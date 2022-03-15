@@ -1,0 +1,51 @@
+@mixin typosettings($fontsize, $color) {
+  font-family: "Noto Sans";
+  font-style: normal;
+  font-weight: 300;
+  line-height: 154.69%;
+  letter-spacing: -0.05em;
+  font-size: $fontsize;
+  color: $color;
+}
+$color-light-grey: #8a8a8a;
+$color-dark: #3e382f;
+
+.login{
+  position: relative;
+  display: flex;
+  height: 100vh;
+  background-color: #f3efea;
+  flex-direction: column;
+  align-items: center;
+  &-back {
+    position: absolute;
+    top: 60px;
+    left: 24px;
+  }
+  &-header {
+    @include typosettings(20, $color-dark);
+    margin-top: 54px;
+  }
+  &-description {
+    @include typosettings(14, $color-light-grey);
+    font-size: 0.7rem;
+    margin-top: 50px;
+    white-space: pre-line;
+    text-align: center;
+  }
+  &-button {
+    width: 88vw;
+    position: absolute;
+    bottom: 12px;
+    height: 53px;
+    text-align: center;
+    border-radius: 56px;
+    background-color: #c4c4c4;
+    border: none;
+    color: #ffffff;
+    box-shadow: 0px 5px 13px rgba(0, 0, 0, 0.05);
+    &.active {
+      background-color: #4d483d;
+    }
+  }
+}
