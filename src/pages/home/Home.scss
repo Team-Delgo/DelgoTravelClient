@@ -1,0 +1,100 @@
+.mainBackground{
+    position: relative;
+    width: 375px;
+    height: 812px;
+    background: #F3EFEA;
+}
+.mainHeaderText{
+    position: absolute;
+    width: 63px;
+    height: 18px;
+    left: 19px;
+    top: 71px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 18px;
+    color: #3E382F;
+}
+.mainPlaceImage{
+    position: relative;
+    img{
+        position: absolute;
+        width: 272px;
+        height: 324px;
+        left: 5px;
+        top: 108px;
+        border-radius: 5px;
+    }
+    .mainPlaceImageSubText{
+        position: absolute;
+        height: 18px;
+        left: 36px;
+        top: 359px;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 18px;
+        color: #FFFFFF;
+    }
+    .mainPlaceImageName{
+        position: absolute;
+        height: 18px;
+        left: 36px;
+        top: 382px;
+        font-family: 'Noto Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 21px;
+        line-height: 18px;   
+        color: #FFFFFF;
+    }
+}
+.recommendedPlaceText{
+    position: absolute;
+    height: 18px;
+    left: 19px;
+    top: 502px;
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 18px;
+}
+.recommendedPlaceImage{
+    position: relative;
+    img{
+        position: absolute;
+        width: 335px;
+        height: 202px;
+        left: 20px;
+        top: 534px;
+        border-radius: 5px;
+    }
+    .recommendedPlaceName{
+        position: absolute;
+        height: 18px;
+        left: 36px;
+        top: 685px;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: bold;
+        font-size: 21px;
+        line-height: 18px;
+        color: #FFFFFF;
+    }
+    .recommendedPlaceLocation{
+        position: absolute;
+        height: 18px;
+        left: 36px;
+        top: 708px;
+        font-family: 'Noto Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 18px;   
+        color: #FFFFFF;
+    }
+}

@@ -1,0 +1,29 @@
+.footer{
+    position: absolute;
+    width :375px;
+    height: 90px;
+    bottom: 0%;
+    background: #FFFFFF;
+    box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    .homeIcon{
+        position: absolute;
+        left: 15%;     
+        top: 30%;
+    }
+    .glassesIcon{
+        position: absolute;
+        left: 35%;
+        top: 30%;
+    }
+    .bagIcon{
+        position: absolute;
+        left: 55%;
+        top: 30%;
+    }
+    .personIcon{
+        position: absolute;
+        left: 75%;
+        top: 30%;
+    }
+}
