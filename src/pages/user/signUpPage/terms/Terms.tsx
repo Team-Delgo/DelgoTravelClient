@@ -7,9 +7,8 @@ import './Terms.scss';
 function Terms() {
   const navigation = useNavigate();
   const [eachTermChecked, setEachTermChecked] = useState<any>({ term1: false, term2: false, term3: false });
-  const [selectedId, setSelctedId] = useState(1);
+  const [selectedId, setSelctedId] = useState(0);
   const [allChecked, setAllChecked] = useState(false);
-  const [detailTermOpen, setDetailTermOpen] = useState(false);
   const { term1, term2, term3 } = eachTermChecked;
   useEffect(() => {
     if (eachTermChecked.term1 && eachTermChecked.term2 && eachTermChecked.term3) {
@@ -24,6 +23,9 @@ function Terms() {
     const { checked, id } = e.target;
     tmp[id] = checked;
     setEachTermChecked(tmp);
+    if(selectedId){
+      setSelctedId(0);
+    }
   };
   const onAllCheckHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
@@ -42,12 +44,11 @@ function Terms() {
   };
   const viewOpenHandler = (event: any) => {
     let { id } = event.target;
-    id = parseInt(id,10);
-    setDetailTermOpen(true);
+    id = parseInt(id, 10);
     setSelctedId(id);
   };
   const viewCloesHandler = () => {
-    setDetailTermOpen(false);
+    setSelctedId(0);
   };
   return (
     <div className="login">
@@ -55,7 +56,7 @@ function Terms() {
         className="login-back"
         aria-hidden="true"
         onClick={
-          !detailTermOpen
+          !selectedId
             ? () => {
                 navigation(-1);
               }
@@ -64,8 +65,8 @@ function Terms() {
       >
         <Arrow />
       </div>
-      <header className="login-header">{!detailTermOpen ? '약관동의' : '이용약관'}</header>
-      {!detailTermOpen && (
+      <header className="login-header">{!selectedId ? '약관동의' : '이용약관'}</header>
+      {!selectedId && (
         <>
           <span className="login-description">{`원활한 서비스를 위해 이용약관\n동의 내용에 동의해주세요`}</span>
           <div className="login-terms">
@@ -105,17 +106,27 @@ function Terms() {
               </label>
             </div>
           </div>
-          <button type="button" className="login-button active" onClick={nextClickHandler}>
+          <button type="button" className="login-button active term" onClick={nextClickHandler}>
             동의합니다
           </button>
         </>
       )}
-      {detailTermOpen && (
+      {!!selectedId && (
         <>
           <div className="login-terms">
             <DetailTerm id={selectedId} />
           </div>
-          <div>check</div>
+          <div className="login-detail">
+            <label className="login-detail-label" htmlFor={`term${selectedId}`}>
+              <input
+                type="checkbox"
+                id={`term${selectedId}`}
+                checked={eachTermChecked[`term${selectedId}`]}
+                onChange={onCheckHandler}
+              />
+              확인 및 동의합니다
+            </label>
+          </div>
         </>
       )}
     </div>

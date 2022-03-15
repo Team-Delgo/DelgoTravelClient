@@ -1,30 +1,38 @@
 @import "../SignUpPage.scss";
-$color-gray-2: #C4C4C4;
+$color-gray-2: #c4c4c4;
+@mixin typobold {
+  color: #474747;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Noto Sans";
+  font-size: 14px;
+  line-height: 19px;
+}
 .login {
   &-terms {
     width: 91vw;
     margin-top: 15px;
     background-color: white;
     border-radius: 7px;
-    
-    &-item{
+
+    &-item {
       position: relative;
       margin: 25px 20px;
-      & input{
+      & input {
         cursor: pointer;
         position: relative;
         top: 2px;
         margin-right: 18px;
       }
-      &-label{
+      &-label {
         color: $color-light-grey;
         font-weight: 400;
         font-style: normal;
-        font-family: 'Roboto';
+        font-family: "Roboto";
         font-size: 13px;
         line-height: 15px;
       }
-      &-button{
+      &-button {
         position: absolute;
         cursor: pointer;
         right: 12px;
@@ -32,36 +40,41 @@ $color-gray-2: #C4C4C4;
         color: $color-gray-2;
         font-weight: 400;
         font-style: normal;
-        font-family: 'Roboto';
+        font-family: "Roboto";
         font-size: 12px;
         line-height: 14px;
       }
     }
-    &-all{
+    &-all {
       width: 91vw;
       margin-top: 41px;
-      &-wrapper{
+      &-wrapper {
         margin: 0 20px;
       }
-      & input{
+      & input {
         cursor: pointer;
         position: relative;
         top: 2px;
         margin-right: 18px;
       }
-      & label{
-        color: #474747;
-        font-weight: 700;
-        font-style: normal;
-        font-family:'Noto Sans';
-        font-size: 14px;
-        line-height: 19px;
+      & label {
+        @include typobold;
       }
     }
   }
-  &-button {
+  &-button.term {
     position: relative;
     margin-top: 40px;
   }
+  &-detail {
+    margin: 0 auto 0 0;
+    padding: 39px 54px;
+    top: 10px;
+    & input {
+      margin-right: 18px;
+    }
+    &-label {
+      @include typobold;
+    }
+  }
 }
-

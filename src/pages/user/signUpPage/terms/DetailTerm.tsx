@@ -1,4 +1,5 @@
 import React from "react";
+import "./DetailTerm.scss";
 
 const term = [
   {},
@@ -20,9 +21,9 @@ const term = [
 ];
 function DetailTerm(props:{ id: number }){
   const {id} = props;
-  return <div>
-    <p>{term[id].main}</p>
-    <p>{term[id].description}</p>
+  return <div className="wrapper">
+    <p className="title">{term[id].main}</p>
+    <p className="description">{term[id].description}</p>
   </div>;
 };
 

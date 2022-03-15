@@ -13,7 +13,8 @@ $color-dark: #3e382f;
 .login{
   position: relative;
   display: flex;
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
   background-color: #f3efea;
   flex-direction: column;
   align-items: center;
@@ -23,12 +24,11 @@ $color-dark: #3e382f;
     left: 24px;
   }
   &-header {
-    @include typosettings(20, $color-dark);
+    @include typosettings(20px, $color-dark);
     margin-top: 54px;
   }
   &-description {
-    @include typosettings(14, $color-light-grey);
-    font-size: 0.7rem;
+    @include typosettings(14px, $color-light-grey);
     margin-top: 50px;
     white-space: pre-line;
     text-align: center;
