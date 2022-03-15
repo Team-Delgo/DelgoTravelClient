@@ -23,7 +23,7 @@ function Terms() {
     const { checked, id } = e.target;
     tmp[id] = checked;
     setEachTermChecked(tmp);
-    if(selectedId){
+    if (selectedId) {
       setSelctedId(0);
     }
   };
@@ -106,7 +106,12 @@ function Terms() {
               </label>
             </div>
           </div>
-          <button type="button" className="login-button active term" onClick={nextClickHandler}>
+          <button
+            type="button"
+            disabled={!allChecked}
+            className={allChecked ? 'login-button active term' : 'login-button term'}
+            onClick={nextClickHandler}
+          >
             동의합니다
           </button>
         </>
