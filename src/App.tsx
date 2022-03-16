@@ -5,7 +5,9 @@ import EditorNote from "./pages/home/EditorNote";
 import SignInPage from "./pages/user/signInPage/SignIn";
 import VerifyPhonePage from "./pages/user/signUpPage/verifyphone/VerifyPhone";
 import TermsPage from "./pages/user/signUpPage/terms/Terms";
+import UserInfo from './pages/user/signUpPage/userInfo/UserInfo';
 import "./App.scss";
+
 
 function App() {
   return (
@@ -15,6 +17,7 @@ function App() {
       <Route path="/user/signin" element={<SignInPage />} />
       <Route path="/user/signup/verifyphone" element={<VerifyPhonePage />} />
       <Route path="/user/signup/terms" element={<TermsPage />} />
+      <Route path="/user/signup/userinfo" element={<UserInfo/>} />
     </Routes>
   );
 }

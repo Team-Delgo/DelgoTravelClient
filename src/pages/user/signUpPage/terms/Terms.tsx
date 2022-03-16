@@ -40,7 +40,7 @@ function Terms() {
     }
   }, [allChecked]);
   const nextClickHandler = () => {
-    navigation('/next');
+    navigation('/user/signup/verifyphone');
   };
   const viewOpenHandler = (event: any) => {
     let { id } = event.target;
