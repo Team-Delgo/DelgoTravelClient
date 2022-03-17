@@ -1,0 +1,87 @@
+.main-background{
+    width: 100%;
+    height: 100%;
+    min-height: 150vh;
+    background: #F3EFEA;
+    padding-bottom: 50px;
+    .main-headertext{
+        padding: 10% 0 5% 5%;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 21px;
+        line-height: 18px;
+        color: #3E382F;
+    }
+    .recommendedplace-text{
+        padding: 15% 0 7% 5%;
+        font-family: 'Noto Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 18px;
+        color: #3E382F;
+    }
+    .main-placeimage{
+        position: relative;
+        img{
+            width: 80%;
+            height: 324px;
+            border-radius: 5px; 
+            padding-left: 1%;
+        }
+        .main-placeimage-subtext{
+            position: absolute;
+            height: 18px;
+            left: 7%;
+            bottom: 19%;
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 18px;
+            color: #FFFFFF;
+        }
+        .main-placeimage-name{
+            position: absolute;
+            height: 18px;
+            left: 7%;
+            bottom: 12%;
+            font-family: 'Noto Sans';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 21px;
+            line-height: 18px;   
+            color: #FFFFFF;
+        }
+    }
+    .recommendedplace-image{
+        text-align: center;
+        position: relative;
+        img{
+            width: 90%;
+            border-radius: 5px;
+            margin-bottom: 10%;
+        }
+        .recommendedplace-name{
+            position: absolute;
+            left: 7%;
+            bottom: 25%;
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: bold;
+            font-size: 18px;
+            color: #FFFFFF;
+            z-index: 10;
+        }
+        .recommendedplace-location{
+            position: absolute;
+            left: 8%;
+            bottom: 20%;
+            font-family: 'Noto Sans';
+            font-style: normal;
+            font-size: 7px;   
+            color: #FFFFFF;
+        }
+    }
+}
