@@ -59,11 +59,17 @@ function UserInfo() {
     setConfirmIsTouched(true);
   };
   const nicknameBlurHandler = () => {
-    console.log(1);
+    const response = checkNickname(nicknameRef.current!.value);
+    if(response.length){
+      setValidNickname('');
+    }else{
+      setValidNickname(nicknameRef.current?.value);
+    }
+    setNicknameFeedback(response);
   };
   return (
     <div className="login">
-      <div aria-hidden="true" className="login-back" onClick={() => navigation(-1)}>
+      <div aria-hidden="true" className="login-back" onClick={!next ? () => navigation(-1): ()=>setNext(false)}>
         <Arrow />
       </div>
       <header className="login-header">필수 정보 입력</header>
@@ -95,7 +101,8 @@ function UserInfo() {
           <button
             type="button"
             disabled={!firstPageIsValid}
-            className={classNames('login-button',{active:firstPageIsValid})}
+            className={classNames('login-button', { active: firstPageIsValid })}
+            onClick={()=>{setNext(true)}}
           >
             다음
           </button>
@@ -103,15 +110,15 @@ function UserInfo() {
       )}
       {next && (
         <>
-          <span className="login-span">이메일</span>
+          <span className="login-span">닉네임</span>
           <div className="login-input-box">
             <input className="login-input" placeholder="닉네임" onBlur={nicknameBlurHandler} ref={nicknameRef} />
-            <p className="input-feedback">{emailFeedback}</p>
+            <p className="input-feedback">{nicknameFeedback}</p>
           </div>
           <button
             type="button"
-            disabled={!firstPageIsValid}
-            className={classNames('login-button',{active:firstPageIsValid})}
+            disabled={!validNickname?.length}
+            className={classNames('login-button', { active: validNickname?.length })}
           >
             다음
           </button>

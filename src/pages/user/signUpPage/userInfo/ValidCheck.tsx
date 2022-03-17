@@ -23,10 +23,15 @@ function checkPasswordConfirm(password: string | undefined, confirm: string | un
   return '';
 }
 function checkNickname(nickname:string){
-  const check = /[~!@#$%^&*()_+|<>?:{}]/;
+  let check = /[~!@#$%^&*()_+|<>?:{}]/;
   if(check.test(nickname)){
     return '특수문자 포함';
   }
+  check = /^.{2,8}$/;
+  if(check.test(nickname) === false){
+    return '2글자 이상 8글자 이하여야 합니다'
+  }
+  //  중복확인 요청
   return '';
 }
 
