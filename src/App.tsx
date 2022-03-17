@@ -5,7 +5,7 @@ import EditorNote from "./pages/home/EditorNote";
 import SignInPage from "./pages/user/signInPage/SignIn";
 import VerifyPhonePage from "./pages/user/signUpPage/VerifyPhone";
 import TermsPage from "./pages/user/signUpPage/Terms";
-
+import "./App.scss";
 
 function App() {
   return (
