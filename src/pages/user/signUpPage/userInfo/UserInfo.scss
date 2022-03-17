@@ -1,0 +1,36 @@
+@import "../SignUpPage.scss";
+@mixin spanposition {
+  margin: 0 auto 0 0;
+  padding-left: 30px;
+  padding-top: 44px;
+}
+.login {
+  &-span {
+    @include spanposition();
+    @include typosettings(14px, $color-light-grey);
+  }
+  &-input {
+    width: 87vw;
+    height: 50px;
+    background-color: white;
+    border-radius: 7px;
+    margin-top: 5px;
+    border: none;
+    text-indent: 22px;
+    &::placeholder {
+      @include typosettings(16px, $color-light-grey);
+    }
+  }
+}
+.login-input-box {
+  position: relative;
+}
+.input-feedback {
+  position: absolute;
+  margin: 0;
+  bottom: -30px;
+  left: 16px;
+  @include typosettings(14px,$color-orange);
+  font-weight: 500;
+}
+
