@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/home/Home";
 import EditorNote from "./pages/home/EditorNote";
 import SignInPage from "./pages/user/signInPage/SignIn";
+
 import VerifyPhonePage from "./pages/user/signUpPage/verifyphone/VerifyPhone";
 import TermsPage from "./pages/user/signUpPage/terms/Terms";
 import UserInfo from './pages/user/signUpPage/userInfo/UserInfo';

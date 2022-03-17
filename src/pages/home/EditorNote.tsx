@@ -4,8 +4,8 @@ import "./EditorNote.scss";
 function EditorNote() {
   return (
     <div className="editor-background">
-      <div className="editor-subtext">바다가 보이는 여름숙소</div>
-      <div className="editor-headertext">속초 코코네집</div>
+      <div className="editor-sub-text">바다가 보이는 여름숙소</div>
+      <div className="editor-header-text">속초 코코네집</div>
       <div className="editor-place">
         <img src={`${process.env.PUBLIC_URL}/assets/images/editorImage.png`} alt="" />
         <div className="editor-place-description">
