@@ -1,8 +1,15 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import classNames from 'classnames';
+import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
 import DetailTerm from './DetailTerm';
 import './Terms.scss';
+
+interface Term {
+  term1: boolean;
+  term2: boolean;
+  term3: boolean;
+}
 
 function Terms() {
   const navigation = useNavigate();
@@ -19,13 +26,13 @@ function Terms() {
   }, [eachTermChecked]);
 
   const onCheckHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const tmp = JSON.parse(JSON.stringify(eachTermChecked));
     const { checked, id } = e.target;
-    tmp[id] = checked;
-    setEachTermChecked(tmp);
     if (selectedId) {
       setSelctedId(0);
     }
+    setEachTermChecked((prev:Term) => {
+      return { ...prev, [id]:checked };
+    });
   };
   const onAllCheckHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
@@ -109,7 +116,7 @@ function Terms() {
           <button
             type="button"
             disabled={!allChecked}
-            className={allChecked ? 'login-button active term' : 'login-button term'}
+            className={classNames('login-button','term',{active:allChecked})}
             onClick={nextClickHandler}
           >
             동의합니다

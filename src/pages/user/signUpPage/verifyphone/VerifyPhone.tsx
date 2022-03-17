@@ -1,4 +1,5 @@
-import React,{ useState, useEffect, ChangeEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
+import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 import ToastMessage from './ToastMessage';
 import './VerifyPhone.scss';
@@ -18,7 +19,6 @@ function VerifyPhone() {
   const isValid = phoneNumber.length === 13;
   const isEntered = phoneNumber.length > 0;
   const buttonClickHandler = () => {
-
     //  인증번호 전송 요청
 
     setButtonIsClicked(true);
@@ -60,15 +60,19 @@ function VerifyPhone() {
   const resetIsResend = () => {
     setIsReSended(false);
   };
-  const nextClickHandler = () => {
-    navigation('/next');
-  };
   const buttonContext = !isSended ? (
-    <button type='button' className={isValid ? 'login-button active' : 'login-button'} onClick={buttonClickHandler}>
+    <button type="button" className={classNames('login-button',{active:isValid})} onClick={buttonClickHandler}>
       인증번호 발송
     </button>
   ) : (
-    <button type='button' disabled={!authIsValid} className={authIsValid ? 'login-button active' : 'login-button'} onClick={nextClickHandler}>
+    <button
+      type="button"
+      disabled={!authIsValid}
+      className={classNames('login-button',{active:authIsValid})}
+      onClick={() => {
+        navigation('/user/signup/userinfo');
+      }}
+    >
       다음
     </button>
   );
@@ -80,26 +84,20 @@ function VerifyPhone() {
       <header className="login-header">휴대폰 인증</header>
       <span className="login-description">원활한 서비스 제공을 위해 휴대폰 번호를 입력해주세요</span>
       <div className="login-inputbox">
-        <input
-          value={phoneNumber}
-          onChange={inputChangeHandler}
-          className="login-input"
-          placeholder="휴대폰 번호"
-        />
+        <input value={phoneNumber} onChange={inputChangeHandler} className="login-input" placeholder="휴대폰 번호" />
         {isEntered && (
-          <span aria-hidden="true" className={isSended ? 'login-input-clear checked' : 'login-input-clear'} onClick={clearButtonHandler}>
+          <span
+            aria-hidden="true"
+            className={classNames('login-input-clear',{checked:isSended})}
+            onClick={clearButtonHandler}
+          >
             {isSended ? <Check /> : 'X'}
           </span>
         )}
       </div>
       {isSended && (
         <div className="login-authnumber">
-          <input
-            value={authNumber}
-            onChange={authChangeHandler}
-            className="login-input"
-            placeholder="인증번호 6자리"
-          />
+          <input value={authNumber} onChange={authChangeHandler} className="login-input" placeholder="인증번호 6자리" />
           <span className="login-timer">
             <Timer isResend={isReSended} resendfunc={resetIsResend} setInValid={() => setTimeIsValid(false)} />
           </span>
@@ -109,7 +107,7 @@ function VerifyPhone() {
         </div>
       )}
       {buttonContext}
-      {buttonIsClicked && <ToastMessage />}
+      {buttonIsClicked && <ToastMessage message='인증번호가 전송 되었습니다'/>}
     </div>
   );
 }

@@ -1,9 +1,10 @@
 import "./ToastMessage.scss";
 import React from "react";
 
-function ToastMessage(){
+function ToastMessage(props: { message: string }){
+  const {message} = props;
   return <div className="toastmessage">
-    <p className="toastmessage-text">인증번호가 전송 되었습니다</p>
+    <p className="toastmessage-text">{message}</p>
   </div>
 };
 export default ToastMessage;

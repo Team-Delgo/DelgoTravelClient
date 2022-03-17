@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
 import './UserInfo.scss';
@@ -94,7 +95,7 @@ function UserInfo() {
           <button
             type="button"
             disabled={!firstPageIsValid}
-            className={firstPageIsValid ? 'login-button active' : 'login-button'}
+            className={classNames('login-button',{active:firstPageIsValid})}
           >
             다음
           </button>
@@ -110,7 +111,7 @@ function UserInfo() {
           <button
             type="button"
             disabled={!firstPageIsValid}
-            className={firstPageIsValid ? 'login-button active' : 'login-button'}
+            className={classNames('login-button',{active:firstPageIsValid})}
           >
             다음
           </button>

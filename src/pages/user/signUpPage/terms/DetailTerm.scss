@@ -1,3 +1,4 @@
+@import '../SignUpPage.scss';
 @mixin font($weight,$size){
   font-family: "Noto Sans";
   font-style: normal;
@@ -5,7 +6,7 @@
   font-size: $size;
   line-height: 150%;
   letter-spacing: -0.05em;
-  color: #3e382f;
+  color: $color-dark;
 }
 .wrapper {
   margin: 46px 34px;

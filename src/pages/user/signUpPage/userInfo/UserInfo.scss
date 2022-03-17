@@ -12,7 +12,7 @@
   &-input {
     width: 87vw;
     height: 50px;
-    background-color: #ffffff;
+    background-color: white;
     border-radius: 7px;
     margin-top: 5px;
     border: none;
@@ -30,7 +30,7 @@
   margin: 0;
   bottom: -30px;
   left: 16px;
-  @include typosettings(14px,#FFAB6F);
+  @include typosettings(14px,$color-orange);
   font-weight: 500;
 }
 

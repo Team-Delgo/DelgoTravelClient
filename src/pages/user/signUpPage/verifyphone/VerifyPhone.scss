@@ -18,12 +18,12 @@
     position: absolute;
     right: 20px;
     top: 29px;
-    color: #ffab6f;
+    color: $color-orange;
   }
   &-input {
     width: 87vw;
     height: 59px;
-    background-color: #ffffff;
+    background-color: white;
     border-radius: 7px;
     margin-top: 12px;
     border: none;
@@ -41,7 +41,7 @@
       border-radius: 100px;
       background-color: #f3efea;
       &.checked {
-        background-color: #ffab6f;
+        background-color: $color-orange;
       }
     }
   }
