@@ -5,28 +5,7 @@ function Timer(props: { isResend: boolean; resendfunc: () => void; setInValid: (
   const [minutes, setMinutes] = useState(2);
   const [seconds, setSeconds] = useState(59);
 
-  const timerEffect = () => {
-    if (isResend) {
-      resendfunc();
-      setMinutes(2);
-      setSeconds(59);
-      return;
-    }
-    const countdown = setInterval(() => {
-      if (seconds === 0) {
-        if (minutes === 0) {
-          clearInterval(countdown);
-          setInValid();
-        } else {
-          setMinutes(minutes - 1);
-          setSeconds(59);
-        }
-      } else {
-        setSeconds(seconds - 1);
-      }
-    }, 1000);
-    return () => clearInterval(countdown);
-  };
+  
   useEffect(() => {
     if (isResend) {
       resendfunc();

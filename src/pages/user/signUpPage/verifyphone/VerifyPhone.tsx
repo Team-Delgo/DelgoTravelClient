@@ -18,12 +18,14 @@ function VerifyPhone() {
   const authIsValid = timeIsValid && authNumber.length === 6;
   const isValid = phoneNumber.length === 13;
   const isEntered = phoneNumber.length > 0;
+
   const buttonClickHandler = () => {
     //  인증번호 전송 요청
 
     setButtonIsClicked(true);
     setIsSended(true);
   };
+
   useEffect(() => {
     if (buttonIsClicked) {
       setTimeout(() => {
@@ -31,6 +33,7 @@ function VerifyPhone() {
       }, 2500);
     }
   }, [buttonIsClicked]);
+
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     if (isSended) return;
     const { value } = event.target;
@@ -43,23 +46,28 @@ function VerifyPhone() {
     }
     setPhoneNumber(adjustNumber);
   };
+
   const clearButtonHandler = () => {
     if (isSended) return;
     setPhoneNumber('');
   };
+
   const authChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     if (authNumber.length === 6 && event.target.value.length > 6) return;
     setAuthNumber(event.target.value);
   };
+
   const authNumberResend = () => {
     //  인증번호 전송 요청
     setIsReSended(true);
     setButtonIsClicked(true);
     setTimeIsValid(true);
   };
+
   const resetIsResend = () => {
     setIsReSended(false);
   };
+
   const buttonContext = !isSended ? (
     <button type="button" className={classNames('login-button',{active:isValid})} onClick={buttonClickHandler}>
       인증번호 발송
@@ -76,6 +84,7 @@ function VerifyPhone() {
       다음
     </button>
   );
+  
   return (
     <div className="login">
       <div aria-hidden="true" className="login-back" onClick={() => navigation(-1)}>
