@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
@@ -14,104 +14,125 @@ interface Input {
 
 function UserInfo() {
   const navigation = useNavigate();
-  const [next, setNext] = useState(false);
+  const [nextPage, setNextPage] = useState(false);
   const [enteredInput, setEnteredInput] = useState({ email: '', password: '', confirm: '', nickname: '' });
   const [validInput, setValidInput] = useState({ email: '', password: '', confirm: '', nickname: '' });
   const [feedback, setFeedback] = useState({ email: '', password: '', confirm: '', nickname: '' });
   const [confirmIsTouched, setConfirmIsTouched] = useState(false);
   const firstPageIsValid = validInput.email.length && validInput.password.length && validInput.confirm.length;
 
-  const emailBlurHanlder = () => {
-    const response = checkEmail(enteredInput.email);
-    if (response.length) {
+  const emailValidCheck = (value: string) => {
+    const response = checkEmail(value);
+
+    if (!response.isValid) {
       setValidInput((prev: Input) => {
         return { ...prev, email: '' };
       });
     } else {
       setValidInput((prev: Input) => {
-        return { ...prev, email: enteredInput.email };
+        return { ...prev, email: value };
       });
     }
     setFeedback((prev: Input) => {
-      return { ...prev, email: response };
+      return { ...prev, email: response.message };
     });
   };
 
-  const passwordBlurHandler = () => {
-    const response = checkPassword(enteredInput.password);
-    if (response.length) {
+  const passwordValidCheck = (value: string) => {
+    const response = checkPassword(value);
+
+    if (!response.isValid) {
       setValidInput((prev: Input) => {
         return { ...prev, password: '' };
       });
     } else {
       setValidInput((prev: Input) => {
-        return { ...prev, password: enteredInput.password };
+        return { ...prev, password: value };
       });
     }
-    if (confirmIsTouched && !response.length) {
-      const { password, confirm } = enteredInput;
-      const check = checkPasswordConfirm(password, confirm);
+
+    if (confirmIsTouched && !response.isValid) {
+      const { confirm } = enteredInput;
+      const check = checkPasswordConfirm(value, confirm);
+
       setFeedback((prev: Input) => {
-        return { ...prev, confirm: check };
+        return { ...prev, confirm: check.message };
       });
     }
+
     setFeedback((prev: Input) => {
-      return { ...prev, password: response };
+      return { ...prev, password: response.message };
     });
   };
 
-  const passwordConfirmBlurHandler = () => {
-    const { password, confirm } = enteredInput;
-    const response = checkPasswordConfirm(password, confirm);
-    if (response.length) {
+  const passwordConfirmValidCheck = (value: string) => {
+    const { password } = enteredInput;
+    const response = checkPasswordConfirm(password, value);
+
+    if (!response.isValid) {
       setValidInput((prev: Input) => {
         return { ...prev, confirm: '' };
       });
     } else {
       setValidInput((prev: Input) => {
-        return { ...prev, confirm: enteredInput.confirm };
+        return { ...prev, confirm: value };
       });
     }
     setFeedback((prev: Input) => {
-      return { ...prev, confirm: response };
+      return { ...prev, confirm: response.message };
     });
     setConfirmIsTouched(true);
   };
 
-  const nicknameBlurHandler = () => {
-    const response = checkNickname(enteredInput.nickname);
-    if (response.length) {
+  const nicknameValidCheck = (value: string) => {
+    const response = checkNickname(value);
+
+    if (!response.isValid) {
       setValidInput((prev: Input) => {
         return { ...prev, nickname: '' };
       });
     } else {
       setValidInput((prev: Input) => {
-        return { ...prev, nickname: enteredInput.nickname };
+        return { ...prev, nickname: value };
       });
     }
+
     setFeedback((prev: Input) => {
-      return { ...prev, nickname: response };
+      return { ...prev, nickname: response.message };
     });
   };
 
   const submitHandler = () => {
-    navigation('/');
+    //  유저정보 보내기
+
+    navigation('/user/signup/petinfo');
   };
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    const { id } = e.target;
+    const { id, value } = e.target;
+
     setEnteredInput((prev: Input) => {
-      return { ...prev, [id]: e.target.value };
+      return { ...prev, [id]: value };
     });
+
+    if (id === 'email') {
+      emailValidCheck(value);
+    } else if (id === 'password') {
+      passwordValidCheck(value);
+    } else if (id === 'confirm') {
+      passwordConfirmValidCheck(value);
+    } else {
+      nicknameValidCheck(value);
+    }
   };
 
   return (
     <div className="login">
-      <div aria-hidden="true" className="login-back" onClick={!next ? () => navigation(-1) : () => setNext(false)}>
+      <div aria-hidden="true" className="login-back" onClick={!nextPage ? () => navigation(-1) : () => setNextPage(false)}>
         <Arrow />
       </div>
       <header className="login-header">필수 정보 입력</header>
-      {!next && (
+      {!nextPage && (
         <>
           <span className="login-span">이메일</span>
           <div className="login-input-box">
@@ -121,7 +142,6 @@ function UserInfo() {
               id="email"
               value={enteredInput.email}
               onChange={inputChangeHandler}
-              onBlur={emailBlurHanlder}
             />
             <p className="input-feedback">{feedback.email}</p>
           </div>
@@ -133,7 +153,6 @@ function UserInfo() {
             value={enteredInput.password}
             id="password"
             onChange={inputChangeHandler}
-            onBlur={passwordBlurHandler}
           />
           <div className="login-input-box">
             <input
@@ -143,7 +162,6 @@ function UserInfo() {
               value={enteredInput.confirm}
               id="confirm"
               onChange={inputChangeHandler}
-              onBlur={passwordConfirmBlurHandler}
             />
             <p className="input-feedback">{feedback.password.length ? feedback.password : feedback.confirm}</p>
           </div>
@@ -152,14 +170,14 @@ function UserInfo() {
             disabled={!firstPageIsValid}
             className={classNames('login-button', { active: firstPageIsValid })}
             onClick={() => {
-              setNext(true);
+              setNextPage(true);
             }}
           >
             다음
           </button>
         </>
       )}
-      {next && (
+      {nextPage && (
         <>
           <span className="login-span">닉네임</span>
           <div className="login-input-box">
@@ -169,7 +187,6 @@ function UserInfo() {
               id="nickname"
               value={enteredInput.nickname}
               onChange={inputChangeHandler}
-              onBlur={nicknameBlurHandler}
             />
             <p className="input-feedback">{feedback.nickname}</p>
           </div>
@@ -177,6 +194,7 @@ function UserInfo() {
             type="button"
             disabled={!validInput.nickname.length}
             className={classNames('login-button', { active: validInput.nickname.length })}
+            onClick={submitHandler}
           >
             다음
           </button>
