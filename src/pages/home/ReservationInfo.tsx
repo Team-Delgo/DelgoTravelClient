@@ -4,9 +4,9 @@ import Airplane from '../../icons/airplane.svg';
 import Footprint from '../../icons/footprint.svg';
 import Book from '../../icons/book.svg';
 import Emergency from '../../icons/emergency.svg'
-import './Upcoming.scss';
+import './ReservationInfo.scss';
 
-function Upcoming() {
+function ReservationInfo() {
   return (
     <div className="home-background">
       <div className="reservation">
@@ -74,4 +74,4 @@ function Upcoming() {
   );
 }
 
-export default Upcoming;
+export default ReservationInfo;

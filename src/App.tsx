@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/home/Home";
 import EditorNote from "./pages/home/EditorNote";
-import Upcoming from './pages/home/Upcoming';
+import Upcoming from './pages/home/ReservationInfo';
 import SignInPage from "./pages/user/signInPage/SignIn";
 import VerifyPhonePage from "./pages/user/signUpPage/verifyphone/VerifyPhone";
 import TermsPage from "./pages/user/signUpPage/terms/Terms";
@@ -17,7 +17,6 @@ function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/editor-note/:id" element={<EditorNote />} />
-      <Route path="/upcoming" element={<Upcoming />} />
       <Route path="/user/signin" element={<SignInPage />} />
       <Route path="/user/signup/verifyphone" element={<VerifyPhonePage />} />
       <Route path="/user/signup/terms" element={<TermsPage />} />

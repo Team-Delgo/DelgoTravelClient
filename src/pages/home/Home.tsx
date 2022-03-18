@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import { Link } from 'react-router-dom';
-import Upcoming from './Upcoming';
+import ReservationInfo from './ReservationInfo';
 import Footer from '../../common/layouts/Footer';
 import './Home.scss';
 
@@ -34,7 +34,7 @@ function Home() {
   return (
     <>
       <div className="home-background">
-        <Upcoming/> 
+        <ReservationInfo/> 
         <div className="main-header-text">Delgo!</div>
         {editorPlaces.map((place) => (
           <Link to="/editor-note/1">
