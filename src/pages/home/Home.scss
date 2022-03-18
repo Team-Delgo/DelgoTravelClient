@@ -11,8 +11,8 @@
         font-size: 1.3rem;
         color: #3E382F;
     }
-    .recommended-place-text{
-        padding: 15% 0 1rem 5%;
+    .recommended-places-text{
+        padding: 7% 0 1rem 5%;
         font-family: 'Noto Sans';
         font-style: normal;
         font-weight: 700;
@@ -20,7 +20,7 @@
         line-height: 18px;
         color: #3E382F;
     }
-    .main-place{   
+    .editor-thumbnail{   
         position: relative;
         img{
             width: 80%;
@@ -31,7 +31,7 @@
         &-subtext{
             position: absolute;
             height: 18px;
-            left: 7%;
+            left: 8%;
             bottom: 19%;
             font-family: 'Roboto';
             font-style: normal;
@@ -43,7 +43,7 @@
         &-name{
             position: absolute;
             height: 18px;
-            left: 7%;
+            left: 8%;
             bottom: 12%;
             font-family: 'Noto Sans';
             font-style: normal;
@@ -53,7 +53,7 @@
             color: #FFFFFF;
         }
     }
-    .recommended-place{
+    .recommended-places{
         text-align: center;
         position: relative;
         img{
@@ -81,4 +81,5 @@
             color: #FFFFFF;
         }
     }
+
 }

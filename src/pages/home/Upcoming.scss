@@ -1,0 +1,169 @@
+.reservation{
+    text-align: center;
+    position: relative;
+    padding-top: 15%;
+    color: #FFFFFF;
+    img{
+        width: 90%;
+        border-radius: 5px;
+        margin-bottom: 10%;
+    }
+    &-place-name{
+        position: absolute;
+        left:7%;
+        top: 30%;
+        font-family: 'Noto Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 18px;        
+        color: #FFFFFF;
+    }
+    &-deadline{
+        position: absolute;
+        right: 10%;
+        top: 30%;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 18px;        
+        color: #FFFFFF;
+    }
+    &-date{
+        position: absolute;
+        left:7%;
+        top: 37%;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 18px;
+        letter-spacing: 0.04em;
+        color: #FFFFFF;
+    }
+    &-time{
+        display: flex;
+        position: absolute;
+        left:7%;
+        top: 44%; 
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 11px;
+        line-height: 18px;       
+        color: #FFFFFF;
+        &-checkin{
+            padding-right: 10px;    
+        }
+    }
+    &-information{
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 3vw;
+        line-height: 18px;
+        text-decoration-line: underline;
+        &-address{
+            position: absolute;
+            left: 10%;     
+            bottom: 20%;
+        }
+        &-inquiry{
+            position: absolute;
+            left: 35%;
+            bottom: 20%;
+        }
+        &-change{
+            position: absolute;
+            left: 55%;
+            bottom: 20%;
+        }
+        &-cancel{
+            position: absolute;
+            left: 80%;
+            bottom: 20%;
+        }
+    }
+}
+.travel-preparation{
+    padding: 5% 0 1rem 5%;
+    font-family: 'Roboto';
+    font-style: normal;
+    line-height: 18px;
+    color: #3E382F;
+    &-text{
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 18px;
+        color: #3E382F;
+    }
+    &-list{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        row-gap: 10px;
+        column-gap: 10px;
+        font-weight: 500;
+        font-size: 14px;
+        padding: 7% 0 15% 0;
+        div{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 109px;
+            height: 33px;
+            border: 1px solid #E8E2DC;
+            box-sizing: border-box;
+            border-radius: 28px;
+            background-color: #FFFFFF;
+        }
+    }
+}
+.recommended-places-around-reserved-place{
+    display: flex;
+    align-items: center;
+    height: 173px;
+    background: #FFFBF6;
+    padding-left: 7%;
+    img{
+        width: 100px;
+        height: 100px;
+    }
+    .recommended-places-information-around-reserved-place{
+        padding-left: 5%;
+        height: 50%;
+        .recommended-places-name-around-reserved-place{
+            font-family: 'Noto Sans';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 18px;
+            color: #6E614D;
+        }
+        .recommended-places-loaction-around-reserved-place{
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 18px;
+            color: #AD9E87;
+        }
+        .recommended-places-review-around-reserved-place{
+            width: 144.86px;
+            height: 52px;
+            background: #FFFFFF;
+            border-radius: 12px;
+            position: absolute;
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 18px;
+            letter-spacing: -0.05em;
+            color: #6E614D;
+        }
+    }
+}
