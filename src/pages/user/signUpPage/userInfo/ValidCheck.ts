@@ -14,6 +14,7 @@ function checkEmail(email: string): Feedback {
 
   return { isValid: true, message: '' };
 }
+
 function checkPassword(password: string): Feedback {
   const check = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
   if (check.test(password) === false) {
@@ -44,4 +45,12 @@ function checkNickname(nickname: string): Feedback {
   return { isValid: true, message: '' };
 }
 
-export { checkEmail, checkPassword, checkPasswordConfirm, checkNickname };
+function checkPetName(name: string): Feedback {
+  const check = /[~!@#$%^&*()_+|<>?:{}]/;
+  if (check.test(name)) {
+    return { isValid: false, message: '특수문자 포함' };
+  }
+  return { isValid: true, message: '' };
+}
+
+export { checkEmail, checkPassword, checkPasswordConfirm, checkNickname, checkPetName };
