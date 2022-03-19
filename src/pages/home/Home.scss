@@ -3,21 +3,19 @@
     height: 100%;
     background: #F3EFEA;
     padding-bottom: 50px;
+    font-style: normal;
     .main-header-text{
         padding: 10% 0 1rem 5%;
         font-family: 'Roboto';
-        font-style: normal;
         font-weight: 600;
-        font-size: 1.3rem;
+        font-size: 4vw;
         color: #3E382F;
     }
     .recommended-places-text{
         padding: 7% 0 1rem 5%;
         font-family: 'Noto Sans';
-        font-style: normal;
         font-weight: 700;
-        font-size: 1.2rem;
-        line-height: 18px;
+        font-size:4vw;
         color: #3E382F;
     }
     .editor-thumbnail{   
@@ -34,22 +32,18 @@
             left: 8%;
             bottom: 19%;
             font-family: 'Roboto';
-            font-style: normal;
             font-weight: 500;
             font-size: 12px;
-            line-height: 18px;
             color: #FFFFFF;
         }
         &-name{
             position: absolute;
             height: 18px;
             left: 8%;
-            bottom: 12%;
+            bottom: 14%;
             font-family: 'Noto Sans';
-            font-style: normal;
             font-weight: 700;
-            font-size: 21px;
-            line-height: 18px;   
+            font-size: 20px;
             color: #FFFFFF;
         }
     }
@@ -66,9 +60,8 @@
             left: 7%;
             bottom: 25%;
             font-family: 'Roboto';
-            font-style: normal;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 4.5vw;
             color: #FFFFFF;
         }
         &-location{
@@ -76,8 +69,7 @@
             left: 8%;
             bottom: 20%;
             font-family: 'Noto Sans';
-            font-style: normal;
-            font-size: 7px;  
+            font-size: 2vw; 
             color: #FFFFFF;
         }
     }

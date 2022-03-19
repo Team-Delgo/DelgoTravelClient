@@ -36,36 +36,32 @@ function ReservationInfo() {
         <div className="travel-preparation-list">
           <div>
             <img src={Emergency} alt="" />
-            응급상황
+            &nbsp;응급상황
           </div>
           <div>
             <img src={Dog} alt="" />
-            여행펫티켓
+            &nbsp;여행펫티켓
           </div>
           <div>
             <img src={Airplane} alt="" />
-            비행기탑승
+            &nbsp;비행기탑승
           </div>
           <div>
             <img src={Footprint} alt="" />
-            필수준비물
+            &nbsp;필수준비물
           </div>
           <div>
             <img src={Book} alt="" />
-            기초상식
+            &nbsp;기초상식
           </div>
         </div>
       </div>
       <div className="recommended-places-around-reserved-place">
         <img src={`${process.env.PUBLIC_URL}/assets/images/recommendedPlacesAroundReservedPlace.png`} alt="" />
         <div className="recommended-places-information-around-reserved-place">
-          <div className="recommended-places-name-around-reserved-place">
-              멍멍카페 강릉점
-          </div>
-          <div className="recommended-places-loaction-around-reserved-place">
-              숙소에서 3.2 km
-          </div>
-           {/* <div className="recommended-places-review-around-reserved-place">
+          <div className="recommended-places-name-around-reserved-place">멍멍카페 강릉점</div>
+          <div className="recommended-places-loaction-around-reserved-place">숙소에서 3.2 km</div>
+          {/* <div className="recommended-places-review-around-reserved-place">
               애기들이랑 놀기 좋아요 강아지 방석도 있어요
           </div>   */}
         </div>
