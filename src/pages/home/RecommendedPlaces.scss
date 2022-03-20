@@ -1,0 +1,32 @@
+.recommended-places{
+    text-align: center;
+    position: relative;
+    img{
+        width: 90%;
+        border-radius: 5px;
+        margin-bottom: 10%;
+    }
+    &-name{
+        position: absolute;
+        left: 7%;
+        bottom: 25%;
+        font-family: 'Roboto';
+        font-weight: bold;
+        font-size: 4.5vw;
+        color: #FFFFFF;
+    }
+    &-location{
+        position: absolute;
+        left: 8%;
+        bottom: 20%;
+        font-family: 'Noto Sans';
+        font-size: 2vw; 
+        color: #FFFFFF;
+    }
+    &-heart{
+        position: absolute;
+        right: 8.33%;
+        top: 12.5%;
+        bottom: 13.19%;
+    }
+}
