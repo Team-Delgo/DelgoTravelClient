@@ -1,15 +1,22 @@
 import React, { ChangeEvent, useState } from 'react';
 
 function PetInfo() {
-  const [image,setImage] = useState('');
+  const [image,setImage] = useState<any>();
+  const [file, setFile] = useState<any>();
   const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.files);
+    const reader = new FileReader();
+    reader.onload = function () {
+      setFile(event.target.files![0]);
+      setImage(reader.result);
+    }
+    reader.readAsDataURL(event.target.files![0]);
+    
   };
   return (
-    <>
-      <input type="file" accept="image/*" name="file" onChange={handleImage} />
-      <img src={image} alt="pet"/>
-    </>
+    <div>
+      <input type="file" accept="image/*" name="image" id="image"  onChange={handleImage} />
+      <img src={image} alt='preview'/>
+    </div>
   );
 }
 export default PetInfo;
