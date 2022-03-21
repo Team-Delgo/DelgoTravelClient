@@ -1,15 +1,17 @@
 @import '../SignUpPage.scss';
 @mixin font($weight,$size){
-  font-family: "Noto Sans";
+  font-family: "Spoqa Han Sans Neo";
   font-style: normal;
   font-weight: $weight;
   font-size: $size;
   line-height: 150%;
-  letter-spacing: -0.05em;
   color: $color-dark;
 }
+
 .wrapper {
   margin: 46px 34px;
+  max-height: 60vh;
+  overflow: scroll;
 }
 .title {
   width: 63vw;
@@ -17,5 +19,6 @@
 }
 .description {
   margin-top: 25px;
-  @include font(300,13px);
+  white-space:pre-line;
+  @include font(400,12px);
 }

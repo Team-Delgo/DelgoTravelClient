@@ -7,37 +7,50 @@
   background-color: $back;
   box-shadow: 0px 5px 13px rgba(0, 0, 0, 0.05);
   border-radius: 7px;
-  font-family: "Roboto";
+  font-family: "Spoqa Han Sans Neo";
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 16px;
-  line-height: 19px;
+  line-height: 150%;
   color: $font;
 }
 .login {
   &-title {
     margin-top: 138px;
-    font-family: "Roboto";
+    font-family: "Spoqa Han Sans Neo";
     font-style: normal;
     font-weight: 700;
-    font-size: 36px;
+    font-size: 24px;
     line-height: 126.19%;
     color: #4d483d;
   }
   &-kakao {
     margin-top: 93px;
+    display: flex;
+    align-items: center;
     @include buttonstyle(#ffef5a, #474747);
   }
   &-naver {
     margin-top: 10px;
+    display: flex;
+    align-items: center;
     @include buttonstyle(#45d156, #474747);
   }
   &-apple {
     margin-top: 10px;
+    display: flex;
+    align-items: center;
     @include buttonstyle(#292929, #ffffff);
   }
   &-button.signup {
     position: relative;
     margin-top: 70px;
   }
+}
+
+.icon{
+  width: 24px;
+  height: 24px;
+  margin-left: 60px;
+  margin-right: 40px;
 }

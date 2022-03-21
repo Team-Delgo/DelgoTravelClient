@@ -4,13 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { checkPetName } from '../userInfo/ValidCheck';
 import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
 import './PetInfo.scss';
+import BirthSelector from './BirthSelector';
 
 interface Input {
   name: string;
-  birth: string;
+  birth: string | undefined;
   weight: string;
   type: string;
 }
+
 interface IsValid {
   name: boolean;
   birth: boolean;
@@ -18,11 +20,19 @@ interface IsValid {
   type: boolean;
 }
 
+enum Id {
+  NAME = 'name',
+  BIRTH = 'birth',
+  WEIGHT = 'weight',
+  TYPE = 'type',
+}
+
 function PetInfo() {
   const navigation = useNavigate();
   const [image, setImage] = useState<any>();
-  const [enteredInput, setEnteredInput] = useState<Input>({ name: '', birth: '', weight: '', type: '' });
+  const [enteredInput, setEnteredInput] = useState<Input>({ name: '', birth: undefined, weight: '', type: '' });
   const [nameFeedback, setNameFeedback] = useState('');
+  const [modalActive, setModalActive] = useState(false);
   const [isValid, setIsValid] = useState<IsValid>({
     name: false,
     birth: false,
@@ -40,8 +50,7 @@ function PetInfo() {
     reader.readAsDataURL(event.target.files![0]);
   };
 
-  const requireInputCheck = (key: string, value:string) => {
-
+  const requireInputCheck = (key: string, value: string) => {
     if (value.length) {
       setIsValid((prev: IsValid) => {
         return { ...prev, [key]: true };
@@ -64,11 +73,11 @@ function PetInfo() {
   };
 
   const typeChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    const {id,value} = event.target;
-    setEnteredInput((prev:Input)=>{
-      return {...prev, type: id};
+    const { id, value } = event.target;
+    setEnteredInput((prev: Input) => {
+      return { ...prev, type: id };
     });
-    requireInputCheck('type',id);
+    requireInputCheck(Id.TYPE, id);
   };
 
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -76,11 +85,18 @@ function PetInfo() {
     setEnteredInput((prev: Input) => {
       return { ...prev, [id]: value };
     });
-    if (id === 'name') {
+    if (id === Id.NAME) {
       nameInputCheck(value);
     } else {
-      requireInputCheck(id,value);
+      requireInputCheck(id, value);
     }
+  };
+
+  const chagneBirthHandler = (year:number,month:number,day:number) => {
+    const birthday = `${year}-${month}-${day}`;
+    setEnteredInput((prev:Input)=>{
+      return {...prev,birth:birthday};
+    })
   };
 
   const submitHandler = () => {
@@ -107,28 +123,39 @@ function PetInfo() {
         </label>
         <div className="petinfo-image-preview" style={{ backgroundImage: `url(${image})` }} />
       </div>
+      {modalActive && (
+        <div>
+          <div aria-hidden="true" className="backdrop" onClick={()=>{setModalActive(false);}}/>
+          <div className='modal'>
+            <BirthSelector changeBirth={chagneBirthHandler}/>
+          </div>
+        </div>
+      )}
       <input
         className="login-input"
         placeholder="강아지 이름"
         value={enteredInput.name}
-        id="name"
+        id={Id.NAME}
         onChange={inputChangeHandler}
       />
       <div className="login-input-wrapper">
         <input
-          type="date"
-          className="login-input birth"
+          className="login-input"
           placeholder="생일"
           value={enteredInput.birth}
-          id="birth"
+          id={Id.BIRTH}
+          onClick={() => {
+            setModalActive(true);
+          }}
+          required
           onChange={inputChangeHandler}
         />
         <input
           className="login-input weight"
           type="number"
-          placeholder="몸무게"
+          placeholder="몸무게(kg)"
           value={enteredInput.weight}
-          id="weight"
+          id={Id.WEIGHT}
           onChange={inputChangeHandler}
         />
       </div>

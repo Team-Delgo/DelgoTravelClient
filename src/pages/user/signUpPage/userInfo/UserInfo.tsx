@@ -12,6 +12,13 @@ interface Input {
   nickname: string;
 }
 
+enum Id{
+  EMAIL='email',
+  PASSWORD='password',
+  CONFIRM='confirm',
+  NICKNAME='nickname'
+}
+
 function UserInfo() {
   const navigation = useNavigate();
   const [nextPage, setNextPage] = useState(false);
@@ -33,6 +40,7 @@ function UserInfo() {
         return { ...prev, email: value };
       });
     }
+    
     setFeedback((prev: Input) => {
       return { ...prev, email: response.message };
     });
@@ -115,11 +123,11 @@ function UserInfo() {
       return { ...prev, [id]: value };
     });
 
-    if (id === 'email') {
+    if (id === Id.EMAIL) {
       emailValidCheck(value);
-    } else if (id === 'password') {
+    } else if (id === Id.PASSWORD) {
       passwordValidCheck(value);
-    } else if (id === 'confirm') {
+    } else if (id === Id.CONFIRM) {
       passwordConfirmValidCheck(value);
     } else {
       nicknameValidCheck(value);
@@ -139,7 +147,7 @@ function UserInfo() {
             <input
               className="login-input"
               placeholder="이메일"
-              id="email"
+              id={Id.EMAIL}
               value={enteredInput.email}
               onChange={inputChangeHandler}
             />
@@ -151,7 +159,7 @@ function UserInfo() {
             placeholder="영문+숫자 포함 8자리 이상"
             type="password"
             value={enteredInput.password}
-            id="password"
+            id={Id.PASSWORD}
             onChange={inputChangeHandler}
           />
           <div className="login-input-box">
@@ -160,7 +168,7 @@ function UserInfo() {
               placeholder="비밀번호 확인"
               type="password"
               value={enteredInput.confirm}
-              id="confirm"
+              id={Id.CONFIRM}
               onChange={inputChangeHandler}
             />
             <p className="input-feedback">{feedback.password.length ? feedback.password : feedback.confirm}</p>
@@ -184,7 +192,7 @@ function UserInfo() {
             <input
               className="login-input"
               placeholder="닉네임"
-              id="nickname"
+              id={Id.NICKNAME}
               value={enteredInput.nickname}
               onChange={inputChangeHandler}
             />
