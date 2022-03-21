@@ -40,7 +40,7 @@
         letter-spacing: 0.04em;
         color: #FFFFFF;
     }
-    &-time{
+    &-stay-time{
         display: flex;
         position: absolute;
         left:7%;
@@ -49,8 +49,8 @@
         font-weight: 500;
         font-size: 3vw;   
         color: #FFFFFF;
-        &-checkin{
-            padding-right: 10px;    
+        .reservation-check-in{
+            padding-right: 1.5em;    
         }
     }
     &-information{
@@ -89,25 +89,24 @@
     &-text{
         font-family: 'Roboto';
         font-weight: 600;
-        font-size: 1.2rem;
+        font-size: 4.5vw;
         line-height: 18px;
         color: #3E382F;
     }
     &-list{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        row-gap: 10px;
-        column-gap: 10px;
+        row-gap: 15px;
+        column-gap: 20px;
         font-weight: 500;
-        font-size: 14px;
-        padding: 2rem 0 12% 0;
+        font-size: 3vw;
+        padding: 8% 0 12% 0;
         div{
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            width: 100%;
-            height: 2.5rem;
+            height: 4.2vh;
             border: 1px solid #E8E2DC;
             box-sizing: border-box;
             border-radius: 28px;
@@ -142,17 +141,35 @@
             color: #AD9E87;
         }
         .recommended-places-review-around-reserved-place{
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 144.86px;
             height: 52px;
-            background: #FFFFFF;
+            background: #8f8181;
             border-radius: 12px;
-            position: absolute;
             font-family: 'Roboto';
+            font-style: normal;
             font-weight: 500;
             font-size: 12px;
             line-height: 18px;
             letter-spacing: -0.05em;
             color: #6E614D;
+            box-shadow: 1px 1px 1px #6E614D;
+            padding: 5px 5px;
+        }
+        .recommended-places-review-around-reserved-place:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            border: 13px solid transparent;
+            border-right-color: #8f8181;
+            border-left: 0;
+            margin-top: -13px;
+            margin-left: -13px;
+            // transform: rotate(-90deg);
         }
     }
 }

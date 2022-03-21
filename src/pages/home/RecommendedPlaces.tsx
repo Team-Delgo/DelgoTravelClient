@@ -3,7 +3,7 @@ import { ReactComponent as ActiveHeart } from '../../icons/activeheart.svg';
 import { ReactComponent as Heart } from '../../icons/heart.svg';
 import './RecommendedPlaces.scss';
 
-interface RedcommendedPlacesProps{
+type RedcommendedPlacesProps = {
     place:RecommendedPlaceType
 }
 

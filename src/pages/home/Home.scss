@@ -5,14 +5,14 @@
     padding-bottom: 50px;
     font-style: normal;
     .main-header-text{
-        padding: 10% 0 1rem 5%;
+        padding: 10% 0 5% 5%;
         font-family: 'Roboto';
         font-weight: 600;
-        font-size: 4vw;
+        font-size: 4.5vw;
         color: #3E382F;
     }
     .recommended-places-text{
-        padding: 7% 0 1rem 5%;
+        padding: 10% 0 5% 5%;
         font-family: 'Noto Sans';
         font-weight: 700;
         font-size:4vw;
@@ -21,10 +21,9 @@
     .editor-thumbnail{   
         position: relative;
         img{
-            width: 80%;
-            height: 324px;
+            width: 75%;
             border-radius: 5px; 
-            padding-left: 1%;
+            padding-left: 2.5%;
         }
         &-subtext{
             position: absolute;
@@ -33,17 +32,17 @@
             bottom: 19%;
             font-family: 'Roboto';
             font-weight: 500;
-            font-size: 12px;
+            font-size: 3vw;
             color: #FFFFFF;
         }
         &-name{
             position: absolute;
             height: 18px;
             left: 8%;
-            bottom: 14%;
+            bottom: 15%;
             font-family: 'Noto Sans';
             font-weight: 700;
-            font-size: 20px;
+            font-size: 5vw;
             color: #FFFFFF;
         }
     }
