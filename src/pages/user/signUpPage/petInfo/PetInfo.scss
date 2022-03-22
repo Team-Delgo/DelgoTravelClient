@@ -1,6 +1,7 @@
 @import "../SignUpPage.scss";
 .petinfo-image{
   position: relative;
+  margin-top: 27px;
   &-input{
     display: none;
   }
@@ -23,6 +24,12 @@
     border-radius: 100%;
     background-color: white;
   }
+  &-icon{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
 }
 .login-input{
   &-wrapper{
@@ -30,28 +37,34 @@
     display: flex;
     justify-content: space-between;
   }
-  &.birth{
-    
+  &.petname{
+    margin-top: 28px;
+  }
+  &.input-birth{
+    margin-top: 38px;
     width: 51%;
     display: inline;
-    &::before{
-      @include typosettings(16, $color-light-grey);
-      content: attr(date-placeholder);
-      width: 100%;
-    }
-    // &:focus::before,
-    &:valid::before{
-      display: none;
-    }
   }
-  &.weight{
+  &.input-weight{
+    margin-top: 38px;
     width: 42%;
     display: inline;
   }
   
 }
 .dogtype{
+  margin-top: 18px;
   display: flex;
+  &-help{
+    width: 28px;
+    height: 28px;
+    font-size: 18px;
+    font-family: 'Roboto';
+    font-weight: 700;
+    text-align: center;
+    background-color: #E8E2DC;
+    border-radius: 100%;
+  }
   &-input{
     display: none;
   }

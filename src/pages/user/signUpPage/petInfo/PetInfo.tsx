@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 import { checkPetName } from '../userInfo/ValidCheck';
 import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
+import { ReactComponent as Camera } from '../../../../icons/camera.svg';
 import './PetInfo.scss';
 import BirthSelector from './BirthSelector';
 
@@ -40,8 +41,7 @@ function PetInfo() {
     type: false,
   });
   const pageIsValid = isValid.name && isValid.birth && isValid.type && isValid.weight;
-  console.log(isValid);
-  console.log(enteredInput);
+
   const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     reader.onload = function () {
@@ -73,7 +73,7 @@ function PetInfo() {
   };
 
   const typeChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = event.target;
+    const { id } = event.target;
     setEnteredInput((prev: Input) => {
       return { ...prev, type: id };
     });
@@ -92,11 +92,11 @@ function PetInfo() {
     }
   };
 
-  const chagneBirthHandler = (year:number,month:number,day:number) => {
+  const chagneBirthHandler = (year: number, month: number, day: number) => {
     const birthday = `${year}-${month}-${day}`;
-    setEnteredInput((prev:Input)=>{
-      return {...prev,birth:birthday};
-    })
+    setEnteredInput((prev: Input) => {
+      return { ...prev, birth: birthday };
+    });
   };
 
   const submitHandler = () => {
@@ -109,7 +109,7 @@ function PetInfo() {
       <div aria-hidden="true" className="login-back" onClick={() => navigation(-1)}>
         <Arrow />
       </div>
-      <header className="login-header">강아지 정보 입력</header>
+      <header className="login-header">대표 강아지 정보</header>
       <div className="petinfo-image">
         <label htmlFor="pet" className="petinfo-image-label">
           <input
@@ -120,38 +120,51 @@ function PetInfo() {
             id="pet"
             onChange={handleImage}
           />
+          <Camera className="petinfo-image-icon" />
         </label>
         <div className="petinfo-image-preview" style={{ backgroundImage: `url(${image})` }} />
       </div>
       {modalActive && (
         <div>
-          <div aria-hidden="true" className="backdrop" onClick={()=>{setModalActive(false);}}/>
-          <div className='modal'>
-            <BirthSelector changeBirth={chagneBirthHandler}/>
+          <div
+            aria-hidden="true"
+            className="backdrop"
+            onClick={() => {
+              setModalActive(false);
+            }}
+          />
+          <div className="modal">
+            <BirthSelector changeBirth={chagneBirthHandler} />
           </div>
         </div>
       )}
-      <input
-        className="login-input"
-        placeholder="강아지 이름"
-        value={enteredInput.name}
-        id={Id.NAME}
-        onChange={inputChangeHandler}
-      />
+      <div className="login-input-box">
+        <input
+          className="login-input petname"
+          placeholder="강아지 이름"
+          value={enteredInput.name}
+          id={Id.NAME}
+          onChange={inputChangeHandler}
+        />
+        <p className="input-feedback">{nameFeedback}</p>
+      </div>
       <div className="login-input-wrapper">
         <input
-          className="login-input"
+          className="login-input input-birth"
           placeholder="생일"
           value={enteredInput.birth}
           id={Id.BIRTH}
           onClick={() => {
             setModalActive(true);
           }}
+          onFocus={() => {
+            setModalActive(true);
+          }}
           required
           onChange={inputChangeHandler}
         />
         <input
-          className="login-input weight"
+          className="login-input input-weight"
           type="number"
           placeholder="몸무게(kg)"
           value={enteredInput.weight}
@@ -160,7 +173,7 @@ function PetInfo() {
         />
       </div>
       <div className="dogtype">
-        <div>?</div>
+        <div className="dogtype-help">?</div>
         <label htmlFor="small">
           <input type="radio" id="small" name="dogtype" className="dogtype-input" onChange={typeChangeHandler} />
           <span className="dogtype-button" />

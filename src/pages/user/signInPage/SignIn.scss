@@ -16,7 +16,7 @@
 }
 .login {
   &-title {
-    margin-top: 138px;
+    margin-top: 103px;
     font-family: "Spoqa Han Sans Neo";
     font-style: normal;
     font-weight: 700;
@@ -34,7 +34,7 @@
     margin-top: 10px;
     display: flex;
     align-items: center;
-    @include buttonstyle(#45d156, #474747);
+    @include buttonstyle(#45d156, #ffffff);
   }
   &-apple {
     margin-top: 10px;
