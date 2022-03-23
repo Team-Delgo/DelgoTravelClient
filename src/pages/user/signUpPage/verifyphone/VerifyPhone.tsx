@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ToastMessage from './ToastMessage';
 import './VerifyPhone.scss';
 import Timer from './Timer';
+import { SIGN_UP_PATH } from '../../../../constants/path.const';
 import { ReactComponent as Check } from '../../../../icons/check.svg';
 import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
 
@@ -18,12 +19,14 @@ function VerifyPhone() {
   const authIsValid = timeIsValid && authNumber.length === 6;
   const isValid = phoneNumber.length === 13;
   const isEntered = phoneNumber.length > 0;
+
   const buttonClickHandler = () => {
     //  인증번호 전송 요청
 
     setButtonIsClicked(true);
     setIsSended(true);
   };
+
   useEffect(() => {
     if (buttonIsClicked) {
       setTimeout(() => {
@@ -31,11 +34,11 @@ function VerifyPhone() {
       }, 2500);
     }
   }, [buttonIsClicked]);
+
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     if (isSended) return;
     const { value } = event.target;
     const onlyNumber = value.replace(/[^-0-9]/g, '');
-    console.log(onlyNumber);
     let adjustNumber: string = onlyNumber;
     if (phoneNumber.length === 13 && value.length > 13) return;
     if ((phoneNumber.length === 2 && value.length === 3) || (phoneNumber.length === 7 && value.length === 8)) {
@@ -43,39 +46,45 @@ function VerifyPhone() {
     }
     setPhoneNumber(adjustNumber);
   };
+
   const clearButtonHandler = () => {
     if (isSended) return;
     setPhoneNumber('');
   };
+
   const authChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     if (authNumber.length === 6 && event.target.value.length > 6) return;
     setAuthNumber(event.target.value);
   };
+
   const authNumberResend = () => {
     //  인증번호 전송 요청
     setIsReSended(true);
     setButtonIsClicked(true);
     setTimeIsValid(true);
   };
+
   const resetIsResend = () => {
     setIsReSended(false);
   };
+
   const buttonContext = !isSended ? (
-    <button type="button" className={classNames('login-button',{active:isValid})} onClick={buttonClickHandler}>
+    <button type="button" className={classNames('login-button', { active: isValid })} onClick={buttonClickHandler}>
       인증번호 발송
     </button>
   ) : (
     <button
       type="button"
       disabled={!authIsValid}
-      className={classNames('login-button',{active:authIsValid})}
+      className={classNames('login-button', { active: authIsValid })}
       onClick={() => {
-        navigation('/user/signup/userinfo');
+        navigation(SIGN_UP_PATH.USER_INFO);
       }}
     >
       다음
     </button>
   );
+
   return (
     <div className="login">
       <div aria-hidden="true" className="login-back" onClick={() => navigation(-1)}>
@@ -88,7 +97,7 @@ function VerifyPhone() {
         {isEntered && (
           <span
             aria-hidden="true"
-            className={classNames('login-input-clear',{checked:isSended})}
+            className={classNames('login-input-clear', { checked: isSended })}
             onClick={clearButtonHandler}
           >
             {isSended ? <Check /> : 'X'}
@@ -107,7 +116,7 @@ function VerifyPhone() {
         </div>
       )}
       {buttonContext}
-      {buttonIsClicked && <ToastMessage message='인증번호가 전송 되었습니다'/>}
+      {buttonIsClicked && <ToastMessage message="인증번호가 전송 되었습니다" />}
     </div>
   );
 }

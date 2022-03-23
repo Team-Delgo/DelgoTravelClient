@@ -1,18 +1,9 @@
-@font-face {
-  font-family:"Spoqa Han Sans Neo";   
-  font-weight: 200;       
-  src: url("./font/SpoqaHanSansNeo-Light.ttf"); 
-}
-@font-face {
-  font-family:"Spoqa Han Sans Neo";   
-  font-weight: 400;      
-  src: url("./font/SpoqaHanSansNeo-Medium.ttf"); 
-}
-@font-face {
-  font-family:"Spoqa Han Sans Neo";     
-  font-weight: 700;    
-  src: url("./font/SpoqaHanSansNeo-Bold.ttf"); 
-}
 body{
   margin: 0;
+  font-family: 'Spoqa Han Sans Neo';
+}
+
+@font-face {
+  font-family: 'Spoqa Han Sans Neo';
+  src: url("./fonts/Spoqa\ Han\ Sans\ Regular.ttf");
 }
