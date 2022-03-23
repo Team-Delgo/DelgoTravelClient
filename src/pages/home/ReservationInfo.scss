@@ -3,7 +3,6 @@
     position: relative;
     padding-top: 15%;
     color: #FFFFFF;
-    font-style: normal;
     img{
         width: 90%;
         border-radius: 5px;
@@ -13,7 +12,6 @@
         position: absolute;
         left:7%;
         top: 30%;
-        font-family: 'Noto Sans';
         font-weight: 700;
         font-size: 4.5vw;
         line-height: 18px;        
@@ -23,7 +21,6 @@
         position: absolute;
         right: 10%;
         top: 30%;
-        font-family: 'Roboto';
         font-weight: 600;
         font-size: 4.5vw;
         line-height: 18px;        
@@ -33,7 +30,6 @@
         position: absolute;
         left:7%;
         top: 37%;
-        font-family: 'Roboto';
         font-weight: 400;
         font-size: 3vw;
         line-height: 18px;
@@ -45,7 +41,6 @@
         position: absolute;
         left:7%;
         top: 44%; 
-        font-family: 'Roboto';
         font-weight: 500;
         font-size: 3vw;   
         color: #FFFFFF;
@@ -54,7 +49,6 @@
         }
     }
     &-information{
-        font-family: 'Roboto';
         font-weight: 400;
         font-size: 3vw;
         line-height: 18px;
@@ -83,11 +77,9 @@
 }
 .travel-preparation{
     padding: 5% 0 5% 5%;
-    font-family: 'Roboto';
     line-height: 18px;
     color: #3E382F;
     &-text{
-        font-family: 'Roboto';
         font-weight: 600;
         font-size: 4.5vw;
         line-height: 18px;
@@ -116,60 +108,55 @@
 }
 .recommended-places-around-reserved-place{
     display: flex;
+    overflow-x: scroll;
     align-items: center;
-    height: 173px;
+    height: 40vw;
     background: #FFFBF6;
     padding-left: 7%;
     img{
-        width: 100px;
-        height: 100px;
+        height: 60%;
     }
-    .recommended-places-information-around-reserved-place{
+    .recommended-place-information-around-reserved-place{
         padding-left: 5%;
-        height: 50%;
-        .recommended-places-name-around-reserved-place{
-            font-family: 'Noto Sans';
+        .recommended-place-name-around-reserved-place{
+            width: 40vw;
             font-weight: 700;
-            font-size: 3.5vw;
+            font-size: 3.6vw;
             color: #6E614D;
         }
-        .recommended-places-loaction-around-reserved-place{
-            font-family: 'Roboto';
+        .recommended-place-loaction-around-reserved-place{
             font-weight: 500;
             font-size: 3vw;
-            line-height: 18px;
             color: #AD9E87;
         }
-        .recommended-places-review-around-reserved-place{
+        .recommended-place-review-around-reserved-place{
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 144.86px;
-            height: 52px;
-            background: #8f8181;
+            text-align: center;
+            width: 32vw;
+            height: 12.5vw;
+            background: #FFFFFF;//#8f8181;
             border-radius: 12px;
-            font-family: 'Roboto';
-            font-style: normal;
             font-weight: 500;
-            font-size: 12px;
-            line-height: 18px;
-            letter-spacing: -0.05em;
+            font-size: 2.7vw;
             color: #6E614D;
-            box-shadow: 1px 1px 1px #6E614D;
-            padding: 5px 5px;
+            box-shadow: 0 0 0 0.6px #d1d0d0;
+            margin-top: 1.5vw;
+            padding: 0 5px;
         }
-        .recommended-places-review-around-reserved-place:after {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            border: 13px solid transparent;
-            border-right-color: #8f8181;
-            border-left: 0;
-            margin-top: -13px;
-            margin-left: -13px;
-            // transform: rotate(-90deg);
+        .recommended-place-review-around-reserved-place:after{
+            // content: '';
+            // position: absolute;
+            // left: 0;
+            // top: 50%;
+            // border: 15px solid transparent;
+            // border-right-color: black;
+            // border-left: 0;
+            // border-top: 0;
+            // margin-top: -6px;
+            // margin-left: -15px;
         }
     }
 }

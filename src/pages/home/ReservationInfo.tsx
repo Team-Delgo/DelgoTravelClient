@@ -44,13 +44,21 @@ function ReservationInfo() {
       name:"멍멍카페 강릉점",
       distanceFromReservationPlace:"3.2km",
       review:"애기들이랑 놀기 좋아요 강아지 방석도 있어요"
-    }]
+    },
+    {
+      id:2,
+      image: `${process.env.PUBLIC_URL}/assets/images/recommendedPlacesAroundReservedPlace.png`,
+      name:"멍멍카페 강릉점",
+      distanceFromReservationPlace:"3.2km",
+      review:"애기들이랑 놀기 좋아요 강아지 방석도 있어요"
+    }
+  ]
   )
 
   return (
     <div className="home-background">
       <div className="reservation">
-        <img src={reservationInfo.image} alt="" />
+        <img src={reservationInfo.image} alt="reservation-place-img" />
         <div className="reservation-place-name">{reservationInfo.placeName}</div>
         <div className="reservation-deadline">{`D-${reservationInfo.deadLine}`}</div>
         <div className="reservation-date">{reservationInfo.date}</div>
@@ -75,38 +83,38 @@ function ReservationInfo() {
         <div className="travel-preparation-text">여행준비 되셨나요?</div>
         <div className="travel-preparation-list">
           <div>
-            <img src={Emergency} alt="" />
+            <img src={Emergency} alt="emergency" />
             &nbsp;응급상황
           </div>
           <div>
-            <img src={Dog} alt="" />
+            <img src={Dog} alt="dog" />
             &nbsp;여행펫티켓
           </div>
           <div>
-            <img src={Airplane} alt="" />
+            <img src={Airplane} alt="airplane" />
             &nbsp;비행기탑승
           </div>
           <div>
-            <img src={Footprint} alt="" />
+            <img src={Footprint} alt="footprint" />
             &nbsp;필수준비물
           </div>
           <div>
-            <img src={Book} alt="" />
+            <img src={Book} alt="book" />
             &nbsp;기초상식
           </div>
         </div>
       </div>
       <div className="recommended-places-around-reserved-place">
-        {
+      {
           recommendedPlace.map((place) => (
             <>
             <img src={place.image} alt="" />
-            <div className="recommended-places-information-around-reserved-place">
-            <div className="recommended-places-name-around-reserved-place">{place.name} </div>
-            <div className="recommended-places-loaction-around-reserved-place">숙소에서 {place.distanceFromReservationPlace}</div>
-            {/* <div className="recommended-places-review-around-reserved-place">
-                {place.review}
-            </div>   */}
+            <div className="recommended-place-information-around-reserved-place">
+            <div className="recommended-place-name-around-reserved-place">{place.name} </div>
+            <div className="recommended-place-loaction-around-reserved-place">숙소에서 {place.distanceFromReservationPlace}</div>
+            <div className="recommended-place-review-around-reserved-place">
+                &quot;{place.review}&quot;
+            </div>  
           </div>
           </>
           ))

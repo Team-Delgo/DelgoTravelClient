@@ -26,7 +26,7 @@ function EditorNote() {
       <div className="editor-header-text">속초 코코네집</div>
       {posts.map((post) => (
         <div className="editor-place">
-          <img src={post.image} alt="" />
+          <img src={post.image} alt="editor-place-img" />
           <div className="editor-place-description">{post.description}</div>
         </div>
       ))}

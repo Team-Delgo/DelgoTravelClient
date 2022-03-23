@@ -6,44 +6,44 @@
     font-style: normal;
     .main-header-text{
         padding: 10% 0 5% 5%;
-        font-family: 'Roboto';
         font-weight: 600;
         font-size: 4.5vw;
         color: #3E382F;
     }
     .recommended-places-text{
         padding: 10% 0 5% 5%;
-        font-family: 'Noto Sans';
         font-weight: 700;
         font-size:4vw;
         color: #3E382F;
     }
-    .editor-thumbnail{   
-        position: relative;
-        img{
-            width: 75%;
-            border-radius: 5px; 
-            padding-left: 2.5%;
-        }
-        &-subtext{
-            position: absolute;
-            height: 18px;
-            left: 8%;
-            bottom: 19%;
-            font-family: 'Roboto';
-            font-weight: 500;
-            font-size: 3vw;
-            color: #FFFFFF;
-        }
-        &-name{
-            position: absolute;
-            height: 18px;
-            left: 8%;
-            bottom: 15%;
-            font-family: 'Noto Sans';
-            font-weight: 700;
-            font-size: 5vw;
-            color: #FFFFFF;
+    .editor-container{
+        display: flex;
+        overflow-x: scroll;
+        .editor-thumbnail{   
+            position: relative;
+            img{
+                width: 75vw;
+                border-radius: 5px; 
+                padding-left: 2.5%;
+            }
+            &-subtext{
+                position: absolute;
+                height: 18px;
+                left: 12%;
+                bottom: 19%;
+                font-weight: 500;
+                font-size: 3vw;
+                color: #FFFFFF;
+            }
+            &-name{
+                position: absolute;
+                height: 18px;
+                left: 12%;
+                bottom: 15%;
+                font-weight: 700;
+                font-size: 5vw;
+                color: #FFFFFF;
+            }
         }
     }
 }

@@ -23,7 +23,7 @@ function RecommendedPlaces({ place }: RedcommendedPlacesProps) {
 
   return (
     <div className="recommended-places">
-      <img src={place.image} alt="" />
+      <img src={place.image} alt="recommended-place-img" />
       <div className="recommended-places-name">{place.name}</div>
       <div className="recommended-places-location">{place.location}</div>
       {wishList ? (
