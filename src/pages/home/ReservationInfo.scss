@@ -1,0 +1,162 @@
+.reservation{
+    text-align: center;
+    position: relative;
+    padding-top: 15%;
+    color: #FFFFFF;
+    img{
+        width: 90%;
+        border-radius: 5px;
+        margin-bottom: 10%;
+    }
+    &-place-name{
+        position: absolute;
+        left:7%;
+        top: 30%;
+        font-weight: 700;
+        font-size: 4.5vw;
+        line-height: 18px;        
+        color: #FFFFFF;
+    }
+    &-deadline{
+        position: absolute;
+        right: 10%;
+        top: 30%;
+        font-weight: 600;
+        font-size: 4.5vw;
+        line-height: 18px;        
+        color: #FFFFFF;
+    }
+    &-date{
+        position: absolute;
+        left:7%;
+        top: 37%;
+        font-weight: 400;
+        font-size: 3vw;
+        line-height: 18px;
+        letter-spacing: 0.04em;
+        color: #FFFFFF;
+    }
+    &-stay-time{
+        display: flex;
+        position: absolute;
+        left:7%;
+        top: 44%; 
+        font-weight: 500;
+        font-size: 3vw;   
+        color: #FFFFFF;
+        .reservation-check-in{
+            padding-right: 1.5em;    
+        }
+    }
+    &-information{
+        font-weight: 400;
+        font-size: 3vw;
+        line-height: 18px;
+        text-decoration-line: underline;
+        &-address{
+            position: absolute;
+            left: 10%;     
+            bottom: 20%;
+        }
+        &-inquiry{
+            position: absolute;
+            left: 35%;
+            bottom: 20%;
+        }
+        &-change{
+            position: absolute;
+            left: 55%;
+            bottom: 20%;
+        }
+        &-cancel{
+            position: absolute;
+            left: 80%;
+            bottom: 20%;
+        }
+    }
+}
+.travel-preparation{
+    padding: 5% 0 5% 5%;
+    line-height: 18px;
+    color: #3E382F;
+    &-text{
+        font-weight: 600;
+        font-size: 4.5vw;
+        line-height: 18px;
+        color: #3E382F;
+    }
+    &-list{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        row-gap: 15px;
+        column-gap: 20px;
+        font-weight: 500;
+        font-size: 3vw;
+        padding: 8% 0 12% 0;
+        div{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 4.2vh;
+            border: 1px solid #E8E2DC;
+            box-sizing: border-box;
+            border-radius: 28px;
+            background-color: #FFFFFF;
+        }
+    }
+}
+.recommended-places-around-reserved-place{
+    display: flex;
+    overflow-x: scroll;
+    align-items: center;
+    height: 40vw;
+    background: #FFFBF6;
+    padding-left: 7%;
+    img{
+        height: 60%;
+    }
+    .recommended-place-information-around-reserved-place{
+        padding-left: 5%;
+        .recommended-place-name-around-reserved-place{
+            width: 40vw;
+            font-weight: 700;
+            font-size: 3.6vw;
+            color: #6E614D;
+        }
+        .recommended-place-loaction-around-reserved-place{
+            font-weight: 500;
+            font-size: 3vw;
+            color: #AD9E87;
+        }
+        .recommended-place-review-around-reserved-place{
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 32vw;
+            height: 12.5vw;
+            background: #FFFFFF;//#8f8181;
+            border-radius: 12px;
+            font-weight: 500;
+            font-size: 2.7vw;
+            color: #6E614D;
+            box-shadow: 0 0 0 0.6px #d1d0d0;
+            margin-top: 1.5vw;
+            padding: 0 5px;
+        }
+        .recommended-place-review-around-reserved-place:after{
+            // content: '';
+            // position: absolute;
+            // left: 0;
+            // top: 50%;
+            // border: 15px solid transparent;
+            // border-right-color: black;
+            // border-left: 0;
+            // border-top: 0;
+            // margin-top: -6px;
+            // margin-left: -15px;
+        }
+    }
+}

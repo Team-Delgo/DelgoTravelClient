@@ -3,82 +3,47 @@
     height: 100%;
     background: #F3EFEA;
     padding-bottom: 50px;
+    font-style: normal;
     .main-header-text{
-        padding: 10% 0 1rem 5%;
-        font-family: 'Roboto';
-        font-style: normal;
+        padding: 10% 0 5% 5%;
         font-weight: 600;
-        font-size: 1.3rem;
+        font-size: 4.5vw;
         color: #3E382F;
     }
-    .recommended-place-text{
-        padding: 15% 0 1rem 5%;
-        font-family: 'Noto Sans';
-        font-style: normal;
+    .recommended-places-text{
+        padding: 10% 0 5% 5%;
         font-weight: 700;
-        font-size: 1.2rem;
-        line-height: 18px;
+        font-size:4vw;
         color: #3E382F;
     }
-    .main-place{   
-        position: relative;
-        img{
-            width: 80%;
-            height: 324px;
-            border-radius: 5px; 
-            padding-left: 1%;
-        }
-        &-subtext{
-            position: absolute;
-            height: 18px;
-            left: 7%;
-            bottom: 19%;
-            font-family: 'Roboto';
-            font-style: normal;
-            font-weight: 500;
-            font-size: 12px;
-            line-height: 18px;
-            color: #FFFFFF;
-        }
-        &-name{
-            position: absolute;
-            height: 18px;
-            left: 7%;
-            bottom: 12%;
-            font-family: 'Noto Sans';
-            font-style: normal;
-            font-weight: 700;
-            font-size: 21px;
-            line-height: 18px;   
-            color: #FFFFFF;
-        }
-    }
-    .recommended-place{
-        text-align: center;
-        position: relative;
-        img{
-            width: 90%;
-            border-radius: 5px;
-            margin-bottom: 10%;
-        }
-        &-name{
-            position: absolute;
-            left: 7%;
-            bottom: 25%;
-            font-family: 'Roboto';
-            font-style: normal;
-            font-weight: bold;
-            font-size: 18px;
-            color: #FFFFFF;
-        }
-        &-location{
-            position: absolute;
-            left: 8%;
-            bottom: 20%;
-            font-family: 'Noto Sans';
-            font-style: normal;
-            font-size: 7px;  
-            color: #FFFFFF;
+    .editor-container{
+        display: flex;
+        overflow-x: scroll;
+        .editor-thumbnail{   
+            position: relative;
+            img{
+                width: 75vw;
+                border-radius: 5px; 
+                padding-left: 2.5%;
+            }
+            &-subtext{
+                position: absolute;
+                height: 18px;
+                left: 12%;
+                bottom: 19%;
+                font-weight: 500;
+                font-size: 3vw;
+                color: #FFFFFF;
+            }
+            &-name{
+                position: absolute;
+                height: 18px;
+                left: 12%;
+                bottom: 15%;
+                font-weight: 700;
+                font-size: 5vw;
+                color: #FFFFFF;
+            }
         }
     }
 }
