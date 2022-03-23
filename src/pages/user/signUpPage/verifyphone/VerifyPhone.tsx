@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ToastMessage from './ToastMessage';
 import './VerifyPhone.scss';
 import Timer from './Timer';
+import { SIGN_UP_PATH } from '../../../../constants/path.const';
 import { ReactComponent as Check } from '../../../../icons/check.svg';
 import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
 
@@ -38,7 +39,6 @@ function VerifyPhone() {
     if (isSended) return;
     const { value } = event.target;
     const onlyNumber = value.replace(/[^-0-9]/g, '');
-    console.log(onlyNumber);
     let adjustNumber: string = onlyNumber;
     if (phoneNumber.length === 13 && value.length > 13) return;
     if ((phoneNumber.length === 2 && value.length === 3) || (phoneNumber.length === 7 && value.length === 8)) {
@@ -78,7 +78,7 @@ function VerifyPhone() {
       disabled={!authIsValid}
       className={classNames('login-button',{active:authIsValid})}
       onClick={() => {
-        navigation('/user/signup/userinfo');
+        navigation(SIGN_UP_PATH.USER_INFO);
       }}
     >
       다음

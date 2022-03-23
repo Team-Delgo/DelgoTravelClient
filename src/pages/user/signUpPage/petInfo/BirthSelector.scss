@@ -1,0 +1,34 @@
+.birth{
+  display: flex;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  width: 335px;
+  height: 272px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 18px;
+  &-years{
+    width: 93px;
+  }
+  &-months{
+    width: 60px;
+  }
+  &-days{
+    width: 60px;
+  }
+}
+.tab{
+  height: 210px;
+  overflow: scroll;
+}
+.birth-item{
+  height: 30px;
+  color: #C4C4C4;
+  &.selected{
+    color: black;
+  }
+  &.blank{
+    color: white;
+  }
+}

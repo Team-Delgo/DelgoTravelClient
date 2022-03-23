@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
 import DetailTerm from './DetailTerm';
+import { SIGN_UP_PATH } from '../../../../constants/path.const';
 import './Terms.scss';
 
 interface Term {
@@ -17,6 +18,7 @@ function Terms() {
   const [selectedId, setSelctedId] = useState(0);
   const [allChecked, setAllChecked] = useState(false);
   const { term1, term2, term3 } = eachTermChecked;
+
   useEffect(() => {
     if (eachTermChecked.term1 && eachTermChecked.term2 && eachTermChecked.term3) {
       setAllChecked(true);
@@ -30,10 +32,11 @@ function Terms() {
     if (selectedId) {
       setSelctedId(0);
     }
-    setEachTermChecked((prev:Term) => {
-      return { ...prev, [id]:checked };
+    setEachTermChecked((prev: Term) => {
+      return { ...prev, [id]: checked };
     });
   };
+
   const onAllCheckHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target;
     setAllChecked(checked);
@@ -41,22 +44,27 @@ function Terms() {
       setEachTermChecked({ term1: false, term2: false, term3: false });
     }
   };
+
   useEffect(() => {
     if (allChecked) {
       setEachTermChecked({ term1: true, term2: true, term3: true });
     }
   }, [allChecked]);
+
   const nextClickHandler = () => {
-    navigation('/user/signup/verifyphone');
+    navigation(SIGN_UP_PATH.VERIFY);
   };
+
   const viewOpenHandler = (event: any) => {
     let { id } = event.target;
     id = parseInt(id, 10);
     setSelctedId(id);
   };
+  
   const viewCloesHandler = () => {
     setSelctedId(0);
   };
+
   return (
     <div className="login">
       <div
@@ -116,7 +124,7 @@ function Terms() {
           <button
             type="button"
             disabled={!allChecked}
-            className={classNames('login-button','term',{active:allChecked})}
+            className={classNames('login-button', 'term', { active: allChecked })}
             onClick={nextClickHandler}
           >
             동의합니다

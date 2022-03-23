@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
 import './UserInfo.scss';
+import { SIGN_UP_PATH } from '../../../../constants/path.const';
 import { checkEmail, checkPassword, checkPasswordConfirm, checkNickname } from './ValidCheck';
 
 interface Input {
@@ -10,6 +11,13 @@ interface Input {
   password: string;
   confirm: string;
   nickname: string;
+}
+
+enum Id{
+  EMAIL='email',
+  PASSWORD='password',
+  CONFIRM='confirm',
+  NICKNAME='nickname'
 }
 
 function UserInfo() {
@@ -33,6 +41,7 @@ function UserInfo() {
         return { ...prev, email: value };
       });
     }
+    
     setFeedback((prev: Input) => {
       return { ...prev, email: response.message };
     });
@@ -105,7 +114,7 @@ function UserInfo() {
   const submitHandler = () => {
     //  유저정보 보내기
 
-    navigation('/user/signup/petinfo');
+    navigation(SIGN_UP_PATH.USER_PET_INFO);
   };
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -115,11 +124,11 @@ function UserInfo() {
       return { ...prev, [id]: value };
     });
 
-    if (id === 'email') {
+    if (id === Id.EMAIL) {
       emailValidCheck(value);
-    } else if (id === 'password') {
+    } else if (id === Id.PASSWORD) {
       passwordValidCheck(value);
-    } else if (id === 'confirm') {
+    } else if (id === Id.CONFIRM) {
       passwordConfirmValidCheck(value);
     } else {
       nicknameValidCheck(value);
@@ -139,7 +148,7 @@ function UserInfo() {
             <input
               className="login-input"
               placeholder="이메일"
-              id="email"
+              id={Id.EMAIL}
               value={enteredInput.email}
               onChange={inputChangeHandler}
             />
@@ -151,7 +160,7 @@ function UserInfo() {
             placeholder="영문+숫자 포함 8자리 이상"
             type="password"
             value={enteredInput.password}
-            id="password"
+            id={Id.PASSWORD}
             onChange={inputChangeHandler}
           />
           <div className="login-input-box">
@@ -160,7 +169,7 @@ function UserInfo() {
               placeholder="비밀번호 확인"
               type="password"
               value={enteredInput.confirm}
-              id="confirm"
+              id={Id.CONFIRM}
               onChange={inputChangeHandler}
             />
             <p className="input-feedback">{feedback.password.length ? feedback.password : feedback.confirm}</p>
@@ -184,7 +193,7 @@ function UserInfo() {
             <input
               className="login-input"
               placeholder="닉네임"
-              id="nickname"
+              id={Id.NICKNAME}
               value={enteredInput.nickname}
               onChange={inputChangeHandler}
             />

@@ -3,14 +3,14 @@
   color: #474747;
   font-weight: 700;
   font-style: normal;
-  font-family: "Noto Sans";
+  font-family: "Spoqa Han Sans Neo";
   font-size: 14px;
-  line-height: 19px;
+  line-height: 150%;
 }
 .login {
   &-terms {
     width: 91vw;
-    margin-top: 15px;
+    margin-top: 30px;
     background-color: white;
     border-radius: 7px;
 
@@ -27,9 +27,9 @@
         color: $color-light-grey;
         font-weight: 400;
         font-style: normal;
-        font-family: "Roboto";
-        font-size: 13px;
-        line-height: 15px;
+        font-family: "Spoqa Han Sans Neo";
+        font-size: 14px;
+        line-height: 150%;
       }
       &-button {
         position: absolute;
@@ -39,9 +39,9 @@
         color: $color-gray-2;
         font-weight: 400;
         font-style: normal;
-        font-family: "Roboto";
-        font-size: 12px;
-        line-height: 14px;
+        font-family: "Spoqa Han Sans Neo";
+        font-size: 14px;
+        line-height: 150%;
       }
     }
     &-all {
