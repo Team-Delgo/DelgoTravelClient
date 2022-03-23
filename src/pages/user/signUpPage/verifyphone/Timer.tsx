@@ -11,8 +11,10 @@ function Timer(props: { isResend: boolean; resendfunc: () => void; setInValid: (
       resendfunc();
       setMinutes(2);
       setSeconds(59);
+
       return;
     }
+
     const countdown = setInterval(() => {
       if (seconds === 0) {
         if (minutes === 0) {
@@ -26,8 +28,10 @@ function Timer(props: { isResend: boolean; resendfunc: () => void; setInValid: (
         setSeconds(seconds - 1);
       }
     }, 1000);
+
     return () => clearInterval(countdown);
   }, [minutes, seconds, isResend]);
+  
   return (
     <div>
       <span>0{minutes}:</span>
@@ -35,4 +39,5 @@ function Timer(props: { isResend: boolean; resendfunc: () => void; setInValid: (
     </div>
   );
 }
+
 export default Timer;

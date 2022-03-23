@@ -14,6 +14,7 @@ function SignIn() {
     <button type='button' className="login-naver"><Naver className='icon'/>네이버 로그인</button>
     <button type='button' className="login-apple"><Apple className='icon'/>애플 로그인</button>
     <button type='button' className='login-button active signup' onClick={()=>{navigation('/user/signup/terms')}}>가입하기</button>
+    <button type='button' className='login-login' onClick={()=>{navigation('/user/signin/login')}}>기존 회원 로그인</button>
   </div>;
 }
 

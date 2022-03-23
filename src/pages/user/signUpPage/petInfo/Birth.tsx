@@ -4,7 +4,10 @@ function Birth(yearStart: number, yearEnd: number, forSelector: boolean) {
   let years: (number | string)[] = [];
   let months: (number | string)[] = [];
   const days: (number | string)[][] = [];
-
+  const leapYear = [1992,1996,2000,2004,2008,2012,2016,2020];
+  const day31: (number | string)[] = ['.', '.', '.'];
+  const day30: (number | string)[] = ['.', '.', '.'];
+  const day28: (number | string)[] = ['.', '.', '.'];
   if (forSelector) {
     years = ['.', '.', '.'];
     months = ['.', '.', '.'];
@@ -16,15 +19,11 @@ function Birth(yearStart: number, yearEnd: number, forSelector: boolean) {
   for (let i = 1; i <= 12; i += 1) {
     months.push(i);
   }
-  const day31: (number | string)[] = ['.', '.', '.'];
-  const day30: (number | string)[] = ['.', '.', '.'];
-  const day28: (number | string)[] = ['.', '.', '.'];
+  
   for (let i = 1; i <= 31; i += 1) {
     if (i === 31) {
       day31.push(i);
-      break;
-    }
-    if (i >= 29) {
+    }else if (i >= 29) {
       day30.push(i);
       day31.push(i);
     } else {
@@ -59,8 +58,7 @@ function Birth(yearStart: number, yearEnd: number, forSelector: boolean) {
       months.push('.');
     }
   }
-
-  return { years, months, days };
+  return { years, months, days,leapYear };
 }
 
 export default Birth;

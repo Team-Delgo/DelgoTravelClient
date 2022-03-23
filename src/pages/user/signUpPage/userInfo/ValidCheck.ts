@@ -33,9 +33,10 @@ function checkPasswordConfirm(password: string | undefined, confirm: string | un
 }
 
 function checkNickname(nickname: string): Feedback {
-  let check = /[~!@#$%^&*()_+|<>?:{}]/;
-  if (check.test(nickname)) {
-    return { isValid: false, message: '특수문자 포함' };
+  // let check = /[`~!@#$%^&*()_|+\-=?;:'",.<>{}[]\\\/ ]/;
+  let check = /^[a-zA-Z가-힣0-9]*$/;
+  if (!check.test(nickname)) {
+    return { isValid: false, message: '올바르지 않은 입력입니다' };
   }
   check = /^.{2,8}$/;
   if (check.test(nickname) === false) {

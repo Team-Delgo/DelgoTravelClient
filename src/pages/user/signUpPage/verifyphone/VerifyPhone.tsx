@@ -38,7 +38,6 @@ function VerifyPhone() {
     if (isSended) return;
     const { value } = event.target;
     const onlyNumber = value.replace(/[^-0-9]/g, '');
-    console.log(onlyNumber);
     let adjustNumber: string = onlyNumber;
     if (phoneNumber.length === 13 && value.length > 13) return;
     if ((phoneNumber.length === 2 && value.length === 3) || (phoneNumber.length === 7 && value.length === 8)) {

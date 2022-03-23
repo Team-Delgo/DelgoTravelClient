@@ -7,19 +7,18 @@ function BirthSelector(props: { changeBirth: (year: number, month: number, day: 
   const [selectedYear, setSelectedYear] = useState<number>(1990);
   const [selectedMonth, setSelectedMonth] = useState<number>(1);
   const [selectedDay, setSelectedDay] = useState<number>(1);
-  const { years, months, days } = Birth(1990, 2022, true);
+  const { years, months, days, leapYear } = Birth(1990, 2022, true);
   const [dayArray, setDayArray] = useState<(number|string)[]>(days[0]);
   const yearRef = useRef<any>(null);
   const monthRef = useRef<any>(null);
   const dayRef = useRef<any>(null);
-  const leapYear = [1992,1996,2000,2004,2008,2012,2016,2020];
+  
   const { changeBirth } = props;
   
   useEffect(()=>{
     if(leapYear.includes(selectedYear)){
       if(selectedMonth===2){
         days[selectedMonth-1].splice(31,0,29);
-        console.log(days[selectedMonth-1]);
       }
     }
     setDayArray(days[selectedMonth-1]);
