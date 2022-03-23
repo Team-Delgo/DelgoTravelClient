@@ -5,12 +5,12 @@ export const EDITOR_NOTE_PATH = '/editor-note/:id';
 
 export const SIGN_IN_PATH = {
   MAIN: '/user/sign-in',
-  SIGNIN: '/user/sign-in/login'
+  SIGNIN: '/user/sign-in/login',
 };
 
 export const SIGN_UP_PATH = {
   VERIFY: '/user/sign-up/verify-phone',
   TERMS: '/user/signup/terms',
   USER_INFO: '/user/signup/user-info',
-  USER_PET_INFO: '/user/sign-up/pet-info'
+  USER_PET_INFO: '/user/sign-up/pet-info',
 };

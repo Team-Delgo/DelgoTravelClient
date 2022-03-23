@@ -8,8 +8,8 @@ import TermsPage from './pages/user/signUpPage/terms/Terms';
 import UserInfo from './pages/user/signUpPage/userInfo/UserInfo';
 import PetInfo from './pages/user/signUpPage/petInfo/PetInfo';
 import Login from './pages/user/signInPage/Login';
-import {EDITOR_NOTE_PATH, ROOT_PATH, SIGN_IN_PATH, SIGN_UP_PATH} from "./constants/path.const";
-import "./App.scss";
+import { EDITOR_NOTE_PATH, ROOT_PATH, SIGN_IN_PATH, SIGN_UP_PATH } from './constants/path.const';
+import './App.scss';
 
 function App() {
   return (
@@ -17,11 +17,11 @@ function App() {
       <Route path={ROOT_PATH} element={<HomePage />} />
       <Route path={EDITOR_NOTE_PATH} element={<EditorNote />} />
       <Route path={SIGN_IN_PATH.MAIN} element={<SignInPage />} />
-      <Route path={SIGN_IN_PATH.SIGNIN} element={<Login/>} />
+      <Route path={SIGN_IN_PATH.SIGNIN} element={<Login />} />
       <Route path={SIGN_UP_PATH.VERIFY} element={<VerifyPhonePage />} />
       <Route path={SIGN_UP_PATH.TERMS} element={<TermsPage />} />
-      <Route path={SIGN_UP_PATH.USER_INFO} element={<UserInfo/>} />
-      <Route path={SIGN_UP_PATH.USER_PET_INFO} element={<PetInfo/>} />
+      <Route path={SIGN_UP_PATH.USER_INFO} element={<UserInfo />} />
+      <Route path={SIGN_UP_PATH.USER_PET_INFO} element={<PetInfo />} />
     </Routes>
   );
 }

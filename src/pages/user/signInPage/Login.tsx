@@ -49,11 +49,7 @@ function Login() {
           onChange={inputChangeHandler}
         />
       </div>
-      <button
-        type="button"
-        className="login-button active"
-        onClick={submitHandler}
-      >
+      <button type="button" className="login-button active" onClick={submitHandler}>
         다음
       </button>
     </div>

@@ -13,11 +13,11 @@ interface Input {
   nickname: string;
 }
 
-enum Id{
-  EMAIL='email',
-  PASSWORD='password',
-  CONFIRM='confirm',
-  NICKNAME='nickname'
+enum Id {
+  EMAIL = 'email',
+  PASSWORD = 'password',
+  CONFIRM = 'confirm',
+  NICKNAME = 'nickname',
 }
 
 function UserInfo() {
@@ -41,7 +41,7 @@ function UserInfo() {
         return { ...prev, email: value };
       });
     }
-    
+
     setFeedback((prev: Input) => {
       return { ...prev, email: response.message };
     });
@@ -137,7 +137,11 @@ function UserInfo() {
 
   return (
     <div className="login">
-      <div aria-hidden="true" className="login-back" onClick={!nextPage ? () => navigation(-1) : () => setNextPage(false)}>
+      <div
+        aria-hidden="true"
+        className="login-back"
+        onClick={!nextPage ? () => navigation(-1) : () => setNextPage(false)}
+      >
         <Arrow />
       </div>
       <header className="login-header">필수 정보 입력</header>

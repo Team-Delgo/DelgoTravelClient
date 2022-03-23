@@ -1,12 +1,12 @@
 @import "../SignUpPage.scss";
-.petinfo-image{
+.petinfo-image {
   position: relative;
   margin-top: 27px;
-  &-input{
+  &-input {
     display: none;
   }
-  &-preview{
-    background-color: #E8E2DC;
+  &-preview {
+    background-color: #e8e2dc;
     border-radius: 100%;
     width: 28vw;
     height: 28vw;
@@ -14,7 +14,7 @@
     background-size: cover;
     background-position: center;
   }
-  &-label{
+  &-label {
     display: block;
     position: absolute;
     bottom: 0;
@@ -24,55 +24,54 @@
     border-radius: 100%;
     background-color: white;
   }
-  &-icon{
+  &-icon {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
   }
 }
-.login-input{
-  &-wrapper{
+.login-input {
+  &-wrapper {
     width: 88vw;
     display: flex;
     justify-content: space-between;
   }
-  &.petname{
+  &.petname {
     margin-top: 28px;
   }
-  &.input-birth{
+  &.input-birth {
     margin-top: 38px;
     width: 51%;
     display: inline;
   }
-  &.input-weight{
+  &.input-weight {
     margin-top: 38px;
     width: 42%;
     display: inline;
   }
-  
 }
-.dogtype{
+.dogtype {
   margin-top: 18px;
   display: flex;
-  &-help{
+  &-help {
     width: 28px;
     height: 28px;
     font-size: 18px;
-    font-family: 'Roboto';
+    font-family: "Roboto";
     font-weight: 700;
     text-align: center;
-    background-color: #E8E2DC;
+    background-color: #e8e2dc;
     border-radius: 100%;
   }
-  &-input{
+  &-input {
     display: none;
   }
-  label{
+  label {
     display: flex;
     align-items: center;
   }
-  &-input + span{
+  &-input + span {
     display: inline-block;
     position: relative;
     width: 26px;
@@ -81,8 +80,8 @@
     background-color: white;
     margin-left: 15px;
   }
-  &-input:checked + span::before{
-    content: '';
+  &-input:checked + span::before {
+    content: "";
     position: absolute;
     width: 13px;
     height: 13px;
@@ -93,17 +92,17 @@
   }
 }
 
-.backdrop{
+.backdrop {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
   z-index: 10;
-  background: rgba(0,0,0,0.75);
+  background: rgba(0, 0, 0, 0.75);
 }
-.modal{
-  position:fixed;
+.modal {
+  position: fixed;
   top: 30vh;
   left: 50%;
   transform: translateX(-50%);

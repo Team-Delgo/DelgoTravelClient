@@ -1,5 +1,5 @@
-@import '../SignUpPage.scss';
-@mixin font($weight,$size){
+@import "../SignUpPage.scss";
+@mixin font($weight, $size) {
   font-family: "Spoqa Han Sans Neo";
   font-style: normal;
   font-weight: $weight;
@@ -15,10 +15,10 @@
 }
 .title {
   width: 63vw;
-  @include font(700,16px);
+  @include font(700, 16px);
 }
 .description {
   margin-top: 25px;
-  white-space:pre-line;
-  @include font(400,12px);
+  white-space: pre-line;
+  @include font(400, 12px);
 }

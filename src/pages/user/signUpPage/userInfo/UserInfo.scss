@@ -30,7 +30,6 @@
   margin: 0;
   bottom: -30px;
   left: 16px;
-  @include typosettings(14px,$color-orange);
+  @include typosettings(14px, $color-orange);
   font-weight: 500;
 }
-

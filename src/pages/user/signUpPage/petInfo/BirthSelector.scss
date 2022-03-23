@@ -1,4 +1,4 @@
-.birth{
+.birth {
   display: flex;
   background-color: white;
   justify-content: center;
@@ -8,27 +8,27 @@
   border-radius: 5px;
   text-align: center;
   font-size: 18px;
-  &-years{
+  &-years {
     width: 93px;
   }
-  &-months{
+  &-months {
     width: 60px;
   }
-  &-days{
+  &-days {
     width: 60px;
   }
 }
-.tab{
+.tab {
   height: 210px;
   overflow: scroll;
 }
-.birth-item{
+.birth-item {
   height: 30px;
-  color: #C4C4C4;
-  &.selected{
+  color: #c4c4c4;
+  &.selected {
     color: black;
   }
-  &.blank{
+  &.blank {
     color: white;
   }
 }

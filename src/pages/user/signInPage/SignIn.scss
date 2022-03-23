@@ -46,16 +46,16 @@
     position: relative;
     margin-top: 70px;
   }
-  &-login{
+  &-login {
     margin-top: 24px;
-    background:none;
-    @include typosettings(16px,#4D483D);
+    background: none;
+    @include typosettings(16px, #4d483d);
     font-weight: 700;
     border: none;
   }
 }
 
-.icon{
+.icon {
   width: 24px;
   height: 24px;
   margin-left: 60px;

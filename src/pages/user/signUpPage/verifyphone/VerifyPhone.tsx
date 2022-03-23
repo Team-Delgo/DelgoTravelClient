@@ -69,14 +69,14 @@ function VerifyPhone() {
   };
 
   const buttonContext = !isSended ? (
-    <button type="button" className={classNames('login-button',{active:isValid})} onClick={buttonClickHandler}>
+    <button type="button" className={classNames('login-button', { active: isValid })} onClick={buttonClickHandler}>
       인증번호 발송
     </button>
   ) : (
     <button
       type="button"
       disabled={!authIsValid}
-      className={classNames('login-button',{active:authIsValid})}
+      className={classNames('login-button', { active: authIsValid })}
       onClick={() => {
         navigation(SIGN_UP_PATH.USER_INFO);
       }}
@@ -84,7 +84,7 @@ function VerifyPhone() {
       다음
     </button>
   );
-  
+
   return (
     <div className="login">
       <div aria-hidden="true" className="login-back" onClick={() => navigation(-1)}>
@@ -97,7 +97,7 @@ function VerifyPhone() {
         {isEntered && (
           <span
             aria-hidden="true"
-            className={classNames('login-input-clear',{checked:isSended})}
+            className={classNames('login-input-clear', { checked: isSended })}
             onClick={clearButtonHandler}
           >
             {isSended ? <Check /> : 'X'}
@@ -116,7 +116,7 @@ function VerifyPhone() {
         </div>
       )}
       {buttonContext}
-      {buttonIsClicked && <ToastMessage message='인증번호가 전송 되었습니다'/>}
+      {buttonIsClicked && <ToastMessage message="인증번호가 전송 되었습니다" />}
     </div>
   );
 }

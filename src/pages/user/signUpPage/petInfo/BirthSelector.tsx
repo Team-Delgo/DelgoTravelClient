@@ -8,22 +8,20 @@ function BirthSelector(props: { changeBirth: (year: number, month: number, day: 
   const [selectedMonth, setSelectedMonth] = useState<number>(1);
   const [selectedDay, setSelectedDay] = useState<number>(1);
   const { years, months, days, leapYear } = Birth(1990, 2022, true);
-  const [dayArray, setDayArray] = useState<(number|string)[]>(days[0]);
+  const [dayArray, setDayArray] = useState<(number | string)[]>(days[0]);
   const yearRef = useRef<any>(null);
   const monthRef = useRef<any>(null);
   const dayRef = useRef<any>(null);
-  
   const { changeBirth } = props;
-  
-  useEffect(()=>{
-    if(leapYear.includes(selectedYear)){
-      if(selectedMonth===2){
-        days[selectedMonth-1].splice(31,0,29);
+
+  useEffect(() => {
+    if (leapYear.includes(selectedYear)) {
+      if (selectedMonth === 2) {
+        days[selectedMonth - 1].splice(31, 0, 29);
       }
     }
-    setDayArray(days[selectedMonth-1]);
-
-  },[selectedMonth,selectedYear]);
+    setDayArray(days[selectedMonth - 1]);
+  }, [selectedMonth, selectedYear]);
 
   useEffect(() => {
     if (selectedYear) {
@@ -44,6 +42,7 @@ function BirthSelector(props: { changeBirth: (year: number, month: number, day: 
       <div key={year} className={classNames('birth-item', { selected: year === selectedYear })}>{`${year}년`}</div>
     );
   });
+
   const monthContext = months.map((month, i) => {
     if (month === '.') return <div className="birth-item blank">.</div>;
     return (
@@ -52,6 +51,7 @@ function BirthSelector(props: { changeBirth: (year: number, month: number, day: 
       </div>
     );
   });
+
   const dayContext = dayArray.map((day, i) => {
     if (day === '.') return <div className="birth-item blank">.</div>;
     return (

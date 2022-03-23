@@ -5,7 +5,6 @@ function Timer(props: { isResend: boolean; resendfunc: () => void; setInValid: (
   const [minutes, setMinutes] = useState(2);
   const [seconds, setSeconds] = useState(59);
 
-  
   useEffect(() => {
     if (isResend) {
       resendfunc();
@@ -31,7 +30,7 @@ function Timer(props: { isResend: boolean; resendfunc: () => void; setInValid: (
 
     return () => clearInterval(countdown);
   }, [minutes, seconds, isResend]);
-  
+
   return (
     <div>
       <span>0{minutes}:</span>

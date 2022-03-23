@@ -60,7 +60,7 @@ function Terms() {
     id = parseInt(id, 10);
     setSelctedId(id);
   };
-  
+
   const viewCloesHandler = () => {
     setSelctedId(0);
   };
