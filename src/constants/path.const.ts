@@ -14,3 +14,5 @@ export const SIGN_UP_PATH = {
   USER_INFO: '/user/signup/user-info',
   USER_PET_INFO: '/user/sign-up/pet-info',
 };
+
+export const WISH_LIST_PATH = '/wish-list'

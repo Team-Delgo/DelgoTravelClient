@@ -8,7 +8,8 @@ import TermsPage from './pages/user/signUpPage/terms/Terms';
 import UserInfo from './pages/user/signUpPage/userInfo/UserInfo';
 import PetInfo from './pages/user/signUpPage/petInfo/PetInfo';
 import Login from './pages/user/signInPage/Login';
-import { EDITOR_NOTE_PATH, ROOT_PATH, SIGN_IN_PATH, SIGN_UP_PATH } from './constants/path.const';
+import WishListPage from './pages/wishList/WishList'
+import { EDITOR_NOTE_PATH, ROOT_PATH, SIGN_IN_PATH, SIGN_UP_PATH ,WISH_LIST_PATH} from './constants/path.const';
 import './App.scss';
 
 function App() {
@@ -22,6 +23,8 @@ function App() {
       <Route path={SIGN_UP_PATH.TERMS} element={<TermsPage />} />
       <Route path={SIGN_UP_PATH.USER_INFO} element={<UserInfo />} />
       <Route path={SIGN_UP_PATH.USER_PET_INFO} element={<PetInfo />} />
+      <Route path={SIGN_UP_PATH.USER_PET_INFO} element={<PetInfo />} />
+      <Route path={WISH_LIST_PATH} element={<WishListPage />} />
     </Routes>
   );
 }
