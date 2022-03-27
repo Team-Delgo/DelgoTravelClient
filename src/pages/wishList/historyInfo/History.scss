@@ -1,0 +1,17 @@
+.history-container{
+    margin: 0% 5%;
+    text-align: center;
+    .history-notice{
+        color:#3E382F;
+        &-main{
+            font-size:24px;
+            font-weight: 700;
+            padding-top: 25%;
+        }
+        &-sub{
+            font-size:16px;
+            font-weight: 300;
+            padding: 2% 0 15% 0;
+        }
+    }
+}
