@@ -95,14 +95,15 @@
         }  
     }
     .travel-history-notice{
+        text-align: center;
         color:#3E382F;
         &-main{
-            font-size:24px;
+            font-size:6vw;
             font-weight: 700;
-            padding-top: 25%;
+            padding-top: 20%;
         }
         &-sub{
-            font-size:16px;
+            font-size:4vw;
             font-weight: 300;
             padding: 2% 0 15% 0;
         }
