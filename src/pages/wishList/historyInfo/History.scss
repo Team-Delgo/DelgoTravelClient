@@ -1,7 +1,100 @@
-.history-container{
-    margin: 0% 5%;
-    text-align: center;
-    .history-notice{
+.travel-history-container{
+    .travel-history-profile{
+        display: flex;
+        align-items: center;
+        height: 40vw;
+        color: #3E382F;
+        font-weight: 400;
+        padding-left: 15%;
+        &-image{
+            width: 24vw;
+            height: 24vw;
+        }
+        &-figures{
+            padding-left: 12%;
+            font-size: 4vw;
+            &-days{
+                padding-bottom: 5%;
+            }
+        }
+    }
+    .travel-hisotry-place{
+        background: #FFFBF6;
+        height: 50vw;
+        margin-bottom: 3%;
+        padding: 5% 0 0 5%;
+        &-period{
+            color: #3E382F;
+            font-size: 3.5vw;
+            padding-bottom: 4%;
+        }
+        &-info{
+            display: flex;
+            &-image{
+                width: 20vw;
+                height: 20vw;
+                border-radius: 5px;
+            }
+            &-detail{
+                padding-left: 7%;
+                &-name{
+                    font-size: 4.5vw;
+                    font-weight: 600;
+                    color: #4D483D;
+                }
+                &-address{
+                    font-size: 3.5vw;
+                    color:#3E382F;
+                }
+                &-package{
+                    padding-top: 5%;
+                    font-size: 3.5vw;
+                    color:#B0A69D;
+                }
+            }
+        }
+        &-review{
+            display: flex;
+            padding-top: 5%;
+            font-size:3.5vw;
+            color: #3E382F;
+            &-etc{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                font-weight: bold;
+                font-size:5vw;
+                width: 20vw;
+                height: 11vw;
+                background-color: #E8E2DC;
+                border-radius: 5px
+            }
+            &-write{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                width: 28vw;
+                height: 11vw;
+                background-color: #E8E2DC;
+                border-radius: 5px;
+                margin-left:7%;
+            }
+            &-reservation-detail{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;       
+                width: 28vw;
+                height: 11vw;
+                background-color: #E8E2DC;
+                border-radius: 5px;
+                margin-left:4%;
+            }
+        }  
+    }
+    .travel-history-notice{
         color:#3E382F;
         &-main{
             font-size:24px;
@@ -14,4 +107,5 @@
             padding: 2% 0 15% 0;
         }
     }
+
 }

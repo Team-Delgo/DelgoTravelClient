@@ -24,11 +24,11 @@ function Footer() {
         </Link>
       )}
       {window.location.pathname === '/search' ? (
-        <Link to="/search">
+        <Link to="/">
           <SearchActive className="searchIcon" />
         </Link>
       ) : (
-        <Link to="/search">
+        <Link to="/">
           <Search className="searchIcon" />
         </Link>
       )}
@@ -42,11 +42,11 @@ function Footer() {
         </Link>
       )}
       {window.location.pathname === "/my-account" ? (
-        <Link to="/my-account">
+        <Link to="/">
           <PersonActive className="personIcon" />
         </Link>
       ) : (
-        <Link to="/my-account">
+        <Link to="/">
           <Person className="personIcon" />
         </Link>
       )}
