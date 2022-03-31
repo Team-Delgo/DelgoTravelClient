@@ -1,5 +1,7 @@
 import React, { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { userActions } from '../../../redux/reducers/userSlice';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 
 interface Input {
@@ -10,6 +12,7 @@ interface Input {
 function Login() {
   const [enteredInput, setEnteredInput] = useState<Input>({ email: '', password: '' });
   const navigation = useNavigate();
+  const dispatch = useDispatch();
 
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
@@ -18,8 +21,8 @@ function Login() {
     });
   };
 
-  const submitHandler = () => {
-    console.log('login submit!');
+  const loginButtonHandler = () => {
+    dispatch(userActions.signin({ id: 1, nickname: 'kim', email: 'cksr1@naver.com' }));
   };
 
   return (
@@ -49,7 +52,7 @@ function Login() {
           onChange={inputChangeHandler}
         />
       </div>
-      <button type="button" className="login-button active" onClick={submitHandler}>
+      <button type="button" className="login-button active" onClick={loginButtonHandler}>
         다음
       </button>
     </div>
