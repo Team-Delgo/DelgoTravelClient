@@ -5,6 +5,7 @@ import { checkPetName } from '../userInfo/ValidCheck';
 import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
 import { ReactComponent as Camera } from '../../../../icons/camera.svg';
 import './PetInfo.scss';
+import DogType from './DogType';
 import BirthSelector from './BirthSelector';
 
 interface Input {
@@ -34,6 +35,7 @@ function PetInfo() {
   const [enteredInput, setEnteredInput] = useState<Input>({ name: '', birth: undefined, weight: '', type: '' });
   const [nameFeedback, setNameFeedback] = useState('');
   const [modalActive, setModalActive] = useState(false);
+  const [isOpenDogType, setIsOpenDogType] = useState(false);
   const [isValid, setIsValid] = useState<IsValid>({
     name: false,
     birth: false,
@@ -173,7 +175,15 @@ function PetInfo() {
         />
       </div>
       <div className="dogtype">
-        <div className="dogtype-help">?</div>
+        <div
+          className="dogtype-help"
+          aria-hidden="true"
+          onClick={() => {
+            setIsOpenDogType(!isOpenDogType);
+          }}
+        >
+          ?
+        </div>
         <label htmlFor="small">
           <input type="radio" id="small" name="dogtype" className="dogtype-input" onChange={typeChangeHandler} />
           <span className="dogtype-button" />
@@ -189,7 +199,9 @@ function PetInfo() {
           <span className="dogtype-button" />
           대형견
         </label>
+        <DogType mount={isOpenDogType}/>
       </div>
+      
       <button
         type="button"
         disabled={!pageIsValid}

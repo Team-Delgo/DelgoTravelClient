@@ -52,11 +52,13 @@
   }
 }
 .dogtype {
+  position: relative;
   margin-top: 18px;
   display: flex;
   &-help {
     width: 28px;
     height: 28px;
+    margin-right: 8px;
     font-size: 18px;
     font-family: "Roboto";
     font-weight: 700;
@@ -70,6 +72,9 @@
   label {
     display: flex;
     align-items: center;
+    line-height: 150%;
+    font-weight: 500;
+    color: #8A8A8A;
   }
   &-input + span {
     display: inline-block;
@@ -79,6 +84,7 @@
     border-radius: 100%;
     background-color: white;
     margin-left: 15px;
+    margin-right: 7px;
   }
   &-input:checked + span::before {
     content: "";

@@ -1,0 +1,30 @@
+.typehelp {
+  position: absolute;
+  bottom: -280px;
+  background-color: white;
+  border-radius: 25px;
+  width: 100%;
+  &-title {
+    margin: 27px 0 0 40px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333333;
+    line-height: 150%;
+  }
+  &-description {
+    margin: 35px 0 0 28px;
+    font-size: 16px;
+    line-height: 150%;
+    color: #8a8a8a;
+    &:last-child {
+      margin-bottom: 27px;
+    }
+  }
+  transform: translateX(-300px);
+  opacity: 0;
+  transition: 0.5s;
+}
+.typehelp.mount {
+  transform: translateX(0);
+  opacity: 1;
+}
