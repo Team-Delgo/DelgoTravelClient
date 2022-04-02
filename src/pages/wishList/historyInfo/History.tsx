@@ -19,7 +19,7 @@ type TravelHisotryPlaceType = {
 };
 
 function History() {
-  const [hasTravelHistorys, setHasTravelHistorys] = useState(false);
+  const [hasTravelHistorys, setHasTravelHistorys] = useState(true);
   const [popularPlace, setPopularPlace] = useState<Array<PopularPlaceType>>([
     {
       id: 1,

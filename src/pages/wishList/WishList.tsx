@@ -4,7 +4,8 @@ import Folder from './wishListInfo/Folder';
 import History from './historyInfo/History';
 import './WishList.scss';
 
-function wishList() {
+
+function WishList() {
   const [currentTab, setCurrentTab] = useState(0);
 
 
@@ -81,4 +82,4 @@ function wishList() {
   );
 }
 
-export default wishList;
+export default WishList;

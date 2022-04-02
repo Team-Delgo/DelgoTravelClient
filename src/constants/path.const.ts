@@ -16,3 +16,5 @@ export const SIGN_UP_PATH = {
 };
 
 export const WISH_LIST_PATH = '/wish-list'
+
+export const WHERE_TO_GO = '/where-to-go'
