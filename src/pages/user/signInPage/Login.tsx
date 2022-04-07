@@ -1,8 +1,12 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
+import { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { userActions } from '../../../redux/reducers/userSlice';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
+import ToastMessage from '../../../common/layouts/ToastMessage';
+import login from '../../../common/api/login';
+
 
 interface Input {
   email: string;
@@ -11,6 +15,7 @@ interface Input {
 
 function Login() {
   const [enteredInput, setEnteredInput] = useState<Input>({ email: '', password: '' });
+  const [loginFailed, setLoginFailed] = useState(false);
   const navigation = useNavigate();
   const dispatch = useDispatch();
 
@@ -22,8 +27,33 @@ function Login() {
   };
 
   const loginButtonHandler = () => {
-    dispatch(userActions.signin({ id: 1, nickname: 'kim', email: 'cksr1@naver.com' }));
+    login(enteredInput, (response: AxiosResponse) => {
+      const { code, data } = response.data;
+      if (code === 200) {
+        dispatch(
+          userActions.signin({
+            id: data.user_id,
+            nickname: data.name,
+            email: data.email,
+            phone: data.phone_no,
+            pets: data.pets,
+          }),
+        );
+        navigation('/');
+      }
+      else if(code === 407){
+        setLoginFailed(true);
+      }
+    });
   };
+
+  useEffect(() => {
+    if (loginFailed) {
+      setTimeout(() => {
+        setLoginFailed(false);
+      }, 2500);
+    }
+  }, [loginFailed]);
 
   return (
     <div className="login">
@@ -55,6 +85,7 @@ function Login() {
       <button type="button" className="login-button active" onClick={loginButtonHandler}>
         다음
       </button>
+      {loginFailed && <ToastMessage message="아이디 비밀번호를 확인해 주세요" />}
     </div>
   );
 }

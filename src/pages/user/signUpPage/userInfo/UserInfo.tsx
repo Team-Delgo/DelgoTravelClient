@@ -1,10 +1,12 @@
 import React, { ChangeEvent, useState } from 'react';
 import classNames from 'classnames';
+import { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
 import './UserInfo.scss';
 import { SIGN_UP_PATH } from '../../../../constants/path.const';
 import { checkEmail, checkPassword, checkPasswordConfirm, checkNickname } from './ValidCheck';
+import { emailCheck } from '../../../../common/api/signup';
 
 interface Input {
   email: string;
@@ -27,6 +29,7 @@ function UserInfo() {
   const [validInput, setValidInput] = useState({ email: '', password: '', confirm: '', nickname: '' });
   const [feedback, setFeedback] = useState({ email: '', password: '', confirm: '', nickname: '' });
   const [confirmIsTouched, setConfirmIsTouched] = useState(false);
+  const [emailDuplicated, setEmailDuplicated] = useState(false);
   const firstPageIsValid = validInput.email.length && validInput.password.length && validInput.confirm.length;
 
   const emailValidCheck = (value: string) => {
@@ -135,6 +138,12 @@ function UserInfo() {
     }
   };
 
+  const emailDupCheck = async () => {
+    emailCheck(enteredInput.email,(data:AxiosResponse)=>{
+      console.log(data);
+    })
+  };
+
   return (
     <div className="login">
       <div
@@ -155,6 +164,7 @@ function UserInfo() {
               id={Id.EMAIL}
               value={enteredInput.email}
               onChange={inputChangeHandler}
+              onBlur={emailDupCheck}
             />
             <p className="input-feedback">{feedback.email}</p>
           </div>

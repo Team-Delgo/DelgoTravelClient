@@ -5,6 +5,8 @@ const initialState = {
   id: '',
   nickname: '',
   email: '',
+  phone: '',
+  pets: [],
 };
 
 const userSlice = createSlice({
@@ -12,7 +14,14 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     signin(state, action) {
-      return { isSignIn: true, id: action.payload.id, nickname: action.payload.nickname, email: action.payload.email };
+      return {
+        isSignIn: true,
+        id: action.payload.id,
+        nickname: action.payload.nickname,
+        email: action.payload.email,
+        phone: action.payload.phone,
+        pets: action.payload.pets,
+      };
     },
     signout() {
       return initialState;

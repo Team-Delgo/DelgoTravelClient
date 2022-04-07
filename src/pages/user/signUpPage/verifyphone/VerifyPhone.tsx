@@ -1,7 +1,7 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
-import ToastMessage from './ToastMessage';
+import ToastMessage from '../../../../common/layouts/ToastMessage';
 import './VerifyPhone.scss';
 import Timer from './Timer';
 import { SIGN_UP_PATH } from '../../../../constants/path.const';

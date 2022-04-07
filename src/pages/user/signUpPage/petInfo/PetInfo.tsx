@@ -183,6 +183,7 @@ function PetInfo() {
           }}
         >
           ?
+        <DogType mount={isOpenDogType}/>
         </div>
         <label htmlFor="small">
           <input type="radio" id="small" name="dogtype" className="dogtype-input" onChange={typeChangeHandler} />
@@ -199,7 +200,6 @@ function PetInfo() {
           <span className="dogtype-button" />
           대형견
         </label>
-        <DogType mount={isOpenDogType}/>
       </div>
       
       <button
