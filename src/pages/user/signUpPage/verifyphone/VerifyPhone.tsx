@@ -78,7 +78,7 @@ function VerifyPhone() {
       disabled={!authIsValid}
       className={classNames('login-button', { active: authIsValid })}
       onClick={() => {
-        navigation(SIGN_UP_PATH.USER_INFO);
+        navigation(SIGN_UP_PATH.USER_INFO,{state:{phone:phoneNumber}});
       }}
     >
       다음

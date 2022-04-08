@@ -1,12 +1,20 @@
 import React, { ChangeEvent, useState } from 'react';
 import classNames from 'classnames';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { checkPetName } from '../userInfo/ValidCheck';
 import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
 import { ReactComponent as Camera } from '../../../../icons/camera.svg';
 import './PetInfo.scss';
 import DogType from './DogType';
 import BirthSelector from './BirthSelector';
+import { signup } from '../../../../common/api/signup';
+
+interface LocationState {
+  phone: string;
+  email: string;
+  nickname: string;
+  password: string;
+}
 
 interface Input {
   name: string;
@@ -31,6 +39,8 @@ enum Id {
 
 function PetInfo() {
   const navigation = useNavigate();
+  const state = useLocation().state as LocationState;
+  const { email, password, nickname, phone } = state;
   const [image, setImage] = useState<any>();
   const [enteredInput, setEnteredInput] = useState<Input>({ name: '', birth: undefined, weight: '', type: '' });
   const [nameFeedback, setNameFeedback] = useState('');
@@ -43,12 +53,15 @@ function PetInfo() {
     type: false,
   });
   const pageIsValid = isValid.name && isValid.birth && isValid.type && isValid.weight;
+  let petImage: any;
 
   const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     reader.onload = function () {
       setImage(reader.result);
     };
+    const { files } = event.target;
+    // let {petImage} = files;
     reader.readAsDataURL(event.target.files![0]);
   };
 
@@ -103,7 +116,20 @@ function PetInfo() {
 
   const submitHandler = () => {
     console.log('저장완료');
+    const userObject = {
+      name:nickname,
+      email,
+      password,
+      phoneNo:phone
+    };
+    const petObject = {
+      name:enteredInput.name,
+      birthday:enteredInput.birth,
+      size:enteredInput.type,
+      weight:enteredInput.weight
+    };
     // 비동기 처리
+    // signup({ email, password, nickname, phone, pet: {petName:enteredInput.name,petBirth:enteredInput.birth,petImage:} }, () => {});
   };
 
   return (
@@ -183,25 +209,25 @@ function PetInfo() {
           }}
         >
           ?
-        <DogType mount={isOpenDogType}/>
+          <DogType mount={isOpenDogType} />
         </div>
-        <label htmlFor="small">
-          <input type="radio" id="small" name="dogtype" className="dogtype-input" onChange={typeChangeHandler} />
+        <label htmlFor="S">
+          <input type="radio" id="S" name="dogtype" className="dogtype-input" onChange={typeChangeHandler} />
           <span className="dogtype-button" />
           소형견
         </label>
-        <label htmlFor="medium">
-          <input type="radio" id="medium" name="dogtype" className="dogtype-input" onChange={typeChangeHandler} />
+        <label htmlFor="M">
+          <input type="radio" id="M" name="dogtype" className="dogtype-input" onChange={typeChangeHandler} />
           <span className="dogtype-button" />
           중형견
         </label>
-        <label htmlFor="large">
-          <input type="radio" id="large" name="dogtype" className="dogtype-input" onChange={typeChangeHandler} />
+        <label htmlFor="L">
+          <input type="radio" id="L" name="dogtype" className="dogtype-input" onChange={typeChangeHandler} />
           <span className="dogtype-button" />
           대형견
         </label>
       </div>
-      
+
       <button
         type="button"
         disabled={!pageIsValid}

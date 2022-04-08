@@ -2,10 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isSignIn: false,
-  id: '',
-  nickname: '',
-  email: '',
-  phone: '',
+  user: { id: '', nickname: '', email: '', phone: '' },
   pets: [],
 };
 
@@ -16,10 +13,7 @@ const userSlice = createSlice({
     signin(state, action) {
       return {
         isSignIn: true,
-        id: action.payload.id,
-        nickname: action.payload.nickname,
-        email: action.payload.email,
-        phone: action.payload.phone,
+        user: action.payload.user,
         pets: action.payload.pets,
       };
     },

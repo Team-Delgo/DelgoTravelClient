@@ -7,7 +7,6 @@ import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import ToastMessage from '../../../common/layouts/ToastMessage';
 import login from '../../../common/api/login';
 
-
 interface Input {
   email: string;
   password: string;
@@ -32,16 +31,21 @@ function Login() {
       if (code === 200) {
         dispatch(
           userActions.signin({
-            id: data.user_id,
-            nickname: data.name,
-            email: data.email,
-            phone: data.phone_no,
-            pets: data.pets,
+            user: {
+              id: data.user.userId,
+              nickname: data.user.name,
+              email: data.user.email,
+              phone: data.user.phoneNo,
+            },
+            pet: data.pet,
           }),
         );
+        const accessToken = response.headers.authorization_access;
+        const refreshToken = response.headers.authorization_refresh;
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
         navigation('/');
-      }
-      else if(code === 407){
+      } else if (code === 303) {
         setLoginFailed(true);
       }
     });
