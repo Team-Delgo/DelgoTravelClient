@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
 import { useNavigate, useLocation, Location } from 'react-router-dom';
@@ -30,14 +30,23 @@ function UserInfo() {
   const navigation = useNavigate();
   const state = useLocation().state as LocationState;
   const { phone } = state;
-  console.log(state);
   const [nextPage, setNextPage] = useState(false);
   const [enteredInput, setEnteredInput] = useState({ email: '', password: '', confirm: '', nickname: '' });
   const [validInput, setValidInput] = useState({ email: '', password: '', confirm: '', nickname: '' });
   const [feedback, setFeedback] = useState({ email: '', password: '', confirm: '', nickname: '' });
   const [confirmIsTouched, setConfirmIsTouched] = useState(false);
-  const [emailDuplicated, setEmailDuplicated] = useState(false);
-  const firstPageIsValid = validInput.email.length && validInput.password.length && validInput.confirm.length;
+  const [emailDuplicated, setEmailDuplicated] = useState(true);
+  const [emailDupCheckFail, setEmailDupCheckFail] = useState(false);
+  const firstPageIsValid =
+    validInput.email.length && validInput.password.length && validInput.confirm.length && !emailDuplicated;
+
+  useEffect(() => {
+    if (!emailDuplicated && validInput.email.length) {
+      setFeedback((prev: Input) => {
+        return { ...prev, email: '사용 가능한 이메일입니다.' };
+      });
+    }
+  }, [feedback.email, emailDuplicated]);
 
   const emailValidCheck = (value: string) => {
     const response = checkEmail(value);
@@ -138,7 +147,8 @@ function UserInfo() {
 
     if (id === Id.EMAIL) {
       emailValidCheck(value);
-      setEmailDuplicated(false);
+      setEmailDuplicated(true);
+      setEmailDupCheckFail(false);
     } else if (id === Id.PASSWORD) {
       passwordValidCheck(value);
     } else if (id === Id.CONFIRM) {
@@ -153,9 +163,10 @@ function UserInfo() {
       const { code } = response.data;
       if (code === 200) {
         setEmailDuplicated(false);
-        console.log('not dup');
+        setEmailDupCheckFail(false);
       } else {
         setEmailDuplicated(true);
+        setEmailDupCheckFail(true);
       }
     });
   };
@@ -180,9 +191,14 @@ function UserInfo() {
               id={Id.EMAIL}
               value={enteredInput.email}
               onChange={inputChangeHandler}
-              onBlur={emailDupCheck}
             />
-            <p className="input-feedback">{emailDuplicated ? '중복된 이메일 입니다' : feedback.email}</p>
+            <p className={classNames('input-feedback', { fine: !emailDuplicated && validInput.email.length })}>
+              {emailDupCheckFail ? '이미 사용중인 이메일입니다.' : feedback.email}
+            </p>
+
+            <span aria-hidden="true" className="input-email-check" onClick={emailDupCheck}>
+              중복확인
+            </span>
           </div>
           <span className="login-span">비밀번호</span>
           <input

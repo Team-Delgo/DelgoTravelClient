@@ -28,6 +28,8 @@ function Login() {
   const loginButtonHandler = () => {
     login(enteredInput, (response: AxiosResponse) => {
       const { code, data } = response.data;
+      console.log(response);
+
       if (code === 200) {
         dispatch(
           userActions.signin({

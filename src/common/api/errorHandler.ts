@@ -2,6 +2,7 @@ import { AxiosError } from "axios";
 
 function errorHandler(error:AxiosError){
   if(error.response){
+    console.log(error.response);
     // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답
     console.log(error.response.data);
     console.log(error.response.status);

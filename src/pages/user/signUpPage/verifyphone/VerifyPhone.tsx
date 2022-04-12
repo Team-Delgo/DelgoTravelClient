@@ -1,5 +1,6 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import classNames from 'classnames';
+import { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ToastMessage from '../../../../common/layouts/ToastMessage';
 import './VerifyPhone.scss';
@@ -7,6 +8,7 @@ import Timer from './Timer';
 import { SIGN_UP_PATH } from '../../../../constants/path.const';
 import { ReactComponent as Check } from '../../../../icons/check.svg';
 import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
+import { phoneSendMessage, phoneCheckNumber } from '../../../../common/api/signup';
 
 function VerifyPhone() {
   const navigation = useNavigate();
@@ -17,14 +19,19 @@ function VerifyPhone() {
   const [timeIsValid, setTimeIsValid] = useState(true);
   const [isReSended, setIsReSended] = useState(false);
   const authIsValid = timeIsValid && authNumber.length === 6;
-  const isValid = phoneNumber.length === 13;
+  const isValid = phoneNumber.length === 11;
   const isEntered = phoneNumber.length > 0;
 
   const buttonClickHandler = () => {
     //  인증번호 전송 요청
-
-    setButtonIsClicked(true);
-    setIsSended(true);
+    phoneSendMessage(phoneNumber, (response: AxiosResponse) => {
+      const { code } = response.data;
+      console.log(response);
+      if (code === 200) {
+        setButtonIsClicked(true);
+        setIsSended(true);
+      }
+    });
   };
 
   useEffect(() => {
@@ -39,12 +46,8 @@ function VerifyPhone() {
     if (isSended) return;
     const { value } = event.target;
     const onlyNumber = value.replace(/[^-0-9]/g, '');
-    let adjustNumber: string = onlyNumber;
-    if (phoneNumber.length === 13 && value.length > 13) return;
-    if ((phoneNumber.length === 2 && value.length === 3) || (phoneNumber.length === 7 && value.length === 8)) {
-      adjustNumber = `${value}-`;
-    }
-    setPhoneNumber(adjustNumber);
+    if (phoneNumber.length === 11 && value.length > 11) return;
+    setPhoneNumber(onlyNumber);
   };
 
   const clearButtonHandler = () => {
@@ -58,10 +61,16 @@ function VerifyPhone() {
   };
 
   const authNumberResend = () => {
+    phoneSendMessage(phoneNumber, (response: AxiosResponse) => {
+      const { code } = response.data;
+      console.log(response);
+      if (code === 200) {
+        setIsReSended(true);
+        setButtonIsClicked(true);
+        setTimeIsValid(true);
+      }
+    });
     //  인증번호 전송 요청
-    setIsReSended(true);
-    setButtonIsClicked(true);
-    setTimeIsValid(true);
   };
 
   const resetIsResend = () => {
@@ -78,7 +87,7 @@ function VerifyPhone() {
       disabled={!authIsValid}
       className={classNames('login-button', { active: authIsValid })}
       onClick={() => {
-        navigation(SIGN_UP_PATH.USER_INFO,{state:{phone:phoneNumber}});
+        navigation(SIGN_UP_PATH.USER_INFO, { state: { phone: phoneNumber } });
       }}
     >
       다음

@@ -41,4 +41,35 @@ async function signup(info: SignUpData, success: (data: AxiosResponse) => void) 
     });
 }
 
-export { emailCheck, signup };
+async function phoneSendMessage(phone: string, success: (data: AxiosResponse) => void) {
+  await axios
+    .get(`${url}/phoneNoCheck`, {
+      params: {
+        phoneNo: phone,
+      },
+    })
+    .then((data) => {
+      success(data);
+    })
+    .catch((error) => {
+      errorHandler(error);
+    });
+}
+
+async function phoneCheckNumber(number: string, success: (data: AxiosResponse) => void) {
+  await axios
+    .get(`${url}/authRandNum`, {
+      params: {
+        enterNum: number,
+      },
+    })
+    .then((data) => {
+      success(data);
+    })
+    .catch((error) => {
+      errorHandler(error);
+    });
+}
+
+
+export { emailCheck, signup, phoneCheckNumber, phoneSendMessage};
