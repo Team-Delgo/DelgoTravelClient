@@ -24,6 +24,6 @@
       2,
       { "extensions": [".js", ".jsx", ".ts", ".tsx",".scss"] }
     ],
-    "jsx-a11y/no-noninteractive-element-interactions": 0
+    "jsx-a11y/no-noninteractive-element-interactions": 0,
   }
 }
