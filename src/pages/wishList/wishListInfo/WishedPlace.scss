@@ -1,0 +1,30 @@
+.wished-place{
+    text-align: center;
+    position: relative;
+    img{
+        width: 100%;
+        border-radius: 5px;
+        margin-bottom: 10%;
+    }
+    &-name{
+        position: absolute;
+        left: 3%;
+        bottom: 25%;
+        font-weight: bold;
+        font-size: 4.5vw;
+        color: #FFFFFF;
+    }
+    &-location{
+        position: absolute;
+        left: 4%;
+        bottom: 20%;
+        font-size: 2vw; 
+        color: #FFFFFF;
+    }
+    &-heart{
+        position: absolute;
+        right: 4%;
+        top: 12.5%;
+        bottom: 13.19%;
+    }
+}

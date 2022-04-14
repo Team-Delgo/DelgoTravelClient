@@ -1,0 +1,37 @@
+.wish-list-background{
+    background: #F3EFEA;
+    padding-bottom: 70px;
+    color: #3E382F;
+    .wish-list-tab{
+        height: 25vw;
+        display: flex;
+        border-bottom: 2px solid #E8E2DC;
+        margin: 0% 5%;
+        font-size: 4vw;
+        font-weight: 700;
+        &-folder{
+            position: absolute;
+            top:7%;
+            left:20%;
+            color:#B0A69D
+        }
+        &-folder-active{
+            position: absolute;
+            top:7%;
+            left:20%;
+            color:#3E382F;
+        }
+        &-history{
+            position: absolute;
+            top:7%;
+            right:20%;
+            color:#B0A69D
+        }
+        &-history-active{
+            position: absolute;
+            top:7%;
+            right:20%;
+            color:#3E382F;
+        }
+    }
+}

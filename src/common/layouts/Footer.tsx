@@ -1,13 +1,56 @@
-import React from 'react'
+import React from 'react';
+import { Link ,useLocation } from 'react-router-dom';
+import { ReactComponent as Home } from '../../icons/home.svg';
+import { ReactComponent as Search } from '../../icons/search.svg';
+import { ReactComponent as Bag } from '../../icons/bag.svg';
+import { ReactComponent as Person } from '../../icons/person.svg';
+import { ReactComponent as HomeActive } from '../../icons/home-active.svg';
+import { ReactComponent as SearchActive } from '../../icons/search-active.svg';
+import { ReactComponent as BagActive } from '../../icons/bag-active.svg';
+import { ReactComponent as PersonActive } from '../../icons/person-active.svg';
+import {ROOT_PATH,WISH_LIST_PATH,WHERE_TO_GO} from '../../constants/path.const'
 import './Footer.scss';
 
 function Footer() {
+  const location = useLocation();
   return (
     <div className="footer">
-      <img className="homeIcon" src={`${process.env.PUBLIC_URL}/assets/images/home.png`} alt="" />
-      <img className="glassesIcon" src={`${process.env.PUBLIC_URL}/assets/images/glasses.png`} alt="" />
-      <img className="bagIcon" src={`${process.env.PUBLIC_URL}/assets/images/bag.png`} alt="" />
-      <img className="personIcon" src={`${process.env.PUBLIC_URL}/assets/images/person.png`} alt="" />
+      {location.pathname === ROOT_PATH ? (
+        <Link to={ROOT_PATH }>
+          <HomeActive className="homeIcon" />
+        </Link>
+      ) : (
+        <Link to={ROOT_PATH }>
+          <Home className="homeIcon" />
+        </Link>
+      )}
+      {location.pathname === '/where-to-go' ? (
+        <Link to="/where-to-go">
+          <SearchActive className="searchIcon" />
+        </Link>
+      ) : (
+        <Link to="/where-to-go">
+          <Search className="searchIcon" />
+        </Link>
+      )}
+      {location.pathname === WISH_LIST_PATH ? (
+        <Link to={WISH_LIST_PATH}>
+          <BagActive className="bagIcon" />
+        </Link>
+      ) : (
+        <Link to={WISH_LIST_PATH}>
+          <Bag className="bagIcon" />
+        </Link>
+      )}
+      {location.pathname === "/my-account" ? (
+        <Link to="/">
+          <PersonActive className="personIcon" />
+        </Link>
+      ) : (
+        <Link to="/">
+          <Person className="personIcon" />
+        </Link>
+      )}
     </div>
   );
 }
