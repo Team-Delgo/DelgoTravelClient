@@ -77,13 +77,8 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
-<<<<<<< HEAD
-    "prettier": "2.5.1"
-  },
-  "proxy":"http://49.50.161.156"
-=======
+
     "prettier": "2.5.1",
     "webpack": "^5.70.0"
   }
->>>>>>> f8e970aa2223b0b88170c3d8c01e76e73babf5bb
 }
