@@ -1,4 +1,6 @@
-import React from 'react'
+import React,{useState} from 'react'
+import { ReactComponent as ActiveHeart } from '../../icons/heart-active.svg';
+import { ReactComponent as Heart } from '../../icons/heart.svg';
 import './Place.scss'
 
 type PlaceTypeProps = {
@@ -6,36 +8,40 @@ type PlaceTypeProps = {
 }
 
 type PlaceType = {
-    id: number
-    image:string
-    region: string
-    region_detail: string
-    name: string
-    maximum_person : number
-    maximum_dog : number
-    price : number
-  }
+  address: string
+  lowestPrice: string
+  mainPhotoUrl: string
+  name: string
+  placeId: number
+  registDt: string
+}
 
 function Place({ place }: PlaceTypeProps) {
+  const [wishList, setWishList] = useState(false);
+
+  const handleWishList =() => {
+    setWishList(!wishList);
+  };
+
   return (
     <div className="place">
-      <img src={place.image} alt="place-img" />
+      <img src={place.mainPhotoUrl} alt="place-img" />
       <div className="place-info">
         <div className="place-info-first-line">
           <span className="place-region">
-            <span>{place.region}&nbsp;</span>
-            <span>{place.region_detail}</span>
-          </span>
-          <span className="place-maximum">
-            <span>최대 {place.maximum_person}명</span>
-            <span>/{place.maximum_dog}마리</span>
+            <span>{place.address}&nbsp;</span>
           </span>
         </div>
         <div className="place-info-second-line">
           <span>{place.name}</span>
-          <span>{place.price}원~</span>
+          <span>{place.lowestPrice}원~</span>
         </div>
       </div>
+      {wishList ? (
+        <ActiveHeart className="place-heart" onClick={handleWishList} />
+      ) : (
+        <Heart className="place-heart" onClick={handleWishList} />
+      )}
     </div>
   );
 }

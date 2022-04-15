@@ -1,10 +1,16 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import classNames from 'classnames';
-import { useNavigate } from 'react-router-dom';
+import { AxiosResponse } from 'axios';
+import { useNavigate, useLocation, Location } from 'react-router-dom';
 import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
 import './UserInfo.scss';
 import { SIGN_UP_PATH } from '../../../../constants/path.const';
 import { checkEmail, checkPassword, checkPasswordConfirm, checkNickname } from './ValidCheck';
+import { emailCheck } from '../../../../common/api/signup';
+
+interface LocationState {
+  phone: string;
+}
 
 interface Input {
   email: string;
@@ -22,12 +28,25 @@ enum Id {
 
 function UserInfo() {
   const navigation = useNavigate();
+  const state = useLocation().state as LocationState;
+  const { phone } = state;
   const [nextPage, setNextPage] = useState(false);
   const [enteredInput, setEnteredInput] = useState({ email: '', password: '', confirm: '', nickname: '' });
   const [validInput, setValidInput] = useState({ email: '', password: '', confirm: '', nickname: '' });
   const [feedback, setFeedback] = useState({ email: '', password: '', confirm: '', nickname: '' });
   const [confirmIsTouched, setConfirmIsTouched] = useState(false);
-  const firstPageIsValid = validInput.email.length && validInput.password.length && validInput.confirm.length;
+  const [emailDuplicated, setEmailDuplicated] = useState(true);
+  const [emailDupCheckFail, setEmailDupCheckFail] = useState(false);
+  const firstPageIsValid =
+    validInput.email.length && validInput.password.length && validInput.confirm.length && !emailDuplicated;
+
+  useEffect(() => {
+    if (!emailDuplicated && validInput.email.length) {
+      setFeedback((prev: Input) => {
+        return { ...prev, email: '사용 가능한 이메일입니다.' };
+      });
+    }
+  }, [feedback.email, emailDuplicated]);
 
   const emailValidCheck = (value: string) => {
     const response = checkEmail(value);
@@ -114,7 +133,9 @@ function UserInfo() {
   const submitHandler = () => {
     //  유저정보 보내기
 
-    navigation(SIGN_UP_PATH.USER_PET_INFO);
+    navigation(SIGN_UP_PATH.USER_PET_INFO, {
+      state: { email: enteredInput.email, password: enteredInput.password, nickname: enteredInput.nickname, phone },
+    });
   };
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -126,6 +147,8 @@ function UserInfo() {
 
     if (id === Id.EMAIL) {
       emailValidCheck(value);
+      setEmailDuplicated(true);
+      setEmailDupCheckFail(false);
     } else if (id === Id.PASSWORD) {
       passwordValidCheck(value);
     } else if (id === Id.CONFIRM) {
@@ -133,6 +156,19 @@ function UserInfo() {
     } else {
       nicknameValidCheck(value);
     }
+  };
+
+  const emailDupCheck = async () => {
+    emailCheck(enteredInput.email, (response: AxiosResponse) => {
+      const { code } = response.data;
+      if (code === 200) {
+        setEmailDuplicated(false);
+        setEmailDupCheckFail(false);
+      } else {
+        setEmailDuplicated(true);
+        setEmailDupCheckFail(true);
+      }
+    });
   };
 
   return (
@@ -156,7 +192,13 @@ function UserInfo() {
               value={enteredInput.email}
               onChange={inputChangeHandler}
             />
-            <p className="input-feedback">{feedback.email}</p>
+            <p className={classNames('input-feedback', { fine: !emailDuplicated && validInput.email.length })}>
+              {emailDupCheckFail ? '이미 사용중인 이메일입니다.' : feedback.email}
+            </p>
+
+            <span aria-hidden="true" className="input-email-check" onClick={emailDupCheck}>
+              중복확인
+            </span>
           </div>
           <span className="login-span">비밀번호</span>
           <input

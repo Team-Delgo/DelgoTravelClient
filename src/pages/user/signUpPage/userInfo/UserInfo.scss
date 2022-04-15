@@ -32,4 +32,15 @@
   left: 16px;
   @include typosettings(14px, $color-orange);
   font-weight: 500;
+  &.fine{
+    color: green;
+  }
+}
+.input-email-check{
+  position: absolute;
+  margin: 0;
+  bottom: -30px;
+  right: 16px;
+  @include typosettings(14px, $color-light-grey);
+  font-weight: 500;
 }
