@@ -19,7 +19,6 @@ type TravelHisotryPlaceType = {
 };
 
 function History() {
-  const [hasTravelHistorys, setHasTravelHistorys] = useState(true);
   const [popularPlace, setPopularPlace] = useState<Array<PopularPlaceType>>([
     {
       id: 1,
@@ -68,7 +67,7 @@ function History() {
   ]);
   return (
     <div className="travel-history-container">
-      {hasTravelHistorys === true ? (
+      {travelHisotryPlace.length > 0 ? (
         <div className="travel-history-profile">
           <img
             className="travel-history-profile-image"
@@ -90,7 +89,7 @@ function History() {
           <div className="travel-history-notice-sub">인기 숙소를 보여드릴게요</div>
         </div>
       )}
-      {hasTravelHistorys === true
+      {travelHisotryPlace.length > 0 
         ? travelHisotryPlace.map((place) => <TravelHisotryPlace place={place} key={place.id} />)
         : popularPlace.map((place) => <PopularPlace place={place} key={place.id} />)}
     </div>

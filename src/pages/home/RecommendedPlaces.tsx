@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useCallback} from 'react'
 import { ReactComponent as ActiveHeart } from '../../icons/heart-active.svg';
 import { ReactComponent as Heart } from '../../icons/heart.svg';
 import './RecommendedPlaces.scss';
@@ -17,9 +17,9 @@ type RecommendedPlaceType = {
 function RecommendedPlaces({ place }: RedcommendedPlacesProps) {
   const [wishList, setWishList] = useState(false);
 
-  const handleWishList = () => {
+  const handleWishList = useCallback(() => {
     setWishList(!wishList);
-  };
+  },[wishList]);
 
   return (
     <div className="recommended-places">
