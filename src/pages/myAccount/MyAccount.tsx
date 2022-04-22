@@ -1,5 +1,6 @@
 import React from "react";
 import "./MyAccount.scss";
+import RightArrow from "../../icons/right-arrow.svg";
 
 function MyAccount() {
   return <div className="account">
@@ -23,16 +24,66 @@ function MyAccount() {
     </div>
     <div className="account-purchase">
       <div className="account-purchase-reservation">
-        <h1 className="account-purchase-reservation-title">예약내역</h1>
+        <h1 className="account-title">예약내역</h1>
         <div className="account-purchase-reservation-box">
           <div className="account-purchase-reservation-box-wrapper">
-            <title>밸런스독</title>
-            <p className="room">프리미엄 한옥빌라[102동 온수...</p>
-            <p className="date">05.06~05.07 1박</p>
+            <p className="account-purchase-reservation-box-wrapper-title">밸런스독</p>
+            <p className="account-purchase-reservation-box-wrapper-room">프리미엄 한옥빌라[102동 온수...</p>
+            <p className="account-purchase-reservation-box-wrapper-date">05.06~05.07 1박</p>
           </div>
           <button type="button" className="account-purchase-reservation-box-state">취소완료</button>
         </div>
       </div>
+      <div className="account-purchase-payment">
+        <h1 className="account-title">결제</h1>
+        <div className="account-item">
+          <h2 className="account-item-name">
+            결제내역
+          </h2>
+          <img src={RightArrow} alt="detail" />
+        </div>
+        <div className="account-item">
+          <h2 className="account-item-name">
+            결제방법
+          </h2>
+          <img src={RightArrow} alt="detail" />
+        </div>
+        <div className="account-item">
+          <h2 className="account-item-name">
+            결제방법
+          </h2>
+          <img src={RightArrow} alt="detail" />
+        </div>
+      </div>
+    </div>
+    <div className="account-settings">
+      <h1 className="account-title">설정</h1>
+      <div className="account-item">
+        <h2 className="account-item-name">
+          알림
+        </h2>
+        <img src={RightArrow} alt="detail" />
+      </div>
+      <div className="account-item">
+        <h2 className="account-item-name">
+          업데이트
+        </h2>
+        <img src={RightArrow} alt="detail" />
+      </div>
+      <div className="account-item">
+        <h2 className="account-item-name">
+          이용사항안내
+        </h2>
+        <img src={RightArrow} alt="detail" />
+      </div>
+    </div>
+    <div className="account-sign">
+      <p className="account-out">
+        회원탈퇴
+      </p>
+      <p className="account-out">
+        로그아웃
+      </p>
     </div>
   </div>;
 };
