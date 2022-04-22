@@ -17,4 +17,23 @@ async function login(data: { email: string; password: string }, success: (data: 
       errorHandler(error);
     });
 }
-export default login;
+
+async function tokenRefresh(
+  data: { accessToken: string; refreshToken: string },
+  success: (data: AxiosResponse) => void,
+) {
+  await axios
+    .get(`${url}tokenReissue`, {
+      headers: {
+        Authorization_Access: `Bearer ${data.accessToken}`,
+        Authorization_Refresh: `Bearer ${data.refreshToken}`,
+      },
+    })
+    .then((data) => {
+      success(data);
+    })
+    .catch((error) => {
+      errorHandler(error);
+    });
+}
+export { login, tokenRefresh };

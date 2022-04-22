@@ -10,8 +10,9 @@ import PetInfo from './pages/user/signUpPage/petInfo/PetInfo';
 import Login from './pages/user/signInPage/Login';
 import WishListPage from './pages/wishList/WishList'
 import WhereToGoPage from './pages/whereToGo/WhereToGo';
-import { EDITOR_NOTE_PATH, ROOT_PATH, SIGN_IN_PATH, SIGN_UP_PATH ,WISH_LIST_PATH,WHERE_TO_GO} from './constants/path.const';
+import { EDITOR_NOTE_PATH, ROOT_PATH, SIGN_IN_PATH, SIGN_UP_PATH, WISH_LIST_PATH, WHERE_TO_GO, MY_ACCOUNT_PATH } from './constants/path.const';
 import './App.scss';
+import MyAccount from './pages/myAccount/MyAccount';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
       <Route path={SIGN_UP_PATH.USER_PET_INFO} element={<PetInfo />} />
       <Route path={WISH_LIST_PATH} element={<WishListPage />} />
       <Route path={WHERE_TO_GO} element={<WhereToGoPage />} />
+      <Route path={MY_ACCOUNT_PATH} element={<MyAccount />} />
     </Routes>
   );
 }

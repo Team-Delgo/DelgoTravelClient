@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { userActions } from '../../../redux/reducers/userSlice';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import ToastMessage from '../../../common/layouts/ToastMessage';
-import login from '../../../common/api/login';
+import { login } from '../../../common/api/login';
 
 interface Input {
   email: string;
