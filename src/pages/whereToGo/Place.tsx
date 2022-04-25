@@ -1,6 +1,7 @@
 import React,{useState,useCallback} from 'react'
-import { ReactComponent as ActiveHeart } from '../../icons/heart-active.svg';
-import { ReactComponent as Heart } from '../../icons/heart.svg';
+import Heart from '../../common/components/Heart'
+// import { ReactComponent as ActiveHeart } from '../../icons/heart-active.svg';
+// import { ReactComponent as Heart } from '../../icons/heart.svg';
 import './Place.scss'
 
 type PlaceTypeProps = {
@@ -37,11 +38,14 @@ function Place({ place }: PlaceTypeProps) {
           <span>{place.lowestPrice}원~</span>
         </div>
       </div>
-      {wishList ? (
+      {/* {wishList ? (
         <ActiveHeart className="place-heart" onClick={handleWishList} />
       ) : (
         <Heart className="place-heart" onClick={handleWishList} />
-      )}
+      )} */}
+      <div className="place-heart">
+        <Heart wishList={wishList} handleWishList={handleWishList} />
+      </div>
     </div>
   );
 }
