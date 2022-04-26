@@ -20,7 +20,7 @@ type PlaceType = {
 function WhereToGo() {
   const [places, setPlaces] = useState<Array<PlaceType>>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [area,setArea] = useState("")
+  const [areaTerm, setAreaTerm] = useState('');
 
   useEffect(() => {
     getAllPlaces((response: AxiosResponse) => {
@@ -30,15 +30,15 @@ function WhereToGo() {
   const handleSerchTerm = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   }, []);
-  const handleChangeArea = useCallback((e)=>{
-    setArea(e.target.value)
+  const handleChangeAreaTerm = useCallback((e)=>{
+    setAreaTerm(e.target.value)
 },[])
 
   return (
     <div className="where-to-go-background">
       <input className="search-place" placeholder="숙소검색" value={searchTerm} onChange={handleSerchTerm} />
       <div className="search-region-date">
-        <select className="search-region" value={area} onChange={handleChangeArea}>
+        <select className="search-region" value={areaTerm} onChange={handleChangeAreaTerm}>
           <option value="">전체</option>
           <option value="제주">제주</option>
           <option value="강원">강원</option>
@@ -64,8 +64,10 @@ function WhereToGo() {
       </div>
       <div className="places-container">
         {places.map((place) => {
-          if (place.name.includes(searchTerm)) {
-            return <Place key={place.placeId} place={place} />;
+          if (place.address.includes(areaTerm)) {
+            if (place.name.includes(searchTerm)) {
+              return <Place key={place.placeId} place={place} />;
+            }
           }
         })}
       </div>
