@@ -1,11 +1,16 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable array-callback-return */
 import React,{useState,useEffect,useCallback} from 'react'
 import { AxiosResponse } from 'axios';
+import {Modal} from 'react-bootstrap'
 import getAllPlaces from '../../common/api/getAllPlaces';
 import Footer from '../../common/layouts/Footer'
-import Place from './Place'
+import RegionSelectionModal from './modal/RegionSelectionModal'
+import Place from './place/Place'
 import { ReactComponent as BottomArrow } from '../../icons/bottom-arrow.svg';
 import './WhereToGo.scss';
+
 
 
 type PlaceType = {
@@ -21,24 +26,35 @@ function WhereToGo() {
   const [places, setPlaces] = useState<Array<PlaceType>>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [areaTerm, setAreaTerm] = useState('');
+  const [regionSelectionModal, setRegionSelectionModal] = useState(false);
 
   useEffect(() => {
     getAllPlaces((response: AxiosResponse) => {
       setPlaces(response.data.data);
     });
   }, []);
+  
   const handleSerchTerm = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   }, []);
-  const handleChangeAreaTerm = useCallback((e)=>{
-    setAreaTerm(e.target.value)
-},[])
+
+  const handleChangeAreaTerm = useCallback((e) => {
+    setAreaTerm(e.target.value);
+  }, []);
+
+  const handleRegionSelectionModal = useCallback((e) => {
+      setRegionSelectionModal(!regionSelectionModal);
+    },[regionSelectionModal],);
+
+  const closeRegionSelectionModal =  useCallback(() => {
+    setRegionSelectionModal(false);
+  },[])
 
   return (
     <div className="where-to-go-background">
       <input className="search-place" placeholder="숙소검색" value={searchTerm} onChange={handleSerchTerm} />
       <div className="search-region-date">
-        <select className="search-region" value={areaTerm} onChange={handleChangeAreaTerm}>
+        {/* <select className="search-region" value={areaTerm} onChange={handleChangeAreaTerm}>
           <option value="">전체</option>
           <option value="제주">제주</option>
           <option value="강원">강원</option>
@@ -52,11 +68,11 @@ function WhereToGo() {
           <option value="대전">대전</option>
           <option value="대구">대구</option>
           <option value="울산">울산</option>
-        </select>
-        {/* <div className="search-region">
+        </select> */}
+        <div className="search-region" onClick={handleRegionSelectionModal}>
           전체
           <BottomArrow className="bottom-arrow" />
-        </div> */}
+        </div>
         <div className="search-date">
           22.03.01 - 22.03.22 / 1박
           <BottomArrow className="bottom-arrow" />
@@ -72,6 +88,7 @@ function WhereToGo() {
         })}
       </div>
       <Footer />
+      <RegionSelectionModal regionSelectionModal={regionSelectionModal} closeRegionSelectionModal={closeRegionSelectionModal}/>
     </div>
   );
 }

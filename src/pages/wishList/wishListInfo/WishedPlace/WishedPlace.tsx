@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import Heart from '../../../common/components/Heart'
+import Heart from '../../../../common/components/Heart'
 // import { ReactComponent as ActiveHeart } from '../../../icons/heart-active.svg';
 // import { ReactComponent as Heart } from '../../../icons/heart.svg';
 import './WishedPlace.scss';

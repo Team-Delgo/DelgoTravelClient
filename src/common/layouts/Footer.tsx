@@ -14,7 +14,7 @@ import './Footer.scss';
 function Footer() {
   const location = useLocation();
   return (
-    <div className="footer">
+    <footer className="footer">
       {location.pathname === ROOT_PATH ? (
         <Link to={ROOT_PATH }>
           <HomeActive className="homeIcon" />
@@ -24,7 +24,7 @@ function Footer() {
           <Home className="homeIcon" />
         </Link>
       )}
-      {location.pathname === '/where-to-go' ? (
+      {location.pathname === WHERE_TO_GO ? (
         <Link to="/where-to-go">
           <SearchActive className="searchIcon" />
         </Link>
@@ -51,7 +51,7 @@ function Footer() {
           <Person className="personIcon" />
         </Link>
       )}
-    </div>
+    </footer>
   );
 }
 

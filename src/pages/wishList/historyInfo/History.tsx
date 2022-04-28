@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import PopularPlace from './PopularPlace';
-import TravelHisotryPlace from './TravelHisotryPlace';
+import PopularPlace from './PopularPlace/PopularPlace';
+import TravelHisotryPlace from './TravelHisotryPlace/TravelHisotryPlace';
 import './History.scss';
 
 type PopularPlaceType = {

@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import WishedPlace from './WishedPlace';
+import WishedPlace from './WishedPlace/WishedPlace';
 import './Folder.scss';
 
 type WishedPlaceType = {
