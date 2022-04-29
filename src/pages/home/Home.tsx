@@ -1,8 +1,8 @@
 import React,{useState} from 'react';
 import { Link } from 'react-router-dom';
-import ReservationInfo from './ReservationInfo';
+import ReservationInfo from './reservationInfo/ReservationInfo';
 import Footer from '../../common/layouts/Footer';
-import RecommendedPlaces from './RecommendedPlaces';
+import RecommendedPlaces from './recommendedPlaces/RecommendedPlaces';
 import './Home.scss';
 
 type EditorPlaceType = {

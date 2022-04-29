@@ -1,5 +1,5 @@
 .region-selection-modal{
-  &-header{
+  &-header-selected{
     width: 110px;
     height: 45px;
     color: #FFFFFF;
@@ -12,23 +12,19 @@
     border-radius: 27px;
     margin-bottom: 30px;
   }
+  &-header{
+    width: 110px;
+    height: 45px;
+    color: #474747;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 27px;
+    margin-bottom: 30px;
+  }
   &-section{
     display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
     margin-bottom: 20px;
-  }
-  &-region-name{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 88px;
-    height: 45px;
-    background: #6E614D;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
-    border-radius: 27px;
-    color: #FFFFFF;
   }
 }

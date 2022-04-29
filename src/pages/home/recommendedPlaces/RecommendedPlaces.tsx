@@ -1,14 +1,14 @@
 import React,{useState,useCallback} from 'react'
-import Heart from '../../common/components/Heart'
+import Heart from '../../../common/components/Heart'
 // import { ReactComponent as ActiveHeart } from '../../icons/heart-active.svg';
 // import { ReactComponent as Heart } from '../../icons/heart.svg';
 import './RecommendedPlaces.scss';
 
-type RedcommendedPlacesProps = {
+interface RedcommendedPlacesProps{
     place:RecommendedPlaceType
 }
 
-type RecommendedPlaceType = {
+interface RecommendedPlaceType{
     image:string
     name: string
     location: string

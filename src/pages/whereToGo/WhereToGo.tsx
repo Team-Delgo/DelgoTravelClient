@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable array-callback-return */
+
 import React,{useState,useEffect,useCallback} from 'react'
 import { AxiosResponse } from 'axios';
-import {Modal} from 'react-bootstrap'
 import getAllPlaces from '../../common/api/getAllPlaces';
 import Footer from '../../common/layouts/Footer'
 import RegionSelectionModal from './modal/RegionSelectionModal'
@@ -13,7 +13,7 @@ import './WhereToGo.scss';
 
 
 
-type PlaceType = {
+interface PlaceType  {
   address: string
   lowestPrice: string
   mainPhotoUrl: string

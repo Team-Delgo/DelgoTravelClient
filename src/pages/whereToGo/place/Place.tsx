@@ -4,11 +4,11 @@ import Heart from '../../../common/components/Heart'
 // import { ReactComponent as Heart } from '../../icons/heart.svg';
 import './Place.scss'
 
-type PlaceTypeProps = {
+interface PlaceTypeProps{
     place:PlaceType
 }
 
-type PlaceType = {
+interface PlaceType  {
   address: string
   lowestPrice: string
   mainPhotoUrl: string
@@ -30,7 +30,7 @@ function Place({ place }: PlaceTypeProps) {
       <div className="place-info">
         <div className="place-info-first-line">
           <span className="place-region">
-            <span>{place.address}&nbsp;</span>
+            <span>{place.address.split(" ")[0]}&nbsp;{place.address.split(" ")[1]}</span>
           </span>
         </div>
         <div className="place-info-second-line">
