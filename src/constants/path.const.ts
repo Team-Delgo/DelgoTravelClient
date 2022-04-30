@@ -6,6 +6,7 @@ export const MY_ACCOUNT_PATH = '/user/myaccount';
 export const SIGN_IN_PATH = {
   MAIN: '/user/signin',
   SIGNIN: '/user/signin/login',
+  FINDPASSWORD: '/user/signin/findpassword',
 };
 
 export const SIGN_UP_PATH = {

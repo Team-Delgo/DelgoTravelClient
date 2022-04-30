@@ -6,6 +6,7 @@ import { userActions } from '../../../redux/reducers/userSlice';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import ToastMessage from '../../../common/layouts/ToastMessage';
 import { login } from '../../../common/api/login';
+import "./Login.scss";
 
 interface Input {
   email: string;
@@ -61,6 +62,10 @@ function Login() {
     }
   }, [loginFailed]);
 
+  const findPassword = () => {
+    navigation('/user/signin/findpassword');
+  };
+
   return (
     <div className="login">
       <div aria-hidden="true" className="login-back" onClick={() => navigation(-1)}>
@@ -91,6 +96,7 @@ function Login() {
       <button type="button" className="login-button active" onClick={loginButtonHandler}>
         다음
       </button>
+      <div className='login-find_password' aria-hidden="true" onClick={findPassword}>비밀번호찾기</div>
       {loginFailed && <ToastMessage message="아이디 비밀번호를 확인해 주세요" />}
     </div>
   );

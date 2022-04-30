@@ -13,6 +13,7 @@ import WhereToGoPage from './pages/whereToGo/WhereToGo';
 import { EDITOR_NOTE_PATH, ROOT_PATH, SIGN_IN_PATH, SIGN_UP_PATH, WISH_LIST_PATH, WHERE_TO_GO, MY_ACCOUNT_PATH } from './constants/path.const';
 import './App.scss';
 import MyAccount from './pages/myAccount/MyAccount';
+import FindPassword from './pages/user/signInPage/FindPassword';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path={EDITOR_NOTE_PATH} element={<EditorNote />} />
       <Route path={SIGN_IN_PATH.MAIN} element={<SignInPage />} />
       <Route path={SIGN_IN_PATH.SIGNIN} element={<Login />} />
+      <Route path={SIGN_IN_PATH.FINDPASSWORD} element={<FindPassword />} />
       <Route path={SIGN_UP_PATH.VERIFY} element={<VerifyPhonePage />} />
       <Route path={SIGN_UP_PATH.TERMS} element={<TermsPage />} />
       <Route path={SIGN_UP_PATH.USER_INFO} element={<UserInfo />} />
