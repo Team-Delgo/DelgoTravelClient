@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
-
+import "./FindPassword.scss";
 
 function FindPassword() {
   const [email, setEmail] = useState('');
