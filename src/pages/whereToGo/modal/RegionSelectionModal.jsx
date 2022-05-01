@@ -8,8 +8,8 @@ import './RegionSelectionModal.scss';
 const regionSelectionModalStyle = {
   content: {
     position: 'fixed',
-    height: '357px',
-    top: '62%',
+    height:"40vh",
+    top: '60%',
     left: '0.25%',
     right: '0.25%',
     background: '#FFFFFF',
@@ -20,6 +20,21 @@ const regionSelectionModalStyle = {
 
 function RegionSelectionModal({ regionSelectionModal, closeRegionSelectionModal }) {
   const [allRegionsSelected, setAllRegionsSelected] = useState(true);
+
+  const regions = [
+    { id: 0, name: '제주', selected: false },
+    { id: 2, name: '강원', selected: false },
+    { id: 3, name: '부산', selected: false },
+    { id: 4, name: '경기', selected: false },
+    { id: 5, name: '인천', selected: false },
+    { id: 6, name: '전라', selected: false },
+    { id: 7, name: '경상', selected: false },
+    { id: 8, name: '충청', selected: false },
+    { id: 9, name: '광주', selected: false },
+    { id: 10, name: '대전', selected: false },
+    { id: 11, name: '대구', selected: false },
+    { id: 12, name: '울산', selected: false },
+  ];  
 
   const handleSelectAllRegions = useCallback(() => {
     setAllRegionsSelected(!allRegionsSelected);
@@ -35,24 +50,19 @@ function RegionSelectionModal({ regionSelectionModal, closeRegionSelectionModal 
             <header className="region-selection-modal-header">국내 전체</header>
           )}
         </div>
-        <section className="region-selection-modal-section">
-          <Region region="제주" />
-          <Region region="강원" />
-          <Region region="부산" />
-          <Region region="경기" />
-        </section>
-        <section className="region-selection-modal-section">
-          <Region region="인천" />
-          <Region region="전라" />
-          <Region region="경상" />
-          <Region region="충청" />
-        </section>
-        <section className="region-selection-modal-section">
-          <Region region="광주" />
-          <Region region="대전" />
-          <Region region="대구" />
-          <Region region="울산" />
-        </section>
+          <Region regions={regions} />
+          {/* <Region region="제주" setSelectedPlaces={setSelectedPlaces} selectedPlaces={selectedPlaces} />
+          <Region region="강원" setSelectedPlaces={setSelectedPlaces} selectedPlaces={selectedPlaces} />
+          <Region region="부산" setSelectedPlaces={setSelectedPlaces} selectedPlaces={selectedPlaces} />
+          <Region region="경기" setSelectedPlaces={setSelectedPlaces} selectedPlaces={selectedPlaces} />
+          <Region region="인천" setSelectedPlaces={setSelectedPlaces} selectedPlaces={selectedPlaces} />
+          <Region region="전라" setSelectedPlaces={setSelectedPlaces} selectedPlaces={selectedPlaces} />
+          <Region region="경상" setSelectedPlaces={setSelectedPlaces} selectedPlaces={selectedPlaces} />
+          <Region region="충청" setSelectedPlaces={setSelectedPlaces} selectedPlaces={selectedPlaces} />
+          <Region region="광주" setSelectedPlaces={setSelectedPlaces} selectedPlaces={selectedPlaces} />
+          <Region region="대전" setSelectedPlaces={setSelectedPlaces} selectedPlaces={selectedPlaces} />
+          <Region region="대구" setSelectedPlaces={setSelectedPlaces} selectedPlaces={selectedPlaces} />
+          <Region region="울산" setSelectedPlaces={setSelectedPlaces} selectedPlaces={selectedPlaces} /> */}
       </Modal>
     </div>
   );

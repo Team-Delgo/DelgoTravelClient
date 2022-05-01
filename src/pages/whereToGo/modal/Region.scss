@@ -1,21 +1,29 @@
-.region-selection-modal-region-name-selected{
+.region-selection-modal{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  row-gap: 30px;
+
+  &-region-name-selected{
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    width: 88px;
+    width: 22vw;
     height: 45px;
     background: #6E614D;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
     border-radius: 27px;
     color: #FFFFFF;
+    font-size: 3.8vw;
   }
-.region-selection-modal-region-name{
+  &-region-name{
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    width: 88px;
+    width: 22vw;
     height: 45px;
     color: #474747;
+    font-size: 3.8vw;
   }
+}

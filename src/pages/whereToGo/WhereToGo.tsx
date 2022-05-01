@@ -11,8 +11,6 @@ import Place from './place/Place'
 import { ReactComponent as BottomArrow } from '../../icons/bottom-arrow.svg';
 import './WhereToGo.scss';
 
-
-
 interface PlaceType  {
   address: string
   lowestPrice: string
@@ -27,13 +25,14 @@ function WhereToGo() {
   const [searchTerm, setSearchTerm] = useState('');
   const [areaTerm, setAreaTerm] = useState('');
   const [regionSelectionModal, setRegionSelectionModal] = useState(false);
+  const [selectedPlaces, setSelectedPlaces] = useState<Array<any>>([]);
 
   useEffect(() => {
     getAllPlaces((response: AxiosResponse) => {
-      setPlaces(response.data.data);
+      setPlaces(response.data.data);  
     });
   }, []);
-  
+
   const handleSerchTerm = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   }, []);
@@ -44,11 +43,11 @@ function WhereToGo() {
 
   const handleRegionSelectionModal = useCallback((e) => {
       setRegionSelectionModal(!regionSelectionModal);
-    },[regionSelectionModal],);
+    },[regionSelectionModal]);
 
-  const closeRegionSelectionModal =  useCallback(() => {
+  const closeRegionSelectionModal = useCallback(() => {
     setRegionSelectionModal(false);
-  },[])
+  }, []);
 
   return (
     <div className="where-to-go-background">
@@ -59,7 +58,7 @@ function WhereToGo() {
           <option value="제주">제주</option>
           <option value="강원">강원</option>
           <option value="부산">부산</option>
-          <option value="경기">경기</option>
+          <optiosn value="경기">경기</optiosn>
           <option value="인천">인천</option>
           <option value="전라">전라</option>
           <option value="경상">경상</option>
@@ -79,6 +78,7 @@ function WhereToGo() {
         </div>
       </div>
       <div className="places-container">
+      {/* place.address.includes(areaTerm) */}
         {places.map((place) => {
           if (place.address.includes(areaTerm)) {
             if (place.name.includes(searchTerm)) {
@@ -88,7 +88,10 @@ function WhereToGo() {
         })}
       </div>
       <Footer />
-      <RegionSelectionModal regionSelectionModal={regionSelectionModal} closeRegionSelectionModal={closeRegionSelectionModal}/>
+      <RegionSelectionModal
+        regionSelectionModal={regionSelectionModal}
+        closeRegionSelectionModal={closeRegionSelectionModal}
+      />
     </div>
   );
 }
