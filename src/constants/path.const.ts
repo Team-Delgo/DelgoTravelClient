@@ -7,7 +7,8 @@ export const SIGN_IN_PATH = {
   MAIN: '/user/signin',
   SIGNIN: '/user/signin/login',
   FINDPASSWORD: '/user/signin/findpassword',
-  RESETPASSWORD: 'user/signin/resetpassword',
+  PHONEAUTH: '/user/signin/phoneauth',
+  RESETPASSWORD: '/user/signin/resetpassword',
 };
 
 export const SIGN_UP_PATH = {

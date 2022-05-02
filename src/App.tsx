@@ -15,6 +15,7 @@ import './App.scss';
 import MyAccount from './pages/myAccount/MyAccount';
 import FindPassword from './pages/user/signInPage/FindPassword';
 import ResetPassword from './pages/user/signInPage/ResetPassword';
+import PhoneAuth from './pages/user/signInPage/PhoneAuth';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Route path={SIGN_IN_PATH.MAIN} element={<SignInPage />} />
       <Route path={SIGN_IN_PATH.SIGNIN} element={<Login />} />
       <Route path={SIGN_IN_PATH.FINDPASSWORD} element={<FindPassword />} />
+      <Route path={SIGN_IN_PATH.PHONEAUTH} element={<PhoneAuth/>}/>
       <Route path={SIGN_IN_PATH.RESETPASSWORD} element={<ResetPassword />} />
       <Route path={SIGN_UP_PATH.VERIFY} element={<VerifyPhonePage />} />
       <Route path={SIGN_UP_PATH.TERMS} element={<TermsPage />} />

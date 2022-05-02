@@ -4,6 +4,7 @@ import { AxiosResponse } from "axios";
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import "./FindPassword.scss";
 import { emailAuth } from "../../../common/api/login";
+import { SIGN_IN_PATH } from "../../../constants/path.const";
 
 function FindPassword() {
   const [email, setEmail] = useState('');
@@ -35,7 +36,7 @@ function FindPassword() {
   };
 
   const nextButtonHandler = () => {
-    navigation('/user/signin/resetpassword');
+    navigation(SIGN_IN_PATH.PHONEAUTH, { state: { phone: phoneNumber } });
   };
 
   return (
