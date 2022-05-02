@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
+import { useDispatch } from 'react-redux';
 import ReservationInfo from './ReservationInfo';
 import Footer from '../../common/layouts/Footer';
 import RecommendedPlaces from './RecommendedPlaces';
+import { tokenActions } from '../../redux/reducers/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
 import './Home.scss';
 
@@ -60,12 +62,25 @@ function Home() {
     },
   ]);
 
-  const accessToken = localStorage.getItem('accessToken') || '';
+  const navigation = useNavigate();
+  const dispatch = useDispatch();
   const refreshToken = localStorage.getItem('refreshToken') || '';
 
   useEffect(() => {
-    tokenRefresh({ accessToken, refreshToken }, (response: AxiosResponse) => {
-      console.log(response);
+    tokenRefresh({ refreshToken }, (response: AxiosResponse) => {
+      const { code, codeMsg } = response.data;
+      console.log(codeMsg);
+
+      if (code === 200) {
+        const accessToken = response.headers.authorization_access;
+        const refreshToken = response.headers.authorization_refresh;
+
+        dispatch(tokenActions.setToken(accessToken),);
+        localStorage.setItem('refreshToken', refreshToken);
+      }
+      else {
+        navigation('/user/signin');
+      }
     });
   }, []);
 

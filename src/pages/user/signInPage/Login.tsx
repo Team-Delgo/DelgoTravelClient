@@ -3,6 +3,7 @@ import { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { userActions } from '../../../redux/reducers/userSlice';
+import { tokenActions } from '../../../redux/reducers/tokenSlice';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import ToastMessage from '../../../common/layouts/ToastMessage';
 import { login } from '../../../common/api/login';
@@ -43,9 +44,12 @@ function Login() {
             pet: data.pet,
           }),
         );
+
         const accessToken = response.headers.authorization_access;
         const refreshToken = response.headers.authorization_refresh;
-        localStorage.setItem('accessToken', accessToken);
+        dispatch(
+          tokenActions.setToken(accessToken),
+        );
         localStorage.setItem('refreshToken', refreshToken);
         navigation('/');
       } else if (code === 303) {
