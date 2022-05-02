@@ -63,7 +63,7 @@ function FindPassword() {
           <div className="findpassword-selectbox-number">{phoneNumber}</div>
         </div>
       </div>}
-      <button type="button" className="login-button active" onClick={emailIsSubmitted ? submitEmail : nextButtonHandler}>
+      <button type="button" className="login-button active" onClick={emailIsSubmitted ? nextButtonHandler : submitEmail}>
         확인
       </button>
     </div>
