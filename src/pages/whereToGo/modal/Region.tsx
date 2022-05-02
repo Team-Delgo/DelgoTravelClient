@@ -9,60 +9,54 @@ interface RegionType{
   name:string 
 }
 interface PropsType{
+  areaTerm:string
   setAreaTerm:Dispatch<SetStateAction<string>>
 }
 
-function Region({ setAreaTerm }: PropsType) {
-  const [selectedRegionId, setSelectedRegionId] = useState(-1);
-  const [regions, setRegions] = useState<Array<RegionType>>([
-    { id: 0, name: '제주' },
-    { id: 1, name: '강원' },
-    { id: 2, name: '부산' },
-    { id: 3, name: '경기' },
-    { id: 4, name: '인천' },
-    { id: 5, name: '전라' },
-    { id: 6, name: '경상' },
-    { id: 7, name: '충청' },
-    { id: 8, name: '광주' },
-    { id: 9, name: '대전' },
-    { id: 10, name: '대구' },
-    { id: 11, name: '울산' },
-  ]);
+const regions = [
+{ id: 0, name: '제주' },
+{ id: 1, name: '강원' },
+{ id: 2, name: '부산' },
+{ id: 3, name: '경기' },
+{ id: 4, name: '인천' },
+{ id: 5, name: '전라' },
+{ id: 6, name: '경상' },
+{ id: 7, name: '충청' },
+{ id: 8, name: '광주' },
+{ id: 9, name: '대전' },
+{ id: 10, name: '대구' },
+{ id: 11, name: '울산' }] 
 
+function Region({ areaTerm,setAreaTerm }: PropsType) {
   const handleSelectAllRegions = useCallback(() => {
-    setSelectedRegionId(-1);
     setAreaTerm('');
   }, []);
-
-  const handleSelectRegion = (regionId: number) => (event: React.MouseEvent) => {
-    if (selectedRegionId === regionId) {
-      setSelectedRegionId(-1);
+  const handleSelectRegion = useCallback((regionName: string) => (event: React.MouseEvent) => {
+    if (areaTerm === regionName) {
       setAreaTerm('');
     } else {
-      setSelectedRegionId(regionId);
-      setAreaTerm(regions[regionId].name);
+      setAreaTerm(regionName);
     }
-  };
-
+  },[]);
   return (
     <div className="region-modal">
-      {selectedRegionId === -1 ? (
+      {areaTerm === '' ? (
         <header className="region-modal-header-selected">국내 전체</header>
       ) : (
         <header className="region-modal-header" onClick={handleSelectAllRegions}>국내 전체</header>
       )}
       <section className="region-modal-section">
         {regions.map((region: RegionType) =>
-          region.id === selectedRegionId ? (
+           region.name=== areaTerm ? (
             <span
               className="region-modal-section-region-name-selected"
               key={region.id}
-              onClick={handleSelectRegion(region.id)}
+              onClick={handleSelectRegion(region.name)}
             >
               {region.name}
             </span>
           ) : (
-            <span className="region-modal-section-region-name" key={region.id} onClick={handleSelectRegion(region.id)}>
+            <span className="region-modal-section-region-name" key={region.id} onClick={handleSelectRegion(region.name)}>
               {region.name}
             </span>
           ),

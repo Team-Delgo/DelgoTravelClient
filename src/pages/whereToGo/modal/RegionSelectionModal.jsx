@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import Modal from 'react-modal';
 import Region from './Region';
 
@@ -19,17 +19,9 @@ const regionSelectionModalStyle = {
 };
 
 function RegionSelectionModal({ regionSelectionModal, closeRegionSelectionModal,areaTerm, setAreaTerm }) {
-  const [allRegionsSelected, setAllRegionsSelected] = useState(true);
-
-  const handleSelectAllRegions = useCallback(() => {
-    setAllRegionsSelected(!allRegionsSelected);
-    setAreaTerm('');
-  }, [allRegionsSelected]);
-
-
   return (
       <Modal style={regionSelectionModalStyle} isOpen={regionSelectionModal} onRequestClose={closeRegionSelectionModal}>
-        <Region setAreaTerm={setAreaTerm}/>
+        <Region setAreaTerm={setAreaTerm} areaTerm={areaTerm}/>
       </Modal>
   );
 }
