@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from '../../common/layouts/Footer';
 import "./MyAccount.scss";
 import RightArrow from "../../icons/right-arrow.svg";
 
@@ -85,6 +86,7 @@ function MyAccount() {
         로그아웃
       </p>
     </div>
+    <Footer />
   </div>;
 };
 

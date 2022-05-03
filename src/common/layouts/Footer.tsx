@@ -8,7 +8,7 @@ import { ReactComponent as HomeActive } from '../../icons/home-active.svg';
 import { ReactComponent as SearchActive } from '../../icons/search-active.svg';
 import { ReactComponent as BagActive } from '../../icons/bag-active.svg';
 import { ReactComponent as PersonActive } from '../../icons/person-active.svg';
-import {ROOT_PATH,WISH_LIST_PATH,WHERE_TO_GO} from '../../constants/path.const'
+import {ROOT_PATH,WISH_LIST_PATH,WHERE_TO_GO,MY_ACCOUNT_PATH} from '../../constants/path.const'
 import './Footer.scss';
 
 function Footer() {
@@ -24,12 +24,12 @@ function Footer() {
           <Home className="homeIcon" />
         </Link>
       )}
-      {location.pathname === '/where-to-go' ? (
-        <Link to="/where-to-go">
+      {location.pathname === WHERE_TO_GO? (
+        <Link to={WHERE_TO_GO}>
           <SearchActive className="searchIcon" />
         </Link>
       ) : (
-        <Link to="/where-to-go">
+        <Link to={WHERE_TO_GO}>
           <Search className="searchIcon" />
         </Link>
       )}
@@ -42,12 +42,12 @@ function Footer() {
           <Bag className="bagIcon" />
         </Link>
       )}
-      {location.pathname === "/my-account" ? (
-        <Link to="/">
+      {location.pathname === MY_ACCOUNT_PATH ? (
+        <Link to={MY_ACCOUNT_PATH}>
           <PersonActive className="personIcon" />
         </Link>
       ) : (
-        <Link to="/">
+        <Link to={MY_ACCOUNT_PATH}>
           <Person className="personIcon" />
         </Link>
       )}
