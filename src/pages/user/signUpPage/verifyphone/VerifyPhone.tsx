@@ -115,7 +115,7 @@ function VerifyPhone() {
       </div>
       {isSended && (
         <div className="login-authnumber">
-          <input value={authNumber} onChange={authChangeHandler} className="login-input" placeholder="인증번호 6자리" />
+          <input value={authNumber} onChange={authChangeHandler} className="login-input" placeholder="인증번호 4자리" />
           <span className="login-timer">
             <Timer isResend={isReSended} resendfunc={resetIsResend} setInValid={() => setTimeIsValid(false)} />
           </span>
