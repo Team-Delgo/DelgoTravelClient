@@ -1,7 +1,6 @@
 import React,{useState} from 'react'
-import Heart from '../../../../common/components/Heart'
-// import { ReactComponent as ActiveHeart } from '../../../icons/heart-active.svg';
-// import { ReactComponent as Heart } from '../../../icons/heart.svg';
+import { ReactComponent as ActiveHeart } from '../../../icons/heart-active.svg';
+import { ReactComponent as Heart } from '../../../icons/heart.svg';
 import './WishedPlace.scss';
 
 type SavedPlaceTypeProps = {
@@ -27,14 +26,11 @@ function WishedPlace({ place }: SavedPlaceTypeProps) {
       <img src={place.image} alt="wished-place-img" />
       <div className="wished-place-name">{place.name}</div>
       <div className="wished-place-location">{place.location}</div>
-      {/* {wishList ? (
+      {wishList ? (
         <ActiveHeart className="wished-place-heart" onClick={handleWishList} />
       ) : (
         <Heart className="wished-place-heart" onClick={handleWishList} />
-      )} */}
-      <div className="wished-place-heart">
-        <Heart wishList={wishList} handleWishList={handleWishList} />
-      </div>
+      )}
     </div>
   );
 }

@@ -45,8 +45,6 @@ function WhereToGo() {
     setRegionSelectionModal(false);
   }, []);
 
-  console.log(areaTerm)
-
   return (
     <div className="where-to-go-background">
       <input className="search-place" placeholder="숙소검색" value={searchTerm} onChange={handleSerchTerm} />

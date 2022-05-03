@@ -43,11 +43,13 @@ function Region({ areaTerm,setAreaTerm }: PropsType) {
       {areaTerm === '' ? (
         <header className="region-modal-header-selected">국내 전체</header>
       ) : (
-        <header className="region-modal-header" onClick={handleSelectAllRegions}>국내 전체</header>
+        <header className="region-modal-header" onClick={handleSelectAllRegions}>
+          국내 전체
+        </header>
       )}
       <section className="region-modal-section">
         {regions.map((region: RegionType) =>
-           region.name=== areaTerm ? (
+          region.name === areaTerm ? (
             <span
               className="region-modal-section-region-name-selected"
               key={region.id}
@@ -56,7 +58,11 @@ function Region({ areaTerm,setAreaTerm }: PropsType) {
               {region.name}
             </span>
           ) : (
-            <span className="region-modal-section-region-name" key={region.id} onClick={handleSelectRegion(region.name)}>
+            <span
+              className="region-modal-section-region-name"
+              key={region.id}
+              onClick={handleSelectRegion(region.name)}
+            >
               {region.name}
             </span>
           ),

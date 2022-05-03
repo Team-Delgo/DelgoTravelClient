@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import PopularPlace from './PopularPlace/PopularPlace';
-import TravelHisotryPlace from './TravelHisotryPlace/TravelHisotryPlace';
+import PopularPlace from './PopularPlace';
+import TravelHisotryPlace from './TravelHisotryPlace';
 import './History.scss';
 
 type PopularPlaceType = {
@@ -19,6 +19,7 @@ type TravelHisotryPlaceType = {
 };
 
 function History() {
+  const [hasTravelHistorys, setHasTravelHistorys] = useState(true);
   const [popularPlace, setPopularPlace] = useState<Array<PopularPlaceType>>([
     {
       id: 1,
@@ -67,7 +68,7 @@ function History() {
   ]);
   return (
     <div className="travel-history-container">
-      {travelHisotryPlace.length > 0 ? (
+      {hasTravelHistorys === true ? (
         <div className="travel-history-profile">
           <img
             className="travel-history-profile-image"
@@ -89,7 +90,7 @@ function History() {
           <div className="travel-history-notice-sub">인기 숙소를 보여드릴게요</div>
         </div>
       )}
-      {travelHisotryPlace.length > 0 
+      {hasTravelHistorys === true
         ? travelHisotryPlace.map((place) => <TravelHisotryPlace place={place} key={place.id} />)
         : popularPlace.map((place) => <PopularPlace place={place} key={place.id} />)}
     </div>

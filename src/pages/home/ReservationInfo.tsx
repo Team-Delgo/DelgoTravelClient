@@ -1,9 +1,9 @@
 import React,{useState} from 'react';
-import Dog from '../../../icons/dog.svg';
-import Airplane from '../../../icons/airplane.svg';
-import Footprint from '../../../icons/footprint.svg';
-import Book from '../../../icons/book.svg';
-import Emergency from '../../../icons/emergency.svg'
+import Dog from '../../icons/dog.svg';
+import Airplane from '../../icons/airplane.svg';
+import Footprint from '../../icons/footprint.svg';
+import Book from '../../icons/book.svg';
+import Emergency from '../../icons/emergency.svg'
 import './ReservationInfo.scss';
 
 type ReservationInfoType = {
