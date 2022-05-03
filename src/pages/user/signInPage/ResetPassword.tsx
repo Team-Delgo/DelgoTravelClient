@@ -21,8 +21,8 @@ function ResetPassword() {
       return { ...prev, [id]: value };
     });
     
-    if(id=='passwordConfirm'){
-    }
+    // if(id==='passwordConfirm'){
+    // }
   };
 
   const submitHandler = () => {
