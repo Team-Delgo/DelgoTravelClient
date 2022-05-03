@@ -12502,6 +12502,11 @@
   dependencies:
     "minimatch" "^3.0.2"
 
+"node-extend@^0.2.0":
+  "integrity" "sha1-o9VoKpgVnMsujrimVieiCezxvPw="
+  "resolved" "https://registry.npmjs.org/node-extend/-/node-extend-0.2.0.tgz"
+  "version" "0.2.0"
+
 "node-fetch@^2.6.1":
   "integrity" "sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ=="
   "resolved" "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.7.tgz"
