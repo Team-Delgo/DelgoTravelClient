@@ -7,7 +7,7 @@ interface SignUpData {
   password: string;
   nickname: string;
   phone: string;
-  pet: { petName: string; petBirth: string | undefined; petImage: ArrayBuffer; petType: string };
+  pet: { name: string; birthday: string | undefined; size: string; weight: string };
 }
 
 async function emailCheck(email: string, success: (data: AxiosResponse) => void) {
@@ -26,12 +26,14 @@ async function emailCheck(email: string, success: (data: AxiosResponse) => void)
 async function signup(info: SignUpData, success: (data: AxiosResponse) => void) {
   const { nickname, email, password, phone, pet } = info;
   await axios
-    .post(`${url}/auth/signup`, {
-      name: nickname,
-      email,
-      password,
-      phone_no: phone,
-      pets: pet,
+    .post(`${url}/signup`, {
+      user: {
+        name: nickname,
+        email,
+        password,
+        phoneNo: phone,
+      },
+      pet,
     })
     .then((data) => {
       success(data);
@@ -71,5 +73,4 @@ async function phoneCheckNumber(number: string, success: (data: AxiosResponse) =
     });
 }
 
-
-export { emailCheck, signup, phoneCheckNumber, phoneSendMessage};
+export { emailCheck, signup, phoneCheckNumber, phoneSendMessage };

@@ -18,7 +18,7 @@ function VerifyPhone() {
   const [isSended, setIsSended] = useState(false);
   const [timeIsValid, setTimeIsValid] = useState(true);
   const [isReSended, setIsReSended] = useState(false);
-  const authIsValid = timeIsValid && authNumber.length === 6;
+  const authIsValid = timeIsValid && authNumber.length === 4;
   const isValid = phoneNumber.length === 11;
   const isEntered = phoneNumber.length > 0;
 
@@ -56,7 +56,7 @@ function VerifyPhone() {
   };
 
   const authChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    if (authNumber.length === 6 && event.target.value.length > 6) return;
+    if (authNumber.length === 4 && event.target.value.length > 4) return;
     setAuthNumber(event.target.value);
   };
 
@@ -91,7 +91,7 @@ function VerifyPhone() {
       }}
     >
       다음
-    </button>
+    </button> 
   );
 
   return (
@@ -115,7 +115,7 @@ function VerifyPhone() {
       </div>
       {isSended && (
         <div className="login-authnumber">
-          <input value={authNumber} onChange={authChangeHandler} className="login-input" placeholder="인증번호 6자리" />
+          <input value={authNumber} onChange={authChangeHandler} className="login-input" placeholder="인증번호 4자리" />
           <span className="login-timer">
             <Timer isResend={isReSended} resendfunc={resetIsResend} setInValid={() => setTimeIsValid(false)} />
           </span>

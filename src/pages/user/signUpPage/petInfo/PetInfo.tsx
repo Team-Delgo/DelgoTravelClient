@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import classNames from 'classnames';
+import { AxiosResponse } from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { checkPetName } from '../userInfo/ValidCheck';
 import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
@@ -54,7 +55,8 @@ function PetInfo() {
   });
   const pageIsValid = isValid.name && isValid.birth && isValid.type && isValid.weight;
   let petImage: any;
-
+  console.log(state);
+  console.log(isValid);
   const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     reader.onload = function () {
@@ -64,7 +66,7 @@ function PetInfo() {
     // let {petImage} = files;
     reader.readAsDataURL(event.target.files![0]);
   };
-
+  // console.log(image);
   const requireInputCheck = (key: string, value: string) => {
     if (value.length) {
       setIsValid((prev: IsValid) => {
@@ -112,22 +114,30 @@ function PetInfo() {
     setEnteredInput((prev: Input) => {
       return { ...prev, birth: birthday };
     });
+    setIsValid((prev: IsValid) => {
+      return { ...prev, birth: true };
+    })
   };
 
   const submitHandler = () => {
     console.log('저장완료');
-    const userObject = {
-      name:nickname,
+    const petInfo = {
+      name: enteredInput.name,
+      birthday: enteredInput.birth,
+      size: enteredInput.type,
+      weight: enteredInput.weight
+    };
+    const userInfo = {
+      nickname,
       email,
       password,
-      phoneNo:phone
+      phone,
+      pet: petInfo,
     };
-    const petObject = {
-      name:enteredInput.name,
-      birthday:enteredInput.birth,
-      size:enteredInput.type,
-      weight:enteredInput.weight
-    };
+    console.log(userInfo);
+    signup(userInfo, (response: AxiosResponse) => {
+      console.log(response);
+    })
     // 비동기 처리
     // signup({ email, password, nickname, phone, pet: {petName:enteredInput.name,petBirth:enteredInput.birth,petImage:} }, () => {});
   };
@@ -151,6 +161,7 @@ function PetInfo() {
           <Camera className="petinfo-image-icon" />
         </label>
         <div className="petinfo-image-preview" style={{ backgroundImage: `url(${image})` }} />
+
       </div>
       {modalActive && (
         <div>
@@ -202,13 +213,17 @@ function PetInfo() {
       </div>
       <div className="dogtype">
         <div
-          className="dogtype-help"
-          aria-hidden="true"
-          onClick={() => {
-            setIsOpenDogType(!isOpenDogType);
-          }}
+          className="dogtype-heplwrapper"
         >
-          ?
+          <div
+            className="dogtype-help"
+            aria-hidden="true"
+            onClick={() => {
+              setIsOpenDogType(!isOpenDogType);
+            }}
+          >
+            ?
+          </div>
           <DogType mount={isOpenDogType} />
         </div>
         <label htmlFor="S">

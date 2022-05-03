@@ -1,4 +1,4 @@
-@import "../signUpPage/SignUpPage.scss";
+@import '../signUpPage/SignUpPage.scss';
 
 @mixin buttonstyle($back, $font) {
   width: 90vw;
@@ -7,7 +7,7 @@
   background-color: $back;
   box-shadow: 0px 5px 13px rgba(0, 0, 0, 0.05);
   border-radius: 7px;
-  font-family: "Spoqa Han Sans Neo";
+  font-family: 'Spoqa Han Sans Neo';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -17,7 +17,7 @@
 .login {
   &-title {
     margin-top: 103px;
-    font-family: "Spoqa Han Sans Neo";
+    font-family: 'Spoqa Han Sans Neo';
     font-style: normal;
     font-weight: 700;
     font-size: 24px;

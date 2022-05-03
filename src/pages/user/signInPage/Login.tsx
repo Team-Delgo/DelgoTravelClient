@@ -3,9 +3,11 @@ import { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { userActions } from '../../../redux/reducers/userSlice';
+import { tokenActions } from '../../../redux/reducers/tokenSlice';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import ToastMessage from '../../../common/layouts/ToastMessage';
-import login from '../../../common/api/login';
+import { login } from '../../../common/api/login';
+import "./Login.scss";
 
 interface Input {
   email: string;
@@ -42,9 +44,12 @@ function Login() {
             pet: data.pet,
           }),
         );
+
         const accessToken = response.headers.authorization_access;
         const refreshToken = response.headers.authorization_refresh;
-        localStorage.setItem('accessToken', accessToken);
+        dispatch(
+          tokenActions.setToken(accessToken),
+        );
         localStorage.setItem('refreshToken', refreshToken);
         navigation('/');
       } else if (code === 303) {
@@ -60,6 +65,10 @@ function Login() {
       }, 2500);
     }
   }, [loginFailed]);
+
+  const findPassword = () => {
+    navigation('/user/signin/findpassword');
+  };
 
   return (
     <div className="login">
@@ -91,6 +100,7 @@ function Login() {
       <button type="button" className="login-button active" onClick={loginButtonHandler}>
         다음
       </button>
+      <div className='login-find_password' aria-hidden="true" onClick={findPassword}>비밀번호찾기</div>
       {loginFailed && <ToastMessage message="아이디 비밀번호를 확인해 주세요" />}
     </div>
   );
