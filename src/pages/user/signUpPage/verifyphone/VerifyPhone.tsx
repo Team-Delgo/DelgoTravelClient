@@ -35,7 +35,7 @@ function VerifyPhone() {
   };
 
   useEffect(() => {
-    if (buttonIsClicked) {
+    if (buttonIsClicked) {  
       setTimeout(() => {
         setButtonIsClicked(false);
       }, 2500);
