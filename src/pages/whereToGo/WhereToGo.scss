@@ -1,6 +1,6 @@
 .where-to-go-background{
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     background: #F3EFEA;
     padding-top: 14%;
     padding-bottom: 50px;
@@ -45,6 +45,16 @@
     }
     .places-container{
         padding-top: 7%;
+    }
+    .region-selection{
+        position : fixed;
+        bottom: 0px;
+        left: 0px;
+        width: 100%;
+        height: 357px;
+        background: #FFFFFF;
+        box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 20px 20px 0px 0px;
     }
 
 }

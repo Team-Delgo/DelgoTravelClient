@@ -15,7 +15,7 @@ interface Input {
 }
 
 function Login() {
-  const [enteredInput, setEnteredInput] = useState<Input>({ email: '', password: '' });
+  const [enteredInput, setEnteredInput] = useState<Input>({ email: '', password: ''});
   const [loginFailed, setLoginFailed] = useState(false);
   const navigation = useNavigate();
   const dispatch = useDispatch();

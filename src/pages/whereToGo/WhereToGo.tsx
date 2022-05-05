@@ -1,72 +1,87 @@
-import React,{useState} from 'react'
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable array-callback-return */
+import React,{useState,useEffect,useCallback} from 'react'
+import { useSelector } from "react-redux";
+import { AxiosResponse } from 'axios';
+import getAllPlaces from '../../common/api/getAllPlaces';
 import Footer from '../../common/layouts/Footer'
-import Place from './Place'
+import RegionSelectionModal from './modal/RegionSelectionModal'
+import Place from './place/Place'
+// import {RootState} from '../../redux/store'
 import { ReactComponent as BottomArrow } from '../../icons/bottom-arrow.svg';
-import './WhereToGo.scss'
+import './WhereToGo.scss';
 
-type PlaceType = {
-  id: number
-  image:string
-  region: string
-  region_detail: string
+interface PlaceType  {
+  address: string
+  lowestPrice: string
+  mainPhotoUrl: string
   name: string
-  maximum_person : number
-  maximum_dog : number
-  price : number
+  placeId: number
+  registDt: string
+  wishId: number
 }
 
 function WhereToGo() {
-  const [places, setPlaces] = useState<Array<PlaceType>>([
-    {
-      id:1,
-      image: `${process.env.PUBLIC_URL}/assets/images/whereToGoImage.png`,
-      region: '강원도',
-      region_detail: '원주',
-      name:'멍멍숙소멍',
-      maximum_person : 4,
-      maximum_dog : 2,
-      price : 190000,
-    },
-    {
-      id:2,
-      image: `${process.env.PUBLIC_URL}/assets/images/whereToGoImage.png`,
-      region: '강원도',
-      region_detail: '원주',
-      name:'멍멍숙소멍',
-      maximum_person : 4,
-      maximum_dog : 2,
-      price : 190000,
-    },
-    {
-      id:3,
-      image: `${process.env.PUBLIC_URL}/assets/images/whereToGoImage.png`,
-      region: '강원도',
-      region_detail: '원주',
-      name:'멍멍숙소멍',
-      maximum_person : 4,
-      maximum_dog : 2,
-      price : 190000,
-    }
-  ]);
+  const [places, setPlaces] = useState<Array<PlaceType>>([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [areaTerm, setAreaTerm] = useState('');
+  const [regionSelectionModal, setRegionSelectionModal] = useState(false);
+  const userId = useSelector((state: any) => state.persist.user.user.id) 
+
+  useEffect(() => {
+    getAllPlaces(userId,(response: AxiosResponse) => {
+      setPlaces(response.data.data); 
+    })
+  }, []);
+
+  const getAllPlace = useCallback(() => {
+    getAllPlaces(userId,(response: AxiosResponse) => {
+      setPlaces(response.data.data); 
+    })
+  }, []);
+
+  const handleSerchTerm = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  }, []);
+
+  const handleRegionSelectionModal = useCallback(() => {
+      setRegionSelectionModal(!regionSelectionModal);
+    },[regionSelectionModal]);
+
+  const closeRegionSelectionModal = useCallback(() => {
+    setRegionSelectionModal(false);
+  }, []);
+
   return (
     <div className="where-to-go-background">
-      <input className="search-place" placeholder="숙소검색" />
+      <input className="search-place" placeholder="숙소검색" value={searchTerm} onChange={handleSerchTerm} />
       <div className="search-region-date">
-        <div className="search-region">
-          전체
-          <BottomArrow className="bottom-arrow"/>
+        <div className="search-region" onClick={handleRegionSelectionModal}>
+          {areaTerm === '' ? '전체' : areaTerm}
+          <BottomArrow className="bottom-arrow" />
         </div>
         <div className="search-date">
           22.03.01 - 22.03.22 / 1박
-          <BottomArrow className="bottom-arrow"/>
+          <BottomArrow className="bottom-arrow" />
         </div>
       </div>
       <div className="places-container">
-        {places.map((place) => (
-          <Place place={place} key={place.id} />
-        ))}
-        </div>
+        {places.map((place) => {
+          if (place.address.includes(areaTerm)) {
+            if (place.name.includes(searchTerm)) {
+              return <Place key={place.placeId} place={place} userId={userId} getAllPlace={getAllPlace} places={places} setPlaces={setPlaces} />;
+            }
+          }
+        })}
+      </div>
       <Footer />
+      <RegionSelectionModal
+        regionSelectionModal={regionSelectionModal}
+        closeRegionSelectionModal={closeRegionSelectionModal}
+        setAreaTerm={setAreaTerm}
+        areaTerm={areaTerm}
+      />
     </div>
   );
 }
