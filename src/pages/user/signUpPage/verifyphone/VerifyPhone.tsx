@@ -35,7 +35,7 @@ function VerifyPhone() {
   };
 
   useEffect(() => {
-    if (buttonIsClicked) {  
+    if (buttonIsClicked) {
       setTimeout(() => {
         setButtonIsClicked(false);
       }, 2500);
@@ -77,6 +77,15 @@ function VerifyPhone() {
     setIsReSended(false);
   };
 
+  const submitAuthNumber = () => {
+    phoneCheckNumber(authNumber, (response: AxiosResponse) => {
+      const { code } = response.data;
+      if (code === 200) {
+        navigation(SIGN_UP_PATH.USER_INFO, { state: { phone: phoneNumber } });
+      }
+    });
+  };
+
   const buttonContext = !isSended ? (
     <button type="button" className={classNames('login-button', { active: isValid })} onClick={buttonClickHandler}>
       인증번호 발송
@@ -86,12 +95,10 @@ function VerifyPhone() {
       type="button"
       disabled={!authIsValid}
       className={classNames('login-button', { active: authIsValid })}
-      onClick={() => {
-        navigation(SIGN_UP_PATH.USER_INFO, { state: { phone: phoneNumber } });
-      }}
+      onClick={submitAuthNumber}
     >
       다음
-    </button> 
+    </button>
   );
 
   return (
