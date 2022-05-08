@@ -18,7 +18,7 @@ function VerifyPhone() {
   const [isSended, setIsSended] = useState(false);
   const [timeIsValid, setTimeIsValid] = useState(true);
   const [isReSended, setIsReSended] = useState(false);
-  const authIsValid = timeIsValid && authNumber.length === 4;
+  const authIsValid = timeIsValid && authNumber.length === 6;
   const isValid = phoneNumber.length === 11;
   const isEntered = phoneNumber.length > 0;
 
@@ -26,7 +26,7 @@ function VerifyPhone() {
     //  인증번호 전송 요청
     phoneSendMessage(phoneNumber, (response: AxiosResponse) => {
       const { code } = response.data;
-      console.log(response);
+
       if (code === 200) {
         setButtonIsClicked(true);
         setIsSended(true);
@@ -56,14 +56,14 @@ function VerifyPhone() {
   };
 
   const authChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    if (authNumber.length === 4 && event.target.value.length > 4) return;
+    if (authNumber.length === 6 && event.target.value.length > 6) return;
     setAuthNumber(event.target.value);
   };
 
   const authNumberResend = () => {
     phoneSendMessage(phoneNumber, (response: AxiosResponse) => {
       const { code } = response.data;
-      console.log(response);
+
       if (code === 200) {
         setIsReSended(true);
         setButtonIsClicked(true);
@@ -77,15 +77,6 @@ function VerifyPhone() {
     setIsReSended(false);
   };
 
-  const submitAuthNumber = () => {
-    phoneCheckNumber(authNumber, (response: AxiosResponse) => {
-      const { code } = response.data;
-      if (code === 200) {
-        navigation(SIGN_UP_PATH.USER_INFO, { state: { phone: phoneNumber } });
-      }
-    });
-  };
-
   const buttonContext = !isSended ? (
     <button type="button" className={classNames('login-button', { active: isValid })} onClick={buttonClickHandler}>
       인증번호 발송
@@ -95,7 +86,9 @@ function VerifyPhone() {
       type="button"
       disabled={!authIsValid}
       className={classNames('login-button', { active: authIsValid })}
-      onClick={submitAuthNumber}
+      onClick={() => {
+        navigation(SIGN_UP_PATH.USER_INFO, { state: { phone: phoneNumber } });
+      }}
     >
       다음
     </button>
@@ -122,7 +115,7 @@ function VerifyPhone() {
       </div>
       {isSended && (
         <div className="login-authnumber">
-          <input value={authNumber} onChange={authChangeHandler} className="login-input" placeholder="인증번호 4자리" />
+          <input value={authNumber} onChange={authChangeHandler} className="login-input" placeholder="인증번호 6자리" />
           <span className="login-timer">
             <Timer isResend={isReSended} resendfunc={resetIsResend} setInValid={() => setTimeIsValid(false)} />
           </span>

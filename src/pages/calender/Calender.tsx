@@ -26,7 +26,6 @@ function Calender() {
 
   const selectDateHandler = (e: any) => {
     const { id } = e.target;
-    console.log(id);
     const date = id.slice(0, 8);
     if (sequence === 0) {
       setSequence(1);
@@ -149,7 +148,7 @@ function Calender() {
   const datesElement4 = getDateContext(4);
 
   const startMonth = selectedDate.start.slice(4, 6);
-  const endDMonth = selectedDate.end.slice(4, 6);
+  const endMonth = selectedDate.end.slice(4, 6);
   const startDate = selectedDate.start.slice(6, 8);
   const endDate = selectedDate.end.slice(6, 8);
 
@@ -159,15 +158,31 @@ function Calender() {
   const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
 
   const startDay = WEEKDAY[new Date(`${startYear}-${startMonth}-${startDate}`).getDay()];
-  const endDay = WEEKDAY[new Date(`${endYear}-${endDMonth}-${endDate}`).getDay()];
+  const endDay = WEEKDAY[new Date(`${endYear}-${endMonth}-${endDate}`).getDay()];
 
-  const days = Number(selectedDate.end) - Number(selectedDate.start);
+  let count = 0;
 
-  const selectedDateContext = sequence === 2 ?
+  if (sequence === 2 && startMonth !== endMonth) {
+    for (let i = 0; i < Number(endMonth) - Number(startMonth); i += 1) {
+      const thisLast = new Date(Number(startYear), Number(startMonth) + i, 0);
+      const thisLastDate = thisLast.getDate();
+      count += thisLastDate;
+    }
+  }
+  const days = (count + Number(endDate)) - Number(startDate);
+
+  let selectedDateContext = sequence === 1 ?
     <div className="selected-date">
-      {startMonth}.{startDate}({startDay}) ~ {endDMonth}.{endDate}({endDay}) {days}박
+      {startMonth}.{startDate}({startDay})
+    </div> : <div />;
+
+  selectedDateContext = sequence === 2 ?
+    <div className="selected-date">
+      {startMonth}.{startDate}({startDay}) ~ {endMonth}.{endDate}({endDay}) {days}박
     </div>
-    : <div />
+    : selectedDateContext;
+
+
 
   const resetHandler = () => {
     setSelectedDate({ start: '', end: '' });
