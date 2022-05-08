@@ -29,8 +29,7 @@ function WishedPlace({ place }: SavedPlaceTypeProps) {
     setWishList(false);
     wishDelete({ wishId: place.wishId }, (response: AxiosResponse) => {
       if (response.data.code === 200) {
-        // getAllPlace()
-        // setWishList(0);
+        setWishList(false);
       }
     });
   },[])

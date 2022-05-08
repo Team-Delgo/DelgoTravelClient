@@ -21,6 +21,7 @@ async function wishDelete(data: { wishId: number }, success: (data: AxiosRespons
     const result = await axios.post(`${url}wish/delete`, {
       wishId:data.wishId
     });
+    console.log(result)
     success(result);
   } catch (error: any) {
     errorHandler(error);

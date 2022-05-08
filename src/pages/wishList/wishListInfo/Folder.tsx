@@ -26,34 +26,12 @@ interface PlaceType {
 }
 
 function Folder() {
-  // const [wishedPlace, setWishedPlace] = useState<Array<WishedPlaceType>>([
-  //     {
-  //       id: 1,
-  //       image: `${process.env.PUBLIC_URL}/assets/images/recommendedPlaceImage.png`,
-  //       name: '멍멍이네 하우스',
-  //       location: '강원도 속초시 조앙동',
-  //     },
-  //     {
-  //       id: 2,
-  //       image: `${process.env.PUBLIC_URL}/assets/images/recommendedPlaceImage.png`,
-  //       name: '멍멍이네 하우스',
-  //       location: '강원도 속초시 조앙동',
-  //     },
-  //     {
-  //       id: 3,
-  //       image: `${process.env.PUBLIC_URL}/assets/images/recommendedPlaceImage.png`,
-  //       name: '멍멍이네 하우스',
-  //       location: '강원도 속초시 조앙동',
-  //     },
-  //   ]);
-
   const [wishedPlace, setWishedPlace] = useState<Array<PlaceType>>([]);
   const userId = useSelector((state: any) => state.persist.user.user.id);
 
   useEffect(() => {
     getAllPlaces(userId, (response: AxiosResponse) => {
       setWishedPlace(response.data.data);
-      console.log(response.data.data)
     });
   }, []);
 

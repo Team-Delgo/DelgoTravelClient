@@ -7,7 +7,6 @@ import './Place.scss'
 interface PlaceTypeProps{
     place:PlaceType
     userId:number
-    getAllPlace:()=>void
     places:Array<PlaceType>
     setPlaces:any
 }
@@ -22,33 +21,34 @@ interface PlaceType  {
   wishId: number
 }
 
-function Place({ place, userId ,getAllPlace,places,setPlaces}: PlaceTypeProps) {
+function Place({ place, userId ,places,setPlaces}: PlaceTypeProps) {
   const [wishList, setWishList] = useState(place.wishId);
 
   const wishListInsert = useCallback(() => {
-    setWishList(1);
-
-    // const updatedUsers = places.map(place => (place.placeId) ? {...place, wishId: 123} : place)
-    // setPlaces(updatedUsers)
-
-    console.log(userId,place.placeId);
     wishInsert({ userId, placeId: place.placeId }, (response: AxiosResponse) => {
       if (response.data.code === 200) {
-        // getAllPlace()
-        setWishList(1);
+        const updatePlace = {...place,wishId:response.data.data.wishId}
+        const updatePlaces = places.map((p)=>
+          p.placeId === updatePlace.placeId ? {...p , ...updatePlace} : p,
+        )
+        setPlaces(updatePlaces)
+        setWishList(response.data.data.wishId);
       }
-    });
-  },[])
+    });   
+  },[wishList,places])
 
   const wishListDelete = useCallback(() => {
-    setWishList(0);
-    wishDelete({ wishId: place.wishId }, (response: AxiosResponse) => {
+    wishDelete({ wishId: wishList }, (response: AxiosResponse) => {
       if (response.data.code === 200) {
-        // getAllPlace()
+        const updatePlace = {...place,wishId:0}
+        const updatePlaces = places.map((p)=>
+          p.placeId === updatePlace.placeId ? {...p , ...updatePlace} : p,
+        )
+        setPlaces(updatePlaces)
         setWishList(0);
       }
     });
-  },[])
+  },[wishList,places])
 
   return (
     <div className="place">
