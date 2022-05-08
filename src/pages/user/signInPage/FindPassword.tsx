@@ -36,7 +36,7 @@ function FindPassword() {
   };
 
   const nextButtonHandler = () => {
-    navigation(SIGN_IN_PATH.PHONEAUTH, { state: { phone: phoneNumber } });
+    navigation(SIGN_IN_PATH.PHONEAUTH, { state: { phone: phoneNumber, email, } });
   };
 
   return (

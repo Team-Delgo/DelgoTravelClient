@@ -5,12 +5,13 @@ import classNames from 'classnames';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import ToastMessage from '../../../common/layouts/ToastMessage';
 import Timer from '../signUpPage/verifyphone/Timer';
-import { phoneSendMessage,phoneCheckNumber } from '../../../common/api/signup';
+import { phoneSendMessage, phoneCheckNumber } from '../../../common/api/signup';
 import { SIGN_IN_PATH } from '../../../constants/path.const';
 
 
 interface LocationState {
   phone: string;
+  email: string;
 }
 
 function PhoneAuth() {
@@ -19,7 +20,7 @@ function PhoneAuth() {
   const [buttonIsClicked, setButtonIsClicked] = useState(true);
   const [authNumber, setAuthNumber] = useState('');
   const state = useLocation().state as LocationState;
-  const { phone } = state;
+  const { phone, email } = state;
   const authIsValid = timeIsValid && authNumber.length === 4;
   const navigation = useNavigate();
 
@@ -57,7 +58,7 @@ function PhoneAuth() {
     phoneCheckNumber(authNumber, (response: AxiosResponse) => {
       const { code } = response.data;
       if (code === 200) {
-        navigation(SIGN_IN_PATH.RESETPASSWORD);
+        navigation(SIGN_IN_PATH.RESETPASSWORD, { state: email });
       }
     });
   };

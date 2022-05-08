@@ -1,8 +1,11 @@
 import React, { ChangeEvent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
+import classNames from 'classnames';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import { SIGN_IN_PATH } from '../../../constants/path.const';
+import { changePassword } from '../../../common/api/login';
+import { checkPasswordConfirm } from "../signUpPage/userInfo/ValidCheck";
 
 interface Input {
   password: string;
@@ -11,23 +14,36 @@ interface Input {
 
 function ResetPassword() {
   const [enteredInput, setEnteredInput] = useState<Input>({ password: '', passwordConfirm: '' });
+  const [confirmValid, setConfirmValid] = useState(false);
   const [feedback, setFeedback] = useState('');
   const navigation = useNavigate();
-  const isValid = enteredInput.password.length >= 8 && feedback.length === 0;
+  const email = useLocation().state as string;
+  const isValid = enteredInput.password.length >= 8 && confirmValid;
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setEnteredInput((prev: Input) => {
       return { ...prev, [id]: value };
     });
-    
-    // if(id==='passwordConfirm'){
-    // }
+
+    if (id === 'passwordConfirm') {
+      const result = checkPasswordConfirm(enteredInput.password, value);
+      const { isValid, message } = result;
+      setConfirmValid(isValid);
+      setFeedback(message);
+    }
   };
 
   const submitHandler = () => {
     // axios
-    navigation(SIGN_IN_PATH.MAIN);
+    if (isValid) {
+      changePassword(email, enteredInput.password, (response: AxiosResponse) => {
+        const { code } = response.data;
+        if (code === 200) {
+          navigation(SIGN_IN_PATH.MAIN);
+        }
+      });
+    }
   };
 
   return (
@@ -60,8 +76,9 @@ function ResetPassword() {
           value={enteredInput.passwordConfirm}
           onChange={inputChangeHandler}
         />
+        <p className='input-feedback'>{feedback}</p>
       </div>
-      <button type="button" className="login-button active" onClick={submitHandler}>
+      <button type="button" disabled={!isValid} className={classNames('login-button', { active: isValid })} onClick={submitHandler}>
         확인
       </button>
     </div>
