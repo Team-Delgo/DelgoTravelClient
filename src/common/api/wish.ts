@@ -1,4 +1,4 @@
-import axios, {  AxiosResponse } from 'axios';
+import axios, {  AxiosResponse,AxiosError } from 'axios';
 import { errorHandler } from './errorHandler';
 import { url } from '../../constants/url.cosnt';
 
@@ -11,7 +11,7 @@ async function wishInsert(data: { userId: number; placeId: number }, success: (d
       },
     });
     success(result);
-  } catch (error: any) {
+  } catch (error: AxiosError | any) {
     errorHandler(error);
   }
 }
@@ -22,7 +22,7 @@ async function wishDelete(data: { wishId: number }, success: (data: AxiosRespons
       wishId:data.wishId
     });
     success(result);
-  } catch (error: any) {
+  } catch (error: AxiosError | any) {
     errorHandler(error);
   }
 }

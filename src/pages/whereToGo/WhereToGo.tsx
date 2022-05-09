@@ -4,7 +4,7 @@
 import React,{useState,useEffect,useCallback} from 'react'
 import { useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
-import getAllPlaces from '../../common/api/getAllPlaces';
+import {getAllPlaces} from '../../common/api/getPlaces';
 import Footer from '../../common/layouts/Footer'
 import RegionSelectionModal from './modal/RegionSelectionModal'
 import Place from './place/Place'
@@ -32,14 +32,10 @@ function WhereToGo() {
   useEffect(() => {
     getAllPlaces(userId,(response: AxiosResponse) => {
       setPlaces(response.data.data); 
+      console.log(response.data.data)
     })
   }, []);
 
-  const getAllPlace = useCallback(() => {
-    getAllPlaces(userId,(response: AxiosResponse) => {
-      setPlaces(response.data.data); 
-    })
-  }, []);
 
   const handleSerchTerm = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -70,7 +66,7 @@ function WhereToGo() {
         {places.map((place) => {
           if (place.address.includes(areaTerm)) {
             if (place.name.includes(searchTerm)) {
-              return <Place key={place.placeId} place={place} userId={userId} getAllPlace={getAllPlace} places={places} setPlaces={setPlaces} />;
+              return <Place key={place.placeId} place={place} userId={userId}  places={places} setPlaces={setPlaces} />;
             }
           }
         })}
