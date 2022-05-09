@@ -33,7 +33,7 @@ function Folder() {
     <div className="wish-list-container">
       <div className="wish-list-container-header-text">저장 된 {wishedPlace.length}개의 숙소</div>
       {wishedPlace.map((place) => (
-        <WishedPlace place={place} key={place.placeId} />
+        <WishedPlace place={place} key={place.placeId} wishedPlace={wishedPlace} setWishedPlace={setWishedPlace}/>
       ))}
     </div>
   );
