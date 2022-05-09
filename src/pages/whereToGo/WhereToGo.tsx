@@ -4,7 +4,7 @@
 import React,{useState,useEffect,useCallback} from 'react'
 import { useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
-import getAllPlaces from '../../common/api/getAllPlaces';
+import {getAllPlaces} from '../../common/api/getPlaces';
 import Footer from '../../common/layouts/Footer'
 import RegionSelectionModal from './modal/RegionSelectionModal'
 import Place from './place/Place'
@@ -32,6 +32,7 @@ function WhereToGo() {
   useEffect(() => {
     getAllPlaces(userId,(response: AxiosResponse) => {
       setPlaces(response.data.data); 
+      console.log(response.data.data)
     })
   }, []);
 
