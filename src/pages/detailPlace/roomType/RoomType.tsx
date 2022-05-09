@@ -13,7 +13,7 @@ function RoomType({room}:any) {
       </div>
       <div className="room-info-second-line">
       <span>{room.name}</span>
-        <span>{room.lowestPrice}원~</span>
+        <span>{room.lowestPrice}원</span>
       </div>
     </div>
   </div>
