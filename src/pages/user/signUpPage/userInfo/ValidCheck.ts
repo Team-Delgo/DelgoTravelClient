@@ -26,7 +26,7 @@ function checkPassword(password: string): Feedback {
 
 function checkPasswordConfirm(password: string | undefined, confirm: string | undefined): Feedback {
   if (password !== confirm) {
-    return { isValid: false, message: '패스워드 불일치' };
+    return { isValid: false, message: '비밀번호 불일치' };
   }
 
   return { isValid: true, message: '' };

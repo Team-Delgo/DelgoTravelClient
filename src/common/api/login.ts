@@ -44,4 +44,20 @@ async function emailAuth(email: string, success: (data: AxiosResponse) => void) 
     });
 }
 
-export { login, tokenRefresh, emailAuth };
+async function changePassword(email: string, password: string, success: (data: AxiosResponse) => void) {
+  await axios
+    .post(`${url}/changePassword`, {
+      user: {
+        email,
+        password,
+      },
+    })
+    .then((data) => {
+      success(data);
+    })
+    .catch((error) => {
+      errorHandler(error);
+    });
+}
+
+export { login, tokenRefresh, emailAuth, changePassword };

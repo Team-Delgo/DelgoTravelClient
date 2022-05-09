@@ -213,17 +213,13 @@ function PetInfo() {
       </div>
       <div className="dogtype">
         <div
-          className="dogtype-heplwrapper"
+          className="dogtype-help"
+          aria-hidden="true"
+          onClick={() => {
+            setIsOpenDogType(!isOpenDogType);
+          }}
         >
-          <div
-            className="dogtype-help"
-            aria-hidden="true"
-            onClick={() => {
-              setIsOpenDogType(!isOpenDogType);
-            }}
-          >
-            ?
-          </div>
+          ?
           <DogType mount={isOpenDogType} />
         </div>
         <label htmlFor="S">
