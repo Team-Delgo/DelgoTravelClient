@@ -10,12 +10,13 @@ import PetInfo from './pages/user/signUpPage/petInfo/PetInfo';
 import Login from './pages/user/signInPage/Login';
 import WishListPage from './pages/wishList/WishList'
 import WhereToGoPage from './pages/whereToGo/WhereToGo';
-import { EDITOR_NOTE_PATH, ROOT_PATH, SIGN_IN_PATH, SIGN_UP_PATH, WISH_LIST_PATH, WHERE_TO_GO, MY_ACCOUNT_PATH, CALENDER_PATH } from './constants/path.const';
+import { EDITOR_NOTE_PATH, ROOT_PATH, SIGN_IN_PATH, SIGN_UP_PATH, WISH_LIST_PATH, WHERE_TO_GO_PATH, MY_ACCOUNT_PATH, CALENDER_PATH,DETAIL_PLACE_PATH } from './constants/path.const';
 import './App.scss';
 import MyAccount from './pages/myAccount/MyAccount';
 import FindPassword from './pages/user/signInPage/FindPassword';
 import ResetPassword from './pages/user/signInPage/ResetPassword';
 import PhoneAuth from './pages/user/signInPage/PhoneAuth';
+import DetailPlace from './pages/detailPlace/DetailPlace'
 import Calender from './pages/calender/Calender';
 
 function App() {
@@ -34,8 +35,9 @@ function App() {
       <Route path={SIGN_UP_PATH.USER_PET_INFO} element={<PetInfo />} />
       <Route path={SIGN_UP_PATH.USER_PET_INFO} element={<PetInfo />} />
       <Route path={WISH_LIST_PATH} element={<WishListPage />} />
-      <Route path={WHERE_TO_GO} element={<WhereToGoPage />} />
+      <Route path={WHERE_TO_GO_PATH} element={<WhereToGoPage />} />
       <Route path={MY_ACCOUNT_PATH} element={<MyAccount />} />
+      <Route path={DETAIL_PLACE_PATH} element={<DetailPlace />} />
       <Route path={CALENDER_PATH} element={<Calender />} />
     </Routes>
   );

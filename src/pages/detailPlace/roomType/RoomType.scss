@@ -1,0 +1,36 @@
+.room{
+    width: 86vw;
+    padding-bottom: 12%;
+    margin: auto;
+    position: relative;
+    img{
+        width: 86vw;
+    }
+    &-info{
+        height: 17vw;
+        margin-top: -3px;
+        padding-top: 5%;
+        background-color: #FFFBF6;
+        box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.15);
+        &-first-line{
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10% 0 5%;
+            color: #B0A69D;
+            font-size: 3vw;
+        }
+        &-second-line{
+            display: flex;
+            justify-content: space-between;
+            padding: 0 6% 0 5%;
+            color: #3E382F;
+            font-weight: bold;
+            font-size: 4.5vw;
+        }
+    }
+    &-heart{
+        position: absolute;
+        top: -5px;
+        right: -10px;
+    }
+}

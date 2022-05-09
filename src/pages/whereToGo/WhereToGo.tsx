@@ -32,7 +32,6 @@ function WhereToGo() {
   useEffect(() => {
     getAllPlaces(userId,(response: AxiosResponse) => {
       setPlaces(response.data.data); 
-      console.log(response.data.data)
     })
   }, []);
 

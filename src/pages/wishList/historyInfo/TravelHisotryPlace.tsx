@@ -1,4 +1,5 @@
 import React from 'react'
+import './TravelHistoryPlace.scss';
 
 type TravelHisotryPlaceTypeProps = {
     place:TravelHisotryPlaceType

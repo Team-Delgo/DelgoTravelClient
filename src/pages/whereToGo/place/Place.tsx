@@ -1,4 +1,5 @@
 import React,{useState,useCallback } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import {wishInsert,wishDelete} from '../../../common/api/wish'
 import Heart from '../../../common/components/Heart'
@@ -21,38 +22,36 @@ interface PlaceType  {
   wishId: number
 }
 
-function Place({ place, userId ,places,setPlaces}: PlaceTypeProps) {
+function Place({ place, userId, places, setPlaces }: PlaceTypeProps) {
   const [wishList, setWishList] = useState(place.wishId);
 
   const wishListInsert = useCallback(() => {
     wishInsert({ userId, placeId: place.placeId }, (response: AxiosResponse) => {
       if (response.data.code === 200) {
-        const updatePlace = {...place,wishId:response.data.data.wishId}
-        const updatePlaces = places.map((p)=>
-          p.placeId === updatePlace.placeId ? {...p , ...updatePlace} : p,
-        )
-        setPlaces(updatePlaces)
+        const updatePlace = { ...place, wishId: response.data.data.wishId };
+        const updatePlaces = places.map((p) => (p.placeId === updatePlace.placeId ? { ...p, ...updatePlace } : p));
+        setPlaces(updatePlaces);
         setWishList(response.data.data.wishId);
       }
-    });   
-  },[wishList,places])
+    });
+  }, [wishList, places]);
 
   const wishListDelete = useCallback(() => {
     wishDelete({ wishId: wishList }, (response: AxiosResponse) => {
       if (response.data.code === 200) {
-        const updatePlace = {...place,wishId:0}
-        const updatePlaces = places.map((p)=>
-          p.placeId === updatePlace.placeId ? {...p , ...updatePlace} : p,
-        )
-        setPlaces(updatePlaces)
+        const updatePlace = { ...place, wishId: 0 };
+        const updatePlaces = places.map((p) => (p.placeId === updatePlace.placeId ? { ...p, ...updatePlace } : p));
+        setPlaces(updatePlaces);
         setWishList(0);
       }
     });
-  },[wishList,places])
+  }, [wishList, places]);
 
   return (
     <div className="place">
-      <img src={place.mainPhotoUrl} alt="place-img" />
+      <Link to={`/detail-place/${place.placeId}`} key={place.placeId}>
+        <img src={place.mainPhotoUrl} alt="place-img" />
+      </Link>
       <div className="place-info">
         <div className="place-info-first-line">
           <span className="place-region">

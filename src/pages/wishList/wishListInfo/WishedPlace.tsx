@@ -2,12 +2,12 @@ import React,{useState,useCallback} from 'react'
 import { AxiosResponse } from 'axios';
 import Heart from '../../../common/components/Heart'
 import {wishDelete} from '../../../common/api/wish'
-// import { ReactComponent as ActiveHeart } from '../../../icons/heart-active.svg';
-// import { ReactComponent as Heart } from '../../../icons/heart.svg';
 import './WishedPlace.scss';
 
-type SavedPlaceTypeProps = {
+type WishedPlaceTypeProps = {
     place:PlaceType
+    wishedPlace:Array<PlaceType>
+    setWishedPlace:any
 }
 
 interface PlaceType {
@@ -21,18 +21,18 @@ interface PlaceType {
 }
 
 
-function WishedPlace({ place }: SavedPlaceTypeProps) {
+function WishedPlace({ place,wishedPlace,setWishedPlace }: WishedPlaceTypeProps) {
   const [wishList, setWishList] = useState(true);
 
-
   const wishListDelete = useCallback(() => {
-    setWishList(false);
     wishDelete({ wishId: place.wishId }, (response: AxiosResponse) => {
       if (response.data.code === 200) {
+        const updateWishedPlaces = wishedPlace.filter(p => p.placeId !== place.placeId);
+        setWishedPlace(updateWishedPlaces)
         setWishList(false);
       }
     });
-  },[])
+  },[wishList,wishedPlace])
 
   return (
     <div className="wished-place">
