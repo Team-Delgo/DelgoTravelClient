@@ -58,7 +58,35 @@ function DetailPlace() {
         '  꼬강이랑 다녀왔는데 매우만족했습니다. 오션뷰에 마당잔디도 관리가 잘 되어있었어요. 사장님이 꼬강이를 너무 예뻐해주셔서 저도 정말 오기 잘했다고 생각했습니다. 재방문 하고싶습다',
     },
     {
-      id: 1,
+      id: 2,
+      profileImage: `${process.env.PUBLIC_URL}/assets/images/reviewImage.png`,
+      reviewImages: [
+        `${process.env.PUBLIC_URL}/assets/images/reviewImage1.png`,
+        `${process.env.PUBLIC_URL}/assets/images/reviewImage1.png`,
+      ],
+      nickName: '꼬꼬맘',
+      starRating: 5,
+      registrationDate: '22.02.01',
+      roomUsed: '301호 (오션뷰) 객실 이용',
+      reviewContent:
+        '  꼬꼬랑 다녀왔는데 매우만족했습니다. 오션뷰에 마당잔디도 관리가 잘 되어있었어요. 사장님이 꼬꼬를 너무 예뻐해주셔서 저도 정말 오기 잘했다고 생각했습니다. 재방문 하고싶습다',
+    },
+    {
+      id: 3,
+      profileImage: `${process.env.PUBLIC_URL}/assets/images/reviewImage.png`,
+      reviewImages: [
+        `${process.env.PUBLIC_URL}/assets/images/reviewImage1.png`,
+        `${process.env.PUBLIC_URL}/assets/images/reviewImage1.png`,
+      ],
+      nickName: '꼬꼬맘',
+      starRating: 5,
+      registrationDate: '22.02.01',
+      roomUsed: '301호 (오션뷰) 객실 이용',
+      reviewContent:
+        '  꼬꼬랑 다녀왔는데 매우만족했습니다. 오션뷰에 마당잔디도 관리가 잘 되어있었어요. 사장님이 꼬꼬를 너무 예뻐해주셔서 저도 정말 오기 잘했다고 생각했습니다. 재방문 하고싶습다',
+    },
+    {
+      id: 4,
       profileImage: `${process.env.PUBLIC_URL}/assets/images/reviewImage.png`,
       reviewImages: [
         `${process.env.PUBLIC_URL}/assets/images/reviewImage1.png`,
@@ -129,7 +157,7 @@ function DetailPlace() {
           <div className="detail-place-info-reviews">★ 9.1 리뷰 12개 &gt;</div>
           <div className="detail-place-info-facility">소형견,오션뷰,자연휴강,산책코스</div>
         </div>
-        <Link style={{ textDecoration: 'none' }} to={CALENDER_PATH} >
+        <Link style={{ textDecoration: 'none' }} to={CALENDER_PATH}>
           <div className="detail-place-reservation-date-select">
             <span>날짜선택</span>
             <span className="detail-place-reservation-date-select-calender">
@@ -147,8 +175,8 @@ function DetailPlace() {
         </div>
         <div className="detail-place-review">
           <header className="detail-place-review-header">
-            <span className="detail-place-review-header-count">리뷰 21개</span>
-            <Link style={{ textDecoration: 'none' }} to={`/detail-place/${placeId}/reviews`} key={placeId}>
+            <span className="detail-place-review-header-number">리뷰 {reviews.length}개</span>
+            <Link style={{ textDecoration: 'none' }} to={`/detail-place/${placeId}/reviews`} state={{ reviews}} key={placeId}>
               <span className="detail-place-review-header-more">더보기</span>
             </Link>
           </header>
