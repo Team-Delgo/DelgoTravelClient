@@ -1,6 +1,41 @@
-.review-header{
-    display: flex;
-    // .img{
-    //     width: 100%;
-    // }
+.review{
+    margin: 0 0 20% 5%;
+    color: #3E382F;
+    &-header{
+        display: flex;
+        &-info{
+            padding-left: 3%;
+            &-nick-name{
+                font-weight: bold;
+            }
+            &-star-rating{
+
+            }
+            &-registration-data{
+                padding-left: 2%;
+                font-weight: bold;
+                font-size: 3vw;
+            }
+            &-room-used{
+                padding-bottom: 10%;
+                font-size: 3vw;
+                color:#AD9E87;
+            }
+        }
+    }
+    &-content{
+        &-description{
+            color:#3E382F;
+            font-size: 3.5vw;
+            font-weight: 100;
+            padding-bottom: 5%;
+        }
+        &-image-container{
+            display: flex;
+            overflow-x: scroll;
+            img{
+                padding-right: 10px;
+            }
+        }
+    }
 }

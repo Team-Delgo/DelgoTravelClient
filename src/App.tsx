@@ -16,8 +16,10 @@ import MyAccount from './pages/myAccount/MyAccount';
 import FindPassword from './pages/user/signInPage/FindPassword';
 import ResetPassword from './pages/user/signInPage/ResetPassword';
 import PhoneAuth from './pages/user/signInPage/PhoneAuth';
-import DetailPlace from './pages/detailPlace/DetailPlace'
 import Calender from './pages/calender/Calender';
+import DetailPlace from './pages/detailPlace/DetailPlace'
+import ReviewsPage from './pages/detailPlace/reviewsPage/ReviewsPage'
+
 
 function App() {
   return (
@@ -37,8 +39,9 @@ function App() {
       <Route path={WISH_LIST_PATH} element={<WishListPage />} />
       <Route path={WHERE_TO_GO_PATH} element={<WhereToGoPage />} />
       <Route path={MY_ACCOUNT_PATH} element={<MyAccount />} />
-      <Route path={DETAIL_PLACE_PATH} element={<DetailPlace />} />
       <Route path={CALENDER_PATH} element={<Calender />} />
+      <Route path={DETAIL_PLACE_PATH.MAIN} element={<DetailPlace />} />
+      <Route path={DETAIL_PLACE_PATH.REVIEWS} element={<ReviewsPage />} />
     </Routes>
   );
 }

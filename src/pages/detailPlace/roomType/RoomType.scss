@@ -1,12 +1,15 @@
 .room{
     width: 86vw;
     padding-bottom: 12%;
-    margin: auto;
+    text-align: center;
+    margin-left: 5%;
     position: relative;
     img{
-        width: 86vw;
+        width: 90vw;
+        height: 25vh;
     }
     &-info{
+        width: 90vw;
         height: 17vw;
         margin-top: -3px;
         padding-top: 5%;

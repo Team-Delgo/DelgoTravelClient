@@ -22,4 +22,7 @@ export const WISH_LIST_PATH = '/wish-list';
 export const CALENDER_PATH = '/calender';
 export const WHERE_TO_GO_PATH = '/where-to-go';
 
-export const DETAIL_PLACE_PATH = '/detail-place/:placeId';
+export const DETAIL_PLACE_PATH = {
+  MAIN:'/detail-place/:placeId',
+  REVIEWS:'/detail-place/:placeId/reviews'
+}
