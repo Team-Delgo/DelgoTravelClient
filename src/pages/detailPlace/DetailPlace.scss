@@ -1,5 +1,6 @@
 .detail-place{
-    margin-bottom: 200px;
+    position: relative; 
+    margin-bottom: 100px;
     color:#3E382F;
     &-main-image{
         width: 100%;
@@ -7,8 +8,8 @@
     }
     &-heart{
         position: absolute;
-        top: -5px;
-        right: -10px;
+        top: 10px;
+        right: 0px;
     }
     &-info{
         margin-left: 5%;
@@ -81,19 +82,22 @@
         margin: 0 0 30% 5%;
         font-size: 6vw;
         font-weight: bold;
-        overflow-x: scroll;
         &-header{
             padding-bottom: 10%;
         }
         &-image-container{
             display: flex;
             justify-content: space-between;
+            overflow-x: scroll;
         }
     }
     &-notice,&-base-information,&-additional-personnel-information,&-cancellation-refund-policy,&-etc,&-map{
         margin: 0 5% 30% 5%;
         font-size: 6vw;
         font-weight: bold;
+        &-header{
+            padding-bottom: 7%;
+        }
 
     }
 }

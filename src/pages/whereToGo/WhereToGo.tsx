@@ -1,16 +1,17 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable array-callback-return */
 import React,{useState,useEffect,useCallback} from 'react'
+import { Link, useParams } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
 import {getAllPlaces} from '../../common/api/getPlaces';
 import Footer from '../../common/layouts/Footer'
 import RegionSelectionModal from './modal/RegionSelectionModal'
 import Place from './place/Place'
+import { CALENDER_PATH} from '../../constants/path.const';
 // import {RootState} from '../../redux/store'
 import { ReactComponent as BottomArrow } from '../../icons/bottom-arrow.svg';
 import './WhereToGo.scss';
+
 
 interface PlaceType  {
   address: string
@@ -52,20 +53,22 @@ function WhereToGo() {
     <div className="where-to-go-background">
       <input className="search-place" placeholder="숙소검색" value={searchTerm} onChange={handleSerchTerm} />
       <div className="search-region-date">
-        <div className="search-region" onClick={handleRegionSelectionModal}>
+        <div className="search-region" aria-hidden="true" onClick={handleRegionSelectionModal}>
           {areaTerm === '' ? '전체' : areaTerm}
           <BottomArrow className="bottom-arrow" />
         </div>
-        <div className="search-date">
-          22.03.01 - 22.03.22 / 1박
-          <BottomArrow className="bottom-arrow" />
-        </div>
+        <Link style={{ textDecoration: 'none' }} to={CALENDER_PATH}>
+          <div className="search-date">
+            22.03.01 - 22.03.22 / 1박
+            <BottomArrow className="bottom-arrow" />
+          </div>
+        </Link>
       </div>
       <div className="places-container">
         {places.map((place) => {
           if (place.address.includes(areaTerm)) {
             if (place.name.includes(searchTerm)) {
-              return <Place key={place.placeId} place={place} userId={userId}  places={places} setPlaces={setPlaces} />;
+              return <Place key={place.placeId} place={place} userId={userId} places={places} setPlaces={setPlaces} />;
             }
           }
         })}

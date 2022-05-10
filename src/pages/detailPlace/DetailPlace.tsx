@@ -7,13 +7,13 @@ import ReservationButton from './reservationButton/ReservationButton';
 import Map from '../../common/components/Map'
 import Heart from '../../common/components/Heart'
 import {wishInsert,wishDelete} from '../../common/api/wish'
+import { CALENDER_PATH} from '../../constants/path.const';
 
 import './DetailPlace.scss';
 
 function DetailPlace() {
   const [wishList, setWishList] = useState(0);
-  const  {placeId}  = useParams()
-
+  const { placeId } = useParams();
 
   const [roomTypes, setRoomTypes] = useState<Array<any>>([
     {
@@ -83,7 +83,7 @@ function DetailPlace() {
   ]);
 
   const wishListInsert = useCallback(() => {
-    setWishList(1)
+    setWishList(1);
     // wishInsert({ userId, placeId: place.placeId }, (response: AxiosResponse) => {
     //   if (response.data.code === 200) {
     //     const updatePlace = { ...place, wishId: response.data.data.wishId };
@@ -95,7 +95,7 @@ function DetailPlace() {
   }, [wishList]);
 
   const wishListDelete = useCallback(() => {
-    setWishList(0)
+    setWishList(0);
     // wishDelete({ wishId: wishList }, (response: AxiosResponse) => {
     //   if (response.data.code === 200) {
     //     const updatePlace = { ...place, wishId: 0 };
@@ -107,7 +107,7 @@ function DetailPlace() {
   }, [wishList]);
 
   return (
-    <div>
+    <>
       <div className="detail-place">
         <img
           className="detail-place-main-image"
@@ -129,12 +129,14 @@ function DetailPlace() {
           <div className="detail-place-info-reviews">★ 9.1 리뷰 12개 &gt;</div>
           <div className="detail-place-info-facility">소형견,오션뷰,자연휴강,산책코스</div>
         </div>
-        <div className="detail-place-reservation-date-select">
-          <span>날짜선택</span>
-          <span className="detail-place-reservation-date-select-calender">
-            11.14 수 - 11.15 목&nbsp;&nbsp;&nbsp;&gt;
-          </span>
-        </div>
+        <Link style={{ textDecoration: 'none' }} to={CALENDER_PATH} >
+          <div className="detail-place-reservation-date-select">
+            <span>날짜선택</span>
+            <span className="detail-place-reservation-date-select-calender">
+              11.14 수 - 11.15 목&nbsp;&nbsp;&nbsp;&gt;
+            </span>
+          </div>
+        </Link>
         <div className="detail-place-room-select">
           <header className="detail-place-room-select-header">객실선택</header>
         </div>
@@ -170,12 +172,12 @@ function DetailPlace() {
         <div className="detail-place-cancellation-refund-policy">취소 및 환불 규정</div>
         <div className="detail-place-etc">확인사항 및 기타</div>
         <div className="detail-place-map">
-          지도
+          <header className="detail-place-map-header">지도</header>
           <Map />
         </div>
       </div>
       <ReservationButton />
-    </div>
+    </>
   );
 }
 
