@@ -1,5 +1,9 @@
-/* eslint-disable react/jsx-no-comment-textnodes */
-import React,{useState,useCallback} from 'react'
+import React,{useState,useCallback,useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
+import { AxiosResponse } from 'axios';
+import { useDispatch } from 'react-redux';
+import { tokenActions } from '../../redux/reducers/tokenSlice';
+import { tokenRefresh } from '../../common/api/login';
 import Footer from '../../common/layouts/Footer';
 import Folder from './wishListInfo/Folder';
 import History from './historyInfo/History';
@@ -8,6 +12,26 @@ import './WishList.scss';
 
 function WishList() {
   const [currentTab, setCurrentTab] = useState(0);
+  const navigation = useNavigate();
+  const dispatch = useDispatch();
+  const refreshToken = localStorage.getItem('refreshToken') || '';
+
+  useEffect(() => {
+    tokenRefresh({ refreshToken }, (response: AxiosResponse) => {
+      const { code } = response.data;
+
+      if (code === 200) {
+        const accessToken = response.headers.authorization_access;
+        const refreshToken = response.headers.authorization_refresh;
+
+        dispatch(tokenActions.setToken(accessToken),);
+        localStorage.setItem('refreshToken', refreshToken);
+      }
+      else {
+        navigation('/user/signin');
+      }
+    });
+  }, [refreshToken]);
 
   const changeCurrentTab = useCallback((tabNumber: number)=> (event: React.MouseEvent)  => {
     setCurrentTab(tabNumber);

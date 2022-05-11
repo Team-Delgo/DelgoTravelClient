@@ -1,9 +1,12 @@
 /* eslint-disable array-callback-return */
 import React,{useState,useEffect,useCallback} from 'react'
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate} from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
+import { useDispatch } from 'react-redux';
 import {getAllPlaces} from '../../common/api/getPlaces';
+import { tokenActions } from '../../redux/reducers/tokenSlice';
+import { tokenRefresh } from '../../common/api/login';
 import Footer from '../../common/layouts/Footer'
 import RegionSelectionModal from './modal/RegionSelectionModal'
 import Place from './place/Place'
@@ -29,9 +32,26 @@ function WhereToGo() {
   const [areaTerm, setAreaTerm] = useState('');
   const [regionSelectionModal, setRegionSelectionModal] = useState(false);
   const userId = useSelector((state: any) => state.persist.user.user.id) 
-  
+  const refreshToken = localStorage.getItem('refreshToken') || '';
+  const dispatch = useDispatch();
+  const navigation = useNavigate();
 
   useEffect(() => {
+    tokenRefresh({ refreshToken }, (response: AxiosResponse) => {
+      const { code } = response.data;
+
+      if (code === 200) {
+        const accessToken = response.headers.authorization_access;
+        const refreshToken = response.headers.authorization_refresh;
+
+        dispatch(tokenActions.setToken(accessToken),);
+        localStorage.setItem('refreshToken', refreshToken);
+      }
+      else {
+        navigation('/user/signin');
+      }
+    });
+
     getAllPlaces(userId,(response: AxiosResponse) => {
       setPlaces(response.data.data); 
     })
