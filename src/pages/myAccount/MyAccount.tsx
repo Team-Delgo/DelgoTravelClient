@@ -1,13 +1,28 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Footer from '../../common/layouts/Footer';
 import "./MyAccount.scss";
 import RightArrow from "../../icons/right-arrow.svg";
+import { tokenActions } from "../../redux/reducers/tokenSlice";
+
+
 
 function MyAccount() {
+  const pet = useSelector((state: any) => state.persist.user.pet);
+  console.log(pet);
+  const navigation = useNavigate();
+  const dispatch = useDispatch();
+  const logoutHandler = () => {
+    dispatch(tokenActions.setToken(''));
+    localStorage.removeItem('refreshToken');
+    navigation('/');
+  };
+
   return <div className="account">
     <div className="account-profile">
-      <img className="account-profile-image" src={`${process.env.PUBLIC_URL}/assets/images/dummyDog.jpg`} alt="dog" />
-      <div className="account-profile-name">몽자</div>
+      <img className="account-profile-image" src={pet.image} alt="dog" />
+      <div className="account-profile-name">{pet.name}</div>
       <div className="account-profile-info">
         <div className="account-proifle-info-coupon">
           <p className="account-profile-info-column">쿠폰</p>
@@ -82,7 +97,7 @@ function MyAccount() {
       <p className="account-out">
         회원탈퇴
       </p>
-      <p className="account-out">
+      <p className="account-out" aria-hidden="true" onClick={logoutHandler}>
         로그아웃
       </p>
     </div>

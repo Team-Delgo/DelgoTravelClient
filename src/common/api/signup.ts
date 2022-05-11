@@ -73,4 +73,15 @@ async function phoneCheckNumber(number: string, success: (data: AxiosResponse) =
     });
 }
 
-export { emailCheck, signup, phoneCheckNumber, phoneSendMessage };
+async function petImageUpload(formdata: FormData, success: (data: AxiosResponse) => void) {
+  await axios
+    .post(`${url}/photo/upload/petProfile`, formdata)
+    .then((data) => {
+      success(data);
+    })
+    .catch((error) => {
+      errorHandler(error);
+    });
+}
+
+export { emailCheck, signup, phoneCheckNumber, phoneSendMessage, petImageUpload };
