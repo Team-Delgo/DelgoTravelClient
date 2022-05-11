@@ -1,4 +1,5 @@
 import React, { useState,useCallback,useEffect } from 'react';
+import { useSelector } from "react-redux";
 import { Link, useParams,useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import RoomType from './roomType/RoomType';
@@ -6,6 +7,7 @@ import Reviews from './reviews/Reviews';
 import ReservationButton from './reservationButton/ReservationButton';
 import Map from '../../common/components/Map'
 import Heart from '../../common/components/Heart'
+import {getDetailPlace} from '../../common/api/getPlaces'
 import {wishInsert,wishDelete} from '../../common/api/wish'
 import { CALENDER_PATH} from '../../constants/path.const';
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow.svg'
@@ -13,7 +15,9 @@ import { ReactComponent as LeftArrow } from '../../icons/left-arrow.svg'
 import './DetailPlace.scss';
 
 function DetailPlace() {
+  const [test,setTest] = useState<Array<any>>([])
   const [wishList, setWishList] = useState(0);
+  const userId = useSelector((state: any) => state.persist.user.user.id);
   const { placeId } = useParams();
   const navigate  = useNavigate();
  
@@ -115,7 +119,12 @@ function DetailPlace() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-}, []);
+
+    getDetailPlace({ userId, placeId: Number(placeId) }, (response: AxiosResponse) => {
+      setTest(response.data.data);
+      console.log(response.data.data);
+    });
+  }, []);
 
   const wishListInsert = useCallback(() => {
     setWishList(1);

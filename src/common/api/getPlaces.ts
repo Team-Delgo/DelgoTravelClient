@@ -24,5 +24,16 @@ async function getWishedPlaces(data: { accessToken: string; userId: number }, su
   }
 }
 
-export { getAllPlaces, getWishedPlaces };
+async function getDetailPlace(data: { userId: number; placeId: number }, success: (data: AxiosResponse) => void) {
+  try {
+    const result = await axios.get(
+      `${url}place/selectDetail?userId=${data.userId}&placeId=${data.placeId}`,
+    );
+    success(result);
+  } catch (error: AxiosError | any) {
+    errorHandler(error);
+  }
+}
+
+export { getAllPlaces, getWishedPlaces,getDetailPlace };
 

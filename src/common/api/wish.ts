@@ -2,8 +2,7 @@ import axios, {  AxiosResponse,AxiosError } from 'axios';
 import { errorHandler } from './errorHandler';
 import { url } from '../../constants/url.cosnt';
 
-async function wishInsert(
-  data: { userId: number; placeId: number; accessToken: string },
+async function wishInsert(data: { userId: number; placeId: number; accessToken: string },
   success: (data: AxiosResponse) => void,
 ) {
   try {
