@@ -15,7 +15,8 @@ import './DetailPlace.scss';
 function DetailPlace() {
   const [wishList, setWishList] = useState(0);
   const { placeId } = useParams();
-  const navigate  = useNavigate()
+  const navigate  = useNavigate();
+ 
 
   const [roomTypes, setRoomTypes] = useState<Array<any>>([
     {

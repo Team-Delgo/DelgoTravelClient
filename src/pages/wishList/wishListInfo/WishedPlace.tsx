@@ -1,4 +1,5 @@
 import React,{useState,useCallback} from 'react'
+import { useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
 import Heart from '../../../common/components/Heart'
 import {wishDelete} from '../../../common/api/wish'
@@ -23,9 +24,11 @@ interface PlaceType {
 
 function WishedPlace({ place,wishedPlace,setWishedPlace }: WishedPlaceTypeProps) {
   const [wishList, setWishList] = useState(true);
+  const refreshToken = localStorage.getItem('refreshToken') || '';
+  const accessToken = useSelector((state: any) => state.token.token);
 
   const wishListDelete = useCallback(() => {
-    wishDelete({ wishId: place.wishId }, (response: AxiosResponse) => {
+    wishDelete({ wishId: place.wishId,accessToken }, (response: AxiosResponse) => {
       if (response.data.code === 200) {
         const updateWishedPlaces = wishedPlace.filter(p => p.placeId !== place.placeId);
         setWishedPlace(updateWishedPlaces)

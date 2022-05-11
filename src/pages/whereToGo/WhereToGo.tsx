@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 import React,{useState,useEffect,useCallback} from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
 import {getAllPlaces} from '../../common/api/getPlaces';
@@ -29,6 +29,7 @@ function WhereToGo() {
   const [areaTerm, setAreaTerm] = useState('');
   const [regionSelectionModal, setRegionSelectionModal] = useState(false);
   const userId = useSelector((state: any) => state.persist.user.user.id) 
+  
 
   useEffect(() => {
     getAllPlaces(userId,(response: AxiosResponse) => {

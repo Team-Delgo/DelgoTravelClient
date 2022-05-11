@@ -20,9 +20,10 @@ function Folder() {
   const [wishedPlace, setWishedPlace] = useState<Array<WishedPlaceType>>([]);
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const refreshToken = localStorage.getItem('refreshToken') || '';
+  const accessToken = useSelector((state: any) => state.token.token);
 
   useEffect(() => {
-    getWishedPlaces({ refreshToken ,userId}, (response: AxiosResponse) => {
+    getWishedPlaces({ accessToken ,userId}, (response: AxiosResponse) => {
       setWishedPlace(response.data.data);
     });
   }, []);
