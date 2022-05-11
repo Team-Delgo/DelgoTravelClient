@@ -48,32 +48,30 @@ function Place({ place, userId, places, setPlaces }: PlaceTypeProps) {
     });
   }, [wishList, places]);
 
-  const moveToDetailPlacePage = useCallback(() => {
-    navigation(`/detail-place/${place.placeId}`);
-  }, []);
-
   return (
-      <div className="place" aria-hidden="true" onClick={moveToDetailPlacePage}>
+    <div className="place" aria-hidden="true">
+      <Link to={`/detail-place/${place.placeId}`} key={place.placeId}>
         <img src={place.mainPhotoUrl} alt="place-img" />
-        <div className="place-info">
-          <div className="place-info-first-line">
-            <span className="place-region">
-                {place.address.split(' ')[0]}&nbsp;{place.address.split(' ')[1]}
-            </span>
-          </div>
-          <div className="place-info-second-line">
-            <span>{place.name}</span>
-            <span>{place.lowestPrice}원~</span>
-          </div>
+      </Link>
+      <div className="place-info">
+        <div className="place-info-first-line">
+          <span className="place-region">
+            {place.address.split(' ')[0]}&nbsp;{place.address.split(' ')[1]}
+          </span>
         </div>
-        <div className="place-heart">
-          {wishList === 0 ? (
-            <Heart wishList={wishList} handleWishList={wishListInsert} />
-          ) : (
-            <Heart wishList={wishList} handleWishList={wishListDelete} />
-          )}
+        <div className="place-info-second-line">
+          <span>{place.name}</span>
+          <span>{place.lowestPrice}원~</span>
         </div>
       </div>
+      <div className="place-heart">
+        {wishList === 0 ? (
+          <Heart wishList={wishList} handleWishList={wishListInsert} />
+        ) : (
+          <Heart wishList={wishList} handleWishList={wishListDelete} />
+        )}
+      </div>
+    </div>
   );
 }
 

@@ -14,13 +14,6 @@ function WishList() {
   },[])
 
   
-  const handleKeyDown = () =>  {
-    // if (ev.keyCode == 13) {
-    //   this.focus()
-    //  }
-  };
-
-
   return (
     <div className="wish-list-background">
         {currentTab === 0 ? (
@@ -31,7 +24,7 @@ function WishList() {
               role="button"
               tabIndex={0}
               onClick={changeCurrentTab(0)}
-              onKeyDown={handleKeyDown}
+              aria-hidden="true"
             >
               Wishlist
             </div>
@@ -40,7 +33,7 @@ function WishList() {
               role="button"
               tabIndex={-1}
               onClick={changeCurrentTab(1)}
-              onKeyDown={handleKeyDown}
+              aria-hidden="true"
             >
               History
             </div>
@@ -55,7 +48,7 @@ function WishList() {
               role="button"
               tabIndex={0}
               onClick={changeCurrentTab(0)}
-              onKeyDown={handleKeyDown}
+              aria-hidden="true"
             >
               Wishlist
             </div>
@@ -64,7 +57,7 @@ function WishList() {
               role="button"
               tabIndex={-1}
               onClick={changeCurrentTab(1)}
-              onKeyDown={handleKeyDown}
+              aria-hidden="true"
             >
               History
             </div>
