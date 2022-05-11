@@ -26,11 +26,8 @@ interface PlaceType  {
 function Place({ place, userId, places, setPlaces }: PlaceTypeProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const accessToken = useSelector((state: any) => state.token.token);
-  const refreshToken = localStorage.getItem('refreshToken') || '';
-
 
   const wishListInsert = useCallback(() => {
-    console.log(accessToken)
     wishInsert({ userId, placeId: place.placeId,accessToken}, (response: AxiosResponse) => {
       if (response.data.code === 200) {
         const updatePlace = { ...place, wishId: response.data.data.wishId };

@@ -1,7 +1,7 @@
 import React,{useState,useCallback,useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import { tokenActions } from '../../redux/reducers/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
 import Footer from '../../common/layouts/Footer';
@@ -14,6 +14,7 @@ function WishList() {
   const [currentTab, setCurrentTab] = useState(0);
   const navigation = useNavigate();
   const dispatch = useDispatch();
+  const accessToken = useSelector((state: any) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
 
   useEffect(() => {
@@ -31,7 +32,7 @@ function WishList() {
         navigation('/user/signin');
       }
     });
-  }, [refreshToken]);
+  }, [accessToken]);
 
   const changeCurrentTab = useCallback((tabNumber: number)=> (event: React.MouseEvent)  => {
     setCurrentTab(tabNumber);

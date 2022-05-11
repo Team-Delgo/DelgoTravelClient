@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import ReservationInfo from './ReservationInfo';
 import Footer from '../../common/layouts/Footer';
 import RecommendedPlaces from './RecommendedPlaces';
@@ -64,6 +64,7 @@ function Home() {
 
   const navigation = useNavigate();
   const dispatch = useDispatch();
+  const accessToken = useSelector((state: any) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
 
   useEffect(() => {
@@ -82,7 +83,7 @@ function Home() {
         navigation('/user/signin');
       }
     });
-  }, []);
+  }, [accessToken]);
 
   return (
     <>

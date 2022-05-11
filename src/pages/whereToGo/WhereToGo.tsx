@@ -32,9 +32,16 @@ function WhereToGo() {
   const [areaTerm, setAreaTerm] = useState('');
   const [regionSelectionModal, setRegionSelectionModal] = useState(false);
   const userId = useSelector((state: any) => state.persist.user.user.id) 
+  const accessToken = useSelector((state: any) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
   const dispatch = useDispatch();
   const navigation = useNavigate();
+
+  useEffect(() => {
+    getAllPlaces(userId, (response: AxiosResponse) => {
+      setPlaces(response.data.data);
+    });
+  }, []);
 
   useEffect(() => {
     tokenRefresh({ refreshToken }, (response: AxiosResponse) => {
@@ -44,18 +51,13 @@ function WhereToGo() {
         const accessToken = response.headers.authorization_access;
         const refreshToken = response.headers.authorization_refresh;
 
-        dispatch(tokenActions.setToken(accessToken),);
+        dispatch(tokenActions.setToken(accessToken));
         localStorage.setItem('refreshToken', refreshToken);
-      }
-      else {
+      } else {
         navigation('/user/signin');
       }
     });
-
-    getAllPlaces(userId,(response: AxiosResponse) => {
-      setPlaces(response.data.data); 
-    })
-  }, []);
+  }, [accessToken]);
 
 
   const handleSerchTerm = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
