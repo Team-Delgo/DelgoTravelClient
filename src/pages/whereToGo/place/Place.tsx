@@ -24,6 +24,7 @@ interface PlaceType  {
 
 function Place({ place, userId, places, setPlaces }: PlaceTypeProps) {
   const [wishList, setWishList] = useState(place.wishId);
+  const navigation = useNavigate();
 
   const wishListInsert = useCallback(() => {
     wishInsert({ userId, placeId: place.placeId }, (response: AxiosResponse) => {
@@ -47,32 +48,32 @@ function Place({ place, userId, places, setPlaces }: PlaceTypeProps) {
     });
   }, [wishList, places]);
 
+  const moveToDetailPlacePage = useCallback(() => {
+    navigation(`/detail-place/${place.placeId}`);
+  }, []);
+
   return (
-    <div className="place">
-      <Link to={`/detail-place/${place.placeId}`} key={place.placeId}>
+      <div className="place" aria-hidden="true" onClick={moveToDetailPlacePage}>
         <img src={place.mainPhotoUrl} alt="place-img" />
-      </Link>
-      <div className="place-info">
-        <div className="place-info-first-line">
-          <span className="place-region">
-            <span>
-              {place.address.split(' ')[0]}&nbsp;{place.address.split(' ')[1]}
+        <div className="place-info">
+          <div className="place-info-first-line">
+            <span className="place-region">
+                {place.address.split(' ')[0]}&nbsp;{place.address.split(' ')[1]}
             </span>
-          </span>
+          </div>
+          <div className="place-info-second-line">
+            <span>{place.name}</span>
+            <span>{place.lowestPrice}원~</span>
+          </div>
         </div>
-        <div className="place-info-second-line">
-          <span>{place.name}</span>
-          <span>{place.lowestPrice}원~</span>
+        <div className="place-heart">
+          {wishList === 0 ? (
+            <Heart wishList={wishList} handleWishList={wishListInsert} />
+          ) : (
+            <Heart wishList={wishList} handleWishList={wishListDelete} />
+          )}
         </div>
       </div>
-      <div className="place-heart">
-        {wishList === 0 ? (
-          <Heart wishList={wishList} handleWishList={wishListInsert} />
-        ) : (
-          <Heart wishList={wishList} handleWishList={wishListDelete} />
-        )}
-      </div>
-    </div>
   );
 }
 

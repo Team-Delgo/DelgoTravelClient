@@ -11,9 +11,13 @@ async function getAllPlaces(userId:number,success: (data: AxiosResponse) => void
   }
 }
 
-async function getWishedPlaces(userId:number, success: (data: AxiosResponse) => void) {
+async function getWishedPlaces(data: { refreshToken: string; userId: number }, success: (data: AxiosResponse) => void) {
   try {
-    const result = await axios.get(`${url}wish/select?userId=${userId}`)
+    const result = await axios.get(`${url}wish/select?userId=${data.userId}`, {
+      headers: {
+        Authorization_Refresh: `${data.refreshToken}`,
+      },
+    });
     success(result);
   } catch (error: AxiosError | any) {
     errorHandler(error);
@@ -21,4 +25,14 @@ async function getWishedPlaces(userId:number, success: (data: AxiosResponse) => 
 }
 
 export { getAllPlaces, getWishedPlaces };
+
+
+// async function getWishedPlaces(userId:number, success: (data: AxiosResponse) => void) {
+//   try {
+//     const result = await axios.get(`${url}wish/select?userId=${userId}`)
+//     success(result);
+//   } catch (error: AxiosError | any) {
+//     errorHandler(error);
+//   }
+// }
 

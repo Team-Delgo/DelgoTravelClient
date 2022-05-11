@@ -19,6 +19,7 @@ import PhoneAuth from './pages/user/signInPage/PhoneAuth';
 import Calender from './pages/calender/Calender';
 import DetailPlace from './pages/detailPlace/DetailPlace'
 import ReviewsPage from './pages/detailPlace/reviewsPage/ReviewsPage'
+import RoomTypePage from './pages/detailPlace/roomTypePage/RoomTypePage';
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
       <Route path={CALENDER_PATH} element={<Calender />} />
       <Route path={DETAIL_PLACE_PATH.MAIN} element={<DetailPlace />} />
       <Route path={DETAIL_PLACE_PATH.REVIEWS} element={<ReviewsPage />} />
+      <Route path={DETAIL_PLACE_PATH.ROOMTYPES} element={<RoomTypePage />} />
     </Routes>
   );
 }

@@ -1,6 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable array-callback-return */
 import React,{useState,useEffect} from 'react'
 import { useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
@@ -22,9 +19,10 @@ interface WishedPlaceType {
 function Folder() {
   const [wishedPlace, setWishedPlace] = useState<Array<WishedPlaceType>>([]);
   const userId = useSelector((state: any) => state.persist.user.user.id);
+  const refreshToken = localStorage.getItem('refreshToken') || '';
 
   useEffect(() => {
-    getWishedPlaces(userId, (response: AxiosResponse) => {
+    getWishedPlaces({ refreshToken ,userId}, (response: AxiosResponse) => {
       setWishedPlace(response.data.data);
     });
   }, []);

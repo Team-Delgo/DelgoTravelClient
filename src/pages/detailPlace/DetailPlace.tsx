@@ -1,5 +1,5 @@
-import React, { useState,useCallback } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useState,useCallback,useEffect } from 'react';
+import { Link, useParams,useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import RoomType from './roomType/RoomType';
 import Reviews from './reviews/Reviews';
@@ -8,12 +8,14 @@ import Map from '../../common/components/Map'
 import Heart from '../../common/components/Heart'
 import {wishInsert,wishDelete} from '../../common/api/wish'
 import { CALENDER_PATH} from '../../constants/path.const';
+import { ReactComponent as LeftArrow } from '../../icons/left-arrow.svg'
 
 import './DetailPlace.scss';
 
 function DetailPlace() {
   const [wishList, setWishList] = useState(0);
   const { placeId } = useParams();
+  const navigate  = useNavigate()
 
   const [roomTypes, setRoomTypes] = useState<Array<any>>([
     {
@@ -110,6 +112,10 @@ function DetailPlace() {
     `${process.env.PUBLIC_URL}/assets/images/service6.png`,
   ]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+}, []);
+
   const wishListInsert = useCallback(() => {
     setWishList(1);
     // wishInsert({ userId, placeId: place.placeId }, (response: AxiosResponse) => {
@@ -134,6 +140,10 @@ function DetailPlace() {
     // });
   }, [wishList]);
 
+  const moveToPreviousPage = useCallback(() => {
+    navigate(-1)
+  },[]);
+
   return (
     <>
       <div className="detail-place">
@@ -142,6 +152,7 @@ function DetailPlace() {
           src={`${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`}
           alt="place-img"
         />
+        <LeftArrow className="detail-place-previous-page" onClick={moveToPreviousPage}/>
         <div className="detail-place-heart">
           {wishList === 0 ? (
             <Heart wishList={wishList} handleWishList={wishListInsert} />
@@ -170,13 +181,20 @@ function DetailPlace() {
         </div>
         <div className="detail-places-room-types">
           {roomTypes.map((room) => (
-            <RoomType key={room.id} room={room} />
+            <Link style={{ textDecoration: 'none' }} to={`/detail-place/${placeId}/${room.id}`}>
+              <RoomType key={room.id} room={room} />
+            </Link>
           ))}
         </div>
         <div className="detail-place-review">
           <header className="detail-place-review-header">
             <span className="detail-place-review-header-number">리뷰 {reviews.length}개</span>
-            <Link style={{ textDecoration: 'none' }} to={`/detail-place/${placeId}/reviews`} state={{ reviews}} key={placeId}>
+            <Link
+              style={{ textDecoration: 'none' }}
+              to={`/detail-place/${placeId}/reviews`}
+              state={{ reviews }}
+              key={placeId}
+            >
               <span className="detail-place-review-header-more">더보기</span>
             </Link>
           </header>

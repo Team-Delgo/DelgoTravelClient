@@ -16,11 +16,10 @@
         background-color: #FFFBF6;
         box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.15);
         &-first-line{
-            display: flex;
-            justify-content: space-between;
-            padding: 0 10% 0 5%;
+            right:0px;
             color: #B0A69D;
             font-size: 3vw;
+            padding-left: 60%;
         }
         &-second-line{
             display: flex;

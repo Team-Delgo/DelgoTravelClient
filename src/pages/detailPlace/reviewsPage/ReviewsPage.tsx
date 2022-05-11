@@ -7,21 +7,20 @@ import './ReviewsPage.scss'
 function ReviewsPage() {
   const [reviews, setReviews] = useState<Array<any>>([]);
   const location: any = useLocation();
-  const navigate  = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     setReviews(location.state.reviews);
   }, []);
 
   const moveToPreviousPage = useCallback(() => {
-    navigate(-1)
-  },[]);
-
+    navigate(-1);
+  }, []);
 
   return (
     <>
       <header className="detail-place-review-page-header">
-        <LeftArrow className="detail-place-review-page-header-previous-page" onClick={moveToPreviousPage}/>
+        <LeftArrow className="detail-place-review-page-header-previous-page" onClick={moveToPreviousPage} />
         <div className="detail-place-review-page-header-number">리뷰 {reviews.length}개</div>
         <div className="detail-place-review-page-header-rating-count">★&nbsp;&nbsp;4.5점</div>
         <input type="checkbox" name="xxx" value="yyy" />
@@ -34,4 +33,4 @@ function ReviewsPage() {
   );
 }
 
-export default ReviewsPage
+export default ReviewsPage;
