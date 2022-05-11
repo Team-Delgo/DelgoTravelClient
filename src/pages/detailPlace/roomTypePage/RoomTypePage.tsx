@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState ,useEffect} from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import ReservationButton from '../reservationButton/ReservationButton';
 import { CALENDER_PATH } from '../../../constants/path.const';
@@ -16,6 +16,10 @@ function RoomTypePage() {
     `${process.env.PUBLIC_URL}/assets/images/service5.png`,
     `${process.env.PUBLIC_URL}/assets/images/service6.png`,
   ]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+}, []);
 
   const moveToPreviousPage = useCallback(() => {
     navigate(-1);
