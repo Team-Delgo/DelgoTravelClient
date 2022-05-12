@@ -10,10 +10,10 @@ declare global {
 
 function Map(){
   useEffect(() => {
-    
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function (position) {
         const container = document.getElementById('myMap');
+        console.log(position.coords.latitude,position.coords.longitude)
         const options = {
           center: new window.kakao.maps.LatLng(position.coords.latitude, position.coords.longitude),  
           level: 3
