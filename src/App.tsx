@@ -17,13 +17,17 @@ import MyAccount from './pages/myAccount/MyAccount';
 import FindPassword from './pages/user/signInPage/FindPassword';
 import ResetPassword from './pages/user/signInPage/ResetPassword';
 import PhoneAuth from './pages/user/signInPage/PhoneAuth';
-import DetailPlace from './pages/detailPlace/DetailPlace'
 import Calender from './pages/calender/Calender';
+import DetailPlace from './pages/detailPlace/DetailPlace'
+import ReviewsPage from './pages/detailPlace/reviewsPage/ReviewsPage'
+import RoomTypePage from './pages/detailPlace/roomTypePage/RoomTypePage';
+
 
 function App() {
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
+
       <Routes>
         <Route path={ROOT_PATH} element={<HomePage />} />
         <Route path={EDITOR_NOTE_PATH} element={<EditorNote />} />
@@ -40,11 +44,14 @@ function App() {
         <Route path={WISH_LIST_PATH} element={<WishListPage />} />
         <Route path={WHERE_TO_GO_PATH} element={<WhereToGoPage />} />
         <Route path={MY_ACCOUNT_PATH} element={<MyAccount />} />
-        <Route path={DETAIL_PLACE_PATH} element={<DetailPlace />} />
         <Route path={CALENDER_PATH} element={<Calender />} />
+        <Route path={DETAIL_PLACE_PATH.MAIN} element={<DetailPlace />} />
+        <Route path={DETAIL_PLACE_PATH.REVIEWS} element={<ReviewsPage />} />
+        <Route path={DETAIL_PLACE_PATH.ROOMTYPES} element={<RoomTypePage />} />
       </Routes>
     </QueryClientProvider>
   );
 }
 
 export default App;
+

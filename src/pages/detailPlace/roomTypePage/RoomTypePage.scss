@@ -1,7 +1,7 @@
-.detail-place{
+.detail-place-room-type{
     position: relative; 
+    margin-bottom: 100px;
     color:#3E382F;
-    padding-bottom: 50px;
     &-main-image{
         width: 100%;
         height: 45vh;
@@ -11,32 +11,25 @@
         top: 50px;
         left: 35px;   
     }
-    &-heart{
-        position: absolute;
-        top: 10px;
-        right: 0px;
-    }
     &-info{
-        padding-left: 5%;
+        margin: 0 0 15% 5%;
         &-name{
-            padding: 5% 0 8% 0;
+            padding: 5% 0 2% 0;
             font-size: 6vw; 
             font-weight: bold;
         }
-        &-address{
+        &-accommodation{
+            display: flex;
             padding-bottom: 2%;
             font-size: 3.5vw;
-            font-weight: 600;
-        }
-        &-map{
-            color: #AD9E87;
-            font-weight: 100;
-            padding-left: 4%;
-        }
-        &-reviews{
-            padding-bottom: 5%;
-            font-size: 3.5vw;
-            color:#6E614D;
+            &-check-in-check-out{
+                color:#8A8A8A;
+            }
+            &-price{
+                font-size: 6vw; 
+                font-weight: bold;
+                margin: -3.5% 0 0 28%;
+            }
         }
         &-facility{
             padding-bottom: 10%;
@@ -53,7 +46,7 @@
         color: #3E382F;
         font-size: 3.5vw;
         font-weight: bold;
-        margin: 0 0 18% 5%;
+        margin: 0 0 20% 5%;
         padding-left:  4%;
         border-radius: 5px;
         &-calender{
@@ -61,7 +54,7 @@
         }
     }
     &-room-select{
-        padding-left: 5%;
+        margin-left: 5%;
         &-header{
             font-size: 6vw;
             font-weight: bold;
@@ -71,7 +64,7 @@
     &-review{
         padding-top: 40%;
         &-header{
-            padding: 0 0 15% 5%;
+            margin: 0 0 15% 5%;
             &-number{
                 font-size: 6vw;
                 font-weight: bold;
@@ -84,11 +77,10 @@
         }
     }
     &-facility{
-        padding: 0 0 30% 5%;
-        font-size: 6vw;
-        font-weight: bold;
+        margin: 0 0 30% 5%;
+        font-size: 5vw;
         &-header{
-            padding-bottom: 10%;
+            padding-bottom: 7%;
         }
         &-image-container{
             display: flex;
@@ -96,20 +88,12 @@
             overflow-x: scroll;
         }
     }
-    &-notice,&-base-information,&-additional-personnel-information,&-cancellation-refund-policy,&-etc{
-        padding: 0 5% 30% 5%;
-        font-size: 6vw;
-        font-weight: bold;
+    &-notice,&-base-information,&-additional-personnel-information{
+        margin: 0 5% 30% 5%;
+        font-size: 5vw;
         &-header{
-            padding-bottom: 10%;
+            padding-bottom: 7%;
         }
-    }
-    &-map{
-        margin-bottom: 20%;
-        &-header{
-            padding: 0 0 10% 5%;
-            font-size: 6vw;
-            font-weight: bold;
-        }
+
     }
 }

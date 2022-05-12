@@ -126,7 +126,7 @@ function PetInfo() {
   };
 
   const submitHandler = () => {
-    const userId = 77;
+    let userId = 0;
     console.log('저장완료');
     const petInfo = {
       name: enteredInput.name,
@@ -141,7 +141,7 @@ function PetInfo() {
       phone,
       pet: petInfo,
     };
-    /* signup(userInfo, (response: AxiosResponse) => {
+    signup(userInfo, (response: AxiosResponse) => {
       console.log(response);
       const { code, codeMsg } = response.data;
       if (code === 200) {
@@ -155,12 +155,14 @@ function PetInfo() {
         console.log(codeMsg);
       }
 
-    }) */
-    formData.append('file', sendingImage);
-    formData.append('userId', userId.toString());
-    petImageUpload(formData, (response: AxiosResponse) => {
-      console.log(response);
-    })
+    }) 
+    if(userId!==0){
+      formData.append('file', sendingImage);
+      formData.append('userId', userId.toString());
+      petImageUpload(formData, (response: AxiosResponse) => {
+        console.log(response);
+      })
+    }
     // 비동기 처리
     // signup({ email, password, nickname, phone, pet: {petName:enteredInput.name,petBirth:enteredInput.birth,petImage:} }, () => {});
   };

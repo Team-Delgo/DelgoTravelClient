@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import "./Calender.scss";
 import { useState } from "react";
@@ -7,6 +8,8 @@ import { ReactComponent as Exit } from '../../icons/exit.svg';
 function Calender() {
   const [selectedDate, setSelectedDate] = useState({ start: '', end: '' });
   const [sequence, setSequence] = useState(0); // 0개 선택, 1개 선택, 2개 선택
+  const navigate  = useNavigate()
+
 
   const getNextYear = (currentMonth: number, currentYear: number, add: number) => {
     if (currentMonth + add > 12) {
@@ -189,40 +192,48 @@ function Calender() {
     setSequence(0);
   };
 
+  const moveToPreviousPage = () => {
+    navigate(-1)
+  };
+
   const bottomButton = <div className="bottom-select-button">{days}박 선택</div>
 
-  return <div className="calender">
-    <div className="fixed-header">
-      <div className="header">
-        <Exit />
-        <h1 className="header-title">날짜선택</h1>
-        <span className="header-reset" aria-hidden="true" onClick={resetHandler}>초기화</span>
+  return (
+    <div className="calender">
+      <div className="fixed-header">
+        <div className="header">
+          <Exit onClick={moveToPreviousPage} />
+          <h1 className="header-title">날짜선택</h1>
+          <span className="header-reset" aria-hidden="true" onClick={resetHandler}>
+            초기화
+          </span>
+        </div>
+        {selectedDateContext}
+        <div className="day-header">
+          <div className="day sun">SUN</div>
+          <div className="day">MON</div>
+          <div className="day">TUE</div>
+          <div className="day">WED</div>
+          <div className="day">THU</div>
+          <div className="day">FRI</div>
+          <div className="day">SAT</div>
+        </div>
       </div>
-      {selectedDateContext}
-      <div className="day-header">
-        <div className="day sun">SUN</div>
-        <div className="day">MON</div>
-        <div className="day">TUE</div>
-        <div className="day">WED</div>
-        <div className="day">THU</div>
-        <div className="day">FRI</div>
-        <div className="day">SAT</div>
+      <div className="date-wrapper">
+        <div className="current-month">{`${datesElement0.currentYear}.${datesElement0.currentMonth}`}</div>
+        <div className="date">{datesElement0.datesElement}</div>
+        <div className="current-month">{`${datesElement1.currentYear}.${datesElement1.currentMonth}`}</div>
+        <div className="date">{datesElement1.datesElement}</div>
+        <div className="current-month">{`${datesElement2.currentYear}.${datesElement2.currentMonth}`}</div>
+        <div className="date">{datesElement2.datesElement}</div>
+        <div className="current-month">{`${datesElement3.currentYear}.${datesElement3.currentMonth}`}</div>
+        <div className="date">{datesElement3.datesElement}</div>
+        <div className="current-month">{`${datesElement4.currentYear}.${datesElement4.currentMonth}`}</div>
+        <div className="date">{datesElement4.datesElement}</div>
       </div>
+      {sequence === 2 && bottomButton}
     </div>
-    <div className="date-wrapper">
-      <div className="current-month">{`${datesElement0.currentYear}.${datesElement0.currentMonth}`}</div>
-      <div className="date">{datesElement0.datesElement}</div>
-      <div className="current-month">{`${datesElement1.currentYear}.${datesElement1.currentMonth}`}</div>
-      <div className="date">{datesElement1.datesElement}</div>
-      <div className="current-month">{`${datesElement2.currentYear}.${datesElement2.currentMonth}`}</div>
-      <div className="date">{datesElement2.datesElement}</div>
-      <div className="current-month">{`${datesElement3.currentYear}.${datesElement3.currentMonth}`}</div>
-      <div className="date">{datesElement3.datesElement}</div>
-      <div className="current-month">{`${datesElement4.currentYear}.${datesElement4.currentMonth}`}</div>
-      <div className="date">{datesElement4.datesElement}</div>
-    </div>
-    {sequence === 2 && bottomButton}
-  </div>
+  );
 }
 
 export default Calender;
