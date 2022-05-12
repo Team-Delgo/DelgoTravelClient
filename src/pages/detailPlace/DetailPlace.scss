@@ -1,6 +1,6 @@
 .detail-place{
     position: relative; 
-    margin-bottom: 100px;
+    padding-bottom: 20px;
     color:#3E382F;
     &-main-image{
         width: 100%;
@@ -17,7 +17,7 @@
         right: 0px;
     }
     &-info{
-        margin-left: 5%;
+        padding-left: 5%;
         &-name{
             padding: 5% 0 8% 0;
             font-size: 6vw; 
@@ -61,7 +61,7 @@
         }
     }
     &-room-select{
-        margin-left: 5%;
+        padding-left: 5%;
         &-header{
             font-size: 6vw;
             font-weight: bold;
@@ -71,7 +71,7 @@
     &-review{
         padding-top: 40%;
         &-header{
-            margin: 0 0 15% 5%;
+            padding: 0 0 15% 5%;
             &-number{
                 font-size: 6vw;
                 font-weight: bold;
@@ -84,7 +84,7 @@
         }
     }
     &-facility{
-        margin: 0 0 30% 5%;
+        padding: 0 0 30% 5%;
         font-size: 6vw;
         font-weight: bold;
         &-header{
@@ -96,13 +96,20 @@
             overflow-x: scroll;
         }
     }
-    &-notice,&-base-information,&-additional-personnel-information,&-cancellation-refund-policy,&-etc,&-map{
-        margin: 0 5% 30% 5%;
+    &-notice,&-base-information,&-additional-personnel-information,&-cancellation-refund-policy,&-etc{
+        padding: 0 5% 30% 5%;
         font-size: 6vw;
         font-weight: bold;
         &-header{
-            padding-bottom: 7%;
+            padding-bottom: 10%;
         }
-
+    }
+    &-map{
+        padding-bottom: 30%;
+        &-header{
+            padding: 0 0 10% 5%;
+            font-size: 6vw;
+            font-weight: bold;
+        }
     }
 }

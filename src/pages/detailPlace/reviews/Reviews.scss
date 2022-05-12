@@ -9,10 +9,10 @@
                 font-weight: bold;
             }
             &-star-rating{
-
+                width: 100%;
             }
             &-registration-data{
-                padding-left: 2%;
+                 padding-left: 12px;
                 font-weight: bold;
                 font-size: 3vw;
             }
@@ -29,6 +29,7 @@
             font-size: 3.5vw;
             font-weight: 100;
             padding-bottom: 5%;
+            padding-right: 5%;
         }
         &-image-container{
             display: flex;
