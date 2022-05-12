@@ -1,6 +1,5 @@
 .detail-place{
     position: relative; 
-    padding-bottom: 20px;
     color:#3E382F;
     &-main-image{
         width: 100%;
@@ -105,7 +104,6 @@
         }
     }
     &-map{
-        padding-bottom: 30%;
         &-header{
             padding: 0 0 10% 5%;
             font-size: 6vw;
