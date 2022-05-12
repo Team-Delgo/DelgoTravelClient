@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import HomePage from './pages/home/Home';
 import EditorNote from './pages/home/EditorNote';
 import SignInPage from './pages/user/signInPage/SignIn';
@@ -23,7 +24,9 @@ import RoomTypePage from './pages/detailPlace/roomTypePage/RoomTypePage';
 
 
 function App() {
+  const queryClient = new QueryClient();
   return (
+    <QueryClientProvider client={queryClient}>
     <Routes>
       <Route path={ROOT_PATH} element={<HomePage />} />
       <Route path={EDITOR_NOTE_PATH} element={<EditorNote />} />
@@ -45,6 +48,7 @@ function App() {
       <Route path={DETAIL_PLACE_PATH.REVIEWS} element={<ReviewsPage />} />
       <Route path={DETAIL_PLACE_PATH.ROOMTYPES} element={<RoomTypePage />} />
     </Routes>
+    </QueryClientProvider>
   );
 }
 
