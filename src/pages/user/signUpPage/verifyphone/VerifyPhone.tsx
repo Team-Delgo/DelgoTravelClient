@@ -2,7 +2,7 @@ import React, { useState, useEffect, ChangeEvent } from 'react';
 import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
-import ToastMessage from '../../../../common/layouts/ToastMessage';
+import ToastMessage from '../../../../common/components/ToastMessage';
 import './VerifyPhone.scss';
 import Timer from './Timer';
 import { SIGN_UP_PATH } from '../../../../constants/path.const';

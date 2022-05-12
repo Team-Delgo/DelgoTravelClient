@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { userActions } from '../../../redux/reducers/userSlice';
 import { tokenActions } from '../../../redux/reducers/tokenSlice';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
-import ToastMessage from '../../../common/layouts/ToastMessage';
+import ToastMessage from '../../../common/components/ToastMessage';
 import { login } from '../../../common/api/login';
 import "./Login.scss";
 
