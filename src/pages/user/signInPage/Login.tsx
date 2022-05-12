@@ -2,10 +2,11 @@ import React, { useState, ChangeEvent, useEffect } from 'react';
 import { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useQuery } from 'react-query';
 import { userActions } from '../../../redux/reducers/userSlice';
 import { tokenActions } from '../../../redux/reducers/tokenSlice';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
-import ToastMessage from '../../../common/layouts/ToastMessage';
+import ToastMessage from '../../../common/components/ToastMessage';
 import { login } from '../../../common/api/login';
 import "./Login.scss";
 
@@ -20,6 +21,8 @@ function Login() {
   const navigation = useNavigate();
   const dispatch = useDispatch();
 
+
+
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
     setEnteredInput((prev: Input) => {
@@ -27,11 +30,10 @@ function Login() {
     });
   };
 
-  const loginButtonHandler = () => {
+  const loginFetch = () => {
     login(enteredInput, (response: AxiosResponse) => {
       const { code, data } = response.data;
       console.log(response);
-
       if (code === 200) {
         dispatch(
           userActions.signin({
@@ -41,7 +43,14 @@ function Login() {
               email: data.user.email,
               phone: data.user.phoneNo,
             },
-            pet: data.pet,
+            pet: {
+              petId: data.pet.petId,
+              birthdat: data.pet.birthday,
+              size: data.pet.size,
+              weight: data.pet.weight,
+              name: data.pet.name,
+              image: data.user.profile,
+            },
           }),
         );
 
@@ -56,7 +65,16 @@ function Login() {
         setLoginFailed(true);
       }
     });
+  }
+
+  const loginButtonHandler = () => {
+    loginFetch();
   };
+
+  const { data, isLoading, isError } = useQuery('login', loginFetch);
+  if (isLoading) {
+    console.log("loading..!");
+  }
 
   useEffect(() => {
     if (loginFailed) {

@@ -2,7 +2,7 @@ import React, { useState, useEffect, ChangeEvent } from 'react';
 import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
-import ToastMessage from '../../../../common/layouts/ToastMessage';
+import ToastMessage from '../../../../common/components/ToastMessage';
 import './VerifyPhone.scss';
 import Timer from './Timer';
 import { SIGN_UP_PATH } from '../../../../constants/path.const';
@@ -18,6 +18,7 @@ function VerifyPhone() {
   const [isSended, setIsSended] = useState(false);
   const [timeIsValid, setTimeIsValid] = useState(true);
   const [isReSended, setIsReSended] = useState(false);
+  const [feedback, setFeedback] = useState('');
   const authIsValid = timeIsValid && authNumber.length === 4;
   const isValid = phoneNumber.length === 11;
   const isEntered = phoneNumber.length > 0;
@@ -26,7 +27,7 @@ function VerifyPhone() {
     //  인증번호 전송 요청
     phoneSendMessage(phoneNumber, (response: AxiosResponse) => {
       const { code } = response.data;
-      console.log(response);
+
       if (code === 200) {
         setButtonIsClicked(true);
         setIsSended(true);
@@ -58,12 +59,13 @@ function VerifyPhone() {
   const authChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     if (authNumber.length === 4 && event.target.value.length > 4) return;
     setAuthNumber(event.target.value);
+    setFeedback('');
   };
 
   const authNumberResend = () => {
     phoneSendMessage(phoneNumber, (response: AxiosResponse) => {
       const { code } = response.data;
-      console.log(response);
+
       if (code === 200) {
         setIsReSended(true);
         setButtonIsClicked(true);
@@ -77,6 +79,18 @@ function VerifyPhone() {
     setIsReSended(false);
   };
 
+  const submitAuthNumber = () => {
+    phoneCheckNumber(authNumber, (response: AxiosResponse) => {
+      const { code } = response.data;
+      console.log(response);
+      if (code === 200) {
+        navigation(SIGN_UP_PATH.USER_INFO, { state: { phone: phoneNumber } });
+      } else {
+        setFeedback('인증번호를 확인해주세요');
+      }
+    });
+  };
+
   const buttonContext = !isSended ? (
     <button type="button" className={classNames('login-button', { active: isValid })} onClick={buttonClickHandler}>
       인증번호 발송
@@ -86,12 +100,10 @@ function VerifyPhone() {
       type="button"
       disabled={!authIsValid}
       className={classNames('login-button', { active: authIsValid })}
-      onClick={() => {
-        navigation(SIGN_UP_PATH.USER_INFO, { state: { phone: phoneNumber } });
-      }}
+      onClick={submitAuthNumber}
     >
       다음
-    </button> 
+    </button>
   );
 
   return (
@@ -122,10 +134,12 @@ function VerifyPhone() {
           <p aria-hidden="true" className="login-authnumber-resend" onClick={authNumberResend}>
             인증번호 재전송
           </p>
+          <p className="input-feedback">{feedback}</p>
         </div>
       )}
       {buttonContext}
       {buttonIsClicked && <ToastMessage message="인증번호가 전송 되었습니다" />}
+      { }
     </div>
   );
 }

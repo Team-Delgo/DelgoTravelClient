@@ -3,12 +3,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
-import ToastMessage from '../../../common/layouts/ToastMessage';
+import ToastMessage from '../../../common/components/ToastMessage';
 import Timer from '../signUpPage/verifyphone/Timer';
-import { phoneSendMessage } from '../../../common/api/signup';
+import { phoneSendMessage, phoneCheckNumber } from '../../../common/api/signup';
+import { SIGN_IN_PATH } from '../../../constants/path.const';
+
 
 interface LocationState {
   phone: string;
+  email: string;
 }
 
 function PhoneAuth() {
@@ -17,7 +20,7 @@ function PhoneAuth() {
   const [buttonIsClicked, setButtonIsClicked] = useState(true);
   const [authNumber, setAuthNumber] = useState('');
   const state = useLocation().state as LocationState;
-  const { phone } = state;
+  const { phone, email } = state;
   const authIsValid = timeIsValid && authNumber.length === 4;
   const navigation = useNavigate();
 
@@ -51,6 +54,15 @@ function PhoneAuth() {
     setAuthNumber(e.target.value);
   };
 
+  const submitAuthNumber = () => {
+    phoneCheckNumber(authNumber, (response: AxiosResponse) => {
+      const { code } = response.data;
+      if (code === 200) {
+        navigation(SIGN_IN_PATH.RESETPASSWORD, { state: email });
+      }
+    });
+  };
+
   return (
     <div className="login">
       <div aria-hidden="true" className="login-back" onClick={() => navigation(-1)}>
@@ -68,7 +80,12 @@ function PhoneAuth() {
           <Timer isResend={isReSended} resendfunc={resetIsResend} setInValid={() => setTimeIsValid(false)} />
         </span>
       </div>
-      <button type="button" className={classNames('login-button', { active: authIsValid })} disabled={!authIsValid}>
+      <button
+        type="button"
+        className={classNames('login-button', { active: authIsValid })}
+        disabled={!authIsValid}
+        onClick={submitAuthNumber}
+      >
         확인
       </button>
       <div className="login-find_password" aria-hidden="true" onClick={authNumberResend}>

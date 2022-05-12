@@ -21,4 +21,5 @@ const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production',
 });
 
+export type RootState = ReturnType<typeof reducers>;
 export default store;

@@ -1,14 +1,16 @@
 import React, { ChangeEvent, useState } from 'react';
 import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
+import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { checkPetName } from '../userInfo/ValidCheck';
 import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
 import { ReactComponent as Camera } from '../../../../icons/camera.svg';
 import './PetInfo.scss';
+import { tokenActions } from '../../../../redux/reducers/tokenSlice';
 import DogType from './DogType';
 import BirthSelector from './BirthSelector';
-import { signup } from '../../../../common/api/signup';
+import { signup, petImageUpload } from '../../../../common/api/signup';
 
 interface LocationState {
   phone: string;
@@ -39,10 +41,12 @@ enum Id {
 }
 
 function PetInfo() {
+  const dispatch = useDispatch();
   const navigation = useNavigate();
   const state = useLocation().state as LocationState;
   const { email, password, nickname, phone } = state;
   const [image, setImage] = useState<any>();
+  const [sendingImage, setSendingImage] = useState<any>();
   const [enteredInput, setEnteredInput] = useState<Input>({ name: '', birth: undefined, weight: '', type: '' });
   const [nameFeedback, setNameFeedback] = useState('');
   const [modalActive, setModalActive] = useState(false);
@@ -54,9 +58,9 @@ function PetInfo() {
     type: false,
   });
   const pageIsValid = isValid.name && isValid.birth && isValid.type && isValid.weight;
-  let petImage: any;
-  console.log(state);
-  console.log(isValid);
+  const formData = new FormData();
+
+  console.log(image);
   const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     reader.onload = function () {
@@ -65,6 +69,8 @@ function PetInfo() {
     const { files } = event.target;
     // let {petImage} = files;
     reader.readAsDataURL(event.target.files![0]);
+    setSendingImage(event.target.files![0]);
+
   };
   // console.log(image);
   const requireInputCheck = (key: string, value: string) => {
@@ -120,6 +126,7 @@ function PetInfo() {
   };
 
   const submitHandler = () => {
+    const userId = 77;
     console.log('저장완료');
     const petInfo = {
       name: enteredInput.name,
@@ -134,8 +141,24 @@ function PetInfo() {
       phone,
       pet: petInfo,
     };
-    console.log(userInfo);
-    signup(userInfo, (response: AxiosResponse) => {
+    /* signup(userInfo, (response: AxiosResponse) => {
+      console.log(response);
+      const { code, codeMsg } = response.data;
+      if (code === 200) {
+        const accessToken = response.headers.authorization_access;
+        const refreshToken = response.headers.authorization_refresh;
+        dispatch(tokenActions.setToken(accessToken));
+        localStorage.setItem('refreshToken', refreshToken);
+        userId = response.data.userId;
+        // navigation('/');
+      } else {
+        console.log(codeMsg);
+      }
+
+    }) */
+    formData.append('file', sendingImage);
+    formData.append('userId', userId.toString());
+    petImageUpload(formData, (response: AxiosResponse) => {
       console.log(response);
     })
     // 비동기 처리
@@ -213,17 +236,13 @@ function PetInfo() {
       </div>
       <div className="dogtype">
         <div
-          className="dogtype-heplwrapper"
+          className="dogtype-help"
+          aria-hidden="true"
+          onClick={() => {
+            setIsOpenDogType(!isOpenDogType);
+          }}
         >
-          <div
-            className="dogtype-help"
-            aria-hidden="true"
-            onClick={() => {
-              setIsOpenDogType(!isOpenDogType);
-            }}
-          >
-            ?
-          </div>
+          ?
           <DogType mount={isOpenDogType} />
         </div>
         <label htmlFor="S">

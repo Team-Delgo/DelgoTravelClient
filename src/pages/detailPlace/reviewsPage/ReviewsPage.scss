@@ -1,0 +1,22 @@
+.detail-place-review-page-header{
+    padding : 12% 0 5% 5%;
+    margin-bottom: 13%;
+    border-bottom: 1px solid #a9a5a1;
+    font-weight: bold;
+    color: #3E382F;
+    &-previous-page{
+        padding-bottom: 7%;
+    }
+    &-number{
+        font-size: 6vw; 
+        padding-bottom: 2%;
+    }
+    &-rating-count{
+        font-size: 3.5vw;
+        padding-bottom: 6%;
+    } 
+    &-image-review{
+        padding-left: 2%;
+        font-size: 3.5vw;
+    }
+}

@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isSignIn: false,
-  user: { id: '', nickname: '', email: '', phone: '' },
-  pets: [],
+  user: { id: 0, nickname: '', email: '', phone: '' },
+  pet: { name: '', petId: 0, birthday: '', size: '', weight: 0, image: '' },
 };
 
 const userSlice = createSlice({
@@ -14,7 +14,7 @@ const userSlice = createSlice({
       return {
         isSignIn: true,
         user: action.payload.user,
-        pets: action.payload.pets,
+        pet: action.payload.pet,
       };
     },
     signout() {
