@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
-import ToastMessage from '../../../common/layouts/ToastMessage';
+import ToastMessage from '../../../common/components/ToastMessage';
 import Timer from '../signUpPage/verifyphone/Timer';
 import { phoneSendMessage, phoneCheckNumber } from '../../../common/api/signup';
 import { SIGN_IN_PATH } from '../../../constants/path.const';
