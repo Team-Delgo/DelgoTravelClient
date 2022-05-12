@@ -44,9 +44,9 @@ function App() {
       <Route path={WHERE_TO_GO_PATH} element={<WhereToGoPage />} />
       <Route path={MY_ACCOUNT_PATH} element={<MyAccount />} />
       <Route path={DETAIL_PLACE_PATH.MAIN} element={<DetailPlace />} />
+      <Route path={CALENDER_PATH} element={<Calender />} />
       <Route path={DETAIL_PLACE_PATH.REVIEWS} element={<ReviewsPage />} />
       <Route path={DETAIL_PLACE_PATH.ROOMTYPES} element={<RoomTypePage />} />
-      <Route path={CALENDER_PATH} element={<Calender />} />
     </Routes>
     </QueryClientProvider>
   );
