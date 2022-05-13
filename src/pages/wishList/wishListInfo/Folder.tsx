@@ -21,15 +21,16 @@ function Folder() {
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const accessToken = useSelector((state: any) => state.token.token);
 
+
   useEffect(() => {
     getWishedPlaces({ accessToken ,userId}, (response: AxiosResponse) => {
       setWishedPlace(response.data.data);
     });
-  }, []);
+  }, [accessToken]);
 
   return (
     <div className="wish-list-container">
-      <div className="wish-list-container-header-text">저장 된 {wishedPlace?.length}개의 숙소</div>
+      <div className="wish-list-container-header-text" aria-hidden="true" >저장 된 {wishedPlace?.length}개의 숙소</div>
       {wishedPlace?.map((place) => (
         <WishedPlace place={place} key={place.placeId} wishedPlace={wishedPlace} setWishedPlace={setWishedPlace}/>
       ))}

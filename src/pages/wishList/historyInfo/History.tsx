@@ -1,4 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect,useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch,useSelector } from 'react-redux';
+import { AxiosResponse } from 'axios';
+import { tokenActions } from '../../../redux/reducers/tokenSlice';
+import { tokenRefresh } from '../../../common/api/login';
 import PopularPlace from './PopularPlace';
 import TravelHisotryPlace from './TravelHisotryPlace';
 import './History.scss';
@@ -19,6 +24,10 @@ type TravelHisotryPlaceType = {
 };
 
 function History() {
+  const navigation = useNavigate();
+  const dispatch = useDispatch();
+  const accessToken = useSelector((state: any) => state.token.token);
+  const refreshToken = localStorage.getItem('refreshToken') || '';
   const [hasTravelHistorys, setHasTravelHistorys] = useState(true);
   const [popularPlace, setPopularPlace] = useState<Array<PopularPlaceType>>([
     {
@@ -66,6 +75,25 @@ function History() {
       package:"슈페리어 더블룸 조식포함패키지"
     },
   ]);
+
+  useEffect(() => {
+    tokenRefresh({ refreshToken }, (response: AxiosResponse) => {
+      const { code } = response.data;
+
+      if (code === 200) {
+        const accessToken = response.headers.authorization_access;
+        const refreshToken = response.headers.authorization_refresh;
+
+        dispatch(tokenActions.setToken(accessToken),);
+        localStorage.setItem('refreshToken', refreshToken);
+      }
+      else {
+        navigation('/user/signin');
+      }
+    });
+  }, [accessToken]);
+
+
   return (
     <div className="travel-history-container">
       {hasTravelHistorys === true ? (
