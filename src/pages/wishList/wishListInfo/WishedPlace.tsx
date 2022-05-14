@@ -1,6 +1,9 @@
 import React,{useState,useCallback} from 'react'
 import { useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
+import alertConfirm, { Button, alert } from "react-alert-confirm";
+import "react-alert-confirm/dist/index.css";
+import AlertConfirm from '../../../common/dialog/AlertConfirm';
 import Heart from '../../../common/components/Heart'
 import {wishDelete} from '../../../common/api/wish'
 import './WishedPlace.scss';
@@ -37,15 +40,43 @@ function WishedPlace({ place,wishedPlace,setWishedPlace }: WishedPlaceTypeProps)
     });
   },[wishList,wishedPlace])
 
+  const wishListDeleteConfirm = async () => {
+    const [isOk, action, instance] = await alertConfirm({
+      content: <div style={{ textAlign: 'center' }}>정말 찜 목록에서 제거하시겠어요?</div>,
+      // eslint-disable-next-line react/no-unstable-nested-components
+      footer(dispatch) {
+        return (
+          <div style={{margin:"auto"}}>
+            <Button  style={{marginRight:"40px",width:"80px",borderRadius: "25px"}} onClick={() => dispatch('delete')} styleType="default">
+              네
+            </Button>
+            <Button  style={{marginLeft:"40px",width:"80px",borderRadius: "25px"}} onClick={() => dispatch('cancel')} styleType="default">
+              아니요
+            </Button>
+          </div>
+        );
+      },
+      async closeBefore(action, close) {
+        if (action === 'delete') {
+          wishListDelete()
+          close()
+        } else {
+          close()
+        }
+      },
+    });
+    console.log(isOk, action, instance);
+  }
+
   return (
     <div className="wished-place">
       {wishList && (
         <>
-          <img src={place.mainPhotoUrl} alt="wished-place-img" />
-          <div className="wished-place-name">{place.name}</div>
+          <img src={place.mainPhotoUrl} alt="wished-place-img" aria-hidden="true" />
+          <div className="wished-place-name" >{place.name}</div>
           <div className="wished-place-location">{place.address}</div>
           <div className="wished-place-heart">
-            <Heart wishList={wishList} handleWishList={wishListDelete} />
+            <Heart wishList={wishList} handleWishList={wishListDeleteConfirm} />
           </div>
         </>
       )}
