@@ -25,4 +25,5 @@ export const DETAIL_PLACE_PATH = {
   MAIN: '/detail-place/:placeId',
   REVIEWS: '/detail-place/:placeId/reviews',
   ROOMTYPES: '/detail-place/:placeId/:roomTypeId',
+  RESERVATION: '/reservation/:placeId/:roomTypeId/:startDate/:endDate',
 };

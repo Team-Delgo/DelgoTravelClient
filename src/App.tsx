@@ -21,6 +21,7 @@ import Calender from './pages/calender/Calender';
 import DetailPlace from './pages/detailPlace/DetailPlace'
 import ReviewsPage from './pages/detailPlace/reviewsPage/ReviewsPage'
 import RoomTypePage from './pages/detailPlace/roomTypePage/RoomTypePage';
+import Reservation from './pages/detailPlace/reservationPage/Reservation';
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
         <Route path={DETAIL_PLACE_PATH.MAIN} element={<DetailPlace />} />
         <Route path={DETAIL_PLACE_PATH.REVIEWS} element={<ReviewsPage />} />
         <Route path={DETAIL_PLACE_PATH.ROOMTYPES} element={<RoomTypePage />} />
+        <Route path={DETAIL_PLACE_PATH.RESERVATION} element={<Reservation />} />
       </Routes>
     </QueryClientProvider>
   );

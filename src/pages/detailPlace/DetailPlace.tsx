@@ -5,7 +5,6 @@ import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
 import RoomType from './roomType/RoomType';
 import Reviews from './reviews/Reviews';
-import ReservationButton from './reservationButton/ReservationButton';
 import Map from '../../common/components/Map'
 import Heart from '../../common/components/Heart'
 import { getDetailPlace } from '../../common/api/getPlaces'
@@ -27,6 +26,10 @@ function DetailPlace() {
   const navigate = useNavigate();
   const { date, dateString } = useSelector((state: any) => state.date);
   const sequence = dateString.length ? 2 : 0;
+  // const place_dummydata = {
+  //   placeName:'밸런스독',
+
+  // };
   const [roomTypes, setRoomTypes] = useState<Array<any>>([
     {
       id: 1,

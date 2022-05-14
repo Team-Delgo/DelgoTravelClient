@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import ReservationButton from '../reservationButton/ReservationButton';
+import BottomButton from '../../../common/layouts/BottomButton';
 import { ReactComponent as LeftArrow } from '../../../icons/left-arrow.svg';
 import Calender from '../../calender/Calender';
 import './RoomTypePage.scss';
@@ -71,7 +71,7 @@ function RoomTypePage() {
         <div className="detail-place-room-type-base-information">기본정보</div>
         <div className="detail-place-room-type-additional-personnel-information">인원 추가 정보</div>
       </div>
-      <ReservationButton />
+      <BottomButton text="예약하기" />
     </>
   );
 }
