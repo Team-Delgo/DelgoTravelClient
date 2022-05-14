@@ -23,7 +23,7 @@ function MyAccount() {
     navigation('/user/signin');
   };
 
-  const wishListDeleteConfirm = async () => {
+  const logoutAlertConfirm = async () => {
     window.scrollTo(0,0);
     const [isOk, action, instance] = await alertConfirm({
       content: <div style={{ textAlign: 'center' }}>정말 찜 목록에서 제거하시겠어요?</div>,
@@ -119,7 +119,7 @@ function MyAccount() {
       </div>
       <div className="account-sign">
         <p className="account-out">회원탈퇴</p>
-        <p className="account-out" aria-hidden="true" onClick={wishListDeleteConfirm}>
+        <p className="account-out" aria-hidden="true" onClick={logoutAlertConfirm}>
           로그아웃
         </p>
       </div>
