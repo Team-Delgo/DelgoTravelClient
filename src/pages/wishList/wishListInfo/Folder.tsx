@@ -21,16 +21,11 @@ function Folder() {
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const accessToken = useSelector((state: any) => state.token.token);
 
-
   useEffect(() => {
     getWishedPlaces({ accessToken ,userId}, (response: AxiosResponse) => {
       setWishedPlace(response.data.data);
     });
   }, [accessToken]);
-
-
-
-  
 
   return (
     <div className="wish-list-container">
