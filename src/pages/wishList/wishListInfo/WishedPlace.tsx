@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
 import alertConfirm, { Button, alert } from "react-alert-confirm";
 import "react-alert-confirm/dist/index.css";
+import AlertConfirm from '../../../common/dialog/AlertConfirm';
 import Heart from '../../../common/components/Heart'
 import {wishDelete} from '../../../common/api/wish'
 import './WishedPlace.scss';

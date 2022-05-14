@@ -28,6 +28,10 @@ function Folder() {
     });
   }, [accessToken]);
 
+
+
+  
+
   return (
     <div className="wish-list-container">
       <div className="wish-list-container-header-text" aria-hidden="true" >저장 된 {wishedPlace?.length}개의 숙소</div>
