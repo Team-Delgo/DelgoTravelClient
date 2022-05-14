@@ -1,99 +1,104 @@
-.detail-place-room-type{
-    position: relative; 
-    margin-bottom: 100px;
-    color:#3E382F;
-    &-main-image{
-        width: 100%;
-        height: 45vh;
+.detail-place-room-type {
+  position: relative;
+  margin-bottom: 100px;
+  color: #3e382f;
+  &.close {
+    display: none;
+  }
+  &-main-image {
+    width: 100%;
+    height: 45vh;
+  }
+  &-previous-page {
+    position: absolute;
+    top: 50px;
+    left: 35px;
+  }
+  &-info {
+    margin: 0 0 15% 5%;
+    &-name {
+      padding: 5% 0 2% 0;
+      font-size: 6vw;
+      font-weight: bold;
     }
-    &-previous-page{
-        position: absolute;
-        top: 50px;
-        left: 35px;   
-    }
-    &-info{
-        margin: 0 0 15% 5%;
-        &-name{
-            padding: 5% 0 2% 0;
-            font-size: 6vw; 
-            font-weight: bold;
-        }
-        &-accommodation{
-            display: flex;
-            padding-bottom: 2%;
-            font-size: 3.5vw;
-            &-check-in-check-out{
-                color:#8A8A8A;
-            }
-            &-price{
-                font-size: 6vw; 
-                font-weight: bold;
-                margin: -3.5% 0 0 28%;
-            }
-        }
-        &-facility{
-            padding-bottom: 10%;
-            font-size: 3.5vw;
-            color:#6E614D;
-        }
-    }
-    &-reservation-date-select{
-        display: flex;
-        align-items: center;
-        width: 87vw;
-        height: 6vh;
-        background-color: #FFFFFF;
-        color: #3E382F;
-        font-size: 3.5vw;
+    &-accommodation {
+      display: flex;
+      padding-bottom: 2%;
+      font-size: 3.5vw;
+      &-check-in-check-out {
+        color: #8a8a8a;
+      }
+      &-price {
+        font-size: 6vw;
         font-weight: bold;
-        margin: 0 0 20% 5%;
-        padding-left:  4%;
-        border-radius: 5px;
-        &-calender{
-            padding-left: 40%;
-        }
+        margin: -3.5% 0 0 28%;
+      }
     }
-    &-room-select{
-        margin-left: 5%;
-        &-header{
-            font-size: 6vw;
-            font-weight: bold;
-            padding-bottom: 5%;
-        }
+    &-facility {
+      padding-bottom: 10%;
+      font-size: 3.5vw;
+      color: #6e614d;
     }
-    &-review{
-        padding-top: 40%;
-        &-header{
-            margin: 0 0 15% 5%;
-            &-number{
-                font-size: 6vw;
-                font-weight: bold;
-            }
-            &-more{
-                color: #FF9162;
-                font-weight: bold;
-                padding-left: 55%;
-            }
-        }
+  }
+  &-reservation-date-select {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 87vw;
+    height: 6vh;
+    background-color: #ffffff;
+    color: #3e382f;
+    font-size: 3.5vw;
+    font-weight: bold;
+    margin: 0 0 18% 5%;
+    padding-left: 4%;
+    border-radius: 5px;
+    &-calender {
+      margin-right: 15px;
     }
-    &-facility{
-        margin: 0 0 30% 5%;
-        font-size: 5vw;
-        &-header{
-            padding-bottom: 7%;
-        }
-        &-image-container{
-            display: flex;
-            justify-content: space-between;
-            overflow-x: scroll;
-        }
+  }
+  &-room-select {
+    margin-left: 5%;
+    &-header {
+      font-size: 6vw;
+      font-weight: bold;
+      padding-bottom: 5%;
     }
-    &-notice,&-base-information,&-additional-personnel-information{
-        margin: 0 5% 30% 5%;
-        font-size: 5vw;
-        &-header{
-            padding-bottom: 7%;
-        }
-
+  }
+  &-review {
+    padding-top: 40%;
+    &-header {
+      margin: 0 0 15% 5%;
+      &-number {
+        font-size: 6vw;
+        font-weight: bold;
+      }
+      &-more {
+        color: #ff9162;
+        font-weight: bold;
+        padding-left: 55%;
+      }
     }
+  }
+  &-facility {
+    margin: 0 0 30% 5%;
+    font-size: 5vw;
+    &-header {
+      padding-bottom: 7%;
+    }
+    &-image-container {
+      display: flex;
+      justify-content: space-between;
+      overflow-x: scroll;
+    }
+  }
+  &-notice,
+  &-base-information,
+  &-additional-personnel-information {
+    margin: 0 5% 30% 5%;
+    font-size: 5vw;
+    &-header {
+      padding-bottom: 7%;
+    }
+  }
 }

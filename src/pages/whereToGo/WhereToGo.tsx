@@ -1,22 +1,21 @@
 /* eslint-disable array-callback-return */
-import React,{useState,useEffect,useCallback} from 'react'
-import { Link ,useNavigate} from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
 import { useDispatch } from 'react-redux';
-import {getAllPlaces} from '../../common/api/getPlaces';
+import { getAllPlaces } from '../../common/api/getPlaces';
 import { tokenActions } from '../../redux/reducers/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
 import Footer from '../../common/layouts/Footer'
 import RegionSelectionModal from './modal/RegionSelectionModal'
 import Place from './place/Place'
-import { CALENDER_PATH} from '../../constants/path.const';
 // import {RootState} from '../../redux/store'
 import { ReactComponent as BottomArrow } from '../../icons/bottom-arrow.svg';
 import './WhereToGo.scss';
 
 
-interface PlaceType  {
+interface PlaceType {
   address: string
   lowestPrice: string
   mainPhotoUrl: string
@@ -31,9 +30,10 @@ function WhereToGo() {
   const [searchTerm, setSearchTerm] = useState('');
   const [areaTerm, setAreaTerm] = useState('');
   const [regionSelectionModal, setRegionSelectionModal] = useState(false);
-  const userId = useSelector((state: any) => state.persist.user.user.id) 
+  const userId = useSelector((state: any) => state.persist.user.user.id)
   const accessToken = useSelector((state: any) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
+  const { date, dateString } = useSelector((state: any) => state.date);
   const dispatch = useDispatch();
   const navigation = useNavigate();
 
@@ -65,8 +65,8 @@ function WhereToGo() {
   }, []);
 
   const handleRegionSelectionModal = useCallback(() => {
-      setRegionSelectionModal(!regionSelectionModal);
-    },[regionSelectionModal]);
+    setRegionSelectionModal(!regionSelectionModal);
+  }, [regionSelectionModal]);
 
   const closeRegionSelectionModal = useCallback(() => {
     setRegionSelectionModal(false);
@@ -80,12 +80,10 @@ function WhereToGo() {
           {areaTerm === '' ? '전체' : areaTerm}
           <BottomArrow className="bottom-arrow" />
         </div>
-        <Link style={{ textDecoration: 'none' }} to={CALENDER_PATH}>
-          <div className="search-date">
-            22.03.01 - 22.03.22 / 1박
-            <BottomArrow className="bottom-arrow" />
-          </div>
-        </Link>
+        <div className="search-date">
+          {dateString}
+          <BottomArrow className="bottom-arrow" />
+        </div>
       </div>
       <div className="places-container">
         {places.map((place) => {

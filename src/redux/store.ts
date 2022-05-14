@@ -4,6 +4,7 @@ import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import userSlice from './reducers/userSlice';
 import tokenSlice from './reducers/tokenSlice';
+import dateSlice from './reducers/dateSlice';
 
 const reducers = combineReducers({
   user: userSlice,
@@ -17,7 +18,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = configureStore({
-  reducer: { persist: persistedReducer, token: tokenSlice },
+  reducer: { persist: persistedReducer, token: tokenSlice, date: dateSlice },
   devTools: process.env.NODE_ENV !== 'production',
 });
 

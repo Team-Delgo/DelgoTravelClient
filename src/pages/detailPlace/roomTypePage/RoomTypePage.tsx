@@ -1,13 +1,16 @@
-import React, { useCallback, useState ,useEffect} from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useCallback, useState, useEffect } from 'react';
+import classNames from 'classnames';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import ReservationButton from '../reservationButton/ReservationButton';
-import { CALENDER_PATH } from '../../../constants/path.const';
 import { ReactComponent as LeftArrow } from '../../../icons/left-arrow.svg';
-
+import Calender from '../../calender/Calender';
 import './RoomTypePage.scss';
 
 function RoomTypePage() {
   const navigate = useNavigate();
+  const { date, dateString } = useSelector((state: any) => state.date);
+  const [isCalenderOpen, setIsCalenderOpen] = useState(false);
   const [service, setService] = useState<Array<any>>([
     `${process.env.PUBLIC_URL}/assets/images/service1.png`,
     `${process.env.PUBLIC_URL}/assets/images/service2.png`,
@@ -17,17 +20,26 @@ function RoomTypePage() {
     `${process.env.PUBLIC_URL}/assets/images/service6.png`,
   ]);
 
+
   useEffect(() => {
     window.scrollTo(0, 0);
-}, []);
+  }, []);
 
   const moveToPreviousPage = useCallback(() => {
     navigate(-1);
   }, []);
 
+  const calenderOpen = () => {
+    setIsCalenderOpen(true);
+  }
+  const calenderClose = () => {
+    setIsCalenderOpen(false);
+  }
+
   return (
     <>
-      <div className="detail-place-room-type">
+      {isCalenderOpen && <Calender closeCalender={calenderClose} />}
+      <div className={classNames("detail-place-room-type", { close: isCalenderOpen })}>
         <img
           className="detail-place-room-type-main-image"
           src={`${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`}
@@ -41,19 +53,17 @@ function RoomTypePage() {
             <div className="detail-place-room-type-info-accommodation-price">360,000원</div>
           </div>
         </div>
-        <Link style={{ textDecoration: 'none' }} to={CALENDER_PATH}>
-          <div className="detail-place-room-type-reservation-date-select">
-            <span>날짜선택</span>
-            <span className="detail-place-room-type-reservation-date-select-calender">
-              11.14 수 - 11.15 목&nbsp;&nbsp;&nbsp;&gt;
-            </span>
-          </div>
-        </Link>
+        <div className="detail-place-room-type-reservation-date-select" aria-hidden="true" onClick={calenderOpen}>
+          <span>날짜선택</span>
+          <span className="detail-place-room-type-reservation-date-select-calender">
+            {dateString}&nbsp;&nbsp;&nbsp;&gt;
+          </span>
+        </div>
         <div className="detail-place-room-type-facility">
           <header className="detail-place-room-type-facility-header">편의시설</header>
           <div className="detail-place-room-type-facility-image-container">
             {service.map((url) => (
-              <img src={url} alt="service-img" />
+              <img src={url} alt="service-img" key={url} />
             ))}
           </div>
         </div>

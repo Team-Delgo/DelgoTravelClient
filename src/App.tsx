@@ -11,7 +11,7 @@ import PetInfo from './pages/user/signUpPage/petInfo/PetInfo';
 import Login from './pages/user/signInPage/Login';
 import WishListPage from './pages/wishList/WishList'
 import WhereToGoPage from './pages/whereToGo/WhereToGo';
-import { EDITOR_NOTE_PATH, ROOT_PATH, SIGN_IN_PATH, SIGN_UP_PATH, WISH_LIST_PATH, WHERE_TO_GO_PATH, MY_ACCOUNT_PATH, CALENDER_PATH, DETAIL_PLACE_PATH } from './constants/path.const';
+import { EDITOR_NOTE_PATH, ROOT_PATH, SIGN_IN_PATH, SIGN_UP_PATH, WISH_LIST_PATH, WHERE_TO_GO_PATH, MY_ACCOUNT_PATH, DETAIL_PLACE_PATH } from './constants/path.const';
 import './App.scss';
 import MyAccount from './pages/myAccount/MyAccount';
 import FindPassword from './pages/user/signInPage/FindPassword';
@@ -27,7 +27,6 @@ function App() {
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
-
       <Routes>
         <Route path={ROOT_PATH} element={<HomePage />} />
         <Route path={EDITOR_NOTE_PATH} element={<EditorNote />} />
@@ -44,7 +43,6 @@ function App() {
         <Route path={WISH_LIST_PATH} element={<WishListPage />} />
         <Route path={WHERE_TO_GO_PATH} element={<WhereToGoPage />} />
         <Route path={MY_ACCOUNT_PATH} element={<MyAccount />} />
-        <Route path={CALENDER_PATH} element={<Calender />} />
         <Route path={DETAIL_PLACE_PATH.MAIN} element={<DetailPlace />} />
         <Route path={DETAIL_PLACE_PATH.REVIEWS} element={<ReviewsPage />} />
         <Route path={DETAIL_PLACE_PATH.ROOMTYPES} element={<RoomTypePage />} />

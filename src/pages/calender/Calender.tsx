@@ -1,15 +1,20 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import classNames from "classnames";
-import "./Calender.scss";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
+import "./Calender.scss";
 import { ReactComponent as Exit } from '../../icons/exit.svg';
+import { dateActions } from "../../redux/reducers/dateSlice";
 
-function Calender() {
-  const [selectedDate, setSelectedDate] = useState({ start: '', end: '' });
-  const [sequence, setSequence] = useState(0); // 0개 선택, 1개 선택, 2개 선택
-  const navigate  = useNavigate()
-
+function Calender(props: {
+  closeCalender: () => void
+}) {
+  const dispatch = useDispatch();
+  const { date, dateString } = useSelector((state: any) => state.date);
+  const { start, end } = date;
+  const [selectedDate, setSelectedDate] = useState({ start, end });
+  const dateExist = dateString.length ? 2 : 0;
+  const [sequence, setSequence] = useState(dateExist); // 0개 선택, 1개 선택, 2개 선택
 
   const getNextYear = (currentMonth: number, currentYear: number, add: number) => {
     if (currentMonth + add > 12) {
@@ -185,7 +190,7 @@ function Calender() {
     </div>
     : selectedDateContext;
 
-
+  const { closeCalender } = props;
 
   const resetHandler = () => {
     setSelectedDate({ start: '', end: '' });
@@ -193,10 +198,16 @@ function Calender() {
   };
 
   const moveToPreviousPage = () => {
-    navigate(-1)
+    closeCalender();
   };
 
-  const bottomButton = <div className="bottom-select-button">{days}박 선택</div>
+  const confirmDateHandler = () => {
+    const selectedDateString = `${startMonth}.${startDate}(${startDay}) ~ ${endMonth}.${endDate}(${endDay}) ${days}박`;
+    dispatch(dateActions.setDate({ date: { start: selectedDate.start, end: selectedDate.end }, dateString: selectedDateString }));
+    closeCalender();
+  };
+
+  const bottomButton = <div className="bottom-select-button" aria-hidden="true" onClick={confirmDateHandler}>{days}박 선택</div>
 
   return (
     <div className="calender">
