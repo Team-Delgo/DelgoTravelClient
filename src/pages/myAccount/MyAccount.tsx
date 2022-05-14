@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Footer from '../../common/layouts/Footer';
 import "./MyAccount.scss";
 import RightArrow from "../../icons/right-arrow.svg";
+import { userActions } from "../../redux/reducers/userSlice";
 import { tokenActions } from "../../redux/reducers/tokenSlice";
 
 
@@ -13,10 +14,11 @@ function MyAccount() {
   console.log(pet);
   const navigation = useNavigate();
   const dispatch = useDispatch();
+
   const logoutHandler = () => {
-    dispatch(tokenActions.setToken(''));
+    dispatch(userActions.signout());
     localStorage.removeItem('refreshToken');
-    navigation('/');
+    navigation('/user/signin');
   };
 
 

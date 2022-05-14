@@ -1,27 +1,35 @@
-import React, { useState,useCallback,useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useSelector } from "react-redux";
-import { Link, useParams,useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
 import RoomType from './roomType/RoomType';
 import Reviews from './reviews/Reviews';
-import ReservationButton from './reservationButton/ReservationButton';
 import Map from '../../common/components/Map'
 import Heart from '../../common/components/Heart'
-import {getDetailPlace} from '../../common/api/getPlaces'
-import {wishInsert,wishDelete} from '../../common/api/wish'
-import { CALENDER_PATH} from '../../constants/path.const';
+import { getDetailPlace } from '../../common/api/getPlaces'
+import { wishInsert, wishDelete } from '../../common/api/wish'
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow.svg'
 
+
 import './DetailPlace.scss';
+import Calender from '../calender/Calender';
 
 function DetailPlace() {
-  const [test,setTest] = useState<Array<any>>([])
+  const [isCalenderOpen, setIsCalenderOpen] = useState(false);
+  const [selectedDateString, setSelectedDateString] = useState('');
+  const [selectedDate, setSelectedDate] = useState({ start: '', end: '' });
+  const [test, setTest] = useState<Array<any>>([])
   const [wishList, setWishList] = useState(0);
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const { placeId } = useParams();
-  const navigate  = useNavigate();
- 
+  const navigate = useNavigate();
+  const { date, dateString } = useSelector((state: any) => state.date);
+  const sequence = dateString.length ? 2 : 0;
+  // const place_dummydata = {
+  //   placeName:'밸런스독',
 
+  // };
   const [roomTypes, setRoomTypes] = useState<Array<any>>([
     {
       id: 1,
@@ -152,17 +160,25 @@ function DetailPlace() {
 
   const moveToPreviousPage = useCallback(() => {
     navigate(-1)
-  },[]);
+  }, []);
+
+  const calenderOpen = () => {
+    setIsCalenderOpen(true);
+  }
+  const calenderClose = () => {
+    setIsCalenderOpen(false);
+  }
 
   return (
     <>
-      <div className="detail-place">
+      {isCalenderOpen && <Calender closeCalender={calenderClose} />}
+      <div className={classNames('detail-place', { close: isCalenderOpen })}>
         <img
           className="detail-place-main-image"
           src={`${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`}
           alt="place-img"
         />
-        <LeftArrow className="detail-place-previous-page" onClick={moveToPreviousPage}/>
+        <LeftArrow className="detail-place-previous-page" onClick={moveToPreviousPage} />
         <div className="detail-place-heart">
           {wishList === 0 ? (
             <Heart wishList={wishList} handleWishList={wishListInsert} />
@@ -178,22 +194,21 @@ function DetailPlace() {
           <div className="detail-place-info-reviews">★ 9.1 리뷰 12개 &gt;</div>
           <div className="detail-place-info-facility">소형견,오션뷰,자연휴강,산책코스</div>
         </div>
-        <Link style={{ textDecoration: 'none' }} to={CALENDER_PATH}>
-          <div className="detail-place-reservation-date-select">
-            <span>날짜선택</span>
-            <span className="detail-place-reservation-date-select-calender">
-              11.14 수 - 11.15 목&nbsp;&nbsp;&nbsp;&gt;
-            </span>
-          </div>
-        </Link>
+
+        <div className="detail-place-reservation-date-select" aria-hidden="true" onClick={calenderOpen}>
+          <span>날짜선택</span>
+          <span className="detail-place-reservation-date-select-calender">
+            {dateString}&nbsp;&nbsp;&nbsp;&gt;
+          </span>
+        </div>
+
         <div className="detail-place-room-select">
           <header className="detail-place-room-select-header">객실선택</header>
         </div>
         <div className="detail-places-room-types">
           {roomTypes.map((room) => (
-            <Link style={{ textDecoration: 'none' }} to={`/detail-place/${placeId}/${room.id}`}>
-              <RoomType key={room.id} room={room} />
-            </Link>
+            <RoomType key={room.id} room={room}
+              navigate={() => { navigate(`/detail-place/${placeId}/${room.id}`); }} />
           ))}
         </div>
         <div className="detail-place-review">
@@ -229,10 +244,9 @@ function DetailPlace() {
         <div className="detail-place-etc">확인사항 및 기타</div>
         <div className="detail-place-map">
           <header className="detail-place-map-header">지도</header>
-          <Map/>
+          <Map />
         </div>
       </div>
-      <ReservationButton />
     </>
   );
 }
