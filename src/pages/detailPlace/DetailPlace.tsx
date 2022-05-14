@@ -224,7 +224,7 @@ function DetailPlace() {
             </Link>
           </header>
           <body>
-            {reviews.map((review) => (
+            {reviews.slice(0,2).map((review) => (
               <Reviews key={review.id} review={review} />
             ))}
           </body>

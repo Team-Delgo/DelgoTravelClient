@@ -13,6 +13,7 @@ import Place from './place/Place'
 // import {RootState} from '../../redux/store'
 import { ReactComponent as BottomArrow } from '../../icons/bottom-arrow.svg';
 import './WhereToGo.scss';
+import Calender from '../calender/Calender';
 
 
 interface PlaceType {
@@ -33,13 +34,18 @@ function WhereToGo() {
   const userId = useSelector((state: any) => state.persist.user.user.id)
   const accessToken = useSelector((state: any) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
+  const [isCalenderOpen, setIsCalenderOpen] = useState(false);
+  const [selectedDateString, setSelectedDateString] = useState('');
+  const [selectedDate, setSelectedDate] = useState({ start: '', end: '' });
   const { date, dateString } = useSelector((state: any) => state.date);
+  const sequence = dateString.length ? 2 : 0;
   const dispatch = useDispatch();
   const navigation = useNavigate();
 
   useEffect(() => {
     getAllPlaces(userId, (response: AxiosResponse) => {
       setPlaces(response.data.data);
+      console.log(response.data.data)
     });
   }, []);
 
@@ -72,7 +78,14 @@ function WhereToGo() {
     setRegionSelectionModal(false);
   }, []);
 
+  const handleCalenderOpenClose = useCallback(() => {
+    setIsCalenderOpen(!isCalenderOpen);
+  },[isCalenderOpen])
+
+
   return (
+    <>
+    {isCalenderOpen && <Calender closeCalender={handleCalenderOpenClose} />}
     <div className="where-to-go-background">
       <input className="search-place" placeholder="숙소검색" value={searchTerm} onChange={handleSerchTerm} />
       <div className="search-region-date">
@@ -80,7 +93,7 @@ function WhereToGo() {
           {areaTerm === '' ? '전체' : areaTerm}
           <BottomArrow className="bottom-arrow" />
         </div>
-        <div className="search-date">
+        <div className="search-date" aria-hidden="true" onClick={handleCalenderOpenClose}>
           {dateString}
           <BottomArrow className="bottom-arrow" />
         </div>
@@ -102,6 +115,7 @@ function WhereToGo() {
         areaTerm={areaTerm}
       />
     </div>
+    </>
   );
 }
 
