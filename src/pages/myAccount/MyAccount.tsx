@@ -1,8 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import alertConfirm, { Button, alert } from "react-alert-confirm";
-import "react-alert-confirm/dist/index.css";
 import Footer from '../../common/layouts/Footer';
 import "./MyAccount.scss";
 import RightArrow from "../../icons/right-arrow.svg";
@@ -21,34 +19,6 @@ function MyAccount() {
     navigation('/');
   };
 
-  const logoutConfirm = async () => {
-    window.scrollTo(0, 0);
-    const [isOk, action, instance] = await alertConfirm({
-      content: <div style={{ textAlign: 'center' }}>정말 로그아웃 하시겠어요?</div>,
-      // eslint-disable-next-line react/no-unstable-nested-components
-      footer(dispatch) {
-        return (
-          <div style={{margin:"auto"}}>
-            <Button  style={{marginRight:"40px",width:"80px",borderRadius: "25px"}} onClick={() => dispatch('delete')} styleType="default">
-              네
-            </Button>
-            <Button  style={{marginLeft:"40px",width:"80px",borderRadius: "25px"}} onClick={() => dispatch('cancel')} styleType="default">
-              아니요
-            </Button>
-          </div>
-        );
-      },
-      async closeBefore(action, close) {
-        if (action === 'delete') {
-          logoutHandler()
-          close()
-        } else {
-          close()
-        }
-      },
-    });
-    console.log(isOk, action, instance);
-  }
 
   return (
     <div className="account">
@@ -117,7 +87,7 @@ function MyAccount() {
       </div>
       <div className="account-sign">
         <p className="account-out">회원탈퇴</p>
-        <p className="account-out" aria-hidden="true" onClick={logoutConfirm}>
+        <p className="account-out" aria-hidden="true" onClick={logoutHandler}>
           로그아웃
         </p>
       </div>
