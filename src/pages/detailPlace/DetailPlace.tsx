@@ -10,49 +10,26 @@ import Heart from '../../common/components/Heart'
 import { getDetailPlace } from '../../common/api/getPlaces'
 import { wishInsert, wishDelete } from '../../common/api/wish'
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow.svg'
-
-
 import './DetailPlace.scss';
 import Calender from '../calender/Calender';
 
 function DetailPlace() {
+  const [place, setPlace] = useState({
+    address: '',
+    lowestPrice: '',
+    mainPhotoUrl: '',
+    name: '',
+    placeId: '',
+    registDt: '',
+    wishId: 0,
+  });
+  const [roomTypes, setRoomTypes] = useState<Array<any>>([])
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
-  const [test, setTest] = useState<Array<any>>([])
-  const [wishList, setWishList] = useState(0);
+  const { date, dateString } = useSelector((state: any) => state.date);
   const userId = useSelector((state: any) => state.persist.user.user.id);
+  const accessToken = useSelector((state: any) => state.token.token);
   const { placeId } = useParams();
   const navigate = useNavigate();
-  const { date, dateString } = useSelector((state: any) => state.date);
-  // const place_dummydata = {
-  //   placeName:'밸런스독',
-
-  // };
-  const [roomTypes, setRoomTypes] = useState<Array<any>>([
-    {
-      id: 1,
-      image: `${process.env.PUBLIC_URL}/assets/images/recommendedPlaceImage.png`,
-      name: '스탠다드',
-      lowestPrice: '190.000',
-      max_person: 2,
-      max_dog: 3,
-    },
-    {
-      id: 2,
-      image: `${process.env.PUBLIC_URL}/assets/images/whereToGoImage.png`,
-      name: '디럭스 더블',
-      lowestPrice: '250.000',
-      max_person: 4,
-      max_dog: 2,
-    },
-    {
-      id: 3,
-      image: `${process.env.PUBLIC_URL}/assets/images/whereToGoImage.png`,
-      name: '프리미어',
-      lowestPrice: '350.000',
-      max_person: 5,
-      max_dog: 6,
-    },
-  ]);
 
   const [reviews, setReviews] = useState<Array<any>>([
     {
@@ -124,79 +101,65 @@ function DetailPlace() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
     getDetailPlace({ userId, placeId: Number(placeId) }, (response: AxiosResponse) => {
-      setTest(response.data.data);
-      console.log(response.data.data);
+      setPlace(response.data.data.place)
+      setRoomTypes(response.data.data.roomList)
     });
   }, []);
 
   const wishListInsert = useCallback(() => {
-    setWishList(1);
-    // wishInsert({ userId, placeId: place.placeId }, (response: AxiosResponse) => {
-    //   if (response.data.code === 200) {
-    //     const updatePlace = { ...place, wishId: response.data.data.wishId };
-    //     const updatePlaces = places.map((p) => (p.placeId === updatePlace.placeId ? { ...p, ...updatePlace } : p));
-    //     setPlaces(updatePlaces);
-    //     setWishList(response.data.data.wishId);
-    //   }
-    // });
-  }, [wishList]);
+    wishInsert({ userId, placeId: Number(placeId),accessToken}, (response: AxiosResponse) => {
+      if (response.data.code === 200) {
+        const updatePlace = { ...place, wishId: response.data.data.wishId };
+        setPlace(updatePlace)
+      }
+    });
+  }, [place]);
 
   const wishListDelete = useCallback(() => {
-    setWishList(0);
-    // wishDelete({ wishId: wishList }, (response: AxiosResponse) => {
-    //   if (response.data.code === 200) {
-    //     const updatePlace = { ...place, wishId: 0 };
-    //     const updatePlaces = places.map((p) => (p.placeId === updatePlace.placeId ? { ...p, ...updatePlace } : p));
-    //     setPlaces(updatePlaces);
-    //     setWishList(0);
-    //   }
-    // });
-  }, [wishList]);
+    wishDelete({ wishId: place.wishId,accessToken }, (response: AxiosResponse) => {
+      if (response.data.code === 200) {
+        const updatePlace = { ...place, wishId: 0 };
+        setPlace(updatePlace)
+      }
+    });
+  }, [place]);
 
   const moveToPreviousPage = useCallback(() => {
     navigate(-1)
   }, []);
 
-  const calenderOpen = () => {
-    setIsCalenderOpen(true);
-  }
-  const calenderClose = () => {
-    setIsCalenderOpen(false);
-  }
+  const calenderOpenClose = useCallback(() => {
+    setIsCalenderOpen(!isCalenderOpen);
+  },[isCalenderOpen])
+
 
   return (
     <>
-      {isCalenderOpen && <Calender closeCalender={calenderClose} />}
+      {isCalenderOpen && <Calender closeCalender={calenderOpenClose} />}
       <div className={classNames('detail-place', { close: isCalenderOpen })}>
-        <img
-          className="detail-place-main-image"
-          src={`${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`}
-          alt="place-img"
-        />
+        <img className="detail-place-main-image" src={place.mainPhotoUrl} alt="place-img" />
         <LeftArrow className="detail-place-previous-page" onClick={moveToPreviousPage} />
         <div className="detail-place-heart">
-          {wishList === 0 ? (
-            <Heart wishList={wishList} handleWishList={wishListInsert} />
+          {place.wishId === 0 ? (
+            <Heart wishList={place.wishId} handleWishList={wishListInsert} />
           ) : (
-            <Heart wishList={wishList} handleWishList={wishListDelete} />
+            <Heart wishList={place.wishId} handleWishList={wishListDelete} />
           )}
         </div>
         <div className="detail-place-info">
-          <header className="detail-place-info-name">밸런스독</header>
+          <header className="detail-place-info-name">{place.name}</header>
           <div className="detail-place-info-address">
-            경기도 양평균 지평면<span className="detail-place-info-map">지도 &gt;</span>
+            {place.address}
+            <span className="detail-place-info-map">지도 &gt;</span>
           </div>
           <div className="detail-place-info-reviews">★ 9.1 리뷰 12개 &gt;</div>
           <div className="detail-place-info-facility">소형견,오션뷰,자연휴강,산책코스</div>
         </div>
 
-        <div className="detail-place-reservation-date-select" aria-hidden="true" onClick={calenderOpen}>
+        <div className="detail-place-reservation-date-select" aria-hidden="true" onClick={calenderOpenClose}>
           <span>날짜선택</span>
-          <span className="detail-place-reservation-date-select-calender">
-            {dateString}&nbsp;&nbsp;&nbsp;&gt;
-          </span>
+          <span className="detail-place-reservation-date-select-calender">{dateString}&nbsp;&nbsp;&nbsp;&gt;</span>
         </div>
 
         <div className="detail-place-room-select">
@@ -204,8 +167,13 @@ function DetailPlace() {
         </div>
         <div className="detail-places-room-types">
           {roomTypes.map((room) => (
-            <RoomType key={room.id} room={room}
-              navigate={() => { navigate(`/detail-place/${placeId}/${room.id}`); }} />
+            <RoomType
+              key={room.id}
+              room={room}
+              navigate={() => {
+                navigate(`/detail-place/${placeId}/${room.roomId}`);
+              }}
+            />
           ))}
         </div>
         <div className="detail-place-review">
@@ -221,7 +189,7 @@ function DetailPlace() {
             </Link>
           </header>
           <body>
-            {reviews.slice(0,2).map((review) => (
+            {reviews.slice(0, 2).map((review) => (
               <Reviews key={review.id} review={review} />
             ))}
           </body>

@@ -13,8 +13,6 @@ function Map() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function (position) {
         const container = document.getElementById('myMap');
-        console.log(window.kakao);
-        console.log(position.coords.latitude, position.coords.longitude)
         const options = {
           center: new window.kakao.maps.LatLng(position.coords.latitude, position.coords.longitude),
           level: 3
@@ -23,7 +21,6 @@ function Map() {
         const map = new window.kakao.maps.Map(container, options);
 
         const markerPosition = new window.kakao.maps.LatLng(position.coords.latitude, position.coords.longitude)
-        console.log(position.coords.latitude)
 
         const marker = new window.kakao.maps.Marker({
           position: markerPosition,

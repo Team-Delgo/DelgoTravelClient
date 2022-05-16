@@ -5,14 +5,14 @@ function RoomType(props: { navigate: () => void, room: any }) {
   const { navigate, room } = props;
   return (
     <div className="room" aria-hidden="true" onClick={navigate}>
-      <img src={room.image} alt="room-img" />
+      <img src={room.crawlingUrl} alt="room-img" />
       <div className="room-info">
         <div className="room-info-first-line">
-          최대 {room.max_person}인/최대 {room.max_dog}마리
+          최대 {room.personMaxNum}인/최대 {room.petMaxNum}마리
         </div>
         <div className="room-info-second-line">
           <span>{room.name}</span>
-          <span>{room.lowestPrice}원</span>
+          <span>{room.price}원</span>
         </div>
       </div>
     </div>
