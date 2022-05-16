@@ -28,7 +28,6 @@ interface PlaceType {
 }
 
 function WhereToGo() {
-  const [isCalenderOpen, setIsCalenderOpen] = useState(false);
   const [places, setPlaces] = useState<Array<PlaceType>>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [areaTerm, setAreaTerm] = useState('');
