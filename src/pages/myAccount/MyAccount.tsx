@@ -27,7 +27,7 @@ function MyAccount() {
   const logoutAlertConfirm = async () => {
     window.scrollTo(0,0);
     const [isOk, action, instance] = await alertConfirm({
-      content: <div style={{ textAlign: 'center' }}>정말 찜 목록에서 제거하시겠어요?</div>,
+      content: <div style={{ textAlign: 'center' }}>정말 로그아웃 하시겠어요?</div>,
       // eslint-disable-next-line react/no-unstable-nested-components
       footer(dispatch) {
         return (
