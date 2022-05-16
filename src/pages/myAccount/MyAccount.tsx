@@ -15,11 +15,13 @@ function MyAccount() {
   const navigation = useNavigate();
   const dispatch = useDispatch();
 
+
   const logoutHandler = () => {
     dispatch(userActions.signout());
     localStorage.removeItem('refreshToken');
     navigation('/user/signin');
   };
+
 
 
   return (

@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
+import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import { getAllPlaces } from '../../common/api/getPlaces';
 import { tokenActions } from '../../redux/reducers/tokenSlice';
@@ -13,6 +14,7 @@ import Place from './place/Place'
 // import {RootState} from '../../redux/store'
 import { ReactComponent as BottomArrow } from '../../icons/bottom-arrow.svg';
 import './WhereToGo.scss';
+import Calender from '../calender/Calender';
 
 
 interface PlaceType {
@@ -26,6 +28,7 @@ interface PlaceType {
 }
 
 function WhereToGo() {
+  const [isCalenderOpen, setIsCalenderOpen] = useState(false);
   const [places, setPlaces] = useState<Array<PlaceType>>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [areaTerm, setAreaTerm] = useState('');
@@ -72,36 +75,47 @@ function WhereToGo() {
     setRegionSelectionModal(false);
   }, []);
 
+  const calenderOpen = () => {
+    setIsCalenderOpen(true);
+  };
+
+  const calenderClose = () => {
+    setIsCalenderOpen(false);
+  };
+
   return (
-    <div className="where-to-go-background">
-      <input className="search-place" placeholder="숙소검색" value={searchTerm} onChange={handleSerchTerm} />
-      <div className="search-region-date">
-        <div className="search-region" aria-hidden="true" onClick={handleRegionSelectionModal}>
-          {areaTerm === '' ? '전체' : areaTerm}
-          <BottomArrow className="bottom-arrow" />
+    <>
+      {isCalenderOpen && <Calender closeCalender={calenderClose} />}
+      <div className={classNames("where-to-go-background", { close: isCalenderOpen })}>
+        <input className="search-place" placeholder="숙소검색" value={searchTerm} onChange={handleSerchTerm} />
+        <div className="search-region-date">
+          <div className="search-region" aria-hidden="true" onClick={handleRegionSelectionModal}>
+            {areaTerm === '' ? '전체' : areaTerm}
+            <BottomArrow className="bottom-arrow" />
+          </div>
+          <div className="search-date" aria-hidden="true" onClick={calenderOpen}>
+            {dateString}
+            <BottomArrow className="bottom-arrow" />
+          </div>
         </div>
-        <div className="search-date">
-          {dateString}
-          <BottomArrow className="bottom-arrow" />
-        </div>
-      </div>
-      <div className="places-container">
-        {places.map((place) => {
-          if (place.address.includes(areaTerm)) {
-            if (place.name.includes(searchTerm)) {
-              return <Place key={place.placeId} place={place} userId={userId} places={places} setPlaces={setPlaces} />;
+        <div className="places-container">
+          {places.map((place) => {
+            if (place.address.includes(areaTerm)) {
+              if (place.name.includes(searchTerm)) {
+                return <Place key={place.placeId} place={place} userId={userId} places={places} setPlaces={setPlaces} />;
+              }
             }
-          }
-        })}
+          })}
+        </div>
+        <Footer />
+        <RegionSelectionModal
+          regionSelectionModal={regionSelectionModal}
+          closeRegionSelectionModal={closeRegionSelectionModal}
+          setAreaTerm={setAreaTerm}
+          areaTerm={areaTerm}
+        />
       </div>
-      <Footer />
-      <RegionSelectionModal
-        regionSelectionModal={regionSelectionModal}
-        closeRegionSelectionModal={closeRegionSelectionModal}
-        setAreaTerm={setAreaTerm}
-        areaTerm={areaTerm}
-      />
-    </div>
+    </>
   );
 }
 

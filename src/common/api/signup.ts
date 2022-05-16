@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
+import { stringify } from 'querystring';
 import { url } from '../../constants/url.cosnt';
 import { errorHandler } from './errorHandler';
 
@@ -34,6 +35,21 @@ async function signup(info: SignUpData, success: (data: AxiosResponse) => void) 
         phoneNo: phone,
       },
       pet,
+    })
+    .then((data) => {
+      success(data);
+    })
+    .catch((error) => {
+      errorHandler(error);
+    });
+}
+
+async function deleteUser(email: string, success: (data: AxiosResponse) => void) {
+  await axios
+    .post(`${url}/deleteUser`, {
+      user: {
+        email,
+      },
     })
     .then((data) => {
       success(data);
@@ -84,4 +100,4 @@ async function petImageUpload(formdata: FormData, success: (data: AxiosResponse)
     });
 }
 
-export { emailCheck, signup, phoneCheckNumber, phoneSendMessage, petImageUpload };
+export { emailCheck, signup, deleteUser, phoneCheckNumber, phoneSendMessage, petImageUpload };

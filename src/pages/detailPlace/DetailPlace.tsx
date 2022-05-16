@@ -17,15 +17,12 @@ import Calender from '../calender/Calender';
 
 function DetailPlace() {
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
-  const [selectedDateString, setSelectedDateString] = useState('');
-  const [selectedDate, setSelectedDate] = useState({ start: '', end: '' });
   const [test, setTest] = useState<Array<any>>([])
   const [wishList, setWishList] = useState(0);
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const { placeId } = useParams();
   const navigate = useNavigate();
   const { date, dateString } = useSelector((state: any) => state.date);
-  const sequence = dateString.length ? 2 : 0;
   // const place_dummydata = {
   //   placeName:'밸런스독',
 

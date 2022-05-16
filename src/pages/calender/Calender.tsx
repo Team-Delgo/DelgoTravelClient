@@ -212,7 +212,7 @@ function Calender(props: {
   return (
     <div className="calender">
       <div className="fixed-header">
-        <div className="header">
+        <div className="calender-header">
           <Exit onClick={moveToPreviousPage} />
           <h1 className="header-title">날짜선택</h1>
           <span className="header-reset" aria-hidden="true" onClick={resetHandler}>
