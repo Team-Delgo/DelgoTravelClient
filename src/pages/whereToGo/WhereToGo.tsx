@@ -36,13 +36,18 @@ function WhereToGo() {
   const userId = useSelector((state: any) => state.persist.user.user.id)
   const accessToken = useSelector((state: any) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
+  const [isCalenderOpen, setIsCalenderOpen] = useState(false);
+  const [selectedDateString, setSelectedDateString] = useState('');
+  const [selectedDate, setSelectedDate] = useState({ start: '', end: '' });
   const { date, dateString } = useSelector((state: any) => state.date);
+  const sequence = dateString.length ? 2 : 0;
   const dispatch = useDispatch();
   const navigation = useNavigate();
 
   useEffect(() => {
     getAllPlaces(userId, (response: AxiosResponse) => {
       setPlaces(response.data.data);
+      console.log(response.data.data)
     });
   }, []);
 
@@ -75,6 +80,7 @@ function WhereToGo() {
     setRegionSelectionModal(false);
   }, []);
 
+
   const calenderOpen = () => {
     setIsCalenderOpen(true);
   };
@@ -97,6 +103,7 @@ function WhereToGo() {
             {dateString}
             <BottomArrow className="bottom-arrow" />
           </div>
+
         </div>
         <div className="places-container">
           {places.map((place) => {
