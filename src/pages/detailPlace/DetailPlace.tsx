@@ -213,7 +213,7 @@ function DetailPlace() {
         <div className="detail-place-etc">확인사항 및 기타</div>
         <div className="detail-place-map">
           <header className="detail-place-map-header">지도</header>
-          <Map />
+          <Map address={place.address} />
         </div>
       </div>
     </>
