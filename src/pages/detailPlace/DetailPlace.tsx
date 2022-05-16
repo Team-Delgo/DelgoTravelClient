@@ -133,6 +133,10 @@ function DetailPlace() {
     setIsCalenderOpen(!isCalenderOpen);
   },[isCalenderOpen])
 
+  const moveToMap = useCallback(() => {
+    window.scroll({ top: document.body.scrollHeight, behavior: 'smooth' });
+  },[])
+
 
   return (
     <>
@@ -149,7 +153,7 @@ function DetailPlace() {
         </div>
         <div className="detail-place-info">
           <header className="detail-place-info-name">{place.name}</header>
-          <div className="detail-place-info-address">
+          <div className="detail-place-info-address"aria-hidden="true" onClick={moveToMap}>
             {place.address}
             <span className="detail-place-info-map">지도 &gt;</span>
           </div>

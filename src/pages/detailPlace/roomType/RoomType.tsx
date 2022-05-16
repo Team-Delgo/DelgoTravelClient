@@ -12,7 +12,7 @@ function RoomType(props: { navigate: () => void, room: any }) {
         </div>
         <div className="room-info-second-line">
           <span>{room.name}</span>
-          <span>{room.price}원</span>
+          <span>{room.price}</span>
         </div>
       </div>
     </div>
