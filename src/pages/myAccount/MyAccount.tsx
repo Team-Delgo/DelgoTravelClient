@@ -17,6 +17,7 @@ function MyAccount() {
   const navigation = useNavigate();
   const dispatch = useDispatch();
 
+
   const logoutHandler = () => {
     dispatch(userActions.signout());
     localStorage.removeItem('refreshToken');
@@ -50,6 +51,7 @@ function MyAccount() {
       },
     })
   }
+
 
 
   return (

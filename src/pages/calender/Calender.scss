@@ -1,6 +1,12 @@
 .calender {
   position: absolute;
   z-index: 100;
+  &-header {
+    display: flex;
+    padding: 20px;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 .fixed-header {
   position: sticky;
@@ -13,10 +19,6 @@
   background-color: white;
 }
 .header {
-  display: flex;
-  padding: 20px;
-  justify-content: space-between;
-  align-items: center;
   &-title {
     font-size: 18px;
     font-weight: bold;
