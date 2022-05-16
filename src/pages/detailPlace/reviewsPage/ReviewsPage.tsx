@@ -1,7 +1,7 @@
 import React,{useEffect,useState,useCallback} from 'react'
 import { useLocation,useNavigate } from 'react-router-dom';
 import Reviews from '../reviews/Reviews';
-import { ReactComponent as LeftArrow } from '../../../icons/left-arrow.svg'
+import { ReactComponent as LeftArrow } from '../../../icons/left-arrow2.svg'
 import './ReviewsPage.scss'
 
 function ReviewsPage() {

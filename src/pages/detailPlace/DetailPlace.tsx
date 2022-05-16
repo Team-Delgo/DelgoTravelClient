@@ -9,7 +9,7 @@ import Map from '../../common/components/Map'
 import Heart from '../../common/components/Heart'
 import { getDetailPlace } from '../../common/api/getPlaces'
 import { wishInsert, wishDelete } from '../../common/api/wish'
-import { ReactComponent as LeftArrow } from '../../icons/left-arrow.svg'
+import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg'
 import './DetailPlace.scss';
 import Calender from '../calender/Calender';
 
