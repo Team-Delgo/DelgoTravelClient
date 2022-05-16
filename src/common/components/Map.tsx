@@ -11,16 +11,16 @@ declare global {
 function Map() {
   useEffect(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function (position) {
+      navigator.geolocation.getCurrentPosition(function () {
         const container = document.getElementById('myMap');
         const options = {
-          center: new window.kakao.maps.LatLng(position.coords.latitude, position.coords.longitude),
+          center: new window.kakao.maps.LatLng(37.54856592, 127.07315088),
           level: 3
         };
 
         const map = new window.kakao.maps.Map(container, options);
 
-        const markerPosition = new window.kakao.maps.LatLng(position.coords.latitude, position.coords.longitude)
+        const markerPosition = new window.kakao.maps.LatLng(37.54856592, 127.07315088)
 
         const marker = new window.kakao.maps.Marker({
           position: markerPosition,
@@ -42,7 +42,7 @@ function Map() {
 
   return (
     <div id='myMap' style={{
-      width: '100%', height: '200px'
+      width: '100%', height: '250px'
     }}> </div>
   );
 };
