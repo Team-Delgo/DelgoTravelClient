@@ -10,6 +10,7 @@ import { ReactComponent as ThumbUp } from '../../icons/thumb-up.svg';
 import { ReactComponent as ThumbUpActive } from '../../icons/thumb-up-active.svg';
 import './RiviewWriting.scss';
 
+
 interface ReservationPlaceType {
     id: number,
     period: string,
@@ -27,6 +28,9 @@ function RiviewWriting() {
   const [activeStar3,setActiveStar3] = useState(false)
   const [activeStar4,setActiveStar4] = useState(false)
   const [activeStar5,setActiveStar5] = useState(false)
+  const [cleanlinessLike,setCleanlinessLike] = useState(false)
+  const [facilitiesLike,setFacilitiesLike] = useState(false)
+  const [locationLike,setLocationLike] = useState(false)
 
   const state = useLocation().state as ReservationPlaceType;
   const navigate = useNavigate();
@@ -59,50 +63,93 @@ function RiviewWriting() {
   };
 
   const handleStarRating1 = useCallback(() => {
-    if (activeStar1 === true) {
-      if (activeStar2 === false) {
-        setActiveStar1(!activeStar1);
-      }
+    if (activeStar1 === false) {
+      setActiveStar1(true)
+      setActiveStar2(false)
+      setActiveStar3(false)
+      setActiveStar4(false)
+      setActiveStar5(false)
     } else {
-      setActiveStar1(!activeStar1);
+      setActiveStar1(false)
+      setActiveStar2(false)
+      setActiveStar3(false)
+      setActiveStar4(false)
+      setActiveStar5(false)
     }
-  },[activeStar1,activeStar2])
+  },[activeStar1,activeStar2,activeStar3,activeStar4,activeStar5])
   const handleStarRating2 = useCallback(() => {
     if (activeStar2 === false) {
-      if (activeStar1 === true) {
-        setActiveStar2(!activeStar2);
-      }
-    } else if (activeStar3 === false) {
-      setActiveStar2(!activeStar2);
+      setActiveStar1(true)
+      setActiveStar2(true)
+      setActiveStar3(false)
+      setActiveStar4(false)
+      setActiveStar5(false)
+    } else {
+      setActiveStar1(true)
+      setActiveStar2(false)
+      setActiveStar3(false)
+      setActiveStar4(false)
+      setActiveStar5(false)
     }
-  },[activeStar1,activeStar2,activeStar3])
+  },[activeStar1,activeStar2,activeStar3,activeStar4,activeStar5])
   const handleStarRating3 = useCallback(() => {
     if (activeStar3 === false) {
-      if (activeStar2 === true) {
-        setActiveStar3(!activeStar3);
-      }
-    } else if (activeStar4 === false) {
-      setActiveStar3(!activeStar3);
+      setActiveStar1(true)
+      setActiveStar2(true)
+      setActiveStar3(true)
+      setActiveStar4(false)
+      setActiveStar5(false)
+    } else {
+      setActiveStar1(true)
+      setActiveStar2(true)
+      setActiveStar3(false)
+      setActiveStar4(false)
+      setActiveStar5(false)
     }
-  },[activeStar2,activeStar3,activeStar4])
+  },[activeStar1,activeStar2,activeStar3,activeStar4,activeStar5])
   const handleStarRating4 = useCallback(() => {
     if (activeStar4 === false) {
-      if (activeStar3 === true) {
-        setActiveStar4(!activeStar4);
-      }
-    } else if (activeStar5 === false) {
-      setActiveStar4(!activeStar4);
+      setActiveStar1(true)
+      setActiveStar2(true)
+      setActiveStar3(true)
+      setActiveStar4(true)
+      setActiveStar5(false)
+    } else {
+      setActiveStar1(true)
+      setActiveStar2(true)
+      setActiveStar3(true)
+      setActiveStar4(false)
+      setActiveStar5(false)
     }
-  },[activeStar3,activeStar4,activeStar5])
+  },[activeStar1,activeStar2,activeStar3,activeStar4,activeStar5])
   const handleStarRating5 = useCallback(() => {
     if (activeStar5 === false) {
-      if (activeStar4 === true) {
-        setActiveStar5(!activeStar5);
-      }
+      setActiveStar1(true)
+      setActiveStar2(true)
+      setActiveStar3(true)
+      setActiveStar4(true)
+      setActiveStar5(true)
     } else {
-      setActiveStar5(!activeStar5);
+      setActiveStar1(true)
+      setActiveStar2(true)
+      setActiveStar3(true)
+      setActiveStar4(true)
+      setActiveStar5(false)
     }
-  },[activeStar4,activeStar5])
+  },[activeStar1,activeStar2,activeStar3,activeStar4,activeStar5])
+
+
+  const handleCleanlinessLike = useCallback(()=>{
+    setCleanlinessLike(!cleanlinessLike)
+  },[cleanlinessLike])
+
+  const handleFacilitiesLike = useCallback(()=>{
+    setFacilitiesLike(!facilitiesLike)
+  },[facilitiesLike])
+
+  const handleLocationLike = useCallback(()=>{
+    setLocationLike(!locationLike)
+  },[locationLike])
 
   return (
     <div className="review-writing">
@@ -158,26 +205,47 @@ function RiviewWriting() {
       <div className="review-writing-division-line" />
       <footer className="review-writing-footer">
         <h4>칭찬하고 싶은 부분이 있나요?</h4>
-        <div className="review-writing-footer-cleanliness">
+        <div className="review-writing-footer-cleanliness" aria-hidden="true" onClick={handleCleanlinessLike}>
           청결
-          <div className="review-writing-footer-cleanliness-thum-up">
-            <ThumbUp />
-            좋아요
-          </div>
+          {cleanlinessLike ? (
+            <div className="review-writing-footer-cleanliness-thum-up-active">
+              <ThumbUpActive />
+              좋아요
+            </div>
+          ) : (
+            <div className="review-writing-footer-cleanliness-thum-up">
+              <ThumbUp />
+              좋아요
+            </div>
+          )}
         </div>
-        <div className="review-writing-footer-facilities">
+        <div className="review-writing-footer-facilities" aria-hidden="true" onClick={handleFacilitiesLike}>
           시설
-          <div className="review-writing-footer-facilities-thum-up">
-            <ThumbUp />
-            좋아요
-          </div>
+          {facilitiesLike ? (
+            <div className="review-writing-footer-facilities-thum-up-active">
+              <ThumbUpActive />
+              좋아요
+            </div>
+          ) : (
+            <div className="review-writing-footer-facilities-thum-up">
+              <ThumbUp />
+              좋아요
+            </div>
+          )}
         </div>
-        <div className="review-writing-footer-location">
+        <div className="review-writing-footer-location" aria-hidden="true" onClick={handleLocationLike}>
           위치
-          <div className="review-writing-footer-location-thum-up">
-            <ThumbUp />
-            좋아요
-          </div>
+          {locationLike ? (
+            <div className="review-writing-footer-location-thum-up-active">
+              <ThumbUpActive />
+              좋아요
+            </div>
+          ) : (
+            <div className="review-writing-footer-location-thum-up">
+              <ThumbUp />
+              좋아요
+            </div>
+          )}
         </div>
         <div className="review-writing-footer-etc">기타</div>
         <input type="text" className="review-writing-footer-input" placeholder="(선택) 한 줄 칭찬을 남겨주세요." />
