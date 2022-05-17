@@ -54,7 +54,7 @@ function DetailPlace() {
         `${process.env.PUBLIC_URL}/assets/images/reviewImage1.png`,
       ],
       nickName: '꼬꼬맘',
-      starRating: 5,
+      starRating: 4,
       registrationDate: '22.02.01',
       roomUsed: '301호 (오션뷰) 객실 이용',
       reviewContent:
@@ -82,7 +82,7 @@ function DetailPlace() {
         `${process.env.PUBLIC_URL}/assets/images/reviewImage1.png`,
       ],
       nickName: '꼬꼬맘',
-      starRating: 5,
+      starRating: 3,
       registrationDate: '22.02.01',
       roomUsed: '301호 (오션뷰) 객실 이용',
       reviewContent:
