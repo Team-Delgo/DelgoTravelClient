@@ -1,6 +1,7 @@
 import React ,{useCallback}from 'react'
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg'
+import BottomButton from '../../common/layouts/BottomButton';
 import "./EditorNote.scss";
 
 function EditorNote() {
@@ -38,9 +39,7 @@ function EditorNote() {
           <div className="editor-place-description">{post.description}</div>
         </div>
       ))}
-      <div className="editor-footer">
-        <div className="laern-more">자세히 보러가기</div>
-      </div>
+      <BottomButton text="자세히 보러가기" />
     </div>
   );
 }
