@@ -5,7 +5,7 @@ function RoomType(props: { navigate: () => void, room: any }) {
   const { navigate, room } = props;
   return (
     <div className="room" aria-hidden="true" onClick={navigate}>
-      <img src={room.crawlingUrl} alt="room-img" />
+      {/* <img src={room.detailPhotos[0].url} alt="room-img" /> */}
       <div className="room-info">
         <div className="room-info-first-line">
           최대 {room.personMaxNum}인/최대 {room.petMaxNum}마리

@@ -104,6 +104,7 @@ function DetailPlace() {
     getDetailPlace({ userId, placeId: Number(placeId) }, (response: AxiosResponse) => {
       setPlace(response.data.data.place)
       setRoomTypes(response.data.data.roomList)
+      console.log(response.data.data.roomList)
     });
   }, []);
 
@@ -175,7 +176,7 @@ function DetailPlace() {
               key={room.id}
               room={room}
               navigate={() => {
-                navigate(`/detail-place/${placeId}/${room.roomId}`);
+                navigate(`/detail-place/${placeId}/${room.roomId}`,{ state:room });
               }}
             />
           ))}

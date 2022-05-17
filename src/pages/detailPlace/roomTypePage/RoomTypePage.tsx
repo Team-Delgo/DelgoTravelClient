@@ -19,6 +19,8 @@ function RoomTypePage() {
     `${process.env.PUBLIC_URL}/assets/images/service5.png`,
     `${process.env.PUBLIC_URL}/assets/images/service6.png`,
   ]);
+  const room = useLocation().state as any;
+  
 
 
   useEffect(() => {
@@ -44,10 +46,10 @@ function RoomTypePage() {
         />
         <LeftArrow className="detail-place-room-type-previous-page" onClick={moveToPreviousPage} />
         <div className="detail-place-room-type-info">
-          <header className="detail-place-room-type-info-name">디럭스 더블</header>
+          <header className="detail-place-room-type-info-name">{room.name}</header>
           <div className="detail-place-room-type-info-accommodation">
-            <div className="detail-place-room-type-info-accommodation-check-in-check-out">입실 15:00 / 퇴실 12:00</div>
-            <div className="detail-place-room-type-info-accommodation-price">360,000원</div>
+            <div className="detail-place-room-type-info-accommodation-check-in-check-out">입실 {room.checkin} / 퇴실 {room.checkout}</div>
+            <div className="detail-place-room-type-info-accommodation-price">{room.price}</div>
           </div>
         </div>
         <div className="detail-place-room-type-reservation-date-select" aria-hidden="true" onClick={calenderOpenClose}>

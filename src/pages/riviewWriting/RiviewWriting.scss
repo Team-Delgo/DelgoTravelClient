@@ -27,11 +27,63 @@
           letter-spacing: 0.04em;
           color: #ffffff;
         }
+        &-previous-page {
+          position: absolute;
+          top: 50px;
+          left: 35px;
+        }
     }
       &-body{
         text-align: center;
-        padding-top: 5%;
+        padding: 5% 0 12% 0;
         background: #FFFFFF;
-        height: 1000px;
+        &-textarea{
+          display: block;
+          margin: auto;
+          margin-top: 8%;
+          padding: 6% 0 0 6%;
+          font-size: 3.2vw;
+          line-height: 20px;
+          width: 85vw;
+          height: 177px;
+          color: #828282;
+          background-color: #F2F2F2;
+          border-radius: 5px;
+          border: none;
+          font-weight: bold;
+        }
+        &-file{
+          display: flex;   
+          overflow-x: scroll;
+          padding: 10% 0 0 6%;
+          &-uploader{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 80px;
+            min-height: 80px;
+            border-radius: 5px;
+            background-color: #F2F2F2;
+          }
+          &-image{
+            width: 80px;
+            height: 80px;
+            margin-left: 20px;
+            border-radius: 5px;
+          }
+        }
       }
+      &-division-line{
+        height: 7px;
+        background-color: #F2F2F2;
+      }
+      &-footer{
+        text-align: center;
+        padding: 5% 0 50% 0;
+        background: #FFFFFF;
+      }
+}
+
+textarea:focus {
+  outline: none;
 }

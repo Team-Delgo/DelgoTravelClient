@@ -23,6 +23,7 @@
     }
     &-accommodation {
       display: flex;
+      justify-content: space-between;
       padding-bottom: 2%;
       font-size: 3.5vw;
       &-check-in-check-out {
@@ -31,7 +32,7 @@
       &-price {
         font-size: 6vw;
         font-weight: bold;
-        margin: -3.5% 0 0 28%;
+        margin: -3.5% 4% 0 0;
       }
     }
     &-facility {
