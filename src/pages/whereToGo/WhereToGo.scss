@@ -4,25 +4,25 @@
   background: #f3efea;
   padding-top: 14%;
   padding-bottom: 50px;
-  font-size: 3.8vw;
+  font-size: 16px;
   &.close {
     display: none;
   }
   .search-place {
     width: 82vw;
-    height: 11vw;
+    height: 50px;
     background: #fffbf6;
     border-radius: 5px;
     border: none;
     color: #b0a69d;
     margin-left: 7.5%;
     padding-left: 3%;
-    font-size: 3.8vw;
+    font-size: 16px;
   }
   .search-region-date {
     display: flex;
     padding: 3.5% 0 0 7.5%;
-    height: 11vw;
+    height: 49px;
     .search-region {
       display: flex;
       align-items: center;
@@ -41,7 +41,7 @@
       background: #ffffff;
       margin-left: 4%;
       width: 60vw;
-      height: 11vw;
+      height: 49px;
       border-radius: 5px;
     }
     .bottom-arrow {
