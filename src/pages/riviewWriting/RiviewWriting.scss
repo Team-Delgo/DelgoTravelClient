@@ -28,7 +28,7 @@
           color: #ffffff;
         }
         &-previous-page {
-          position: absolute;
+          position: absolute; 
           top: 50px;
           left: 35px;
         }
@@ -37,12 +37,19 @@
         text-align: center;
         padding: 5% 0 12% 0;
         background: #FFFFFF;
+        &-star{
+          display: flex;
+          align-items: center;
+          justify-content: space-evenly;
+          padding: 5%
+
+        }
         &-textarea{
           display: block;
           margin: auto;
           margin-top: 8%;
           padding: 6% 0 0 6%;
-          font-size: 3.2vw;
+          font-size: 14px;
           line-height: 20px;
           width: 85vw;
           height: 177px;
@@ -79,11 +86,52 @@
       }
       &-footer{
         text-align: center;
-        padding: 5% 0 50% 0;
+        padding: 5% 6% 50% 6%;
         background: #FFFFFF;
+        &-cleanliness,&-facilities,&-location,&-etc{
+          display: flex;
+          justify-content: space-between;
+          font-weight: bold;
+          padding-top: 10%;
+          &-thum-up{
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            width: 98px;
+            height: 36px;
+            border: 1px solid #C4C4C4;
+            border-radius: 98px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #8A8A8A;
+          }
+          &-thum-up-active{
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            width: 98px;
+            height: 36px;
+            background-color: #FF9162;
+            border: 1px solid #FF9162;
+            border-radius: 98px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #FFFFFF;
+          }
+
+        }
+        &-input{
+          margin-top: 5%;
+          width: 88vw;
+          height: 46px;
+          border: 1px solid #FFFFFF;
+          background-color: #F2F2F2;
+          font-weight: bold;
+          text-indent: 20px;
+        }
       }
 }
 
-textarea:focus {
+textarea,input:focus {
   outline: none;
 }
