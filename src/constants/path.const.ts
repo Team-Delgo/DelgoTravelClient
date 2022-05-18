@@ -27,3 +27,5 @@ export const DETAIL_PLACE_PATH = {
   ROOMTYPES: '/detail-place/:placeId/:roomTypeId',
   RESERVATION: '/reservation/:placeId/:roomTypeId/:startDate/:endDate',
 };
+
+export const REVIEW_WRITING_PATH = '/review-writing/:reservationId';

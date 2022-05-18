@@ -5,9 +5,10 @@
     position: relative;
     img{
         width: 86vw;
+        height:275px
     }
     &-info{
-        height: 17vw;
+        height: 60px;
         margin-top: -3px;
         padding-top: 5%;
         background-color: #FFFBF6;
@@ -17,7 +18,7 @@
             justify-content: space-between;
             padding: 0 10% 0 5%;
             color: #B0A69D;
-            font-size: 3vw;
+            font-size: 14px;
         }
         &-second-line{
             display: flex;
@@ -25,7 +26,7 @@
             padding: 0 6% 0 5%;
             color: #3E382F;
             font-weight: bold;
-            font-size: 4.5vw;
+            font-size: 18px;
         }
     }
     &-heart{

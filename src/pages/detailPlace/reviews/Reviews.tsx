@@ -1,8 +1,12 @@
-import React from 'react'
+import React,{useMemo} from 'react'
 import { ReactComponent as ReviewStar } from '../../../icons/review-star.svg'
 import './Reviews.scss';
 
+
+
 function Reviews({ review }: any) {
+  const reviewStarCount = useMemo(()=>reviewStarComponents(),[])
+
   function reviewStarComponents() {
     const reviewStarArray = [];
     // eslint-disable-next-line no-plusplus
@@ -19,7 +23,7 @@ function Reviews({ review }: any) {
         <div className="review-header-info">
           <div className="review-header-info-nick-name">{review.nickName}</div>
           <div>
-            <span className="review-header-info-star-rating">{reviewStarComponents()}</span>
+            <span className="review-header-info-star-rating">{reviewStarCount}</span>
             <span className="review-header-info-registration-data">{review.registrationDate}</span>
           </div>
           <div className="review-header-info-room-used">{review.roomUsed}</div>
@@ -28,7 +32,7 @@ function Reviews({ review }: any) {
       <body className="review-content">
         <div className="review-content-description">{review.reviewContent}</div>
         <div className="review-content-image-container">
-          {review.reviewImages.map((image: any) => (
+          {review.reviewImages.map((image: string) => (
             <img src={image} alt="profile-img" />
           ))}
         </div>
