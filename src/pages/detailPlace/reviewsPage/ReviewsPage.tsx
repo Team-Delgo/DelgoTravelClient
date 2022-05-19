@@ -1,7 +1,8 @@
 import React,{useEffect,useState,useCallback} from 'react'
 import { useLocation,useNavigate } from 'react-router-dom';
 import Reviews from '../reviews/Reviews';
-import { ReactComponent as LeftArrow } from '../../../icons/left-arrow.svg'
+import { ReactComponent as LeftArrow } from '../../../icons/left-arrow2.svg'
+import { ReactComponent as ReviewStar } from '../../../icons/review-star.svg'
 import './ReviewsPage.scss'
 
 function ReviewsPage() {
@@ -22,7 +23,7 @@ function ReviewsPage() {
       <header className="detail-place-review-page-header">
         <LeftArrow className="detail-place-review-page-header-previous-page" onClick={moveToPreviousPage} />
         <div className="detail-place-review-page-header-number">리뷰 {reviews.length}개</div>
-        <div className="detail-place-review-page-header-rating-count">★&nbsp;&nbsp;4.5점</div>
+        <div className="detail-place-review-page-header-rating-count"><ReviewStar className="detail-place-review-page-header-review-star"/>&nbsp;&nbsp;4.5점</div>
         <input type="checkbox" name="xxx" value="yyy" />
         <span className="detail-place-review-page-header-image-review">사진 리뷰만 보기(4개)</span>
       </header>

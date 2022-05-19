@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import BottomButton from '../../../common/layouts/BottomButton';
-import { ReactComponent as LeftArrow } from '../../../icons/left-arrow.svg';
+import { ReactComponent as LeftArrow } from '../../../icons/left-arrow2.svg';
 import Calender from '../../calender/Calender';
 import './RoomTypePage.scss';
 
@@ -19,6 +19,8 @@ function RoomTypePage() {
     `${process.env.PUBLIC_URL}/assets/images/service5.png`,
     `${process.env.PUBLIC_URL}/assets/images/service6.png`,
   ]);
+  const room = useLocation().state as any;
+  
 
 
   useEffect(() => {
@@ -29,16 +31,13 @@ function RoomTypePage() {
     navigate(-1);
   }, []);
 
-  const calenderOpen = () => {
-    setIsCalenderOpen(true);
-  }
-  const calenderClose = () => {
-    setIsCalenderOpen(false);
-  }
+  const calenderOpenClose = useCallback(() => {
+    setIsCalenderOpen(!isCalenderOpen);
+  },[isCalenderOpen])
 
   return (
     <>
-      {isCalenderOpen && <Calender closeCalender={calenderClose} />}
+      {isCalenderOpen && <Calender closeCalender={calenderOpenClose} />}
       <div className={classNames("detail-place-room-type", { close: isCalenderOpen })}>
         <img
           className="detail-place-room-type-main-image"
@@ -47,13 +46,13 @@ function RoomTypePage() {
         />
         <LeftArrow className="detail-place-room-type-previous-page" onClick={moveToPreviousPage} />
         <div className="detail-place-room-type-info">
-          <header className="detail-place-room-type-info-name">디럭스 더블</header>
+          <header className="detail-place-room-type-info-name">{room.name}</header>
           <div className="detail-place-room-type-info-accommodation">
-            <div className="detail-place-room-type-info-accommodation-check-in-check-out">입실 15:00 / 퇴실 12:00</div>
-            <div className="detail-place-room-type-info-accommodation-price">360,000원</div>
+            <div className="detail-place-room-type-info-accommodation-check-in-check-out">입실 {room.checkin} / 퇴실 {room.checkout}</div>
+            <div className="detail-place-room-type-info-accommodation-price">{room.price}</div>
           </div>
         </div>
-        <div className="detail-place-room-type-reservation-date-select" aria-hidden="true" onClick={calenderOpen}>
+        <div className="detail-place-room-type-reservation-date-select" aria-hidden="true" onClick={calenderOpenClose}>
           <span>날짜선택</span>
           <span className="detail-place-room-type-reservation-date-select-calender">
             {dateString}&nbsp;&nbsp;&nbsp;&gt;

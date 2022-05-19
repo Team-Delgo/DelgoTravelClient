@@ -62,7 +62,7 @@ function Place({ place, userId, places, setPlaces }: PlaceTypeProps) {
         </div>
         <div className="place-info-second-line">
           <span>{place.name}</span>
-          <span>{place.lowestPrice}원~</span>
+          <span>{place.lowestPrice}~</span>
         </div>
       </div>
       <div className="place-heart">

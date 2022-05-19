@@ -1,6 +1,5 @@
 /* global kakao */
-import React, { useEffect } from "react";
-
+import React, { useEffect } from 'react';
 
 declare global {
   interface Window {
@@ -8,47 +7,74 @@ declare global {
   }
 }
 
-function Map() {
+interface addressProps {
+  address:string
+}
+
+function Map({address}:addressProps) {
   useEffect(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        const container = document.getElementById('myMap');
-        console.log(window.kakao);
-        console.log(position.coords.latitude, position.coords.longitude)
-        const options = {
-          center: new window.kakao.maps.LatLng(position.coords.latitude, position.coords.longitude),
-          level: 3
-        };
+      navigator.geolocation.getCurrentPosition(
+        function () {
+          const container = document.getElementById('myMap');
+          const options = {
+            center: new window.kakao.maps.LatLng(0, 0),
+            level: 3,
+          };
 
-        const map = new window.kakao.maps.Map(container, options);
+          const map = new window.kakao.maps.Map(container, options);
 
-        const markerPosition = new window.kakao.maps.LatLng(position.coords.latitude, position.coords.longitude)
-        console.log(position.coords.latitude)
+          const geocoder = new window.kakao.maps.services.Geocoder();
 
-        const marker = new window.kakao.maps.Marker({
-          position: markerPosition,
-        });
-        // 마커를 지도 위에 표시
-        marker.setMap(map);
-      }, function (error) {
-        console.error(error);
-      }, {
-        enableHighAccuracy: false,
-        maximumAge: 0,
-        timeout: Infinity
-      });
+          geocoder.addressSearch('서울특별시 광진구 군자동 373-2', function (result: any, status: any) {
+            // 정상적으로 검색이 완료됐으면
+            if (status === window.kakao.maps.services.Status.OK) {
+              const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+
+              const marker = new window.kakao.maps.Marker({
+                map,
+                position: coords,
+              });
+
+              // 인포윈도우로 장소에 대한 설명을 표시합니다
+              // const infowindow = new window.kakao.maps.InfoWindow({
+              //     content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+              // });
+              // infowindow.open(map, marker);
+
+              // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+              map.setCenter(coords);
+            }
+            else{
+              alert('그런 주소는 없습니다')
+            }
+          });
+        },
+        function (error) {
+          console.error(error);
+        },
+        {
+          enableHighAccuracy: false,
+          maximumAge: 0,
+          timeout: Infinity,
+        },
+      );
     } else {
       alert('GPS를 지원하지 않습니다');
     }
-
   }, []);
 
   return (
-    <div id='myMap' style={{
-      width: '100%', height: '200px'
-    }}> </div>
+    <div
+      id="myMap"
+      style={{
+        width: '100%',
+        height: '250px',
+      }}
+    >
+      {' '}
+    </div>
   );
-};
+}
 
 export default Map;
-
