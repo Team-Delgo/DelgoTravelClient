@@ -13,7 +13,7 @@ import { phoneSendMessage, phoneCheckNumber } from '../../../../common/api/signu
 function VerifyPhone() {
   const navigation = useNavigate();
   const [buttonIsClicked, setButtonIsClicked] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [authNumber, setAuthNumber] = useState('');
   const [isSended, setIsSended] = useState(false);
   const [timeIsValid, setTimeIsValid] = useState(true);
@@ -24,6 +24,7 @@ function VerifyPhone() {
   const isEntered = phoneNumber.length > 0;
 
   const buttonClickHandler = () => {
+    console.log('first');
     //  인증번호 전송 요청
     phoneSendMessage(phoneNumber, (response: AxiosResponse) => {
       const { code } = response.data;
