@@ -8,7 +8,6 @@ import Timer from '../signUpPage/verifyphone/Timer';
 import { phoneSendMessage, phoneCheckNumber } from '../../../common/api/signup';
 import { SIGN_IN_PATH } from '../../../constants/path.const';
 
-
 interface LocationState {
   phone: string;
   email: string;
@@ -79,7 +78,11 @@ function PhoneAuth() {
         <span className="login-timer">
           <Timer isResend={isReSended} resendfunc={resetIsResend} setInValid={() => setTimeIsValid(false)} />
         </span>
+        <p aria-hidden="true" className="login-authnumber-resend" onClick={authNumberResend}>
+          인증번호 재전송
+        </p>
       </div>
+
       <button
         type="button"
         className={classNames('login-button', { active: authIsValid })}
@@ -88,9 +91,6 @@ function PhoneAuth() {
       >
         확인
       </button>
-      <div className="login-find_password" aria-hidden="true" onClick={authNumberResend}>
-        재전송
-      </div>
     </div>
   );
 }
