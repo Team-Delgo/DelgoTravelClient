@@ -17,10 +17,18 @@
   &-days {
     width: 60px;
   }
+  &-divider{
+    width: .1px;
+    background-color: #8A8A8A;
+    height: 60%;
+  }
 }
 .tab {
   height: 210px;
   overflow: scroll;
+  &::-webkit-scrollbar{
+    display: none;
+  }
 }
 .birth-item {
   height: 30px;

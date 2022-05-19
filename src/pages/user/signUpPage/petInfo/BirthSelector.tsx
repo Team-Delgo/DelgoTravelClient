@@ -84,9 +84,11 @@ function BirthSelector(props: { changeBirth: (year: number, month: number, day: 
       <div className="birth-years tab" ref={yearRef} onScroll={yearScrollHandler}>
         {yearContext}
       </div>
+      <div className='birth-divider'/>
       <div className="birth-months tab" ref={monthRef} onScroll={monthScrollHandler}>
         {monthContext}
       </div>
+      <div className='birth-divider'/>
       <div className="birth-days tab" ref={dayRef} onScroll={dayScrollHandler}>
         {dayContext}
       </div>
