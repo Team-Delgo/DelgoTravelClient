@@ -1,40 +1,34 @@
-import React from 'react'
-import alertConfirm, { Button, alert } from "react-alert-confirm";
-import "react-alert-confirm/dist/index.css";
+import React, { useEffect } from 'react'
+import { createPortal } from 'react-dom';
+import "./AlertConfirm.scss";
 
+function AlertConfirm(props: { text: string, yesButtonHandler: () => void, noButtonHandler: () => void }) {
+  const { text, yesButtonHandler, noButtonHandler } = props;
+  useEffect(() => {
+    document.body.style.cssText = `
+      position: fixed;
+      top: -${window.scrollY}px;
+      overflow-y:scroll;
+      width:100%
+    `;
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = '';
+      window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+    }
+  }, []);
 
-async function AlertConfirm({wishListDelete}:any){
-    const [isOk, action, instance] = await alertConfirm({
-      content: <div style={{ textAlign: 'center' }}>정말 찜 목록에서 제거하시겠어요?</div>,
-      // eslint-disable-next-line react/no-unstable-nested-components
-      footer(dispatch) {
-        return (
-          <div style={{margin:"auto"}}>
-            <Button  style={{marginRight:"40px",width:"80px",borderRadius: "25px"}} onClick={() => dispatch('delete')} styleType="default">
-              네
-            </Button>
-            <Button  style={{marginLeft:"40px",width:"80px",borderRadius: "25px"}} onClick={() => dispatch('cancel')} styleType="default">
-              아니요
-            </Button>
-          </div>
-        );
-      },
-      async closeBefore(action, close) {
-        if (action === 'delete') {
-          wishListDelete()
-          close()
-        } else {
-          close()
-        }
-      },
-    });
-    console.log(isOk, action, instance);
-  }
+  const el = document.getElementById('modal') as Element;
 
-// function AlertConfirm() {
-//   return (
-//     <div>AlertConfirm</div>
-//   )
-// }
+  return createPortal(<div className='alertConfirm-bg'>
+    <div className='alertConfirm-box'>
+      <div className='alertConfirm-text'>{text}</div>
+      <div className='alertConfirm-wrapper'>
+        <button type='button' className='alertConfirm-button' onClick={yesButtonHandler}>네</button>
+        <button type='button' className='alertConfirm-button' onClick={noButtonHandler}>아니오</button>
+      </div>
+    </div>
+  </div>, el);
+};
 
-export default AlertConfirm
+export default AlertConfirm;

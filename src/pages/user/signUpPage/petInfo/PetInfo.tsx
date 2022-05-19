@@ -60,7 +60,6 @@ function PetInfo() {
   const pageIsValid = isValid.name && isValid.birth && isValid.type && isValid.weight;
   const formData = new FormData();
 
-  console.log(image);
   const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     reader.onload = function () {
@@ -72,7 +71,6 @@ function PetInfo() {
     setSendingImage(event.target.files![0]);
 
   };
-  // console.log(image);
   const requireInputCheck = (key: string, value: string) => {
     if (value.length) {
       setIsValid((prev: IsValid) => {
@@ -127,7 +125,6 @@ function PetInfo() {
 
   const submitHandler = () => {
     let userId = 0;
-    console.log('저장완료');
     const petInfo = {
       name: enteredInput.name,
       birthday: enteredInput.birth,
@@ -142,7 +139,7 @@ function PetInfo() {
       pet: petInfo,
     };
     signup(userInfo, (response: AxiosResponse) => {
-      console.log(response);
+
       const { code, codeMsg } = response.data;
       if (code === 200) {
         const accessToken = response.headers.authorization_access;
@@ -150,13 +147,13 @@ function PetInfo() {
         dispatch(tokenActions.setToken(accessToken));
         localStorage.setItem('refreshToken', refreshToken);
         userId = response.data.userId;
-        // navigation('/');
+        navigation('/');
       } else {
         console.log(codeMsg);
       }
 
-    }) 
-    if(userId!==0){
+    })
+    if (userId !== 0) {
       formData.append('file', sendingImage);
       formData.append('userId', userId.toString());
       petImageUpload(formData, (response: AxiosResponse) => {

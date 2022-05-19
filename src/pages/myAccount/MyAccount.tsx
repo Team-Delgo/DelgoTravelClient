@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import alertConfirm, { Button, alert } from "react-alert-confirm";
@@ -8,10 +8,13 @@ import "./MyAccount.scss";
 import RightArrow from "../../icons/right-arrow.svg";
 import { userActions } from "../../redux/reducers/userSlice";
 import { tokenActions } from "../../redux/reducers/tokenSlice";
+import AlertConfirm from "../../common/dialog/AlertConfirm";
 
 
 
 function MyAccount() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [text, setText] = useState('');
   const pet = useSelector((state: any) => state.persist.user.pet);
   console.log(pet);
   const navigation = useNavigate();
@@ -24,38 +27,17 @@ function MyAccount() {
     navigation('/user/signin');
   };
 
-  const logoutAlertConfirm = async () => {
-    window.scrollTo(0,0);
-    const [isOk, action, instance] = await alertConfirm({
-      content: <div style={{ textAlign: 'center' }}>정말 로그아웃 하시겠어요?</div>,
-      // eslint-disable-next-line react/no-unstable-nested-components
-      footer(dispatch) {
-        return (
-          <div style={{margin:"auto"}}>
-            <Button  style={{marginRight:"40px",width:"80px",borderRadius: "25px"}} onClick={() => dispatch('delete')} styleType="default">
-              네
-            </Button>
-            <Button  style={{marginLeft:"40px",width:"80px",borderRadius: "25px"}} onClick={() => dispatch('cancel')} styleType="default">
-              아니요
-            </Button>
-          </div>
-        );
-      },
-      async closeBefore(action, close) {
-        if (action === 'delete') {
-          logoutHandler()
-          close()
-        } else {
-          close()
-        }
-      },
-    })
-  }
-
-
+  const logOutModalOpen = () => {
+    setIsModalOpen(true);
+    setText('정말 로그아웃 하시겠습니까?');
+  };
 
   return (
     <div className="account">
+      {isModalOpen && <AlertConfirm text={text}
+        yesButtonHandler={() => { logoutHandler(); }}
+        noButtonHandler={() => { setIsModalOpen(false); }}
+      />}
       <div className="account-profile">
         <img className="account-profile-image" src={pet?.image} alt="dog" />
         <div className="account-profile-name">{pet?.name}</div>
@@ -121,7 +103,7 @@ function MyAccount() {
       </div>
       <div className="account-sign">
         <p className="account-out">회원탈퇴</p>
-        <p className="account-out" aria-hidden="true" onClick={logoutAlertConfirm}>
+        <p className="account-out" aria-hidden="true" onClick={logOutModalOpen}>
           로그아웃
         </p>
       </div>

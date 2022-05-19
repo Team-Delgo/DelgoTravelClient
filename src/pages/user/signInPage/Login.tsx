@@ -2,7 +2,6 @@ import React, { useState, ChangeEvent, useEffect } from 'react';
 import { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useQuery } from 'react-query';
 import { userActions } from '../../../redux/reducers/userSlice';
 import { tokenActions } from '../../../redux/reducers/tokenSlice';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
@@ -71,10 +70,6 @@ function Login() {
     loginFetch();
   };
 
-  const { data, isLoading, isError } = useQuery('login', loginFetch);
-  if (isLoading) {
-    console.log("loading..!");
-  }
 
   useEffect(() => {
     if (loginFailed) {

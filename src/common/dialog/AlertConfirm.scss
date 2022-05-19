@@ -1,0 +1,53 @@
+.alertConfirm-bg {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.alertConfirm-box {
+  height: 27%;
+  width: 84%;
+  margin-bottom: 25%;
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.alertConfirm-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 66%;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #333333;
+}
+.alertConfirm-wrapper {
+  height: 34%;
+  width: 100%;
+  display: flex;
+}
+.alertConfirm-button {
+  width: 50%;
+  background-color: #ffffff;
+  border: 1px solid #e5e5e5;
+  color: #ff9162;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 22.54px;
+  &:first-child {
+    border-bottom-left-radius: 5px;
+  }
+  &:last-child {
+    border-bottom-right-radius: 5px;
+  }
+}
