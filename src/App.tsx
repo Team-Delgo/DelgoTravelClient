@@ -9,9 +9,21 @@ import TermsPage from './pages/user/signUpPage/terms/Terms';
 import UserInfo from './pages/user/signUpPage/userInfo/UserInfo';
 import PetInfo from './pages/user/signUpPage/petInfo/PetInfo';
 import Login from './pages/user/signInPage/Login';
-import WishListPage from './pages/wishList/WishList'
+import WishListPage from './pages/wishList/WishList';
 import WhereToGoPage from './pages/whereToGo/WhereToGo';
-import { EDITOR_NOTE_PATH, ROOT_PATH, SIGN_IN_PATH, SIGN_UP_PATH, WISH_LIST_PATH, WHERE_TO_GO_PATH, MY_ACCOUNT_PATH, DETAIL_PLACE_PATH,REVIEW_WRITING_PATH,KAKAO_REDIRECT_HANDLE_PATH } from './constants/path.const';
+import {
+  EDITOR_NOTE_PATH,
+  ROOT_PATH,
+  SIGN_IN_PATH,
+  SIGN_UP_PATH,
+  WISH_LIST_PATH,
+  WHERE_TO_GO_PATH,
+  MY_ACCOUNT_PATH,
+  DETAIL_PLACE_PATH,
+  REVIEW_WRITING_PATH,
+  KAKAO_REDIRECT_HANDLE_PATH,
+  NAVER_REDIRECT_HANDLE_PATH
+} from './constants/path.const';
 import './App.scss';
 import MyAccount from './pages/myAccount/MyAccount';
 import FindPassword from './pages/user/signInPage/FindPassword';
@@ -23,7 +35,8 @@ import ReviewsPage from './pages/detailPlace/reviewsPage/ReviewsPage'
 import RoomTypePage from './pages/detailPlace/roomTypePage/RoomTypePage';
 import Reservation from './pages/detailPlace/reservationPage/Reservation';
 import ReviewWritingPage from './pages/riviewWriting/RiviewWriting'
-import KakaoRedirectHandler from './common/socialLogin/KakaoRedirectHandler';
+import KakaoRedirectHandler from './common/socialLogion/KakaoRedirectHandler';
+import NaverRedirectHandler from './common/socialLogion/NaverRedirectHandler';
 
 
 function App() {
@@ -52,6 +65,7 @@ function App() {
         <Route path={DETAIL_PLACE_PATH.RESERVATION} element={<Reservation />} />
         <Route path={REVIEW_WRITING_PATH} element={<ReviewWritingPage />} />
         <Route path={KAKAO_REDIRECT_HANDLE_PATH} element={<KakaoRedirectHandler />} />
+        <Route path={NAVER_REDIRECT_HANDLE_PATH} element={<NaverRedirectHandler />} />
       </Routes>
     </QueryClientProvider>
   );

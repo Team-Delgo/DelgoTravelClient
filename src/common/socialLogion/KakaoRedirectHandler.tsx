@@ -20,6 +20,10 @@ function KakaoRedirectHandler() {
   const code = new URL(window.location.href).searchParams.get("code");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    getToken();
+    // KakaoLogOut()
+  }, []);
 
 
   const getToken = async () => {
@@ -31,15 +35,11 @@ function KakaoRedirectHandler() {
       client_secret: CLIENT_SECRET,
     });
     try {
-      // access token 가져오기
       const res = await axios.post(
         "https://kauth.kakao.com/oauth/token",
         payload
       );
-      console.log(res)
-      // Kakao Javascript SDK 초기화
       window.Kakao.init(REST_API_KEY);
-      // access token 설정
       window.Kakao.Auth.setAccessToken(res.data.access_token);
 
       const accessToken = res.data.access_token;  
@@ -71,16 +71,12 @@ function KakaoRedirectHandler() {
     }
   };
 
-  const KaKaoLogOut = ()=>{
+  const KakaoLogOut = ()=>{
     window.Kakao.API.request({
       url: '/v1/user/unlink',
     });
   }
 
-  useEffect(() => {
-    getToken();
-    // KaKaoLogOut()
-  }, []);
   return <div>카카오 로그인</div>
   ;
 };
