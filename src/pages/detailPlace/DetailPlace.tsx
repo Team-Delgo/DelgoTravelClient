@@ -154,11 +154,20 @@ function DetailPlace() {
         </div>
         <div className="detail-place-info">
           <header className="detail-place-info-name">{place.name}</header>
-          <div className="detail-place-info-address"aria-hidden="true" onClick={moveToMap}>
+          <div className="detail-place-info-address">
             {place.address}
-            <span className="detail-place-info-map">지도 &gt;</span>
+            <span className="detail-place-info-map" aria-hidden="true" onClick={moveToMap}>
+              지도 &gt;
+            </span>
           </div>
-          <div className="detail-place-info-reviews">★ 9.1 리뷰 12개 &gt;</div>
+          <Link
+            style={{ textDecoration: 'none' }}
+            to={`/detail-place/${placeId}/reviews`}
+            state={{ reviews }}
+            key={placeId}
+          >
+            <div className="detail-place-info-reviews">★ 9.1 리뷰 12개 &gt;</div>
+          </Link>
           <div className="detail-place-info-facility">소형견,오션뷰,자연휴강,산책코스</div>
         </div>
 
@@ -176,7 +185,7 @@ function DetailPlace() {
               key={room.id}
               room={room}
               navigate={() => {
-                navigate(`/detail-place/${placeId}/${room.roomId}`,{ state:room });
+                navigate(`/detail-place/${placeId}/${room.roomId}`, { state: room });
               }}
             />
           ))}

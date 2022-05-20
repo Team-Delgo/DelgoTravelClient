@@ -13,56 +13,40 @@ interface addressProps {
 
 function Map({address}:addressProps) {
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        function () {
-          const container = document.getElementById('myMap');
-          const options = {
-            center: new window.kakao.maps.LatLng(0, 0),
-            level: 3,
-          };
+    const container = document.getElementById('myMap');
+    const options = {
+      center: new window.kakao.maps.LatLng(0, 0),
+      level: 3,
+    };
 
-          const map = new window.kakao.maps.Map(container, options);
+    const map = new window.kakao.maps.Map(container, options);
 
-          const geocoder = new window.kakao.maps.services.Geocoder();
+    const geocoder = new window.kakao.maps.services.Geocoder();
 
-          geocoder.addressSearch('서울특별시 광진구 군자동 373-2', function (result: any, status: any) {
-            // 정상적으로 검색이 완료됐으면
-            if (status === window.kakao.maps.services.Status.OK) {
-              const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+    geocoder.addressSearch('서울특별시 광진구 군자동 373-2', function (result: any, status: any) {
+      // 정상적으로 검색이 완료됐으면
+      if (status === window.kakao.maps.services.Status.OK) {
+        const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
 
-              const marker = new window.kakao.maps.Marker({
-                map,
-                position: coords,
-              });
+        const marker = new window.kakao.maps.Marker({
+          map,
+          position: coords,
+        });
 
-              // 인포윈도우로 장소에 대한 설명을 표시합니다
-              // const infowindow = new window.kakao.maps.InfoWindow({
-              //     content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
-              // });
-              // infowindow.open(map, marker);
+        // 인포윈도우로 장소에 대한 설명을 표시합니다
+        // const infowindow = new window.kakao.maps.InfoWindow({
+        //     content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+        // });
+        // infowindow.open(map, marker);
 
-              // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-              map.setCenter(coords);
-            }
-            else{
-              alert('그런 주소는 없습니다')
-            }
-          });
-        },
-        function (error) {
-          console.error(error);
-        },
-        {
-          enableHighAccuracy: false,
-          maximumAge: 0,
-          timeout: Infinity,
-        },
-      );
-    } else {
-      alert('GPS를 지원하지 않습니다');
-    }
-  }, []);
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+      }
+      else{
+        alert('그런 주소는 없습니다')
+      }
+    });
+  }, [])
 
   return (
     <div

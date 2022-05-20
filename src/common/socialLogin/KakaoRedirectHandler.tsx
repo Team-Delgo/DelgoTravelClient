@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import KakaoLogin from "react-kakao-login";
 import qs from "qs";
 import {REST_API_KEY,REDIRECT_URI} from '../../constants/url.cosnt'
 import { tokenActions } from '../../redux/reducers/tokenSlice';
