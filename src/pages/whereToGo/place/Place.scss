@@ -5,7 +5,8 @@
     position: relative;
     img{
         width: 86vw;
-        height:275px
+        height:275px;
+        border-radius: 5px 5px 0px 0px;
     }
     &-info{
         height: 60px;
@@ -13,6 +14,7 @@
         padding-top: 5%;
         background-color: #FFFBF6;
         box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.15);
+        border-radius: 5px;
         &-first-line{
             display: flex;
             justify-content: space-between;
