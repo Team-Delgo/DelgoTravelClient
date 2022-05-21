@@ -8,7 +8,6 @@ import './Place.scss'
 
 interface PlaceTypeProps{
     place:PlaceType
-    userId:number
     places:Array<PlaceType>
     setPlaces:any
 }
@@ -23,9 +22,10 @@ interface PlaceType  {
   wishId: number
 }
 
-function Place({ place, userId, places, setPlaces }: PlaceTypeProps) {
+function Place({ place,  places, setPlaces }: PlaceTypeProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const accessToken = useSelector((state: any) => state.token.token);
+  const userId = useSelector((state: any) => state.persist.user.user.id)
 
   const wishListInsert = useCallback(() => {
     wishInsert({ userId, placeId: place.placeId,accessToken}, (response: AxiosResponse) => {
