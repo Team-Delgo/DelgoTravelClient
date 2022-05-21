@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import HomePage from './pages/home/Home';
-import EditorNote from './pages/home/EditorNote';
+import EditorNote from './pages/editorNote/EditorNote';
 import SignInPage from './pages/user/signInPage/SignIn';
 import VerifyPhonePage from './pages/user/signUpPage/verifyphone/VerifyPhone';
 import TermsPage from './pages/user/signUpPage/terms/Terms';

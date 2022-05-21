@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import qs from "qs";
-import {REST_API_KEY,REDIRECT_URI} from '../../constants/url.cosnt'
+import {KAKAO} from '../../constants/url.cosnt'
 import { tokenActions } from '../../redux/reducers/tokenSlice';
 
 
@@ -21,16 +21,18 @@ function KakaoRedirectHandler() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if(code==null){
+      navigate('/user/signin')
+    }
     getToken();
-    // KakaoLogOut()
   }, []);
 
 
   const getToken = async () => {
     const payload = qs.stringify({
       grant_type: "authorization_code",
-      client_id: REST_API_KEY,
-      redirect_uri: REDIRECT_URI,
+      client_id: KAKAO.REST_API_KEY,
+      redirect_uri: KAKAO.REDIRECT_URI,
       code ,
       client_secret: CLIENT_SECRET,
     });
@@ -39,7 +41,7 @@ function KakaoRedirectHandler() {
         "https://kauth.kakao.com/oauth/token",
         payload
       );
-      window.Kakao.init(REST_API_KEY);
+      window.Kakao.init(KAKAO.REST_API_KEY);
       window.Kakao.Auth.setAccessToken(res.data.access_token);
 
       const accessToken = res.data.access_token;  
@@ -49,7 +51,6 @@ function KakaoRedirectHandler() {
       );
       localStorage.setItem('refreshToken', refreshToken);
       getProfile()
-      // navigate('/');
     } catch (err) {
       console.log(err);
     }
@@ -75,9 +76,13 @@ function KakaoRedirectHandler() {
     window.Kakao.API.request({
       url: '/v1/user/unlink',
     });
+    navigate('/user/signin')
   }
 
-  return <div>카카오 로그인</div>
+  return <div>
+    카카오 로그인
+    <button type="button" onClick={KakaoLogOut}> 로그아웃</button>
+  </div>
   ;
 };
 

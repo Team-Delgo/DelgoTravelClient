@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
-import { ReactComponent as ActiveHeart } from '../../icons/heart-active.svg';
-import { ReactComponent as Heart } from '../../icons/heart.svg';
+import { ReactComponent as ActiveHeart } from '../../../icons/heart-active.svg';
+import { ReactComponent as Heart } from '../../../icons/heart.svg';
 import './RecommendedPlaces.scss';
 
 type RedcommendedPlacesProps = {
