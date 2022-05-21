@@ -9200,7 +9200,7 @@
     "lodash" "~4.17.10"
     "minimatch" "~3.0.2"
 
-"goober@^2.0.37":
+"goober@^2.0.37", "goober@^2.1.9":
   "integrity" "sha512-PAtnJbrWtHbfpJUIveG5PJIB6Mc9Kd0gimu9wZwPyA+wQUSeOeA4x4Ug16lyaaUUKZ/G6QEH1xunKOuXP1F4Vw=="
   "resolved" "https://registry.npmjs.org/goober/-/goober-2.1.9.tgz"
   "version" "2.1.9"
