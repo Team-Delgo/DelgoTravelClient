@@ -43,7 +43,7 @@ function Region({ areaTerm,setAreaTerm }: PropsType) {
   },[areaTerm]);
   
   return (
-    <div className="region-modal">
+    <div className="region-modal" >
       {areaTerm === '' ? (
         <header className="region-modal-header-selected">국내 전체</header>
       ) : (
