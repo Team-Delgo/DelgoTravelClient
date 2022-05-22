@@ -2,8 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Carousel } from 'react-responsive-carousel';
-import "react-responsive-carousel/lib/styles/carousel.min.css"; 
+import ImageSlider from '../../../common/components/ImageSlider';
 import BottomButton from '../../../common/layouts/BottomButton';
 import { ReactComponent as LeftArrow } from '../../../icons/left-arrow2.svg';
 import Calender from '../../calender/Calender';
@@ -47,11 +46,7 @@ function RoomTypePage() {
     <>
       {isCalenderOpen && <Calender closeCalender={calenderOpenClose} />}
       <div className={classNames('detail-place-room-type', { close: isCalenderOpen })}>
-        <Carousel showThumbs={false} showArrows={false} showStatus={false} >
-          {roomImg.map((url) => (
-            <img src={url} alt="service-img" key={url} />
-          ))}
-        </Carousel>
+        <ImageSlider images={roomImg}/>
         <LeftArrow className="detail-place-room-type-previous-page" onClick={moveToPreviousPage} />
         <div className="detail-place-room-type-info">
           <header className="detail-place-room-type-info-name">{room.name}</header>
