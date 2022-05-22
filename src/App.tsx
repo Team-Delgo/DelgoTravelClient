@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import HomePage from './pages/home/Home';
@@ -11,7 +12,7 @@ import PetInfo from './pages/user/signUpPage/petInfo/PetInfo';
 import Login from './pages/user/signInPage/Login';
 import WishListPage from './pages/wishList/WishList'
 import WhereToGoPage from './pages/whereToGo/WhereToGo';
-import { EDITOR_NOTE_PATH, ROOT_PATH, SIGN_IN_PATH, SIGN_UP_PATH, WISH_LIST_PATH, WHERE_TO_GO_PATH, MY_ACCOUNT_PATH, DETAIL_PLACE_PATH,REVIEW_WRITING_PATH } from './constants/path.const';
+import { EDITOR_NOTE_PATH, ROOT_PATH, SIGN_IN_PATH, SIGN_UP_PATH, WISH_LIST_PATH, WHERE_TO_GO_PATH, MY_ACCOUNT_PATH, DETAIL_PLACE_PATH, REVIEW_WRITING_PATH } from './constants/path.const';
 import './App.scss';
 import MyAccount from './pages/myAccount/MyAccount';
 import FindPassword from './pages/user/signInPage/FindPassword';
@@ -23,12 +24,19 @@ import ReviewsPage from './pages/detailPlace/reviewsPage/ReviewsPage'
 import RoomTypePage from './pages/detailPlace/roomTypePage/RoomTypePage';
 import Reservation from './pages/detailPlace/reservationPage/Reservation';
 import ReviewWritingPage from './pages/riviewWriting/RiviewWriting'
-
+import AlertConfirmOne from './common/dialog/AlertConfirmOne';
+import { errorActions } from './redux/reducers/errorSlice';
 
 function App() {
+  const hasError = useSelector((state: any) => state.error.hasError);
+  const dispatch = useDispatch();
+  const alertButtonHandler = () => {
+    dispatch(errorActions.setFine());
+  };
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
+      {hasError && <AlertConfirmOne text='네트워크를 확인해주세요' buttonHandler={alertButtonHandler} />}
       <Routes>
         <Route path={ROOT_PATH} element={<HomePage />} />
         <Route path={EDITOR_NOTE_PATH} element={<EditorNote />} />

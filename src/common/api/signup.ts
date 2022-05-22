@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { stringify } from 'querystring';
 import { url } from '../../constants/url.cosnt';
-import { errorHandler } from './errorHandler';
+import { useErrorHandler } from './useErrorHandler';
 
 interface SignUpData {
   email: string;
@@ -20,7 +20,7 @@ async function emailCheck(email: string, success: (data: AxiosResponse) => void)
       success(data);
     })
     .catch((error) => {
-      errorHandler(error);
+      useErrorHandler(error);
     });
 }
 
@@ -40,7 +40,7 @@ async function signup(info: SignUpData, success: (data: AxiosResponse) => void) 
       success(data);
     })
     .catch((error) => {
-      errorHandler(error);
+      useErrorHandler(error);
     });
 }
 
@@ -55,11 +55,11 @@ async function deleteUser(email: string, success: (data: AxiosResponse) => void)
       success(data);
     })
     .catch((error) => {
-      errorHandler(error);
+      useErrorHandler(error);
     });
 }
 
-async function phoneSendMessage(phone: string, success: (data: AxiosResponse) => void) {
+async function phoneSendMessage(phone: string, success: (data: AxiosResponse) => void, networkError: () => void) {
   await axios
     .get(`${url}/phoneNoCheck`, {
       params: {
@@ -70,14 +70,41 @@ async function phoneSendMessage(phone: string, success: (data: AxiosResponse) =>
       success(data);
     })
     .catch((error) => {
-      errorHandler(error);
+      networkError();
+      useErrorHandler(error);
     });
 }
 
-async function phoneCheckNumber(number: string, success: (data: AxiosResponse) => void) {
+async function phoneSendMessageForFind(
+  phone: string,
+  success: (data: AxiosResponse) => void,
+  networkError: () => void,
+) {
+  await axios
+    .get(`${url}/phoneNoAuth`, {
+      params: {
+        phoneNo: phone,
+      },
+    })
+    .then((data) => {
+      success(data);
+    })
+    .catch((error) => {
+      networkError();
+      useErrorHandler(error);
+    });
+}
+
+async function phoneCheckNumber(
+  data: { number: string; smsId: number },
+  success: (data: AxiosResponse) => void,
+  networkError: () => void,
+) {
+  const { number, smsId } = data;
   await axios
     .get(`${url}/authRandNum`, {
       params: {
+        smsId,
         enterNum: number,
       },
     })
@@ -85,7 +112,8 @@ async function phoneCheckNumber(number: string, success: (data: AxiosResponse) =
       success(data);
     })
     .catch((error) => {
-      errorHandler(error);
+      networkError();
+      useErrorHandler(error);
     });
 }
 
@@ -96,8 +124,8 @@ async function petImageUpload(formdata: FormData, success: (data: AxiosResponse)
       success(data);
     })
     .catch((error) => {
-      errorHandler(error);
+      useErrorHandler(error);
     });
 }
 
-export { emailCheck, signup, deleteUser, phoneCheckNumber, phoneSendMessage, petImageUpload };
+export { emailCheck, signup, deleteUser, phoneSendMessageForFind, phoneCheckNumber, phoneSendMessage, petImageUpload };

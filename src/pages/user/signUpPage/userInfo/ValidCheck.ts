@@ -17,7 +17,9 @@ function checkEmail(email: string): Feedback {
 
 function checkPassword(password: string): Feedback {
   const check = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  const regExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
   if (check.test(password) === false) {
+    if (regExp.test(password)) return { isValid: true, message: '' };
     return { isValid: false, message: '보안을 위해 최소 8자 문자, 숫자를 조합해주세요.' };
   }
 
@@ -48,7 +50,12 @@ function checkNickname(nickname: string): Feedback {
 
 function checkPetName(name: string): Feedback {
   const check = /[~!@#$%^&*()_+|<>?:{}]/;
+  const space = /^.{2,8}$/;
+
   if (check.test(name)) {
+    return { isValid: false, message: '특수문자 제외 2자이상 8자이하로 입력해주세요.' };
+  }
+  if (space.test(name) === false) {
     return { isValid: false, message: '특수문자 제외 2자이상 8자이하로 입력해주세요.' };
   }
   return { isValid: true, message: '' };

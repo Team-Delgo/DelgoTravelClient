@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { errorHandler } from './errorHandler';
+import { useErrorHandler } from './useErrorHandler';
 import { url } from '../../constants/url.cosnt';
 
 async function login(data: { email: string; password: string }, success: (data: AxiosResponse) => void) {
@@ -12,7 +12,7 @@ async function login(data: { email: string; password: string }, success: (data: 
       success(data);
     })
     .catch((error) => {
-      errorHandler(error);
+      useErrorHandler(error);
     });
 }
 
@@ -27,7 +27,7 @@ async function tokenRefresh(data: { refreshToken: string }, success: (data: Axio
       success(data);
     })
     .catch((error) => {
-      errorHandler(error);
+      useErrorHandler(error);
     });
 }
 
@@ -40,7 +40,7 @@ async function emailAuth(email: string, success: (data: AxiosResponse) => void) 
       success(data);
     })
     .catch((error) => {
-      errorHandler(error);
+      useErrorHandler(error);
     });
 }
 
@@ -56,7 +56,7 @@ async function changePassword(email: string, password: string, success: (data: A
       success(data);
     })
     .catch((error) => {
-      errorHandler(error);
+      useErrorHandler(error);
     });
 }
 

@@ -11,6 +11,7 @@ import { tokenActions } from '../../../../redux/reducers/tokenSlice';
 import DogType from './DogType';
 import BirthSelector from './BirthSelector';
 import { signup, petImageUpload } from '../../../../common/api/signup';
+import Check from "../../../../icons/check.svg"
 
 interface LocationState {
   phone: string;
@@ -138,28 +139,30 @@ function PetInfo() {
       phone,
       pet: petInfo,
     };
+    console.log(userInfo);
     signup(userInfo, (response: AxiosResponse) => {
 
       const { code, codeMsg } = response.data;
       if (code === 200) {
-        const accessToken = response.headers.authorization_access;
-        const refreshToken = response.headers.authorization_refresh;
-        dispatch(tokenActions.setToken(accessToken));
-        localStorage.setItem('refreshToken', refreshToken);
-        userId = response.data.userId;
-        navigation('/');
+        // const accessToken = response.headers.authorization_access;
+        // const refreshToken = response.headers.authorization_refresh;
+        // dispatch(tokenActions.setToken(accessToken));
+        // localStorage.setItem('refreshToken', refreshToken);
+        userId = response.data.data.userId;
+        console.log(response);
+        console.log(userId);
+        formData.append('file', sendingImage);
+        formData.append('userId', userId.toString());
+        petImageUpload(formData, (response: AxiosResponse) => {
+          console.log(response);
+        });
+        navigation('/user/signin/login');
       } else {
         console.log(codeMsg);
       }
 
     })
-    if (userId !== 0) {
-      formData.append('file', sendingImage);
-      formData.append('userId', userId.toString());
-      petImageUpload(formData, (response: AxiosResponse) => {
-        console.log(response);
-      })
-    }
+
     // 비동기 처리
     // signup({ email, password, nickname, phone, pet: {petName:enteredInput.name,petBirth:enteredInput.birth,petImage:} }, () => {});
   };
@@ -246,17 +249,23 @@ function PetInfo() {
         </div>
         <label htmlFor="S">
           <input type="radio" id="S" name="dogtype" className="dogtype-input" onChange={typeChangeHandler} />
-          <span className="dogtype-button" />
+          <span className="dogtype-button">
+            <img className='checkbox-icon' src={Check} alt="check" />
+          </span>
           소형견
         </label>
         <label htmlFor="M">
           <input type="radio" id="M" name="dogtype" className="dogtype-input" onChange={typeChangeHandler} />
-          <span className="dogtype-button" />
+          <span className="dogtype-button">
+            <img className='checkbox-icon' src={Check} alt="check" />
+          </span>
           중형견
         </label>
         <label htmlFor="L">
           <input type="radio" id="L" name="dogtype" className="dogtype-input" onChange={typeChangeHandler} />
-          <span className="dogtype-button" />
+          <span className="dogtype-button">
+            <img className='checkbox-icon' src={Check} alt="check" />
+          </span>
           대형견
         </label>
       </div>

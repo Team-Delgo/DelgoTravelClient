@@ -152,11 +152,15 @@ function Terms() {
           <div className="login-detail">
             <label className="login-detail-label" htmlFor={`term${selectedId}`}>
               <input
+                className="login-detail-label-input"
                 type="checkbox"
                 id={`term${selectedId}`}
                 checked={eachTermChecked[`term${selectedId}`]}
                 onChange={onCheckHandler}
               />
+              <span className="checkbox-button">
+                <img className='checkbox-icon' src={Check} alt="check" />
+              </span>
               확인 및 동의합니다
             </label>
           </div>

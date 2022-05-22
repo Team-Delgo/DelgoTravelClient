@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import alertConfirm, { Button, alert } from "react-alert-confirm";
 import "react-alert-confirm/dist/index.css";
@@ -9,17 +10,19 @@ import RightArrow from "../../icons/right-arrow.svg";
 import { userActions } from "../../redux/reducers/userSlice";
 import { tokenActions } from "../../redux/reducers/tokenSlice";
 import AlertConfirm from "../../common/dialog/AlertConfirm";
-
+import AlertConfirmOne from "../../common/dialog/AlertConfirmOne";
+import { deleteUser } from "../../common/api/signup";
 
 
 function MyAccount() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [text, setText] = useState('');
   const pet = useSelector((state: any) => state.persist.user.pet);
   console.log(pet);
   const navigation = useNavigate();
   const dispatch = useDispatch();
-
+  const email = useSelector((state: any) => state.persist.user.user.email);
 
   const logoutHandler = () => {
     dispatch(userActions.signout());
@@ -27,16 +30,34 @@ function MyAccount() {
     navigation('/user/signin');
   };
 
+  const deleteHandler = () => {
+    deleteUser(email, (response: AxiosResponse) => {
+      console.log(response);
+    });
+    dispatch(userActions.signout());
+    localStorage.removeItem('refreshToken');
+    navigation('/user/signin');
+  };
+
   const logOutModalOpen = () => {
-    setIsModalOpen(true);
+    setLogoutModalOpen(true);
     setText('정말 로그아웃 하시겠습니까?');
+  };
+
+  const deleteUserModalOpen = () => {
+    setDeleteModalOpen(true);
+    setText('정말 회원탈퇴 하시겠어요?ㅠㅠ');
   };
 
   return (
     <div className="account">
-      {isModalOpen && <AlertConfirm text={text}
-        yesButtonHandler={() => { logoutHandler(); }}
-        noButtonHandler={() => { setIsModalOpen(false); }}
+      {logoutModalOpen && <AlertConfirm text={text}
+        yesButtonHandler={logoutHandler}
+        noButtonHandler={() => { setLogoutModalOpen(false); }}
+      />}
+      {deleteModalOpen && <AlertConfirm text={text}
+        yesButtonHandler={deleteHandler}
+        noButtonHandler={() => { setLogoutModalOpen(false); }}
       />}
       <div className="account-profile">
         <img className="account-profile-image" src={pet?.image} alt="dog" />
@@ -102,7 +123,7 @@ function MyAccount() {
         </div>
       </div>
       <div className="account-sign">
-        <p className="account-out">회원탈퇴</p>
+        <p className="account-out" aria-hidden="true" onClick={deleteUserModalOpen}>회원탈퇴</p>
         <p className="account-out" aria-hidden="true" onClick={logOutModalOpen}>
           로그아웃
         </p>
