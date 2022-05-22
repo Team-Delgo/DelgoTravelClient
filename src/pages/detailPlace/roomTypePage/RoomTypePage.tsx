@@ -2,6 +2,8 @@ import React, { useCallback, useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 import BottomButton from '../../../common/layouts/BottomButton';
 import { ReactComponent as LeftArrow } from '../../../icons/left-arrow2.svg';
 import Calender from '../../calender/Calender';
@@ -20,6 +22,12 @@ function RoomTypePage() {
     `${process.env.PUBLIC_URL}/assets/images/service6.png`,
   ]);
   const room = useLocation().state as any;
+
+  const [roomImg, setRoomImg] = useState<Array<any>>([
+    `${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`,
+    `${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`,
+    `${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`
+  ]);
   
 
 
@@ -38,17 +46,19 @@ function RoomTypePage() {
   return (
     <>
       {isCalenderOpen && <Calender closeCalender={calenderOpenClose} />}
-      <div className={classNames("detail-place-room-type", { close: isCalenderOpen })}>
-        <img
-          className="detail-place-room-type-main-image"
-          src={`${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`}
-          alt="place-img"
-        />
+      <div className={classNames('detail-place-room-type', { close: isCalenderOpen })}>
+        <Carousel showThumbs={false} showArrows={false} showStatus={false} >
+          {roomImg.map((url) => (
+            <img src={url} alt="service-img" key={url} />
+          ))}
+        </Carousel>
         <LeftArrow className="detail-place-room-type-previous-page" onClick={moveToPreviousPage} />
         <div className="detail-place-room-type-info">
           <header className="detail-place-room-type-info-name">{room.name}</header>
           <div className="detail-place-room-type-info-accommodation">
-            <div className="detail-place-room-type-info-accommodation-check-in-check-out">입실 {room.checkin} / 퇴실 {room.checkout}</div>
+            <div className="detail-place-room-type-info-accommodation-check-in-check-out">
+              입실 {room.checkin} / 퇴실 {room.checkout}
+            </div>
             <div className="detail-place-room-type-info-accommodation-price">{room.price}</div>
           </div>
         </div>
