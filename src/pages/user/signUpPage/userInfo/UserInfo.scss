@@ -1,4 +1,4 @@
-@import "../SignUpPage.scss";
+@import '../SignUpPage.scss';
 @mixin spanposition {
   margin: 0 auto 0 0;
   padding-left: 30px;
@@ -32,15 +32,16 @@
   left: 16px;
   @include typosettings(14px, $color-orange);
   font-weight: 500;
-  &.fine{
+  &.fine {
     color: green;
   }
 }
-.input-email-check{
+.input-email-check {
   position: absolute;
   margin: 0;
   bottom: -30px;
   right: 16px;
+  cursor: pointer;
   @include typosettings(14px, $color-light-grey);
   font-weight: 500;
 }

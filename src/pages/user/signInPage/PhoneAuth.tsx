@@ -1,12 +1,14 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
+import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import ToastMessage from '../../../common/components/ToastMessage';
 import Timer from '../signUpPage/verifyphone/Timer';
-import { phoneSendMessage, phoneCheckNumber } from '../../../common/api/signup';
+import { phoneCheckNumber, phoneSendMessageForFind } from '../../../common/api/signup';
 import { SIGN_IN_PATH } from '../../../constants/path.const';
+import { errorActions } from '../../../redux/reducers/errorSlice';
 
 interface LocationState {
   phone: string;
@@ -14,7 +16,9 @@ interface LocationState {
 }
 
 function PhoneAuth() {
+  const dispatch = useDispatch();
   const [timeIsValid, setTimeIsValid] = useState(true);
+  const [SMSid, setSMSid] = useState<number>(0);
   const [isReSended, setIsReSended] = useState(false);
   const [buttonIsClicked, setButtonIsClicked] = useState(true);
   const [authNumber, setAuthNumber] = useState('');
@@ -32,16 +36,21 @@ function PhoneAuth() {
     }
   }, [buttonIsClicked]);
 
+  const errorHandler = () => {
+    dispatch(errorActions.setError());
+  };
+
   const authNumberResend = () => {
-    phoneSendMessage(phone, (response: AxiosResponse) => {
-      const { code } = response.data;
+    phoneSendMessageForFind(phone, (response: AxiosResponse) => {
+      const { code, data } = response.data;
       console.log(response);
       if (code === 200) {
+        setSMSid(data);
         setIsReSended(true);
         setButtonIsClicked(true);
         setTimeIsValid(true);
       }
-    });
+    }, errorHandler);
     //  인증번호 전송 요청
   };
 
@@ -54,12 +63,12 @@ function PhoneAuth() {
   };
 
   const submitAuthNumber = () => {
-    phoneCheckNumber(authNumber, (response: AxiosResponse) => {
+    phoneCheckNumber({ number: authNumber, smsId: SMSid }, (response: AxiosResponse) => {
       const { code } = response.data;
       if (code === 200) {
         navigation(SIGN_IN_PATH.RESETPASSWORD, { state: email });
       }
-    });
+    }, errorHandler);
   };
 
   return (

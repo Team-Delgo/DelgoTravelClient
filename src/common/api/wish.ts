@@ -1,8 +1,9 @@
-import axios, {  AxiosResponse,AxiosError } from 'axios';
-import { errorHandler } from './errorHandler';
+import axios, { AxiosResponse, AxiosError } from 'axios';
+import { useErrorHandler } from './useErrorHandler';
 import { url } from '../../constants/url.cosnt';
 
-async function wishInsert(data: { userId: number; placeId: number; accessToken: string },
+async function wishInsert(
+  data: { userId: number; placeId: number; accessToken: string },
   success: (data: AxiosResponse) => void,
 ) {
   try {
@@ -22,22 +23,26 @@ async function wishInsert(data: { userId: number; placeId: number; accessToken: 
     );
     success(result);
   } catch (error: AxiosError | any) {
-    errorHandler(error);
+    useErrorHandler(error);
   }
 }
 
-async function wishDelete(data: { wishId: number; accessToken:string }, success: (data: AxiosResponse) => void) {
+async function wishDelete(data: { wishId: number; accessToken: string }, success: (data: AxiosResponse) => void) {
   try {
-    const result = await axios.post(`${url}wish/delete`, {
-      wishId:data.wishId,
-    },{
-      headers: {
-        Authorization_Access: `${data.accessToken}`,
-      }
-    });
+    const result = await axios.post(
+      `${url}wish/delete`,
+      {
+        wishId: data.wishId,
+      },
+      {
+        headers: {
+          Authorization_Access: `${data.accessToken}`,
+        },
+      },
+    );
     success(result);
   } catch (error: AxiosError | any) {
-    errorHandler(error);
+    useErrorHandler(error);
   }
 }
 
