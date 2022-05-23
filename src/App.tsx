@@ -12,18 +12,30 @@ import PetInfo from './pages/user/signUpPage/petInfo/PetInfo';
 import Login from './pages/user/signInPage/Login';
 import WishListPage from './pages/wishList/WishList';
 import WhereToGoPage from './pages/whereToGo/WhereToGo';
-import { EDITOR_NOTE_PATH, ROOT_PATH, SIGN_IN_PATH, SIGN_UP_PATH, WISH_LIST_PATH, WHERE_TO_GO_PATH, MY_ACCOUNT_PATH, DETAIL_PLACE_PATH, REVIEW_WRITING_PATH } from './constants/path.const';
+import {
+  EDITOR_NOTE_PATH,
+  ROOT_PATH,
+  SIGN_IN_PATH,
+  SIGN_UP_PATH,
+  WISH_LIST_PATH,
+  WHERE_TO_GO_PATH,
+  MY_ACCOUNT_PATH,
+  DETAIL_PLACE_PATH,
+  REVIEW_WRITING_PATH,
+  KAKAO_REDIRECT_HANDLE_PATH,
+  NAVER_REDIRECT_HANDLE_PATH,
+} from './constants/path.const';
 import './App.scss';
 import MyAccount from './pages/myAccount/MyAccount';
 import FindPassword from './pages/user/signInPage/FindPassword';
 import ResetPassword from './pages/user/signInPage/ResetPassword';
 import PhoneAuth from './pages/user/signInPage/PhoneAuth';
 import Calender from './pages/calender/Calender';
-import DetailPlace from './pages/detailPlace/DetailPlace'
-import ReviewsPage from './pages/detailPlace/reviewsPage/ReviewsPage'
+import DetailPlace from './pages/detailPlace/DetailPlace';
+import ReviewsPage from './pages/detailPlace/reviewsPage/ReviewsPage';
 import RoomTypePage from './pages/detailPlace/roomTypePage/RoomTypePage';
 import Reservation from './pages/detailPlace/reservationPage/Reservation';
-import ReviewWritingPage from './pages/riviewWriting/RiviewWriting'
+import ReviewWritingPage from './pages/riviewWriting/RiviewWriting';
 import KakaoRedirectHandler from './common/socialLogion/KakaoRedirectHandler';
 import NaverRedirectHandler from './common/socialLogion/NaverRedirectHandler';
 import AlertConfirmOne from './common/dialog/AlertConfirmOne';
