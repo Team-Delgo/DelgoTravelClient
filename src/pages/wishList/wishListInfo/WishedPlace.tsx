@@ -30,7 +30,7 @@ function WishedPlace({ place, wishedPlace, setWishedPlace }: WishedPlaceTypeProp
   const [wishList, setWishList] = useState(true);
   const refreshToken = localStorage.getItem('refreshToken') || '';
   const accessToken = useSelector((state: any) => state.token.token);
-  const [wishListConfirmModalOpen, setWishListConfirmModalOpen] = useState(false);
+  const [wishListAlertConfirmOpen, setWishListAlertConfirmOpen] = useState(false);
 
   const wishListDelete = useCallback(() => {
     wishDelete({ wishId: place.wishId, accessToken }, (response: AxiosResponse) => {
@@ -42,9 +42,9 @@ function WishedPlace({ place, wishedPlace, setWishedPlace }: WishedPlaceTypeProp
     });
   }, [wishList, wishedPlace]);
 
-  const openCloseWishListConfirmModal = useCallback(() => {
-    setWishListConfirmModalOpen(!wishListConfirmModalOpen);
-  },[wishListConfirmModalOpen])
+  const wishListConfirmModalOpenClose = useCallback(() => {
+    setWishListAlertConfirmOpen(!wishListAlertConfirmOpen);
+  },[wishListAlertConfirmOpen])
 
 
   return (
@@ -61,14 +61,14 @@ function WishedPlace({ place, wishedPlace, setWishedPlace }: WishedPlaceTypeProp
             <div className="wished-place-location">{place.address}</div>
           </Link>
           <div className="wished-place-heart">
-            {wishListConfirmModalOpen && (
+            {wishListAlertConfirmOpen && (
               <AlertConfirm
                 text="정말 찜 목록에서 제거하시겠어요?"
                 yesButtonHandler={wishListDelete}
-                noButtonHandler={openCloseWishListConfirmModal}
+                noButtonHandler={wishListConfirmModalOpenClose}
               />
             )}
-            <Heart wishList={wishList} handleWishList={openCloseWishListConfirmModal} />
+            <Heart wishList={wishList} handleWishList={wishListConfirmModalOpenClose} />
           </div>
         </>
       )}

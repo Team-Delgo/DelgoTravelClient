@@ -1,4 +1,5 @@
-import React,{useMemo} from 'react'
+
+import React,{useMemo, useState,useCallback} from 'react'
 import { ReactComponent as ReviewStar } from '../../../icons/review-star.svg'
 import './Reviews.scss';
 
@@ -6,15 +7,19 @@ import './Reviews.scss';
 
 function Reviews({ review }: any) {
   const reviewStarCount = useMemo(()=>reviewStarComponents(),[])
+  const [moreDescription,setMoreDescription] = useState(false)
 
   function reviewStarComponents() {
     const reviewStarArray = [];
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < review.starRating; i++) {
+    for (let i = 0; i < review.starRating; i += 1) {
       reviewStarArray.push(<ReviewStar />);
     }
     return reviewStarArray;
   }
+
+  const handleMoreDescription = useCallback(() => {
+    setMoreDescription(!moreDescription);
+  }, [moreDescription]);
 
   return (
     <div className="review">
@@ -30,7 +35,22 @@ function Reviews({ review }: any) {
         </div>
       </header>
       <body className="review-content">
-        <div className="review-content-description">{review.reviewContent}</div>
+        {review.reviewContent.length > 95 ? (
+          <div>
+            {moreDescription ? (
+              <div className="review-content-description">{review.reviewContent}</div>
+            ) : (
+              <>
+                <div className="review-content-description">{review.reviewContent.substring(0, 94)} ...</div>
+                <span className="review-content-description-more" aria-hidden="true" onClick={handleMoreDescription}>
+                  더보기
+                </span>
+              </>
+            )}
+          </div>
+        ) : (
+          <div className="review-content-description">{review.reviewContent}</div>
+        )}
         <div className="review-content-image-container">
           {review.reviewImages.map((image: string) => (
             <img src={image} alt="profile-img" />
