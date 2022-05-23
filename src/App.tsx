@@ -40,6 +40,7 @@ import KakaoRedirectHandler from './common/socialLogion/KakaoRedirectHandler';
 import NaverRedirectHandler from './common/socialLogion/NaverRedirectHandler';
 import AlertConfirmOne from './common/dialog/AlertConfirmOne';
 import { errorActions } from './redux/reducers/errorSlice';
+import ReservationConfirmPage from './pages/detailPlace/reservationConfirmPage/ReservationConfirmPage';
 
 
 function App() {
@@ -72,6 +73,7 @@ function App() {
         <Route path={DETAIL_PLACE_PATH.REVIEWS} element={<ReviewsPage />} />
         <Route path={DETAIL_PLACE_PATH.ROOMTYPES} element={<RoomTypePage />} />
         <Route path={DETAIL_PLACE_PATH.RESERVATION} element={<Reservation />} />
+        <Route path={DETAIL_PLACE_PATH.RESERVATION_CONFIRM} element={<ReservationConfirmPage />} />
         <Route path={REVIEW_WRITING_PATH} element={<ReviewWritingPage />} />
         <Route path={KAKAO_REDIRECT_HANDLE_PATH} element={<KakaoRedirectHandler />} />
         <Route path={NAVER_REDIRECT_HANDLE_PATH} element={<NaverRedirectHandler />} />

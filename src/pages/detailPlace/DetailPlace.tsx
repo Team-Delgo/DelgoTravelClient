@@ -182,13 +182,26 @@ function DetailPlace() {
         </div>
         <div className="detail-places-room-types">
           {roomTypes.map((room) => (
+            // <Link
+            //   style={{ textDecoration: 'none' }}
+            //   to={`/detail-place/${placeId}/${room.roomId}`}
+            //   state={{ room,place }}
+            //   key={placeId}
+            // >
             <RoomType
               key={room.id}
               room={room}
               navigate={() => {
-                navigate(`/detail-place/${placeId}/${room.roomId}`, { state: room });
+                // navigate(`/detail-place/${placeId}/${room.roomId}`, { state: room, place });
+                navigate(`/detail-place/${placeId}/${room.roomId}`, {
+                  state: {
+                    room,
+                    place
+                  },
+                });
               }}
             />
+            // </Link>
           ))}
         </div>
         <div className="detail-place-review">
