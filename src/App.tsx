@@ -3,14 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import HomePage from './pages/home/Home';
-import EditorNote from './pages/home/EditorNote';
+import EditorNote from './pages/editorNote/EditorNote';
 import SignInPage from './pages/user/signInPage/SignIn';
 import VerifyPhonePage from './pages/user/signUpPage/verifyphone/VerifyPhone';
 import TermsPage from './pages/user/signUpPage/terms/Terms';
 import UserInfo from './pages/user/signUpPage/userInfo/UserInfo';
 import PetInfo from './pages/user/signUpPage/petInfo/PetInfo';
 import Login from './pages/user/signInPage/Login';
-import WishListPage from './pages/wishList/WishList'
+import WishListPage from './pages/wishList/WishList';
 import WhereToGoPage from './pages/whereToGo/WhereToGo';
 import { EDITOR_NOTE_PATH, ROOT_PATH, SIGN_IN_PATH, SIGN_UP_PATH, WISH_LIST_PATH, WHERE_TO_GO_PATH, MY_ACCOUNT_PATH, DETAIL_PLACE_PATH, REVIEW_WRITING_PATH } from './constants/path.const';
 import './App.scss';
@@ -24,8 +24,11 @@ import ReviewsPage from './pages/detailPlace/reviewsPage/ReviewsPage'
 import RoomTypePage from './pages/detailPlace/roomTypePage/RoomTypePage';
 import Reservation from './pages/detailPlace/reservationPage/Reservation';
 import ReviewWritingPage from './pages/riviewWriting/RiviewWriting'
+import KakaoRedirectHandler from './common/socialLogion/KakaoRedirectHandler';
+import NaverRedirectHandler from './common/socialLogion/NaverRedirectHandler';
 import AlertConfirmOne from './common/dialog/AlertConfirmOne';
 import { errorActions } from './redux/reducers/errorSlice';
+
 
 function App() {
   const hasError = useSelector((state: any) => state.error.hasError);
@@ -58,6 +61,8 @@ function App() {
         <Route path={DETAIL_PLACE_PATH.ROOMTYPES} element={<RoomTypePage />} />
         <Route path={DETAIL_PLACE_PATH.RESERVATION} element={<Reservation />} />
         <Route path={REVIEW_WRITING_PATH} element={<ReviewWritingPage />} />
+        <Route path={KAKAO_REDIRECT_HANDLE_PATH} element={<KakaoRedirectHandler />} />
+        <Route path={NAVER_REDIRECT_HANDLE_PATH} element={<NaverRedirectHandler />} />
       </Routes>
     </QueryClientProvider>
   );

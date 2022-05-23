@@ -51,7 +51,7 @@ function WishList() {
               onClick={changeCurrentTab(0)}
               aria-hidden="true"
             >
-              Wishlist
+              찜 목록
             </div>
             <div
               className="wish-list-tab-history"
@@ -60,7 +60,7 @@ function WishList() {
               onClick={changeCurrentTab(1)}
               aria-hidden="true"
             >
-              History
+              여행내역
             </div>
           </div>
           <Folder/>
@@ -75,7 +75,7 @@ function WishList() {
               onClick={changeCurrentTab(0)}
               aria-hidden="true"
             >
-              Wishlist
+              찜 목록
             </div>
             <div
               className="wish-list-tab-history-active"
@@ -84,7 +84,7 @@ function WishList() {
               onClick={changeCurrentTab(1)}
               aria-hidden="true"
             >
-              History
+              여행내역
             </div>
           </div>
           <History/>

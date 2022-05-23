@@ -1,18 +1,18 @@
-import React,{useState,useCallback } from 'react'
+import React,{useState,useCallback} from 'react'
 import { useSelector } from "react-redux";
-import { Link } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import {wishInsert,wishDelete} from '../../../common/api/wish'
-import Heart from '../../../common/components/Heart'
-import './Place.scss'
+import { ReactComponent as ActiveHeart } from '../../../icons/heart-active.svg';
+import { ReactComponent as Heart } from '../../../icons/heart.svg';
+import './RecommendedPlaces.scss';
 
-interface PlaceTypeProps{
-    place:PlaceType
-    places:Array<PlaceType>
+interface RedcommendedPlacesProps  {
+    place:RecommendedPlaceType
+    places:Array<RecommendedPlaceType>
     setPlaces:any
 }
 
-interface PlaceType  {
+interface RecommendedPlaceType  {
   address: string
   lowestPrice: string
   mainPhotoUrl: string
@@ -22,10 +22,13 @@ interface PlaceType  {
   wishId: number
 }
 
-function Place({ place,  places, setPlaces }: PlaceTypeProps) {
+
+function RecommendedPlaces({ place ,places ,setPlaces}: RedcommendedPlacesProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const accessToken = useSelector((state: any) => state.token.token);
   const userId = useSelector((state: any) => state.persist.user.user.id)
+
+
 
   const wishListInsert = useCallback(() => {
     wishInsert({ userId, placeId: place.placeId,accessToken}, (response: AxiosResponse) => {
@@ -50,30 +53,17 @@ function Place({ place,  places, setPlaces }: PlaceTypeProps) {
   }, [wishList, places]);
 
   return (
-    <div className="place" aria-hidden="true">
-      <Link to={`/detail-place/${place.placeId}`} key={place.placeId}>
-        <img src={place.mainPhotoUrl} alt="place-img" />
-      </Link>
-      <div className="place-info">
-        <div className="place-info-first-line">
-          <span className="place-region">
-            {place.address.split(' ')[0]}&nbsp;{place.address.split(' ')[1]}
-          </span>
-        </div>
-        <div className="place-info-second-line">
-          <span>{place.name}</span>
-          <span>{place.lowestPrice}~</span>
-        </div>
-      </div>
-      <div className="place-heart">
-        {wishList === 0 ? (
-          <Heart wishList={wishList} handleWishList={wishListInsert} />
-        ) : (
-          <Heart wishList={wishList} handleWishList={wishListDelete} />
-        )}
-      </div>
+    <div className="recommended-places">
+      <img src={place.mainPhotoUrl} alt="recommended-place-img" />
+      <div className="recommended-places-name">{place.name}</div>
+      <div className="recommended-places-location">{place.address}</div>
+      {wishList > 0 ? (
+        <ActiveHeart className="recommended-places-heart" onClick={wishListDelete} />
+      ) : (
+        <Heart className="recommended-places-heart" onClick={wishListInsert} />
+      )}
     </div>
   );
 }
 
-export default Place;
+export default RecommendedPlaces;

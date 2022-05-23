@@ -1,31 +1,37 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { useDispatch } from 'react-redux';
-import ReservationInfo from './ReservationInfo';
+import ReservationInfo from './reservationInfo/ReservationInfo';
 import Footer from '../../common/layouts/Footer';
-import RecommendedPlaces from './RecommendedPlaces';
+import RecommendedPlaces from './recommenedPlaces/RecommendedPlaces';
 import { tokenActions } from '../../redux/reducers/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
+import { getAllPlaces } from '../../common/api/getPlaces';
 import './Home.scss';
 
 
-type EditorPlaceType = {
+interface EditorPlaceType {
   id: number
   image: string
   subtext: string
   name: string
 }
 
-type RecommendedPlaceType = {
-  id: number
-  image: string
+interface RecommendedPlaceType  {
+  address: string
+  lowestPrice: string
+  mainPhotoUrl: string
   name: string
-  location: string
+  placeId: number
+  registDt: string
+  wishId: number
 }
 
-function Home() {
 
+function Home() {
+  const [places, setPlaces] = useState<Array<RecommendedPlaceType>>([]);
   const [editorPlaces, setEditorPlaces] = useState<Array<EditorPlaceType>>([
     {
       id: 1,
@@ -40,31 +46,17 @@ function Home() {
       name: '숙초 코코네집',
     }
   ]);
-
-  const [redcommendedPlaces, setRedcommendedPlaces] = useState<Array<RecommendedPlaceType>>([
-    {
-      id: 1,
-      image: `${process.env.PUBLIC_URL}/assets/images/recommendedPlaceImage.png`,
-      name: '멍멍이네 하우스',
-      location: '강원도 속초시 조앙동',
-    },
-    {
-      id: 2,
-      image: `${process.env.PUBLIC_URL}/assets/images/recommendedPlaceImage.png`,
-      name: '멍멍이네 하우스',
-      location: '강원도 속초시 조앙동',
-    },
-    {
-      id: 3,
-      image: `${process.env.PUBLIC_URL}/assets/images/recommendedPlaceImage.png`,
-      name: '멍멍이네 하우스',
-      location: '강원도 속초시 조앙동',
-    },
-  ]);
-
   const navigation = useNavigate();
   const dispatch = useDispatch();
   const refreshToken = localStorage.getItem('refreshToken') || '';
+  const accessToken = useSelector((state: any) => state.token.token);
+  const userId = useSelector((state: any) => state.persist.user.user.id)
+
+  useEffect(() => {
+    getAllPlaces(userId, (response: AxiosResponse) => {
+      setPlaces(response.data.data);
+    });
+  }, []);
 
   useEffect(() => {
     tokenRefresh({ refreshToken }, (response: AxiosResponse) => {
@@ -82,7 +74,7 @@ function Home() {
         navigation('/user/signin');
       }
     });
-  }, []);
+  }, [accessToken]);
 
   return (
     <>
@@ -101,8 +93,8 @@ function Home() {
           ))}
         </div>
         <div className="recommended-places-text">델고갈만한 숙소</div>
-        {redcommendedPlaces.map((place) => (
-          <RecommendedPlaces place={place} key={place.id} />
+        {places.map((place) => (
+          <RecommendedPlaces places={places} setPlaces={setPlaces} place={place} key={place.placeId} />
         ))}
       </div>
       <Footer />

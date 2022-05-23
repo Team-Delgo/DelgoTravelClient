@@ -29,3 +29,7 @@ export const DETAIL_PLACE_PATH = {
 };
 
 export const REVIEW_WRITING_PATH = '/review-writing/:reservationId';
+
+export const KAKAO_REDIRECT_HANDLE_PATH = '/oauth/callback/kakao';
+export const NAVER_REDIRECT_HANDLE_PATH = '/oauth/callback/naver';
+

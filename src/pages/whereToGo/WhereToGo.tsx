@@ -107,7 +107,7 @@ function WhereToGo() {
           {places.map((place) => {
             if (place.address.includes(areaTerm)) {
               if (place.name.includes(searchTerm)) {
-                return <Place key={place.placeId} place={place} userId={userId} places={places} setPlaces={setPlaces} />;
+                return <Place key={place.placeId} place={place}  places={places} setPlaces={setPlaces} />;
               }
             }
           })}

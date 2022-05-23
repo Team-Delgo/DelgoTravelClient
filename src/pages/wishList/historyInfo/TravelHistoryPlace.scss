@@ -6,6 +6,7 @@
     &-period{
         color: #3E382F;
         font-size: 3.5vw;
+        font-weight: bold;
         padding-bottom: 4%;
     }
     &-info{
@@ -16,7 +17,7 @@
             border-radius: 5px;
         }
         &-detail{
-            padding-left: 7%;
+            margin-left: 7%;
             &-name{
                 font-size: 4.5vw;
                 font-weight: 600;
@@ -59,7 +60,7 @@
             height: 11vw;
             background-color: #E8E2DC;
             border-radius: 5px;
-            margin-left:7%;
+            margin-left:25%;
         }
         &-reservation-detail{
             display: flex;
@@ -70,7 +71,7 @@
             height: 11vw;
             background-color: #E8E2DC;
             border-radius: 5px;
-            margin-left:4%;
+            margin-left:11%;
         }
         &-link{
             text-decoration: none;
