@@ -2,7 +2,7 @@ import React from "react";
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
 import RightArrow from "../../../icons/right-arrow.svg";
 import './Reservation.scss';
-import BottomButton from "../../../common/layouts/BottomButton";
+import BottomButton from "../../../common/components/BottomButton";
 
 function Reservation() {
   return <><div className="reservationPage">

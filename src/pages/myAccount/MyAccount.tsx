@@ -4,7 +4,7 @@ import { AxiosResponse } from "axios";
 import { useNavigate } from "react-router-dom";
 import alertConfirm, { Button, alert } from "react-alert-confirm";
 import "react-alert-confirm/dist/index.css";
-import Footer from '../../common/layouts/Footer';
+import Footer from '../../common/components/Footer';
 import "./MyAccount.scss";
 import RightArrow from "../../icons/right-arrow.svg";
 import { userActions } from "../../redux/reducers/userSlice";

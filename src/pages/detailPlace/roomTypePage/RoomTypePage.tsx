@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ImageSlider from '../../../common/components/ImageSlider';
-import BottomButton from '../../../common/layouts/BottomButton';
+import BottomButton from '../../../common/components/BottomButton';
 import { ReactComponent as LeftArrow } from '../../../icons/left-arrow2.svg';
 import Calender from '../../calender/Calender';
 import './RoomTypePage.scss';

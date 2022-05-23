@@ -1,7 +1,7 @@
 
 import React,{ChangeEvent,useEffect,useState,useCallback,useRef} from 'react'
 import {useNavigate, useLocation } from 'react-router-dom'; 
-import BottomButton from '../../common/layouts/BottomButton';
+import BottomButton from '../../common/components/BottomButton';
 import { ReactComponent as BigRivewStarActive } from '../../icons/big-review-star-active.svg';
 import { ReactComponent as BigRivewStar} from '../../icons/big-review-star.svg';
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg'

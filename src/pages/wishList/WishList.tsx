@@ -4,7 +4,7 @@ import { AxiosResponse } from 'axios';
 import { useDispatch,useSelector } from 'react-redux';
 import { tokenActions } from '../../redux/reducers/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
-import Footer from '../../common/layouts/Footer';
+import Footer from '../../common/components/Footer';
 import Folder from './wishListInfo/Folder';
 import History from './historyInfo/History';
 import './WishList.scss';
