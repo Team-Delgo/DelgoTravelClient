@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { getAllPlaces } from '../../common/api/getPlaces';
 import { tokenActions } from '../../redux/reducers/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
-import Footer from '../../common/layouts/Footer'
+import Footer from '../../common/components/Footer'
 import RegionSelectionModal from './modal/RegionSelectionModal'
 import Place from './place/Place'
 // import {RootState} from '../../redux/store'

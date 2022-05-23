@@ -1,7 +1,7 @@
 import React ,{useCallback}from 'react'
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg'
-import BottomButton from '../../common/layouts/BottomButton';
+import BottomButton from '../../common/components/BottomButton';
 import "./EditorNote.scss";
 
 function EditorNote() {

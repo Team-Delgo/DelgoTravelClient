@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { useDispatch } from 'react-redux';
 import ReservationInfo from './reservationInfo/ReservationInfo';
-import Footer from '../../common/layouts/Footer';
+import Footer from '../../common/components/Footer';
 import RecommendedPlaces from './recommenedPlaces/RecommendedPlaces';
 import { tokenActions } from '../../redux/reducers/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
