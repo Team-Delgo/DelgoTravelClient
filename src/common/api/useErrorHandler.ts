@@ -1,6 +1,11 @@
+import React, { useState } from 'react';
 import { AxiosError } from 'axios';
+import { useDispatch } from 'react-redux';
+import { errorActions } from '../../redux/reducers/errorSlice';
 
-function errorHandler(error: AxiosError) {
+function useErrorHandler(error: AxiosError) {
+  // const dispatch = useDispatch();
+  // dispatch(errorActions.setError());
   if (error.response) {
     console.log(error.response);
     // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답
@@ -17,4 +22,4 @@ function errorHandler(error: AxiosError) {
   console.log(error.config);
 }
 
-export { errorHandler };
+export { useErrorHandler };

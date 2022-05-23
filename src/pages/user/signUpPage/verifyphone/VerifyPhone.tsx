@@ -2,6 +2,8 @@ import React, { useState, useEffect, ChangeEvent } from 'react';
 import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { errorActions } from '../../../../redux/reducers/errorSlice';
 import ToastMessage from '../../../../common/components/ToastMessage';
 import './VerifyPhone.scss';
 import Timer from './Timer';
@@ -10,7 +12,9 @@ import { ReactComponent as Check } from '../../../../icons/check.svg';
 import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
 import { phoneSendMessage, phoneCheckNumber } from '../../../../common/api/signup';
 
+
 function VerifyPhone() {
+
   const navigation = useNavigate();
   const [buttonIsClicked, setButtonIsClicked] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -19,6 +23,7 @@ function VerifyPhone() {
   const [timeIsValid, setTimeIsValid] = useState(true);
   const [isReSended, setIsReSended] = useState(false);
   const [feedback, setFeedback] = useState('');
+  const [SMSid, setSMSid] = useState(0);
   const authIsValid = timeIsValid && authNumber.length === 4;
   const isValid = phoneNumber.length === 11;
   const isEntered = phoneNumber.length > 0;
@@ -26,13 +31,20 @@ function VerifyPhone() {
   const buttonClickHandler = () => {
     //  인증번호 전송 요청
     phoneSendMessage(phoneNumber, (response: AxiosResponse) => {
-      const { code } = response.data;
+      const { code, data } = response.data;
 
       if (code === 200) {
+        setSMSid(data);
         setButtonIsClicked(true);
         setIsSended(true);
       }
-    });
+    }, errorHandler);
+  };
+
+  const dispatch = useDispatch();
+
+  const errorHandler = () => {
+    dispatch(errorActions.setError());
   };
 
   useEffect(() => {
@@ -71,7 +83,7 @@ function VerifyPhone() {
         setButtonIsClicked(true);
         setTimeIsValid(true);
       }
-    });
+    }, errorHandler);
     //  인증번호 전송 요청
   };
 
@@ -80,7 +92,7 @@ function VerifyPhone() {
   };
 
   const submitAuthNumber = () => {
-    phoneCheckNumber(authNumber, (response: AxiosResponse) => {
+    phoneCheckNumber({ number: authNumber, smsId: SMSid }, (response: AxiosResponse) => {
       const { code } = response.data;
       console.log(response);
       if (code === 200) {
@@ -88,8 +100,9 @@ function VerifyPhone() {
       } else {
         setFeedback('인증번호를 확인해주세요');
       }
-    });
+    }, errorHandler);
   };
+
 
   const buttonContext = !isSended ? (
     <button type="button" className={classNames('login-button', { active: isValid })} onClick={buttonClickHandler}>
@@ -121,7 +134,7 @@ function VerifyPhone() {
             className={classNames('login-input-clear', { checked: isSended })}
             onClick={clearButtonHandler}
           >
-            {isSended ? <Check /> : 'X'}
+            {isSended ? <Check /> : <div style={{ fontWeight: 700 }}>X</div>}
           </span>
         )}
       </div>

@@ -1,4 +1,4 @@
-@import "../SignUpPage.scss";
+@import '../SignUpPage.scss';
 
 .login {
   &-inputbox {
@@ -36,6 +36,9 @@
       height: 24px;
       text-align: center;
       position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       right: 20px;
       top: 20px;
       border-radius: 100px;

@@ -1,13 +1,13 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { errorHandler } from './errorHandler';
+import { useErrorHandler } from './useErrorHandler';
 import { url } from '../../constants/url.cosnt';
 
-async function getAllPlaces(userId:number,success: (data: AxiosResponse) => void) {
+async function getAllPlaces(userId: number, success: (data: AxiosResponse) => void) {
   try {
-    const result = await axios.get(`${url}place/selectWheretogo?userId=${userId}`)
+    const result = await axios.get(`${url}place/selectWheretogo?userId=${userId}`);
     success(result);
   } catch (error: AxiosError | any) {
-    errorHandler(error);
+    useErrorHandler(error);
   }
 }
 
@@ -16,24 +16,21 @@ async function getWishedPlaces(data: { accessToken: string; userId: number }, su
     const result = await axios.get(`${url}wish/select?userId=${data.userId}`, {
       headers: {
         Authorization_Access: `${data.accessToken}`,
-      }
+      },
     });
     success(result);
   } catch (error: AxiosError | any) {
-    errorHandler(error);
+    useErrorHandler(error);
   }
 }
 
 async function getDetailPlace(data: { userId: number; placeId: number }, success: (data: AxiosResponse) => void) {
   try {
-    const result = await axios.get(
-      `${url}place/selectDetail?userId=${data.userId}&placeId=${data.placeId}`,
-    );
+    const result = await axios.get(`${url}place/selectDetail?userId=${data.userId}&placeId=${data.placeId}`);
     success(result);
   } catch (error: AxiosError | any) {
-    errorHandler(error);
+    useErrorHandler(error);
   }
 }
 
-export { getAllPlaces, getWishedPlaces,getDetailPlace };
-
+export { getAllPlaces, getWishedPlaces, getDetailPlace };

@@ -5,6 +5,7 @@ import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
 import DetailTerm from './DetailTerm';
 import { SIGN_UP_PATH } from '../../../../constants/path.const';
 import './Terms.scss';
+import Check from "../../../../icons/check.svg"
 
 interface Term {
   term1: boolean;
@@ -73,8 +74,8 @@ function Terms() {
         onClick={
           !selectedId
             ? () => {
-                navigation(-1);
-              }
+              navigation(-1);
+            }
             : viewCloesHandler
         }
       >
@@ -87,7 +88,10 @@ function Terms() {
           <div className="login-terms">
             <div className="login-terms-item">
               <label className="login-terms-item-label" htmlFor="term1">
-                <input type="checkbox" id="term1" checked={term1} onChange={onCheckHandler} />
+                <input className="checkbox-input" type="checkbox" id="term1" checked={term1} onChange={onCheckHandler} />
+                <span className="checkbox-button">
+                  <img className='checkbox-icon' src={Check} alt="check" />
+                </span>
                 [필수]이용약관 동의
               </label>
               <span aria-hidden="true" className="login-terms-item-button" id="1" onClick={viewOpenHandler}>
@@ -96,7 +100,10 @@ function Terms() {
             </div>
             <div className="login-terms-item">
               <label htmlFor="term2" className="login-terms-item-label">
-                <input type="checkbox" id="term2" checked={term2} onChange={onCheckHandler} />
+                <input className="checkbox-input" type="checkbox" id="term2" checked={term2} onChange={onCheckHandler} />
+                <span className="checkbox-button">
+                  <img className='checkbox-icon' src={Check} alt="check" />
+                </span>
                 [필수]만 14세 이상 확인
               </label>
               <span aria-hidden="true" className="login-terms-item-button" id="2" onClick={viewOpenHandler}>
@@ -105,7 +112,10 @@ function Terms() {
             </div>
             <div className="login-terms-item">
               <label className="login-terms-item-label" htmlFor="term3">
-                <input type="checkbox" id="term3" checked={term3} onChange={onCheckHandler} />
+                <input className="checkbox-input" type="checkbox" id="term3" checked={term3} onChange={onCheckHandler} />
+                <span className="checkbox-button">
+                  <img className='checkbox-icon' src={Check} alt="check" />
+                </span>
                 [필수]개인정보 수집 이용 동의
               </label>
               <span aria-hidden="true" className="login-terms-item-button" id="3" onClick={viewOpenHandler}>
@@ -116,7 +126,10 @@ function Terms() {
           <div className="login-terms-all">
             <div className="login-terms-all-wrapper">
               <label htmlFor="all">
-                <input type="checkbox" id="all" checked={allChecked} onChange={onAllCheckHandler} />
+                <input className="checkbox-input" type="checkbox" id="all" checked={allChecked} onChange={onAllCheckHandler} />
+                <span className="checkbox-button">
+                  <img className='checkbox-icon' src={Check} alt="check" />
+                </span>
                 모두 확인 및 동의합니다.
               </label>
             </div>
@@ -139,11 +152,15 @@ function Terms() {
           <div className="login-detail">
             <label className="login-detail-label" htmlFor={`term${selectedId}`}>
               <input
+                className="login-detail-label-input"
                 type="checkbox"
                 id={`term${selectedId}`}
                 checked={eachTermChecked[`term${selectedId}`]}
                 onChange={onCheckHandler}
               />
+              <span className="checkbox-button">
+                <img className='checkbox-icon' src={Check} alt="check" />
+              </span>
               확인 및 동의합니다
             </label>
           </div>
