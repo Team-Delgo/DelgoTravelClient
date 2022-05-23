@@ -30,6 +30,7 @@ function WishedPlace({ place, wishedPlace, setWishedPlace }: WishedPlaceTypeProp
   const [wishList, setWishList] = useState(true);
   const refreshToken = localStorage.getItem('refreshToken') || '';
   const accessToken = useSelector((state: any) => state.token.token);
+  const [wishListConfirmModalOpen, setWishListConfirmModalOpen] = useState(false);
 
   const wishListDelete = useCallback(() => {
     wishDelete({ wishId: place.wishId, accessToken }, (response: AxiosResponse) => {
@@ -41,42 +42,10 @@ function WishedPlace({ place, wishedPlace, setWishedPlace }: WishedPlaceTypeProp
     });
   }, [wishList, wishedPlace]);
 
-  const wishListDeleteConfirm = async () => {
-    window.scrollTo(0, 0);
-    const [isOk, action, instance] = await alertConfirm({
-      content: <div style={{ textAlign: 'center' }}>정말 찜 목록에서 제거하시겠어요?</div>,
-      // eslint-disable-next-line react/no-unstable-nested-components
-      footer(dispatch) {
-        return (
-          <div style={{ margin: 'auto' }}>
-            <Button
-              style={{ marginRight: '40px', width: '80px', borderRadius: '25px' }}
-              onClick={() => dispatch('delete')}
-              styleType="default"
-            >
-              네
-            </Button>
-            <Button
-              style={{ marginLeft: '40px', width: '80px', borderRadius: '25px' }}
-              onClick={() => dispatch('cancel')}
-              styleType="default"
-            >
-              아니요
-            </Button>
-          </div>
-        );
-      },
-      async closeBefore(action, close) {
-        if (action === 'delete') {
-          wishListDelete();
-          close();
-        } else {
-          close();
-        }
-      },
-    });
-    console.log(isOk, action, instance);
-  };
+  const openCloseWishListConfirmModal = useCallback(() => {
+    setWishListConfirmModalOpen(!wishListConfirmModalOpen);
+  },[wishListConfirmModalOpen])
+
 
   return (
     <div className="wished-place">
@@ -92,7 +61,14 @@ function WishedPlace({ place, wishedPlace, setWishedPlace }: WishedPlaceTypeProp
             <div className="wished-place-location">{place.address}</div>
           </Link>
           <div className="wished-place-heart">
-            <Heart wishList={wishList} handleWishList={wishListDeleteConfirm} />
+            {wishListConfirmModalOpen && (
+              <AlertConfirm
+                text="정말 찜 목록에서 제거하시겠어요?"
+                yesButtonHandler={wishListDelete}
+                noButtonHandler={openCloseWishListConfirmModal}
+              />
+            )}
+            <Heart wishList={wishList} handleWishList={openCloseWishListConfirmModal} />
           </div>
         </>
       )}
