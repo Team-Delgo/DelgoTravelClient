@@ -1,6 +1,7 @@
 .reservationPage {
     margin-left: 20px;
     margin-right: 20px;
+    margin-bottom: 150px;
   }
   .header {
     display: flex;
@@ -152,12 +153,12 @@
       font-size: 14px;
       font-weight: 500;
       line-height: 21px;
-      margin-bottom: 35px;
+      margin-bottom: 25px;
     }
   }
   .finalprice {
     margin-top: 33px;
-    margin-bottom: 21px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
     &-price {
@@ -168,15 +169,51 @@
     }
   }
   .payment-method {
+    margin-top: 20px;
+    margin-bottom: 100px;
     display: flex;
-    margin-top: 71px;
-    margin-bottom: 200px;
-    justify-content: space-evenly;
-    &-item {
+    justify-content: space-between;
+    &-label{
+      color: #b0a69d;
       font-size: 14px;
       font-weight: 500;
       line-height: 21px;
-      color: #3e382f;
+    }
+    &-price {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 22.54px;
+      color: #3E382F;
     }
   }
-  
+  .view-policy{
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 150%;
+    margin-bottom: 55px;
+  }
+  .cancel-reservation{
+    &-label{
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 150%;
+      text-align: center;
+      color: #FF9162;
+      margin-bottom: 20px;
+    }
+    &-button{
+      width: 335px;
+      height: 56px;
+      background: rgba(255, 145, 98, 0.2);
+      border-radius: 10px;
+      font-weight: 500;
+      font-size: 16px;
+      text-align: center;
+      color: #FF9162;
+      border: none;
+      margin: auto;
+      display:block;
+    }
+  }

@@ -3,33 +3,29 @@ import { useSelector } from "react-redux";
 import { useNavigate, useLocation,Link } from 'react-router-dom';
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
 import RightArrow from "../../../icons/right-arrow.svg";
+import RightArrowBlack from "../../../icons/right-arrow-black.svg";
 import BottomButton from "../../../common/components/BottomButton";
 import './ReservationConfirmPage.scss';
 
 function ReservationConfirmPage() {
   const navigate = useNavigate();
-  const {nickname,phone} = useSelector((state: any) => state.persist.user.user);
+  const { nickname, phone } = useSelector((state: any) => state.persist.user.user);
   const { date, dateString } = useSelector((state: any) => state.date);
-  const {room} = useLocation().state as any;
-  const {place} = useLocation().state as any;
-  console.log(place)
-  console.log(room) 
-  console.log(date)
-  console.log(dateString)
+  const { room, place } = useSelector((state: any) => state.persist.reservation);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const moveToPreviousPage = useCallback(() => {
-    navigate(-1);
+  const moveToMainPage = useCallback(() => {
+    navigate('/');
   }, []);
-
 
   return (
     <>
       <div className="reservationPage">
         <div className="header">
-          <Exit className="exit-button" onClick={moveToPreviousPage} />
+          <Exit className="exit-button" onClick={moveToMainPage} />
           <h1 className="header-title">예약확정</h1>
         </div>
         <div className="placeinfo">
@@ -72,13 +68,17 @@ function ReservationConfirmPage() {
           </div>
         </div>
         <div className="reservation-devide" />
-        <h2 className="reservation-title second">할인정보</h2>
+        <h2 className="reservation-title second">결제 정보</h2>
         <div className="original-price">
           <div className="reservation-label">상품가격(1박)</div>
           <div className="original-price-amount">100,000원</div>
         </div>
         <div className="couponsale">
-          <div className="reservation-label">쿠폰 사용</div>
+          <div className="reservation-label">결제 시 포인터 사용</div>
+          <div className="couponsale-amount">-0P</div>
+        </div>
+        <div className="couponsale">
+          <div className="reservation-label">결제 시 쿠폰 사용</div>
           <div className="couponsale-amount">0원</div>
         </div>
         <div className="reservation-devide" />
@@ -86,21 +86,22 @@ function ReservationConfirmPage() {
           <div className="reservation-label">결제 금액</div>
           <div className="finalprice-price">99,000원</div>
         </div>
-        <div className="reservation-label">결제 수단</div>
         <div className="payment-method">
-          <div className="payment-method-item">신용카드</div>
-          <div className="payment-method-item">카카오페이</div>
-          <div className="payment-method-item">토스</div>
+          <div className="payment-method-label">결제 수단</div>
+          <div className="payment-method-price">신용카드</div>
+        </div>
+        <div className="view-policy">
+          {place.name} 정책보기
+          <img src={RightArrowBlack} alt="detail" />
+        </div>
+        <div className="cancel-reservation">
+          <div className="cancel-reservation-label">2022년 05월 23일 18:00까지 무료 취소 가능합니다.</div>
+          <button className="cancel-reservation-button" type="button">예약취소</button>
         </div>
       </div>
-      <Link
-        to={`/reservation-confirm/${room.placeId}/${room.roomId}/${date.start}/${date.end}`}
-        state={{ room, place }}
-      >
-        <BottomButton text="예약내역 공유하기" />
-      </Link>
+      <BottomButton text="예약내역 공유하기" />
     </>
   );
-};
+}
 
 export default ReservationConfirmPage;

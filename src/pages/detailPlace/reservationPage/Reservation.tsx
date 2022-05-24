@@ -15,7 +15,6 @@ function Reservation() {
   const { date, dateString } = useSelector((state: any) => state.date);
   const {room,place} = useSelector((state: any) => state.persist.reservation);
 
-
   const clientKey = 'test_ck_XLkKEypNArWzAYzmpbjVlmeaxYG5';
   const secretKey = 'test_sk_5mBZ1gQ4YVXzygzAM0a8l2KPoqNb';
 
@@ -35,8 +34,8 @@ function Reservation() {
           orderId: 'AVw8mD2KHztN_646IGAZF',
           orderName: '토스 티셔츠 외 2건',
           customerName: nickname,
-          successUrl: `http://localhost:3000/reservation-confirm/${room.placeId}/${room.roomId}/${date.start}/${date.end}`,
-          failUrl: `http://localhost:3000/reservation/${room.placeId}/${room.roomId}/${date.start}/${date.end}`,
+          successUrl: `http://localhost:3000/reservation-confirm/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
+          failUrl: `http://localhost:3000/reservation/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
         })
     });
   };
@@ -49,8 +48,8 @@ function Reservation() {
           orderId: 'AVw8mD2KHztN_646IGAZF',
           orderName: '토스 티셔츠 외 2건',
           customerName: nickname,
-          successUrl: `http://localhost:3000/reservation-confirm/${room.placeId}/${room.roomId}/${date.start}/${date.end}`,
-          failUrl: `http://localhost:3000/reservation/${room.placeId}/${room.roomId}/${date.start}/${date.end}`,
+          successUrl: `http://localhost:3000/reservation-confirm/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
+          failUrl: `http://localhost:3000/reservation/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
         })
   })}
 
@@ -123,12 +122,7 @@ function Reservation() {
           </div>
         </div>
       </div>
-      <Link
-        to={`/reservation-confirm/${room.placeId}/${room.roomId}/${date.start}/${date.end}`}
-        state={{ room, place }}
-      >
         <BottomButton text="99,000원 결제하기" />
-      </Link>
     </>
   );
 };
