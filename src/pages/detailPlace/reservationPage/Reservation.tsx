@@ -1,29 +1,58 @@
 import React,{useCallback,useEffect} from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useLocation,Link } from 'react-router-dom';
+import { loadTossPayments } from '@tosspayments/payment-sdk'
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
 import RightArrow from "../../../icons/right-arrow.svg";
 import './Reservation.scss';
 import BottomButton from "../../../common/components/BottomButton";
 
+
+
 function Reservation() {
-  const navigate = useNavigate();
-  const {nickname,phone} = useSelector((state: any) => state.persist.user.user);
+  const navigation = useNavigate();
+  const { nickname, phone } = useSelector((state: any) => state.persist.user.user);
   const { date, dateString } = useSelector((state: any) => state.date);
-  const {room} = useLocation().state as any;
-  const {place} = useLocation().state as any;
-  console.log(place)
-  console.log(room) 
-  console.log(date)
-  console.log(dateString)
+  const {room,place} = useSelector((state: any) => state.persist.reservation);
+
+
+  const clientKey = 'test_ck_XLkKEypNArWzAYzmpbjVlmeaxYG5';
+  const secretKey = 'test_sk_5mBZ1gQ4YVXzygzAM0a8l2KPoqNb';
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   const moveToPreviousPage = useCallback(() => {
-    navigate(-1);
+    navigation(-1);
   }, []);
 
+  const creditCardPayment =  () => {
+    loadTossPayments(clientKey).then((tossPayments) => {
+      tossPayments
+        .requestPayment('카드', {
+          amount: Number(room.price.slice(0, -1).replace(',','')),
+          orderId: 'AVw8mD2KHztN_646IGAZF',
+          orderName: '토스 티셔츠 외 2건',
+          customerName: nickname,
+          successUrl: `http://localhost:3000/reservation-confirm/${room.placeId}/${room.roomId}/${date.start}/${date.end}`,
+          failUrl: `http://localhost:3000/reservation/${room.placeId}/${room.roomId}/${date.start}/${date.end}`,
+        })
+    });
+  };
+
+  const BankTransfer =  () => {
+    loadTossPayments(clientKey).then((tossPayments) => {
+      tossPayments
+        .requestPayment('계좌이체', { 
+          amount: Number(room.price.slice(0, -1).replace(',','')),
+          orderId: 'AVw8mD2KHztN_646IGAZF',
+          orderName: '토스 티셔츠 외 2건',
+          customerName: nickname,
+          successUrl: `http://localhost:3000/reservation-confirm/${room.placeId}/${room.roomId}/${date.start}/${date.end}`,
+          failUrl: `http://localhost:3000/reservation/${room.placeId}/${room.roomId}/${date.start}/${date.end}`,
+        })
+  })}
 
   return (
     <>
@@ -44,14 +73,16 @@ function Reservation() {
           <div className="checkin-checkout-date">
             <span className="check-title">체크인</span>
             <span className="check-date">
-              {date.start.substring(2, 4)}.{date.start.substring(4, 6)}.{date.start.substring(6, 8)} {dateString.substring(5,8)}
+              {date.start.substring(2, 4)}.{date.start.substring(4, 6)}.{date.start.substring(6, 8)}{' '}
+              {dateString.substring(5, 8)}
             </span>
             <span className="check-date">{room.checkin.substring(0, 5)}</span>
           </div>
-          <div className="checkin-checkout-date"> 
+          <div className="checkin-checkout-date">
             <span className="check-title">체크아웃</span>
             <span className="check-date">
-              {date.end.substring(2, 4)}.{date.end.substring(4, 6)}.{date.end.substring(6, 8)} {dateString.substring(16,19)}
+              {date.end.substring(2, 4)}.{date.end.substring(4, 6)}.{date.end.substring(6, 8)}{' '}
+              {dateString.substring(16, 19)}
             </span>
             <span className="check-date">{room.checkout.substring(0, 5)}</span>
           </div>
@@ -83,12 +114,19 @@ function Reservation() {
         </div>
         <div className="reservation-label">결제 수단</div>
         <div className="payment-method">
-          <div className="payment-method-item">신용카드</div>
+          <div className="payment-method-item" aria-hidden="true" onClick={creditCardPayment}>
+            신용카드
+          </div>
           <div className="payment-method-item">카카오페이</div>
-          <div className="payment-method-item">토스</div>
+          <div className="payment-method-item" aria-hidden="true" onClick={BankTransfer}>
+            토스
+          </div>
         </div>
       </div>
-      <Link to={`/reservation-confirm/${room.placeId}/${room.roomId}/${date.start}/${date.end}`} state={{ room, place }}>
+      <Link
+        to={`/reservation-confirm/${room.placeId}/${room.roomId}/${date.start}/${date.end}`}
+        state={{ room, place }}
+      >
         <BottomButton text="99,000원 결제하기" />
       </Link>
     </>
