@@ -86,9 +86,9 @@ function ReservationConfirmPage() {
           <div className="reservation-label">결제 금액</div>
           <div className="finalprice-price">99,000원</div>
         </div>
-        <div className="payment-method">
-          <div className="payment-method-label">결제 수단</div>
-          <div className="payment-method-price">신용카드</div>
+        <div className="payment-methods">
+          <div className="payment-methods-label">결제 수단</div>
+          <div className="payment-methods-price">신용카드</div>
         </div>
         <div className="view-policy">
           {place.name} 정책보기

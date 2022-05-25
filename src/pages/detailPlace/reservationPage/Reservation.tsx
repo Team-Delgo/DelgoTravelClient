@@ -1,6 +1,7 @@
-import React,{useCallback,useEffect} from "react";
+import React,{useCallback,useEffect,useState} from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useLocation,Link } from 'react-router-dom';
+import axios  from "axios";
 import { loadTossPayments } from '@tosspayments/payment-sdk'
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
 import RightArrow from "../../../icons/right-arrow.svg";
@@ -9,17 +10,39 @@ import BottomButton from "../../../common/components/BottomButton";
 
 
 
+
 function Reservation() {
   const navigation = useNavigate();
   const { nickname, phone } = useSelector((state: any) => state.persist.user.user);
   const { date, dateString } = useSelector((state: any) => state.date);
   const {room,place} = useSelector((state: any) => state.persist.reservation);
+  const [kakao2,setKakao] = useState({
+    // 응답에서 가져올 값들
+    next_redirect_pc_url: "",
+    tid: "",
+    // 요청에 넘겨줄 매개변수들
+    params: {
+      cid: "TC0ONETIME",
+      partner_order_id: "partner_order_id",
+      partner_user_id: "partner_user_id",
+      item_name: "초코파이",
+      quantity: 1,
+      total_amount: 2200,
+      vat_amount: 200,
+      tax_free_amount: 0,
+      approval_url: "http://localhost:3000/",
+      fail_url: "http://localhost:3000/",
+      cancel_url: "http://localhost:3000/",
+    },
+  })
 
   const clientKey = 'test_ck_XLkKEypNArWzAYzmpbjVlmeaxYG5';
   const secretKey = 'test_sk_5mBZ1gQ4YVXzygzAM0a8l2KPoqNb';
 
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    postKakaopay()
   }, []);
 
   const moveToPreviousPage = useCallback(() => {
@@ -32,7 +55,7 @@ function Reservation() {
         .requestPayment('카드', {
           amount: Number(room.price.slice(0, -1).replace(',','')),
           orderId: 'AVw8mD2KHztN_646IGAZF',
-          orderName: '토스 티셔츠 외 2건',
+          orderName: place.name+room.name,
           customerName: nickname,
           successUrl: `http://localhost:3000/reservation-confirm/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
           failUrl: `http://localhost:3000/reservation/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
@@ -46,12 +69,72 @@ function Reservation() {
         .requestPayment('계좌이체', { 
           amount: Number(room.price.slice(0, -1).replace(',','')),
           orderId: 'AVw8mD2KHztN_646IGAZF',
-          orderName: '토스 티셔츠 외 2건',
+          orderName: place.name+room.name,
           customerName: nickname,
           successUrl: `http://localhost:3000/reservation-confirm/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
           failUrl: `http://localhost:3000/reservation/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
         })
   })}
+
+  const config = {
+    next_redirect_pc_url: "",
+    tid: "",
+    params: {
+      cid: "TC0ONETIME",
+      partner_order_id: "partner_order_id",
+      partner_user_id: "partner_user_id",
+      item_name: "동대문엽기떡볶이",
+      quantity: 1,
+      total_amount: 22000,
+      vat_amount: 0,
+      tax_free_amount: 0,
+      approval_url: "http://localhost:3000",
+      fail_url: "http://localhost:3000",
+      cancel_url: "http://localhost:3000",
+    },
+  };
+
+ const APP_ADMIN_KEY = '280b4b1856b2e89cb30fa6706dd06751';
+
+  const postKakaopay = async () => {
+    const data = await axios.post('http://kapi.kakao.com/v1/payment/ready', config, {
+      headers: {
+        Authorization: `KakaoAK ${APP_ADMIN_KEY}`,
+        "Content-type": "application/x-www-form-urlencoded;charset=utf-8"
+      }
+    });
+  }
+   // axios({
+   //   // 프록시에 카카오 도메인을 설정했으므로 결제 준비 url만 주자
+   //   url: "http://kapi.kakao.com/v1/payment/ready",
+   //   // 결제 준비 API는 POST 메소드라고 한다.
+   //   method: 'POST',
+   //   withCredentials: true, // 쿠키 cors 통신 설정
+   //   headers: {
+   // 'Host': 'kapi.kakao.com',
+   //   Authorization: `KakaoAK ${APP_ADMIN_KEY}`,
+   //   "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+   // },
+   //   // 설정한 매개변수들
+   //   params:{
+   //     cid: 'TC0ONETIME',
+   //     partner_order_id: 'partner_order_id',
+   //     partner_user_id: 'partner_user_id',
+   //     item_name: '초코파이',
+   //     quantity: 1,
+   //     total_amount: 2200,
+   //     vat_amount: 200,
+   //     tax_free_amount: 0,
+   //     approval_url: `http://localhost:3000/reservation-confirm/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
+   //     fail_url: `http://localhost:3000/reservation-confirm/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
+   //     cancel_url: `http://localhost:3000/reservation/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
+   //   },
+   // }).then((response) => {
+   //   console.log(response);
+   // });
+ 
+  
+
 
   return (
     <>
