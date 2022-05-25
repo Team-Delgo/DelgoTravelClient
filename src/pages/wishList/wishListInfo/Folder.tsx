@@ -36,7 +36,7 @@ function Folder() {
       ))}
     </div>
   );
-}
+} 
 
 export default Folder;
 
