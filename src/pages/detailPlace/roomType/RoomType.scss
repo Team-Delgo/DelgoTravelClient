@@ -9,25 +9,33 @@
         height: 25vh;
     }
     &-info{
+        position: relative;
         width: 90vw;
-        height: 17vw;
-        margin-top: -3px;
-        padding-top: 5%;
+        height: 75px;
         background-color: #FFFBF6;
         box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.15);
         &-first-line{
-            right:0px;
-            color: #B0A69D;
-            font-size: 3vw;
-            padding-left: 60%;
-        }
-        &-second-line{
             display: flex;
             justify-content: space-between;
-            padding: 0 6% 0 5%;
+            padding: 0 5%;
+            &-name{
+                font-size: 18px;
+                font-weight: 700;
+                color: #4D483D;
+            }
+            &-max{
+                font-size: 12px;
+                color: #B0A69D;
+                padding-top: 7px;
+            }
+        }
+        &-second-line{
+            position: absolute;
+            right :5%;
+            bottom: 12px;
             color: #3E382F;
             font-weight: bold;
-            font-size: 4.5vw;
+            font-size: 18px;
         }
     }
     &-heart{

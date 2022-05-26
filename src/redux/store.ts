@@ -6,9 +6,11 @@ import userSlice from './reducers/userSlice';
 import tokenSlice from './reducers/tokenSlice';
 import dateSlice from './reducers/dateSlice';
 import errorSlice from './reducers/errorSlice';
+import reservationSlice from './reducers/reservationSlice';
 
 const reducers = combineReducers({
   user: userSlice,
+  reservation:reservationSlice
 });
 
 const persistConfig = {

@@ -9,7 +9,7 @@ import Map from '../../common/components/Map'
 import Heart from '../../common/components/Heart'
 import { getDetailPlace } from '../../common/api/getPlaces'
 import { wishInsert, wishDelete } from '../../common/api/wish'
-import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg'
+import { ReactComponent as LeftArrow } from '../../icons/left-arrow-white.svg'
 import './DetailPlace.scss';
 import Calender from '../calender/Calender';
 
@@ -44,7 +44,7 @@ function DetailPlace() {
       registrationDate: '22.03.01',
       roomUsed: '103호 (오션뷰) 객실 이용',
       reviewContent:
-        '  꼬강이랑 다녀왔는데 매우만족했습니다. 오션뷰에 마당잔디도 관리가 잘 되어있었어요. 사장님이 꼬강이를 너무 예뻐해주셔서 저도 정말 오기 잘했다고 생각했습니다. 재방문 하고싶습니다',
+        '꼬강이랑 다녀왔는데 매우만족했습니다. 오션뷰에 마당잔디도 관리가 잘 되어있었어요. 사장님이 꼬강이를 너무 예뻐해주셔서 저도 정말 오기 잘했다고 생각했습니다. 재방문 하고싶습니다',
     },
     {
       id: 2,
@@ -58,7 +58,7 @@ function DetailPlace() {
       registrationDate: '22.02.01',
       roomUsed: '301호 (오션뷰) 객실 이용',
       reviewContent:
-        '  꼬꼬랑 다녀왔는데 매우만족했습니다. 오션뷰에 마당잔디도 관리가 잘 되어있었어요. 사장님이 꼬꼬를 너무 예뻐해주셔서 저도 정말 오기 잘했다고 생각했습니다. 재방문 하고싶습니다',
+        '꼬꼬랑 다녀왔는데 매우만족했습니다. 오션뷰에 마당잔디도 관리가 잘 되어있었어요.',
     },
     {
       id: 3,
@@ -104,6 +104,7 @@ function DetailPlace() {
     getDetailPlace({ userId, placeId: Number(placeId) }, (response: AxiosResponse) => {
       setPlace(response.data.data.place)
       setRoomTypes(response.data.data.roomList)
+      console.log(response.data.data.place)
       console.log(response.data.data.roomList)
     });
   }, []);
@@ -181,25 +182,38 @@ function DetailPlace() {
         </div>
         <div className="detail-places-room-types">
           {roomTypes.map((room) => (
+            // <Link
+            //   style={{ textDecoration: 'none' }}
+            //   to={`/detail-place/${placeId}/${room.roomId}`}
+            //   state={{ room,place }}
+            //   key={placeId}
+            // >
             <RoomType
               key={room.id}
               room={room}
               navigate={() => {
-                navigate(`/detail-place/${placeId}/${room.roomId}`, { state: room });
+                // navigate(`/detail-place/${placeId}/${room.roomId}`, { state: room, place });
+                navigate(`/detail-place/${placeId}/${room.roomId}`, {
+                  state: {
+                    room,
+                    place
+                  },
+                });
               }}
             />
+            // </Link>
           ))}
         </div>
         <div className="detail-place-review">
           <header className="detail-place-review-header">
-            <span className="detail-place-review-header-number">리뷰 {reviews.length}개</span>
+            <div className="detail-place-review-header-number">리뷰 {reviews.length}개</div>
             <Link
               style={{ textDecoration: 'none' }}
               to={`/detail-place/${placeId}/reviews`}
               state={{ reviews }}
               key={placeId}
             >
-              <span className="detail-place-review-header-more">더보기</span>
+              <div className="detail-place-review-header-more">더보기</div>
             </Link>
           </header>
           <body>
