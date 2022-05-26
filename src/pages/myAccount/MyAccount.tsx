@@ -61,7 +61,12 @@ function MyAccount() {
       />}
       <div className="account-profile">
         <img className="account-profile-image" src={pet?.image} alt="dog" />
-        <div className="account-profile-name">{pet?.name}</div>
+        <div className="account-profile-name-wrapper">
+          <div className="account-profile-name">
+            {pet?.name}
+            <img src={RightArrow} alt="detail" />
+          </div>
+        </div>
         <div className="account-profile-info">
           <div className="account-proifle-info-coupon">
             <p className="account-profile-info-column">쿠폰</p>
@@ -91,36 +96,21 @@ function MyAccount() {
             </button>
           </div>
         </div>
-        <div className="account-purchase-payment">
-          <h1 className="account-title">결제</h1>
-          <div className="account-item">
-            <h2 className="account-item-name">결제내역</h2>
-            <img src={RightArrow} alt="detail" />
-          </div>
-          <div className="account-item">
-            <h2 className="account-item-name">결제방법</h2>
-            <img src={RightArrow} alt="detail" />
-          </div>
-          <div className="account-item">
-            <h2 className="account-item-name">결제방법</h2>
-            <img src={RightArrow} alt="detail" />
-          </div>
-        </div>
       </div>
       <div className="account-settings">
-        <h1 className="account-title">설정</h1>
         <div className="account-item">
-          <h2 className="account-item-name">알림</h2>
+          <h2 className="account-item-name">설정</h2>
           <img src={RightArrow} alt="detail" />
         </div>
         <div className="account-item">
-          <h2 className="account-item-name">업데이트</h2>
+          <h2 className="account-item-name">공지사항</h2>
           <img src={RightArrow} alt="detail" />
         </div>
-        <div className="account-item">
-          <h2 className="account-item-name">이용사항안내</h2>
+        <div className="account-item last">
+          <h2 className="account-item-name">문의</h2>
           <img src={RightArrow} alt="detail" />
         </div>
+        <p className="account-item-p">카카오 플러스친구로 이동</p>
       </div>
       <div className="account-sign">
         <p className="account-out" aria-hidden="true" onClick={deleteUserModalOpen}>회원탈퇴</p>

@@ -109,7 +109,7 @@ function DetailPlace() {
   }, []);
 
   const wishListInsert = useCallback(() => {
-    wishInsert({ userId, placeId: Number(placeId),accessToken}, (response: AxiosResponse) => {
+    wishInsert({ userId, placeId: Number(placeId), accessToken }, (response: AxiosResponse) => {
       if (response.data.code === 200) {
         const updatePlace = { ...place, wishId: response.data.data.wishId };
         setPlace(updatePlace)
@@ -118,7 +118,7 @@ function DetailPlace() {
   }, [place]);
 
   const wishListDelete = useCallback(() => {
-    wishDelete({ wishId: place.wishId,accessToken }, (response: AxiosResponse) => {
+    wishDelete({ wishId: place.wishId, accessToken }, (response: AxiosResponse) => {
       if (response.data.code === 200) {
         const updatePlace = { ...place, wishId: 0 };
         setPlace(updatePlace)
@@ -132,16 +132,16 @@ function DetailPlace() {
 
   const calenderOpenClose = useCallback(() => {
     setIsCalenderOpen(!isCalenderOpen);
-  },[isCalenderOpen])
+  }, [isCalenderOpen])
 
   const moveToMap = useCallback(() => {
     window.scroll({ top: document.body.scrollHeight, behavior: 'smooth' });
-  },[])
+  }, [])
 
 
   return (
     <>
-      {isCalenderOpen && <Calender closeCalender={calenderOpenClose} />}
+      {isCalenderOpen && <Calender closeCalender={calenderOpenClose} isRoom={false} />}
       <div className={classNames('detail-place', { close: isCalenderOpen })}>
         <img className="detail-place-main-image" src={place.mainPhotoUrl} alt="place-img" />
         <LeftArrow className="detail-place-previous-page" onClick={moveToPreviousPage} />

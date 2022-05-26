@@ -89,7 +89,7 @@ function WhereToGo() {
 
   return (
     <>
-      {isCalenderOpen && <Calender closeCalender={calenderClose} />}
+      {isCalenderOpen && <Calender closeCalender={calenderClose} isRoom={false} />}
       <div className={classNames("where-to-go-background", { close: isCalenderOpen })}>
         <input className="search-place" placeholder="숙소검색" value={searchTerm} onChange={handleSerchTerm} />
         <div className="search-region-date">
@@ -107,7 +107,7 @@ function WhereToGo() {
           {places.map((place) => {
             if (place.address.includes(areaTerm)) {
               if (place.name.includes(searchTerm)) {
-                return <Place key={place.placeId} place={place}  places={places} setPlaces={setPlaces} />;
+                return <Place key={place.placeId} place={place} places={places} setPlaces={setPlaces} />;
               }
             }
           })}

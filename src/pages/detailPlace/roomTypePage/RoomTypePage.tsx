@@ -27,7 +27,7 @@ function RoomTypePage() {
     `${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`,
     `${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`
   ]);
-  
+
 
 
   useEffect(() => {
@@ -40,13 +40,13 @@ function RoomTypePage() {
 
   const calenderOpenClose = useCallback(() => {
     setIsCalenderOpen(!isCalenderOpen);
-  },[isCalenderOpen])
+  }, [isCalenderOpen])
 
   return (
     <>
-      {isCalenderOpen && <Calender closeCalender={calenderOpenClose} />}
+      {isCalenderOpen && <Calender closeCalender={calenderOpenClose} isRoom roomId={room.roomId} />}
       <div className={classNames('detail-place-room-type', { close: isCalenderOpen })}>
-        <ImageSlider images={roomImg}/>
+        <ImageSlider images={roomImg} />
         <LeftArrow className="detail-place-room-type-previous-page" onClick={moveToPreviousPage} />
         <div className="detail-place-room-type-info">
           <header className="detail-place-room-type-info-name">{room.name}</header>

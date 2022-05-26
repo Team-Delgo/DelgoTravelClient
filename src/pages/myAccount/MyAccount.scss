@@ -11,6 +11,18 @@
     display: flex;
     justify-content: space-between;
     margin: 22px;
+    &.last {
+      margin-bottom: 0;
+      h2 {
+        margin-bottom: 0;
+      }
+    }
+    &-p {
+      margin: 0 0 0 22px;
+      color: #ad9e87;
+      font-size: 12px;
+      font-weight: 500;
+    }
     &-name {
       color: #6e614d;
       font-weight: 500;
@@ -29,11 +41,23 @@
       border-radius: 100%;
     }
     &-name {
-      margin-top: 34px;
+      &-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 34px;
+      }
+      position: relative;
       font-size: 24px;
       line-height: 30px;
       font-weight: 700;
       color: #3e382f;
+      img {
+        position: absolute;
+        top: 50%;
+        left: 60px;
+        transform: translateY(-50%);
+      }
     }
     &-info {
       display: flex;

@@ -1,20 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import classNames from "classnames";
+import { AxiosResponse } from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
 import "./Calender.scss";
 import { ReactComponent as Exit } from '../../icons/exit.svg';
 import { dateActions } from "../../redux/reducers/dateSlice";
+import { getReservedDate } from "../../common/api/calender";
+import { errorActions } from "../../redux/reducers/errorSlice";
 
-function Calender(props: {
-  closeCalender: () => void
-}) {
+interface CalenderProps {
+  closeCalender: () => void,
+  isRoom: boolean,
+  roomId?: string,
+}
+
+Calender.defaultProps = {
+  roomId: 0
+};
+
+function Calender(props: CalenderProps) {
   const dispatch = useDispatch();
   const { date, dateString } = useSelector((state: any) => state.date);
   const { start, end } = date;
   const [selectedDate, setSelectedDate] = useState({ start, end });
   const dateExist = dateString.length ? 2 : 0;
   const [sequence, setSequence] = useState(dateExist); // 0개 선택, 1개 선택, 2개 선택
+  const [reservedDate, setReservedDate] = useState<string[]>();
+  const { closeCalender, isRoom, roomId } = props;
+
+  const errorHandler = () => {
+    dispatch(errorActions.setError());
+  };
+
+  useEffect(() => {
+    if (isRoom) {
+      getReservedDate({ roomId }, (response: AxiosResponse) => {
+        console.log(response);
+      }, errorHandler);
+    }
+  }, []);
+
 
   const getNextYear = (currentMonth: number, currentYear: number, add: number) => {
     if (currentMonth + add > 12) {
@@ -190,7 +215,6 @@ function Calender(props: {
     </div>
     : selectedDateContext;
 
-  const { closeCalender } = props;
 
   const resetHandler = () => {
     setSelectedDate({ start: '', end: '' });
