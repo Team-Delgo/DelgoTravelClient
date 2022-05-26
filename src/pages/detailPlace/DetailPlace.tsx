@@ -25,7 +25,7 @@ function DetailPlace() {
   });
   const [roomTypes, setRoomTypes] = useState<Array<any>>([])
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
-  const { date, dateString } = useSelector((state: any) => state.date);
+  const { date, dateString } = useSelector((state: any) => state.persist.date);
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const accessToken = useSelector((state: any) => state.token.token);
   const { placeId } = useParams();

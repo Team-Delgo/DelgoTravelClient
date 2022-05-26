@@ -11,7 +11,7 @@ import './RoomTypePage.scss';
 
 function RoomTypePage() {
   const navigate = useNavigate();
-  const { date, dateString } = useSelector((state: any) => state.date);
+  const { date, dateString } = useSelector((state: any) => state.persist.date);
   const dispatch = useDispatch();
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
 

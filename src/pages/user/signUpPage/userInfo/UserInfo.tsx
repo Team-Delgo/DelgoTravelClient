@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState, useEffect } from 'react';
 import classNames from 'classnames';
+import { useDispatch } from 'react-redux';
 import { AxiosResponse } from 'axios';
 import { useNavigate, useLocation, Location } from 'react-router-dom';
 import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
@@ -28,6 +29,7 @@ enum Id {
 
 function UserInfo() {
   const navigation = useNavigate();
+  const dispatch = useDispatch();
   const state = useLocation().state as LocationState;
   const { phone } = state;
   const [nextPage, setNextPage] = useState(false);
@@ -168,7 +170,7 @@ function UserInfo() {
         setEmailDuplicated(true);
         setEmailDupCheckFail(true);
       }
-    });
+    }, dispatch);
   };
 
   return (

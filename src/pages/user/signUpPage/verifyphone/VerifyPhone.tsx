@@ -42,7 +42,6 @@ function VerifyPhone() {
   };
 
   const dispatch = useDispatch();
-
   const errorHandler = () => {
     dispatch(errorActions.setError());
   };

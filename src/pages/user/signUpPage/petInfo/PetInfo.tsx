@@ -155,13 +155,13 @@ function PetInfo() {
         formData.append('userId', userId.toString());
         petImageUpload(formData, (response: AxiosResponse) => {
           console.log(response);
-        });
+        }, dispatch);
         navigation('/user/signin/login');
       } else {
         console.log(codeMsg);
       }
 
-    })
+    }, dispatch)
 
     // 비동기 처리
     // signup({ email, password, nickname, phone, pet: {petName:enteredInput.name,petBirth:enteredInput.birth,petImage:} }, () => {});

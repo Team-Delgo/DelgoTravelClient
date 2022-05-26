@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { AxiosResponse } from "axios";
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import "./FindPassword.scss";
@@ -13,6 +14,7 @@ function FindPassword() {
   const [feedback, setFeedback] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   const navigation = useNavigate();
+  const dispatch = useDispatch();
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -32,7 +34,7 @@ function FindPassword() {
         setFeedback('회원정보를 찾을 수 없습니다.');
         inputRef.current?.focus();
       }
-    });
+    }, dispatch);
   };
 
   const nextButtonHandler = () => {

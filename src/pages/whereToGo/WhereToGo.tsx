@@ -40,7 +40,7 @@ function WhereToGo() {
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
   const [selectedDateString, setSelectedDateString] = useState('');
   const [selectedDate, setSelectedDate] = useState({ start: '', end: '' });
-  const { date, dateString } = useSelector((state: any) => state.date);
+  const { date, dateString } = useSelector((state: any) => state.persist.date);
   const sequence = dateString.length ? 2 : 0;
   const dispatch = useDispatch();
   const navigation = useNavigate();
@@ -79,7 +79,7 @@ function WhereToGo() {
       } else {
         navigation('/user/signin');
       }
-    });
+    }, dispatch);
   }, [accessToken]);
 
   const handleSerchTerm = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {

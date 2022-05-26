@@ -10,7 +10,8 @@ import reservationSlice from './reducers/reservationSlice';
 
 const reducers = combineReducers({
   user: userSlice,
-  reservation:reservationSlice
+  date: dateSlice,
+  reservation: reservationSlice,
 });
 
 const persistConfig = {
@@ -21,7 +22,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = configureStore({
-  reducer: { persist: persistedReducer, token: tokenSlice, date: dateSlice, error: errorSlice },
+  reducer: { persist: persistedReducer, token: tokenSlice, error: errorSlice },
   devTools: process.env.NODE_ENV !== 'production',
 });
 

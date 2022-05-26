@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
+import { useDispatch } from 'react-redux';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import { SIGN_IN_PATH } from '../../../constants/path.const';
 import { changePassword } from '../../../common/api/login';
@@ -17,6 +18,7 @@ function ResetPassword() {
   const [confirmValid, setConfirmValid] = useState(false);
   const [feedback, setFeedback] = useState('');
   const navigation = useNavigate();
+  const dispatch = useDispatch();
   const email = useLocation().state as string;
   const isValid = enteredInput.password.length >= 8 && confirmValid;
 
@@ -42,7 +44,7 @@ function ResetPassword() {
         if (code === 200) {
           navigation(SIGN_IN_PATH.MAIN);
         }
-      });
+      }, dispatch);
     }
   };
 
