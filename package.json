@@ -88,6 +88,5 @@
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "2.5.1",
     "webpack": "^5.70.0"
-  },
-  "proxy": "https://kapi.kakao.com"
+  }
 }

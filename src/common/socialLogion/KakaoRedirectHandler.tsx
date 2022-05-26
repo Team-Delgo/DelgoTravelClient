@@ -32,7 +32,7 @@ function KakaoRedirectHandler() {
     const payload = qs.stringify({
       grant_type: "authorization_code",
       client_id: KAKAO.REST_API_KEY,
-      redirect_uri: KAKAO.REDIRECT_URI,
+      redirect_uri: KAKAO.CALL_BACK_URL,
       code ,
       client_secret: CLIENT_SECRET,
     });

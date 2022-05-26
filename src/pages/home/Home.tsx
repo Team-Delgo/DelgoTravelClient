@@ -56,6 +56,7 @@ function Home() {
     getAllPlaces(userId, (response: AxiosResponse) => {
       setPlaces(response.data.data);
     });
+    console.log(process.env.REACT_APP_BASE_URL)
   }, []);
 
   useEffect(() => {

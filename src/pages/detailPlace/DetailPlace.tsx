@@ -9,7 +9,7 @@ import Map from '../../common/components/Map'
 import Heart from '../../common/components/Heart'
 import { getDetailPlace } from '../../common/api/getPlaces'
 import { wishInsert, wishDelete } from '../../common/api/wish'
-import { ReactComponent as LeftArrow } from '../../icons/left-arrow-white.svg'
+import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg'
 import './DetailPlace.scss';
 import Calender from '../calender/Calender';
 
@@ -127,10 +127,6 @@ function DetailPlace() {
     });
   }, [place]);
 
-  const moveToPreviousPage = useCallback(() => {
-    navigate(-1)
-  }, []);
-
   const calenderOpenClose = useCallback(() => {
     setIsCalenderOpen(!isCalenderOpen);
   },[isCalenderOpen])
@@ -145,7 +141,9 @@ function DetailPlace() {
       {isCalenderOpen && <Calender closeCalender={calenderOpenClose} />}
       <div className={classNames('detail-place', { close: isCalenderOpen })}>
         <img className="detail-place-main-image" src={place.mainPhotoUrl} alt="place-img" />
-        <LeftArrow className="detail-place-previous-page" onClick={moveToPreviousPage} />
+        <Link to="/where-to-go" key={place.placeId}>
+          <LeftArrow className="detail-place-previous-page" />
+        </Link>
         <div className="detail-place-heart">
           {place.wishId === 0 ? (
             <Heart wishList={place.wishId} handleWishList={wishListInsert} />
@@ -182,26 +180,18 @@ function DetailPlace() {
         </div>
         <div className="detail-places-room-types">
           {roomTypes.map((room) => (
-            // <Link
-            //   style={{ textDecoration: 'none' }}
-            //   to={`/detail-place/${placeId}/${room.roomId}`}
-            //   state={{ room,place }}
-            //   key={placeId}
-            // >
             <RoomType
               key={room.id}
               room={room}
               navigate={() => {
-                // navigate(`/detail-place/${placeId}/${room.roomId}`, { state: room, place });
                 navigate(`/detail-place/${placeId}/${room.roomId}`, {
                   state: {
                     room,
-                    place
+                    place,
                   },
                 });
               }}
             />
-            // </Link>
           ))}
         </div>
         <div className="detail-place-review">
