@@ -24,18 +24,19 @@ function Folder() {
   useEffect(() => {
     getWishedPlaces({ accessToken, userId }, (response: AxiosResponse) => {
       setWishedPlace(response.data.data);
+      console.log(response.data.data)
     });
   }, [accessToken]);
 
   return (
     <div className="wish-list-container">
       <div className="wish-list-container-header-text" aria-hidden="true" >저장 된 {wishedPlace?.length}개의 숙소</div>
-      {wishedPlace?.map((place) => (
+      {wishedPlace?.sort((a, b) => b.wishId - a.wishId).map((place) => (
         <WishedPlace place={place} key={place.placeId} wishedPlace={wishedPlace} setWishedPlace={setWishedPlace} />
       ))}
     </div>
   );
-}
+} 
 
 export default Folder;
 

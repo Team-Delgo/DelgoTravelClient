@@ -1,7 +1,8 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import classNames from 'classnames';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { reservationActions } from '../../../redux/reducers/reservationSlice';
 import ImageSlider from '../../../common/components/ImageSlider';
 import BottomButton from '../../../common/components/BottomButton';
 import { ReactComponent as LeftArrow } from '../../../icons/left-arrow2.svg';
@@ -11,7 +12,9 @@ import './RoomTypePage.scss';
 function RoomTypePage() {
   const navigate = useNavigate();
   const { date, dateString } = useSelector((state: any) => state.date);
+  const dispatch = useDispatch();
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
+
   const [service, setService] = useState<Array<any>>([
     `${process.env.PUBLIC_URL}/assets/images/service1.png`,
     `${process.env.PUBLIC_URL}/assets/images/service2.png`,
@@ -20,14 +23,15 @@ function RoomTypePage() {
     `${process.env.PUBLIC_URL}/assets/images/service5.png`,
     `${process.env.PUBLIC_URL}/assets/images/service6.png`,
   ]);
-  const room = useLocation().state as any;
+  const { room } = useLocation().state as any;
+  const { place } = useLocation().state as any;
+  console.log(room)
 
   const [roomImg, setRoomImg] = useState<Array<any>>([
     `${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`,
     `${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`,
-    `${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`
+    `${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`,
   ]);
-
 
 
   useEffect(() => {
@@ -40,7 +44,27 @@ function RoomTypePage() {
 
   const calenderOpenClose = useCallback(() => {
     setIsCalenderOpen(!isCalenderOpen);
-  }, [isCalenderOpen])
+
+  }, [isCalenderOpen]);
+
+  const handleReservation = () => {
+    dispatch(
+      reservationActions.reservation({
+        place: { placeId: place.placeId, name: place.name, address: place.address },
+        room: {
+          roomId: room.roomId,
+          name: room.name,
+          checkin: room.checkin,
+          checkout: room.checkout,
+          price: room.price,
+          images: room.detailPhotos,
+        },
+      }),
+    );
+    setTimeout(() => {
+      navigate(`/reservation/${room.placeId}/${room.roomId}/${date.start}/${date.end}`);
+    }, 100);
+  };
 
   return (
     <>
@@ -52,7 +76,7 @@ function RoomTypePage() {
           <header className="detail-place-room-type-info-name">{room.name}</header>
           <div className="detail-place-room-type-info-accommodation">
             <div className="detail-place-room-type-info-accommodation-check-in-check-out">
-              입실 {room.checkin} / 퇴실 {room.checkout}
+              입실 {room.checkin.substring(0, 5)} / 퇴실 {room.checkout.substring(0, 5)}
             </div>
             <div className="detail-place-room-type-info-accommodation-price">{room.price}</div>
           </div>
@@ -75,7 +99,9 @@ function RoomTypePage() {
         <div className="detail-place-room-type-base-information">기본정보</div>
         <div className="detail-place-room-type-additional-personnel-information">인원 추가 정보</div>
       </div>
-      <BottomButton text="예약하기" />
+      <div aria-hidden="true" onClick={handleReservation}>
+        <BottomButton text="예약하기" />
+      </div>
     </>
   );
 }
