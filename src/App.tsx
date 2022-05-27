@@ -50,7 +50,7 @@ function App() {
     dispatch(errorActions.setFine());
   };
   const queryClient = new QueryClient();
-  return (
+  return ( 
     <QueryClientProvider client={queryClient}>
       {hasError && <AlertConfirmOne text='네트워크를 확인해주세요' buttonHandler={alertButtonHandler} />}
       <Routes>
