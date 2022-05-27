@@ -8,14 +8,16 @@ import Region from './Region';
 const regionSelectionModalStyle = {
   content: {
     position: 'fixed',
-    height: '357px',
-    top: '60%',
+    height: '47vh',
+    top: '49vh',
     left: '0.25%',
     right: '0.25%',
     background: '#FFFFFF',
     boxShadow: '0px -4px 10px rgba(0, 0, 0, 0.2)',
     borderRadius: '20px 20px 0px 0px',
+    touchAction:"none",
   },
+  overlay: {zIndex: 2},
 };
 
 function RegionSelectionModal({ regionSelectionModal, closeRegionSelectionModal,areaTerm, setAreaTerm }) {

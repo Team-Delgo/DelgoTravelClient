@@ -130,26 +130,24 @@ function WhereToGo() {
           </div>
         </div>
         <div className="places-container">
-          {isLoading ? (
-            allPlacesSkeletons
-          ) : (
-            data?.data.map((place: PlaceType) => {
-              if (place.address.includes(areaTerm)) {
-                if (place.name.includes(searchTerm)) {
-                  return <Place key={place.placeId} place={place} places={places} setPlaces={setPlaces} />;
+          {isLoading
+            ? allPlacesSkeletons
+            : data?.data.map((place: PlaceType) => {
+                if (place.address.includes(areaTerm)) {
+                  if (place.name.includes(searchTerm)) {
+                    return <Place key={place.placeId} place={place} places={places} setPlaces={setPlaces} />;
+                  }
                 }
-              }
-            })
-          )}
+              })}
         </div>
-        <Footer />
         <RegionSelectionModal
-          regionSelectionModal={regionSelectionModal}
-          closeRegionSelectionModal={closeRegionSelectionModal}
-          setAreaTerm={setAreaTerm}
-          areaTerm={areaTerm}
-        />
+            regionSelectionModal={regionSelectionModal}
+            closeRegionSelectionModal={closeRegionSelectionModal}
+            setAreaTerm={setAreaTerm}
+            areaTerm={areaTerm}
+          />
       </div>
+      <Footer />
     </>
   );
 }
