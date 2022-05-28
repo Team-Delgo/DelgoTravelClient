@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { stringify } from 'querystring';
 import { url } from '../../constants/url.cosnt';
-import { useErrorHandler } from './useErrorHandler';
+import { useErrorHandlers } from './useErrorHandlers';
 
 interface SignUpData {
   email: string;
@@ -11,7 +11,7 @@ interface SignUpData {
   pet: { name: string; birthday: string | undefined; size: string; weight: string };
 }
 
-async function emailCheck(email: string, success: (data: AxiosResponse) => void) {
+async function emailCheck(email: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
     .get(`${url}/emailCheck`, {
       params: { email },
@@ -20,11 +20,11 @@ async function emailCheck(email: string, success: (data: AxiosResponse) => void)
       success(data);
     })
     .catch((error) => {
-      useErrorHandler(error);
+      useErrorHandlers(dispatch, error);
     });
 }
 
-async function signup(info: SignUpData, success: (data: AxiosResponse) => void) {
+async function signup(info: SignUpData, success: (data: AxiosResponse) => void, dispatch: any) {
   const { nickname, email, password, phone, pet } = info;
   await axios
     .post(`${url}/signup`, {
@@ -40,11 +40,11 @@ async function signup(info: SignUpData, success: (data: AxiosResponse) => void) 
       success(data);
     })
     .catch((error) => {
-      useErrorHandler(error);
+      useErrorHandlers(dispatch, error);
     });
 }
 
-async function deleteUser(email: string, success: (data: AxiosResponse) => void) {
+async function deleteUser(email: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
     .post(`${url}/deleteUser`, {
       user: {
@@ -55,11 +55,11 @@ async function deleteUser(email: string, success: (data: AxiosResponse) => void)
       success(data);
     })
     .catch((error) => {
-      useErrorHandler(error);
+      useErrorHandlers(dispatch, error);
     });
 }
 
-async function phoneSendMessage(phone: string, success: (data: AxiosResponse) => void, networkError: () => void) {
+async function phoneSendMessage(phone: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
     .get(`${url}/phoneNoCheck`, {
       params: {
@@ -70,16 +70,11 @@ async function phoneSendMessage(phone: string, success: (data: AxiosResponse) =>
       success(data);
     })
     .catch((error) => {
-      networkError();
-      useErrorHandler(error);
+      useErrorHandlers(dispatch, error);
     });
 }
 
-async function phoneSendMessageForFind(
-  phone: string,
-  success: (data: AxiosResponse) => void,
-  networkError: () => void,
-) {
+async function phoneSendMessageForFind(phone: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
     .get(`${url}/phoneNoAuth`, {
       params: {
@@ -90,15 +85,14 @@ async function phoneSendMessageForFind(
       success(data);
     })
     .catch((error) => {
-      networkError();
-      useErrorHandler(error);
+      useErrorHandlers(dispatch, error);
     });
 }
 
 async function phoneCheckNumber(
   data: { number: string; smsId: number },
   success: (data: AxiosResponse) => void,
-  networkError: () => void,
+  dispatch: any,
 ) {
   const { number, smsId } = data;
   await axios
@@ -112,19 +106,18 @@ async function phoneCheckNumber(
       success(data);
     })
     .catch((error) => {
-      networkError();
-      useErrorHandler(error);
+      useErrorHandlers(dispatch, error);
     });
 }
 
-async function petImageUpload(formdata: FormData, success: (data: AxiosResponse) => void) {
+async function petImageUpload(formdata: FormData, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
     .post(`${url}/photo/upload/petProfile`, formdata)
     .then((data) => {
       success(data);
     })
     .catch((error) => {
-      useErrorHandler(error);
+      useErrorHandlers(dispatch, error);
     });
 }
 

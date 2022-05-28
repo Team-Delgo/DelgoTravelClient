@@ -52,7 +52,7 @@ function Login() {
             },
           }),
         );
-        
+
         const accessToken = response.headers.authorization_access;
         const refreshToken = response.headers.authorization_refresh;
         dispatch(
@@ -63,7 +63,7 @@ function Login() {
       } else if (code === 303) {
         setLoginFailed(true);
       }
-    });
+    }, dispatch);
   }
 
   const loginButtonHandler = () => {

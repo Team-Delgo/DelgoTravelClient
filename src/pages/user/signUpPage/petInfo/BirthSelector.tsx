@@ -39,7 +39,7 @@ function BirthSelector(props: { changeBirth: (year: number, month: number, day: 
   const yearContext = years.map((year, i) => {
     if (year === '.') return <div className="birth-item blank">.</div>;
     return (
-      <div key={year} className={classNames('birth-item', { selected: year === selectedYear })}>{`${year}년`}</div>
+      <div key={year} className={classNames('birth-item', { selected: year === selectedYear })}>{`${year} 년`}</div>
     );
   });
 
@@ -47,7 +47,7 @@ function BirthSelector(props: { changeBirth: (year: number, month: number, day: 
     if (month === '.') return <div className="birth-item blank">.</div>;
     return (
       <div key={`m${month}`} className={classNames('birth-item', { selected: month === selectedMonth })}>
-        {month >= 10 ? `${month}월` : `0${month}월`}
+        {month >= 10 ? `${month} 월` : `0${month} 월`}
       </div>
     );
   });
@@ -56,7 +56,7 @@ function BirthSelector(props: { changeBirth: (year: number, month: number, day: 
     if (day === '.') return <div className="birth-item blank">.</div>;
     return (
       <div key={`d${day}`} className={classNames('birth-item', { selected: day === selectedDay })}>
-        {day >= 10 ? `${day}일` : `0${day}일`}
+        {day >= 10 ? `${day} 일` : `0${day} 일`}
       </div>
     );
   });
@@ -84,11 +84,11 @@ function BirthSelector(props: { changeBirth: (year: number, month: number, day: 
       <div className="birth-years tab" ref={yearRef} onScroll={yearScrollHandler}>
         {yearContext}
       </div>
-      <div className='birth-divider'/>
+      <div className='birth-divider' />
       <div className="birth-months tab" ref={monthRef} onScroll={monthScrollHandler}>
         {monthContext}
       </div>
-      <div className='birth-divider'/>
+      <div className='birth-divider' />
       <div className="birth-days tab" ref={dayRef} onScroll={dayScrollHandler}>
         {dayContext}
       </div>

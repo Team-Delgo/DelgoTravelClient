@@ -1,10 +1,11 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
-import { useErrorHandler } from './useErrorHandler';
+import { useErrorHandlers } from './useErrorHandlers';
 import { url } from '../../constants/url.cosnt';
 
 async function wishInsert(
   data: { userId: number; placeId: number; accessToken: string },
   success: (data: AxiosResponse) => void,
+  dispatch: any,
 ) {
   try {
     const result = await axios.post(
@@ -23,11 +24,15 @@ async function wishInsert(
     );
     success(result);
   } catch (error: AxiosError | any) {
-    useErrorHandler(error);
+    useErrorHandlers(dispatch, error);
   }
 }
 
-async function wishDelete(data: { wishId: number; accessToken: string }, success: (data: AxiosResponse) => void) {
+async function wishDelete(
+  data: { wishId: number; accessToken: string },
+  success: (data: AxiosResponse) => void,
+  dispatch: any,
+) {
   try {
     const result = await axios.post(
       `${url}wish/delete`,
@@ -42,7 +47,7 @@ async function wishDelete(data: { wishId: number; accessToken: string }, success
     );
     success(result);
   } catch (error: AxiosError | any) {
-    useErrorHandler(error);
+    useErrorHandlers(dispatch, error);
   }
 }
 

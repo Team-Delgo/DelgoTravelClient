@@ -15,8 +15,16 @@
   color: $font;
 }
 .login {
+  &-signin {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  // width: 100vw;
+  // height: 100vh;
   &-title {
-    margin-top: 103px;
     font-family: 'Spoqa Han Sans Neo';
     font-style: normal;
     font-weight: 700;
@@ -62,7 +70,6 @@
   margin-right: 40px;
 }
 
-
-a{
+a {
   text-decoration: none;
 }

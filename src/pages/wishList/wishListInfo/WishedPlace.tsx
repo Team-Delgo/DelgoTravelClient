@@ -1,18 +1,18 @@
-import React,{useState,useCallback} from 'react'
+import React, { useState, useCallback } from 'react'
 import { Link } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
 import alertConfirm, { Button, alert } from "react-alert-confirm";
 import "react-alert-confirm/dist/index.css";
 import AlertConfirm from '../../../common/dialog/AlertConfirm';
 import Heart from '../../../common/components/Heart'
-import {wishDelete} from '../../../common/api/wish'
+import { wishDelete } from '../../../common/api/wish'
 import './WishedPlace.scss';
 
 type WishedPlaceTypeProps = {
-    place:PlaceType
-    wishedPlace:Array<PlaceType>
-    setWishedPlace:any
+  place: PlaceType
+  wishedPlace: Array<PlaceType>
+  setWishedPlace: any
 }
 
 interface PlaceType {
@@ -31,6 +31,7 @@ function WishedPlace({ place, wishedPlace, setWishedPlace }: WishedPlaceTypeProp
   const refreshToken = localStorage.getItem('refreshToken') || '';
   const accessToken = useSelector((state: any) => state.token.token);
   const [wishListAlertConfirmOpen, setWishListAlertConfirmOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const wishListDelete = useCallback(() => {
     wishDelete({ wishId: place.wishId, accessToken }, (response: AxiosResponse) => {
@@ -39,12 +40,12 @@ function WishedPlace({ place, wishedPlace, setWishedPlace }: WishedPlaceTypeProp
         setWishedPlace(updateWishedPlaces);
         setWishList(false);
       }
-    });
+    }, dispatch);
   }, [wishList, wishedPlace]);
 
   const wishListConfirmModalOpenClose = useCallback(() => {
     setWishListAlertConfirmOpen(!wishListAlertConfirmOpen);
-  },[wishListAlertConfirmOpen])
+  }, [wishListAlertConfirmOpen])
 
 
   return (

@@ -42,7 +42,6 @@ function VerifyPhone() {
   };
 
   const dispatch = useDispatch();
-
   const errorHandler = () => {
     dispatch(errorActions.setError());
   };
@@ -125,9 +124,9 @@ function VerifyPhone() {
         <Arrow />
       </div>
       <header className="login-header">휴대폰 인증</header>
-      <span className="login-description">원활한 서비스 제공을 위해 휴대폰 번호를 입력해주세요</span>
+      <span className="login-description phone">원활한 서비스 제공을 위해 휴대폰 번호를 입력해주세요</span>
       <div className="login-inputbox">
-        <input value={phoneNumber} onChange={inputChangeHandler} className="login-input" placeholder="휴대폰 번호" />
+        <input value={phoneNumber} onChange={inputChangeHandler} className="login-input phonenumber" placeholder="휴대폰 번호" />
         {isEntered && (
           <span
             aria-hidden="true"

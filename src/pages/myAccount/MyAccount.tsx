@@ -19,7 +19,6 @@ function MyAccount() {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [text, setText] = useState('');
   const pet = useSelector((state: any) => state.persist.user.pet);
-  console.log(pet);
   const navigation = useNavigate();
   const dispatch = useDispatch();
   const email = useSelector((state: any) => state.persist.user.user.email);
@@ -33,7 +32,7 @@ function MyAccount() {
   const deleteHandler = () => {
     deleteUser(email, (response: AxiosResponse) => {
       console.log(response);
-    });
+    }, dispatch);
     dispatch(userActions.signout());
     localStorage.removeItem('refreshToken');
     navigation('/user/signin');

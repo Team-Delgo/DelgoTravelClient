@@ -1,6 +1,6 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AxiosResponse } from 'axios';
 import { tokenActions } from '../../../redux/reducers/tokenSlice';
 import { tokenRefresh } from '../../../common/api/login';
@@ -55,24 +55,24 @@ function History() {
       period: "03.02-03.04",
       image: `${process.env.PUBLIC_URL}/assets/images/recommendedPlaceImage.png`,
       name: '멍멍이네 하우스',
-      address:"강원도 속초시 조앙동",
-      package:"슈페리어 더블룸 조식포함패키지"
+      address: "강원도 속초시 조앙동",
+      package: "슈페리어 더블룸 조식포함패키지"
     },
     {
       id: 2,
       period: "03.02-03.04",
       image: `${process.env.PUBLIC_URL}/assets/images/recommendedPlaceImage.png`,
       name: '멍멍이네 하우스',
-      address:"강원도 속초시 조앙동",
-      package:"슈페리어 더블룸 조식포함패키지"
+      address: "강원도 속초시 조앙동",
+      package: "슈페리어 더블룸 조식포함패키지"
     },
     {
       id: 3,
       period: "03.02-03.04",
       image: `${process.env.PUBLIC_URL}/assets/images/recommendedPlaceImage.png`,
       name: '멍멍이네 하우스',
-      address:"강원도 속초시 조앙동",
-      package:"슈페리어 더블룸 조식포함패키지"
+      address: "강원도 속초시 조앙동",
+      package: "슈페리어 더블룸 조식포함패키지"
     },
   ]);
 
@@ -90,7 +90,7 @@ function History() {
       else {
         navigation('/user/signin');
       }
-    });
+    }, dispatch);
   }, [accessToken]);
 
 

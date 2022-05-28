@@ -20,7 +20,7 @@ Calender.defaultProps = {
 
 function Calender(props: CalenderProps) {
   const dispatch = useDispatch();
-  const { date, dateString } = useSelector((state: any) => state.date);
+  const { date, dateString } = useSelector((state: any) => state.persist.date);
   const { start, end } = date;
   const [selectedDate, setSelectedDate] = useState({ start, end });
   const dateExist = dateString.length ? 2 : 0;
@@ -206,12 +206,12 @@ function Calender(props: CalenderProps) {
 
   let selectedDateContext = sequence === 1 ?
     <div className="selected-date">
-      {startMonth}.{startDate}({startDay})
+      {startMonth}.{`0${startDate}`.slice(-2)}({startDay})
     </div> : <div />;
 
   selectedDateContext = sequence === 2 ?
     <div className="selected-date">
-      {startMonth}.{startDate}({startDay}) ~ {endMonth}.{endDate}({endDay}) {days}박
+      {startMonth}.{`0${startDate}`.slice(-2)}({startDay}) ~ {endMonth}.{`0${endDate}`.slice(-2)}({endDay}) {days}박
     </div>
     : selectedDateContext;
 
@@ -226,7 +226,7 @@ function Calender(props: CalenderProps) {
   };
 
   const confirmDateHandler = () => {
-    const selectedDateString = `${startMonth}.${startDate}(${startDay}) ~ ${endMonth}.${endDate}(${endDay}) ${days}박`;
+    const selectedDateString = `${startMonth}.${`0${startDate}`.slice(-2)}(${startDay}) ~ ${endMonth}.${`0${endDate}`.slice(-2)}(${endDay}) ${days}박`;
     dispatch(dateActions.setDate({ date: { start: selectedDate.start, end: selectedDate.end }, dateString: selectedDateString }));
     closeCalender();
   };

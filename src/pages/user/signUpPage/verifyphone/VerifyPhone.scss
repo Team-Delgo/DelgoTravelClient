@@ -1,6 +1,11 @@
 @import '../SignUpPage.scss';
 
 .login {
+  &-description {
+    &.phone {
+      margin-bottom: 55px;
+    }
+  }
   &-inputbox {
     position: relative;
   }
@@ -21,16 +26,15 @@
     color: $color-orange;
   }
   &-input {
-    width: 87vw;
-    height: 59px;
-    background-color: white;
-    border-radius: 7px;
-    margin-top: 12px;
-    border: none;
-    text-indent: 22px;
-    &::placeholder {
-      @include typosettings(16, $color-light-grey);
+    &.phonenumber {
+      margin: 0;
+      &::placeholder {
+        color: #8a8a8a;
+        font-size: 16px;
+        font-weight: 300;
+      }
     }
+
     &-clear {
       width: 24px;
       height: 24px;
@@ -39,8 +43,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      right: 20px;
-      top: 20px;
+      top: calc(50%);
+      right: 11px;
+      transform: translateY(-50%);
       border-radius: 100px;
       background-color: #f3efea;
       &.checked {
