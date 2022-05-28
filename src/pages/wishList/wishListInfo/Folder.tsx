@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
 import WishedPlace from './WishedPlace';
 import { getWishedPlaces } from '../../../common/api/getPlaces';
@@ -20,12 +20,13 @@ function Folder() {
   const [wishedPlace, setWishedPlace] = useState<Array<WishedPlaceType>>([]);
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const accessToken = useSelector((state: any) => state.token.token);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getWishedPlaces({ accessToken, userId }, (response: AxiosResponse) => {
       setWishedPlace(response.data.data);
       console.log(response.data.data)
-    });
+    }, dispatch);
   }, [accessToken]);
 
   return (
@@ -36,7 +37,7 @@ function Folder() {
       ))}
     </div>
   );
-} 
+}
 
 export default Folder;
 

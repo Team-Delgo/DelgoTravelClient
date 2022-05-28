@@ -1,18 +1,18 @@
-import React,{useState,useCallback} from 'react'
-import { useSelector } from "react-redux";
+import React, { useState, useCallback } from 'react'
+import { useDispatch, useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
-import {wishInsert,wishDelete} from '../../../common/api/wish'
+import { wishInsert, wishDelete } from '../../../common/api/wish'
 import { ReactComponent as ActiveHeart } from '../../../icons/heart-active.svg';
 import { ReactComponent as Heart } from '../../../icons/heart.svg';
 import './RecommendedPlaces.scss';
 
-interface RedcommendedPlacesProps  {
-    place:RecommendedPlaceType
-    places:Array<RecommendedPlaceType>
-    setPlaces:any
+interface RedcommendedPlacesProps {
+  place: RecommendedPlaceType
+  places: Array<RecommendedPlaceType>
+  setPlaces: any
 }
 
-interface RecommendedPlaceType  {
+interface RecommendedPlaceType {
   address: string
   lowestPrice: string
   mainPhotoUrl: string
@@ -23,33 +23,33 @@ interface RecommendedPlaceType  {
 }
 
 
-function RecommendedPlaces({ place ,places ,setPlaces}: RedcommendedPlacesProps) {
+function RecommendedPlaces({ place, places, setPlaces }: RedcommendedPlacesProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const accessToken = useSelector((state: any) => state.token.token);
   const userId = useSelector((state: any) => state.persist.user.user.id)
-
+  const dispatch = useDispatch();
 
 
   const wishListInsert = useCallback(() => {
-    wishInsert({ userId, placeId: place.placeId,accessToken}, (response: AxiosResponse) => {
+    wishInsert({ userId, placeId: place.placeId, accessToken }, (response: AxiosResponse) => {
       if (response.data.code === 200) {
         const updatePlace = { ...place, wishId: response.data.data.wishId };
         const updatePlaces = places.map((p) => (p.placeId === updatePlace.placeId ? { ...p, ...updatePlace } : p));
         setPlaces(updatePlaces);
         setWishList(response.data.data.wishId);
       }
-    });
+    }, dispatch);
   }, [wishList, places]);
 
   const wishListDelete = useCallback(() => {
-    wishDelete({ wishId: wishList,accessToken }, (response: AxiosResponse) => {
+    wishDelete({ wishId: wishList, accessToken }, (response: AxiosResponse) => {
       if (response.data.code === 200) {
         const updatePlace = { ...place, wishId: 0 };
         const updatePlaces = places.map((p) => (p.placeId === updatePlace.placeId ? { ...p, ...updatePlace } : p));
         setPlaces(updatePlaces);
         setWishList(0);
       }
-    });
+    }, dispatch);
   }, [wishList, places]);
 
   return (

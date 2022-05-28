@@ -205,7 +205,7 @@ function UserInfo() {
           <span className="login-span">비밀번호</span>
           <input
             className="login-input"
-            placeholder="영문+숫자 포함 8자리 이상"
+            placeholder="비밀번호 최소 8자이상 (문자, 숫자 조합)"
             type="password"
             value={enteredInput.password}
             id={Id.PASSWORD}
@@ -213,7 +213,7 @@ function UserInfo() {
           />
           <div className="login-input-box">
             <input
-              className="login-input"
+              className="login-input bitmargin"
               placeholder="비밀번호 확인"
               type="password"
               value={enteredInput.confirm}

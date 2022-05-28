@@ -55,7 +55,7 @@ function Home() {
   useEffect(() => {
     getAllPlaces(userId, (response: AxiosResponse) => {
       setPlaces(response.data.data);
-    });
+    }, dispatch);
   }, []);
 
   useEffect(() => {

@@ -77,7 +77,7 @@ function PhoneAuth() {
         <Arrow />
       </div>
       <header className="login-header">인증번호 입력</header>
-      <div className="login-description">
+      <div className="login-description longmargin">
         등록된 휴대폰 번호로 인증번호가 전송되었습니다.
         <br />
         인증번호를 입력해주세요.

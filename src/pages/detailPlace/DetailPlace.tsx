@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
@@ -30,6 +30,7 @@ function DetailPlace() {
   const accessToken = useSelector((state: any) => state.token.token);
   const { placeId } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [reviews, setReviews] = useState<Array<any>>([
     {
@@ -106,7 +107,7 @@ function DetailPlace() {
       setRoomTypes(response.data.data.roomList)
       console.log(response.data.data.place)
       console.log(response.data.data.roomList)
-    });
+    }, dispatch);
   }, []);
 
   const wishListInsert = useCallback(() => {
@@ -115,7 +116,7 @@ function DetailPlace() {
         const updatePlace = { ...place, wishId: response.data.data.wishId };
         setPlace(updatePlace)
       }
-    });
+    }, dispatch);
   }, [place]);
 
   const wishListDelete = useCallback(() => {
@@ -124,7 +125,7 @@ function DetailPlace() {
         const updatePlace = { ...place, wishId: 0 };
         setPlace(updatePlace)
       }
-    });
+    }, dispatch);
   }, [place]);
 
   const moveToPreviousPage = useCallback(() => {

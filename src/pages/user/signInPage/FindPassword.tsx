@@ -6,6 +6,7 @@ import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import "./FindPassword.scss";
 import { emailAuth } from "../../../common/api/login";
 import { SIGN_IN_PATH } from "../../../constants/path.const";
+import Check from "../../../icons/check.svg";
 
 function FindPassword() {
   const [email, setEmail] = useState('');
@@ -26,8 +27,7 @@ function FindPassword() {
 
       const { code, data } = response.data;
       if (code === 200) {
-        const number = `${data.slice(0, 3)}-${data.slice(3, 7)}-${data.slice(7, 11)}`;
-        setPhoneNumber(number);
+        setPhoneNumber(data);
         setEmailIsSubmitted(true);
       }
       else {
@@ -48,7 +48,7 @@ function FindPassword() {
       </div>
       <header className="login-header">비밀번호 재설정</header>
       {!emailIsSubmitted ? <div>
-        <div className="login-description">회원가입 시 등록한 이메일을 입력해 주세요</div>
+        <div className="login-description longmargin">회원가입 시 등록한 이메일을 입력해 주세요</div>
         <div className="login-input-box">
           <input
             className="login-input"
@@ -60,10 +60,12 @@ function FindPassword() {
           <div className="login-input-feedback">{feedback}</div>
         </div>
       </div> : <div className="findpassword-selectbox">
-        <div className="findpassword-selectbox-circle" />
+        <div className="findpassword-selectbox-circle">
+          <img src={Check} alt="check" />
+        </div>
         <div className="findpassword-selectbox-wrapper">
           <div className="findpassword-selectbox-label">등록된 휴대폰번호로 인증</div>
-          <div className="findpassword-selectbox-number">{phoneNumber}</div>
+          <div className="findpassword-selectbox-number">{`${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3, 7)}-${phoneNumber.slice(7, 11)}`}</div>
         </div>
       </div>}
       <button type="button" className="login-button active" onClick={emailIsSubmitted ? nextButtonHandler : submitEmail}>

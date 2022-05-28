@@ -7,7 +7,7 @@ import { ReactComponent as Naver } from '../../../icons/naver.svg';
 import { ReactComponent as Apple } from '../../../icons/apple.svg';
 import { SIGN_IN_PATH, SIGN_UP_PATH } from '../../../constants/path.const';
 import { tokenActions } from '../../../redux/reducers/tokenSlice';
-import {KAKAO,NAVER} from '../../../constants/url.cosnt'
+import { KAKAO, NAVER } from '../../../constants/url.cosnt'
 
 
 function SignIn() {
@@ -21,7 +21,7 @@ function SignIn() {
 
 
   return (
-    <div className="login">
+    <div className="login-signin">
       <div className="login-title">Delgo 가요</div>
       <a href={KAKAO.KAKAO_AUTH_URL}>
         <button type="button" className="login-kakao">
@@ -30,10 +30,10 @@ function SignIn() {
         </button>
       </a>
       <a href={NAVER.NAVER_AUTH_URL}>
-      <button type="button" className="login-naver">
-        <Naver className="icon" />
-        네이버 로그인
-      </button>
+        <button type="button" className="login-naver">
+          <Naver className="icon" />
+          네이버 로그인
+        </button>
       </a>
       <button type="button" className="login-apple">
         <Apple className="icon" />
