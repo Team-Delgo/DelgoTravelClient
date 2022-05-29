@@ -35,7 +35,9 @@ function Calender(props: CalenderProps) {
   useEffect(() => {
     if (isRoom) {
       getReservedDate({ roomId }, (response: AxiosResponse) => {
+        const { data } = response.data;
         console.log(response);
+        setReservedDate(data);
       }, errorHandler);
     }
   }, []);
@@ -75,6 +77,11 @@ function Calender(props: CalenderProps) {
       setSelectedDate((prev) => {
         return { ...prev, end: date };
       });
+    } else if (sequence === 2) {
+      setSequence(1);
+      setSelectedDate(() => {
+        return { start: date, end: '' };
+      })
     }
   };
 
