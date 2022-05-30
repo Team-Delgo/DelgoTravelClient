@@ -31,7 +31,6 @@ import MyAccount from './pages/myAccount/MyAccount';
 import FindPassword from './pages/user/signInPage/FindPassword';
 import ResetPassword from './pages/user/signInPage/ResetPassword';
 import PhoneAuth from './pages/user/signInPage/PhoneAuth';
-import Calender from './pages/calender/Calender';
 import DetailPlace from './pages/detailPlace/DetailPlace';
 import ReviewsPage from './pages/detailPlace/reviewsPage/ReviewsPage';
 import RoomTypePage from './pages/detailPlace/roomTypePage/RoomTypePage';
@@ -42,7 +41,7 @@ import NaverRedirectHandler from './common/socialLogion/NaverRedirectHandler';
 import AlertConfirmOne from './common/dialog/AlertConfirmOne';
 import { errorActions } from './redux/reducers/errorSlice';
 import ReservationConfirmPage from './pages/detailPlace/reservationConfirmPage/ReservationConfirmPage';
-import './Transition.scss';
+
 
 function App() {
   const hasError = useSelector((state: any) => state.error.hasError);
@@ -51,11 +50,10 @@ function App() {
     dispatch(errorActions.setFine());
   };
   const queryClient = new QueryClient();
-  const location = useLocation();
   return (
     <QueryClientProvider client={queryClient}>
       {hasError && <AlertConfirmOne text="네트워크를 확인해주세요" buttonHandler={alertButtonHandler} />}
-      <Routes location={location}>
+      <Routes>
         <Route path={ROOT_PATH} element={<HomePage />} />
         <Route path={EDITOR_NOTE_PATH} element={<EditorNote />} />
         <Route path={SIGN_IN_PATH.MAIN} element={<SignInPage />} />
@@ -70,26 +68,16 @@ function App() {
         <Route path={SIGN_UP_PATH.USER_PET_INFO} element={<PetInfo />} />
         <Route path={WISH_LIST_PATH} element={<WishListPage />} />
         <Route path={WHERE_TO_GO_PATH} element={<WhereToGoPage />} />
-        <Route path={MY_ACCOUNT_PATH} element={<MyAccount />} />
+        <Route path={DETAIL_PLACE_PATH.MAIN} element={<DetailPlace />} />
+        <Route path={DETAIL_PLACE_PATH.REVIEWS} element={<ReviewsPage />} />
+        <Route path={DETAIL_PLACE_PATH.ROOMTYPES} element={<RoomTypePage />} />
+        <Route path={DETAIL_PLACE_PATH.RESERVATION} element={<Reservation />} />
+        <Route path={DETAIL_PLACE_PATH.RESERVATION_CONFIRM} element={<ReservationConfirmPage />} />
         <Route path={REVIEW_WRITING_PATH} element={<ReviewWritingPage />} />
+        <Route path={MY_ACCOUNT_PATH} element={<MyAccount />} />
         <Route path={KAKAO_REDIRECT_HANDLE_PATH} element={<KakaoRedirectHandler />} />
         <Route path={NAVER_REDIRECT_HANDLE_PATH} element={<NaverRedirectHandler />} />
       </Routes>
-      <TransitionGroup className="transition-group">
-        <CSSTransition
-          key={location.pathname}
-          classNames="slide"
-          timeout={500}
-        >
-          <Routes location={location}>
-            <Route path={DETAIL_PLACE_PATH.MAIN} element={<DetailPlace />} />
-            <Route path={DETAIL_PLACE_PATH.REVIEWS} element={<ReviewsPage />} />
-            <Route path={DETAIL_PLACE_PATH.ROOMTYPES} element={<RoomTypePage />} />
-            <Route path={DETAIL_PLACE_PATH.RESERVATION} element={<Reservation />} />
-            <Route path={DETAIL_PLACE_PATH.RESERVATION_CONFIRM} element={<ReservationConfirmPage />} />
-          </Routes>
-        </CSSTransition>
-      </TransitionGroup>
     </QueryClientProvider>
   );
 }
