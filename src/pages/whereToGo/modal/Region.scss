@@ -1,8 +1,7 @@
 .region-modal{
-  height: 100%;
   &-header-selected{
     width: 25vw;
-    height: 45px;
+    height:  45px;
     color: #FFFFFF;
     display: flex;
     align-items: center;
@@ -11,8 +10,8 @@
     background: #6E614D;  
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
     border-radius: 27px;
-    margin-bottom: 7vw;
-    font-size: 3.8vw;
+    margin: 3vh 0;
+    font-size: 16px;
   }
   &-header{ 
     width: 25vw;
@@ -23,15 +22,14 @@
     justify-content: center;
     text-align: center;
     border-radius: 27px;
-    margin-bottom: 7vw;
-    font-size: 3.8vw;
+    margin: 3vh 0;
+    font-size: 16px;
   }
   &-section{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     row-gap: 30px;
     height: 60%;
-  
     &-region-name-selected{
       display: flex;
       align-items: center;
@@ -43,7 +41,7 @@
       box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
       border-radius: 27px;
       color: #FFFFFF;
-      font-size: 3.8vw;
+      font-size: 16px;
     }
     &-region-name{
       display: flex;
@@ -53,7 +51,7 @@
       width: 22vw;
       height: 45px;
       color: #474747;
-      font-size: 3.8vw;
+      font-size: 16px;
     }
   }
 }

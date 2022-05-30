@@ -22,10 +22,9 @@ function RoomTypePage() {
     `${process.env.PUBLIC_URL}/assets/images/service4.png`,
     `${process.env.PUBLIC_URL}/assets/images/service5.png`,
     `${process.env.PUBLIC_URL}/assets/images/service6.png`,
-  ]);
-  const { room } = useLocation().state as any;
-  const { place } = useLocation().state as any;
-  console.log(room)
+  ]); 
+  const {room,place} = useSelector((state: any) => state.persist.reservation);
+
 
   const [roomImg, setRoomImg] = useState<Array<any>>([
     `${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`,
@@ -38,9 +37,6 @@ function RoomTypePage() {
     window.scrollTo(0, 0);
   }, []);
 
-  const moveToPreviousPage = useCallback(() => {
-    navigate(-1);
-  }, []);
 
   const calenderOpenClose = useCallback(() => {
     setIsCalenderOpen(!isCalenderOpen);
@@ -63,7 +59,7 @@ function RoomTypePage() {
     );
     setTimeout(() => {
       navigate(`/reservation/${room.placeId}/${room.roomId}/${date.start}/${date.end}`);
-    }, 100);
+    }, 300);
   };
 
   return (
@@ -71,7 +67,9 @@ function RoomTypePage() {
       {isCalenderOpen && <Calender closeCalender={calenderOpenClose} isRoom roomId={room.roomId} />}
       <div className={classNames('detail-place-room-type', { close: isCalenderOpen })}>
         <ImageSlider images={roomImg} />
-        <LeftArrow className="detail-place-room-type-previous-page" onClick={moveToPreviousPage} />
+        <Link to={`/detail-place/${place.placeId}`} key={place.placeId}>
+        <LeftArrow className="detail-place-room-type-previous-page"/>
+        </Link>
         <div className="detail-place-room-type-info">
           <header className="detail-place-room-type-info-name">{room.name}</header>
           <div className="detail-place-room-type-info-accommodation">

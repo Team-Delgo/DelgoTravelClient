@@ -1,12 +1,13 @@
 /* eslint-disable array-callback-return */
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback,useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
-import axios from 'axios'
 import { useQuery, useQueryClient } from 'react-query'
+import Skeleton , { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 import { getAllPlaces } from '../../common/api/getPlaces';
 import { tokenActions } from '../../redux/reducers/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
@@ -29,6 +30,21 @@ interface PlaceType {
   wishId: number
 }
 
+function AllPlacesSkeletons() {
+  const AllPlacesSkeletonsArray = [];
+  for (let i = 0; i < 20; i += 1) {
+    AllPlacesSkeletonsArray.push(
+      <div className="skeleton">
+        <SkeletonTheme baseColor="#f0e9e9" highlightColor="#e4dddd">
+        <Skeleton height={270} borderRadius={5} />
+        <Skeleton height={80} borderRadius={5} />
+        </SkeletonTheme>
+      </div>,
+    );
+  }
+  return AllPlacesSkeletonsArray;
+}
+
 function WhereToGo() {
   const [places, setPlaces] = useState<Array<PlaceType>>([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -44,7 +60,7 @@ function WhereToGo() {
   const sequence = dateString.length ? 2 : 0;
   const dispatch = useDispatch();
   const navigation = useNavigate();
-
+  const allPlacesSkeletons = useMemo(()=>AllPlacesSkeletons(),[])
 
 
   const { isLoading, error, data, isFetching } = useQuery(
@@ -56,8 +72,9 @@ function WhereToGo() {
       refetchInterval: false, // 데이터 변경시 fetch하는시간 // default:false : db 데이터값 변경하면 즉시 변경
     },
   );
-  console.log(isLoading, error, isFetching)
-  console.log(data)
+
+
+
   // useEffect(() => {
   //   // getAllPlaces(userId, (response: AxiosResponse) => {
   //   //   setPlaces(response.data.data);
@@ -98,6 +115,7 @@ function WhereToGo() {
     setIsCalenderOpen(!isCalenderOpen);
   }, [isCalenderOpen]);
 
+
   return (
     <>
       {isCalenderOpen && <Calender closeCalender={handleCalenderOpenClose} isRoom={false} />}
@@ -114,22 +132,24 @@ function WhereToGo() {
           </div>
         </div>
         <div className="places-container">
-          {data?.data.map((place: PlaceType) => {
-            if (place.address.includes(areaTerm)) {
-              if (place.name.includes(searchTerm)) {
-                return <Place key={place.placeId} place={place} places={places} setPlaces={setPlaces} />;
-              }
-            }
-          })}
+          {isLoading
+            ? allPlacesSkeletons
+            : data?.data.map((place: PlaceType) => {
+                if (place.address.includes(areaTerm)) {
+                  if (place.name.includes(searchTerm)) {
+                    return <Place key={place.placeId} place={place} places={places} setPlaces={setPlaces} />;
+                  }
+                }
+              })}
         </div>
-        <Footer />
         <RegionSelectionModal
-          regionSelectionModal={regionSelectionModal}
-          closeRegionSelectionModal={closeRegionSelectionModal}
-          setAreaTerm={setAreaTerm}
-          areaTerm={areaTerm}
-        />
+            regionSelectionModal={regionSelectionModal}
+            closeRegionSelectionModal={closeRegionSelectionModal}
+            setAreaTerm={setAreaTerm}
+            areaTerm={areaTerm}
+          />
       </div>
+      <Footer />
     </>
   );
 }

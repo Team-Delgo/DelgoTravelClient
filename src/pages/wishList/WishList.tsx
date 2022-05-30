@@ -40,6 +40,7 @@ function WishList() {
 
 
   return (
+    <>
     <div className="wish-list-background">
       {currentTab === 0 ? (
         <>
@@ -87,11 +88,12 @@ function WishList() {
               여행내역
             </div>
           </div>
-          <History />
-        </>
-      )}
-      <Footer />
+          <History/>
+          </>
+        )}
     </div>
+    <Footer />
+    </>
   );
 }
 
