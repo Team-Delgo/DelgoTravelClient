@@ -1,8 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
 import { useErrorHandler } from './useErrorHandler';
+import { useErrorHandlers } from './useErrorHandlers';
 import { url } from '../../constants/url.cosnt';
 
-async function login(data: { email: string; password: string }, success: (data: AxiosResponse) => void) {
+async function login(data: { email: string; password: string }, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
     .post(`${url}login`, {
       email: data.email,
@@ -12,11 +13,11 @@ async function login(data: { email: string; password: string }, success: (data: 
       success(data);
     })
     .catch((error) => {
-      useErrorHandler(error);
+      useErrorHandlers(dispatch, error);
     });
 }
 
-async function tokenRefresh(data: { refreshToken: string }, success: (data: AxiosResponse) => void) {
+async function tokenRefresh(data: { refreshToken: string }, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
     .get(`${url}tokenReissue`, {
       headers: {
@@ -27,11 +28,11 @@ async function tokenRefresh(data: { refreshToken: string }, success: (data: Axio
       success(data);
     })
     .catch((error) => {
-      useErrorHandler(error);
+      useErrorHandlers(dispatch, error);
     });
 }
 
-async function emailAuth(email: string, success: (data: AxiosResponse) => void) {
+async function emailAuth(email: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
     .get(`${url}/emailAuth`, {
       params: { email },
@@ -40,11 +41,11 @@ async function emailAuth(email: string, success: (data: AxiosResponse) => void) 
       success(data);
     })
     .catch((error) => {
-      useErrorHandler(error);
+      useErrorHandlers(dispatch, error);
     });
 }
 
-async function changePassword(email: string, password: string, success: (data: AxiosResponse) => void) {
+async function changePassword(email: string, password: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
     .post(`${url}/changePassword`, {
       user: {
@@ -56,7 +57,7 @@ async function changePassword(email: string, password: string, success: (data: A
       success(data);
     })
     .catch((error) => {
-      useErrorHandler(error);
+      useErrorHandlers(dispatch, error);
     });
 }
 

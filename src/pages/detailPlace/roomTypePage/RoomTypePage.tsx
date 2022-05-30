@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import classNames from 'classnames';
-import { useNavigate, useLocation,Link } from 'react-router-dom';
-import { useSelector,useDispatch } from 'react-redux';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { reservationActions } from '../../../redux/reducers/reservationSlice';
 import ImageSlider from '../../../common/components/ImageSlider';
 import BottomButton from '../../../common/components/BottomButton';
@@ -11,7 +11,7 @@ import './RoomTypePage.scss';
 
 function RoomTypePage() {
   const navigate = useNavigate();
-  const { date, dateString } = useSelector((state: any) => state.date);
+  const { date, dateString } = useSelector((state: any) => state.persist.date);
   const dispatch = useDispatch();
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
 
@@ -25,11 +25,13 @@ function RoomTypePage() {
   ]); 
   const {room,place} = useSelector((state: any) => state.persist.reservation);
 
+
   const [roomImg, setRoomImg] = useState<Array<any>>([
     `${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`,
     `${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`,
     `${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`,
   ]);
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -38,6 +40,7 @@ function RoomTypePage() {
 
   const calenderOpenClose = useCallback(() => {
     setIsCalenderOpen(!isCalenderOpen);
+
   }, [isCalenderOpen]);
 
   const handleReservation = () => {
@@ -61,7 +64,7 @@ function RoomTypePage() {
 
   return (
     <>
-      {isCalenderOpen && <Calender closeCalender={calenderOpenClose} />}
+      {isCalenderOpen && <Calender closeCalender={calenderOpenClose} isRoom roomId={room.roomId} />}
       <div className={classNames('detail-place-room-type', { close: isCalenderOpen })}>
         <ImageSlider images={roomImg} />
         <Link to={`/detail-place/${place.placeId}`} key={place.placeId}>
@@ -94,9 +97,9 @@ function RoomTypePage() {
         <div className="detail-place-room-type-base-information">기본정보</div>
         <div className="detail-place-room-type-additional-personnel-information">인원 추가 정보</div>
       </div>
-        <div aria-hidden="true" onClick={handleReservation}>
-          <BottomButton text="예약하기" />
-        </div>
+      <div aria-hidden="true" onClick={handleReservation}>
+        <BottomButton text="예약하기" />
+      </div>
     </>
   );
 }

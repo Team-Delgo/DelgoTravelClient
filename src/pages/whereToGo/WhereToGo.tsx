@@ -56,7 +56,7 @@ function WhereToGo() {
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
   const [selectedDateString, setSelectedDateString] = useState('');
   const [selectedDate, setSelectedDate] = useState({ start: '', end: '' });
-  const { date, dateString } = useSelector((state: any) => state.date);
+  const { date, dateString } = useSelector((state: any) => state.persist.date);
   const sequence = dateString.length ? 2 : 0;
   const dispatch = useDispatch();
   const navigation = useNavigate();
@@ -69,9 +69,12 @@ function WhereToGo() {
     {
       cacheTime: 0, // cacheTime : 언마운트된 후 어느 시점까지 메모리에 데이터를 저장하여 캐싱할 것인지를 결정함.
       staleTime: 10000, // staleTime : 마운트 되어 있는 시점에서 데이터가 구식인지 판단함.
-      refetchInterval:false, // 데이터 변경시 fetch하는시간 // default:false : db 데이터값 변경하면 즉시 변경
+      refetchInterval: false, // 데이터 변경시 fetch하는시간 // default:false : db 데이터값 변경하면 즉시 변경
     },
   );
+
+
+
   // useEffect(() => {
   //   // getAllPlaces(userId, (response: AxiosResponse) => {
   //   //   setPlaces(response.data.data);
@@ -93,7 +96,7 @@ function WhereToGo() {
       } else {
         navigation('/user/signin');
       }
-    });
+    }, dispatch);
   }, [accessToken]);
 
   const handleSerchTerm = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,7 +118,7 @@ function WhereToGo() {
 
   return (
     <>
-      {isCalenderOpen && <Calender closeCalender={handleCalenderOpenClose} />}
+      {isCalenderOpen && <Calender closeCalender={handleCalenderOpenClose} isRoom={false} />}
       <div className={classNames('where-to-go-background', { close: isCalenderOpen })}>
         <input className="search-place" placeholder="숙소검색" value={searchTerm} onChange={handleSerchTerm} />
         <div className="search-region-date">

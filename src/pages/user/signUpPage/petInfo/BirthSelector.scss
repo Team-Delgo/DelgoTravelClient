@@ -1,4 +1,5 @@
 .birth {
+  z-index: 10;
   display: flex;
   background-color: white;
   justify-content: center;
@@ -8,25 +9,26 @@
   border-radius: 5px;
   text-align: center;
   font-size: 18px;
+  font-weight: 300;
   &-years {
-    width: 93px;
+    width: 120px;
   }
   &-months {
-    width: 60px;
+    width: 80px;
   }
   &-days {
-    width: 60px;
+    width: 80px;
   }
-  &-divider{
-    width: .1px;
-    background-color: #8A8A8A;
+  &-divider {
+    width: 0.1px;
+    background-color: #8a8a8a;
     height: 60%;
   }
 }
 .tab {
   height: 210px;
   overflow: scroll;
-  &::-webkit-scrollbar{
+  &::-webkit-scrollbar {
     display: none;
   }
 }

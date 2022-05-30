@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
@@ -25,11 +25,12 @@ function DetailPlace() {
   });
   const [roomTypes, setRoomTypes] = useState<Array<any>>([])
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
-  const { date, dateString } = useSelector((state: any) => state.date);
+  const { date, dateString } = useSelector((state: any) => state.persist.date);
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const accessToken = useSelector((state: any) => state.token.token);
   const { placeId } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [reviews, setReviews] = useState<Array<any>>([
     {
@@ -106,39 +107,39 @@ function DetailPlace() {
       setRoomTypes(response.data.data.roomList)
       console.log(response.data.data.place)
       console.log(response.data.data.roomList)
-    });
+    }, dispatch);
   }, []);
 
   const wishListInsert = useCallback(() => {
-    wishInsert({ userId, placeId: Number(placeId),accessToken}, (response: AxiosResponse) => {
+    wishInsert({ userId, placeId: Number(placeId), accessToken }, (response: AxiosResponse) => {
       if (response.data.code === 200) {
         const updatePlace = { ...place, wishId: response.data.data.wishId };
         setPlace(updatePlace)
       }
-    });
+    }, dispatch);
   }, [place]);
 
   const wishListDelete = useCallback(() => {
-    wishDelete({ wishId: place.wishId,accessToken }, (response: AxiosResponse) => {
+    wishDelete({ wishId: place.wishId, accessToken }, (response: AxiosResponse) => {
       if (response.data.code === 200) {
         const updatePlace = { ...place, wishId: 0 };
         setPlace(updatePlace)
       }
-    });
+    }, dispatch);
   }, [place]);
 
   const calenderOpenClose = useCallback(() => {
     setIsCalenderOpen(!isCalenderOpen);
-  },[isCalenderOpen])
+  }, [isCalenderOpen])
 
   const moveToMap = useCallback(() => {
     window.scroll({ top: document.body.scrollHeight, behavior: 'smooth' });
-  },[])
+  }, [])
 
 
   return (
     <>
-      {isCalenderOpen && <Calender closeCalender={calenderOpenClose} />}
+      {isCalenderOpen && <Calender closeCalender={calenderOpenClose} isRoom={false} />}
       <div className={classNames('detail-place', { close: isCalenderOpen })}>
         <img className="detail-place-main-image" src={place.mainPhotoUrl} alt="place-img" />
         <Link to="/where-to-go" key={place.placeId}>
@@ -227,7 +228,7 @@ function DetailPlace() {
         <div className="detail-place-etc">확인사항 및 기타</div>
         <div className="detail-place-map">
           <header className="detail-place-map-header">지도</header>
-          <Map address={place.address} />
+          {/* <Map address={place.address} /> */}
         </div>
       </div>
     </>

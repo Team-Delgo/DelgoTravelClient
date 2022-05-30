@@ -19,7 +19,7 @@ interface EditorPlaceType {
   name: string
 }
 
-interface RecommendedPlaceType  {
+interface RecommendedPlaceType {
   address: string
   lowestPrice: string
   mainPhotoUrl: string
@@ -55,8 +55,7 @@ function Home() {
   useEffect(() => {
     getAllPlaces(userId, (response: AxiosResponse) => {
       setPlaces(response.data.data);
-    });
-    console.log(process.env.REACT_APP_BASE_URL)
+    }, dispatch);
   }, []);
 
   useEffect(() => {
@@ -74,7 +73,7 @@ function Home() {
       else {
         navigation('/user/signin');
       }
-    });
+    }, dispatch);
   }, [accessToken]);
 
   return (

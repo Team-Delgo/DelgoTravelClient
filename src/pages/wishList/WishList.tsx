@@ -1,7 +1,7 @@
-import React,{useState,useCallback,useEffect} from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { tokenActions } from '../../redux/reducers/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
 import Footer from '../../common/components/Footer';
@@ -31,19 +31,19 @@ function WishList() {
       else {
         navigation('/user/signin');
       }
-    });
+    }, dispatch);
   }, [accessToken]);
 
-  const changeCurrentTab = useCallback((tabNumber: number)=> (event: React.MouseEvent)  => {
+  const changeCurrentTab = useCallback((tabNumber: number) => (event: React.MouseEvent) => {
     setCurrentTab(tabNumber);
-  },[])
+  }, [])
 
-  
+
   return (
     <>
     <div className="wish-list-background">
-        {currentTab === 0 ? (
-          <>
+      {currentTab === 0 ? (
+        <>
           <div className="wish-list-tab">
             <div
               className="wish-list-tab-folder-active"
@@ -64,10 +64,10 @@ function WishList() {
               여행내역
             </div>
           </div>
-          <Folder/>
-          </>
-        ) : (
-          <>
+          <Folder />
+        </>
+      ) : (
+        <>
           <div className="wish-list-tab">
             <div
               className="wish-list-tab-folder"
