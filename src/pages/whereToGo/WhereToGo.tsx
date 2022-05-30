@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
-import axios from 'axios'
 import { useQuery, useQueryClient } from 'react-query'
 import Skeleton , { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
