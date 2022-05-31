@@ -70,7 +70,7 @@ function RoomTypePage() {
         {(status) => (
           <div className={`pageSlider pageSlider-${status}`}>
       <div className={classNames('detail-place-room-type', { close: isCalenderOpen })}>
-        <ImageSlider images={roomImg} />
+        {/* <ImageSlider images={roomImg} /> */}
         <Link to={`/detail-place/${place.placeId}`} key={place.placeId}>
         <LeftArrow className="detail-place-room-type-previous-page"/>
         </Link>

@@ -6,6 +6,7 @@ import { AxiosResponse } from 'axios';
 import { Transition  } from 'react-transition-group';
 import RoomType from './roomType/RoomType';
 import Reviews from './reviews/Reviews';
+import ImageSlider from '../../common/components/ImageSlider';
 import Map from '../../common/components/Map';
 import Heart from '../../common/components/Heart';
 import { getDetailPlace } from '../../common/api/getPlaces';
@@ -13,6 +14,12 @@ import { wishInsert, wishDelete } from '../../common/api/wish';
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg';
 import './DetailPlace.scss';
 import Calender from '../calender/Calender';
+
+interface PhotoListType {
+  detailPhotoId: number
+  isMain: number
+  url: string
+}
 
 function DetailPlace() {
   const [place, setPlace] = useState({
@@ -24,6 +31,7 @@ function DetailPlace() {
     registDt: '',
     wishId: 0,
   });
+  const [photoList,setPhotoList] = useState<Array<PhotoListType>>([])
   const [roomTypes, setRoomTypes] = useState<Array<any>>([]);
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
   const { date, dateString } = useSelector((state: any) => state.persist.date);
@@ -103,13 +111,13 @@ function DetailPlace() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    console.log(Number(placeId),date.start,userId)
     getDetailPlace(
-      { userId, placeId: Number(placeId) },
+      { userId, placeId: Number(placeId),startDt:date.start },
       (response: AxiosResponse) => {
         setPlace(response.data.data.place);
+        setPhotoList(response.data.data.detailPhotoList)
         setRoomTypes(response.data.data.roomList);
-        console.log(response.data.data.place);
-        console.log(response.data.data.roomList);
       },
       dispatch,
     );
@@ -156,7 +164,7 @@ function DetailPlace() {
         {(status) => (
           <div className={location.state.prevPath.includes('detail-place')===false ? `pageSlider pageSlider-${status}` : `pageSlider pageSlider2-${status}`}>
             <div className={classNames('detail-place', { close: isCalenderOpen })}>
-              <img className="detail-place-main-image" src={place.mainPhotoUrl} alt="place-img" />
+              <ImageSlider images={photoList} />
               <Link to="/where-to-go" key={place.placeId}>
                 <LeftArrow className="detail-place-previous-page" />
               </Link>
