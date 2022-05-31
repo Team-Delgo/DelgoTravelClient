@@ -2,6 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { Transition  } from 'react-transition-group';
 import { reservationActions } from '../../../redux/reducers/reservationSlice';
 import ImageSlider from '../../../common/components/ImageSlider';
 import BottomButton from '../../../common/components/BottomButton';
@@ -65,6 +66,9 @@ function RoomTypePage() {
   return (
     <>
       {isCalenderOpen && <Calender closeCalender={calenderOpenClose} isRoom roomId={room.roomId} />}
+      <Transition in timeout={200} appear>
+        {(status) => (
+          <div className={`pageSlider pageSlider-${status}`}>
       <div className={classNames('detail-place-room-type', { close: isCalenderOpen })}>
         <ImageSlider images={roomImg} />
         <Link to={`/detail-place/${place.placeId}`} key={place.placeId}>
@@ -100,6 +104,9 @@ function RoomTypePage() {
       <div aria-hidden="true" onClick={handleReservation}>
         <BottomButton text="예약하기" />
       </div>
+      </div>
+        )}
+      </Transition>
     </>
   );
 }

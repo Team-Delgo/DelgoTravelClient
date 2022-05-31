@@ -6,11 +6,11 @@ import { AxiosResponse } from 'axios';
 import { Transition  } from 'react-transition-group';
 import RoomType from './roomType/RoomType';
 import Reviews from './reviews/Reviews';
-import Map from '../../common/components/Map'
-import Heart from '../../common/components/Heart'
-import { getDetailPlace } from '../../common/api/getPlaces'
-import { wishInsert, wishDelete } from '../../common/api/wish'
-import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg'
+import Map from '../../common/components/Map';
+import Heart from '../../common/components/Heart';
+import { getDetailPlace } from '../../common/api/getPlaces';
+import { wishInsert, wishDelete } from '../../common/api/wish';
+import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg';
 import './DetailPlace.scss';
 import Calender from '../calender/Calender';
 
@@ -102,7 +102,6 @@ function DetailPlace() {
   ]);
 
   useEffect(() => {
-    console.log(location.state.prevPath.includes('detail-place'))
     window.scrollTo(0, 0);
     getDetailPlace(
       { userId, placeId: Number(placeId) },
