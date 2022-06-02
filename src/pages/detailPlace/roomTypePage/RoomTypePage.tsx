@@ -13,6 +13,12 @@ import Calender from '../../calender/Calender';
 import './RoomTypePage.scss';
 
 
+interface PhotoListType {
+  detailPhotoId: number
+  isMain: number
+  url: string
+}
+
 
 function RoomTypePage() {
   const navigate = useNavigate();
@@ -21,6 +27,8 @@ function RoomTypePage() {
   const location: any = useLocation();
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
   const { placeId } = useParams();
+  const { room, place } = location.state;
+  const [photoList, setPhotoList] = useState<Array<PhotoListType>>([]);
 
   const [service, setService] = useState<Array<any>>([
     `${process.env.PUBLIC_URL}/assets/images/service1.png`,
@@ -29,8 +37,7 @@ function RoomTypePage() {
     `${process.env.PUBLIC_URL}/assets/images/service4.png`,
     `${process.env.PUBLIC_URL}/assets/images/service5.png`,
     `${process.env.PUBLIC_URL}/assets/images/service6.png`,
-  ]); 
-  const {room,place} = useSelector((state: any) => state.persist.reservation);
+  ]);
 
   const [roomImg, setRoomImg] = useState<Array<any>>([
     `${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`,
@@ -41,18 +48,16 @@ function RoomTypePage() {
   useEffect(() => {
     window.scrollTo(0, 0);
     getRoomData(
-      { roomId: room.roomId },
+      room.roomId,
       (response: AxiosResponse) => {
-        console.log(response.data);
+        setPhotoList(response.data.data.detailRoomPhotos);
       },
       dispatch,
     );
   }, []);
 
-
   const calenderOpenClose = useCallback(() => {
     setIsCalenderOpen(!isCalenderOpen);
-
   }, [isCalenderOpen]);
 
   const handleReservation = () => {
@@ -81,7 +86,7 @@ function RoomTypePage() {
         {(status) => (
           <div className={`pageSlider pageSlider-${status}`}>
             <div className={classNames('detail-place-room-type', { close: isCalenderOpen })}>
-              {/* <ImageSlider images={roomImg} /> */}
+              <ImageSlider images={photoList} />
               <Link to={`/detail-place/${placeId}`} state={{ prevPath: location.pathname }} key={placeId}>
                 <LeftArrow className="detail-place-room-type-previous-page" />
               </Link>
@@ -89,7 +94,7 @@ function RoomTypePage() {
                 <header className="detail-place-room-type-info-name">{room.name}</header>
                 <div className="detail-place-room-type-info-accommodation">
                   <div className="detail-place-room-type-info-accommodation-check-in-check-out">
-                    입실 {room.checkin.substring(0, 5)} / 퇴실 {room.checkout.substring(0, 5)}
+                    {/* 입실 {room.checkin.substring(0, 5)} / 퇴실 {room.checkout.substring(0, 5)} */}
                   </div>
                   <div className="detail-place-room-type-info-accommodation-price">{room.price}</div>
                 </div>
@@ -116,12 +121,12 @@ function RoomTypePage() {
               <div className="detail-place-room-type-base-information">기본정보</div>
               <div className="detail-place-room-type-additional-personnel-information">인원 추가 정보</div>
             </div>
-            <div aria-hidden="true" onClick={handleReservation}>
-              <BottomButton text="예약하기" />
-            </div>
           </div>
         )}
       </Transition>
+      <div aria-hidden="true" onClick={handleReservation}>
+        <BottomButton text="예약하기" />
+      </div>
     </>
   );
 }

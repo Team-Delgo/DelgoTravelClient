@@ -15,7 +15,7 @@ import {TOSS} from "../../../constants/url.cosnt"
 function Reservation() {
   const navigation = useNavigate();
   const { nickname, phone } = useSelector((state: any) => state.persist.user.user);
-  const { date, dateString } = useSelector((state: any) => state.date);
+  const { date, dateString } = useSelector((state: any) => state.persist.date);
   const {room,place} = useSelector((state: any) => state.persist.reservation);
   const [kakao2,setKakao] = useState({
     // 응답에서 가져올 값들
@@ -124,7 +124,6 @@ function Reservation() {
               {date.start.substring(2, 4)}.{date.start.substring(4, 6)}.{date.start.substring(6, 8)}{' '}
               {dateString.substring(5, 8)}
             </span>
-            <span className="check-date">{room.checkin.substring(0, 5)}</span>
           </div>
           <div className="checkin-checkout-date">
             <span className="check-title">체크아웃</span>
@@ -132,7 +131,6 @@ function Reservation() {
               {date.end.substring(2, 4)}.{date.end.substring(4, 6)}.{date.end.substring(6, 8)}{' '}
               {dateString.substring(16, 19)}
             </span>
-            <span className="check-date">{room.checkout.substring(0, 5)}</span>
           </div>
         </div>
         <h2 className="reservation-title first">예약자정보</h2>
@@ -171,7 +169,7 @@ function Reservation() {
           </div>
         </div>
       </div>
-      <Link to={`/reservation-confirm/${room.placeId}/${room.roomId}/${date.start}/${date.end}`} key={place.placeId}>
+      <Link to={`/reservation-confirm/${place.placeId}/${room.roomId}/${date.start}/${date.end}`} key={place.placeId}>
         <BottomButton text= {`${room.price} 결제하기`} />
         </Link>
     </>
