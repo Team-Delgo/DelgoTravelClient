@@ -104,7 +104,7 @@ function Reservation() {
     <>
       <div className="reservationPage">
         <div className="header">
-        <Link to={`/detail-place/${place.placeId}/${room.roomId}`} key={place.placeId}>
+        <Link to={`/detail-place/${place.placeId}/${room.roomId}`} key={place.placeId} state={{ room,place }}>
           <Exit className="exit-button"  />
           </Link>
           <h1 className="header-title">예약</h1>
