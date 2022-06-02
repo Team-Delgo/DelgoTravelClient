@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react';
-import { useLocation,Link} from 'react-router-dom';
+import { useLocation,Link,useParams} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Transition  } from 'react-transition-group';
 import Reviews from '../reviews/Reviews';
@@ -10,9 +10,11 @@ import './ReviewsPage.scss';
 function ReviewsPage() {
   const [reviews, setReviews] = useState<Array<any>>([]);
   const location: any = useLocation();
-  const { place } = useSelector((state: any) => state.persist.reservation);
+  const { placeId } = useParams();
+  
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     setReviews(location.state.reviews);
   }, []);
 
@@ -22,7 +24,7 @@ function ReviewsPage() {
         {(status) => (
           <div className={`pageSlider pageSlider-${status}`}>
             <header className="detail-place-review-page-header">
-              <Link to={`/detail-place/${place.placeId}`} state={{ prevPath: location.pathname }} key={place.placeId}>
+              <Link to={`/detail-place/${placeId}`} state={{ prevPath: location.pathname }} key={placeId}>
                 <LeftArrow className="detail-place-review-page-header-previous-page" />
               </Link>
               <div className="detail-place-review-page-header-number">리뷰 {reviews.length}개</div>

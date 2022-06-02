@@ -15,7 +15,7 @@ function ImageSlider({images}:ImagesProps) {
   return (
       <Carousel showThumbs={false} showArrows={false} showStatus={false}>
         {images.map((image:imageType) => (
-          <img src={image.url} alt="img" key={image.url} />
+          <img src={image.url} alt="img" key={image.url}/>
         ))}
       </Carousel>
   );

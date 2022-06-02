@@ -38,6 +38,7 @@ function DetailPlace() {
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const accessToken = useSelector((state: any) => state.token.token);
   const { placeId } = useParams();
+  console.log(placeId)
   const location: any = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -111,10 +112,10 @@ function DetailPlace() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    console.log(Number(placeId),date.start,userId)
     getDetailPlace(
-      { userId, placeId: Number(placeId),startDt:date.start },
+      { userId, placeId: Number(placeId),startDt:date.start,endDt:date.end },
       (response: AxiosResponse) => {
+        console.log(response)
         setPlace(response.data.data.place);
         setPhotoList(response.data.data.detailPhotoList)
         setRoomTypes(response.data.data.roomList);
