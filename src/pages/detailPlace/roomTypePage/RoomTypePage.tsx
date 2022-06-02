@@ -124,7 +124,7 @@ function RoomTypePage() {
           </div>
         )}
       </Transition>
-      <div aria-hidden="true" onClick={handleReservation}>
+      <div className="reservation-button" aria-hidden="true" onClick={handleReservation}>
         <BottomButton text="예약하기" />
       </div>
     </>
