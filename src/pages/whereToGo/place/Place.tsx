@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from 'react-router-dom';
+import { Link,useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { wishInsert, wishDelete } from '../../../common/api/wish'
 import Heart from '../../../common/components/Heart'
@@ -27,6 +27,7 @@ function Place({ place, places, setPlaces }: PlaceTypeProps) {
   const accessToken = useSelector((state: any) => state.token.token);
   const userId = useSelector((state: any) => state.persist.user.user.id)
   const dispatch = useDispatch();
+  const location: any = useLocation();
 
   const wishListInsert = useCallback(() => {
     wishInsert({ userId, placeId: place.placeId, accessToken }, (response: AxiosResponse) => {
@@ -52,7 +53,7 @@ function Place({ place, places, setPlaces }: PlaceTypeProps) {
 
   return (
     <div className="place" aria-hidden="true">
-      <Link to={`/detail-place/${place.placeId}`} key={place.placeId}>
+      <Link to={`/detail-place/${place.placeId}`} state={{ prevPath: location.pathname }}  key={place.placeId}>
         <img src={place.mainPhotoUrl} alt="place-img" />
       </Link>
       <div className="place-info">
