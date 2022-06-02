@@ -3,7 +3,7 @@ import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 
 interface ImagesProps  {
-  images:Array<imageType>
+  images:Array<any>
 }
 interface imageType {
   detailPhotoId: number;

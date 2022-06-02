@@ -1,24 +1,41 @@
 import React,{useCallback,useEffect} from "react";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { useNavigate, useLocation,Link } from 'react-router-dom';
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
 import RightArrow from "../../../icons/right-arrow.svg";
 import RightArrowBlack from "../../../icons/right-arrow-black.svg";
 import BottomButton from "../../../common/components/BottomButton";
+import { reservationActions } from '../../../redux/reducers/reservationSlice';
 import './ReservationConfirmPage.scss';
 
 function ReservationConfirmPage() {
   const navigate = useNavigate();
   const { nickname, phone } = useSelector((state: any) => state.persist.user.user);
-  const { date, dateString } = useSelector((state: any) => state.date);
+  const { date, dateString } = useSelector((state: any) => state.persist.date);
   const { room, place } = useSelector((state: any) => state.persist.reservation);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   const moveToMainPage = useCallback(() => {
-    navigate('/');
+    dispatch(
+      reservationActions.reservation({
+        place: { placeId: 0, name: '', address: '' },
+        room: {
+          roomId: 0,
+          name: '',
+          checkin: '',
+          checkout: '',
+          price: 0,
+          images: [],
+        },
+      }),
+    );
+    setTimeout(() => {
+      navigate('/');
+    }, 300);
   }, []);
 
   return (
@@ -43,7 +60,6 @@ function ReservationConfirmPage() {
               {date.start.substring(2, 4)}.{date.start.substring(4, 6)}.{date.start.substring(6, 8)}{' '}
               {dateString.substring(5, 8)}
             </span>
-            <span className="check-date">{room.checkin.substring(0, 5)}</span>
           </div>
           <div className="checkin-checkout-date">
             <span className="check-title">체크아웃</span>
@@ -51,7 +67,6 @@ function ReservationConfirmPage() {
               {date.end.substring(2, 4)}.{date.end.substring(4, 6)}.{date.end.substring(6, 8)}{' '}
               {dateString.substring(16, 19)}
             </span>
-            <span className="check-date">{room.checkout.substring(0, 5)}</span>
           </div>
         </div>
         <h2 className="reservation-title first">예약정보</h2>
