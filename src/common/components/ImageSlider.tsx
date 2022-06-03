@@ -3,18 +3,19 @@ import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
 
 interface ImagesProps  {
-  images:Array<any>
+  images:Array<ImageType>
 }
-interface imageType {
-  detailPhotoId: number;
-  isMain: number;
-  url: string;
+interface ImageType{
+  detailPhotoId: number
+  isMain: number
+  url: string
 }
+
 
 function ImageSlider({images}:ImagesProps) {
   return (
-      <Carousel showThumbs={false} showArrows={false} showStatus={false}>
-        {images.map((image:imageType) => (
+      <Carousel showThumbs={false}  showStatus={false} swipeable={false}>
+        {images.map((image:ImageType) => (
           <img src={image.url} alt="img" key={image.url}/>
         ))}
       </Carousel>

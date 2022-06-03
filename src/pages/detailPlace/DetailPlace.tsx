@@ -120,6 +120,7 @@ function DetailPlace() {
       },
       dispatch,
     );
+    console.log(place)  
   }, []);
 
   const wishListInsert = useCallback(() => {
@@ -252,7 +253,10 @@ function DetailPlace() {
               <div className="detail-place-etc">확인사항 및 기타</div>
               <div className="detail-place-map">
                 <header className="detail-place-map-header">지도</header>
-                <Map address={place.address} />
+                {
+                  place.address ? <Map address={place.address} />
+                  : null
+                }
               </div>
             </div>
           </div>

@@ -22,6 +22,9 @@ function Folder() {
   const accessToken = useSelector((state: any) => state.token.token);
   const dispatch = useDispatch();
 
+  console.log(accessToken)
+  console.log(userId)
+
   useEffect(() => {
     getWishedPlaces({ accessToken, userId }, (response: AxiosResponse) => {
       setWishedPlace(response.data.data);
