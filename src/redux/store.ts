@@ -7,10 +7,14 @@ import tokenSlice from './reducers/tokenSlice';
 import dateSlice from './reducers/dateSlice';
 import errorSlice from './reducers/errorSlice';
 import reservationSlice from './reducers/reservationSlice';
+import placeSlice from './reducers/placeSlice';
+import roomSlice from './reducers/roomSlice';
 
 const reducers = combineReducers({
   user: userSlice,
   date: dateSlice,
+  currentPlace:placeSlice,
+  currentRoom:roomSlice,
   reservation: reservationSlice,
 });
 

@@ -14,7 +14,7 @@ interface ImageType{
 
 function ImageSlider({images}:ImagesProps) {
   return (
-      <Carousel showThumbs={false}  showStatus={false} swipeable={false}>
+      <Carousel showThumbs={false} showStatus={false} >
         {images.map((image:ImageType) => (
           <img src={image.url} alt="img" key={image.url}/>
         ))}

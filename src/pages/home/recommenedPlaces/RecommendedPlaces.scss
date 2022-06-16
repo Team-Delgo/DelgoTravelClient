@@ -1,30 +1,30 @@
 .recommended-places{
     text-align: center;
     position: relative;
+    margin: 0% 5%;
     img{
-        width: 90%;
+        width: 100%;
         border-radius: 5px;
         margin-bottom: 10%;
     }
     &-name{
         position: absolute;
-        left: 7%;
-        bottom: 25%;
+        left: 4%;
+        bottom: 27%;
         font-weight: bold;
-        font-size: 4.5vw;
+        font-size: 18px;
         color: #FFFFFF;
     }
     &-location{
         position: absolute;
-        left: 8%;
+        left: 4%;
         bottom: 20%;
-        font-size: 2vw; 
+        font-size: 12px; 
         color: #FFFFFF;
     }
     &-heart{
         position: absolute;
-        right: 8.33%;
-        top: 12.5%;
-        bottom: 13.19%;
+        top: -5px;
+        right: -10px;
     }
 }

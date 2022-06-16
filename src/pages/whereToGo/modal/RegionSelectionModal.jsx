@@ -23,7 +23,7 @@ const regionSelectionModalStyle = {
 function RegionSelectionModal({ regionSelectionModal, closeRegionSelectionModal,areaTerm, setAreaTerm }) {
   return (
       <Modal style={regionSelectionModalStyle} isOpen={regionSelectionModal} onRequestClose={closeRegionSelectionModal} ariaHideApp={false}>
-        <Region setAreaTerm={setAreaTerm} areaTerm={areaTerm}/>
+        <Region setAreaTerm={setAreaTerm} areaTerm={areaTerm} closeRegionSelectionModal={closeRegionSelectionModal}/>
       </Modal>
   );
 }

@@ -11,6 +11,7 @@ interface RegionType{
 interface PropsType{
   areaTerm:string
   setAreaTerm:Dispatch<SetStateAction<string>>
+  closeRegionSelectionModal:any
 }
 
 const regions = [
@@ -28,10 +29,13 @@ const regions = [
   { id: 11, name: '울산' },
 ]; 
 
-function Region({ areaTerm,setAreaTerm }: PropsType) {
+function Region({ areaTerm,setAreaTerm ,closeRegionSelectionModal}: PropsType) {
 
   const handleSelectAllRegions = useCallback(() => {
     setAreaTerm('');
+    setTimeout(()=>{
+      closeRegionSelectionModal()
+    },200)
   }, []);
 
   const handleSelectRegion = useCallback((regionName: string) => (event: React.MouseEvent) => {
@@ -40,6 +44,9 @@ function Region({ areaTerm,setAreaTerm }: PropsType) {
     } else {
       setAreaTerm(regionName);
     }
+    setTimeout(()=>{
+      closeRegionSelectionModal()
+    },200)
   },[areaTerm]);
   
   return (

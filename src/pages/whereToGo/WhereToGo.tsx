@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
-import { useQuery, useQueryClient } from 'react-query'
+import { useQuery } from 'react-query'
 import Skeleton , { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { getAllPlaces } from '../../common/api/getPlaces';
@@ -82,6 +82,7 @@ function WhereToGo() {
 
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     tokenRefresh({ refreshToken }, (response: AxiosResponse) => {
       const { code } = response.data;
 

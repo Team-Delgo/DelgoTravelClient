@@ -1,8 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  place: { placeId: 0, name: '', address: ''},
-  room: { roomId: 0, name: '', checkin: '', checkout: '', price: 0, images: []},
+  place: { placeId: 0, name: '', address: '' },
+  room: { roomId: 0, name: '', price: 0 },
+  date: {
+    date: {
+      start: '',
+      end: '',
+    },
+    dateString:'',
+  },
 };
 
 const reservationSlice = createSlice({
@@ -13,6 +20,7 @@ const reservationSlice = createSlice({
       return {
         place: action.payload.place,
         room: action.payload.room,
+        date: action.payload.date,
       };
     },
     reservationCancle() {
