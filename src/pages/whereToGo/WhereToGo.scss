@@ -21,7 +21,8 @@
   }
   .search-region-date {
     display: flex;
-    padding: 12px 0 0 7.5%;
+    margin: 12px 0 0 7.5%;
+    width: 88vw;
     height: 49px;
     .search-region {
       display: flex;
@@ -33,6 +34,7 @@
       border-radius: 5px;
     }
     .search-date {
+      width: 60vw;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -40,7 +42,6 @@
       color: #000000;
       background: #ffffff;
       margin-left: 4%;
-      width: 60vw;
       height: 49px;
       border-radius: 5px;
     }

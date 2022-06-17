@@ -24,21 +24,20 @@
         }
     }
     &-content{
-        position: relative;
         &-description{
+            position: relative;
             color:#3E382F;
             font-size: 14px;
             font-weight: 300;
             padding-bottom: 5%;
             padding-right: 5%;
-        }
-        &-description-more{
-            position: absolute;
-            font-size: 14px;
-            font-weight: 500;
-            color: #ff9162;
-            top:36px;
-            right: 8px;
+            &-more{
+                position: absolute;
+                font-size: 14px;
+                font-weight: 500;
+                color: #ff9162;
+                white-space:nowrap;
+            }
         }
         &-image-container{
             display: flex;

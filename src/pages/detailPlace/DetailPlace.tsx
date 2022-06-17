@@ -12,6 +12,7 @@ import Heart from '../../common/components/Heart';
 import { getDetailPlace } from '../../common/api/getPlaces';
 import { wishInsert, wishDelete } from '../../common/api/wish';
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg';
+import { currentPlaceActions } from '../../redux/reducers/placeSlice';
 import './DetailPlace.scss';
 import Calender from '../calender/Calender';
 
@@ -30,8 +31,10 @@ function DetailPlace() {
     placeId: '',
     registDt: '',
     wishId: 0,
+    checkin: '',
+    checkout: '',
   });
-  const [photoList,setPhotoList] = useState<Array<PhotoListType>>([])
+  const [photoList, setPhotoList] = useState<Array<PhotoListType>>([]);
   const [roomTypes, setRoomTypes] = useState<Array<any>>([]);
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
   const { date, dateString } = useSelector((state: any) => state.persist.date);
@@ -55,7 +58,7 @@ function DetailPlace() {
       registrationDate: '22.03.01',
       roomUsed: '103호 (오션뷰) 객실 이용',
       reviewContent:
-        '꼬강이랑 다녀왔는데 매우만족했습니다. 오션뷰에 마당잔디도 관리가 잘 되어있었어요. 사장님이 꼬강이를 너무 예뻐해주셔서 저도 정말 오기 잘했다고 생각했습니다. 재방문 하고싶습니다',
+        '꼬강이랑 다녀왔는데 매우만족했습니다. 오션뷰에 마당잔디도 관리가 잘 되어있었어요. 사장님이 꼬강이를 너무 예뻐해주셔서 저도 정말 오기 잘했다고 생각했습니다.재방문 하고싶습니다.꼬강이랑 다녀왔는데 매우만족했습니다. 오션뷰에 마당잔디도 관리가 잘 되어있었어요. 사장님이 꼬강이를 너무 예뻐해주셔서 저도 정말 오기 잘했다고 생각했습니다. 재방문 하고싶습니다',
     },
     {
       id: 2,
@@ -69,34 +72,6 @@ function DetailPlace() {
       registrationDate: '22.02.01',
       roomUsed: '301호 (오션뷰) 객실 이용',
       reviewContent: '꼬꼬랑 다녀왔는데 매우만족했습니다. 오션뷰에 마당잔디도 관리가 잘 되어있었어요.',
-    },
-    {
-      id: 3,
-      profileImage: `${process.env.PUBLIC_URL}/assets/images/reviewImage.png`,
-      reviewImages: [
-        `${process.env.PUBLIC_URL}/assets/images/reviewImage1.png`,
-        `${process.env.PUBLIC_URL}/assets/images/reviewImage1.png`,
-      ],
-      nickName: '꼬꼬맘',
-      starRating: 5,
-      registrationDate: '22.02.01',
-      roomUsed: '301호 (오션뷰) 객실 이용',
-      reviewContent:
-        '  꼬꼬랑 다녀왔는데 매우만족했습니다. 오션뷰에 마당잔디도 관리가 잘 되어있었어요. 사장님이 꼬꼬를 너무 예뻐해주셔서 저도 정말 오기 잘했다고 생각했습니다. 재방문 하고싶습니다',
-    },
-    {
-      id: 4,
-      profileImage: `${process.env.PUBLIC_URL}/assets/images/reviewImage.png`,
-      reviewImages: [
-        `${process.env.PUBLIC_URL}/assets/images/reviewImage1.png`,
-        `${process.env.PUBLIC_URL}/assets/images/reviewImage1.png`,
-      ],
-      nickName: '꼬꼬맘',
-      starRating: 3,
-      registrationDate: '22.02.01',
-      roomUsed: '301호 (오션뷰) 객실 이용',
-      reviewContent:
-        '  꼬꼬랑 다녀왔는데 매우만족했습니다. 오션뷰에 마당잔디도 관리가 잘 되어있었어요. 사장님이 꼬꼬를 너무 예뻐해주셔서 저도 정말 오기 잘했다고 생각했습니다. 재방문 하고싶습니다',
     },
   ]);
 
@@ -112,16 +87,29 @@ function DetailPlace() {
   useEffect(() => {
     window.scrollTo(0, 0);
     getDetailPlace(
-      { userId, placeId: Number(placeId),startDt:date.start,endDt:date.end },
+      { userId, placeId: Number(placeId), startDt: date.start, endDt: date.end },
       (response: AxiosResponse) => {
         setPlace(response.data.data.place);
-        setPhotoList(response.data.data.detailPhotoList)
+        setPhotoList(response.data.data.detailPhotoList);
         setRoomTypes(response.data.data.roomList);
       },
       dispatch,
     );
-    console.log(place)  
   }, []);
+
+  useEffect(() => {
+    dispatch(
+      currentPlaceActions.currentPlace({
+        place: {
+          placeId: place.placeId,
+          name: place.name,
+          address: place.address,
+          checkIn:place.checkin,
+          checkOut:place.checkout
+        },
+      }),
+    );
+  },[place])
 
   const wishListInsert = useCallback(() => {
     wishInsert(
@@ -162,7 +150,13 @@ function DetailPlace() {
       {isCalenderOpen && <Calender closeCalender={calenderOpenClose} isRoom={false} />}
       <Transition in timeout={200} appear>
         {(status) => (
-          <div className={location.state.prevPath.includes('detail-place')===false ? `pageSlider pageSlider-${status}` : `pageSlider pageSlider2-${status}`}>
+          <div
+            className={
+              location.state.prevPath.includes('detail-place') === false
+                ? `pageSlider pageSlider-${status}`
+                : `pageSlider pageSlider2-${status}`
+            }
+          >
             <div className={classNames('detail-place', { close: isCalenderOpen })}>
               <ImageSlider images={photoList} />
               <Link to="/where-to-go" key={place.placeId}>
@@ -213,7 +207,6 @@ function DetailPlace() {
                       navigate(`/detail-place/${placeId}/${room.roomId}`, {
                         state: {
                           room,
-                          place,
                         },
                       });
                     }}
@@ -253,10 +246,7 @@ function DetailPlace() {
               <div className="detail-place-etc">확인사항 및 기타</div>
               <div className="detail-place-map">
                 <header className="detail-place-map-header">지도</header>
-                {
-                  place.address ? <Map address={place.address} />
-                  : null
-                }
+                {place.address ? <Map address={place.address} /> : null}
               </div>
             </div>
           </div>

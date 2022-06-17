@@ -10,6 +10,7 @@ import ImageSlider from '../../../common/components/ImageSlider';
 import BottomButton from '../../../common/components/BottomButton';
 import { ReactComponent as LeftArrow } from '../../../icons/left-arrow2.svg';
 import Calender from '../../calender/Calender';
+import { currentRoomActions } from '../../../redux/reducers/roomSlice';
 import './RoomTypePage.scss';
 
 
@@ -23,11 +24,11 @@ interface PhotoListType {
 function RoomTypePage() {
   const navigate = useNavigate();
   const { date, dateString } = useSelector((state: any) => state.persist.date);
+  const { currentPlace } = useSelector((state: any) => state.persist.currentPlace);
   const dispatch = useDispatch();
   const location: any = useLocation();
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
-  const { placeId } = useParams();
-  const { room, place } = location.state;
+  const { room } = location.state;
   const [photoList, setPhotoList] = useState<Array<PhotoListType>>([]);
 
   const [service, setService] = useState<Array<any>>([
@@ -37,12 +38,6 @@ function RoomTypePage() {
     `${process.env.PUBLIC_URL}/assets/images/service4.png`,
     `${process.env.PUBLIC_URL}/assets/images/service5.png`,
     `${process.env.PUBLIC_URL}/assets/images/service6.png`,
-  ]);
-
-  const [roomImg, setRoomImg] = useState<Array<any>>([
-    `${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`,
-    `${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`,
-    `${process.env.PUBLIC_URL}/assets/images/detailPlaceImage.jpg`,
   ]);
 
   useEffect(() => {
@@ -56,6 +51,18 @@ function RoomTypePage() {
     );
   }, []);
 
+  useEffect(() => {
+    dispatch(
+      currentRoomActions.currentRoom({
+        room: {
+          roomId: room.roomId,
+          name: room.name,
+          price: room.price,
+        },
+      }),
+    );
+  }, [room]);
+
   const calenderOpenClose = useCallback(() => {
     setIsCalenderOpen(!isCalenderOpen);
   }, [isCalenderOpen]);
@@ -63,19 +70,24 @@ function RoomTypePage() {
   const handleReservation = () => {
     dispatch(
       reservationActions.reservation({
-        place: { placeId: place.placeId, name: place.name, address: place.address },
+        place: {
+          placeId: currentPlace.placeId,
+          name: currentPlace.name,
+          address: currentPlace.address,
+        },
         room: {
           roomId: room.roomId,
           name: room.name,
-          checkin: room.checkin,
-          checkout: room.checkout,
           price: room.price,
-          images: room.detailPhotos,
+        },
+        date: {
+          date,
+          dateString
         },
       }),
     );
     setTimeout(() => {
-      navigate(`/reservation/${room.placeId}/${room.roomId}/${date.start}/${date.end}`);
+      navigate(`/reservation/${currentPlace.placeId}/${room.roomId}/${date.start}/${date.end}`);
     }, 300);
   };
 
@@ -87,14 +99,18 @@ function RoomTypePage() {
           <div className={`pageSlider pageSlider-${status}`}>
             <div className={classNames('detail-place-room-type', { close: isCalenderOpen })}>
               <ImageSlider images={photoList} />
-              <Link to={`/detail-place/${placeId}`} state={{ prevPath: location.pathname }} key={placeId}>
+              <Link
+                to={`/detail-place/${currentPlace.placeId}`}
+                state={{ prevPath: location.pathname }}
+                key={currentPlace.placeId}
+              >
                 <LeftArrow className="detail-place-room-type-previous-page" />
               </Link>
               <div className="detail-place-room-type-info">
                 <header className="detail-place-room-type-info-name">{room.name}</header>
                 <div className="detail-place-room-type-info-accommodation">
                   <div className="detail-place-room-type-info-accommodation-check-in-check-out">
-                    {/* 입실 {room.checkin.substring(0, 5)} / 퇴실 {room.checkout.substring(0, 5)} */}
+                    입실 {currentPlace.checkIn.substring(0, 5)} / 퇴실 {currentPlace.checkOut.substring(0, 5)}
                   </div>
                   <div className="detail-place-room-type-info-accommodation-price">{room.price}</div>
                 </div>

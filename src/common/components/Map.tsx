@@ -23,8 +23,7 @@ function Map({address}:addressProps) {
 
     const geocoder = new window.kakao.maps.services.Geocoder();
 
-    console.log(address)
-    // '서울특별시 광진구 군자동 373-2'
+
     geocoder.addressSearch(address, function (result: any, status: any) {
       // 정상적으로 검색이 완료됐으면
       if (status === window.kakao.maps.services.Status.OK) {

@@ -1,111 +1,104 @@
-import React,{useCallback,useEffect,useState} from "react";
-import { useSelector } from "react-redux";
-import { useNavigate,Link } from 'react-router-dom';
-import axios  from "axios";
-import { loadTossPayments } from '@tosspayments/payment-sdk'
+import React, { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
+import { loadTossPayments } from '@tosspayments/payment-sdk';
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
-import RightArrow from "../../../icons/right-arrow.svg";
+import RightArrow from '../../../icons/right-arrow.svg';
 import './Reservation.scss';
-import BottomButton from "../../../common/components/BottomButton";
-import {TOSS} from "../../../constants/url.cosnt"
-
-
-
+import BottomButton from '../../../common/components/BottomButton';
+import { TOSS } from '../../../constants/url.cosnt';
 
 function Reservation() {
   const navigation = useNavigate();
   const { nickname, phone } = useSelector((state: any) => state.persist.user.user);
-  const { date, dateString } = useSelector((state: any) => state.persist.date);
-  const {room,place} = useSelector((state: any) => state.persist.reservation);
-  const [kakao2,setKakao] = useState({
+  const { room, place,date } = useSelector((state: any) => state.persist.reservation);
+  const [kakao2, setKakao] = useState({
     // 응답에서 가져올 값들
-    next_redirect_pc_url: "",
-    tid: "",
+    next_redirect_pc_url: '',
+    tid: '',
     // 요청에 넘겨줄 매개변수들
     params: {
-      cid: "TC0ONETIME",
-      partner_order_id: "partner_order_id",
-      partner_user_id: "partner_user_id",
-      item_name: "초코파이",
+      cid: 'TC0ONETIME',
+      partner_order_id: 'partner_order_id',
+      partner_user_id: 'partner_user_id',
+      item_name: '초코파이',
       quantity: 1,
       total_amount: 2200,
       vat_amount: 200,
       tax_free_amount: 0,
-      approval_url: "http://localhost:3000/",
-      fail_url: "http://localhost:3000/",
-      cancel_url: "http://localhost:3000/",
+      approval_url: 'http://localhost:3000/',
+      fail_url: 'http://localhost:3000/',
+      cancel_url: 'http://localhost:3000/',
     },
-  })
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    postKakaopay()
+    postKakaopay();
   }, []);
 
-
-  const creditCardPayment =  () => {
+  const creditCardPayment = () => {
     loadTossPayments(TOSS.CLIENT_KEY).then((tossPayments) => {
-      tossPayments
-        .requestPayment('카드', {
-          amount: Number(room.price.slice(0, -1).replace(',','')),
-          orderId: 'AVw8mD2KHztN_646IGAZF',
-          orderName: place.name+room.name,
-          customerName: nickname,
-          successUrl: `${process.env.REACT_APP_BASE_URL}/reservation-confirm/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
-          failUrl: `${process.env.REACT_APP_BASE_URL}/reservation/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
-        })
+      tossPayments.requestPayment('카드', {
+        amount: Number(room.price.slice(0, -1).replace(',', '')),
+        orderId: 'AVw8mD2KHztN_646IGAZF',
+        orderName: place.name + room.name,
+        customerName: nickname,
+        successUrl: `${process.env.REACT_APP_BASE_URL}/reservation-confirm/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
+        failUrl: `${process.env.REACT_APP_BASE_URL}/reservation/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
+      });
     });
   };
 
-  const BankTransfer =  () => {
+  const BankTransfer = () => {
     loadTossPayments(TOSS.CLIENT_KEY).then((tossPayments) => {
-      tossPayments
-        .requestPayment('계좌이체', { 
-          amount: Number(room.price.slice(0, -1).replace(',','')),
-          orderId: 'AVw8mD2KHztN_646IGAZF',
-          orderName: place.name+room.name,
-          customerName: nickname,
-          successUrl: `${process.env.REACT_APP_BASE_URL}/reservation-confirm/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
-          failUrl: `${process.env.REACT_APP_BASE_URL}/reservation/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
-        })
-  })}
+      tossPayments.requestPayment('계좌이체', {
+        amount: Number(room.price.slice(0, -1).replace(',', '')),
+        orderId: 'AVw8mD2KHztN_646IGAZF',
+        orderName: place.name + room.name,
+        customerName: nickname,
+        successUrl: `${process.env.REACT_APP_BASE_URL}/reservation-confirm/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
+        failUrl: `${process.env.REACT_APP_BASE_URL}/reservation/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
+      });
+    });
+  };
 
   const config = {
-    next_redirect_pc_url: "",
-    tid: "",
+    next_redirect_pc_url: '',
+    tid: '',
     params: {
-      cid: "TC0ONETIME",
-      partner_order_id: "partner_order_id",
-      partner_user_id: "partner_user_id",
-      item_name: "동대문엽기떡볶이",
+      cid: 'TC0ONETIME',
+      partner_order_id: 'partner_order_id',
+      partner_user_id: 'partner_user_id',
+      item_name: '동대문엽기떡볶이',
       quantity: 1,
       total_amount: 22000,
       vat_amount: 0,
       tax_free_amount: 0,
-      approval_url: "http://localhost:3000",
-      fail_url: "http://localhost:3000",
-      cancel_url: "http://localhost:3000",
+      approval_url: 'http://localhost:3000',
+      fail_url: 'http://localhost:3000',
+      cancel_url: 'http://localhost:3000',
     },
   };
 
- const APP_ADMIN_KEY = '280b4b1856b2e89cb30fa6706dd06751';
+  const APP_ADMIN_KEY = '280b4b1856b2e89cb30fa6706dd06751';
 
   const postKakaopay = async () => {
     const data = await axios.post('/api/v1/payment/ready', config, {
       headers: {
         Authorization: `KakaoAK ${APP_ADMIN_KEY}`,
-        "Content-type": "application/x-www-form-urlencoded;charset=utf-8"
-      }
+        'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+      },
     });
-  }
-
+  };
 
   return (
     <>
       <div className="reservationPage">
         <div className="header">
-        <Link to={`/detail-place/${place.placeId}/${room.roomId}`} key={place.placeId} state={{ room,place }}>
-          <Exit className="exit-button"  />
+          <Link to={`/detail-place/${place.placeId}/${room.roomId}`} key={place.placeId} state={{ room, place }}>
+            <Exit className="exit-button" />
           </Link>
           <h1 className="header-title">예약</h1>
         </div>
@@ -121,15 +114,15 @@ function Reservation() {
           <div className="checkin-checkout-date">
             <span className="check-title">체크인</span>
             <span className="check-date">
-              {date.start.substring(2, 4)}.{date.start.substring(4, 6)}.{date.start.substring(6, 8)}{' '}
-              {dateString.substring(5, 8)}
+              {date.date.start.substring(2, 4)}.{date.date.start.substring(4, 6)}.{date.date.start.substring(6, 8)}{' '}
+              {date.dateString.substring(5, 8)}
             </span>
           </div>
           <div className="checkin-checkout-date">
             <span className="check-title">체크아웃</span>
             <span className="check-date">
-              {date.end.substring(2, 4)}.{date.end.substring(4, 6)}.{date.end.substring(6, 8)}{' '}
-              {dateString.substring(16, 19)}
+              {date.date.end.substring(2, 4)}.{date.date.end.substring(4, 6)}.{date.date.end.substring(6, 8)}{' '}
+              {date.dateString.substring(16, 19)}
             </span>
           </div>
         </div>
@@ -170,10 +163,10 @@ function Reservation() {
         </div>
       </div>
       <Link to={`/reservation-confirm/${place.placeId}/${room.roomId}/${date.start}/${date.end}`} key={place.placeId}>
-        <BottomButton text= {`${room.price} 결제하기`} />
-        </Link>
+        <BottomButton text={`${room.price} 결제하기`} />
+      </Link>
     </>
   );
-};
+}
 
 export default Reservation;
