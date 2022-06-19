@@ -3,14 +3,14 @@ import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { errorActions } from '../../../../redux/reducers/errorSlice';
-import ToastMessage from '../../../../common/components/ToastMessage';
+import { errorActions } from '../../../redux/reducers/errorSlice';
+import ToastMessage from '../../../common/dialog/ToastMessage';
 import './VerifyPhone.scss';
 import Timer from './Timer';
-import { SIGN_UP_PATH } from '../../../../constants/path.const';
-import { ReactComponent as Check } from '../../../../icons/check.svg';
-import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
-import { phoneSendMessage, phoneCheckNumber } from '../../../../common/api/signup';
+import { SIGN_UP_PATH } from '../../../constants/path.const';
+import { ReactComponent as Check } from '../../../icons/check.svg';
+import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
+import { phoneSendMessage, phoneCheckNumber } from '../../../common/api/signup';
 
 
 function VerifyPhone() {

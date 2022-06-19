@@ -6,10 +6,10 @@ import { Transition  } from 'react-transition-group';
 import { AxiosResponse } from 'axios';
 import { reservationActions } from '../../../redux/reducers/reservationSlice';
 import { getRoomData } from '../../../common/api/getRoom';
-import ImageSlider from '../../../common/components/ImageSlider';
+import ImageSlider from '../../../common/utils/ImageSlider';
 import BottomButton from '../../../common/components/BottomButton';
 import { ReactComponent as LeftArrow } from '../../../icons/left-arrow2.svg';
-import Calender from '../../calender/Calender';
+import Calender from '../../../common/utils/Calender';
 import { currentRoomActions } from '../../../redux/reducers/roomSlice';
 import './RoomTypePage.scss';
 

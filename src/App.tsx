@@ -1,16 +1,15 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import HomePage from './pages/home/Home';
 import EditorNote from './pages/editorNote/EditorNote';
-import SignInPage from './pages/user/signInPage/SignIn';
-import VerifyPhonePage from './pages/user/signUpPage/verifyphone/VerifyPhone';
-import TermsPage from './pages/user/signUpPage/terms/Terms';
-import UserInfo from './pages/user/signUpPage/userInfo/UserInfo';
-import PetInfo from './pages/user/signUpPage/petInfo/PetInfo';
-import Login from './pages/user/signInPage/Login';
+import SignInPage from './pages/signInPage/SignIn';
+import VerifyPhonePage from './pages/signUpPage/verifyphone/VerifyPhone';
+import TermsPage from './pages/signUpPage/terms/Terms';
+import UserInfo from './pages/signUpPage/userInfo/UserInfo';
+import PetInfo from './pages/signUpPage/petInfo/PetInfo';
+import Login from './pages/signInPage/Login';
 import WishListPage from './pages/wishList/WishList';
 import WhereToGoPage from './pages/whereToGo/WhereToGo';
 import {
@@ -28,9 +27,9 @@ import {
 } from './constants/path.const';
 import './App.scss';
 import MyAccount from './pages/myAccount/MyAccount';
-import FindPassword from './pages/user/signInPage/FindPassword';
-import ResetPassword from './pages/user/signInPage/ResetPassword';
-import PhoneAuth from './pages/user/signInPage/PhoneAuth';
+import FindPassword from './pages/signInPage/FindPassword';
+import ResetPassword from './pages/signInPage/ResetPassword';
+import PhoneAuth from './pages/signInPage/PhoneAuth';
 import DetailPlace from './pages/detailPlace/DetailPlace';
 import ReviewsPage from './pages/detailPlace/reviewsPage/ReviewsPage';
 import RoomTypePage from './pages/detailPlace/roomTypePage/RoomTypePage';

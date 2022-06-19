@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{memo}from 'react'
 import './RoomType.scss'
 
 interface RoomListType {
@@ -35,4 +35,4 @@ function RoomType(props: { navigate: () => void; room: RoomListType }) {
   );
 }
 
-export default RoomType;
+export default memo(RoomType);

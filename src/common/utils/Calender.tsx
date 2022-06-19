@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./Calender.scss";
 import { ReactComponent as Exit } from '../../icons/exit.svg';
 import { dateActions } from "../../redux/reducers/dateSlice";
-import { getReservedDate } from "../../common/api/calender";
+import { getReservedDate } from "../api/calender";
 import { errorActions } from "../../redux/reducers/errorSlice";
 
 interface CalenderProps {

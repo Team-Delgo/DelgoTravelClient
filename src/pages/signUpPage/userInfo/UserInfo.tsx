@@ -2,12 +2,12 @@ import React, { ChangeEvent, useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import { AxiosResponse } from 'axios';
-import { useNavigate, useLocation, Location } from 'react-router-dom';
-import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import './UserInfo.scss';
-import { SIGN_UP_PATH } from '../../../../constants/path.const';
+import { SIGN_UP_PATH } from '../../../constants/path.const';
 import { checkEmail, checkPassword, checkPasswordConfirm, checkNickname } from './ValidCheck';
-import { emailCheck } from '../../../../common/api/signup';
+import { emailCheck } from '../../../common/api/signup';
 
 interface LocationState {
   phone: string;

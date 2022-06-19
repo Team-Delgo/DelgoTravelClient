@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback,memo } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { Link,useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
@@ -41,14 +41,18 @@ function Place({ place, places, setPlaces }: PlaceTypeProps) {
   }, [wishList, places]);
 
   const wishListDelete = useCallback(() => {
-    wishDelete({ wishId: wishList, accessToken }, (response: AxiosResponse) => {
-      if (response.data.code === 200) {
-        const updatePlace = { ...place, wishId: 0 };
-        const updatePlaces = places.map((p) => (p.placeId === updatePlace.placeId ? { ...p, ...updatePlace } : p));
-        setPlaces(updatePlaces);
-        setWishList(0);
-      }
-    }, dispatch);
+    wishDelete(
+      { wishId: wishList, accessToken },
+      (response: AxiosResponse) => {
+        if (response.data.code === 200) {
+          const updatePlace = { ...place, wishId: 0 };
+          const updatePlaces = places.map((p) => (p.placeId === updatePlace.placeId ? { ...p, ...updatePlace } : p));
+          setPlaces(updatePlaces);
+          setWishList(0);
+        }
+      },
+      dispatch,
+    );
   }, [wishList, places]);
 
   return (
@@ -78,4 +82,4 @@ function Place({ place, places, setPlaces }: PlaceTypeProps) {
   );
 }
 
-export default Place;
+export default memo(Place);

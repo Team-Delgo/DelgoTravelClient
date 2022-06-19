@@ -6,15 +6,15 @@ import { AxiosResponse } from 'axios';
 import { Transition  } from 'react-transition-group';
 import RoomType from './roomType/RoomType';
 import Reviews from './reviews/Reviews';
-import ImageSlider from '../../common/components/ImageSlider';
-import Map from '../../common/components/Map';
+import ImageSlider from '../../common/utils/ImageSlider';
+import Map from '../../common/utils/Map';
 import Heart from '../../common/components/Heart';
 import { getDetailPlace } from '../../common/api/getPlaces';
 import { wishInsert, wishDelete } from '../../common/api/wish';
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg';
 import { currentPlaceActions } from '../../redux/reducers/placeSlice';
 import './DetailPlace.scss';
-import Calender from '../calender/Calender';
+import Calender from '../../common/utils/Calender';
 
 interface PhotoListType {
   detailPhotoId: number
@@ -145,6 +145,11 @@ function DetailPlace() {
     window.scroll({ top: document.body.scrollHeight, behavior: 'smooth' });
   }, []);
 
+  const moveToPrevPage = useCallback(() => {
+    if(location.state.prevPath==="/wish-list") navigate("/wish-list")
+    else navigate("/where-to-go")
+  }, []);
+
   return (
     <>
       {isCalenderOpen && <Calender closeCalender={calenderOpenClose} isRoom={false} />}
@@ -159,9 +164,7 @@ function DetailPlace() {
           >
             <div className={classNames('detail-place', { close: isCalenderOpen })}>
               <ImageSlider images={photoList} />
-              <Link to="/where-to-go" key={place.placeId}>
-                <LeftArrow className="detail-place-previous-page" />
-              </Link>
+                <LeftArrow className="detail-place-previous-page" onClick={moveToPrevPage}/>
               <div className="detail-place-heart">
                 {place.wishId === 0 ? (
                   <Heart wishList={place.wishId} handleWishList={wishListInsert} />

@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AxiosResponse } from 'axios';
 import { tokenActions } from '../../../redux/reducers/tokenSlice';
 import { tokenRefresh } from '../../../common/api/login';
-import PopularPlace from './PopularPlace';
-import TravelHisotryPlace from './TravelHisotryPlace';
+import PopularPlace from './popularPlace/PopularPlace';
+import TravelHisotryPlace from './travelHistoryPlace/TravelHistoryPlace';
 import './History.scss';
 
 type PopularPlaceType = {

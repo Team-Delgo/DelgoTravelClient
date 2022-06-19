@@ -1,5 +1,5 @@
 
-import React,{useMemo, useState,useCallback} from 'react'
+import React,{useMemo, useState,useCallback ,memo} from 'react'
 import { ReactComponent as ReviewStar } from '../../../icons/review-star.svg'
 import './Reviews.scss';
 
@@ -75,4 +75,4 @@ function Reviews({ review }: RivewTypeProps) {
   );
 }
 
-export default Reviews;
+export default memo(Reviews);
