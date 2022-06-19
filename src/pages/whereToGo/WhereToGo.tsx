@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 import React, { useState, useEffect, useCallback,useMemo } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
@@ -17,7 +17,7 @@ import Place from './place/Place'
 // import {RootState} from '../../redux/store'
 import { ReactComponent as BottomArrow } from '../../icons/bottom-arrow.svg';
 import './WhereToGo.scss';
-import Calender from '../calender/Calender';
+import Calender from '../../common/utils/Calender';
 
 
 interface PlaceType {
@@ -142,11 +142,11 @@ function WhereToGo() {
               })}
         </div>
         <RegionSelectionModal
-            regionSelectionModal={regionSelectionModal}
-            closeRegionSelectionModal={closeRegionSelectionModal}
-            setAreaTerm={setAreaTerm}
-            areaTerm={areaTerm}
-          />
+          regionSelectionModal={regionSelectionModal}
+          closeRegionSelectionModal={closeRegionSelectionModal}
+          setAreaTerm={setAreaTerm}
+          areaTerm={areaTerm}
+        />
       </div>
       <Footer />
     </>

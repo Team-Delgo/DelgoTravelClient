@@ -11,10 +11,8 @@ async function wishInsert(
     const result = await axios.post(
       `${url}wish/insert`,
       {
-        wish: {
           userId: data.userId,
           placeId: data.placeId,
-        },
       },
       {
         headers: {

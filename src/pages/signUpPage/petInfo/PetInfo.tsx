@@ -4,14 +4,13 @@ import { AxiosResponse } from 'axios';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { checkPetName } from '../userInfo/ValidCheck';
-import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
-import { ReactComponent as Camera } from '../../../../icons/camera.svg';
+import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
+import { ReactComponent as Camera } from '../../../icons/camera.svg';
 import './PetInfo.scss';
-import { tokenActions } from '../../../../redux/reducers/tokenSlice';
 import DogType from './DogType';
 import BirthSelector from './BirthSelector';
-import { signup, petImageUpload } from '../../../../common/api/signup';
-import Check from "../../../../icons/check.svg"
+import { signup, petImageUpload } from '../../../common/api/signup';
+import Check from "../../../icons/check.svg"
 
 interface LocationState {
   phone: string;

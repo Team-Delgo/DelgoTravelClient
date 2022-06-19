@@ -1,10 +1,8 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback,memo } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
 import { wishInsert, wishDelete } from '../../../common/api/wish'
 import Heart from '../../../common/components/Heart'
-// import { ReactComponent as ActiveHeart } from '../../../icons/heart-active.svg';
-// import { ReactComponent as Heart } from '../../../icons/heart.svg';
 import './RecommendedPlaces.scss';
 
 interface RedcommendedPlacesProps {
@@ -76,4 +74,4 @@ function RecommendedPlaces({ place, places, setPlaces }: RedcommendedPlacesProps
   );
 }
 
-export default RecommendedPlaces;
+export default memo(RecommendedPlaces);
