@@ -8,6 +8,7 @@ import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg'
 import { ReactComponent as Camera } from '../../icons/camera.svg';
 import { ReactComponent as ThumbUp } from '../../icons/thumb-up.svg';
 import { ReactComponent as ThumbUpActive } from '../../icons/thumb-up-active.svg';
+import { ReactComponent as X } from '../../icons/x.svg';
 import './RiviewWriting.scss';
 
 
@@ -31,10 +32,11 @@ function RiviewWriting() {
   const [cleanlinessLike,setCleanlinessLike] = useState(false)
   const [facilitiesLike,setFacilitiesLike] = useState(false)
   const [locationLike,setLocationLike] = useState(false)
+  const [rivewText,setReviewText] = useState("")
 
   const state = useLocation().state as ReservationPlaceType;
   const navigate = useNavigate();
-
+;
   const moveToPreviousPage = useCallback(() => {
     navigate(-1);
   }, []);
@@ -46,6 +48,9 @@ function RiviewWriting() {
   }, []);
 
   const handleUploadFile = async (event: { target: HTMLInputElement }) => {
+    if(images.length===4){
+      return
+    }
     if (event.target.files) {
       const imageLists = event.target.files;
       let imageUrlLists = [...images];
@@ -60,6 +65,11 @@ function RiviewWriting() {
       }
       setImages(imageUrlLists);
     }
+  };
+
+  const handleDeleteImage = (clickedImage: File) =>(event: React.MouseEvent)  => {
+    const newImages = images.filter((image) => image !== clickedImage);
+    setImages(newImages);
   };
 
   const handleStarRating1 = useCallback(() => {
@@ -151,6 +161,10 @@ function RiviewWriting() {
     setLocationLike(!locationLike)
   },[locationLike])
 
+  const handleReviewWrite = useCallback((e)=>{
+    setReviewText(e.target.value)
+  },[])
+
   return (
     <div className="review-writing">
       <header className="review-writing-header">
@@ -188,17 +202,32 @@ function RiviewWriting() {
             <BigRivewStar onClick={handleStarRating5} />
           )}
         </div>
-        <textarea
-          className="review-writing-body-textarea"
-          placeholder="다른 멍멍이들을 위해&#13;&#10;솔직한 리뷰를 부탁드려요!"
-        />
+        <div className="review-writing-body-textarea-container">
+          <textarea
+            className="review-writing-body-textarea"
+            placeholder="다른 멍멍이들을 위해&#13;&#10;솔직한 리뷰를 부탁드려요!"
+            onChange={handleReviewWrite}
+            maxLength={150}
+          />
+          <div className="review-writing-body-textarea-length">{rivewText.length}/150</div>
+        </div>
         <div className="review-writing-body-file">
           <div className="review-writing-body-file-uploader" aria-hidden="true" onClick={handleOpenFileUpload}>
             <Camera />
             <input type="file" multiple ref={fileUploadRef} onChange={handleUploadFile} style={{ display: 'none' }} />
           </div>
           {images.map((image) => (
-            <img className="review-writing-body-file-image" src={image} alt="img" key={image} />
+            <div className="review-writing-body-file-image-container">
+              <img className="review-writing-body-file-image" src={image} alt="img" key={image} />
+              <div
+                className="review-writing-body-file-image-delete"
+                aria-hidden="true"
+                onClick={handleDeleteImage(image)}
+              >
+                <div className="review-writing-body-file-image-delete-button" />
+                <X className="review-writing-body-file-image-delete-x" />
+              </div>
+            </div>
           ))}
         </div>
       </body>
