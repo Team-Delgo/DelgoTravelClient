@@ -25,6 +25,7 @@ function Folder() {
   useEffect(() => {
     getWishedPlaces({ accessToken, userId }, (response: AxiosResponse) => {
       setWishedPlace(response.data.data);
+      console.log(response.data.data)
     }, dispatch);
   }, [accessToken]);
 
