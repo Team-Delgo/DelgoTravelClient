@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
-import WishedPlace from './WishedPlace';
+import WishedPlace from './wishedPlace/WishedPlace';
 import { getWishedPlaces } from '../../../common/api/getPlaces';
 import './Folder.scss';
 

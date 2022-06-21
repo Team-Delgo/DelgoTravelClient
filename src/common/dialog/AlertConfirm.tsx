@@ -37,8 +37,8 @@ function AlertConfirm(props: { text: string, yesButtonHandler: () => void, noBut
     <div className={classNames('alertConfirm-box', { unmount })}>
       <div className='alertConfirm-text'>{text}</div>
       <div className='alertConfirm-wrapper'>
-        <button type='button' className='alertConfirm-button' onClick={yesUnmount}>확인</button>
         <button type='button' className='alertConfirm-button' onClick={noUnmount}>취소</button>
+        <button type='button' className='alertConfirm-button' onClick={yesUnmount}>확인</button>
       </div>
     </div>
   </div>, el);

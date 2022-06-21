@@ -18,11 +18,11 @@ if (endMonth.length === 1) {
   endMonth = `0${endMonth}`;
 }
 let startDate = start.getDate().toString();
-if (startMonth.length === 1) {
+if (startDate.length === 1) {
   startDate = `0${startDate}`;
 }
 let endDate = end.getDate().toString();
-if (endMonth.length === 1) {
+if (endDate.length === 1) {
   endDate = `0${endDate}`;
 }
 

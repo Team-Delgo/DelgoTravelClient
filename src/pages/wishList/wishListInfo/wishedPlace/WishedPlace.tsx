@@ -1,12 +1,10 @@
-import React, { useState, useCallback } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useState, useCallback,memo } from 'react'
+import { Link ,useLocation} from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
-import alertConfirm, { Button, alert } from "react-alert-confirm";
-import "react-alert-confirm/dist/index.css";
-import AlertConfirm from '../../../common/dialog/AlertConfirm';
-import Heart from '../../../common/components/Heart'
-import { wishDelete } from '../../../common/api/wish'
+import AlertConfirm from '../../../../common/dialog/AlertConfirm';
+import Heart from '../../../../common/components/Heart'
+import { wishDelete } from '../../../../common/api/wish'
 import './WishedPlace.scss';
 
 type WishedPlaceTypeProps = {
@@ -28,31 +26,35 @@ interface PlaceType {
 
 function WishedPlace({ place, wishedPlace, setWishedPlace }: WishedPlaceTypeProps) {
   const [wishList, setWishList] = useState(true);
-  const refreshToken = localStorage.getItem('refreshToken') || '';
   const accessToken = useSelector((state: any) => state.token.token);
   const [wishListAlertConfirmOpen, setWishListAlertConfirmOpen] = useState(false);
   const dispatch = useDispatch();
+  const location: any = useLocation();
 
   const wishListDelete = useCallback(() => {
-    wishDelete({ wishId: place.wishId, accessToken }, (response: AxiosResponse) => {
-      if (response.data.code === 200) {
-        const updateWishedPlaces = wishedPlace.filter((p) => p.placeId !== place.placeId);
-        setWishedPlace(updateWishedPlaces);
-        setWishList(false);
-      }
-    }, dispatch);
+    wishDelete(
+      { wishId: place.wishId, accessToken },
+      (response: AxiosResponse) => {
+        if (response.data.code === 200) {
+          const updateWishedPlaces = wishedPlace.filter((p) => p.placeId !== place.placeId);
+          setWishedPlace(updateWishedPlaces);
+          setWishList(false);
+        }
+      },
+      dispatch,
+    );
   }, [wishList, wishedPlace]);
 
   const wishListConfirmModalOpenClose = useCallback(() => {
     setWishListAlertConfirmOpen(!wishListAlertConfirmOpen);
-  }, [wishListAlertConfirmOpen])
+  }, [wishListAlertConfirmOpen]);
 
 
   return (
     <div className="wished-place">
       {wishList && (
         <>
-          <Link to={`/detail-place/${place.placeId}`} key={place.placeId}>
+          <Link to={`/detail-place/${place.placeId}`} state={{ prevPath: location.pathname }} key={place.placeId}>
             <img src={place.mainPhotoUrl} alt="wished-place-img" aria-hidden="true" />
           </Link>
           <Link to={`/detail-place/${place.placeId}`} key={place.placeId}>
@@ -77,4 +79,4 @@ function WishedPlace({ place, wishedPlace, setWishedPlace }: WishedPlaceTypeProp
   );
 }
 
-export default WishedPlace;
+export default memo(WishedPlace);

@@ -1,35 +1,22 @@
 .wish-list-background{
     background: #F3EFEA;
+    height: 100%;
     padding-bottom: 70px;
     color: #3E382F;
     .wish-list-tab{
         height: 12vh;
         display: flex;
+        justify-content: space-around;
+        align-items: center;
         border-bottom: 2px solid #E8E2DC;
         font-size: 18px;
         font-weight: 700;
-        &-folder{
-            position: absolute;
-            top:8%;
-            left:20%;
+        &-folder,&-history{
+            padding-top: 50px;
             color:#B0A69D
         }
-        &-folder-active{
-            position: absolute;
-            top:8%;
-            left:20%;
-            color:#3E382F;
-        }
-        &-history{
-            position: absolute;
-            top:8%;
-            right:20%;
-            color:#B0A69D
-        }
-        &-history-active{
-            position: absolute;
-            top:8%;
-            right:20%;
+        &-folder-active,&-history-active{
+            padding-top: 50px;
             color:#3E382F;
         }
     }

@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom';
-import { ReactComponent as Arrow } from '../../../../icons/left-arrow.svg';
+import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import DetailTerm from './DetailTerm';
-import { SIGN_UP_PATH } from '../../../../constants/path.const';
+import { SIGN_UP_PATH } from '../../../constants/path.const';
 import './Terms.scss';
-import Check from "../../../../icons/check.svg"
+import Check from "../../../icons/check.svg"
 
 interface Term {
   term1: boolean;

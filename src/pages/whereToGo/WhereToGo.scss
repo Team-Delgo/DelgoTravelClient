@@ -1,6 +1,6 @@
 .where-to-go-background {
   width: 100%;
-  min-height: 100vh;
+  height: 100%;
   background: #f3efea;
   padding-top: 14%;
   padding-bottom: 50px;
@@ -21,7 +21,8 @@
   }
   .search-region-date {
     display: flex;
-    padding: 12px 0 0 7.5%;
+    margin: 12px 0 0 7.5%;
+    width: 88vw;
     height: 49px;
     .search-region {
       display: flex;
@@ -33,6 +34,7 @@
       border-radius: 5px;
     }
     .search-date {
+      width: 60vw;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -40,7 +42,6 @@
       color: #000000;
       background: #ffffff;
       margin-left: 4%;
-      width: 60vw;
       height: 49px;
       border-radius: 5px;
     }
@@ -61,4 +62,9 @@
     box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.2);
     border-radius: 20px 20px 0px 0px;
   }
+    .skeleton{
+      width: 86vw;
+      padding-bottom: 40px;
+      margin: auto;
+    }
 }

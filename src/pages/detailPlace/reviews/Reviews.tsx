@@ -1,11 +1,25 @@
 
-import React,{useMemo, useState,useCallback} from 'react'
+import React,{useMemo, useState,useCallback ,memo} from 'react'
 import { ReactComponent as ReviewStar } from '../../../icons/review-star.svg'
 import './Reviews.scss';
 
 
+interface RivewTypeProps {
+  review:RivewType
+}
 
-function Reviews({ review }: any) {
+interface RivewType {
+  id:number,
+  nickName: string;
+  profileImage: string;
+  registrationDate: string;
+  reviewContent: string;
+  reviewImages: Array<string>;
+  roomUsed: string;
+  starRating: number;
+}
+
+function Reviews({ review }: RivewTypeProps) {
   const reviewStarCount = useMemo(()=>reviewStarComponents(),[])
   const [moreDescription,setMoreDescription] = useState(false)
 
@@ -35,17 +49,17 @@ function Reviews({ review }: any) {
         </div>
       </header>
       <body className="review-content">
-        {review.reviewContent.length > 95 ? (
+        {review.reviewContent.length > 115 ? (
           <div>
             {moreDescription ? (
               <div className="review-content-description">{review.reviewContent}</div>
             ) : (
-              <>
-                <div className="review-content-description">{review.reviewContent.substring(0, 94)} ...</div>
-                <span className="review-content-description-more" aria-hidden="true" onClick={handleMoreDescription}>
-                  더보기
-                </span>
-              </>
+                <div className="review-content-description">
+                  {review.reviewContent.substring(0, 116)} ...
+                  <span className="review-content-description-more" aria-hidden="true" onClick={handleMoreDescription}>
+                    더보기
+                  </span>
+                </div>
             )}
           </div>
         ) : (
@@ -61,4 +75,4 @@ function Reviews({ review }: any) {
   );
 }
 
-export default Reviews;
+export default memo(Reviews);

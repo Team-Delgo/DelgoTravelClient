@@ -29,12 +29,16 @@ async function getWishedPlaces(
 }
 
 async function getDetailPlace(
-  data: { userId: number; placeId: number },
+  data: { userId: number; placeId: number; startDt: string; endDt: string },
   success: (data: AxiosResponse) => void,
   dispatch: any,
 ) {
   try {
-    const result = await axios.get(`${url}place/selectDetail?userId=${data.userId}&placeId=${data.placeId}`);
+    const startDt = `${data.startDt.substring(0, 4)}-${data.startDt.substring(4, 6)}-${data.startDt.substring(6, 8)}`;
+    const endDt = `${data.endDt.substring(0, 4)}-${data.endDt.substring(4, 6)}-${data.endDt.substring(6, 8)}`;
+    const result = await axios.get(
+      `${url}place/selectDetail?userId=${data.userId}&placeId=${data.placeId}&startDt=${startDt}&endDt=${endDt}`,
+    );
     success(result);
   } catch (error: AxiosError | any) {
     useErrorHandlers(dispatch, error);

@@ -18,26 +18,26 @@
     margin: 0 0 15% 5%;
     &-name {
       padding: 5% 0 2% 0;
-      font-size: 6vw;
+      font-size: 24px;
       font-weight: bold;
     }
     &-accommodation {
       display: flex;
       justify-content: space-between;
       padding-bottom: 2%;
-      font-size: 3.5vw;
+      font-size: 14px;
       &-check-in-check-out {
         color: #8a8a8a;
       }
       &-price {
-        font-size: 6vw;
+        font-size: 24px;
         font-weight: bold;
         margin: -3.5% 4% 0 0;
       }
     }
     &-facility {
       padding-bottom: 10%;
-      font-size: 3.5vw;
+      font-size: 18px;
       color: #6e614d;
     }
   }
@@ -46,10 +46,10 @@
     align-items: center;
     justify-content: space-between;
     width: 87vw;
-    height: 6vh;
+    height: 61px;
     background-color: #ffffff;
     color: #3e382f;
-    font-size: 3.5vw;
+    font-size: 16px;
     font-weight: bold;
     margin: 0 0 18% 5%;
     padding-left: 4%;
@@ -83,7 +83,9 @@
   }
   &-facility {
     margin: 0 0 30% 5%;
-    font-size: 5vw;
+    font-size: 18px;
+    color: #3E382F;
+    font-weight: 500;
     &-header {
       padding-bottom: 7%;
     }
@@ -97,9 +99,15 @@
   &-base-information,
   &-additional-personnel-information {
     margin: 0 5% 30% 5%;
-    font-size: 5vw;
+    font-size: 18px;
+    color: #3E382F;
+    font-weight: 500;
     &-header {
       padding-bottom: 7%;
     }
   }
+}
+.reservation-button{
+  position: "absolute";
+  margin-top: 100px;
 }

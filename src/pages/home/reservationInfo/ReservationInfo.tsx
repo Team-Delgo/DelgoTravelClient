@@ -6,7 +6,7 @@ import Book from '../../../icons/book.svg';
 import Emergency from '../../../icons/emergency.svg'
 import './ReservationInfo.scss';
 
-type ReservationInfoType = {
+interface ReservationInfoType  {
   id: number
   image:string
   placeName:string
@@ -15,7 +15,7 @@ type ReservationInfoType = {
   checkInTime:string 
   checkOutTime:string 
 }
-type RecommendedPlaceType = {
+interface RecommendedPlaceType {
   id: number
   image:string
   name:string

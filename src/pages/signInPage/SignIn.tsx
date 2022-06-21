@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import './SignIn.scss';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { ReactComponent as Kakao } from '../../../icons/kakao.svg';
-import { ReactComponent as Naver } from '../../../icons/naver.svg';
-import { ReactComponent as Apple } from '../../../icons/apple.svg';
-import { SIGN_IN_PATH, SIGN_UP_PATH } from '../../../constants/path.const';
-import { tokenActions } from '../../../redux/reducers/tokenSlice';
-import { KAKAO, NAVER } from '../../../constants/url.cosnt'
+import { ReactComponent as Kakao } from '../../icons/kakao.svg';
+import { ReactComponent as Naver } from '../../icons/naver.svg';
+import { ReactComponent as Apple } from '../../icons/apple.svg';
+import { SIGN_IN_PATH, SIGN_UP_PATH } from '../../constants/path.const';
+import { tokenActions } from '../../redux/reducers/tokenSlice';
+import { KAKAO, NAVER } from '../../constants/url.cosnt'
 
 
 function SignIn() {
