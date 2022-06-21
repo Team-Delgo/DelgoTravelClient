@@ -49,8 +49,11 @@ function Home() {
   const navigation = useNavigate();
   const dispatch = useDispatch();
   const refreshToken = localStorage.getItem('refreshToken') || '';
+  console.log(1);
   const accessToken = useSelector((state: any) => state.token.token);
+  console.log(2);
   const userId = useSelector((state: any) => state.persist.user.user.id)
+  console.log(3);
 
   useEffect(() => {
     getAllPlaces(userId, (response: AxiosResponse) => {

@@ -48,6 +48,10 @@ function MyAccount() {
     setText('정말 회원탈퇴 하시겠어요?ㅠㅠ');
   };
 
+  const navigateCouponPage = () => {
+    navigation('/user/myaccount/coupon');
+  };
+
   return (
     <div className="account">
       {logoutModalOpen && <AlertConfirm text={text}
@@ -67,7 +71,7 @@ function MyAccount() {
           </div>
         </div>
         <div className="account-profile-info">
-          <div className="account-proifle-info-coupon">
+          <div className="account-proifle-info-coupon"  aria-hidden="true" onClick={navigateCouponPage}>
             <p className="account-profile-info-column">쿠폰</p>
             <p className="account-profile-info-value">3장</p>
           </div>
