@@ -42,7 +42,9 @@
           align-items: center;
           justify-content: space-evenly;
           padding: 5%
-
+        }
+        &-textarea-container{
+          position: relative;
         }
         &-textarea{
           display: block;
@@ -58,6 +60,12 @@
           border-radius: 5px;
           border: none;
           font-weight: bold;
+          &-length{
+            color: #828282;
+            position: absolute;
+            bottom: 12px;
+            right: 7%;
+          }
         }
         &-file{
           display: flex;   
@@ -72,11 +80,32 @@
             border-radius: 5px;
             background-color: #F2F2F2;
           }
+          &-image-container{
+            position: relative;
+          }
           &-image{
             width: 80px;
             height: 80px;
             margin-left: 20px;
             border-radius: 5px;
+            &-delete{
+              &-button{
+                width: 17px;
+                height:17px;
+                top:3px;
+                right:3px;
+                position: absolute;
+                background: #F3EFEA;
+                border-radius: 50%;
+              }
+              &-x{
+                width: 10px;
+                height:10px;
+                position: absolute;
+                top:6px;
+                right:6px;
+              }
+            }
           }
         }
       }
