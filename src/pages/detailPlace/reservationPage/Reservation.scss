@@ -125,7 +125,18 @@
     line-height: 21px;
   }
 }
-.couponsale {
+.point-sale {
+  display: flex;
+  justify-content: space-between;
+  &-amount {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 21px;
+    margin-bottom: 35px;
+    color: #b0a69d;
+  }
+}
+.coupon-sale {
   display: flex;
   justify-content: space-between;
   &-amount {

@@ -1,9 +1,10 @@
 
-import React,{useState,useCallback,useRef} from 'react'
+import React,{useState,useCallback,useRef,useEffect} from 'react'
 import {useNavigate, useLocation } from 'react-router-dom'; 
 import BottomButton from '../../common/components/BottomButton';
 import { ReactComponent as BigRivewStarActive } from '../../icons/big-review-star-active.svg';
 import { ReactComponent as BigRivewStar} from '../../icons/big-review-star.svg';
+import { ReactComponent as BigRiveHalfwStar} from '../../icons/big-review-half-star.svg';
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg'
 import { ReactComponent as Camera } from '../../icons/camera.svg';
 import { ReactComponent as ThumbUp } from '../../icons/thumb-up.svg';
@@ -24,6 +25,7 @@ interface ReservationPlaceType {
 function RiviewWriting() {
   const [images, setImages] = useState<Array<any>>([]);
   const fileUploadRef = useRef<HTMLInputElement>(null);
+  const slideRef = useRef<HTMLDivElement>(null)
   const [activeStar1,setActiveStar1] = useState(false)
   const [activeStar2,setActiveStar2] = useState(false)
   const [activeStar3,setActiveStar3] = useState(false)
@@ -36,6 +38,10 @@ function RiviewWriting() {
 
   const state = useLocation().state as ReservationPlaceType;
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    console.log(slideRef.current?.offsetWidth)
+  },[])
 ;
   const moveToPreviousPage = useCallback(() => {
     navigate(-1);
@@ -47,7 +53,7 @@ function RiviewWriting() {
     }
   }, []);
 
-  const handleUploadFile = async (event: { target: HTMLInputElement }) => {
+  const handleUploadFile = (event: { target: HTMLInputElement }) => {
     if(images.length===4){
       return
     }
@@ -72,7 +78,8 @@ function RiviewWriting() {
     setImages(newImages);
   };
 
-  const handleStarRating1 = useCallback(() => {
+  const handleStarRating1 = useCallback((e) => {
+    console.log(e.clientX)
     if (activeStar1 === false) {
       setActiveStar1(true)
       setActiveStar2(false)
@@ -177,12 +184,12 @@ function RiviewWriting() {
         <h4>쪼꼬와의 이용이 어땠나요?</h4>
         <div className="review-writing-body-star">
           {activeStar1 ? (
-            <BigRivewStarActive onClick={handleStarRating1} />
+            <div className="review-star" ref={slideRef}><BigRivewStarActive onClick={handleStarRating1} /></div>
           ) : (
-            <BigRivewStar onClick={handleStarRating1} />
+            <div className="review-star" ref={slideRef}><BigRivewStar onClick={handleStarRating1} /></div>
           )}
           {activeStar2 ? (
-            <BigRivewStarActive onClick={handleStarRating2} />
+            <BigRivewStarActive onClick={handleStarRating2}/>
           ) : (
             <BigRivewStar onClick={handleStarRating2} />
           )}

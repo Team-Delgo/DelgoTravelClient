@@ -36,8 +36,8 @@ function AllPlacesSkeletons() {
     AllPlacesSkeletonsArray.push(
       <div className="skeleton">
         <SkeletonTheme baseColor="#f0e9e9" highlightColor="#e4dddd">
-        <Skeleton height={270} borderRadius={5} />
-        <Skeleton height={80} borderRadius={5} />
+        <Skeleton style={{height:"30vh"}} borderRadius={5} />
+        <Skeleton height={60} borderRadius={5} />
         </SkeletonTheme>
       </div>,
     );
@@ -61,7 +61,6 @@ function WhereToGo() {
   const dispatch = useDispatch();
   const navigation = useNavigate();
   const allPlacesSkeletons = useMemo(()=>AllPlacesSkeletons(),[])
-
 
   const { isLoading, error, data, isFetching } = useQuery(
     'todos',
@@ -98,10 +97,6 @@ function WhereToGo() {
     }, dispatch);
   }, [accessToken]);
 
-  const handleSerchTerm = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  }, []);
-
   const handleRegionSelectionModal = useCallback(() => {
     setRegionSelectionModal(!regionSelectionModal);
   }, [regionSelectionModal]);
@@ -119,25 +114,28 @@ function WhereToGo() {
     <>
       {isCalenderOpen && <Calender closeCalender={handleCalenderOpenClose} isRoom={false} />}
       <div className={classNames('where-to-go-background', { close: isCalenderOpen })}>
-        <input className="search-place" placeholder="숙소검색" value={searchTerm} onChange={handleSerchTerm} />
-        <div className="search-region-date">
-          <div className="search-region" aria-hidden="true" onClick={handleRegionSelectionModal}>
-            {areaTerm === '' ? '전체' : areaTerm}
-            <BottomArrow className="bottom-arrow" />
+        {
+          isLoading ? <div className="filter-skeleton">
+            <SkeletonTheme baseColor="#f0e9e9" highlightColor="#e4dddd">
+              <Skeleton height={49} borderRadius={5} />
+            </SkeletonTheme>
+          </div> : <div className="search-region-date">
+            <div className="search-region" aria-hidden="true" onClick={handleRegionSelectionModal}>
+              {areaTerm === '' ? '전체' : areaTerm}
+              <BottomArrow className="bottom-arrow" />
+            </div>
+            <div className="search-date" aria-hidden="true" onClick={handleCalenderOpenClose}>
+              {dateString}
+              <BottomArrow className="bottom-arrow" />
+            </div>
           </div>
-          <div className="search-date" aria-hidden="true" onClick={handleCalenderOpenClose}>
-            {dateString}
-            <BottomArrow className="bottom-arrow" />
-          </div>
-        </div>
+        }
         <div className="places-container">
           {isLoading
             ? allPlacesSkeletons
             : data?.data.map((place: PlaceType) => {
                 if (place.address.includes(areaTerm)) {
-                  if (place.name.includes(searchTerm)) {
                     return <Place key={place.placeId} place={place} places={places} setPlaces={setPlaces} />;
-                  }
                 }
               })}
         </div>
