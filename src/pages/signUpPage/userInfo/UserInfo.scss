@@ -17,6 +17,12 @@
     margin-top: 5px;
     border: none;
     text-indent: 22px;
+    color: #3e382f;
+    font-size: 16px;
+    &.password{
+      font-size: 25px;
+    }
+    font-weight: 500;
     &::placeholder {
       @include typosettings(16px, $color-light-grey);
     }

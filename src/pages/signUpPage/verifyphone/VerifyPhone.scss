@@ -13,6 +13,7 @@
     position: relative;
     &-resend {
       position: absolute;
+      font-size: 14px;
       margin: 0;
       right: 0;
       bottom: -34px;
@@ -22,17 +23,28 @@
   &-timer {
     position: absolute;
     right: 20px;
-    top: 20px;
+    top: 35px;
+    font-weight: 500;
     color: $color-orange;
   }
   &-input {
     &.phonenumber {
       margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      font
       &::placeholder {
         color: #8a8a8a;
         font-size: 16px;
         font-weight: 300;
       }
+    }
+    &.authnumber{
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: .5px;
     }
 
     &-clear {
@@ -44,7 +56,7 @@
       justify-content: center;
       align-items: center;
       top: calc(50%);
-      right: 11px;
+      right: 20px;
       transform: translateY(-50%);
       border-radius: 100px;
       background-color: #f3efea;

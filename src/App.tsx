@@ -78,7 +78,6 @@ function App() {
         <Route path={DETAIL_PLACE_PATH.RESERVATION} element={<Reservation />} />
         <Route path={DETAIL_PLACE_PATH.RESERVATION_CONFIRM} element={<ReservationConfirmPage />} />
         <Route path={REVIEW_WRITING_PATH} element={<ReviewWritingPage />} />
-        <Route path={MY_ACCOUNT_PATH} element={<MyAccount />} />
         <Route path={KAKAO_REDIRECT_HANDLE_PATH} element={<KakaoRedirectHandler />} />
         <Route path={NAVER_REDIRECT_HANDLE_PATH} element={<NaverRedirectHandler />} />
       </Routes>

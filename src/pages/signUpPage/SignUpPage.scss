@@ -41,7 +41,7 @@ $color-orange: #ffab6f;
     line-height: 22px;
     width: 88vw;
     margin-top: 70px;
-    height: 53px;
+    height: 56px;
     text-align: center;
     border-radius: 56px;
     background-color: $color-gray-2;
@@ -53,6 +53,7 @@ $color-orange: #ffab6f;
     }
   }
   &-input {
+    font-size: 16px;
     &.bitmargin {
       margin-top: 14px;
     }
