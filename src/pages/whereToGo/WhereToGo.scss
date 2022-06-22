@@ -8,17 +8,6 @@
   &.close {
     display: none;
   }
-  .search-place {
-    width: 82vw;
-    height: 50px;
-    background: #fffbf6;
-    border-radius: 5px;
-    border: none;
-    color: #b0a69d;
-    margin-left: 7.5%;
-    padding-left: 3%;
-    font-size: 16px;
-  }
   .search-region-date {
     display: flex;
     margin: 12px 0 0 7.5%;
@@ -62,9 +51,14 @@
     box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.2);
     border-radius: 20px 20px 0px 0px;
   }
-    .skeleton{
+  .filter-skeleton{
+    margin: 12px 0 0 7.5%;
+    width: 88vw;
+    height: 49px;
+    }
+    .skeleton {
       width: 86vw;
       padding-bottom: 40px;
       margin: auto;
     }
-}
+    }

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
@@ -10,32 +10,11 @@ import BottomButton from '../../../common/components/BottomButton';
 import { TOSS } from '../../../constants/url.cosnt';
 
 function Reservation() {
-  const navigation = useNavigate();
   const { nickname, phone } = useSelector((state: any) => state.persist.user.user);
   const { room, place,date } = useSelector((state: any) => state.persist.reservation);
-  const [kakao2, setKakao] = useState({
-    // 응답에서 가져올 값들
-    next_redirect_pc_url: '',
-    tid: '',
-    // 요청에 넘겨줄 매개변수들
-    params: {
-      cid: 'TC0ONETIME',
-      partner_order_id: 'partner_order_id',
-      partner_user_id: 'partner_user_id',
-      item_name: '초코파이',
-      quantity: 1,
-      total_amount: 2200,
-      vat_amount: 200,
-      tax_free_amount: 0,
-      approval_url: 'http://localhost:3000/',
-      fail_url: 'http://localhost:3000/',
-      cancel_url: 'http://localhost:3000/',
-    },
-  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    postKakaopay();
   }, []);
 
   const creditCardPayment = () => {
@@ -142,9 +121,13 @@ function Reservation() {
           <div className="reservation-label">상품가격(1박)</div>
           <div className="original-price-amount">{room.price}</div>
         </div>
-        <div className="couponsale">
+        <div className="point-sale">
+          <div className="reservation-label">포인터 사용</div>
+          <div className="point-sale-amount">-0p</div>
+        </div>
+        <div className="coupon-sale">
           <div className="reservation-label">쿠폰 사용</div>
-          <div className="couponsale-amount">0원</div>
+          <div className="coupon-sale-amount">0원</div>
         </div>
         <div className="reservation-devide" />
         <div className="finalprice">
@@ -152,7 +135,7 @@ function Reservation() {
           <div className="finalprice-price">{room.price}</div>
         </div>
         <div className="reservation-label">결제 수단</div>
-        <div className="payment-method">
+        {/* <div className="payment-method">
           <div className="payment-method-item" aria-hidden="true" onClick={creditCardPayment}>
             신용카드
           </div>
@@ -160,11 +143,11 @@ function Reservation() {
           <div className="payment-method-item" aria-hidden="true" onClick={BankTransfer}>
             토스
           </div>
-        </div>
+        </div> */}
       </div>
-      <Link to={`/reservation-confirm/${place.placeId}/${room.roomId}/${date.start}/${date.end}`} key={place.placeId}>
-        <BottomButton text={`${room.price} 결제하기`} />
-      </Link>
+      <div aria-hidden="true" onClick={creditCardPayment}>
+      <BottomButton text={`${room.price} 결제하기`}/>
+      </div>
     </>
   );
 }
