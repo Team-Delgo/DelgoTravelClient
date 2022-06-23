@@ -110,10 +110,11 @@ function Login() {
           onChange={inputChangeHandler}
         />
       </div>
-      <button type="button" className="login-button active" onClick={loginButtonHandler}>
-        다음
-      </button>
       <div className='login-find_password' aria-hidden="true" onClick={findPassword}>비밀번호찾기</div>
+      <button type="button" className="login-button active" onClick={loginButtonHandler}>
+        로그인
+      </button>
+      
       {loginFailed && <ToastMessage message="아이디 비밀번호를 확인해 주세요" />}
     </div>
   );
