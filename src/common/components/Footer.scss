@@ -1,30 +1,40 @@
 .footer{
     position : fixed;
+    display: flex;
     text-align: center;
     bottom : 0;
     width :100%;
     height:79px;
-    background: #FFFFFF;
+    background: #FFFFFF;    
     box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.2);
     z-index: 1;
-    .homeIcon{
+    font-size: 11px;
+    color: #8A8A8A;
+    .home-icon{
         position: absolute;
         left: 15%;     
-        top: 30%;
+        top: 15%;
     }
-    .searchIcon{
+    .search-icon{
         position: absolute;
         left: 35%;     
-        top: 25%;    
+        top: 15%;    
     }
-    .bagIcon{
+    .bag-icon{
         position: absolute;
         right:35%;
-        top: 30%;
+        top: 15%;
     }
-    .personIcon{
+    .person-icon{
         position: absolute;
         right:15%;
-        top: 30%;
+        top: 15%;
+    }
+    &-text{
+        padding-top: 4px;
+    }
+    &-text-active{
+        color: #3E382F;
+        padding-top: 4px;
     }
 }

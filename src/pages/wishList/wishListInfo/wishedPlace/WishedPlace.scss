@@ -3,13 +3,14 @@
     position: relative;
     img{
         width: 100%;
+        height:270px;
         border-radius: 5px;
         margin-bottom: 10%;
     }
     &-name{
         position: absolute;
         left: 4%;
-        bottom: 27%;
+        bottom: 26%;
         font-weight: bold;
         font-size: 18px;
         color: #FFFFFF;
@@ -19,11 +20,12 @@
         left: 4%;
         bottom: 20%;
         font-size: 12px;  
+        font-weight: 500;
         color: #FFFFFF;
     }
     &-heart{
         position: absolute;
-        top: -5px;
-        right: -10px;
+        top: -20px;
+        right: -15px;
     }
 }

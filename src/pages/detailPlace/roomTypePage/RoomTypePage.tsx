@@ -23,8 +23,9 @@ interface PhotoListType {
 
 function RoomTypePage() {
   const navigate = useNavigate();
-  const { date, dateString } = useSelector((state: any) => state.persist.date);
+  const { date, dateString } = useSelector((state: any) => state.date);
   const { currentPlace } = useSelector((state: any) => state.persist.currentPlace);
+  const { user } = useSelector((state: any) => state.persist.user);
   const dispatch = useDispatch();
   const location: any = useLocation();
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
@@ -70,6 +71,7 @@ function RoomTypePage() {
   const handleReservation = () => {
     dispatch(
       reservationActions.reservation({
+        user: { id: user.id, nickname: user.nickname, email: user.email, phone: user.phone },
         place: {
           placeId: currentPlace.placeId,
           name: currentPlace.name,

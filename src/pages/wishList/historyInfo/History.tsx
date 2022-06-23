@@ -97,20 +97,8 @@ function History() {
   return (
     <div className="travel-history-container">
       {hasTravelHistorys === true ? (
-        <div className="travel-history-profile">
-          <img
-            className="travel-history-profile-image"
-            src={`${process.env.PUBLIC_URL}/assets/images/profileImage.png`}
-            alt="profile-img"
-          />
-          <div className="travel-history-profile-figures">
-            <div className="travel-history-profile-figures-days">
-              Traveled <strong>31</strong> days
-            </div>
-            <div className="travel-history-profile-figures-places">
-              Stayed <strong>12</strong> Places
-            </div>
-          </div>
+        <div className="travel-history-number">
+          델고 갔던 3개 장소
         </div>
       ) : (
         <div className="travel-history-notice">

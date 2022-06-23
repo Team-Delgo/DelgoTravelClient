@@ -37,7 +37,7 @@ function DetailPlace() {
   const [photoList, setPhotoList] = useState<Array<PhotoListType>>([]);
   const [roomTypes, setRoomTypes] = useState<Array<any>>([]);
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
-  const { date, dateString } = useSelector((state: any) => state.persist.date);
+  const { date, dateString } = useSelector((state: any) => state.date);
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const accessToken = useSelector((state: any) => state.token.token);
   const { placeId } = useParams();
@@ -92,6 +92,7 @@ function DetailPlace() {
         setPlace(response.data.data.place);
         setPhotoList(response.data.data.detailPhotoList);
         setRoomTypes(response.data.data.roomList);
+        console.log(response.data.data.roomList)
       },
       dispatch,
     );

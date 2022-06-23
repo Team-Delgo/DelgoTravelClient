@@ -31,7 +31,7 @@ function Folder() {
 
   return (
     <div className="wish-list-container">
-      <div className="wish-list-container-header-text" aria-hidden="true" >저장 된 {wishedPlace?.length}개의 숙소</div>
+      <div className="wish-list-container-header-text" aria-hidden="true" >델고 갈 {wishedPlace?.length}개 장소</div>
       {wishedPlace?.sort((a, b) => b.wishId - a.wishId).map((place) => (
         <WishedPlace place={place} key={place.placeId} wishedPlace={wishedPlace} setWishedPlace={setWishedPlace} />
       ))}

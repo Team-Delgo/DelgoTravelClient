@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes  } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import HomePage from './pages/home/Home';
 import EditorNote from './pages/editorNote/EditorNote';
