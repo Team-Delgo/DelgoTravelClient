@@ -1,40 +1,55 @@
 import React,{useCallback,useEffect} from "react";
 import { useSelector,useDispatch } from "react-redux";
 import { useNavigate, useLocation,Link } from 'react-router-dom';
+import { AxiosResponse } from 'axios';
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
 import RightArrow from "../../../icons/right-arrow.svg";
 import RightArrowBlack from "../../../icons/right-arrow-black.svg";
 import BottomButton from "../../../common/components/BottomButton";
 import { reservationActions } from '../../../redux/reducers/reservationSlice';
+import {bookingRequest,bookingGetData} from '../../../common/api/booking'
 import './ReservationConfirmPage.scss';
+
+
 
 function ReservationConfirmPage() {
   const navigate = useNavigate();
   const { nickname, phone } = useSelector((state: any) => state.persist.user.user);
-  const { date, dateString } = useSelector((state: any) => state.persist.date);
-  const { room, place } = useSelector((state: any) => state.persist.reservation);
+  const { room, place,date } = useSelector((state: any) => state.persist.reservation);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    bookingGetData(
+      { bookingId: '1234'},
+      (response: AxiosResponse) => {
+        console.log(response.data)
+      },
+      dispatch,
+    );
     window.scrollTo(0, 0);
   }, []);
 
   const moveToMainPage = useCallback(() => {
-    dispatch(
-      reservationActions.reservation({
-        place: { placeId: 0, name: '', address: '' },
-        room: {
-          roomId: 0,
-          name: '',
-          checkin: '',
-          checkout: '',
-          price: 0,
-          images: [],
-        },
-      }),
-    );
     setTimeout(() => {
       navigate('/');
+      dispatch(
+        reservationActions.reservation({
+          user: { id: 0, nickname: '', email: '', phone: '' },
+          place: { placeId: 0, name: '', address: '' },
+          room: {
+            roomId: 0,
+            name: '',
+            checkin: '',
+            checkout: '',
+            price: 0,
+            images: [],
+          },
+          date: {
+            date:'',
+            dateString:''
+          },
+        }),
+      );
     }, 300);
   }, []);
 
@@ -57,15 +72,15 @@ function ReservationConfirmPage() {
           <div className="checkin-checkout-date">
             <span className="check-title">체크인</span>
             <span className="check-date">
-              {date.start.substring(2, 4)}.{date.start.substring(4, 6)}.{date.start.substring(6, 8)}{' '}
-              {dateString.substring(5, 8)}
+              {date.date.start.substring(2, 4)}.{date.date.start.substring(4, 6)}.{date.date.start.substring(6, 8)}{' '}
+              {date.dateString.substring(5, 8)}
             </span>
           </div>
           <div className="checkin-checkout-date">
             <span className="check-title">체크아웃</span>
             <span className="check-date">
-              {date.end.substring(2, 4)}.{date.end.substring(4, 6)}.{date.end.substring(6, 8)}{' '}
-              {dateString.substring(16, 19)}
+              {date.date.end.substring(2, 4)}.{date.date.end.substring(4, 6)}.{date.date.end.substring(6, 8)}{' '}
+              {date.dateString.substring(16, 19)}
             </span>
           </div>
         </div>

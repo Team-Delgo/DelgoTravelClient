@@ -58,7 +58,7 @@ function Folder() {
       { accessToken, userId },
       (response: AxiosResponse) => {
         setWishedPlace(response.data.data);
-        if (response.data.data.length > 1) {
+        if (response.data.data.length > 0) {
           setHasWishedPlaces(true);
         }
       },
