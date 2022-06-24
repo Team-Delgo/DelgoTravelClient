@@ -6,15 +6,16 @@ import { tokenActions } from '../../../redux/reducers/tokenSlice';
 import { tokenRefresh } from '../../../common/api/login';
 import PopularPlace from './popularPlace/PopularPlace';
 import TravelHisotryPlace from './travelHistoryPlace/TravelHistoryPlace';
+import { ReactComponent as FootPrintActive } from '../../../icons/foot-print-active.svg';
 import './History.scss';
 
-type PopularPlaceType = {
+interface PopularPlaceType  {
   id: number;
   image: string;
   name: string;
   location: string;
 };
-type TravelHisotryPlaceType = {
+interface TravelHisotryPlaceType {
   id: number,
   period: string,
   image: string,
@@ -28,7 +29,7 @@ function History() {
   const dispatch = useDispatch();
   const accessToken = useSelector((state: any) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
-  const [hasTravelHistorys, setHasTravelHistorys] = useState(true);
+  const [hasTravelHistorys, setHasTravelHistorys] = useState(false);
   const [popularPlace, setPopularPlace] = useState<Array<PopularPlaceType>>([
     {
       id: 1,
@@ -102,8 +103,9 @@ function History() {
         </div>
       ) : (
         <div className="travel-history-notice">
-          <div className="travel-history-notice-main">아직 여행 기록이 없어요</div>
-          <div className="travel-history-notice-sub">인기 숙소를 보여드릴게요</div>
+          <FootPrintActive className="travel-history-notice-foot-print"/>
+          <div className="travel-history-notice-main">여행내역이 없어요</div>
+          <div className="travel-history-notice-sub">이번 주말 델고가요</div>
         </div>
       )}
       {hasTravelHistorys === true

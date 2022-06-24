@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useCallback} from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as Home } from '../../icons/home.svg';
 import { ReactComponent as Search } from '../../icons/search.svg';
@@ -13,9 +13,15 @@ import './Footer.scss';
 
 function Footer() {
   const location = useLocation();
+
+  const goToTopScreen = useCallback(() => {
+    window.scroll({ top: 0, behavior: 'smooth' });
+  }, []);
+
+
   return (
     <div className="footer">
-      <div className="home-icon">
+      <div className="home-icon" aria-hidden="true" onClick={goToTopScreen}>
         {location.pathname === ROOT_PATH ? (
           <>
             <Link to={ROOT_PATH}>
@@ -32,7 +38,7 @@ function Footer() {
           </>
         )}
       </div>
-      <div className="search-icon">
+      <div className="search-icon" aria-hidden="true" onClick={goToTopScreen}>
         {location.pathname === WHERE_TO_GO_PATH ? (
           <>
             <Link to={WHERE_TO_GO_PATH}>

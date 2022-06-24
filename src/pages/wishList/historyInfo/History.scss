@@ -12,15 +12,19 @@
     .travel-history-notice{
         text-align: center;
         color:#3E382F;
+        &-foot-print{
+            padding-top: 70px;
+        }
         &-main{
-            font-size:6vw;
+            font-size:24px;
             font-weight: 700;
-            padding-top: 20%;
+            padding-top: 15px;
         }
         &-sub{
-            font-size:4vw;
-            font-weight: 300;
-            padding: 2% 0 15% 0;
+            font-size:16px;
+            padding: 5px 0 50px 0;
+            font-weight: 400;
+            color: #B0A69D;
         }
     }
 

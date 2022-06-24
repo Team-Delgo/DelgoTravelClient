@@ -1,15 +1,32 @@
 .wish-list-container{
-    margin: 0% 5%;
     height: 100%;
-    &-header-text{
+    .wish-list-header-text{
+        margin: 0% 5%;
         color: #8A8A8A;
         font-size: 14px;
-        // padding: 40px 0 15px 0
         display: flex;
         align-items: center;
         height: 70px;
         font-weight: 700;
         font-size: 16px;
         color: #3E382F;
+    }
+    .wish-list-notice{
+        text-align: center;
+        color:#3E382F;
+        &-foot-print{
+            padding-top: 70px;
+        }
+        &-main{
+            font-size:24px;
+            font-weight: 700;
+            padding-top: 15px;
+        }
+        &-sub{
+            font-size:16px;
+            padding: 5px 0 50px 0;
+            font-weight: 400;
+            color: #B0A69D;
+        }
     }
 }

@@ -15,7 +15,7 @@ type PopularPlaceType = {
 
 
 function PopularPlace({ place }: PopularPlaceTypeProps  ) {
-  const [wishList, setWishList] = useState(true);
+  const [wishList, setWishList] = useState(false);
 
   const handleWishList = () => {
     setWishList(!wishList);
