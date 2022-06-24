@@ -12,20 +12,40 @@ import './ReservationConfirmPage.scss';
 
 
 
+
 function ReservationConfirmPage() {
   const navigate = useNavigate();
-  const { nickname, phone } = useSelector((state: any) => state.persist.user.user);
+  const user = useSelector((state: any) => state.persist.user);
   const { room, place,date } = useSelector((state: any) => state.persist.reservation);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    bookingGetData(
-      { bookingId: '1234'},
+
+    bookingRequest(
+      {
+        userId: user.id,
+        placeId: place.placeId,
+        roomId: room.roomId,
+        couponId: 1,
+        point: 0,
+        peopleNum: 2,
+        petNum: 2,
+        startDt: date.startDt,
+        endDt: date.endDt,
+      },
       (response: AxiosResponse) => {
-        console.log(response.data)
+        console.log(response.data);
       },
       dispatch,
     );
+
+    // bookingGetData(
+    //   { bookingId: '1234'},
+    //   (response: AxiosResponse) => {
+    //     console.log(response.data)
+    //   },
+    //   dispatch,
+    // );
     window.scrollTo(0, 0);
   }, []);
 
@@ -93,7 +113,7 @@ function ReservationConfirmPage() {
           <div className="reservation-info-second-line">
             <div className="reservation-info-second-line-name-label">예약자 이름</div>
             <div className="reservation-info-second-line-name">
-              {nickname} / {phone}
+              {user.nickname} / {user.phone}
             </div>
           </div>
         </div>

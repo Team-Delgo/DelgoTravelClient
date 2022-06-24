@@ -21,7 +21,7 @@ async function bookingRequest(
     const result = await axios.post(`${url}booking/request`, {
       userId: data.userId,
       placeId: data.placeId,
-      rooID: data.roomId,
+      roomId: data.roomId,
       couponId: data.couponId,
       point: data.point,
       peopleNum: data.peopleNum,
