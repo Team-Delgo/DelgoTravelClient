@@ -17,6 +17,8 @@ async function bookingRequest(
   success: (data: AxiosResponse) => void,
   dispatch: any,
 ) {
+  const startDt = `${data.startDt.substring(0,4)}-${data.startDt.substring(4,6)}-${data.startDt.substring(6,10)}`
+  const endDt = `${data.endDt.substring(0,4)}-${data.endDt.substring(4,6)}-${data.endDt.substring(6,10)}`
   try {
     const result = await axios.post(`${url}booking/request`, {
       userId: data.userId,
@@ -26,8 +28,8 @@ async function bookingRequest(
       point: data.point,
       peopleNum: data.peopleNum,
       petNum: data.petNum,
-      startDt: data.startDt,
-      endDt: data.endDt,
+      startDt,
+      endDt
     });
     success(result);
   } catch (error: AxiosError | any) {
@@ -37,15 +39,17 @@ async function bookingRequest(
 
 async function bookingGetData(
   data: {
+    accessToken: string;
     bookingId: string;
   },
   success: (data: AxiosResponse) => void,
   dispatch: any,
 ) {
   try {
-    const result = await axios.get(`${url}booking/request`, {
-      params: {
-        bookingId: data.bookingId,
+    console.log(1)
+    const result = await axios.get(`${url}booking/getData?bookingId=${data.bookingId}`,{
+      headers: {
+        Authorization_Access: `${data.accessToken}`,
       },
     });
     success(result);

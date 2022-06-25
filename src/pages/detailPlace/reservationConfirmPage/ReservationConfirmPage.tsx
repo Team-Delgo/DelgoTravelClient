@@ -1,6 +1,6 @@
-import React,{useCallback,useEffect} from "react";
+import React,{useCallback,useEffect, useState} from "react";
 import { useSelector,useDispatch } from "react-redux";
-import { useNavigate, useLocation,Link } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
 import RightArrow from "../../../icons/right-arrow.svg";
@@ -15,39 +15,46 @@ import './ReservationConfirmPage.scss';
 
 function ReservationConfirmPage() {
   const navigate = useNavigate();
-  const user = useSelector((state: any) => state.persist.user);
+  const {user} = useSelector((state: any) => state.persist.user);
   const { room, place,date } = useSelector((state: any) => state.persist.reservation);
+  const accessToken = useSelector((state: any) => state.token.token);
   const dispatch = useDispatch();
+  const [bookingId,setBookingId] = useState("")
+  const [reservationData,setReservationData] = useState({})
 
   useEffect(() => {
-
+    window.scrollTo(0, 0);
     bookingRequest(
       {
         userId: user.id,
         placeId: place.placeId,
         roomId: room.roomId,
-        couponId: 1,
+        couponId: 0,
         point: 0,
-        peopleNum: 2,
-        petNum: 2,
-        startDt: date.startDt,
-        endDt: date.endDt,
+        peopleNum: 1,
+        petNum: 1,
+        startDt: date.date.start,
+        endDt: date.date.end,
       },
       (response: AxiosResponse) => {
-        console.log(response.data);
+       setBookingId(response.data.data.bookingId)
       },
       dispatch,
-    );
-
-    // bookingGetData(
-    //   { bookingId: '1234'},
-    //   (response: AxiosResponse) => {
-    //     console.log(response.data)
-    //   },
-    //   dispatch,
-    // );
-    window.scrollTo(0, 0);
+    )
   }, []);
+
+  useEffect(() => {
+    if (bookingId !== '') {
+      bookingGetData(
+        { bookingId, accessToken },
+        (response: AxiosResponse) => {
+          setReservationData(response.data.data);
+          console.log(response.data.data)
+        },
+        dispatch,
+      );
+    }
+  }, [bookingId]);
 
   const moveToMainPage = useCallback(() => {
     setTimeout(() => {
