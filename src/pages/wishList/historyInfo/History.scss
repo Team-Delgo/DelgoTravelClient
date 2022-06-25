@@ -1,36 +1,30 @@
 .travel-history-container{
     height: 100%;
-    .travel-history-profile{
+    .travel-history-number{
         display: flex;
         align-items: center;
-        height: 40vw;
+        height: 70px;
         color: #3E382F;
-        font-weight: 400;
-        padding-left: 15%;
-        &-image{
-            width: 24vw;
-            height: 24vw;
-        }
-        &-figures{
-            padding-left: 12%;
-            font-size: 4vw;
-            &-days{
-                padding-bottom: 5%;
-            }
-        }
+        font-weight: 700;
+        font-size: 16px;
+        padding-left: 5%;
     }
     .travel-history-notice{
         text-align: center;
         color:#3E382F;
+        &-foot-print{
+            padding-top: 70px;
+        }
         &-main{
-            font-size:6vw;
+            font-size:24px;
             font-weight: 700;
-            padding-top: 20%;
+            padding-top: 15px;
         }
         &-sub{
-            font-size:4vw;
-            font-weight: 300;
-            padding: 2% 0 15% 0;
+            font-size:16px;
+            padding: 5px 0 50px 0;
+            font-weight: 400;
+            color: #B0A69D;
         }
     }
 

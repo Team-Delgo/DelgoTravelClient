@@ -76,12 +76,12 @@
   }
 }
 .travel-preparation {
-  padding: 5% 0 5% 5%;
+  padding: 5% 0 0 5%;
   line-height: 18px;
   color: #3e382f;
   &-text {
     font-weight: 600;
-    font-size: 4.5vw;
+    font-size: 20px;
     line-height: 18px;
     color: #3e382f;
   }
@@ -92,7 +92,7 @@
     column-gap: 20px;
     font-weight: 500;
     font-size: 3vw;
-    padding: 8% 0 12% 0;
+    padding: 8% 0 0 0;
     div {
       display: flex;
       align-items: center;
@@ -103,60 +103,6 @@
       box-sizing: border-box;
       border-radius: 28px;
       background-color: #ffffff;
-    }
-  }
-}
-.recommended-places-around-reserved-place {
-  display: flex;
-  overflow-x: scroll;
-  align-items: center;
-  height: 40vw;
-  background: #fffbf6;
-  padding-left: 7%;
-  img {
-    height: 60%;
-  }
-  .recommended-place-information-around-reserved-place {
-    padding-left: 5%;
-    .recommended-place-name-around-reserved-place {
-      width: 40vw;
-      font-weight: 700;
-      font-size: 3.6vw;
-      color: #6e614d;
-    }
-    .recommended-place-loaction-around-reserved-place {
-      font-weight: 500;
-      font-size: 3vw;
-      color: #ad9e87;
-    }
-    .recommended-place-review-around-reserved-place {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      width: 32vw;
-      height: 12.5vw;
-      background: #ffffff; //#8f8181;
-      border-radius: 12px;
-      font-weight: 500;
-      font-size: 2.7vw;
-      color: #6e614d;
-      box-shadow: 0 0 0 0.6px #d1d0d0;
-      margin-top: 1.5vw;
-      padding: 0 5px;
-    }
-    .recommended-place-review-around-reserved-place:after {
-      // content: '';
-      // position: absolute;
-      // left: 0;
-      // top: 50%;
-      // border: 15px solid transparent;
-      // border-right-color: black;
-      // border-left: 0;
-      // border-top: 0;
-      // margin-top: -6px;
-      // margin-left: -15px;
     }
   }
 }

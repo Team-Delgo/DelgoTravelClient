@@ -21,6 +21,19 @@ interface PhotoListType {
   isMain: number
   url: string
 }
+interface RoomType {
+  isBooking: number
+  mainPhotoUrl: string
+  name: string
+  personMaxNum: number
+  personStandardNum: number
+  petMaxNum: number
+  petSizeLimit: string
+  petStandardNum: number
+  placeId: number
+  price: string
+  roomId: number
+}
 
 function DetailPlace() {
   const [place, setPlace] = useState({
@@ -35,9 +48,9 @@ function DetailPlace() {
     checkout: '',
   });
   const [photoList, setPhotoList] = useState<Array<PhotoListType>>([]);
-  const [roomTypes, setRoomTypes] = useState<Array<any>>([]);
+  const [roomTypes, setRoomTypes] = useState<Array<RoomType>>([]);
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
-  const { date, dateString } = useSelector((state: any) => state.persist.date);
+  const { date, dateString } = useSelector((state: any) => state.date);
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const accessToken = useSelector((state: any) => state.token.token);
   const { placeId } = useParams();
@@ -92,6 +105,7 @@ function DetailPlace() {
         setPlace(response.data.data.place);
         setPhotoList(response.data.data.detailPhotoList);
         setRoomTypes(response.data.data.roomList);
+        console.log(response.data.data.roomList)
       },
       dispatch,
     );
@@ -204,7 +218,7 @@ function DetailPlace() {
               <div className="detail-places-room-types">
                 {roomTypes.map((room) => (
                   <RoomType
-                    key={room.id}
+                    key={room.roomId}
                     room={room}
                     navigate={() => {
                       navigate(`/detail-place/${placeId}/${room.roomId}`, {

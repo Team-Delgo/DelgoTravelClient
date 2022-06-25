@@ -52,7 +52,7 @@ function WishList() {
               onClick={changeCurrentTab(0)}
               aria-hidden="true"
             >
-              찜 목록
+              찜
             </div>
             <div
               className="wish-list-tab-history"
@@ -76,7 +76,7 @@ function WishList() {
               onClick={changeCurrentTab(0)}
               aria-hidden="true"
             >
-              찜 목록
+              찜
             </div>
             <div
               className="wish-list-tab-history-active"

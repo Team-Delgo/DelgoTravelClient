@@ -1,40 +1,82 @@
-import React,{useCallback,useEffect} from "react";
+import React,{useCallback,useEffect, useState} from "react";
 import { useSelector,useDispatch } from "react-redux";
-import { useNavigate, useLocation,Link } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
+import { AxiosResponse } from 'axios';
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
 import RightArrow from "../../../icons/right-arrow.svg";
 import RightArrowBlack from "../../../icons/right-arrow-black.svg";
 import BottomButton from "../../../common/components/BottomButton";
 import { reservationActions } from '../../../redux/reducers/reservationSlice';
+import {bookingRequest,bookingGetData} from '../../../common/api/booking'
 import './ReservationConfirmPage.scss';
+
+
+
 
 function ReservationConfirmPage() {
   const navigate = useNavigate();
-  const { nickname, phone } = useSelector((state: any) => state.persist.user.user);
-  const { date, dateString } = useSelector((state: any) => state.persist.date);
-  const { room, place } = useSelector((state: any) => state.persist.reservation);
+  const {user} = useSelector((state: any) => state.persist.user);
+  const { room, place,date } = useSelector((state: any) => state.persist.reservation);
+  const accessToken = useSelector((state: any) => state.token.token);
   const dispatch = useDispatch();
+  const [bookingId,setBookingId] = useState("")
+  const [reservationData,setReservationData] = useState({})
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    bookingRequest(
+      {
+        userId: user.id,
+        placeId: place.placeId,
+        roomId: room.roomId,
+        couponId: 0,
+        point: 0,
+        peopleNum: 1,
+        petNum: 1,
+        startDt: date.date.start,
+        endDt: date.date.end,
+      },
+      (response: AxiosResponse) => {
+       setBookingId(response.data.data.bookingId)
+      },
+      dispatch,
+    )
   }, []);
 
-  const moveToMainPage = useCallback(() => {
-    dispatch(
-      reservationActions.reservation({
-        place: { placeId: 0, name: '', address: '' },
-        room: {
-          roomId: 0,
-          name: '',
-          checkin: '',
-          checkout: '',
-          price: 0,
-          images: [],
+  useEffect(() => {
+    if (bookingId !== '') {
+      bookingGetData(
+        { bookingId, accessToken },
+        (response: AxiosResponse) => {
+          setReservationData(response.data.data);
+          console.log(response.data.data)
         },
-      }),
-    );
+        dispatch,
+      );
+    }
+  }, [bookingId]);
+
+  const moveToMainPage = useCallback(() => {
     setTimeout(() => {
       navigate('/');
+      dispatch(
+        reservationActions.reservation({
+          user: { id: 0, nickname: '', email: '', phone: '' },
+          place: { placeId: 0, name: '', address: '' },
+          room: {
+            roomId: 0,
+            name: '',
+            checkin: '',
+            checkout: '',
+            price: 0,
+            images: [],
+          },
+          date: {
+            date:'',
+            dateString:''
+          },
+        }),
+      );
     }, 300);
   }, []);
 
@@ -57,15 +99,15 @@ function ReservationConfirmPage() {
           <div className="checkin-checkout-date">
             <span className="check-title">체크인</span>
             <span className="check-date">
-              {date.start.substring(2, 4)}.{date.start.substring(4, 6)}.{date.start.substring(6, 8)}{' '}
-              {dateString.substring(5, 8)}
+              {date.date.start.substring(2, 4)}.{date.date.start.substring(4, 6)}.{date.date.start.substring(6, 8)}{' '}
+              {date.dateString.substring(5, 8)}
             </span>
           </div>
           <div className="checkin-checkout-date">
             <span className="check-title">체크아웃</span>
             <span className="check-date">
-              {date.end.substring(2, 4)}.{date.end.substring(4, 6)}.{date.end.substring(6, 8)}{' '}
-              {dateString.substring(16, 19)}
+              {date.date.end.substring(2, 4)}.{date.date.end.substring(4, 6)}.{date.date.end.substring(6, 8)}{' '}
+              {date.dateString.substring(16, 19)}
             </span>
           </div>
         </div>
@@ -78,7 +120,7 @@ function ReservationConfirmPage() {
           <div className="reservation-info-second-line">
             <div className="reservation-info-second-line-name-label">예약자 이름</div>
             <div className="reservation-info-second-line-name">
-              {nickname} / {phone}
+              {user.nickname} / {user.phone}
             </div>
           </div>
         </div>

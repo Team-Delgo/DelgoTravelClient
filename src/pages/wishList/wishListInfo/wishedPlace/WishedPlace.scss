@@ -1,15 +1,17 @@
 .wished-place{
+    margin: 0% 5%;
     text-align: center;
     position: relative;
     img{
         width: 100%;
+        height:270px;
         border-radius: 5px;
-        margin-bottom: 10%;
+        margin-bottom: 25px;
     }
     &-name{
         position: absolute;
         left: 4%;
-        bottom: 27%;
+        bottom: 20%;
         font-weight: bold;
         font-size: 18px;
         color: #FFFFFF;
@@ -17,13 +19,14 @@
     &-location{
         position: absolute;
         left: 4%;
-        bottom: 20%;
+        bottom: 14%;
         font-size: 12px;  
+        font-weight: 500;
         color: #FFFFFF;
     }
     &-heart{
         position: absolute;
-        top: -5px;
-        right: -10px;
+        top: -20px;
+        right: -15px;
     }
 }

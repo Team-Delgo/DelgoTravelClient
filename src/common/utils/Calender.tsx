@@ -20,7 +20,7 @@ Calender.defaultProps = {
 
 function Calender(props: CalenderProps) {
   const dispatch = useDispatch();
-  const { date, dateString } = useSelector((state: any) => state.persist.date);
+  const { date, dateString } = useSelector((state: any) => state.date);
   const { start, end } = date;
   const [selectedDate, setSelectedDate] = useState({ start, end });
   const dateExist = dateString.length ? 2 : 0;

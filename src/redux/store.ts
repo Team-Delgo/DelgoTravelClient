@@ -12,7 +12,6 @@ import roomSlice from './reducers/roomSlice';
 
 const reducers = combineReducers({
   user: userSlice,
-  date: dateSlice,
   currentPlace:placeSlice,
   currentRoom:roomSlice,
   reservation: reservationSlice,
@@ -26,7 +25,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = configureStore({
-  reducer: { persist: persistedReducer, token: tokenSlice, error: errorSlice },
+  reducer: { persist: persistedReducer, token: tokenSlice, error: errorSlice, date: dateSlice,},
   devTools: process.env.NODE_ENV !== 'production',
 });
 

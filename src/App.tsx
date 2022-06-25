@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes  } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import HomePage from './pages/home/Home';
 import EditorNote from './pages/editorNote/EditorNote';
@@ -68,10 +68,8 @@ function App() {
         <Route path={SIGN_UP_PATH.USER_PET_INFO} element={<PetInfo />} />
         <Route path={WISH_LIST_PATH} element={<WishListPage />} />
         <Route path={WHERE_TO_GO_PATH} element={<WhereToGoPage />} />
-
         <Route path={MY_ACCOUNT_PATH} element={<MyAccount />} />
         <Route path={COUPON_PATH} element={<Coupon />} />
-
         <Route path={DETAIL_PLACE_PATH.MAIN} element={<DetailPlace />} />
         <Route path={DETAIL_PLACE_PATH.REVIEWS} element={<ReviewsPage />} />
         <Route path={DETAIL_PLACE_PATH.ROOMTYPES} element={<RoomTypePage />} />

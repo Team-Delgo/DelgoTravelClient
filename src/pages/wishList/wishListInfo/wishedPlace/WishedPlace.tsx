@@ -7,7 +7,7 @@ import Heart from '../../../../common/components/Heart'
 import { wishDelete } from '../../../../common/api/wish'
 import './WishedPlace.scss';
 
-type WishedPlaceTypeProps = {
+interface WishedPlaceTypeProps {
   place: PlaceType
   wishedPlace: Array<PlaceType>
   setWishedPlace: any
@@ -23,13 +23,13 @@ interface PlaceType {
   wishId: number;
 }
 
-
 function WishedPlace({ place, wishedPlace, setWishedPlace }: WishedPlaceTypeProps) {
   const [wishList, setWishList] = useState(true);
   const accessToken = useSelector((state: any) => state.token.token);
   const [wishListAlertConfirmOpen, setWishListAlertConfirmOpen] = useState(false);
   const dispatch = useDispatch();
   const location: any = useLocation();
+
 
   const wishListDelete = useCallback(() => {
     wishDelete(

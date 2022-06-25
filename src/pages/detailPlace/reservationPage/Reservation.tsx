@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -10,8 +10,7 @@ import BottomButton from '../../../common/components/BottomButton';
 import { TOSS } from '../../../constants/url.cosnt';
 
 function Reservation() {
-  const { nickname, phone } = useSelector((state: any) => state.persist.user.user);
-  const { room, place,date } = useSelector((state: any) => state.persist.reservation);
+  const { user,room, place,date } = useSelector((state: any) => state.persist.reservation);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -23,9 +22,9 @@ function Reservation() {
         amount: Number(room.price.slice(0, -1).replace(',', '')),
         orderId: 'AVw8mD2KHztN_646IGAZF',
         orderName: place.name + room.name,
-        customerName: nickname,
-        successUrl: `${process.env.REACT_APP_BASE_URL}/reservation-confirm/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
-        failUrl: `${process.env.REACT_APP_BASE_URL}/reservation/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
+        customerName: user.nickname,
+        successUrl: `${process.env.REACT_APP_BASE_URL}/reservation-confirm/${place.placeId}/${room.roomId}/${date.date.start}/${date.date.end}`,
+        failUrl: `${process.env.REACT_APP_BASE_URL}/reservation/${place.placeId}/${room.roomId}/${date.date.start}/${date.date.end}`,
       });
     });
   };
@@ -36,7 +35,7 @@ function Reservation() {
         amount: Number(room.price.slice(0, -1).replace(',', '')),
         orderId: 'AVw8mD2KHztN_646IGAZF',
         orderName: place.name + room.name,
-        customerName: nickname,
+        customerName: user.nickname,
         successUrl: `${process.env.REACT_APP_BASE_URL}/reservation-confirm/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
         failUrl: `${process.env.REACT_APP_BASE_URL}/reservation/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
       });
@@ -109,7 +108,7 @@ function Reservation() {
         <div className="reservation-user-info">
           <div className="reservation-label">예약자 이름</div>
           <div className="reservation-user-info-phone">
-            {nickname} / {phone}
+            {user.nickname} / {user.phone}
           </div>
           <div aria-hidden="true" className="reservation-user-info-change">
             변경

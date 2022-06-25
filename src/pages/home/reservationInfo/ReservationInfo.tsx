@@ -104,20 +104,6 @@ function ReservationInfo() {
           </div>
         </div>
       </div>
-      <div className="recommended-places-around-reserved-place">
-        {recommendedPlace.map((place) => (
-          <>
-            <img src={place.image} alt="" />
-            <div className="recommended-place-information-around-reserved-place" key={place.id}>
-              <div className="recommended-place-name-around-reserved-place" key={place.id}>{place.name} </div>
-              <div className="recommended-place-loaction-around-reserved-place">
-                숙소에서 {place.distanceFromReservationPlace}
-              </div>
-              <div className="recommended-place-review-around-reserved-place">&quot;{place.review}&quot;</div>
-            </div>
-          </>
-        ))}
-      </div>
     </div>
   );
 }
