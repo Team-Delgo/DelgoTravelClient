@@ -26,6 +26,17 @@ function checkPassword(password: string): Feedback {
   return { isValid: true, message: '' };
 }
 
+function checkPasswordLogin(password: string): Feedback {
+  const check = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  const regExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+  if (check.test(password) === false) {
+    if (regExp.test(password)) return { isValid: true, message: '' };
+    return { isValid: false, message: '영문+숫자 포함 8자리 이상' };
+  }
+
+  return { isValid: true, message: '' };
+}
+
 function checkPasswordConfirm(password: string | undefined, confirm: string | undefined): Feedback {
   if (password !== confirm) {
     return { isValid: false, message: '비밀번호가 일치하지 않습니다.' };
@@ -61,4 +72,4 @@ function checkPetName(name: string): Feedback {
   return { isValid: true, message: '' };
 }
 
-export { checkEmail, checkPassword, checkPasswordConfirm, checkNickname, checkPetName };
+export { checkEmail, checkPassword, checkPasswordLogin, checkPasswordConfirm, checkNickname, checkPetName };

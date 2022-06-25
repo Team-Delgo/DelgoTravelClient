@@ -39,7 +39,7 @@ function VerifyPhone() {
           setButtonIsClicked(true);
           setIsSended(true);
           setPhoneIsExist(false);
-        } else{
+        } else {
           setPhoneIsExist(true);
         }
       },
@@ -166,7 +166,7 @@ function VerifyPhone() {
           <input
             value={authNumber}
             onChange={authChangeHandler}
-            className="login-input authnumber"
+            className={classNames("login-input authnumber", { invalid: feedback.length })}
             placeholder="인증번호 4자리"
           />
           <span className="login-timer">
@@ -180,7 +180,7 @@ function VerifyPhone() {
       )}
       {buttonContext}
       {buttonIsClicked && <ToastMessage message="인증번호가 전송 되었습니다" />}
-      {}
+      { }
     </div>
   );
 }

@@ -42,7 +42,7 @@
   }
   &.input-birth {
     margin-top: 38px;
-    width: 51%;
+    width: 100%;
     display: inline;
   }
   &.input-weight {
@@ -53,8 +53,10 @@
 }
 .dogtype {
   position: relative;
+  width: 88vw;
   margin-top: 18px;
   display: flex;
+  justify-content: space-evenly;
   &-help {
     width: 28px;
     height: 28px;

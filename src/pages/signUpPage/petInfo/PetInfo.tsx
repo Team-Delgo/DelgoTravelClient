@@ -22,21 +22,18 @@ interface LocationState {
 interface Input {
   name: string;
   birth: string | undefined;
-  weight: string;
   type: string;
 }
 
 interface IsValid {
   name: boolean;
   birth: boolean;
-  weight: boolean;
   type: boolean;
 }
 
 enum Id {
   NAME = 'name',
   BIRTH = 'birth',
-  WEIGHT = 'weight',
   TYPE = 'type',
 }
 
@@ -47,17 +44,16 @@ function PetInfo() {
   const { email, password, nickname, phone } = state;
   const [image, setImage] = useState<any>();
   const [sendingImage, setSendingImage] = useState<any>();
-  const [enteredInput, setEnteredInput] = useState<Input>({ name: '', birth: undefined, weight: '', type: '' });
+  const [enteredInput, setEnteredInput] = useState<Input>({ name: '', birth: undefined, type: '' });
   const [nameFeedback, setNameFeedback] = useState('');
   const [modalActive, setModalActive] = useState(false);
   const [isOpenDogType, setIsOpenDogType] = useState(false);
   const [isValid, setIsValid] = useState<IsValid>({
     name: false,
     birth: false,
-    weight: false,
     type: false,
   });
-  const pageIsValid = isValid.name && isValid.birth && isValid.type && isValid.weight;
+  const pageIsValid = isValid.name && isValid.birth && isValid.type;
   const formData = new FormData();
 
   const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
@@ -114,7 +110,7 @@ function PetInfo() {
   };
 
   const chagneBirthHandler = (year: number, month: number, day: number) => {
-    const birthday = `${year}-${month}-${day}`;
+    const birthday = `${year}.${`0${month}`.slice(-2)}.${`0${day}`.slice(-2)}`;
     setEnteredInput((prev: Input) => {
       return { ...prev, birth: birthday };
     });
@@ -129,7 +125,6 @@ function PetInfo() {
       name: enteredInput.name,
       birthday: enteredInput.birth,
       size: enteredInput.type,
-      weight: enteredInput.weight
     };
     const userInfo = {
       nickname,
@@ -155,7 +150,7 @@ function PetInfo() {
         petImageUpload(formData, (response: AxiosResponse) => {
           console.log(response);
         }, dispatch);
-        navigation('/user/signin/login');
+        // navigation('/user/signin/login');
       } else {
         console.log(codeMsg);
       }
@@ -203,7 +198,7 @@ function PetInfo() {
       )}
       <div className="login-input-box">
         <input
-          className="login-input petname"
+          className={classNames("login-input petname", { invalid: !isValid.name })}
           placeholder="강아지 이름"
           value={enteredInput.name}
           id={Id.NAME}
@@ -213,7 +208,7 @@ function PetInfo() {
       </div>
       <div className="login-input-wrapper">
         <input
-          className="login-input input-birth"
+          className={classNames("login-input input-birth", { invalid: !isValid.birth })}
           placeholder="생일"
           value={enteredInput.birth}
           id={Id.BIRTH}
@@ -224,14 +219,6 @@ function PetInfo() {
             setModalActive(true);
           }}
           required
-          onChange={inputChangeHandler}
-        />
-        <input
-          className="login-input input-weight"
-          type="number"
-          placeholder="몸무게(kg)"
-          value={enteredInput.weight}
-          id={Id.WEIGHT}
           onChange={inputChangeHandler}
         />
       </div>

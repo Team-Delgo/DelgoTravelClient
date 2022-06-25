@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import classNames from "classnames";
 import { useDispatch } from "react-redux";
 import { AxiosResponse } from "axios";
 import { ReactComponent as Arrow } from '../../icons/left-arrow.svg';
@@ -51,7 +52,7 @@ function FindPassword() {
         <div className="login-description longmargin">회원가입 시 등록한 이메일을 입력해 주세요</div>
         <div className="login-input-box">
           <input
-            className="login-input"
+            className={classNames("login-input", { invalid: feedback.length })}
             placeholder="이메일"
             value={email}
             ref={inputRef}
