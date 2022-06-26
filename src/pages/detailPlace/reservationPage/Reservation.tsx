@@ -23,7 +23,7 @@ function Reservation() {
         orderId: 'AVw8mD2KHztN_646IGAZF',
         orderName: place.name + room.name,
         customerName: user.nickname,
-        successUrl: `${process.env.REACT_APP_BASE_URL}/reservation-confirm/${place.placeId}/${room.roomId}/${date.date.start}/${date.date.end}`,
+        successUrl: `${process.env.REACT_APP_BASE_URL}/reservation-waiting/${place.placeId}/${room.roomId}/${date.date.start}/${date.date.end}`,
         failUrl: `${process.env.REACT_APP_BASE_URL}/reservation/${place.placeId}/${room.roomId}/${date.date.start}/${date.date.end}`,
       });
     });
@@ -36,7 +36,7 @@ function Reservation() {
         orderId: 'AVw8mD2KHztN_646IGAZF',
         orderName: place.name + room.name,
         customerName: user.nickname,
-        successUrl: `${process.env.REACT_APP_BASE_URL}/reservation-confirm/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
+        successUrl: `${process.env.REACT_APP_BASE_URL}/reservation-confirm/${place.placeId}/${room.roomId}/${date.date.start}/${date.date.end}`,
         failUrl: `${process.env.REACT_APP_BASE_URL}/reservation/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
       });
     });

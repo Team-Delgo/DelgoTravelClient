@@ -27,7 +27,8 @@ export const DETAIL_PLACE_PATH = {
   REVIEWS: '/detail-place/:placeId/reviews',
   ROOMTYPES: '/detail-place/:placeId/:roomTypeId',
   RESERVATION: '/reservation/:placeId/:roomTypeId/:startDate/:endDate',
-  RESERVATION_CONFIRM: '/reservation-confirm/:placeId/:roomTypeId/:startDate/:endDate',
+  RESERVATION_WAITING: '/reservation-waiting/:placeId/:roomTypeId/:startDate/:endDate',
+  RESERVATION_CONFIRM: '/reservation-confirm/:bookingId',
 };
 
 export const REVIEW_WRITING_PATH = '/review-writing/:reservationId';
