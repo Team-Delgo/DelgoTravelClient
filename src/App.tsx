@@ -42,6 +42,7 @@ import AlertConfirmOne from './common/dialog/AlertConfirmOne';
 import { errorActions } from './redux/reducers/errorSlice';
 import ReservationConfirmPage from './pages/detailPlace/reservationConfirmPage/ReservationConfirmPage';
 import Coupon from './pages/myAccount/Coupon';
+import ReservationWaitingPage from './pages/detailPlace/reservationWaitingPage/ReservationWaitingPage';
 
 function App() {
   const hasError = useSelector((state: any) => state.error.hasError);
@@ -74,6 +75,7 @@ function App() {
         <Route path={DETAIL_PLACE_PATH.REVIEWS} element={<ReviewsPage />} />
         <Route path={DETAIL_PLACE_PATH.ROOMTYPES} element={<RoomTypePage />} />
         <Route path={DETAIL_PLACE_PATH.RESERVATION} element={<Reservation />} />
+        <Route path={DETAIL_PLACE_PATH.RESERVATION_WAITING} element={<ReservationWaitingPage />} />
         <Route path={DETAIL_PLACE_PATH.RESERVATION_CONFIRM} element={<ReservationConfirmPage />} />
         <Route path={REVIEW_WRITING_PATH} element={<ReviewWritingPage />} />
         <Route path={KAKAO_REDIRECT_HANDLE_PATH} element={<KakaoRedirectHandler />} />
