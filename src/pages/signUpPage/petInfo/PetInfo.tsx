@@ -145,12 +145,12 @@ function PetInfo() {
         userId = response.data.data.userId;
         console.log(response);
         console.log(userId);
-        formData.append('file', sendingImage);
         formData.append('userId', userId.toString());
+        formData.append('photo', sendingImage);
         petImageUpload(formData, (response: AxiosResponse) => {
           console.log(response);
         }, dispatch);
-        // navigation('/user/signin/login');
+        navigation('/user/signin/login');
       } else {
         console.log(codeMsg);
       }
@@ -198,7 +198,7 @@ function PetInfo() {
       )}
       <div className="login-input-box">
         <input
-          className={classNames("login-input petname", { invalid: !isValid.name })}
+          className={classNames("login-input petname", { invalid: nameFeedback.length })}
           placeholder="강아지 이름"
           value={enteredInput.name}
           id={Id.NAME}
@@ -208,7 +208,7 @@ function PetInfo() {
       </div>
       <div className="login-input-wrapper">
         <input
-          className={classNames("login-input input-birth", { invalid: !isValid.birth })}
+          className={classNames("login-input input-birth")}
           placeholder="생일"
           value={enteredInput.birth}
           id={Id.BIRTH}

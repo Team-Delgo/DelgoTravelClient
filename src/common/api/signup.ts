@@ -81,7 +81,7 @@ async function phoneSendMessage(phone: string, success: (data: AxiosResponse) =>
 
 async function phoneSendMessageForFind(phone: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .get(`${url}/phoneNoAuthCheck`, {
+    .get(`${url}/phoneNoCheck`, {
       params: {
         phoneNo: phone,
       },

@@ -15,3 +15,8 @@
   color: #ff9162;
   font-size: 14px;
 }
+.login-button {
+  &.loginpage {
+    margin-top: 26px;
+  }
+}

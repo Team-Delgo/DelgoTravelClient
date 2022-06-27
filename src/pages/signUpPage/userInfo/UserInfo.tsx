@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import { AxiosResponse } from 'axios';
@@ -39,6 +39,7 @@ function UserInfo() {
   const [confirmIsTouched, setConfirmIsTouched] = useState(false);
   const [emailDuplicated, setEmailDuplicated] = useState(true);
   const [emailDupCheckFail, setEmailDupCheckFail] = useState(false);
+  const emailRef = useRef<any>();
   const firstPageIsValid =
     validInput.email.length && validInput.password.length && validInput.confirm.length && !emailDuplicated;
 
@@ -169,6 +170,7 @@ function UserInfo() {
       } else {
         setEmailDuplicated(true);
         setEmailDupCheckFail(true);
+        emailRef.current.focus();
       }
     }, dispatch);
   };
@@ -193,6 +195,7 @@ function UserInfo() {
               id={Id.EMAIL}
               value={enteredInput.email}
               onChange={inputChangeHandler}
+              ref={emailRef}
             />
             <p className={classNames('input-feedback', { fine: !emailDuplicated && validInput.email.length })}>
               {emailDupCheckFail ? '이미 사용중인 이메일입니다.' : feedback.email}

@@ -60,10 +60,11 @@ function checkNickname(nickname: string): Feedback {
 }
 
 function checkPetName(name: string): Feedback {
-  const check = /[~!@#$%^&*()_+|<>?:{}]/;
+  // const check = /[~!@#$%^&*()_+|<>?:{}]/;
+  const check = /^[a-zA-Z가-힣0-9]*$/;
   const space = /^.{2,8}$/;
 
-  if (check.test(name)) {
+  if (!check.test(name)) {
     return { isValid: false, message: '특수문자 제외 2자이상 8자이하로 입력해주세요.' };
   }
   if (space.test(name) === false) {

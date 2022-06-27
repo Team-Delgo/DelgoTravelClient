@@ -135,7 +135,7 @@ function Login() {
         </p>
       </div>
       <div className='login-find_password' aria-hidden="true" onClick={findPassword}>비밀번호찾기</div>
-      <button type="button" className="login-button active" onClick={loginButtonHandler}>
+      <button type="button" className="login-button active loginpage" onClick={loginButtonHandler}>
         로그인
       </button>
 
