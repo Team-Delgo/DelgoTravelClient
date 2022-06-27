@@ -1,7 +1,22 @@
 .login-find_password {
-  margin-top: 40px;
+  margin-top: 92px;
   text-decoration: underline;
   color: #8a8a8a;
   font-size: 14px;
   font-weight: 500;
+}
+
+.login-feedback {
+  position: absolute;
+  margin: 0;
+  bottom: -30px;
+  left: 16px;
+  font-weight: 500;
+  color: #ff9162;
+  font-size: 14px;
+}
+.login-button {
+  &.loginpage {
+    margin-top: 26px;
+  }
 }

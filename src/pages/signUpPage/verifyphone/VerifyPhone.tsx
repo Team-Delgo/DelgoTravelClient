@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent, useRef } from 'react';
 import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -23,14 +23,20 @@ function VerifyPhone() {
   const [feedback, setFeedback] = useState('');
   const [SMSid, setSMSid] = useState(0);
   const [phoneIsExist, setPhoneIsExist] = useState(false);
+  const [authFailed, setAuthFailed] = useState(false);
+  const phoneRef = useRef<any>();
+  const authRef = useRef<any>();
+
   const authIsValid = timeIsValid && authNumber.length === 4;
-  const isValid = phoneNumber.length === 11;
+  const isValid = phoneNumber.length === 13;
   const isEntered = phoneNumber.length > 0;
+
 
   const buttonClickHandler = () => {
     //  인증번호 전송 요청
+    const phone = phoneNumber.slice(0, 3) + phoneNumber.slice(4, 8) + phoneNumber.slice(9, 13);
     phoneSendMessage(
-      phoneNumber,
+      phone,
       (response: AxiosResponse) => {
         const { code, data } = response.data;
 
@@ -39,8 +45,9 @@ function VerifyPhone() {
           setButtonIsClicked(true);
           setIsSended(true);
           setPhoneIsExist(false);
-        } else{
+        } else {
           setPhoneIsExist(true);
+          phoneRef.current.focus();
         }
       },
       errorHandler,
@@ -63,9 +70,30 @@ function VerifyPhone() {
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     if (isSended) return;
     const { value } = event.target;
-    const onlyNumber = value.replace(/[^-0-9]/g, '');
-    if (phoneNumber.length === 11 && value.length > 11) return;
-    setPhoneNumber(onlyNumber);
+    // const onlyNumber = value.replace(/[^-0-9]/g, '');
+    let temp = value;
+    if (
+      (value.length === 3 && phoneNumber.length === 2) ||
+      (value.length === 8 && phoneNumber.length === 7)) {
+      temp = value.concat(' ');
+    }
+
+    if (
+      (value.length === 9 && phoneNumber.length === 8) ||
+      (value.length === 4 && phoneNumber.length === 3)
+    ) {
+      temp = `${phoneNumber} ${value.slice(-1)}`;
+    }
+
+    if (
+      (value.length === 9 && phoneNumber.length === 10) ||
+      (value.length === 4 && phoneNumber.length === 5)
+    ) {
+      temp = value.slice(0, -1);
+    }
+
+    if (phoneNumber.length === 13 && value.length > 13) return;
+    setPhoneNumber(temp);
     setPhoneIsExist(false);
   };
 
@@ -79,6 +107,7 @@ function VerifyPhone() {
     if (authNumber.length === 4 && event.target.value.length > 4) return;
     setAuthNumber(event.target.value);
     setFeedback('');
+    setAuthFailed(false);
   };
 
   const authNumberResend = () => {
@@ -113,6 +142,8 @@ function VerifyPhone() {
           navigation(SIGN_UP_PATH.USER_INFO, { state: { phone: phoneNumber } });
         } else {
           setFeedback('인증번호를 확인해주세요');
+          setAuthFailed(true);
+          authRef.current.focus();
         }
       },
       errorHandler,
@@ -145,8 +176,9 @@ function VerifyPhone() {
         <input
           value={phoneNumber}
           onChange={inputChangeHandler}
-          className="login-input phonenumber"
+          className={classNames("login-input phonenumber", { invalid: phoneIsExist })}
           placeholder="휴대폰 번호"
+          ref={phoneRef}
         />
         <p className={classNames('input-feedback')}>
           {phoneIsExist && '이미 가입된 전화번호입니다.'}
@@ -166,8 +198,9 @@ function VerifyPhone() {
           <input
             value={authNumber}
             onChange={authChangeHandler}
-            className="login-input authnumber"
+            className={classNames("login-input authnumber", { invalid: feedback.length })}
             placeholder="인증번호 4자리"
+            ref={authRef}
           />
           <span className="login-timer">
             <Timer isResend={isReSended} resendfunc={resetIsResend} setInValid={() => setTimeIsValid(false)} />
@@ -180,7 +213,7 @@ function VerifyPhone() {
       )}
       {buttonContext}
       {buttonIsClicked && <ToastMessage message="인증번호가 전송 되었습니다" />}
-      {}
+      { }
     </div>
   );
 }

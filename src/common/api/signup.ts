@@ -8,7 +8,7 @@ interface SignUpData {
   password: string;
   nickname: string;
   phone: string;
-  pet: { name: string; birthday: string | undefined; size: string; weight: string };
+  pet: { name: string; birthday: string | undefined; size: string };
 }
 
 async function emailCheck(email: string, success: (data: AxiosResponse) => void, dispatch: any) {
@@ -34,7 +34,12 @@ async function signup(info: SignUpData, success: (data: AxiosResponse) => void, 
         password,
         phoneNo: phone,
       },
-      pet,
+      pet: {
+        name: pet.name,
+        birthday: pet.birthday,
+        size: pet.size,
+        // weight: 4.3,
+      },
     })
     .then((data) => {
       success(data);
@@ -61,7 +66,7 @@ async function deleteUser(email: string, success: (data: AxiosResponse) => void,
 
 async function phoneSendMessage(phone: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .get(`${url}/phoneNoCheck`, {
+    .get(`${url}/phoneNoAuth`, {
       params: {
         phoneNo: phone,
       },
@@ -76,7 +81,7 @@ async function phoneSendMessage(phone: string, success: (data: AxiosResponse) =>
 
 async function phoneSendMessageForFind(phone: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .get(`${url}/phoneNoAuth`, {
+    .get(`${url}/phoneNoCheck`, {
       params: {
         phoneNo: phone,
       },

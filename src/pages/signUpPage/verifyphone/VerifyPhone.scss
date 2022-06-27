@@ -23,7 +23,7 @@
   &-timer {
     position: absolute;
     right: 20px;
-    top: 35px;
+    top: 50%;
     font-weight: 500;
     color: $color-orange;
   }
@@ -32,19 +32,18 @@
       margin: 0;
       font-size: 18px;
       font-weight: 700;
-      letter-spacing: .5px;
-      font
-      &::placeholder {
+      letter-spacing: 0.5px;
+      font &::placeholder {
         color: #8a8a8a;
         font-size: 16px;
         font-weight: 300;
       }
     }
-    &.authnumber{
+    &.authnumber {
       margin-top: 20px;
       font-size: 18px;
       font-weight: 700;
-      letter-spacing: .5px;
+      letter-spacing: 0.5px;
     }
 
     &-clear {

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, useEffect } from 'react';
+import React, { ChangeEvent, useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import { AxiosResponse } from 'axios';
@@ -39,6 +39,7 @@ function UserInfo() {
   const [confirmIsTouched, setConfirmIsTouched] = useState(false);
   const [emailDuplicated, setEmailDuplicated] = useState(true);
   const [emailDupCheckFail, setEmailDupCheckFail] = useState(false);
+  const emailRef = useRef<any>();
   const firstPageIsValid =
     validInput.email.length && validInput.password.length && validInput.confirm.length && !emailDuplicated;
 
@@ -169,6 +170,7 @@ function UserInfo() {
       } else {
         setEmailDuplicated(true);
         setEmailDupCheckFail(true);
+        emailRef.current.focus();
       }
     }, dispatch);
   };
@@ -188,11 +190,12 @@ function UserInfo() {
           <span className="login-span">이메일</span>
           <div className="login-input-box">
             <input
-              className="login-input"
+              className={classNames("login-input", { invalid: feedback.email.length && emailDuplicated })}
               placeholder="이메일"
               id={Id.EMAIL}
               value={enteredInput.email}
               onChange={inputChangeHandler}
+              ref={emailRef}
             />
             <p className={classNames('input-feedback', { fine: !emailDuplicated && validInput.email.length })}>
               {emailDupCheckFail ? '이미 사용중인 이메일입니다.' : feedback.email}
@@ -204,7 +207,7 @@ function UserInfo() {
           </div>
           <span className="login-span">비밀번호</span>
           <input
-            className="login-input password"
+            className={classNames("login-input password", { invalid: feedback.password.length })}
             placeholder="비밀번호 최소 8자이상 (문자, 숫자 조합)"
             type="password"
             value={enteredInput.password}
@@ -213,7 +216,7 @@ function UserInfo() {
           />
           <div className="login-input-box">
             <input
-              className="login-input bitmargin password"
+              className={classNames("login-input bitmargin password", { invalid: feedback.confirm.length })}
               placeholder="비밀번호 확인"
               type="password"
               value={enteredInput.confirm}
@@ -239,7 +242,7 @@ function UserInfo() {
           <span className="login-span">닉네임</span>
           <div className="login-input-box">
             <input
-              className="login-input"
+              className={classNames("login-input", { invalid: feedback.nickname.length })}
               placeholder="닉네임"
               id={Id.NICKNAME}
               value={enteredInput.nickname}

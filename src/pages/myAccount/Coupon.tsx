@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +8,7 @@ import './Coupon.scss';
 import { tokenActions } from '../../redux/reducers/tokenSlice';
 import { url } from '../../constants/url.cosnt';
 import { tokenRefresh } from '../../common/api/login';
+import CouponModal from './CouponModal';
 
 interface CouponType {
   couponId: number;
@@ -22,11 +23,13 @@ interface CouponType {
 
 function Coupon() {
   const [couponList, setCouponList] = useState<CouponType[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const accessToken = useSelector((state: any) => state.token.token);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const refreshToken = localStorage.getItem('refreshToken') || '';
+  const registRef = useRef<any>();
 
   useEffect(() => {
     getCouponList();
@@ -53,7 +56,6 @@ function Coupon() {
     );
   }, [accessToken]);
 
-  
 
   const getCouponList = async () => {
     const response = await axios.get(`${url}/coupon/getCouponList?userId=${userId}`);
@@ -61,7 +63,7 @@ function Coupon() {
     setCouponList(data);
     console.log(response);
     console.log(data);
-    
+
   };
 
   const couponRegist = async () => {
@@ -73,11 +75,21 @@ function Coupon() {
     console.log(response);
   };
 
+  const modalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const modalClose = () => {
+    if (isModalOpen) {
+      setIsModalOpen(false);
+    }
+  };
+
   const existCoupon = couponList.map((coupon) => {
     const priceString = coupon.discountNum.toString();
-    const price = `${priceString.slice(0,priceString.length-3)},${priceString.slice(priceString.length-3)}`;
-    const registDate = `${coupon.registDt.slice(0,4)}.${coupon.registDt.slice(5,7)}.${coupon.registDt.slice(8,10)}`;
-    const expireDate = `${coupon.expireDt.slice(0,4)}.${coupon.expireDt.slice(5,7)}.${coupon.expireDt.slice(8,10)}`;
+    const price = `${priceString.slice(0, priceString.length - 3)},${priceString.slice(priceString.length - 3)}`;
+    const registDate = `${coupon.registDt.slice(0, 4)}.${coupon.registDt.slice(5, 7)}.${coupon.registDt.slice(8, 10)}`;
+    const expireDate = `${coupon.expireDt.slice(0, 4)}.${coupon.expireDt.slice(5, 7)}.${coupon.expireDt.slice(8, 10)}`;
 
     return (
       <div className="coupon-item">
@@ -92,19 +104,27 @@ function Coupon() {
 
   return (
     <div className="coupon">
-      <div aria-hidden="true" className="myaccount-back" onClick={() => navigate(-1)}>
-        <Arrow />
-      </div>
-      <header className="myaccount-header">쿠폰함</header>
-      <div className="coupon-headline">
-        <div className="coupon-count">쿠폰 {couponList && couponList.length}장</div>
-        <span>30일 이내 소멸예정 쿠폰 1장</span>
-      </div>
-      <div className="coupon-flexwrapper">
-        <div aria-hidden="true" className="coupon-regist">
-          +쿠폰등록하기
+      {isModalOpen && <CouponModal />}
+      <div className="coupon-backdrop" aria-hidden="true" onClick={modalClose}>
+        <div aria-hidden="true" className="myaccount-back" onClick={() => navigate(-1)}>
+          <Arrow />
         </div>
-        {existCoupon}
+        <header className="myaccount-header">쿠폰함</header>
+        <div className="coupon-headline">
+          <div className="coupon-count">쿠폰 {couponList && couponList.length}장</div>
+          <span>30일 이내 소멸예정 쿠폰 1장</span>
+        </div>
+        <div className="coupon-flexwrapper">
+          <div aria-hidden="true" className="coupon-regist" onClick={modalOpen}>
+            쿠폰등록하기
+          </div>
+          {existCoupon.length ?
+            existCoupon :
+            <div className='coupon-nocoupon'>
+              <div className='coupon-nocoupon-title'>쿠폰이 없어요ㅠㅠ</div>
+              <div className='coupon-nocoupon-p'>{`'`}델고가요{`'`}를 입력해보세요</div>
+            </div>}
+        </div>
       </div>
     </div>
   );
