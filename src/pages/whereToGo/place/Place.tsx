@@ -1,9 +1,10 @@
-import React, { useState, useCallback,memo } from 'react'
+import React, { useState, useCallback,memo, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { Link,useLocation } from 'react-router-dom';
+import { Link,useLocation,useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { wishInsert, wishDelete } from '../../../common/api/wish'
 import Heart from '../../../common/components/Heart'
+import { scrollActions } from '../../../redux/reducers/scrollSlice';
 import './Place.scss'
 
 interface PlaceTypeProps {
@@ -28,6 +29,7 @@ function Place({ place, places, setPlaces }: PlaceTypeProps) {
   const userId = useSelector((state: any) => state.persist.user.user.id)
   const dispatch = useDispatch();
   const location: any = useLocation();
+  const navigate = useNavigate();
 
   const wishListInsert = useCallback(() => {
     wishInsert({ userId, placeId: place.placeId, accessToken }, (response: AxiosResponse) => {
@@ -55,11 +57,29 @@ function Place({ place, places, setPlaces }: PlaceTypeProps) {
     );
   }, [wishList, places]);
 
+  useEffect(() => {
+    return () => {
+      console.log(window.scrollY)
+    };
+  }, []);
+
+
+  const moveToDetailPage = useCallback(() => {
+    dispatch(scrollActions.whereToGoScrollY({ scrollY: window.scrollY }));
+    navigate(`/detail-place/${place.placeId}`, {
+      state: {
+        prevPath: location.pathname,
+      },
+    });
+  }, []);
+
   return (
     <div className="place" aria-hidden="true">
-      <Link to={`/detail-place/${place.placeId}`} state={{ prevPath: location.pathname }}  key={place.placeId}>
-        <img src={place.mainPhotoUrl} alt="place-img" />
-      </Link>
+      {/* <Link to={`/detail-place/${place.placeId}`} state={{ prevPath: location.pathname}}  key={place.placeId}> */}
+      <div aria-hidden onClick={moveToDetailPage}>
+        <img src={place.mainPhotoUrl} alt="place-img"/>
+        </div>
+      {/* </Link> */}
       <div className="place-info">
         <div className="place-info-first-line">
           <span className="place-region">

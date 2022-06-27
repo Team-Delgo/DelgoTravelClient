@@ -79,4 +79,4 @@ function WishedPlace({ place, wishedPlace, setWishedPlace }: WishedPlaceTypeProp
   );
 }
 
-export default memo(WishedPlace);
+export default memo(WishedPlace)

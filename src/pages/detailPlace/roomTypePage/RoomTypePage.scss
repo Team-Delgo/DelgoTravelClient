@@ -1,7 +1,9 @@
 .detail-place-room-type {
-  position: relative;
+  z-index: 2;
+  position: absolute;
   margin-bottom: 100px;
   color: #3e382f;
+  background-color: #f3efea;
   &.close {
     display: none;
   }

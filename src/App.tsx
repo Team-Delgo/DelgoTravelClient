@@ -1,7 +1,8 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Route, Routes  } from 'react-router-dom';
+import { Route, Routes, useLocation  } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 import HomePage from './pages/home/Home';
 import EditorNote from './pages/editorNote/EditorNote';
 import SignInPage from './pages/signInPage/SignIn';
@@ -51,10 +52,14 @@ function App() {
     dispatch(errorActions.setFine());
   };
   const queryClient = new QueryClient();
+  const location = useLocation()
+
   return (
     <QueryClientProvider client={queryClient}>
       {hasError && <AlertConfirmOne text="네트워크를 확인해주세요" buttonHandler={alertButtonHandler} />}
-      <Routes>
+      {/* <TransitionGroup className="transition-group">
+      <CSSTransition exact key={location.pathname.includes('/detail-place')===true ?location.pathname:null} classNames="slide" timeout={200}> */}
+      <Routes location={location}>
         <Route path={ROOT_PATH} element={<HomePage />} />
         <Route path={EDITOR_NOTE_PATH} element={<EditorNote />} />
         <Route path={SIGN_IN_PATH.MAIN} element={<SignInPage />} />
@@ -81,6 +86,8 @@ function App() {
         <Route path={KAKAO_REDIRECT_HANDLE_PATH} element={<KakaoRedirectHandler />} />
         <Route path={NAVER_REDIRECT_HANDLE_PATH} element={<NaverRedirectHandler />} />
       </Routes>
+      {/* </CSSTransition>
+   		 </TransitionGroup>  */}
     </QueryClientProvider>
   );
 }

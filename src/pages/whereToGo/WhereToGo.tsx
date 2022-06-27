@@ -11,6 +11,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { getAllPlaces } from '../../common/api/getPlaces';
 import { tokenActions } from '../../redux/reducers/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
+import { scrollActions } from '../../redux/reducers/scrollSlice';
 import Footer from '../../common/components/Footer'
 import RegionSelectionModal from './modal/RegionSelectionModal'
 import Place from './place/Place'
@@ -24,7 +25,7 @@ interface PlaceType {
   address: string
   lowestPrice: string
   mainPhotoUrl: string
-  name: string
+  name: string  
   placeId: number
   registDt: string
   wishId: number
@@ -57,6 +58,7 @@ function WhereToGo() {
   const [selectedDateString, setSelectedDateString] = useState('');
   const [selectedDate, setSelectedDate] = useState({ start: '', end: '' });
   const { date, dateString } = useSelector((state: any) => state.date);
+  const { whereToGoScrollY } = useSelector((state: any) => state.scroll);
   const sequence = dateString.length ? 2 : 0;
   const dispatch = useDispatch();
   const navigation = useNavigate();
@@ -66,22 +68,19 @@ function WhereToGo() {
     'todos',
     () => fetch(`http://49.50.161.156/place/selectWheretogo?userId=${userId}`).then((res) => res.json()),
     {
-      cacheTime: 0, // cacheTime : 언마운트된 후 어느 시점까지 메모리에 데이터를 저장하여 캐싱할 것인지를 결정함.
+      cacheTime: 10000, // cacheTime : 언마운트된 후 어느 시점까지 메모리에 데이터를 저장하여 캐싱할 것인지를 결정함.
       staleTime: 10000, // staleTime : 마운트 되어 있는 시점에서 데이터가 구식인지 판단함.
       refetchInterval: false, // 데이터 변경시 fetch하는시간 // default:false : db 데이터값 변경하면 즉시 변경
     },
   );
 
-  // useEffect(() => {
-  //   // getAllPlaces(userId, (response: AxiosResponse) => {
-  //   //   setPlaces(response.data.data);
-  //   // });
-  //   setPlaces(data.data)
-  // }, [data]);
+  useEffect(() => {
+    dispatch(scrollActions.whereToGoScrollY({ scrollY: window.scrollY }));
+    window.scrollTo(0, whereToGoScrollY);
+  }, []);
 
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     tokenRefresh({ refreshToken }, (response: AxiosResponse) => {
       const { code } = response.data;
 
