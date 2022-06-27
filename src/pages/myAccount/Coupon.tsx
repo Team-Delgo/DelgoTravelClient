@@ -8,6 +8,7 @@ import './Coupon.scss';
 import { tokenActions } from '../../redux/reducers/tokenSlice';
 import { url } from '../../constants/url.cosnt';
 import { tokenRefresh } from '../../common/api/login';
+import { ReactComponent as FootPrintActive } from "../../icons/foot-print-active.svg";
 import CouponModal from './CouponModal';
 
 interface CouponType {
@@ -121,6 +122,7 @@ function Coupon() {
           {existCoupon.length ?
             existCoupon :
             <div className='coupon-nocoupon'>
+              <FootPrintActive />
               <div className='coupon-nocoupon-title'>쿠폰이 없어요ㅠㅠ</div>
               <div className='coupon-nocoupon-p'>{`'`}델고가요{`'`}를 입력해보세요</div>
             </div>}
