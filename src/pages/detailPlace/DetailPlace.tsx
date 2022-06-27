@@ -98,7 +98,11 @@ function DetailPlace() {
   ]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (location.state.prevPath === '/wish-list' || '/where-to-go') window.scroll(0, 0);
+  }, [location]);
+
+
+  useEffect(() => {
     getDetailPlace(
       { userId, placeId: Number(placeId), startDt: date.start, endDt: date.end },
       (response: AxiosResponse) => {
@@ -167,15 +171,15 @@ function DetailPlace() {
   return (
     <>
       {isCalenderOpen && <Calender closeCalender={calenderOpenClose} isRoom={false} />}
-      <Transition in timeout={200} appear>
-        {(status) => (
-          <div
-            className={
-              location.state.prevPath.includes('detail-place') === false
-                ? `pageSlider pageSlider-${status}`
-                : `pageSlider pageSlider2-${status}`
-            }
-          >
+      {/* <Transition in timeout={100} appear>
+        {(status) => ( */}
+          {/* <div
+            // className={
+            //   location.state.prevPath.includes('detail-place') === false
+            //     ? `pageSlider pageSlider-${status}`
+            //     : `pageSlider pageSlider2-${status}`
+            // }
+          > */}
             <div className={classNames('detail-place', { close: isCalenderOpen })}>
               <ImageSlider images={photoList} />
                 <LeftArrow className="detail-place-previous-page" onClick={moveToPrevPage}/>
@@ -266,9 +270,9 @@ function DetailPlace() {
                 {place.address ? <Map address={place.address} /> : null}
               </div>
             </div>
-          </div>
-        )}
-      </Transition>
+          {/* </div> */}
+      {/* //   )}
+      // </Transition> */}
     </>
   );
 }

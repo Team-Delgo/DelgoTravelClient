@@ -18,6 +18,10 @@ function WishList() {
   const refreshToken = localStorage.getItem('refreshToken') || '';
 
   useEffect(() => {
+    window.scroll(0,0)
+  }, []);
+
+  useEffect(() => {
     tokenRefresh({ refreshToken }, (response: AxiosResponse) => {
       const { code } = response.data;
 

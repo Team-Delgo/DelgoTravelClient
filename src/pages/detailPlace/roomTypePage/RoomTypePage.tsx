@@ -42,9 +42,9 @@ function RoomTypePage() {
   ]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
     getRoomData(
-      room.roomId,
+      room?.roomId,
       (response: AxiosResponse) => {
         setPhotoList(response.data.data.detailRoomPhotos);
       },
@@ -56,9 +56,9 @@ function RoomTypePage() {
     dispatch(
       currentRoomActions.currentRoom({
         room: {
-          roomId: room.roomId,
-          name: room.name,
-          price: room.price,
+          roomId: room?.roomId,
+          name: room?.name,
+          price: room?.price,
         },
       }),
     );
@@ -96,9 +96,9 @@ function RoomTypePage() {
   return (
     <>
       {isCalenderOpen && <Calender closeCalender={calenderOpenClose} isRoom roomId={room.roomId} />}
-      <Transition in timeout={200} appear>
+      {/* <Transition in timeout={100} appear>
         {(status) => (
-          <div className={`pageSlider pageSlider-${status}`}>
+          <div className={`pageSlider pageSlider-${status}`}> */}
             <div className={classNames('detail-place-room-type', { close: isCalenderOpen })}>
               <ImageSlider images={photoList} />
               <Link
@@ -139,9 +139,9 @@ function RoomTypePage() {
               <div className="detail-place-room-type-base-information">기본정보</div>
               <div className="detail-place-room-type-additional-personnel-information">인원 추가 정보</div>
             </div>
-          </div>
+          {/* </div>
         )}
-      </Transition>
+      </Transition> */}
       <div className="reservation-button" aria-hidden="true" onClick={handleReservation}>
         <BottomButton text="예약하기" />
       </div>

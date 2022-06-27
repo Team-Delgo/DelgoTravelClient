@@ -1,5 +1,5 @@
-import React,{useEffect,useState} from 'react';
-import { useLocation,Link,useParams} from 'react-router-dom';
+import React,{useEffect,useState,useCallback} from 'react';
+import { useLocation,Link,useParams,useNavigate} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Transition  } from 'react-transition-group';
 import Reviews from '../reviews/Reviews';
@@ -11,21 +11,25 @@ function ReviewsPage() {
   const [reviews, setReviews] = useState<Array<any>>([]);
   const location: any = useLocation();
   const { placeId } = useParams();
-  
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0);
     setReviews(location.state.reviews);
   }, []);
 
+  // const moveToPrevPage = useCallback(() => {
+  //   navigate(-1)
+  // }, []);
+
   return (
-    <div>
-      <Transition in timeout={200} appear>
+    <>
+      {/* <Transition in timeout={100} appear>
         {(status) => (
-          <div className={`pageSlider pageSlider-${status}`}>
+          <div className={`pageSlider pageSlider-${status}`}> */}
             <header className="detail-place-review-page-header">
               <Link to={`/detail-place/${placeId}`} state={{ prevPath: location.pathname }} key={placeId}>
-                <LeftArrow className="detail-place-review-page-header-previous-page" />
+                <LeftArrow className="detail-place-review-page-header-previous-page"  />
               </Link>
               <div className="detail-place-review-page-header-number">리뷰 {reviews.length}개</div>
               <div className="detail-place-review-page-header-rating-count">
@@ -38,10 +42,10 @@ function ReviewsPage() {
             {reviews.map((review) => (
               <Reviews key={review.id} review={review} />
             ))}
-          </div>
+          {/* </div>
         )}
-      </Transition>
-    </div>
+      </Transition> */}
+    </>
   );
 }
 

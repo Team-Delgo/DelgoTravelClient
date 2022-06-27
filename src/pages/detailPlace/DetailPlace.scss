@@ -1,7 +1,9 @@
 .detail-place {
-  position: relative;
+  z-index: 1;
+  position: absolute;
   color: #3e382f;
   padding-bottom: 50px;
+  background-color: #f3efea;
   &.close {
     display: none;
   }
@@ -125,15 +127,15 @@
 }
 .pageSlider-entering {
   opacity: 0;
-  transform: translate3d(100%, 0,0);
+  transform: translate3d(50%, 0,0);
   animation-name: slidein 4s 1s;
   
 }
-
+// ease-out
 .pageSlider-entered {
   opacity: 1;
   transform: translate3d(0, 0,0);
-  transition: all 500ms;
+  transition: all 400ms;
   animation-name: slidein 4s 1s;
 }
 
@@ -144,7 +146,7 @@
 
 .pageSlider-exited {
   opacity: 0;
-  transition: all 700ms;
+  transition: all 400ms;
 }
 
 
@@ -152,7 +154,7 @@
 
 .pageSlider2-entering {
   opacity: 0;
-  transform: translate3d(-100%, 0,0);
+  transform: translate3d(-50%, 0,0);
   animation-name: slidein 4s 1s;
   
 }
@@ -160,7 +162,7 @@
 .pageSlider2-entered {
   opacity: 1;
   transform: translate3d(0, 0,0);
-  transition: all 500ms;
+  transition: all 400ms;
   animation-name: slidein 4s 1s;
 }
 
@@ -171,5 +173,5 @@
 
 .pageSlider2-exited {
   opacity: 0;
-  transition: all 700ms;
+  transition: all 400ms;
 }
