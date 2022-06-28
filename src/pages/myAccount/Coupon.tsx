@@ -23,6 +23,7 @@ interface CouponType {
 }
 
 function Coupon() {
+  const [scheduledCoupon, setScheduledCoupon] = useState<number>(0);
   const [couponList, setCouponList] = useState<CouponType[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const userId = useSelector((state: any) => state.persist.user.user.id);
@@ -30,12 +31,11 @@ function Coupon() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const refreshToken = localStorage.getItem('refreshToken') || '';
-  const registRef = useRef<any>();
 
   useEffect(() => {
     getCouponList();
-    couponRegist();
-  }, []);
+    getScheduledCoupon();
+  }, [isModalOpen]);
 
   useEffect(() => {
     tokenRefresh(
@@ -57,7 +57,6 @@ function Coupon() {
     );
   }, [accessToken]);
 
-
   const getCouponList = async () => {
     const response = await axios.get(`${url}/coupon/getCouponList?userId=${userId}`);
     const { data } = response.data;
@@ -67,13 +66,23 @@ function Coupon() {
 
   };
 
-  const couponRegist = async () => {
-    console.log(userId);
-    const response = await axios.post(`${url}coupon/regist`, {
-      userId,
-      couponCode: 'asdf',
-    });
-    console.log(response);
+  const getScheduledCoupon = () => {
+    let count = 0;
+    const date = new Date();
+    const currentDateTime = date.getTime();
+    couponList.map((coupon) => {
+      const expireDateString = coupon.expireDt;
+      const expireDate = new Date(expireDateString);
+      const expireDateTime = expireDate.getTime();
+      const differenceTime = expireDateTime - currentDateTime;
+      const difference = Math.abs(differenceTime / (1000 * 60 * 60 * 24));
+
+      if (difference <= 30) count += 1;
+
+      return count;
+    })
+
+    setScheduledCoupon(count);
   };
 
   const modalOpen = () => {
@@ -101,11 +110,10 @@ function Coupon() {
       </div>
     );
   });
-  console.log(existCoupon);
 
   return (
     <div className="coupon">
-      {isModalOpen && <CouponModal />}
+      {isModalOpen && <CouponModal closeModal={modalClose} />}
       <div className="coupon-backdrop" aria-hidden="true" onClick={modalClose}>
         <div aria-hidden="true" className="myaccount-back" onClick={() => navigate(-1)}>
           <Arrow />
@@ -113,7 +121,7 @@ function Coupon() {
         <header className="myaccount-header">쿠폰함</header>
         <div className="coupon-headline">
           <div className="coupon-count">쿠폰 {couponList && couponList.length}장</div>
-          <span>30일 이내 소멸예정 쿠폰 1장</span>
+          <span>30일 이내 소멸예정 쿠폰 {scheduledCoupon}장</span>
         </div>
         <div className="coupon-flexwrapper">
           <div aria-hidden="true" className="coupon-regist" onClick={modalOpen}>

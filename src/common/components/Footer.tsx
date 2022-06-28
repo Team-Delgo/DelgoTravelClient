@@ -1,4 +1,4 @@
-import React,{useCallback} from 'react';
+import React, { useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as Home } from '../../icons/home.svg';
 import { ReactComponent as Search } from '../../icons/search.svg';
@@ -73,16 +73,16 @@ function Footer() {
         )}
       </div>
       <div className="person-icon">
-        {location.pathname === MY_ACCOUNT_PATH ? (
+        {location.pathname === MY_ACCOUNT_PATH.MAIN ? (
           <>
-            <Link to={MY_ACCOUNT_PATH}>
+            <Link to={MY_ACCOUNT_PATH.MAIN}>
               <PersonActive />
             </Link>
             <div className="footer-text-active">내 정보</div>
           </>
         ) : (
           <>
-            <Link to={MY_ACCOUNT_PATH}>
+            <Link to={MY_ACCOUNT_PATH.MAIN}>
               <Person />
             </Link>
             <div className="footer-text">내 정보</div>
