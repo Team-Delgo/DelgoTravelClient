@@ -9,8 +9,6 @@ import './Place.scss'
 
 interface PlaceTypeProps {
   place: PlaceType
-  places: Array<PlaceType>
-  setPlaces: any
 }
 
 interface PlaceType {
@@ -23,7 +21,7 @@ interface PlaceType {
   wishId: number
 }
 
-function Place({ place, places, setPlaces }: PlaceTypeProps) {
+function Place({ place }: PlaceTypeProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const accessToken = useSelector((state: any) => state.token.token);
   const userId = useSelector((state: any) => state.persist.user.user.id)
@@ -34,38 +32,32 @@ function Place({ place, places, setPlaces }: PlaceTypeProps) {
   const wishListInsert = useCallback(() => {
     wishInsert({ userId, placeId: place.placeId, accessToken }, (response: AxiosResponse) => {
       if (response.data.code === 200) {
-        const updatePlace = { ...place, wishId: response.data.data.wishId };
-        const updatePlaces = places.map((p) => (p.placeId === updatePlace.placeId ? { ...p, ...updatePlace } : p));
-        setPlaces(updatePlaces);
+        // const updatePlace = { ...place, wishId: response.data.data.wishId };
+        // const updatePlaces = places.map((p) => (p.placeId === updatePlace.placeId ? { ...p, ...updatePlace } : p));
+        // setPlaces(updatePlaces);
         setWishList(response.data.data.wishId);
       }
     }, dispatch);
-  }, [wishList, places]);
+  }, [wishList]);
 
   const wishListDelete = useCallback(() => {
     wishDelete(
       { wishId: wishList, accessToken },
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
-          const updatePlace = { ...place, wishId: 0 };
-          const updatePlaces = places.map((p) => (p.placeId === updatePlace.placeId ? { ...p, ...updatePlace } : p));
-          setPlaces(updatePlaces);
+          // const updatePlace = { ...place, wishId: 0 };
+          // const updatePlaces = places.map((p) => (p.placeId === updatePlace.placeId ? { ...p, ...updatePlace } : p));
+          // setPlaces(updatePlaces);
           setWishList(0);
         }
       },
       dispatch,
     );
-  }, [wishList, places]);
-
-  useEffect(() => {
-    return () => {
-      console.log(window.scrollY)
-    };
-  }, []);
+  }, [wishList]);
 
 
   const moveToDetailPage = useCallback(() => {
-    dispatch(scrollActions.whereToGoScrollY({ scrollY: window.scrollY }));
+    dispatch(scrollActions.scroll({ whereToGo: window.scrollY,detailPlace:0 }));
     navigate(`/detail-place/${place.placeId}`, {
       state: {
         prevPath: location.pathname,
@@ -75,11 +67,9 @@ function Place({ place, places, setPlaces }: PlaceTypeProps) {
 
   return (
     <div className="place" aria-hidden="true">
-      {/* <Link to={`/detail-place/${place.placeId}`} state={{ prevPath: location.pathname}}  key={place.placeId}> */}
       <div aria-hidden onClick={moveToDetailPage}>
         <img src={place.mainPhotoUrl} alt="place-img"/>
         </div>
-      {/* </Link> */}
       <div className="place-info">
         <div className="place-info-first-line">
           <span className="place-region">

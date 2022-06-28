@@ -81,6 +81,13 @@ function Folder() {
   //   );
   // }, [accessToken]);
 
+  if (isLoading)
+    return (
+      <div>
+        <img src={`${process.env.PUBLIC_URL}/assets/images/dog-animation.gif`} alt="loading" />
+      </div>
+    );
+
   return (
     <div className="wish-list-container">
       {data?.data.length>0? (

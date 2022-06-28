@@ -50,26 +50,26 @@ function Login() {
   const loginFetch = () => {
     login(enteredInput, (response: AxiosResponse) => {
       const { code, data } = response.data;
-      console.log(response);
+      console.log(data);
       if (code === 200) {
-        dispatch(
-          userActions.signin({
-            user: {
-              id: data.user.userId,
-              nickname: data.user.name,
-              email: data.user.email,
-              phone: data.user.phoneNo,
-            },
-            pet: {
-              petId: data.pet.petId,
-              birthdat: data.pet.birthday,
-              size: data.pet.size,
-              weight: data.pet.weight,
-              name: data.pet.name,
-              image: data.user.profile,
-            },
-          }),
-        );
+        // dispatch(
+        //   userActions.signin({
+        //     user: {
+        //       id: data.user.userId,
+        //       nickname: data.user.name,
+        //       email: data.user.email,
+        //       phone: data.user.phoneNo,
+        //     },
+        //     // pet: {
+        //     //   petId: data.pet.petId,
+        //     //   birthdat: data.pet.birthday,
+        //     //   size: data.pet.size,
+        //     //   weight: data.pet.weight,
+        //     //   name: data.pet.name,
+        //     //   image: data.user.profile,
+        //     // },
+        //   }),
+        // );
 
         const accessToken = response.headers.authorization_access;
         const refreshToken = response.headers.authorization_refresh;
