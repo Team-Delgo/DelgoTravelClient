@@ -83,8 +83,8 @@ function Folder() {
 
   if (isLoading)
     return (
-      <div>
-        <img src={`${process.env.PUBLIC_URL}/assets/images/dog-animation.gif`} alt="loading" />
+      <div className="wish-list-container">
+        &nbsp;
       </div>
     );
 

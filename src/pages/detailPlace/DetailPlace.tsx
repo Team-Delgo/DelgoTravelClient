@@ -1,9 +1,10 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect,useMemo } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useNavigate,useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
 import { Transition  } from 'react-transition-group';
+import Skeleton , { SkeletonTheme } from 'react-loading-skeleton'
 import RoomType from './roomType/RoomType';
 import Reviews from './reviews/Reviews';
 import ImageSlider from '../../common/utils/ImageSlider';
@@ -36,6 +37,21 @@ interface RoomType {
   roomId: number
 }
 
+function RoomTypeSkeletons() {
+  const RoomTypeSkeletonsArray = [];
+  for (let i = 0; i < 3; i += 1) {
+    RoomTypeSkeletonsArray.push(
+      <div className="room-type-skeleton">
+        <SkeletonTheme baseColor="#f0e9e9" highlightColor="#e4dddd">
+        <Skeleton style={{height:"25vh"}} borderRadius={5} />
+        <Skeleton height={60} borderRadius={5} />
+        </SkeletonTheme>
+      </div>,
+    );
+  }
+  return RoomTypeSkeletonsArray;
+}
+
 function DetailPlace() {
   const [place, setPlace] = useState({
     address: '',
@@ -59,6 +75,7 @@ function DetailPlace() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { whereToGoScrollY,detailPlaceScrollY } = useSelector((state: any) => state.scroll);
+  const roomTypeSkeletons = useMemo(()=>RoomTypeSkeletons(),[])
 
   const [reviews, setReviews] = useState<Array<any>>([
     {
@@ -198,8 +215,15 @@ function DetailPlace() {
             //     : `pageSlider pageSlider2-${status}`
             // }
           > */}
-      <div className={classNames('detail-place', { close: isCalenderOpen })}>
-        <ImageSlider images={photoList} />
+      <div className={classNames('detail-place', { close: isCalenderOpen })} >
+        <div style={{width:"100%"}}>
+        {
+          photoList.length>0 ?<ImageSlider images={photoList} />:
+          <SkeletonTheme baseColor="#f0e9e9" highlightColor="#e4dddd">
+          <Skeleton style={{height:"30vh"}} />
+          </SkeletonTheme>
+        }
+        </div>
         <LeftArrow className="detail-place-previous-page" onClick={moveToPrevPage} />
         <div className="detail-place-heart">
           {place.wishId === 0 ? (
@@ -236,21 +260,24 @@ function DetailPlace() {
           <header className="detail-place-room-select-header">객실선택</header>
         </div>
         <div className="detail-places-room-types">
-          {roomTypes.map((room) => (
-            <div aria-hidden="true" onClick={saveDetailPlaceScrollY}>
-              <RoomType
-                key={room.roomId}
-                room={room}
-                navigate={() => {
-                  navigate(`/detail-place/${placeId}/${room.roomId}`, {
-                    state: {
-                      room,
-                    },
-                  });
-                }}
-              />
-            </div>
-          ))}
+          {
+            roomTypes.length > 0 ?roomTypes.map((room) => (
+              <div aria-hidden="true" onClick={saveDetailPlaceScrollY}>
+                <RoomType
+                  key={room.roomId}
+                  room={room}
+                  navigate={() => {
+                    navigate(`/detail-place/${placeId}/${room.roomId}`, {
+                      state: {
+                        room,
+                      },
+                    });
+                  }}
+                />
+              </div>
+            )) :
+            roomTypeSkeletons
+          }
         </div>
         <div className="detail-place-review">
           <header className="detail-place-review-header">

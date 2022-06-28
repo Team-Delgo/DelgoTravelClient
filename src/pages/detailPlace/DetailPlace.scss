@@ -1,9 +1,7 @@
 .detail-place {
   z-index: 1;
-  position: absolute;
   color: #3e382f;
   padding-bottom: 50px;
-  background-color: #f3efea;
   &.close {
     display: none;
   }
@@ -18,8 +16,8 @@
   }
   &-heart {
     position: absolute;
-    top: -5px;
-    right: -10px;
+    top: -15px;
+    right: 0px;
     -webkit-tap-highlight-color : rgba(0,0,0,0)
   }
   &-info {
@@ -55,7 +53,7 @@
     align-items: center;
     justify-content: space-between;
     width: 87vw;
-    height: 6vh;
+    height: 49px;
     background-color: #ffffff;
     color: #3e382f;
     font-size: 16px;
@@ -124,6 +122,9 @@
       font-weight: bold;
     }
   }
+}
+.room-type-skeleton{
+  margin: 0 5% 12% 5%;
 }
 .pageSlider-entering {
   opacity: 0;
