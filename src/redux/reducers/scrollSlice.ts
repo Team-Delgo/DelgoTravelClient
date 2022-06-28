@@ -2,15 +2,17 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   whereToGoScrollY: { scrollY: 0 },
+  detailPlaceScrollY: { scrollY: 0 },
 };
 
 const scrollSlice = createSlice({
   name: 'scrollY',
   initialState,
   reducers: {
-    whereToGoScrollY(state, action) {
+    scroll(state, action) {
       return {
-        whereToGoScrollY: action.payload.scrollY,
+        whereToGoScrollY: action.payload.whereToGo,
+        detailPlaceScrollY:action.payload.detailPlace
       };
     },
     scrollCancle() {

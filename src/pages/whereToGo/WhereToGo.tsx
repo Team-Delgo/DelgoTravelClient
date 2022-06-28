@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 import React, { useState, useEffect, useCallback,useMemo } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
@@ -47,8 +47,6 @@ function AllPlacesSkeletons() {
 }
 
 function WhereToGo() {
-  const [places, setPlaces] = useState<Array<PlaceType>>([]);
-  const [searchTerm, setSearchTerm] = useState('');
   const [areaTerm, setAreaTerm] = useState('');
   const [regionSelectionModal, setRegionSelectionModal] = useState(false);
   const userId = useSelector((state: any) => state.persist.user.user.id);
@@ -62,10 +60,11 @@ function WhereToGo() {
   const sequence = dateString.length ? 2 : 0;
   const dispatch = useDispatch();
   const navigation = useNavigate();
+  const location: any = useLocation();
   const allPlacesSkeletons = useMemo(()=>AllPlacesSkeletons(),[])
 
   const { isLoading, error, data, isFetching } = useQuery(
-    'todos',
+    'getAllPlaces',
     () => fetch(`http://49.50.161.156/place/selectWheretogo?userId=${userId}`).then((res) => res.json()),
     {
       cacheTime: 10000, // cacheTime : 언마운트된 후 어느 시점까지 메모리에 데이터를 저장하여 캐싱할 것인지를 결정함.
@@ -75,8 +74,12 @@ function WhereToGo() {
   );
 
   useEffect(() => {
-    dispatch(scrollActions.whereToGoScrollY({ scrollY: window.scrollY }));
-    window.scrollTo(0, whereToGoScrollY);
+    if (location.state?.prevPath.includes('/detail-place')) {
+      dispatch(scrollActions.scroll({ whereToGo: window.scrollY }));
+      window.scrollTo(0, whereToGoScrollY);
+    } else {
+      window.scrollTo(0, 0);
+    }
   }, []);
 
 
@@ -134,7 +137,7 @@ function WhereToGo() {
             ? allPlacesSkeletons
             : data?.data.map((place: PlaceType) => {
                 if (place.address.includes(areaTerm)) {
-                    return <Place key={place.placeId} place={place} places={places} setPlaces={setPlaces} />;
+                    return <Place key={place.placeId} place={place} />;
                 }
               })}
         </div>

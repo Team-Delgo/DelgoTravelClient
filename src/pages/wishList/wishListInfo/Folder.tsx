@@ -81,6 +81,13 @@ function Folder() {
   //   );
   // }, [accessToken]);
 
+  if (isLoading)
+    return (
+      <div className="wish-list-container">
+        &nbsp;
+      </div>
+    );
+
   return (
     <div className="wish-list-container">
       {data?.data.length>0? (

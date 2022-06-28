@@ -11,6 +11,7 @@ import BottomButton from '../../../common/components/BottomButton';
 import { ReactComponent as LeftArrow } from '../../../icons/left-arrow2.svg';
 import Calender from '../../../common/utils/Calender';
 import { currentRoomActions } from '../../../redux/reducers/roomSlice';
+import { scrollActions } from '../../../redux/reducers/scrollSlice';
 import './RoomTypePage.scss';
 
 
@@ -42,7 +43,7 @@ function RoomTypePage() {
   ]);
 
   useEffect(() => {
-    // window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
     getRoomData(
       room?.roomId,
       (response: AxiosResponse) => {
@@ -92,6 +93,9 @@ function RoomTypePage() {
       navigate(`/reservation/${currentPlace.placeId}/${room.roomId}/${date.start}/${date.end}`);
     }, 300);
   };
+
+
+
 
   return (
     <>

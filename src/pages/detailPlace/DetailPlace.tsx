@@ -1,9 +1,10 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect,useMemo } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useNavigate,useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
 import { Transition  } from 'react-transition-group';
+import Skeleton , { SkeletonTheme } from 'react-loading-skeleton'
 import RoomType from './roomType/RoomType';
 import Reviews from './reviews/Reviews';
 import ImageSlider from '../../common/utils/ImageSlider';
@@ -13,6 +14,7 @@ import { getDetailPlace } from '../../common/api/getPlaces';
 import { wishInsert, wishDelete } from '../../common/api/wish';
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg';
 import { currentPlaceActions } from '../../redux/reducers/placeSlice';
+import { scrollActions } from '../../redux/reducers/scrollSlice';
 import './DetailPlace.scss';
 import Calender from '../../common/utils/Calender';
 
@@ -33,6 +35,21 @@ interface RoomType {
   placeId: number
   price: string
   roomId: number
+}
+
+function RoomTypeSkeletons() {
+  const RoomTypeSkeletonsArray = [];
+  for (let i = 0; i < 3; i += 1) {
+    RoomTypeSkeletonsArray.push(
+      <div className="room-type-skeleton">
+        <SkeletonTheme baseColor="#f0e9e9" highlightColor="#e4dddd">
+        <Skeleton style={{height:"25vh"}} borderRadius={5} />
+        <Skeleton height={60} borderRadius={5} />
+        </SkeletonTheme>
+      </div>,
+    );
+  }
+  return RoomTypeSkeletonsArray;
 }
 
 function DetailPlace() {
@@ -57,6 +74,8 @@ function DetailPlace() {
   const location: any = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { whereToGoScrollY,detailPlaceScrollY } = useSelector((state: any) => state.scroll);
+  const roomTypeSkeletons = useMemo(()=>RoomTypeSkeletons(),[])
 
   const [reviews, setReviews] = useState<Array<any>>([
     {
@@ -98,8 +117,14 @@ function DetailPlace() {
   ]);
 
   useEffect(() => {
-    if (location.state.prevPath === '/wish-list' || '/where-to-go') window.scroll(0, 0);
-  }, [location]);
+    if (location.state.prevPath.includes('/detail-place')) {
+      if(roomTypes.length>0){
+        window.scroll(0, detailPlaceScrollY);
+      }
+    } else {
+      window.scroll(0, 0);
+    }
+  }, [roomTypes]); 
 
 
   useEffect(() => {
@@ -164,8 +189,18 @@ function DetailPlace() {
   }, []);
 
   const moveToPrevPage = useCallback(() => {
-    if(location.state.prevPath==="/wish-list") navigate("/wish-list")
-    else navigate("/where-to-go")
+    if (location.state.prevPath === '/wish-list') navigate('/wish-list');
+    else
+      navigate('/where-to-go', {
+        state: {
+          prevPath: location.pathname,
+        },
+      });
+  }, []);
+
+
+  const saveDetailPlaceScrollY = useCallback(() => {
+    dispatch(scrollActions.scroll({ whereToGo: whereToGoScrollY,detailPlace: window.scrollY }));
   }, []);
 
   return (
@@ -173,104 +208,116 @@ function DetailPlace() {
       {isCalenderOpen && <Calender closeCalender={calenderOpenClose} isRoom={false} />}
       {/* <Transition in timeout={100} appear>
         {(status) => ( */}
-          {/* <div
+      {/* <div
             // className={
             //   location.state.prevPath.includes('detail-place') === false
             //     ? `pageSlider pageSlider-${status}`
             //     : `pageSlider pageSlider2-${status}`
             // }
           > */}
-            <div className={classNames('detail-place', { close: isCalenderOpen })}>
-              <ImageSlider images={photoList} />
-                <LeftArrow className="detail-place-previous-page" onClick={moveToPrevPage}/>
-              <div className="detail-place-heart">
-                {place.wishId === 0 ? (
-                  <Heart wishList={place.wishId} handleWishList={wishListInsert} />
-                ) : (
-                  <Heart wishList={place.wishId} handleWishList={wishListDelete} />
-                )}
-              </div>
-              <div className="detail-place-info">
-                <header className="detail-place-info-name">{place.name}</header>
-                <div className="detail-place-info-address">
-                  {place.address}
-                  <span className="detail-place-info-map" aria-hidden="true" onClick={moveToMap}>
-                    지도 &gt;
-                  </span>
-                </div>
-                <Link
-                  style={{ textDecoration: 'none' }}
-                  to={`/detail-place/${placeId}/reviews`}
-                  state={{ reviews }}
-                  key={placeId}
-                >
-                  <div className="detail-place-info-reviews">★ 9.1 리뷰 12개 &gt;</div>
-                </Link>
-                <div className="detail-place-info-facility">소형견,오션뷰,자연휴강,산책코스</div>
-              </div>
+      <div className={classNames('detail-place', { close: isCalenderOpen })} >
+        <div style={{width:"100%"}}>
+        {
+          photoList.length>0 ?<ImageSlider images={photoList} />:
+          <SkeletonTheme baseColor="#f0e9e9" highlightColor="#e4dddd">
+          <Skeleton style={{height:"30vh"}} />
+          </SkeletonTheme>
+        }
+        </div>
+        <LeftArrow className="detail-place-previous-page" onClick={moveToPrevPage} />
+        <div className="detail-place-heart">
+          {place.wishId === 0 ? (
+            <Heart wishList={place.wishId} handleWishList={wishListInsert} />
+          ) : (
+            <Heart wishList={place.wishId} handleWishList={wishListDelete} />
+          )}
+        </div>
+        <div className="detail-place-info">
+          <header className="detail-place-info-name">{place.name}</header>
+          <div className="detail-place-info-address">
+            {place.address}
+            <span className="detail-place-info-map" aria-hidden="true" onClick={moveToMap}>
+              지도 &gt;
+            </span>
+          </div>
+          <Link
+            style={{ textDecoration: 'none' }}
+            to={`/detail-place/${placeId}/reviews`}
+            state={{ reviews }}
+            key={placeId}
+          >
+            <div className="detail-place-info-reviews">★ 9.1 리뷰 12개 &gt;</div>
+          </Link>
+          <div className="detail-place-info-facility">소형견,오션뷰,자연휴강,산책코스</div>
+        </div>
 
-              <div className="detail-place-reservation-date-select" aria-hidden="true" onClick={calenderOpenClose}>
-                <span>날짜선택</span>
-                <span className="detail-place-reservation-date-select-calender">
-                  {dateString}&nbsp;&nbsp;&nbsp;&gt;
-                </span>
-              </div>
+        <div className="detail-place-reservation-date-select" aria-hidden="true" onClick={calenderOpenClose}>
+          <span>날짜선택</span>
+          <span className="detail-place-reservation-date-select-calender">{dateString}&nbsp;&nbsp;&nbsp;&gt;</span>
+        </div>
 
-              <div className="detail-place-room-select">
-                <header className="detail-place-room-select-header">객실선택</header>
+        <div className="detail-place-room-select">
+          <header className="detail-place-room-select-header">객실선택</header>
+        </div>
+        <div className="detail-places-room-types">
+          {
+            roomTypes.length > 0 ?roomTypes.map((room) => (
+              <div aria-hidden="true" onClick={saveDetailPlaceScrollY}>
+                <RoomType
+                  key={room.roomId}
+                  room={room}
+                  navigate={() => {
+                    navigate(`/detail-place/${placeId}/${room.roomId}`, {
+                      state: {
+                        room,
+                      },
+                    });
+                  }}
+                />
               </div>
-              <div className="detail-places-room-types">
-                {roomTypes.map((room) => (
-                  <RoomType
-                    key={room.roomId}
-                    room={room}
-                    navigate={() => {
-                      navigate(`/detail-place/${placeId}/${room.roomId}`, {
-                        state: {
-                          room,
-                        },
-                      });
-                    }}
-                  />
-                ))}
-              </div>
-              <div className="detail-place-review">
-                <header className="detail-place-review-header">
-                  <div className="detail-place-review-header-number">리뷰 {reviews.length}개</div>
-                  <Link
-                    style={{ textDecoration: 'none' }}
-                    to={`/detail-place/${placeId}/reviews`}
-                    state={{ reviews }}
-                    key={placeId}
-                  >
-                    <div className="detail-place-review-header-more">더보기</div>
-                  </Link>
-                </header>
-                <body>
-                  {reviews.slice(0, 2).map((review) => (
-                    <Reviews key={review.id} review={review} />
-                  ))}
-                </body>
-              </div>
-              <div className="detail-place-facility">
-                <header className="detail-place-facility-header">편의시설 및 서비스</header>
-                <div className="detail-place-facility-image-container">
-                  {service.map((url) => (
-                    <img src={url} alt="service-img" />
-                  ))}
-                </div>
-              </div>
-              <div className="detail-place-notice">공지사항</div>
-              <div className="detail-place-base-information">기본정보</div>
-              <div className="detail-place-additional-personnel-information">인원 추가 정보</div>
-              <div className="detail-place-cancellation-refund-policy">취소 및 환불 규정</div>
-              <div className="detail-place-etc">확인사항 및 기타</div>
-              <div className="detail-place-map">
-                <header className="detail-place-map-header">지도</header>
-                {place.address ? <Map address={place.address} /> : null}
-              </div>
+            )) :
+            roomTypeSkeletons
+          }
+        </div>
+        <div className="detail-place-review">
+          <header className="detail-place-review-header">
+            <div className="detail-place-review-header-number">리뷰 {reviews.length}개</div>
+            <div aria-hidden="true" onClick={saveDetailPlaceScrollY}>
+              <Link
+                style={{ textDecoration: 'none' }}
+                to={`/detail-place/${placeId}/reviews`}
+                state={{ reviews }}
+                key={placeId}
+              >
+                <div className="detail-place-review-header-more">더보기</div>
+              </Link>
             </div>
-          {/* </div> */}
+          </header>
+          <body>
+            {reviews.slice(0, 2).map((review) => (
+              <Reviews key={review.id} review={review} />
+            ))}
+          </body>
+        </div>
+        <div className="detail-place-facility">
+          <header className="detail-place-facility-header">편의시설 및 서비스</header>
+          <div className="detail-place-facility-image-container">
+            {service.map((url) => (
+              <img src={url} alt="service-img" />
+            ))}
+          </div>
+        </div>
+        <div className="detail-place-notice">공지사항</div>
+        <div className="detail-place-base-information">기본정보</div>
+        <div className="detail-place-additional-personnel-information">인원 추가 정보</div>
+        <div className="detail-place-cancellation-refund-policy">취소 및 환불 규정</div>
+        <div className="detail-place-etc">확인사항 및 기타</div>
+        <div className="detail-place-map">
+          <header className="detail-place-map-header">지도</header>
+          {place.address ? <Map address={place.address} /> : null}
+        </div>
+      </div>
+      {/* </div> */}
       {/* //   )}
       // </Transition> */}
     </>
