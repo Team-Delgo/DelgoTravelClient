@@ -12,6 +12,7 @@ import { tokenActions } from "../../redux/reducers/tokenSlice";
 import AlertConfirm from "../../common/dialog/AlertConfirm";
 import AlertConfirmOne from "../../common/dialog/AlertConfirmOne";
 import { deleteUser } from "../../common/api/signup";
+import { MY_ACCOUNT_PATH } from "../../constants/path.const";
 
 
 function MyAccount() {
@@ -71,7 +72,7 @@ function MyAccount() {
           </div>
         </div>
         <div className="account-profile-info">
-          <div className="account-proifle-info-coupon"  aria-hidden="true" onClick={navigateCouponPage}>
+          <div className="account-proifle-info-coupon" aria-hidden="true" onClick={navigateCouponPage}>
             <p className="account-profile-info-column">쿠폰</p>
             <p className="account-profile-info-value">3장</p>
           </div>
@@ -100,7 +101,7 @@ function MyAccount() {
           </div>
         </div>
       </div>
-      <div className="account-settings">
+      <div className="account-settings" aria-hidden="true" onClick={() => { navigation(MY_ACCOUNT_PATH.SETTINGS); }}>
         <div className="account-item">
           <h2 className="account-item-name">설정</h2>
           <img src={RightArrow} alt="detail" />

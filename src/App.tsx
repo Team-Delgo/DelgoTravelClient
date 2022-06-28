@@ -1,6 +1,6 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Route, Routes, useLocation  } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import HomePage from './pages/home/Home';
@@ -25,7 +25,6 @@ import {
   REVIEW_WRITING_PATH,
   KAKAO_REDIRECT_HANDLE_PATH,
   NAVER_REDIRECT_HANDLE_PATH,
-  COUPON_PATH,
 } from './constants/path.const';
 import './App.scss';
 import MyAccount from './pages/myAccount/MyAccount';
@@ -44,6 +43,7 @@ import { errorActions } from './redux/reducers/errorSlice';
 import ReservationConfirmPage from './pages/detailPlace/reservationConfirmPage/ReservationConfirmPage';
 import Coupon from './pages/myAccount/Coupon';
 import ReservationWaitingPage from './pages/detailPlace/reservationWaitingPage/ReservationWaitingPage';
+import Settings from './pages/myAccount/Settings';
 
 function App() {
   const hasError = useSelector((state: any) => state.error.hasError);
@@ -74,8 +74,9 @@ function App() {
         <Route path={SIGN_UP_PATH.USER_PET_INFO} element={<PetInfo />} />
         <Route path={WISH_LIST_PATH} element={<WishListPage />} />
         <Route path={WHERE_TO_GO_PATH} element={<WhereToGoPage />} />
-        <Route path={MY_ACCOUNT_PATH} element={<MyAccount />} />
-        <Route path={COUPON_PATH} element={<Coupon />} />
+        <Route path={MY_ACCOUNT_PATH.MAIN} element={<MyAccount />} />
+        <Route path={MY_ACCOUNT_PATH.COUPON} element={<Coupon />} />
+        <Route path={MY_ACCOUNT_PATH.SETTINGS} element={<Settings />} />
         <Route path={DETAIL_PLACE_PATH.MAIN} element={<DetailPlace />} />
         <Route path={DETAIL_PLACE_PATH.REVIEWS} element={<ReviewsPage />} />
         <Route path={DETAIL_PLACE_PATH.ROOMTYPES} element={<RoomTypePage />} />

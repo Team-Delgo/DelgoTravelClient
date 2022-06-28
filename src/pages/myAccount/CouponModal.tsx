@@ -6,13 +6,14 @@ import { registCoupon } from '../../common/api/coupon';
 import "./CouponModal.scss";
 
 
-function CouponModal() {
+function CouponModal(props: { closeModal: () => void }) {
   const [enteredInput, setEnteredInput] = useState('');
   const [feedback, setFeedback] = useState('공백 없이 쿠폰코드를 입력해주세요.');
   const [invalid, setInvalid] = useState(false);
   const dispatch = useDispatch();
   const inputRef = useRef<any>();
   const { id } = useSelector((state: any) => state.persist.user.user);
+  const { closeModal } = props;
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -27,10 +28,10 @@ function CouponModal() {
       couponCode: enteredInput
     };
     registCoupon(data, (response: AxiosResponse) => {
-      const { code, data } = response.data;
+      const { code } = response.data;
       console.log(response);
       if (code === 200) {
-        console.log(data);
+        // closeModal();
       } else {
         setInvalid(true);
         setFeedback('유효하지 않은 쿠폰 코드 입니다.');
