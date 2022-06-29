@@ -1,12 +1,11 @@
 .reservation {
+  padding: 10% 5% 0 5%;
   text-align: center;
   position: relative;
-  padding-top: 15%;
   color: #ffffff;
   img {
-    width: 90%;
+    width:335px;
     border-radius: 5px;
-    margin-bottom: 10%;
   }
   &-place-name {
     position: absolute;
@@ -56,53 +55,23 @@
     &-address {
       position: absolute;
       left: 10%;
-      bottom: 20%;
+      bottom: 10%;
     }
     &-inquiry {
       position: absolute;
       left: 35%;
-      bottom: 20%;
+      bottom: 10%;
     }
     &-change {
       position: absolute;
       left: 55%;
-      bottom: 20%;
+      bottom: 10%;
     }
     &-cancel {
       position: absolute;
       left: 80%;
-      bottom: 20%;
+      bottom: 10%;
     }
   }
 }
-.travel-preparation {
-  padding: 5% 5% 0 5%;
-  line-height: 18px;
-  color: #3e382f;
-  &-text {
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 18px;
-    color: #3e382f;
-  }
-  &-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    row-gap: 15px;
-    column-gap: 20px;
-    font-weight: 500;
-    font-size: 3vw;
-    padding: 8% 0 0 0;
-    div {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      height: 4.2vh;
-      border: 1px solid #e8e2dc;
-      box-sizing: border-box;
-      border-radius: 28px;
-      background-color: #ffffff;
-    }
-  }
-}
+

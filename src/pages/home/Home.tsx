@@ -8,7 +8,13 @@ import Footer from '../../common/components/Footer';
 import RecommendedPlaces from './recommenedPlaces/RecommendedPlaces';
 import { tokenActions } from '../../redux/reducers/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
+import { bookingGetDataByMain } from '../../common/api/booking';
 import { getAllPlaces } from '../../common/api/getPlaces';
+import Dog from '../../icons/dog.svg';
+import Airplane from '../../icons/airplane.svg';
+import Footprint from '../../icons/footprint.svg';
+import Book from '../../icons/book.svg';
+import Emergency from '../../icons/emergency.svg'
 import './Home.scss';
 
 
@@ -32,6 +38,8 @@ interface RecommendedPlaceType {
 
 function Home() {
   const [places, setPlaces] = useState<Array<RecommendedPlaceType>>([]);
+  const [revervationPlaces, setRevervationPlaces] = useState<Array<any>>([]);
+
   const [editorPlaces, setEditorPlaces] = useState<Array<EditorPlaceType>>([
     {
       id: 1,
@@ -59,6 +67,11 @@ function Home() {
     getAllPlaces(userId,startDt,endDt, (response: AxiosResponse) => {
       setPlaces(response.data.data);
     }, dispatch);
+
+    bookingGetDataByMain({accessToken, userId}, (response: AxiosResponse) => {
+      setRevervationPlaces(response.data.data)
+      console.log(response.data.data)
+    }, dispatch);
   }, []);
 
   useEffect(() => {
@@ -81,7 +94,41 @@ function Home() {
   return (
     <>
       <div className="home-background">
-        <ReservationInfo />
+      <div className="reservation-places">
+        {
+          revervationPlaces.map((a) => (
+            <ReservationInfo key={a.bookingId}/>
+          ))
+        }
+        </div>
+        {
+          revervationPlaces.length > 0 ?
+            <div className="travel-preparation">
+              <div className="travel-preparation-text">여행준비 되셨나요?</div>
+              <div className="travel-preparation-list">
+                <div>
+                  <img src={Emergency} alt="emergency" />
+                  &nbsp;응급상황
+                </div>
+                <div>
+                  <img src={Dog} alt="dog" />
+                  &nbsp;여행펫티켓
+                </div>
+                <div>
+                  <img src={Airplane} alt="airplane" />
+                  &nbsp;비행기탑승
+                </div>
+                <div>
+                  <img src={Footprint} alt="footprint" />
+                  &nbsp;필수준비물
+                </div>
+                <div>
+                  <img src={Book} alt="book" />
+                  &nbsp;기초상식
+                </div>
+              </div>
+            </div> : null
+        }
         <div className="main-header-text">Delgo!</div>
         <div className="editor-container">
           {editorPlaces.map((place) => (
@@ -95,7 +142,7 @@ function Home() {
           ))}
         </div>
         <div className="recommended-places-text">델고갈만한 숙소</div>
-        {places.map((place) => (
+        {places?.map((place) => (
           <RecommendedPlaces places={places} setPlaces={setPlaces} place={place} key={place.placeId} />
         ))}
       </div>

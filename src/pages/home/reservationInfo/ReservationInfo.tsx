@@ -56,7 +56,6 @@ function ReservationInfo() {
   )
 
   return (
-    <div className="home-background">
       <div className="reservation">
         <img src={reservationInfo.image} alt="reservation-place-img" />
         <div className="reservation-place-name">{reservationInfo.placeName}</div>
@@ -79,32 +78,6 @@ function ReservationInfo() {
           <div className="reservation-information-cancel">예약취소</div>
         </div>
       </div>
-      <div className="travel-preparation">
-        <div className="travel-preparation-text">여행준비 되셨나요?</div>
-        <div className="travel-preparation-list">
-          <div>
-            <img src={Emergency} alt="emergency" />
-            &nbsp;응급상황
-          </div>
-          <div>
-            <img src={Dog} alt="dog" />
-            &nbsp;여행펫티켓
-          </div>
-          <div>
-            <img src={Airplane} alt="airplane" />
-            &nbsp;비행기탑승
-          </div>
-          <div>
-            <img src={Footprint} alt="footprint" />
-            &nbsp;필수준비물
-          </div>
-          <div>
-            <img src={Book} alt="book" />
-            &nbsp;기초상식
-          </div>
-        </div>
-      </div>
-    </div>
   );
 }
 
