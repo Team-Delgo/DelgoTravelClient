@@ -44,6 +44,7 @@ import ReservationConfirmPage from './pages/detailPlace/reservationConfirmPage/R
 import Coupon from './pages/myAccount/Coupon';
 import ReservationWaitingPage from './pages/detailPlace/reservationWaitingPage/ReservationWaitingPage';
 import Settings from './pages/myAccount/Settings';
+import ChangePetInfo from './pages/myAccount/ChangePetInfo';
 
 function App() {
   const hasError = useSelector((state: any) => state.error.hasError);
@@ -77,6 +78,7 @@ function App() {
         <Route path={MY_ACCOUNT_PATH.MAIN} element={<MyAccount />} />
         <Route path={MY_ACCOUNT_PATH.COUPON} element={<Coupon />} />
         <Route path={MY_ACCOUNT_PATH.SETTINGS} element={<Settings />} />
+        <Route path={MY_ACCOUNT_PATH.PETINFO} element={<ChangePetInfo />} />
         <Route path={DETAIL_PLACE_PATH.MAIN} element={<DetailPlace />} />
         <Route path={DETAIL_PLACE_PATH.REVIEWS} element={<ReviewsPage />} />
         <Route path={DETAIL_PLACE_PATH.ROOMTYPES} element={<RoomTypePage />} />

@@ -13,7 +13,6 @@ async function login(data: { email: string; password: string }, success: (data: 
       success(data);
     })
     .catch((error) => {
-      console.log(1);
       useErrorHandlers(dispatch, error);
     });
 }

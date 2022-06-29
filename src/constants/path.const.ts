@@ -6,6 +6,7 @@ export const MY_ACCOUNT_PATH = {
   MAIN: '/user/myaccount',
   COUPON: '/user/myaccount/coupon',
   SETTINGS: '/user/myaccount/settings',
+  PETINFO: '/user/myaccount/petinfo',
 };
 export const SIGN_IN_PATH = {
   MAIN: '/user/signin',
