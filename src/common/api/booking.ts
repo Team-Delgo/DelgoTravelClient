@@ -58,4 +58,25 @@ async function bookingGetData(
   }
 }
 
-export { bookingRequest, bookingGetData };
+async function bookingGetDataByMain(
+  data: {
+    accessToken: string;
+    userId: number;
+  },
+  success: (data: AxiosResponse) => void,
+  dispatch: any,
+) {
+  try {
+    console.log(data.userId)
+    const result = await axios.get(`${url}booking/getData/main?userId=${data.userId}`,{
+      headers: {
+        Authorization_Access: `${data.accessToken}`,
+      },
+    });
+    success(result);
+  } catch (error: AxiosError | any) {
+    useErrorHandlers(dispatch, error);
+  }
+}
+
+export { bookingRequest, bookingGetData,bookingGetDataByMain };
