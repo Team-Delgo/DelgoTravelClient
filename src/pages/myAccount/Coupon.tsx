@@ -31,11 +31,15 @@ function Coupon() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const refreshToken = localStorage.getItem('refreshToken') || '';
+  let count;
+
+  useEffect(()=>{
+    getCouponList();
+  },[isModalOpen])
 
   useEffect(() => {
-    getCouponList();
     getScheduledCoupon();
-  }, [isModalOpen]);
+  }, [couponList]);
 
   useEffect(() => {
     tokenRefresh(
@@ -78,10 +82,8 @@ function Coupon() {
       const difference = Math.abs(differenceTime / (1000 * 60 * 60 * 24));
 
       if (difference <= 30) count += 1;
-
       return count;
     })
-
     setScheduledCoupon(count);
   };
 

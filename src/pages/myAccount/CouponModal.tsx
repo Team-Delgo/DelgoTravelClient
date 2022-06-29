@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
 import React, { ChangeEvent, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { registCoupon } from '../../common/api/coupon';
+import { registCoupon } from '../../common/api/myaccount';
 import "./CouponModal.scss";
 
 
@@ -31,7 +31,7 @@ function CouponModal(props: { closeModal: () => void }) {
       const { code } = response.data;
       console.log(response);
       if (code === 200) {
-        // closeModal();
+        closeModal();
       } else {
         setInvalid(true);
         setFeedback('유효하지 않은 쿠폰 코드 입니다.');

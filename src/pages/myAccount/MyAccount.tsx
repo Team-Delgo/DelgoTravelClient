@@ -1,28 +1,51 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AxiosResponse } from "axios";
-import { useNavigate } from "react-router-dom";
-import alertConfirm, { Button, alert } from "react-alert-confirm";
-import "react-alert-confirm/dist/index.css";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AxiosResponse } from 'axios';
+import { useNavigate } from 'react-router-dom';
+import alertConfirm, { Button, alert } from 'react-alert-confirm';
+import 'react-alert-confirm/dist/index.css';
 import Footer from '../../common/components/Footer';
-import "./MyAccount.scss";
-import RightArrow from "../../icons/right-arrow.svg";
-import { userActions } from "../../redux/reducers/userSlice";
-import { tokenActions } from "../../redux/reducers/tokenSlice";
-import AlertConfirm from "../../common/dialog/AlertConfirm";
-import AlertConfirmOne from "../../common/dialog/AlertConfirmOne";
-import { deleteUser } from "../../common/api/signup";
-import { MY_ACCOUNT_PATH } from "../../constants/path.const";
-
+import './MyAccount.scss';
+import RightArrow from '../../icons/right-arrow.svg';
+import { userActions } from '../../redux/reducers/userSlice';
+import { tokenActions } from '../../redux/reducers/tokenSlice';
+import AlertConfirm from '../../common/dialog/AlertConfirm';
+import AlertConfirmOne from '../../common/dialog/AlertConfirmOne';
+import { deleteUser } from '../../common/api/signup';
+import { MY_ACCOUNT_PATH } from '../../constants/path.const';
+import { myAccount } from '../../common/api/myaccount';
 
 function MyAccount() {
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [text, setText] = useState('');
+  const [items, setItems] = useState({ coupons: 0, points: 0, reviews: 0 });
   const pet = useSelector((state: any) => state.persist.user.pet);
   const navigation = useNavigate();
   const dispatch = useDispatch();
   const email = useSelector((state: any) => state.persist.user.user.email);
+  const userId = useSelector((state: any) => state.persist.user.user.id);
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
+  const getUserInfo = () => {
+    const data = {
+      userId,
+    };
+    console.log(data);
+    myAccount(
+      data,
+      (response: AxiosResponse) => {
+        const { data } = response.data;
+        setItems((prev) => {
+          return { ...prev, coupons: data.couponNum, reviews: data.reviewNum };
+        });
+      },
+      dispatch,
+    );
+  };
 
   const logoutHandler = () => {
     dispatch(userActions.signout());
@@ -31,9 +54,13 @@ function MyAccount() {
   };
 
   const deleteHandler = () => {
-    deleteUser(email, (response: AxiosResponse) => {
-      console.log(response);
-    }, dispatch);
+    deleteUser(
+      email,
+      (response: AxiosResponse) => {
+        console.log(response);
+      },
+      dispatch,
+    );
     dispatch(userActions.signout());
     localStorage.removeItem('refreshToken');
     navigation('/user/signin');
@@ -55,34 +82,44 @@ function MyAccount() {
 
   return (
     <div className="account">
-      {logoutModalOpen && <AlertConfirm text={text}
-        yesButtonHandler={logoutHandler}
-        noButtonHandler={() => { setLogoutModalOpen(false); }}
-      />}
-      {deleteModalOpen && <AlertConfirm text={text}
-        yesButtonHandler={deleteHandler}
-        noButtonHandler={() => { setLogoutModalOpen(false); }}
-      />}
+      {logoutModalOpen && (
+        <AlertConfirm
+          text={text}
+          yesButtonHandler={logoutHandler}
+          noButtonHandler={() => {
+            setLogoutModalOpen(false);
+          }}
+        />
+      )}
+      {deleteModalOpen && (
+        <AlertConfirm
+          text={text}
+          yesButtonHandler={deleteHandler}
+          noButtonHandler={() => {
+            setDeleteModalOpen(false);
+          }}
+        />
+      )}
       <div className="account-profile">
         <img className="account-profile-image" src={pet?.image} alt="dog" />
         <div className="account-profile-name-wrapper">
           <div className="account-profile-name">
             {pet?.name}
-            <img src={RightArrow} alt="detail" />
+            <img aria-hidden="true" src={RightArrow} onClick={()=>{navigation(MY_ACCOUNT_PATH.PETINFO)}} alt="detail" />
           </div>
         </div>
         <div className="account-profile-info">
           <div className="account-proifle-info-coupon" aria-hidden="true" onClick={navigateCouponPage}>
             <p className="account-profile-info-column">쿠폰</p>
-            <p className="account-profile-info-value">3장</p>
+            <p className="account-profile-info-value">{items.coupons}장</p>
           </div>
           <div className="account-proifle-info-point">
             <p className="account-profile-info-column">포인트</p>
-            <p className="account-profile-info-value">15896</p>
+            <p className="account-profile-info-value">{items.points}</p>
           </div>
           <div className="account-proifle-info-review">
             <p className="account-profile-info-column">리뷰</p>
-            <p className="account-profile-info-value">2건</p>
+            <p className="account-profile-info-value">{items.reviews}건</p>
           </div>
         </div>
       </div>
@@ -101,7 +138,13 @@ function MyAccount() {
           </div>
         </div>
       </div>
-      <div className="account-settings" aria-hidden="true" onClick={() => { navigation(MY_ACCOUNT_PATH.SETTINGS); }}>
+      <div
+        className="account-settings"
+        aria-hidden="true"
+        onClick={() => {
+          navigation(MY_ACCOUNT_PATH.SETTINGS);
+        }}
+      >
         <div className="account-item">
           <h2 className="account-item-name">설정</h2>
           <img src={RightArrow} alt="detail" />
@@ -117,7 +160,9 @@ function MyAccount() {
         <p className="account-item-p">카카오 플러스친구로 이동</p>
       </div>
       <div className="account-sign">
-        <p className="account-out" aria-hidden="true" onClick={deleteUserModalOpen}>회원탈퇴</p>
+        <p className="account-out" aria-hidden="true" onClick={deleteUserModalOpen}>
+          회원탈퇴
+        </p>
         <p className="account-out" aria-hidden="true" onClick={logOutModalOpen}>
           로그아웃
         </p>
@@ -125,6 +170,6 @@ function MyAccount() {
       <Footer />
     </div>
   );
-};
+}
 
 export default MyAccount;
