@@ -136,6 +136,30 @@
     color: #b0a69d;
   }
 }
+.available-point-sale {
+  display: flex;
+  justify-content: space-between;
+  &-label{
+    position: absolute;
+    right:150px;
+    font-size: 14px;
+    color:white;
+    background: #B0A69D;
+    width: 83px;
+    height: 25px;
+    border-radius: 37px;
+    display : flex;
+    justify-content : center;
+    align-items : center;
+  }
+  &-amount {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 21px;
+    margin-bottom: 35px;
+    color: #3E382F;
+  }
+}
 .coupon-sale {
   display: flex;
   justify-content: space-between;

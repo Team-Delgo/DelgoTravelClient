@@ -51,9 +51,12 @@ function Home() {
   const refreshToken = localStorage.getItem('refreshToken') || '';
   const accessToken = useSelector((state: any) => state.token.token);
   const userId = useSelector((state: any) => state.persist.user.user.id)
+  const { date, dateString } = useSelector((state: any) => state.date);
+  const startDt = `${date.start.substring(0,4)}-${date.start.substring(4,6)}-${date.start.substring(6,10)}`
+  const endDt = `${date.end.substring(0,4)}-${date.end.substring(4,6)}-${date.end.substring(6,10)}`
 
   useEffect(() => {
-    getAllPlaces(userId, (response: AxiosResponse) => {
+    getAllPlaces(userId,startDt,endDt, (response: AxiosResponse) => {
       setPlaces(response.data.data);
     }, dispatch);
   }, []);

@@ -33,10 +33,7 @@ async function wishDelete(
 ) {
   try {
     const result = await axios.post(
-      `${url}wish/delete`,
-      {
-        wishId: data.wishId,
-      },
+      `${url}wish/delete/${data.wishId}`,
       {
         headers: {
           Authorization_Access: `${data.accessToken}`,

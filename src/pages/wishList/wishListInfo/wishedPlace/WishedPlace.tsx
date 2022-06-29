@@ -9,8 +9,8 @@ import './WishedPlace.scss';
 
 interface WishedPlaceTypeProps {
   place: PlaceType
-  wishedPlace: Array<PlaceType>
-  setWishedPlace: any
+  // wishedPlace: Array<PlaceType>
+  // setWishedPlace: any
 }
 
 interface PlaceType {
@@ -23,27 +23,26 @@ interface PlaceType {
   wishId: number;
 }
 
-function WishedPlace({ place, wishedPlace, setWishedPlace }: WishedPlaceTypeProps) {
+function WishedPlace({ place,}: WishedPlaceTypeProps) {
   const [wishList, setWishList] = useState(true);
   const accessToken = useSelector((state: any) => state.token.token);
   const [wishListAlertConfirmOpen, setWishListAlertConfirmOpen] = useState(false);
   const dispatch = useDispatch();
   const location: any = useLocation();
 
-
   const wishListDelete = useCallback(() => {
     wishDelete(
       { wishId: place.wishId, accessToken },
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
-          const updateWishedPlaces = wishedPlace.filter((p) => p.placeId !== place.placeId);
-          setWishedPlace(updateWishedPlaces);
+          // const updateWishedPlaces = wishedPlace.filter((p) => p.placeId !== place.placeId);
+          // setWishedPlace(updateWishedPlaces);
           setWishList(false);
         }
       },
       dispatch,
     );
-  }, [wishList, wishedPlace]);
+  }, []);
 
   const wishListConfirmModalOpenClose = useCallback(() => {
     setWishListAlertConfirmOpen(!wishListAlertConfirmOpen);

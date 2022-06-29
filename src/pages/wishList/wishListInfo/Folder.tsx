@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useLayoutEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
 import { useQuery } from 'react-query'
@@ -48,7 +48,7 @@ function Folder() {
   ]);
 
 
-  const { isLoading, error, data, isFetching } = useQuery(
+  const { isLoading, error, data:wishedPlaces, isFetching } = useQuery(
     'getWishedPlaces',
     () => fetch(`http://49.50.161.156/wish/select?userId=${userId}`).then((res) => res.json()),
     {
@@ -58,18 +58,6 @@ function Folder() {
     },
   );
 
-  // useLayoutEffect(() => {
-  //   getWishedPlaces(
-  //     { accessToken, userId },
-  //     (response: AxiosResponse) => {
-  //       setWishedPlace(response.data.data);
-  //       if (response.data.data.length > 0) {
-  //         setHasWishedPlaces(true);
-  //       }
-  //     },
-  //     dispatch,
-  //   );
-  // }, [accessToken]);
 
   // useEffect(() => {
   //   getWishedPlaces(
@@ -90,9 +78,9 @@ function Folder() {
 
   return (
     <div className="wish-list-container">
-      {data?.data.length>0? (
+      {wishedPlaces?.data.length>0? (
         <div className="wish-list-header-text" aria-hidden="true">
-          델고 갈 {data.data.length}개 장소
+          델고 갈 {wishedPlaces.data.length}개 장소
         </div>
       ) : (
         <div className="wish-list-notice">
@@ -101,15 +89,15 @@ function Folder() {
           <div className="wish-list-notice-sub">인기 숙소를 보여드릴게요</div>
         </div>
       )}
-      {data?.data.length>0
-        ? data.data
+      {wishedPlaces.data.length>0
+        ? wishedPlaces.data
             .sort((a:WishedPlaceType, b:WishedPlaceType) => b.wishId - a.wishId)
             .map((place:WishedPlaceType) => (
               <WishedPlace
                 place={place}
                 key={place.placeId}
-                wishedPlace={data.data}
-                setWishedPlace={setWishedPlace}
+                // wishedPlace={data.data}
+                // setWishedPlace={setWishedPlace}
               />
             ))
         : popularPlace.map((place) => <PopularPlace place={place} key={place.id} />)}

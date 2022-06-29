@@ -13,11 +13,13 @@ interface PlaceTypeProps {
 
 interface PlaceType {
   address: string
+  checkin: string
+  checkout: string
+  isBooking: number
   lowestPrice: string
   mainPhotoUrl: string
   name: string
   placeId: number
-  registDt: string
   wishId: number
 }
 
@@ -67,7 +69,7 @@ function Place({ place }: PlaceTypeProps) {
 
   return (
     <div className="place" aria-hidden="true">
-      <div aria-hidden onClick={moveToDetailPage}>
+      <div aria-hidden onClick={place.isBooking===0 ? moveToDetailPage : undefined}>
         <img src={place.mainPhotoUrl} alt="place-img"/>
         </div>
       <div className="place-info">
@@ -78,7 +80,10 @@ function Place({ place }: PlaceTypeProps) {
         </div>
         <div className="place-info-second-line">
           <span>{place.name}</span>
-          <span>{place.lowestPrice}~</span>
+          {
+            place.isBooking===0 ? <span>{place.lowestPrice}~</span>
+            : <span>예약마감</span>
+          }
         </div>
       </div>
       <div className="place-heart">

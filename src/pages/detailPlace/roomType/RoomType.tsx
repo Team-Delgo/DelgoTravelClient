@@ -18,7 +18,7 @@ interface RoomListType {
 function RoomType(props: { navigate: () => void; room: RoomListType }) {
   const { navigate, room } = props;
   return (
-    <div className="room" aria-hidden="true" onClick={navigate}>
+    <div className="room" aria-hidden="true"  onClick={room.isBooking===0 ? navigate : undefined}>
       <img src={`${room.mainPhotoUrl}`} alt="room-img" />
       <div className="room-info">
         <div className="room-info-first-line">
@@ -28,7 +28,10 @@ function RoomType(props: { navigate: () => void; room: RoomListType }) {
           </p>
         </div>
         <div className="room-info-second-line">
-          <span>{room.price}</span>
+          {
+            room.isBooking === 1 ? <span>예약마감</span>
+            : <span>{room.price}</span> 
+          }
         </div>
       </div>
     </div>
