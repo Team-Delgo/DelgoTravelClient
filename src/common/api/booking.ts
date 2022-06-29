@@ -13,6 +13,8 @@ async function bookingRequest(
     petNum: number;
     startDt: string;
     endDt: string;
+    // orderId:string;
+    // paymentKey:string;
   },
   success: (data: AxiosResponse) => void,
   dispatch: any,

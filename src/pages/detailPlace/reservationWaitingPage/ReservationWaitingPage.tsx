@@ -1,19 +1,21 @@
-import React,{useEffect,useState} from 'react';
+import React,{useEffect} from 'react';
 import { useSelector,useDispatch } from "react-redux";
-import { useLocation,Link,useParams,useNavigate} from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
-import {bookingRequest,bookingGetData} from '../../../common/api/booking'
+import {bookingRequest} from '../../../common/api/booking'
 import './ReservationWaitingPage.scss';
 
 function ReservationWaitingPage() {
-  const [reviews, setReviews] = useState<Array<any>>([]);
-  const [bookingId,setBookingId] = useState("")
-  const location: any = useLocation();
-  const { placeId } = useParams();
   const {user} = useSelector((state: any) => state.persist.user);
   const { room, place,date } = useSelector((state: any) => state.persist.reservation);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const urlStr = window.location.href
+  const url = new URL(urlStr);
+  const urlParams = url.searchParams;
+  const orderId = urlParams.get('orderId');
+  const paymentKey = urlParams.get('paymentKey');
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -28,10 +30,12 @@ function ReservationWaitingPage() {
         petNum: 1,
         startDt: date.date.start,
         endDt: date.date.end,
+        // orderId,
+        // paymentKey,
       },
       (response: AxiosResponse) => {
         console.log(response.data.data)
-        // navigate(`/reservation-confirm/${response.data.data.bookingId}`)
+        navigate(`/reservation-confirm/${response.data.data.bookingId}`)
         setTimeout(() => {
           navigate(`/reservation-confirm/${response.data.data}`);
         }, 3000);
