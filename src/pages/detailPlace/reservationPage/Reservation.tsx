@@ -86,7 +86,7 @@ function Reservation() {
             <img src={RightArrow} alt="detail" />
           </div>
           <p className="placeinfo-address">{place.address}</p>
-          <p className="placeinfo-room">502호 [온수풀, 더블베드타입]</p>
+          {/* <p className="placeinfo-room">502호 [온수풀, 더블베드타입]</p> */}
         </div>
         <div className="checkin-checkout">
           <div className="checkin-checkout-date">
@@ -122,7 +122,12 @@ function Reservation() {
         </div>
         <div className="point-sale">
           <div className="reservation-label">포인터 사용</div>
-          <div className="point-sale-amount">-0p</div>
+          <div className="point-sale-amount">-0P</div>
+        </div>
+        <div className="available-point-sale">
+          <div className="available-point-sale-label">전액 사용</div>
+          <div/> 
+          <div className="available-point-sale-amount">사용가능 : 3000P</div>
         </div>
         <div className="coupon-sale">
           <div className="reservation-label">쿠폰 사용</div>

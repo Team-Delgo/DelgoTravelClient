@@ -2,9 +2,9 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useErrorHandlers } from './useErrorHandlers';
 import { url } from '../../constants/url.cosnt';
 
-async function getAllPlaces(userId: number, success: (data: AxiosResponse) => void, dispatch: any) {
+async function getAllPlaces(userId: number,startDt:string,endDt:string, success: (data: AxiosResponse) => void, dispatch: any) {
   try {
-    const result = await axios.get(`${url}place/selectWheretogo?userId=${userId}`);
+    const result = await axios.get(`${url}place/selectWheretogo?userId=${userId}&startDt=${startDt}&endDt=${endDt}`);
     success(result);
   } catch (error: AxiosError | any) {
     useErrorHandlers(dispatch, error);

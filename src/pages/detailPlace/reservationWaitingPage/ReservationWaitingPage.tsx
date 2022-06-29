@@ -30,11 +30,11 @@ function ReservationWaitingPage() {
         endDt: date.date.end,
       },
       (response: AxiosResponse) => {
-        setBookingId(response.data.data.bookingId)
-        console.log(response.data.data.bookingId)
+        console.log(response.data.data)
+        // navigate(`/reservation-confirm/${response.data.data.bookingId}`)
         setTimeout(() => {
-          navigate(`/reservation-confirm/${response.data.data.bookingId}`);
-        }, 5000);
+          navigate(`/reservation-confirm/${response.data.data}`);
+        }, 3000);
       },
       dispatch,
     )
@@ -42,7 +42,7 @@ function ReservationWaitingPage() {
   }, []);
 
   return (
-    <div>12313123123</div>
+    <div>예약 대기화면</div>
   );
 }
 
