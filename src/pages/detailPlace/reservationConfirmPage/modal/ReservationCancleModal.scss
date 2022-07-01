@@ -1,0 +1,37 @@
+.reservation-cancle-confirm {
+    text-align: center;
+    color:#3E382F;
+    .reservation-cancle-place-info {
+        margin: auto;
+        font-weight: 500;
+        width: 95%;
+        height: 20vh;
+        border: 1px solid #E8E2DC;
+        border-radius: 7px;
+        &-name{
+            font-weight: 700;
+            font-size: 18px;
+            padding: 5% 0% 3% 0%;
+        }
+        &-address{
+            padding-bottom: 3px;
+        }
+        &-room-type{
+            padding-bottom: 10px;
+        }
+    }
+    .reservation-cancle-button-container{
+        padding-top: 40px;
+        margin:auto;
+        width: 95%;
+        display: flex;
+        justify-content: space-between;
+        .reservation-cancle-button{
+            background-color: #F3EFEA;
+            border: none;
+            border-radius: 7px;
+            width: 47%;
+            height: 56px;
+        }
+    }
+}

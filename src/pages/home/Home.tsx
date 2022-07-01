@@ -40,7 +40,6 @@ interface RecommendedPlaceType {
 function Home() {
   const [places, setPlaces] = useState<Array<RecommendedPlaceType>>([]);
   const [revervationPlaces, setRevervationPlaces] = useState<Array<any>>([]);
-
   const [editorPlaces, setEditorPlaces] = useState<Array<EditorPlaceType>>([
     {
       id: 1,
@@ -97,6 +96,7 @@ function Home() {
   return (
     <>
       <div className="home-background">
+
         <HomeReservation/>
       <div className="reservation-places">
         {
@@ -107,6 +107,7 @@ function Home() {
         </div>
         {
           revervationPlaces?.length ?
+
             <div className="travel-preparation">
               <div className="travel-preparation-text">여행준비 되셨나요?</div>
               <div className="travel-preparation-list">
@@ -133,7 +134,7 @@ function Home() {
               </div>
             </div> : <div/>
         }
-        <div className="main-header-text">Delgo!</div>
+        <div className="main-header-text">델고 에디터노트</div>
         <div className="editor-container">
           {editorPlaces.map((place) => (
             <Link to={`/editor-note/${place.id}`} key={place.id}>

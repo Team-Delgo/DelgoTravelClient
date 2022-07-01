@@ -7,7 +7,8 @@ import RightArrow from "../../../icons/right-arrow.svg";
 import RightArrowBlack from "../../../icons/right-arrow-black.svg";
 import BottomButton from "../../../common/components/BottomButton";
 import { reservationActions } from '../../../redux/reducers/reservationSlice';
-import {bookingRequest,bookingGetData} from '../../../common/api/booking'
+import {bookingGetData} from '../../../common/api/booking'
+import ReservationCancleModal from "./modal/ReservationCancleModal";
 import './ReservationConfirmPage.scss';
 
 
@@ -19,45 +20,25 @@ function ReservationConfirmPage() {
   const { room, place,date } = useSelector((state: any) => state.persist.reservation);
   const accessToken = useSelector((state: any) => state.token.token);
   const dispatch = useDispatch();
-  // const [bookingId,setBookingId] = useState("")
+  const [reservationCancleModal, setReservationCancleModal] = useState(false);
   const [reservationData, setReservationData] = useState({
     bookingId: "",
-  canCancelDate: "",
-  couponId: 0,
-  couponPrice: "",
-  endDt: "",
-  finalPrice: "",
-  originalPrice: "",
-  placeAddress: "",
-  placeName: "",
-  point: 0,
-  roomName: "",
-  startDt: "",
-  userName: "",
-  userPhoneNo: ""
+    bookingState: "",
+    canCancelDate: "",
+    couponId: 0,
+    couponPrice: "",
+    endDt: "",
+    finalPrice: "",
+    originalPrice: "",
+    placeAddress: "",
+    placeName: "",
+    point: 0,
+    roomName: "",
+    startDt: "",
+    userName: "",
+    userPhoneNo: ""
   })
   const { bookingId } = useParams();
-
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  //   bookingRequest(
-  //     {
-  //       userId: user.id,
-  //       placeId: place.placeId,
-  //       roomId: room.roomId,
-  //       couponId: 0,
-  //       point: 0,
-  //       peopleNum: 1,
-  //       petNum: 1,
-  //       startDt: date.date.start,
-  //       endDt: date.date.end,
-  //     },
-  //     (response: AxiosResponse) => {
-  //      setBookingId(response.data.data.bookingId)
-  //     },
-  //     dispatch,
-  //   )
-  // }, []);
 
   useEffect(() => {
     if (bookingId !== undefined) {
@@ -96,12 +77,24 @@ function ReservationConfirmPage() {
     }, 300);
   }, []);
 
+
+  const handleReservationCancleModal = useCallback(() => {
+    setReservationCancleModal(!reservationCancleModal);
+  }, [reservationCancleModal]);
+
+  const closeReservationCancleModal  = useCallback(() => {
+    setReservationCancleModal(false);
+  }, []);
+
   return (
     <>
       <div className="reservationPage">
         <div className="header">
           <Exit className="exit-button" onClick={moveToMainPage} />
-          <h1 className="header-title">예약확정</h1>
+          {
+            reservationData.bookingState === "W" ? <h1 className="header-title">예약접수 확인</h1>
+            : <h1 className="header-title">예약확정</h1>
+          }
         </div>
         <div className="placeinfo">
           <div className="placeinfo-wrapper">
@@ -109,9 +102,9 @@ function ReservationConfirmPage() {
             <img src={RightArrow} alt="detail" />
           </div>
           <p className="placeinfo-address">{reservationData.placeAddress}</p>
-          <p className="placeinfo-room">502호 [온수풀, 더블베드타입]</p>
+          {/* <p className="placeinfo-room">502호 [온수풀, 더블베드타입]</p> */}
         </div>
-        <div className="checkin-checkout">
+        <div className="checkin-checkout">  
           <div className="checkin-checkout-date">
             <span className="check-title">체크인</span>
             <span className="check-date">
@@ -170,10 +163,18 @@ function ReservationConfirmPage() {
           <img src={RightArrowBlack} alt="detail" />
         </div>
         <div className="cancel-reservation">
-          <div className="cancel-reservation-label">2022년 05월 23일 18:00까지 무료 취소 가능합니다.</div>
-          <button className="cancel-reservation-button" type="button">예약취소</button>
+          <div className="cancel-reservation-label">
+            {reservationData.canCancelDate.substring(0, 4)}년 {reservationData.canCancelDate.substring(5, 7)}월 {reservationData.canCancelDate.substring(8, 10)}일
+            18:00까지 무료 취소 가능합니다.</div>
+          <button className="cancel-reservation-button" type="button" onClick={handleReservationCancleModal}>예약취소</button>
         </div>
       </div>
+      {
+        reservationCancleModal && <ReservationCancleModal
+          reservationCancleModal={handleReservationCancleModal}
+          closeReservationCancleModal={closeReservationCancleModal}
+        />
+      }
       <BottomButton text="예약내역 공유하기" />
     </>
   );
