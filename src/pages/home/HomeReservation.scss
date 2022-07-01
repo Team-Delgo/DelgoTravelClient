@@ -1,0 +1,12 @@
+.homemodal{
+  display: flex;
+  overflow-x: scroll;
+  &-item{
+    &-card{
+      width: 90vw;
+      margin: 5vw;
+      height: 300px;
+      background-color: white;
+    }
+  }
+}

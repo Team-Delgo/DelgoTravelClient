@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
@@ -16,6 +16,7 @@ import Footprint from '../../icons/footprint.svg';
 import Book from '../../icons/book.svg';
 import Emergency from '../../icons/emergency.svg'
 import './Home.scss';
+import HomeReservation from './HomeReservation';
 
 
 interface EditorPlaceType {
@@ -62,6 +63,7 @@ function Home() {
   const { date, dateString } = useSelector((state: any) => state.date);
   const startDt = `${date.start.substring(0,4)}-${date.start.substring(4,6)}-${date.start.substring(6,10)}`
   const endDt = `${date.end.substring(0,4)}-${date.end.substring(4,6)}-${date.end.substring(6,10)}`
+  const scrollRef = useRef();
 
   useEffect(() => {
     getAllPlaces(userId,startDt,endDt, (response: AxiosResponse) => {
@@ -91,18 +93,20 @@ function Home() {
     }, dispatch);
   }, [accessToken]);
 
+
   return (
     <>
       <div className="home-background">
+        <HomeReservation/>
       <div className="reservation-places">
         {
-          revervationPlaces.map((a) => (
+          revervationPlaces?.length&&revervationPlaces?.map((a) => (
             <ReservationInfo key={a.bookingId}/>
           ))
         }
         </div>
         {
-          revervationPlaces.length > 0 ?
+          revervationPlaces?.length ?
             <div className="travel-preparation">
               <div className="travel-preparation-text">여행준비 되셨나요?</div>
               <div className="travel-preparation-list">
@@ -127,7 +131,7 @@ function Home() {
                   &nbsp;기초상식
                 </div>
               </div>
-            </div> : null
+            </div> : <div/>
         }
         <div className="main-header-text">Delgo!</div>
         <div className="editor-container">

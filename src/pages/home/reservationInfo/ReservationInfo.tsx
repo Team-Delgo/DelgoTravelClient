@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useRef, useState} from 'react';
 import Dog from '../../../icons/dog.svg';
 import Airplane from '../../../icons/airplane.svg';
 import Footprint from '../../../icons/footprint.svg';
@@ -24,7 +24,7 @@ interface RecommendedPlaceType {
 }
 
 function ReservationInfo() {
-
+  const scrollRef = useRef();
   const [reservationInfo, setReservationInfo] =  useState<ReservationInfoType>(
     {
       id:1,
