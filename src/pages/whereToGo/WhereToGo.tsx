@@ -53,7 +53,6 @@ function WhereToGo() {
   const accessToken = useSelector((state: any) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
-  const [selectedDateString, setSelectedDateString] = useState('');
   const [selectedDate, setSelectedDate] = useState({ start: '', end: '' });
   const { date, dateString } = useSelector((state: any) => state.date);
   const { whereToGoScrollY } = useSelector((state: any) => state.scroll);
@@ -63,7 +62,7 @@ function WhereToGo() {
   const location: any = useLocation();
   const allPlacesSkeletons = useMemo(()=>AllPlacesSkeletons(),[])
 
-  const { isLoading, error, data, isFetching } = useQuery(
+  const { isLoading, error, data:places, isFetching } = useQuery(
     'getAllPlaces',
     () => fetch(`http://49.50.161.156/place/selectWheretogo?userId=${userId}`).then((res) => res.json()),
     {
@@ -135,7 +134,7 @@ function WhereToGo() {
         <div className="places-container">
           {isLoading
             ? allPlacesSkeletons
-            : data?.data.map((place: PlaceType) => {
+            : places?.data.map((place: PlaceType) => {
                 if (place.address.includes(areaTerm)) {
                     return <Place key={place.placeId} place={place} />;
                 }

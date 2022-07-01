@@ -23,7 +23,7 @@ interface PlaceType {
   wishId: number;
 }
 
-function WishedPlace({ place, wishedPlace, setWishedPlace }: WishedPlaceTypeProps) {
+function WishedPlace({ place, wishedPlace,setWishedPlace }: WishedPlaceTypeProps) {
   const [wishList, setWishList] = useState(true);
   const accessToken = useSelector((state: any) => state.token.token);
   const [wishListAlertConfirmOpen, setWishListAlertConfirmOpen] = useState(false);
