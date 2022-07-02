@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable array-callback-return */
 import React, { useState, useEffect, useCallback,useMemo } from 'react'
-import { useNavigate,useLocation } from 'react-router-dom';
+import { useNavigate,useLocation,Link} from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
@@ -50,7 +50,7 @@ function AllPlacesSkeletons() {
   return AllPlacesSkeletonsArray;
 }
 
-const regionName = ['제주','강원','경기','전라','경상','충청']
+const regionName = ['제주','경기','전라','전라','광주','대구']
 
 
 function WhereToGo() {
@@ -131,7 +131,9 @@ function WhereToGo() {
     <>
       {isCalenderOpen && <Calender closeCalender={handleCalenderOpenClose} isRoom={false} />}
       <div className={classNames('where-to-go-background', { close: isCalenderOpen })}>
-        <DelgoLogo className="delgo-logo" width={120} height={50} />
+        <Link to="/">
+          <DelgoLogo className="delgo-logo" width={120} height={50} />
+        </Link>
         {isLoading ? (
           <div className="filter-skeleton">
             <SkeletonTheme baseColor="#f0e9e9" highlightColor="#e4dddd">
@@ -141,7 +143,7 @@ function WhereToGo() {
         ) : (
           <>
             {areaTerm === '' ? null : regionName.includes(areaTerm) ? (
-              <header className="region-name">{areaTerm}도로 델고가요</header>
+              <header className="region-name">{areaTerm}로 델고가요</header>
             ) : (
               <header className="region-name">{areaTerm}으로 델고가요</header>
             )}

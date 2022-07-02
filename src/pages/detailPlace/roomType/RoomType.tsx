@@ -15,10 +15,10 @@ interface RoomListType {
   roomId: number
 }
 
-function RoomType(props: { navigate: () => void; room: RoomListType }) {
-  const { navigate, room } = props;
+function RoomType(props: { navigate: () => void; room: RoomListType; checkIn: string; checkOut: string }) {
+  const { navigate, room, checkIn, checkOut } = props;
   return (
-    <div className="room" aria-hidden="true"  onClick={room.isBooking===0 ? navigate : undefined}>
+    <div className="room" aria-hidden="true" onClick={room.isBooking === 0 ? navigate : undefined}>
       <img src={`${room.mainPhotoUrl}`} alt="room-img" />
       <div className="room-info">
         <div className="room-info-first-line">
@@ -28,10 +28,12 @@ function RoomType(props: { navigate: () => void; room: RoomListType }) {
           </p>
         </div>
         <div className="room-info-second-line">
-          {
-            room.isBooking === 1 ? <span>예약마감</span>
-            : <span>{room.price}</span> 
-          }
+          <div className="check-in-check-out-time">
+            입실 {checkIn.substring(0, 5)} / 퇴실 {checkOut.substring(0, 5)}
+          </div>
+          <div className="room-price">
+            {room.isBooking === 1 ? <span>예약마감</span> : <span>{room.price}</span>}
+          </div>
         </div>
       </div>
     </div>

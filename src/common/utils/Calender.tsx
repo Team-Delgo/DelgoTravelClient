@@ -233,7 +233,7 @@ function Calender(props: CalenderProps) {
   };
 
   const confirmDateHandler = () => {
-    const selectedDateString = `${startMonth}.${`0${startDate}`.slice(-2)}(${startDay}) ~ ${endMonth}.${`0${endDate}`.slice(-2)}(${endDay}) ${days}박`;
+    const selectedDateString = `${startMonth}.${`0${startDate}`.slice(-2)}(${startDay}) - ${endMonth}.${`0${endDate}`.slice(-2)}(${endDay}) ${days}박`;
     dispatch(dateActions.setDate({ date: { start: selectedDate.start, end: selectedDate.end }, dateString: selectedDateString }));
     closeCalender();
   };
