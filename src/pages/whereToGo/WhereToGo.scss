@@ -20,7 +20,9 @@
     display: flex;
     margin-top: 15px;
     width: 88vw;
-    height: 49px;
+    height: 43px;
+    color: #474747;
+    font-weight: 500;
     .search-region {
       display: flex;
       align-items: center;
@@ -29,6 +31,7 @@
       background: #ffffff;
       width: 22vw;
       border-radius: 5px;
+      font-size: 14px;
     }
     .search-date {
       width: 60vw;
@@ -36,18 +39,17 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      color: #000000;
       background: #ffffff;
       margin-left: 4%;
-      height: 49px;
       border-radius: 5px;
+      font-size: 14px;
     }
     .bottom-arrow {
       padding-left: 10px;
     }
   }
   .places-container {
-    padding-top: 35px;
+    padding-top: 30px;
   }
   .region-selection {
     position: fixed;
