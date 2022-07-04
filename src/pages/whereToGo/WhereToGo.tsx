@@ -50,7 +50,7 @@ function AllPlacesSkeletons() {
   return AllPlacesSkeletonsArray;
 }
 
-const regionName = ['제주','경기','전라','전라','광주','대구']
+const regionName = ['제주','서울/경기','전라','전라','광주','대구']
 
 
 function WhereToGo() {
@@ -74,7 +74,7 @@ function WhereToGo() {
 
   const { isLoading, error, data: places, isFetching, refetch } = useQuery(
     'getAllPlaces',
-    () => fetch(`http://49.50.161.156/place/selectWheretogo?userId=${userId}&startDt=${startDt}&endDt=${endDt}`).then((res) => res.json()),
+    () => fetch(`http://61.97.186.174:8080/place/selectWheretogo?userId=${userId}&startDt=${startDt}&endDt=${endDt}`).then((res) => res.json()),
     {
       cacheTime: 10000, // cacheTime : 언마운트된 후 어느 시점까지 메모리에 데이터를 저장하여 캐싱할 것인지를 결정함.
       staleTime: 10000, // staleTime : 마운트 되어 있는 시점에서 데이터가 구식인지 판단함.

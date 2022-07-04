@@ -27,6 +27,7 @@ function MyAccount() {
   const userId = useSelector((state: any) => state.persist.user.user.id);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     getUserInfo();
   }, []);
 

@@ -40,7 +40,7 @@ function ReservationWaitingPage() {
     //   (response: AxiosResponse) => {
     //     setTimeout(() => {
     //       navigate(`/reservation-confirm/${response.data.data}`);
-    //     }, 3000);
+    //     }, 1000);
     //   },
     //   dispatch,
     // )
@@ -49,7 +49,7 @@ function ReservationWaitingPage() {
 
   return (
     <div className="loading-spinner">
-      <LoadingSpin primaryColor="black" secondaryColor="gray"/>
+      <LoadingSpin primaryColor="#6E614D" secondaryColor="gray"/>
     </div>
   );
 }
