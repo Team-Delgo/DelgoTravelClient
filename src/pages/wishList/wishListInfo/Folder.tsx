@@ -50,7 +50,7 @@ function Folder() {
 
   const { isLoading, error, data:wishedPlaces, isFetching ,refetch } = useQuery(
     'getWishedPlaces',
-    () => fetch(`http://49.50.161.156/wish/select?userId=${userId}`).then((res) => res.json()),
+    () => fetch(`http://61.97.186.174:8080/wish/select?userId=${userId}`).then((res) => res.json()),
     {
       cacheTime: 1000 * 60 * 5,
       staleTime: 1000 * 60 * 3,
