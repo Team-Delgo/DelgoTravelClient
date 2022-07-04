@@ -8,8 +8,8 @@ import Region from './Region';
 const regionSelectionModalStyle = {
   content: {
     position: 'fixed',
-    height: '47vh',
-    top: '49vh',
+    height: '50vh',
+    top: '46.5vh',
     left: '0.25%',
     right: '0.25%',
     background: '#FFFFFF',
