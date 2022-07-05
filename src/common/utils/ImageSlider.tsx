@@ -1,6 +1,7 @@
 import React from 'react'
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; 
+import './ImageSlider.scss'
 
 interface ImagesProps  {
   images:Array<ImageType>
@@ -16,7 +17,7 @@ function ImageSlider({ images }: ImagesProps) {
   return (
     <Carousel showThumbs={false} showStatus={false} emulateTouch={false} infiniteLoop showArrows={false}>
       {images && images.map((image: ImageType) => (
-        <img src={image.url} alt="img" key={image.url} />
+        <img className='image-slider' src={image.url} alt="img" key={image.url} />
       ))}
     </Carousel>
   );

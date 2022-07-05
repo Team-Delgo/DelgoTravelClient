@@ -25,6 +25,7 @@ import {
   REVIEW_WRITING_PATH,
   KAKAO_REDIRECT_HANDLE_PATH,
   NAVER_REDIRECT_HANDLE_PATH,
+  RESERVATION_PATH
 } from './constants/path.const';
 import './App.scss';
 import MyAccount from './pages/myAccount/MyAccount';
@@ -34,15 +35,15 @@ import PhoneAuth from './pages/signInPage/PhoneAuth';
 import DetailPlace from './pages/detailPlace/DetailPlace';
 import ReviewsPage from './pages/detailPlace/reviewsPage/ReviewsPage';
 import RoomTypePage from './pages/detailPlace/roomTypePage/RoomTypePage';
-import Reservation from './pages/detailPlace/reservationPage/Reservation';
+import Reservation from './pages/reservation/reservationPage/Reservation';
 import ReviewWritingPage from './pages/riviewWriting/RiviewWriting';
 import KakaoRedirectHandler from './common/socialLogion/KakaoRedirectHandler';
 import NaverRedirectHandler from './common/socialLogion/NaverRedirectHandler';
 import AlertConfirmOne from './common/dialog/AlertConfirmOne';
 import { errorActions } from './redux/reducers/errorSlice';
-import ReservationConfirmPage from './pages/detailPlace/reservationConfirmPage/ReservationConfirmPage';
+import ReservationConfirmPage from './pages/reservation/reservationConfirmPage/ReservationConfirmPage';
 import Coupon from './pages/myAccount/Coupon';
-import ReservationWaitingPage from './pages/detailPlace/reservationWaitingPage/ReservationWaitingPage';
+import ReservationWaitingPage from './pages/reservation/reservationWaitingPage/ReservationWaitingPage';
 import Settings from './pages/myAccount/Settings';
 import ChangePetInfo from './pages/myAccount/ChangePetInfo';
 
@@ -82,9 +83,9 @@ function App() {
         <Route path={DETAIL_PLACE_PATH.MAIN} element={<DetailPlace />} />
         <Route path={DETAIL_PLACE_PATH.REVIEWS} element={<ReviewsPage />} />
         <Route path={DETAIL_PLACE_PATH.ROOMTYPES} element={<RoomTypePage />} />
-        <Route path={DETAIL_PLACE_PATH.RESERVATION} element={<Reservation />} />
-        <Route path={DETAIL_PLACE_PATH.RESERVATION_WAITING} element={<ReservationWaitingPage />} />
-        <Route path={DETAIL_PLACE_PATH.RESERVATION_CONFIRM} element={<ReservationConfirmPage />} />
+        <Route path={RESERVATION_PATH.RESERVATION} element={<Reservation />} />
+        <Route path={RESERVATION_PATH.RESERVATION_WAITING} element={<ReservationWaitingPage />} />
+        <Route path={RESERVATION_PATH.RESERVATION_CONFIRM} element={<ReservationConfirmPage />} />
         <Route path={REVIEW_WRITING_PATH} element={<ReviewWritingPage />} />
         <Route path={KAKAO_REDIRECT_HANDLE_PATH} element={<KakaoRedirectHandler />} />
         <Route path={NAVER_REDIRECT_HANDLE_PATH} element={<NaverRedirectHandler />} />
