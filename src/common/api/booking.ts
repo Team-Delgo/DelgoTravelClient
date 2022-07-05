@@ -33,6 +33,7 @@ async function bookingRequest(
       startDt,
       endDt
     });
+    console.log(result)
     success(result);
   } catch (error: AxiosError | any) {
     useErrorHandlers(dispatch, error);
