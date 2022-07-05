@@ -117,7 +117,7 @@ function DetailPlace() {
   ]);
 
   useEffect(() => {
-    if (location.state.prevPath.includes('/detail-place')) {
+    if (location.state?.prevPath.includes('/detail-place')) {
       if(roomTypes.length>0){
         window.scroll(0, detailPlaceScrollY);
       }

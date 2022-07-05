@@ -19,7 +19,7 @@ function RoomType(props: { navigate: () => void; room: RoomListType; checkIn: st
   const { navigate, room, checkIn, checkOut } = props;
   return (
     <div className="room" aria-hidden="true" onClick={room.isBooking === 0 ? navigate : undefined}>
-      <img src={`${room.mainPhotoUrl}`} alt="room-img" />
+      <img src={`${room.mainPhotoUrl}`} alt="room-img"/>
       <div className="room-info">
         <div className="room-info-first-line">
           <p className="room-info-first-line-name">{room.name}</p>

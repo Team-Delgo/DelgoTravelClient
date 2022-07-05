@@ -30,12 +30,15 @@ export const DETAIL_PLACE_PATH = {
   MAIN: '/detail-place/:placeId',
   REVIEWS: '/detail-place/:placeId/reviews',
   ROOMTYPES: '/detail-place/:placeId/:roomTypeId',
-  RESERVATION: '/reservation/:placeId/:roomTypeId/:startDate/:endDate',
-  RESERVATION_WAITING: '/reservation-waiting/:placeId/:roomTypeId/:startDate/:endDate',
-  RESERVATION_CONFIRM: '/reservation-confirm/:bookingId',
 };
 
 export const REVIEW_WRITING_PATH = '/review-writing/:reservationId';
 
 export const KAKAO_REDIRECT_HANDLE_PATH = '/oauth/callback/kakao';
 export const NAVER_REDIRECT_HANDLE_PATH = '/oauth/callback/naver';
+
+export const RESERVATION_PATH = {
+  RESERVATION: '/reservation/:placeId/:roomTypeId/:startDate/:endDate',
+  RESERVATION_WAITING: '/reservation-waiting/:placeId/:roomTypeId/:startDate/:endDate',
+  RESERVATION_CONFIRM: '/reservation-confirm/:bookingId',
+};
