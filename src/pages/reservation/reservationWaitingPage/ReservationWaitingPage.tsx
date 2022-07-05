@@ -23,27 +23,28 @@ function ReservationWaitingPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    // bookingRequest(
-    //   {
-    //     userId: user.id,
-    //     placeId: place.placeId,
-    //     roomId: room.roomId,
-    //     couponId: 0,
-    //     point: 0,
-    //     peopleNum: 1,
-    //     petNum: 1,
-    //     startDt: date.date.start,
-    //     endDt: date.date.end,
-    //     // orderId,
-    //     // paymentKey,
-    //   },
-    //   (response: AxiosResponse) => {
-    //     setTimeout(() => {
-    //       navigate(`/reservation-confirm/${response.data.data}`);
-    //     }, 1000);
-    //   },
-    //   dispatch,
-    // )
+    bookingRequest(
+      {
+        userId: user.id,
+        placeId: place.placeId,
+        roomId: room.roomId,
+        couponId: 0,
+        point: 0,
+        peopleNum: 1,
+        petNum: 1,
+        startDt: date.date.start,
+        endDt: date.date.end,
+        // orderId,
+        // paymentKey,
+      },
+      (response: AxiosResponse) => {
+        console.log(response.data.data)
+        // setTimeout(() => {
+        //   navigate(`/reservation-confirm/${response.data.data}`);
+        // }, 1000);
+      },
+      dispatch,
+    )
 
   }, []);
 
