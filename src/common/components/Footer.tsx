@@ -8,7 +8,7 @@ import { ReactComponent as HomeActive } from '../../icons/home-active.svg';
 import { ReactComponent as SearchActive } from '../../icons/search-active.svg';
 import { ReactComponent as BagActive } from '../../icons/bag-active.svg';
 import { ReactComponent as PersonActive } from '../../icons/person-active.svg';
-import { ROOT_PATH, WISH_LIST_PATH, WHERE_TO_GO_PATH, MY_ACCOUNT_PATH } from '../../constants/path.const';
+import { ROOT_PATH, MY_STORAGE_PATH, WHERE_TO_GO_PATH, MY_ACCOUNT_PATH } from '../../constants/path.const';
 import './Footer.scss';
 
 function Footer() {
@@ -56,16 +56,16 @@ function Footer() {
         )}
       </div>
       <div className="bag-icon">
-        {location.pathname === WISH_LIST_PATH ? (
+        {location.pathname === MY_STORAGE_PATH ? (
           <>
-            <Link to={WISH_LIST_PATH}>
+            <Link to={MY_STORAGE_PATH}>
               <BagActive />
             </Link>
             <div className="footer-text-active">내 여행</div>
           </>
         ) : (
           <>
-            <Link to={WISH_LIST_PATH}>
+            <Link to={MY_STORAGE_PATH}>
               <Bag />
             </Link>
             <div className="footer-text">내 여행</div>

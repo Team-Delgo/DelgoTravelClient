@@ -11,14 +11,14 @@ import TermsPage from './pages/signUpPage/terms/Terms';
 import UserInfo from './pages/signUpPage/userInfo/UserInfo';
 import PetInfo from './pages/signUpPage/petInfo/PetInfo';
 import Login from './pages/signInPage/Login';
-import WishListPage from './pages/wishList/WishList';
+import MyStoragePage from './pages/myStorage/MyStorage';
 import WhereToGoPage from './pages/whereToGo/WhereToGo';
 import {
   EDITOR_NOTE_PATH,
   ROOT_PATH,
   SIGN_IN_PATH,
   SIGN_UP_PATH,
-  WISH_LIST_PATH,
+  MY_STORAGE_PATH,
   WHERE_TO_GO_PATH,
   MY_ACCOUNT_PATH,
   DETAIL_PLACE_PATH,
@@ -74,7 +74,7 @@ function App() {
         <Route path={SIGN_UP_PATH.USER_INFO} element={<UserInfo />} />
         <Route path={SIGN_UP_PATH.USER_PET_INFO} element={<PetInfo />} />
         <Route path={SIGN_UP_PATH.USER_PET_INFO} element={<PetInfo />} />
-        <Route path={WISH_LIST_PATH} element={<WishListPage />} />
+        <Route path={MY_STORAGE_PATH} element={<MyStoragePage />} />
         <Route path={WHERE_TO_GO_PATH} element={<WhereToGoPage />} />
         <Route path={MY_ACCOUNT_PATH.MAIN} element={<MyAccount />} />
         <Route path={MY_ACCOUNT_PATH.COUPON} element={<Coupon />} />

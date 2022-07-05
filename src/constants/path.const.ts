@@ -23,7 +23,7 @@ export const SIGN_UP_PATH = {
   USER_PET_INFO: '/user/signup/pet-info',
 };
 
-export const WISH_LIST_PATH = '/wish-list';
+export const MY_STORAGE_PATH = '/my-storage';
 export const WHERE_TO_GO_PATH = '/where-to-go';
 
 export const DETAIL_PLACE_PATH = {
