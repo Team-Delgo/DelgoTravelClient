@@ -7,6 +7,9 @@
   &.close {
     display: none;
   }
+  &-image-skeleton{
+    height: 30vh;
+  }
   &-main-image {
     width: 100%;
     height: 375px;
