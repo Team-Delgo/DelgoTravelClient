@@ -1,6 +1,7 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable array-callback-return */
 import React, { useState, useEffect, useCallback,useMemo } from 'react'
-import { useNavigate,useLocation } from 'react-router-dom';
+import { useNavigate,useLocation,Link} from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
@@ -17,6 +18,7 @@ import RegionSelectionModal from './modal/RegionSelectionModal'
 import Place from './place/Place'
 // import {RootState} from '../../redux/store'
 import { ReactComponent as BottomArrow } from '../../icons/bottom-arrow.svg';
+import { ReactComponent as DelgoLogo } from '../../icons/delgo-logo.svg';
 import './WhereToGo.scss';
 import Calender from '../../common/utils/Calender';
 
@@ -48,6 +50,9 @@ function AllPlacesSkeletons() {
   return AllPlacesSkeletonsArray;
 }
 
+const regionName = ['제주','서울/경기','전라','전라','광주','대구']
+
+
 function WhereToGo() {
   const [areaTerm, setAreaTerm] = useState('');
   const [regionSelectionModal, setRegionSelectionModal] = useState(false);
@@ -69,7 +74,7 @@ function WhereToGo() {
 
   const { isLoading, error, data: places, isFetching, refetch } = useQuery(
     'getAllPlaces',
-    () => fetch(`http://49.50.161.156/place/selectWheretogo?userId=${userId}&startDt=${startDt}&endDt=${endDt}`).then((res) => res.json()),
+    () => fetch(`http://61.97.186.174:8080/place/selectWheretogo?userId=${userId}&startDt=${startDt}&endDt=${endDt}`).then((res) => res.json()),
     {
       cacheTime: 10000, // cacheTime : 언마운트된 후 어느 시점까지 메모리에 데이터를 저장하여 캐싱할 것인지를 결정함.
       staleTime: 10000, // staleTime : 마운트 되어 있는 시점에서 데이터가 구식인지 판단함.
@@ -126,28 +131,40 @@ function WhereToGo() {
     <>
       {isCalenderOpen && <Calender closeCalender={handleCalenderOpenClose} isRoom={false} />}
       <div className={classNames('where-to-go-background', { close: isCalenderOpen })}>
-        {
-          isLoading ? <div className="filter-skeleton">
+        <Link to="/">
+          <DelgoLogo className="delgo-logo" width={120} height={50} />
+        </Link>
+        {isLoading ? (
+          <div className="filter-skeleton">
             <SkeletonTheme baseColor="#f0e9e9" highlightColor="#e4dddd">
               <Skeleton height={49} borderRadius={5} />
             </SkeletonTheme>
-          </div> : <div className="search-region-date">
-            <div className="search-region" aria-hidden="true" onClick={handleRegionSelectionModal}>
-              {areaTerm === '' ? '전체' : areaTerm}
-              <BottomArrow className="bottom-arrow" />
-            </div>
-            <div className="search-date" aria-hidden="true" onClick={handleCalenderOpenClose}>
-              {dateString}
-              <BottomArrow className="bottom-arrow" />
-            </div>
           </div>
-        }
+        ) : (
+          <>
+            {areaTerm === '' ? null : regionName.includes(areaTerm) ? (
+              <header className="region-name">{areaTerm}로 델고가요</header>
+            ) : (
+              <header className="region-name">{areaTerm}으로 델고가요</header>
+            )}
+            <div className="search-region-date">
+              <div className="search-region" aria-hidden="true" onClick={handleRegionSelectionModal}>
+                {areaTerm === '' ? '전체' : areaTerm}
+                <BottomArrow className="bottom-arrow" />
+              </div>
+              <div className="search-date" aria-hidden="true" onClick={handleCalenderOpenClose}>
+                {dateString}
+                <BottomArrow className="bottom-arrow" />
+              </div>
+            </div>
+          </>
+        )}
         <div className="places-container">
           {isLoading
             ? allPlacesSkeletons
-            : places?.data?.map((place: PlaceType) => {
+            : places.data.map((place: PlaceType) => {
                 if (place.address.includes(areaTerm)) {
-                    return <Place key={place.placeId} place={place} />;
+                  return <Place key={place.placeId} place={place} />;
                 }
               })}
         </div>

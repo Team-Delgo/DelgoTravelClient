@@ -28,7 +28,7 @@ interface PopularPlaceType  {
 
 
 function Folder() {
-  const [wishedPlace, setWishedPlace] = useState<Array<WishedPlaceType>>([]);
+  // const [wishedPlace, setWishedPlace] = useState<Array<WishedPlaceType>>([]);
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const accessToken = useSelector((state: any) => state.token.token);
   const dispatch = useDispatch();
@@ -48,22 +48,31 @@ function Folder() {
   ]);
 
 
-  const { isLoading, error, data:wishedPlaces, isFetching } = useQuery(
+  const { isLoading, error, data:wishedPlaces, isFetching ,refetch } = useQuery(
     'getWishedPlaces',
-    () => fetch(`http://49.50.161.156/wish/select?userId=${userId}`).then((res) => res.json()),
+    () => fetch(`http://61.97.186.174:8080/wish/select?userId=${userId}`).then((res) => res.json()),
     {
-      cacheTime: 10000, // cacheTime : 언마운트된 후 어느 시점까지 메모리에 데이터를 저장하여 캐싱할 것인지를 결정함.
-      staleTime: 10000, // staleTime : 마운트 되어 있는 시점에서 데이터가 구식인지 판단함.
-      refetchInterval: false, // 데이터 변경시 fetch하는시간 // default:false : db 데이터값 변경하면 즉시 변경
+      cacheTime: 1000 * 60 * 5,
+      staleTime: 1000 * 60 * 3,
+      onSuccess: (data: any) => {
+        console.log(isLoading)
+      },
     },
   );
 
+  // useEffect(()=>{
+  //   console.log(isFetching)
+  // },[isFetching])
 
   // useEffect(() => {
   //   getWishedPlaces(
   //     { accessToken, userId },
   //     (response: AxiosResponse) => {
   //       setWishedPlace(response.data.data);
+  //       setIsLoading(false)
+  //       // if(response.data.data.length>0){
+  //       //   setIsLoading(false)
+  //       // }
   //     },
   //     dispatch,
   //   );
@@ -78,7 +87,7 @@ function Folder() {
 
   return (
     <div className="wish-list-container">
-      {wishedPlaces?.data.length>0? (
+      {wishedPlaces.data.length>0 ? (
         <div className="wish-list-header-text" aria-hidden="true">
           델고 갈 {wishedPlaces.data.length}개 장소
         </div>
@@ -89,15 +98,16 @@ function Folder() {
           <div className="wish-list-notice-sub">인기 숙소를 보여드릴게요</div>
         </div>
       )}
-      {wishedPlaces.data.length>0
+      {wishedPlaces.data.length>0 
         ? wishedPlaces.data
             .sort((a:WishedPlaceType, b:WishedPlaceType) => b.wishId - a.wishId)
             .map((place:WishedPlaceType) => (
               <WishedPlace
                 place={place}
                 key={place.placeId}
-                // wishedPlace={data.data}
+                // wishedPlace={wishedPlace}
                 // setWishedPlace={setWishedPlace}
+                refetch={refetch}
               />
             ))
         : popularPlace.map((place) => <PopularPlace place={place} key={place.id} />)}

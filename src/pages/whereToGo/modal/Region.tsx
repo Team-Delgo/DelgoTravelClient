@@ -15,18 +15,12 @@ interface PropsType{
 }
 
 const regions = [
-  { id: 0, name: '제주' },
-  { id: 1, name: '강원' },
-  { id: 2, name: '부산' },
-  { id: 3, name: '경기' },
-  { id: 4, name: '인천' },
-  { id: 5, name: '전라' },
-  { id: 6, name: '경상' },
-  { id: 7, name: '충청' },
-  { id: 8, name: '광주' },
-  { id: 9, name: '대전' },
-  { id: 10, name: '대구' },
-  { id: 11, name: '울산' },
+  { id: 0, name: '강원' },
+  { id: 1, name: '서울/경기' },
+  { id: 2, name: '제주' },
+  { id: 3, name: '경상' },
+  { id: 4, name: '전라' },
+  { id: 5, name: '충청' },
 ]; 
 
 function Region({ areaTerm,setAreaTerm ,closeRegionSelectionModal}: PropsType) {
@@ -51,7 +45,7 @@ function Region({ areaTerm,setAreaTerm ,closeRegionSelectionModal}: PropsType) {
   
   return (
     <div className="region-modal" >
-      {areaTerm === '' ? (
+      {/* {areaTerm === '' ? (
         <header className="region-modal-header-selected">국내 전체</header>
       ) : (
         <header className="region-modal-header" onClick={handleSelectAllRegions}>
@@ -78,7 +72,18 @@ function Region({ areaTerm,setAreaTerm ,closeRegionSelectionModal}: PropsType) {
             </span>
           ),
         )}
-      </section>
+      </section> */}
+      <div className="region-modal-region-name" onClick={handleSelectAllRegions}>국내전체</div>
+      {
+        regions.map((region: RegionType) =>
+          <div
+            key={region.id}
+            className="region-modal-region-name"
+            onClick={handleSelectRegion(region.name)}
+          >
+            {region.name}
+          </div>)
+      }
     </div>
   );
 }

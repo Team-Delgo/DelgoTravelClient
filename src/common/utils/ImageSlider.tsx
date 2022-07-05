@@ -12,13 +12,13 @@ interface ImageType{
 }
 
 
-function ImageSlider({images}:ImagesProps) {
+function ImageSlider({ images }: ImagesProps) {
   return (
-      <Carousel showThumbs={false} showStatus={false} >
-        {images&&images.map((image:ImageType) => (
-          <img src={image.url} alt="img" key={image.url}/>
-        ))}
-      </Carousel>
+    <Carousel showThumbs={false} showStatus={false} emulateTouch={false} infiniteLoop showArrows={false}>
+      {images && images.map((image: ImageType) => (
+        <img src={image.url} alt="img" key={image.url} />
+      ))}
+    </Carousel>
   );
 }
 

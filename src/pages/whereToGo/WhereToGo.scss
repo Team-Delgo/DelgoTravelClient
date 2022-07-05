@@ -1,47 +1,55 @@
 .where-to-go-background {
   // position: absolute;
+  margin-left: 7.5%;
   z-index: 0;
   width: 100%;
   height: 100%;
   background: #f3efea;
-  padding-top: 14%;
-  padding-bottom: 50px;
+  padding: 10% 0 15% 0;
   font-size: 16px;
   &.close {
     display: none;
   }
+  .region-name{
+    padding-top: 27px;
+    font-weight: bold;
+    color: #3E382F;
+    font-size: 20px;
+  }
   .search-region-date {
     display: flex;
-    margin: 12px 0 0 7.5%;
+    margin-top: 15px;
     width: 88vw;
-    height: 49px;
+    height: 43px;
+    color: #474747;
+    font-weight: 500;
     .search-region {
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       background: #ffffff;
-      width: 22vw;
+      width: 24vw;
       border-radius: 5px;
+      font-size: 14px;
     }
     .search-date {
-      width: 60vw;
+      width: 59vw;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      color: #000000;
       background: #ffffff;
       margin-left: 4%;
-      height: 49px;
       border-radius: 5px;
+      font-size: 14px;
     }
     .bottom-arrow {
       padding-left: 10px;
     }
   }
   .places-container {
-    padding-top: 35px;
+    padding-top: 30px;
   }
   .region-selection {
     position: fixed;
@@ -54,13 +62,12 @@
     border-radius: 20px 20px 0px 0px;
   }
   .filter-skeleton{
-    margin: 12px 0 0 7.5%;
+    margin-top: 12px;
     width: 88vw;
     height: 49px;
     }
     .skeleton {
-      width: 86vw;
+      width: 87vw;
       padding-bottom: 40px;
-      margin: auto;
     }
     }

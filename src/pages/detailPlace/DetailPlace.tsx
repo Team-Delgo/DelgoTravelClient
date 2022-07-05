@@ -134,7 +134,7 @@ function DetailPlace() {
         setPlace(response.data.data.place);
         setPhotoList(response.data.data.detailPhotoList);
         setRoomTypes(response.data.data.roomList);
-        console.log(response.data.data.roomList)
+        console.log(response.data.data.place)
       },
       dispatch,
     );
@@ -266,14 +266,15 @@ function DetailPlace() {
                 <RoomType
                   key={room.roomId}
                   room={room}
+                  checkIn={place.checkin}
+                  checkOut={place.checkout}
                   navigate={() => {
                     navigate(`/detail-place/${placeId}/${room.roomId}`, {
                       state: {
-                        room,
+                        room
                       },
                     });
-                  }}
-                />
+                  } }               />
               </div>
             )) :
             roomTypeSkeletons
