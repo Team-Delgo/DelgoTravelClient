@@ -7,10 +7,10 @@ import { tokenRefresh } from '../../common/api/login';
 import Footer from '../../common/components/Footer';
 import Folder from './wishListInfo/Folder';
 import History from './historyInfo/History';
-import './WishList.scss';
+import './MyStorage.scss';
 
 
-function WishList() {
+function MyStorage() {
   const [currentTab, setCurrentTab] = useState(0);
   const navigation = useNavigate();
   const dispatch = useDispatch();
@@ -101,4 +101,4 @@ function WishList() {
   );
 }
 
-export default WishList;
+export default MyStorage;
