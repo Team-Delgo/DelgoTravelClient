@@ -74,7 +74,7 @@ function DetailPlace() {
   const location: any = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { whereToGoScrollY,detailPlaceScrollY } = useSelector((state: any) => state.scroll);
+  const { whereToGoScrollY,detailPlaceScrollY,myStorageY } = useSelector((state: any) => state.scroll);
   const roomTypeSkeletons = useMemo(()=>RoomTypeSkeletons(),[])
 
   const [reviews, setReviews] = useState<Array<any>>([
@@ -134,7 +134,6 @@ function DetailPlace() {
         setPlace(response.data.data.place);
         setPhotoList(response.data.data.detailPhotoList);
         setRoomTypes(response.data.data.roomList);
-        console.log(response.data.data.place)
       },
       dispatch,
     );
@@ -189,8 +188,12 @@ function DetailPlace() {
   }, []);
 
   const moveToPrevPage = useCallback(() => {
-    if (location.state.prevPath === '/my-storage') navigate('/my-storage');
-    else if (location.state.prevPath === '/') navigate('/');
+    if (location.state.prevPath === '/my-storage') navigate('/my-storage', {
+      state: {
+        prevPath: location.pathname,
+      },
+    })
+    else if (location.state.prevPath === '/') navigate("/");
     else
       navigate('/where-to-go', {
         state: {
@@ -201,7 +204,7 @@ function DetailPlace() {
 
 
   const saveDetailPlaceScrollY = useCallback(() => {
-    dispatch(scrollActions.scroll({ whereToGo: whereToGoScrollY,detailPlace: window.scrollY }));
+    dispatch(scrollActions.scroll({ whereToGo: whereToGoScrollY, detailPlace: window.scrollY, myStorage: myStorageY }));
   }, []);
 
   return (

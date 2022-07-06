@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,useLocation} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { tokenActions } from '../../redux/reducers/tokenSlice';
@@ -16,10 +16,17 @@ function MyStorage() {
   const dispatch = useDispatch();
   const accessToken = useSelector((state: any) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
+  const location: any = useLocation();
+  const { myStorageY } = useSelector((state: any) => state.scroll);
 
-  useEffect(() => {
-    window.scroll(0,0)
-  }, []);
+  // useEffect(() => {
+  //   if (location.state?.prevPath.includes('/detail-place')) {
+  //     console.log(myStorageY)
+  //     window.scrollTo(0, myStorageY);
+  //   } else {
+  //     window.scrollTo(0, 0);
+  //   }
+  // }, []);
 
   useEffect(() => {
     tokenRefresh({ refreshToken }, (response: AxiosResponse) => {
