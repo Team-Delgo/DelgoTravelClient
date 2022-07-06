@@ -1,5 +1,6 @@
 import React, { useState, useCallback,memo } from 'react'
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate,useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { wishInsert, wishDelete } from '../../../common/api/wish'
 import Heart from '../../../common/components/Heart'
@@ -27,6 +28,8 @@ function RecommendedPlaces({ place, places, setPlaces }: RedcommendedPlacesProps
   const accessToken = useSelector((state: any) => state.token.token);
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location: any = useLocation();
 
   const wishListInsert = useCallback(() => {
     wishInsert(
@@ -58,8 +61,16 @@ function RecommendedPlaces({ place, places, setPlaces }: RedcommendedPlacesProps
     );
   }, [wishList, places]);
 
+  const moveToDetailPage = useCallback(() => {
+    navigate(`/detail-place/${place.placeId}`, {
+      state: {
+        prevPath: location.pathname,
+      },
+    });
+  }, []);
+
   return (
-    <div className="recommended-places">
+    <div className="recommended-places" aria-hidden="true" onClick={moveToDetailPage}>
       <img src={place.mainPhotoUrl} alt="recommended-place-img" />
       <div className="recommended-places-name">{place.name}</div>
       <div className="recommended-places-location">{place.address}</div>

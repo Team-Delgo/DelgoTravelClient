@@ -30,7 +30,7 @@ function ReservationWaitingPage() {
         roomId: room.roomId,
         couponId: 0,
         point: 0,
-        peopleExtraNum: 1,
+        personExtraNum: 1,
         petExtraNum: 1,
         startDt: date.date.start,
         endDt: date.date.end,

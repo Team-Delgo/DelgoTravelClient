@@ -1,6 +1,6 @@
 import React, { useState, useCallback,memo, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { Link,useLocation,useNavigate } from 'react-router-dom';
+import { useLocation,useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { wishInsert, wishDelete } from '../../../common/api/wish'
 import Heart from '../../../common/components/Heart'

@@ -9,7 +9,7 @@ async function bookingRequest(
     roomId: number;
     couponId: number;
     point: number;
-    peopleExtraNum: number;
+    personExtraNum: number;
     petExtraNum: number;
     startDt: string;
     endDt: string;
@@ -26,7 +26,7 @@ async function bookingRequest(
   console.log(data.roomId)
   console.log(data.couponId)
   console.log(data.point)
-  console.log(data.peopleExtraNum)
+  console.log(data.personExtraNum)
   console.log(data.petExtraNum)
   try {
     const result = await axios.post(`${url}booking/request`, {
@@ -35,7 +35,7 @@ async function bookingRequest(
       roomId: data.roomId,
       couponId: data.couponId,
       point: data.point,
-      peopleExtraNum: data.peopleExtraNum,
+      personExtraNum: data.personExtraNum,
       petExtraNum: data.petExtraNum,
       startDt,
       endDt,
