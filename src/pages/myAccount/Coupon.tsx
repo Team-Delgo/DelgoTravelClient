@@ -62,7 +62,7 @@ function Coupon() {
   }, [accessToken]);
 
   const getCouponList = async () => {
-    const response = await axios.get(`${url}coupon/getCouponList?userId=${userId}`);
+    const response = await axios.get(`${url}/coupon/getCouponList?userId=${userId}`);
     const { data } = response.data;
     setCouponList(data);
     console.log(response);

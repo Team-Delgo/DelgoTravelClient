@@ -15,6 +15,7 @@ interface ReservationInfoType  {
   checkInTime:string 
   checkOutTime:string 
 }
+
 interface RecommendedPlaceType {
   id: number
   image:string
