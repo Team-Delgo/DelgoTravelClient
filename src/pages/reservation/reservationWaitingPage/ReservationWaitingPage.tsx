@@ -30,22 +30,23 @@ function ReservationWaitingPage() {
         roomId: room.roomId,
         couponId: 0,
         point: 0,
-        peopleNum: 1,
-        petNum: 1,
+        peopleExtraNum: 1,
+        petExtraNum: 1,
         startDt: date.date.start,
         endDt: date.date.end,
-        // orderId,
-        // paymentKey,
+        orderId,
+        paymentKey,
       },
       (response: AxiosResponse) => {
         console.log(response.data.data)
-        // setTimeout(() => {
-        //   navigate(`/reservation-confirm/${response.data.data}`);
-        // }, 1000);
+        if (response.data.data !== null) {
+          setTimeout(() => {
+            navigate(`/reservation-confirm/${response.data.data}`);
+          }, 3000);
+        }
       },
       dispatch,
     )
-
   }, []);
 
   return (
