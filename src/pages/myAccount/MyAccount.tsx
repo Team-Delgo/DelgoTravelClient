@@ -6,7 +6,7 @@ import alertConfirm, { Button, alert } from 'react-alert-confirm';
 import 'react-alert-confirm/dist/index.css';
 import Footer from '../../common/components/Footer';
 import './MyAccount.scss';
-import RightArrow from '../../icons/right-arrow.svg';
+import RightArrow from '../../icons/right-arrow-black.svg';
 import { userActions } from '../../redux/reducers/userSlice';
 import { tokenActions } from '../../redux/reducers/tokenSlice';
 import AlertConfirm from '../../common/dialog/AlertConfirm';
@@ -103,11 +103,8 @@ function MyAccount() {
       )}
       <div className="account-profile">
         <img className="account-profile-image" src={pet?.image} alt="dog" />
-        <div className="account-profile-name-wrapper">
-          <div className="account-profile-name">{pet?.name}</div>
-        </div>
         <div className="account-profile-info">
-          <div>
+          <div className='account-profile-info-first'>
             <div className="account-profile-info-name">몽자</div>
             <span className="account-profile-info-age">/ 5살</span>
             <img
@@ -119,16 +116,16 @@ function MyAccount() {
               alt="detail"
             />
           </div>
-          <div>
-            <div className="account-proifle-info-coupon" aria-hidden="true" onClick={navigateCouponPage}>
+          <div className='account-profile-info-second'>
+            <div className="account-profile-info-coupon" aria-hidden="true" onClick={navigateCouponPage}>
               <p className="account-profile-info-column">쿠폰</p>
               <p className="account-profile-info-value">{items.coupons}장</p>
             </div>
-            <div className="account-proifle-info-point">
+            <div className="account-profile-info-point">
               <p className="account-profile-info-column">포인트</p>
               <p className="account-profile-info-value">{items.points}</p>
             </div>
-            <div className="account-proifle-info-review">
+            <div className="account-profile-info-review">
               <p className="account-profile-info-column">리뷰</p>
               <p className="account-profile-info-value">{items.reviews}건</p>
             </div>
@@ -137,7 +134,7 @@ function MyAccount() {
       </div>
       <div className="account-purchase">
         <div className="account-purchase-reservation">
-          <h1 className="account-title">예약내역</h1>
+          <h1 className="account-title">여행 내역</h1>
           <div className="account-purchase-reservation-box">
             <div className="account-purchase-reservation-box-wrapper">
               <p className="account-purchase-reservation-box-wrapper-title">밸런스독</p>
@@ -157,6 +154,10 @@ function MyAccount() {
           navigation(MY_ACCOUNT_PATH.SETTINGS);
         }}
       >
+        <div className="account-item first">
+          <h2 className="account-item-name">내 정보 관리</h2>
+          <img src={RightArrow} alt="detail" />
+        </div>
         <div className="account-item">
           <h2 className="account-item-name">설정</h2>
           <img src={RightArrow} alt="detail" />

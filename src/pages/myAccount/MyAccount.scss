@@ -11,6 +11,9 @@
     display: flex;
     justify-content: space-between;
     margin: 22px;
+    &.first{
+      margin-top: 64px;
+    }
     &.last {
       margin-bottom: 0;
       h2 {
@@ -33,45 +36,49 @@
 
   &-profile {
     text-align: center;
-    border-bottom: solid #e8e2dc 5px;
     &-image {
-      margin-top: 84px;
-      width: 41vw;
-      height: 41vw;
-      border-radius: 100%;
-    }
-    &-name {
-      &-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 34px;
-      }
       position: relative;
-      font-size: 24px;
-      line-height: 30px;
-      font-weight: 700;
-      color: #3e382f;
-      img {
-        position: absolute;
-        top: 50%;
-        left: 60px;
-        transform: translateY(-50%);
-      }
+      width: 100vw;
+      height: 100vw;
+      z-index: -1;
     }
     &-info {
+      background-color: red;
       display: flex;
+      z-index: 10;
+      margin-top: -50px;
+      flex-direction: column;
       background: #fffbf6;
-      border-radius: 5px;
-      margin: 34px 20px;
-      padding: 24px 43px;
+      border-radius: 15px 15px 0px 0px;
+      padding: 40px 54px;
       justify-content: space-between;
+      &-first{
+        display: flex;
+      }
+      &-second{
+        margin-top: 24px;
+        display: flex;
+        justify-content: space-between;
+      }
+      &-name{
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 36px;
+      }
+      &-age{
+        margin-left: 5px;
+        margin-right: 8px;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 36px;
+        text-align: end;
+      }
 
       &-column {
         margin: 0;
         color: #b0a69d;
         font-weight: 500;
-        font-size: 16px;
+        font-size: 14px;
         line-height: 150%;
       }
       &-value {
@@ -81,6 +88,7 @@
         line-height: 150%;
         color: #3e382f;
       }
+      
     }
   }
   &-purchase {
