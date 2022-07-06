@@ -42,7 +42,6 @@ async function bookingRequest(
       orderId:data.orderId,
       paymentKey:data.paymentKey
     });
-    console.log(result)
     success(result);
   } catch (error: AxiosError | any) {
     useErrorHandlers(dispatch, error);

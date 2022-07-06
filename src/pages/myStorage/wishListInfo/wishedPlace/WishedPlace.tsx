@@ -1,11 +1,12 @@
 import React, { useState, useCallback,memo } from 'react'
-import { Link ,useLocation} from 'react-router-dom';
+import { Link ,useLocation,useNavigate} from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { useMutation } from 'react-query'
 import { AxiosResponse } from 'axios';
 import AlertConfirm from '../../../../common/dialog/AlertConfirm';
 import Heart from '../../../../common/components/Heart'
 import { wishDelete } from '../../../../common/api/wish'
+import { scrollActions } from '../../../../redux/reducers/scrollSlice';
 import './WishedPlace.scss';
 
 interface WishedPlaceTypeProps {
@@ -31,6 +32,7 @@ function WishedPlace({ place,refetch}: WishedPlaceTypeProps) {
   const [wishListAlertConfirmOpen, setWishListAlertConfirmOpen] = useState(false);
   const dispatch = useDispatch();
   const location: any = useLocation();
+  const navigate = useNavigate();
 
   const wishListDelete = useCallback(() => {
     wishDelete(
@@ -51,29 +53,30 @@ function WishedPlace({ place,refetch}: WishedPlaceTypeProps) {
   }, [wishListAlertConfirmOpen]);
 
 
+  const moveToDetailPage = useCallback(() => {
+    dispatch(scrollActions.scroll({ whereToGo: 0, detailPlace: 0, myStorage: window.scrollY }));
+    navigate(`/detail-place/${place.placeId}`, {
+      state: {
+        prevPath: location.pathname,
+      },
+    });
+  }, []);
+
   return (
-    <div className="wished-place">
-        <div>
-          <Link to={`/detail-place/${place.placeId}`} state={{ prevPath: location.pathname }} key={place.placeId}>
-            <img src={place.mainPhotoUrl} alt="wished-place-img" aria-hidden="true" />
-          </Link>
-          <Link to={`/detail-place/${place.placeId}`} key={place.placeId}>
-            <div className="wished-place-name">{place.name}</div>
-          </Link>
-          <Link to={`/detail-place/${place.placeId}`} key={place.placeId}>
-            <div className="wished-place-location">{place.address}</div>
-          </Link>
-          <div className="wished-place-heart">
-            {wishListAlertConfirmOpen && (
-              <AlertConfirm
-                text="정말 찜 목록에서 제거하시겠어요?"
-                yesButtonHandler={wishListDelete}
-                noButtonHandler={wishListConfirmModalOpenClose}
-              />
-            )}
-            <Heart wishList={wishList} handleWishList={wishListConfirmModalOpenClose} />
-          </div>
-        </div>
+    <div className="wished-place" aria-hidden="true" >
+      <img src={place.mainPhotoUrl} alt="wished-place-img" aria-hidden="true" onClick={moveToDetailPage} />
+      <div className="wished-place-name" aria-hidden="true" onClick={moveToDetailPage}>{place.name}</div>
+      <div className="wished-place-location" aria-hidden="true" onClick={moveToDetailPage}>{place.address}</div>
+      <div className="wished-place-heart">
+        {wishListAlertConfirmOpen && (
+          <AlertConfirm
+            text="정말 찜 목록에서 제거하시겠어요?"
+            yesButtonHandler={wishListDelete}
+            noButtonHandler={wishListConfirmModalOpenClose}
+          />
+        )}
+        <Heart wishList={wishList} handleWishList={wishListConfirmModalOpenClose} />
+      </div>
     </div>
   );
 }

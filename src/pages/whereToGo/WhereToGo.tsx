@@ -12,7 +12,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { getAllPlaces } from '../../common/api/getPlaces';
 import { tokenActions } from '../../redux/reducers/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
-import { scrollActions } from '../../redux/reducers/scrollSlice';
+import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import Footer from '../../common/components/Footer'
 import RegionSelectionModal from './modal/RegionSelectionModal'
 import Place from './place/Place'
@@ -20,7 +20,7 @@ import Place from './place/Place'
 import { ReactComponent as BottomArrow } from '../../icons/bottom-arrow.svg';
 import { ReactComponent as DelgoLogo } from '../../icons/delgo-logo.svg';
 import './WhereToGo.scss';
-import Calender from '../../common/utils/Calender';
+import Calender from '../../common/utils/Calender'; 
 
 
 interface PlaceType {
@@ -60,30 +60,24 @@ function WhereToGo() {
   const accessToken = useSelector((state: any) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
-  const [selectedDateString, setSelectedDateString] = useState('');
-  const [selectedDate, setSelectedDate] = useState({ start: '', end: '' });
   const { date, dateString } = useSelector((state: any) => state.date);
   const { whereToGoScrollY } = useSelector((state: any) => state.scroll);
   const sequence = dateString.length ? 2 : 0;
-  const dispatch = useDispatch();
-  const navigation = useNavigate();
   const location: any = useLocation();
   const allPlacesSkeletons = useMemo(()=>AllPlacesSkeletons(),[])
   const startDt =`${date.start.substring(0,4)}-${date.start.substring(4,6)}-${date.start.substring(6,10)}`
   const endDt = `${date.end.substring(0,4)}-${date.end.substring(4,6)}-${date.end.substring(6,10)}`
+  const dispatch = useDispatch()
 
   const { isLoading, error, data: places, isFetching, refetch } = useQuery(
     'getAllPlaces',
-    () => fetch(`http://61.97.186.174:8080/place/selectWheretogo?userId=${userId}&startDt=${startDt}&endDt=${endDt}`).then((res) => res.json()),
+    () => getAllPlaces(userId,startDt,endDt),
     {
-      cacheTime: 10000, // cacheTime : 언마운트된 후 어느 시점까지 메모리에 데이터를 저장하여 캐싱할 것인지를 결정함.
-      staleTime: 10000, // staleTime : 마운트 되어 있는 시점에서 데이터가 구식인지 판단함.
+      cacheTime: 1000 * 60 * 5,
+      staleTime: 1000 * 60 * 3,
       refetchInterval: false, // 데이터 변경시 fetch하는시간 // default:false : db 데이터값 변경하면 즉시 변경
-      onSuccess: (data: any) => {
-        console.log(startDt)
-      },
       onError: (error: any) => {
-        console.log(error)
+        useErrorHandlers(dispatch, error)
       }
     },
   );
@@ -91,7 +85,6 @@ function WhereToGo() {
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
-      dispatch(scrollActions.scroll({ whereToGo: window.scrollY }));
       window.scrollTo(0, whereToGoScrollY);
     } else {
       window.scrollTo(0, 0);

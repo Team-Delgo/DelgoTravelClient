@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useErrorHandlers } from './useErrorHandlers';
 import { url } from '../../constants/url.cosnt';
 
-async function getAllPlaces(userId: number,startDt:string,endDt:string, success: (data: AxiosResponse) => void, dispatch: any) {
+async function getAllPlacesMain(userId: number, startDt: string, endDt: string, success: (data: AxiosResponse) => void, dispatch: any) {
   try {
     const result = await axios.get(`${url}place/selectWheretogo?userId=${userId}&startDt=${startDt}&endDt=${endDt}`);
     success(result);
@@ -11,22 +11,38 @@ async function getAllPlaces(userId: number,startDt:string,endDt:string, success:
   }
 }
 
-async function getWishedPlaces(
-  data: { accessToken: string; userId: number },
-  success: (data: AxiosResponse) => void,
-  dispatch: any,
-) {
-  try {
-    const result = await axios.get(`${url}wish/select?userId=${data.userId}`, {
-      headers: {
-        Authorization_Access: `${data.accessToken}`,
-      },
-    });
-    success(result);
-  } catch (error: AxiosError | any) {
-    useErrorHandlers(dispatch, error);
-  }
-}
+async function getAllPlaces(userId: number, startDt: string, endDt: string) {
+  return fetch(`${url}place/selectWheretogo?userId=${userId}&startDt=${startDt}&endDt=${endDt}`).then((response) =>
+    response.json()
+  );
+};
+
+async function getWishedPlaces(accessToken: string ,userId: number) {
+  return fetch(`${url}wish/select?userId=${userId}`, {
+    // headers: {
+    //   Authorization: accessToken
+    // }
+  }).then((response) =>
+    response.json()
+  );
+};
+
+// async function getWishedPlaces(
+//   data: { accessToken: string; userId: number },
+//   success: (data: AxiosResponse) => void,
+//   dispatch: any,
+// ) {
+//   try {
+//     const result = await axios.get(`${url}wish/select?userId=${data.userId}`, {
+//       headers: {
+//         Authorization_Access: `${data.accessToken}`,
+//       },
+//     });
+//     success(result);
+//   } catch (error: AxiosError | any) {
+//     useErrorHandlers(dispatch, error);
+//   }
+// }
 
 async function getDetailPlace(
   data: { userId: number; placeId: number; startDt: string; endDt: string },
@@ -45,4 +61,4 @@ async function getDetailPlace(
   }
 }
 
-export { getAllPlaces, getWishedPlaces, getDetailPlace };
+export { getAllPlacesMain,getAllPlaces,getWishedPlaces, getDetailPlace };

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback,useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as Home } from '../../icons/home.svg';
 import { ReactComponent as Search } from '../../icons/search.svg';
@@ -14,10 +14,20 @@ import './Footer.scss';
 function Footer() {
   const location = useLocation();
 
+  // useEffect(() => {
+  //   const varUA = navigator.userAgent.toLowerCase();
+  //   if (varUA.indexOf('android') > -1) {
+  //     console.log('안드로이드')
+  //   } else if (varUA.indexOf("iphone") > -1 || varUA.indexOf("ipad") > -1 || varUA.indexOf("ipod") > -1) {
+  //     console.log('ios')
+  //   } else {
+  //     console.log('웹')
+  //   }
+  // }, [])
+
   const goToTopScreen = useCallback(() => {
     window.scroll({ top: 0, behavior: 'smooth' });
   }, []);
-
 
   return (
     <div className="footer">

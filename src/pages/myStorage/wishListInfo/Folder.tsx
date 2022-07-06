@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from "react-redux";
-import { AxiosResponse } from 'axios';
+import { useLocation} from 'react-router-dom';
+import { useSelector } from "react-redux";
 import { useQuery } from 'react-query'
+import { useDispatch } from 'react-redux';
 import WishedPlace from './wishedPlace/WishedPlace';
 import { getWishedPlaces } from '../../../common/api/getPlaces';
 import PopularPlace from '../historyInfo/popularPlace/PopularPlace'
+import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
 import { ReactComponent as FootPrintActive } from '../../../icons/foot-print-active.svg';
 import './Folder.scss';
 
@@ -31,7 +33,7 @@ function Folder() {
   // const [wishedPlace, setWishedPlace] = useState<Array<WishedPlaceType>>([]);
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const accessToken = useSelector((state: any) => state.token.token);
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const [popularPlace, setPopularPlace] = useState<Array<PopularPlaceType>>([
     {
       id: 1,
@@ -46,23 +48,30 @@ function Folder() {
       location: '강원도 속초시 조앙동',
     },
   ]);
+  const location: any = useLocation();
+  const { myStorageY } = useSelector((state: any) => state.scroll);
 
-
-  const { isLoading, error, data:wishedPlaces, isFetching ,refetch } = useQuery(
+  const { isLoading, data: wishedPlaces, refetch } = useQuery(
     'getWishedPlaces',
-    () => fetch(`http://61.97.186.174:8080/wish/select?userId=${userId}`).then((res) => res.json()),
+    () => getWishedPlaces(accessToken, userId),
     {
       cacheTime: 1000 * 60 * 5,
       staleTime: 1000 * 60 * 3,
-      onSuccess: (data: any) => {
-        console.log(isLoading)
-      },
+      onError: (error: any) => {
+        useErrorHandlers(dispatch, error)
+      }
     },
   );
 
-  // useEffect(()=>{
-  //   console.log(isFetching)
-  // },[isFetching])
+  useEffect(() => {
+    if (location.state?.prevPath.includes('/detail-place')) {
+        window.scrollTo(0, myStorageY);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [isLoading]);
+  
+
 
   // useEffect(() => {
   //   getWishedPlaces(

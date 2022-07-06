@@ -9,7 +9,7 @@ import RecommendedPlaces from './recommenedPlaces/RecommendedPlaces';
 import { tokenActions } from '../../redux/reducers/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
 import { bookingGetDataByMain } from '../../common/api/booking';
-import { getAllPlaces } from '../../common/api/getPlaces';
+import { getAllPlacesMain } from '../../common/api/getPlaces';
 import Dog from '../../icons/dog.svg';
 import Airplane from '../../icons/airplane.svg';
 import Footprint from '../../icons/footprint.svg';
@@ -66,7 +66,7 @@ function Home() {
   const scrollRef = useRef();
 
   useEffect(() => {
-    getAllPlaces(userId, startDt, endDt, (response: AxiosResponse) => {
+    getAllPlacesMain(userId, startDt, endDt, (response: AxiosResponse) => {
       setPlaces(response.data.data);
     }, dispatch);
 

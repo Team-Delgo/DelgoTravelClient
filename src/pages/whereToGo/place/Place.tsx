@@ -59,7 +59,7 @@ function Place({ place }: PlaceTypeProps) {
 
 
   const moveToDetailPage = useCallback(() => {
-    dispatch(scrollActions.scroll({ whereToGo: window.scrollY,detailPlace:0 }));
+    dispatch(scrollActions.scroll({ whereToGo: window.scrollY,detailPlace:0,myStorage:0 }));
     navigate(`/detail-place/${place.placeId}`, {
       state: {
         prevPath: location.pathname,
