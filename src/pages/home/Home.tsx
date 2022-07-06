@@ -97,15 +97,14 @@ function Home() {
   return (
     <>
       <div className="home-background">
-
         <HomeReservation lists={reservationPlaces}/>
-        <div className="reservation-places">
+        {/* <div className="reservation-places">
           {
             reservationPlaces?.length && reservationPlaces?.map((a) => (
               <ReservationInfo key={a.bookingId} />
             ))
           }
-        </div>
+        </div> */}
         {
           reservationPlaces?.length ?
 

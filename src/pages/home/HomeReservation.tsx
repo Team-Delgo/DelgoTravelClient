@@ -162,7 +162,7 @@ function HomeReservation(props: { lists: any[] }) {
       onTouchStart={mouseDownHandler}
       onTouchEnd={mouseLeaveHandler}
     >
-      <div className="homemodal-attach">{infoArray[page].location} 여행까지 D-{infoArray[page].date}</div>
+      <div className="homemodal-attach">{infoArray[page]?.location} 여행까지 D-{infoArray[page]?.date}</div>
       {reservationList}
     </div>
   );
