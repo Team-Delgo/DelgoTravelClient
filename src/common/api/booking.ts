@@ -9,18 +9,25 @@ async function bookingRequest(
     roomId: number;
     couponId: number;
     point: number;
-    peopleNum: number;
-    petNum: number;
+    peopleExtraNum: number;
+    petExtraNum: number;
     startDt: string;
     endDt: string;
-    // orderId:string;
-    // paymentKey:string;
+    orderId:string|null;
+    paymentKey:string|null;
   },
   success: (data: AxiosResponse) => void,
   dispatch: any,
 ) {
   const startDt = `${data.startDt.substring(0,4)}-${data.startDt.substring(4,6)}-${data.startDt.substring(6,10)}`
   const endDt = `${data.endDt.substring(0,4)}-${data.endDt.substring(4,6)}-${data.endDt.substring(6,10)}`
+  console.log(data.userId)
+  console.log(data.placeId)
+  console.log(data.roomId)
+  console.log(data.couponId)
+  console.log(data.point)
+  console.log(data.peopleExtraNum)
+  console.log(data.petExtraNum)
   try {
     const result = await axios.post(`${url}booking/request`, {
       userId: data.userId,
@@ -28,10 +35,12 @@ async function bookingRequest(
       roomId: data.roomId,
       couponId: data.couponId,
       point: data.point,
-      peopleNum: data.peopleNum,
-      petNum: data.petNum,
+      peopleExtraNum: data.peopleExtraNum,
+      petExtraNum: data.petExtraNum,
       startDt,
-      endDt
+      endDt,
+      orderId:data.orderId,
+      paymentKey:data.paymentKey
     });
     console.log(result)
     success(result);
