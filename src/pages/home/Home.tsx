@@ -39,7 +39,7 @@ interface RecommendedPlaceType {
 
 function Home() {
   const [places, setPlaces] = useState<Array<RecommendedPlaceType>>([]);
-  const [revervationPlaces, setRevervationPlaces] = useState<Array<any>>([]);
+  const [reservationPlaces, setReservationPlaces] = useState<Array<any>>([]);
   const [editorPlaces, setEditorPlaces] = useState<Array<EditorPlaceType>>([
     {
       id: 1,
@@ -71,7 +71,7 @@ function Home() {
     }, dispatch);
 
     bookingGetDataByMain({ accessToken, userId }, (response: AxiosResponse) => {
-      setRevervationPlaces(response.data.data)
+      setReservationPlaces(response.data.data)
       console.log(response.data.data)
     }, dispatch);
   }, []);
@@ -98,16 +98,16 @@ function Home() {
     <>
       <div className="home-background">
 
-        <HomeReservation />
+        <HomeReservation lists={reservationPlaces}/>
         <div className="reservation-places">
           {
-            revervationPlaces?.length && revervationPlaces?.map((a) => (
+            reservationPlaces?.length && reservationPlaces?.map((a) => (
               <ReservationInfo key={a.bookingId} />
             ))
           }
         </div>
         {
-          revervationPlaces?.length ?
+          reservationPlaces?.length ?
 
             <div className="travel-preparation">
               <div className="travel-preparation-text">여행준비 되셨나요?</div>
