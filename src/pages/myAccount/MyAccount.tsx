@@ -104,23 +104,34 @@ function MyAccount() {
       <div className="account-profile">
         <img className="account-profile-image" src={pet?.image} alt="dog" />
         <div className="account-profile-name-wrapper">
-          <div className="account-profile-name">
-            {pet?.name}
-            <img aria-hidden="true" src={RightArrow} onClick={()=>{navigation(MY_ACCOUNT_PATH.PETINFO)}} alt="detail" />
-          </div>
+          <div className="account-profile-name">{pet?.name}</div>
         </div>
         <div className="account-profile-info">
-          <div className="account-proifle-info-coupon" aria-hidden="true" onClick={navigateCouponPage}>
-            <p className="account-profile-info-column">쿠폰</p>
-            <p className="account-profile-info-value">{items.coupons}장</p>
+          <div>
+            <div className="account-profile-info-name">몽자</div>
+            <span className="account-profile-info-age">/ 5살</span>
+            <img
+              aria-hidden="true"
+              src={RightArrow}
+              onClick={() => {
+                navigation(MY_ACCOUNT_PATH.PETINFO);
+              }}
+              alt="detail"
+            />
           </div>
-          <div className="account-proifle-info-point">
-            <p className="account-profile-info-column">포인트</p>
-            <p className="account-profile-info-value">{items.points}</p>
-          </div>
-          <div className="account-proifle-info-review">
-            <p className="account-profile-info-column">리뷰</p>
-            <p className="account-profile-info-value">{items.reviews}건</p>
+          <div>
+            <div className="account-proifle-info-coupon" aria-hidden="true" onClick={navigateCouponPage}>
+              <p className="account-profile-info-column">쿠폰</p>
+              <p className="account-profile-info-value">{items.coupons}장</p>
+            </div>
+            <div className="account-proifle-info-point">
+              <p className="account-profile-info-column">포인트</p>
+              <p className="account-profile-info-value">{items.points}</p>
+            </div>
+            <div className="account-proifle-info-review">
+              <p className="account-profile-info-column">리뷰</p>
+              <p className="account-profile-info-value">{items.reviews}건</p>
+            </div>
           </div>
         </div>
       </div>
