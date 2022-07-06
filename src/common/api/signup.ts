@@ -13,7 +13,7 @@ interface SignUpData {
 
 async function emailCheck(email: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .get(`${url}/emailCheck`, {
+    .get(`${url}emailCheck`, {
       params: { email },
     })
     .then((data) => {
@@ -27,7 +27,7 @@ async function emailCheck(email: string, success: (data: AxiosResponse) => void,
 async function signup(info: SignUpData, success: (data: AxiosResponse) => void, dispatch: any) {
   const { nickname, email, password, phone, pet } = info;
   await axios
-    .post(`${url}/signup`, {
+    .post(`${url}signup`, {
       user: {
         name: nickname,
         email,
@@ -51,7 +51,7 @@ async function signup(info: SignUpData, success: (data: AxiosResponse) => void, 
 
 async function deleteUser(email: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .post(`${url}/deleteUser`, {
+    .post(`${url}deleteUser`, {
       user: {
         email,
       },
@@ -66,7 +66,7 @@ async function deleteUser(email: string, success: (data: AxiosResponse) => void,
 
 async function phoneSendMessage(phone: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .get(`${url}/phoneNoAuth`, {
+    .get(`${url}phoneNoAuth`, {
       params: {
         phoneNo: phone,
       },
@@ -81,7 +81,7 @@ async function phoneSendMessage(phone: string, success: (data: AxiosResponse) =>
 
 async function phoneSendMessageForFind(phone: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .get(`${url}/phoneNoCheck`, {
+    .get(`${url}phoneNoCheck`, {
       params: {
         phoneNo: phone,
       },
@@ -101,7 +101,7 @@ async function phoneCheckNumber(
 ) {
   const { number, smsId } = data;
   await axios
-    .get(`${url}/authRandNum`, {
+    .get(`${url}authRandNum`, {
       params: {
         smsId,
         enterNum: number,
@@ -117,7 +117,7 @@ async function phoneCheckNumber(
 
 async function petImageUpload(formdata: FormData, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .post(`${url}/photo/upload/petProfile`, formdata)
+    .post(`${url}photo/upload/petProfile`, formdata)
     .then((data) => {
       success(data);
     })

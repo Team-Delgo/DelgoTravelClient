@@ -34,7 +34,7 @@ async function tokenRefresh(data: { refreshToken: string }, success: (data: Axio
 
 async function emailAuth(email: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .get(`${url}/emailAuth`, {
+    .get(`${url}emailAuth`, {
       params: { email },
     })
     .then((data) => {
@@ -47,7 +47,7 @@ async function emailAuth(email: string, success: (data: AxiosResponse) => void, 
 
 async function changePassword(email: string, password: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .post(`${url}/changePassword`, {
+    .post(`${url}changePassword`, {
       user: {
         email,
         password,

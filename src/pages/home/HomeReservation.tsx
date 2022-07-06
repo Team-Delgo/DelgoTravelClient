@@ -1,7 +1,18 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './HomeReservation.scss';
 
-function HomeReservation() {
+interface ReservationInfoType  {
+  id: number
+  image:string
+  placeName:string
+  deadLine:number 
+  date:string 
+  checkInTime:string 
+  checkOutTime:string 
+}
+
+function HomeReservation(props:{lists:ReservationInfoType[]}) {
+  const {lists} = props;
   const scrollRef = useRef<any>(null);
   const [position, setPosition] = useState(0);
   const [startPosition, setStartPosition] = useState(0);
