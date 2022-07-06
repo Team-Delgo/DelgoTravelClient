@@ -1,12 +1,86 @@
-.homemodal{
+.homemodal {
   display: flex;
   overflow-x: scroll;
-  &-item{
-    &-card{
+  &-item {
+    &-image {
+      width: 46%;
+      height: 90%;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    &-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      height: 100%;
+      width: 46%;
+    }
+    &-card {
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
       width: 90vw;
       margin: 5vw;
-      height: 300px;
+      margin-top: 60px;
+      height: 216px;
       background-color: white;
+      &-title {
+        display: flex;
+        justify-content: center;
+        &-place {
+          font-size: 16px;
+          font-weight: 700;
+          color: #3e382f;
+          margin-right: 10px;
+        }
+      }
+      &-check {
+        font-size: 12px;
+        line-height: 18px;
+        font-weight: 700;
+        color: #3e382f;
+      }
+      &-date{
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 18px;
+      }
+      &-time{
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 18px;
+      }
+      &-checkinout{
+        display: flex;
+        justify-content: space-evenly;
+      }
+      &-first{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      &-second{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      &-button{
+        display: flex;
+        margin-top: 30px;
+        font-size: 12px;
+        color: #3e382f;
+        font-weight: 500;
+      }
+      &-location{
+        margin-right: 10px;
+      }
     }
+  }
+  &-attach {
+    position: fixed;
+    margin: 21px;
+    font-size: 18px;
+    font-weight: 700;
   }
 }
