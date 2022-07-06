@@ -189,7 +189,8 @@ function DetailPlace() {
   }, []);
 
   const moveToPrevPage = useCallback(() => {
-    if (location.state.prevPath === '/wish-list') navigate('/wish-list');
+    if (location.state.prevPath === '/my-storage') navigate('/my-storage');
+    else if (location.state.prevPath === '/') navigate('/');
     else
       navigate('/where-to-go', {
         state: {
