@@ -6,7 +6,7 @@ import { ReactComponent as Kakao } from '../../icons/kakao.svg';
 import { ReactComponent as Naver } from '../../icons/naver.svg';
 import { ReactComponent as Apple } from '../../icons/apple.svg';
 import { SIGN_IN_PATH, SIGN_UP_PATH } from '../../constants/path.const';
-import { tokenActions } from '../../redux/reducers/tokenSlice';
+import { tokenActions } from '../../redux/slice/tokenSlice';
 import { KAKAO, NAVER } from '../../constants/url.cosnt'
 
 

@@ -6,7 +6,7 @@ import { AxiosResponse } from 'axios';
 import AlertConfirm from '../../../../common/dialog/AlertConfirm';
 import Heart from '../../../../common/components/Heart'
 import { wishDelete } from '../../../../common/api/wish'
-import { scrollActions } from '../../../../redux/reducers/scrollSlice';
+import { scrollActions } from '../../../../redux/slice/scrollSlice';
 import './WishedPlace.scss';
 
 interface WishedPlaceTypeProps {

@@ -4,11 +4,13 @@ import { useLocation,useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { wishInsert, wishDelete } from '../../../common/api/wish'
 import Heart from '../../../common/components/Heart'
-import { scrollActions } from '../../../redux/reducers/scrollSlice';
+import { scrollActions } from '../../../redux/slice/scrollSlice';
+import { areaActions } from '../../../redux/slice/areaSlice';
 import './Place.scss'
 
 interface PlaceTypeProps {
   place: PlaceType
+  areaTerm:string
 }
 
 interface PlaceType {
@@ -23,7 +25,7 @@ interface PlaceType {
   wishId: number
 }
 
-function Place({ place }: PlaceTypeProps) {
+function Place({ place,areaTerm }: PlaceTypeProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const accessToken = useSelector((state: any) => state.token.token);
   const userId = useSelector((state: any) => state.persist.user.user.id)
@@ -59,13 +61,14 @@ function Place({ place }: PlaceTypeProps) {
 
 
   const moveToDetailPage = useCallback(() => {
-    dispatch(scrollActions.scroll({ whereToGo: window.scrollY,detailPlace:0,myStorage:0 }));
+    dispatch(scrollActions.scroll({ whereToGo: window.scrollY, detailPlace: 0, myStorage: 0 }));
+    dispatch(areaActions.setArea( {areaName: areaTerm} ));
     navigate(`/detail-place/${place.placeId}`, {
       state: {
         prevPath: location.pathname,
       },
     });
-  }, []);
+  }, [areaTerm]);
 
   return (
     <div className="place" aria-hidden="true">

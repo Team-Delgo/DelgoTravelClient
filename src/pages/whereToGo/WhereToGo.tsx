@@ -10,7 +10,7 @@ import { useQuery } from 'react-query'
 import Skeleton , { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { getAllPlaces } from '../../common/api/getPlaces';
-import { tokenActions } from '../../redux/reducers/tokenSlice';
+import { tokenActions } from '../../redux/slice/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import Footer from '../../common/components/Footer'
@@ -50,11 +50,12 @@ function AllPlacesSkeletons() {
   return AllPlacesSkeletonsArray;
 }
 
-const regionName = ['제주','서울/경기','전라','전라','광주','대구']
+const areaName = ['제주','서울/경기','전라','전라','광주','대구']
 
 
 function WhereToGo() {
-  const [areaTerm, setAreaTerm] = useState('');
+  const whereToGoAreaName = useSelector((state: any) => state.area.whereToGoArea);
+  const [areaTerm, setAreaTerm] = useState("");
   const [regionSelectionModal, setRegionSelectionModal] = useState(false);
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const accessToken = useSelector((state: any) => state.token.token);
@@ -86,6 +87,7 @@ function WhereToGo() {
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
       window.scrollTo(0, whereToGoScrollY);
+      setAreaTerm(whereToGoAreaName)
     } else {
       window.scrollTo(0, 0);
     }
@@ -135,7 +137,7 @@ function WhereToGo() {
           </div>
         ) : (
           <>
-            {areaTerm === '' ? null : regionName.includes(areaTerm) ? (
+            {areaTerm === '' ? null : areaName.includes(areaTerm) ? (
               <header className="region-name">{areaTerm}로 델고가요</header>
             ) : (
               <header className="region-name">{areaTerm}으로 델고가요</header>
@@ -157,7 +159,7 @@ function WhereToGo() {
             ? allPlacesSkeletons
             : places.data.map((place: PlaceType) => {
                 if (place.address.includes(areaTerm)) {
-                  return <Place key={place.placeId} place={place} />;
+                  return <Place key={place.placeId} place={place}  areaTerm={areaTerm}/>;
                 }
               })}
         </div>

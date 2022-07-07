@@ -40,7 +40,7 @@ import ReviewWritingPage from './pages/riviewWriting/RiviewWriting';
 import KakaoRedirectHandler from './common/socialLogion/KakaoRedirectHandler';
 import NaverRedirectHandler from './common/socialLogion/NaverRedirectHandler';
 import AlertConfirmOne from './common/dialog/AlertConfirmOne';
-import { errorActions } from './redux/reducers/errorSlice';
+import { errorActions } from './redux/slice/errorSlice';
 import ReservationConfirmPage from './pages/reservation/reservationConfirmPage/ReservationConfirmPage';
 import Coupon from './pages/myAccount/Coupon';
 import ReservationWaitingPage from './pages/reservation/reservationWaitingPage/ReservationWaitingPage';

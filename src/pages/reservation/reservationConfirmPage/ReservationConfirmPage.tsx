@@ -6,7 +6,7 @@ import { ReactComponent as Exit } from '../../../icons/exit.svg';
 import RightArrow from "../../../icons/right-arrow.svg";
 import RightArrowBlack from "../../../icons/right-arrow-black.svg";
 import BottomButton from "../../../common/components/BottomButton";
-import { reservationActions } from '../../../redux/reducers/reservationSlice';
+import { reservationActions } from '../../../redux/slice/reservationSlice';
 import {bookingGetData} from '../../../common/api/booking'
 import ReservationCancleModal from "./modal/ReservationCancleModal";
 import './ReservationConfirmPage.scss';

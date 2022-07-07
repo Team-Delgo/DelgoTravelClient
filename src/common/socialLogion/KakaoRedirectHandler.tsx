@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import qs from "qs";
 import {KAKAO} from '../../constants/url.cosnt'
-import { tokenActions } from '../../redux/reducers/tokenSlice';
+import { tokenActions } from '../../redux/slice/tokenSlice';
 
 
 declare global {
