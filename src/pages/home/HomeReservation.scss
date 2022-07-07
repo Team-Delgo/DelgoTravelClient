@@ -22,7 +22,7 @@
       justify-content: space-evenly;
       width: 90vw;
       margin: 5vw;
-      margin-top: 60px;
+      margin-top: 0px;
       height: 216px;
       background-color: white;
       &-title {
@@ -41,38 +41,38 @@
         font-weight: 700;
         color: #3e382f;
       }
-      &-date{
+      &-date {
         font-size: 12px;
         font-weight: 500;
         line-height: 18px;
       }
-      &-time{
+      &-time {
         font-size: 12px;
         font-weight: 500;
         line-height: 18px;
       }
-      &-checkinout{
+      &-checkinout {
         display: flex;
         justify-content: space-evenly;
       }
-      &-first{
+      &-first {
         display: flex;
         flex-direction: column;
         align-items: center;
       }
-      &-second{
+      &-second {
         display: flex;
         flex-direction: column;
         align-items: center;
       }
-      &-button{
+      &-button {
         display: flex;
         margin-top: 30px;
         font-size: 12px;
         color: #3e382f;
         font-weight: 500;
       }
-      &-location{
+      &-location {
         margin-right: 10px;
       }
     }

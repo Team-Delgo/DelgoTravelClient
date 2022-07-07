@@ -17,6 +17,7 @@ import Book from '../../icons/book.svg';
 import Emergency from '../../icons/emergency.svg'
 import './Home.scss';
 import HomeReservation from './HomeReservation';
+import Delgo from '../../icons/delgo.svg';
 
 
 interface EditorPlaceType {
@@ -39,6 +40,7 @@ interface RecommendedPlaceType {
 
 function Home() {
   const [places, setPlaces] = useState<Array<RecommendedPlaceType>>([]);
+  const [page, setPage] = useState(0);
   const [reservationPlaces, setReservationPlaces] = useState<Array<any>>([]);
   const [editorPlaces, setEditorPlaces] = useState<Array<EditorPlaceType>>([
     {
@@ -97,7 +99,9 @@ function Home() {
   return (
     <>
       <div className="home-background">
-        <HomeReservation lists={reservationPlaces}/>
+        <img src={Delgo} alt="delgo" className='delgo' />
+        <div className='home-reservation-info'>{reservationPlaces[page].place.address.slice(0, 2)} 여행까지 D-1</div>
+        <HomeReservation lists={reservationPlaces} pageChange={(number) => { setPage(number); }} />
         {/* <div className="reservation-places">
           {
             reservationPlaces?.length && reservationPlaces?.map((a) => (
