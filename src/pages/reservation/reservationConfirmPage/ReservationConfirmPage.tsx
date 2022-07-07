@@ -41,6 +41,7 @@ function ReservationConfirmPage() {
   const { bookingId } = useParams();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (bookingId !== undefined) {
       bookingGetData(
         { bookingId, accessToken },

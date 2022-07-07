@@ -100,7 +100,7 @@ function Home() {
     <>
       <div className="home-background">
         <img src={Delgo} alt="delgo" className='delgo' />
-        <div className='home-reservation-info'>{reservationPlaces[page].place.address.slice(0, 2)} 여행까지 D-1</div>
+        <div className='home-reservation-info'>{reservationPlaces[page]?.place.address.slice(0, 2)} 여행까지 D-1</div>
         <HomeReservation lists={reservationPlaces} pageChange={(number) => { setPage(number); }} />
         {/* <div className="reservation-places">
           {
