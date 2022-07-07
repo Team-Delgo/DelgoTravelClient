@@ -13,8 +13,8 @@ import Heart from '../../common/components/Heart';
 import { getDetailPlace } from '../../common/api/getPlaces';
 import { wishInsert, wishDelete } from '../../common/api/wish';
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg';
-import { currentPlaceActions } from '../../redux/reducers/placeSlice';
-import { scrollActions } from '../../redux/reducers/scrollSlice';
+import { currentPlaceActions } from '../../redux/slice/placeSlice';
+import { scrollActions } from '../../redux/slice/scrollSlice';
 import './DetailPlace.scss';
 import Calender from '../../common/utils/Calender';
 

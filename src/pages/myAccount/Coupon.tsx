@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ReactComponent as Arrow } from '../../icons/left-arrow.svg';
 import './Coupon.scss';
-import { tokenActions } from '../../redux/reducers/tokenSlice';
+import { tokenActions } from '../../redux/slice/tokenSlice';
 import { url } from '../../constants/url.cosnt';
 import { tokenRefresh } from '../../common/api/login';
 import { ReactComponent as FootPrintActive } from "../../icons/foot-print-active.svg";

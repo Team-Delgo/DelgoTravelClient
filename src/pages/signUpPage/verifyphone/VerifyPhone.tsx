@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { errorActions } from '../../../redux/reducers/errorSlice';
+import { errorActions } from '../../../redux/slice/errorSlice';
 import ToastMessage from '../../../common/dialog/ToastMessage';
 import './VerifyPhone.scss';
 import Timer from './Timer';

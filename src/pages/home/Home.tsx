@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { useDispatch } from 'react-redux';
-import ReservationInfo from './reservationInfo/ReservationInfo';
 import Footer from '../../common/components/Footer';
 import RecommendedPlaces from './recommenedPlaces/RecommendedPlaces';
-import { tokenActions } from '../../redux/reducers/tokenSlice';
+import { tokenActions } from '../../redux/slice/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
 import { bookingGetDataByMain } from '../../common/api/booking';
 import { getAllPlacesMain } from '../../common/api/getPlaces';
@@ -65,7 +64,7 @@ function Home() {
 
   const startDt = `${date.start.substring(0, 4)}-${date.start.substring(4, 6)}-${date.start.substring(6, 10)}`
   const endDt = `${date.end.substring(0, 4)}-${date.end.substring(4, 6)}-${date.end.substring(6, 10)}`
-  const scrollRef = useRef();
+
 
   useEffect(() => {
     getAllPlacesMain(userId, startDt, endDt, (response: AxiosResponse) => {
@@ -80,7 +79,7 @@ function Home() {
 
   useEffect(() => {
     tokenRefresh({ refreshToken }, (response: AxiosResponse) => {
-      const { code, codeMsg } = response.data;
+      const { code } = response.data;
 
       if (code === 200) {
         const accessToken = response.headers.authorization_access;
@@ -99,45 +98,49 @@ function Home() {
   return (
     <>
       <div className="home-background">
-        <img src={Delgo} alt="delgo" className='delgo' />
-        <div className='home-reservation-info'>{reservationPlaces[page]?.place.address.slice(0, 2)} 여행까지 D-1</div>
-        <HomeReservation lists={reservationPlaces} pageChange={(number) => { setPage(number); }} />
-        {/* <div className="reservation-places">
-          {
-            reservationPlaces?.length && reservationPlaces?.map((a) => (
-              <ReservationInfo key={a.bookingId} />
-            ))
-          }
-        </div> */}
-        {
-          reservationPlaces?.length ?
-
-            <div className="travel-preparation">
-              <div className="travel-preparation-text">여행준비 되셨나요?</div>
-              <div className="travel-preparation-list">
-                <div>
-                  <img src={Emergency} alt="emergency" />
-                  &nbsp;응급상황
-                </div>
-                <div>
-                  <img src={Dog} alt="dog" />
-                  &nbsp;여행펫티켓
-                </div>
-                <div>
-                  <img src={Airplane} alt="airplane" />
-                  &nbsp;비행기탑승
-                </div>
-                <div>
-                  <img src={Footprint} alt="footprint" />
-                  &nbsp;필수준비물
-                </div>
-                <div>
-                  <img src={Book} alt="book" />
-                  &nbsp;기초상식
-                </div>
+        <img src={Delgo} alt="delgo" className="delgo" />
+        {reservationPlaces?.length && (
+          <>
+            <div className="home-reservation-info">
+              {reservationPlaces[page]?.place.address.slice(0, 2)} 여행까지 D-1
+            </div>
+            <HomeReservation
+              lists={reservationPlaces}
+              pageChange={(number) => {
+                setPage(number);
+              }}
+            />
+          </>
+        )}
+        {reservationPlaces?.length ? (
+          <div className="travel-preparation">
+            <div className="travel-preparation-text">여행준비 되셨나요?</div>
+            <div className="travel-preparation-list">
+              <div>
+                <img src={Emergency} alt="emergency" />
+                &nbsp;응급상황
               </div>
-            </div> : <div />
-        }
+              <div>
+                <img src={Dog} alt="dog" />
+                &nbsp;여행펫티켓
+              </div>
+              <div>
+                <img src={Airplane} alt="airplane" />
+                &nbsp;비행기탑승
+              </div>
+              <div>
+                <img src={Footprint} alt="footprint" />
+                &nbsp;필수준비물
+              </div>
+              <div>
+                <img src={Book} alt="book" />
+                &nbsp;기초상식
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div />
+        )}
         <div className="main-header-text">델고 에디터노트</div>
         <div className="editor-container">
           {editorPlaces.map((place) => (

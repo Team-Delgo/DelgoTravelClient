@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AxiosResponse } from 'axios';
-import { tokenActions } from '../../../redux/reducers/tokenSlice';
+import { tokenActions } from '../../../redux/slice/tokenSlice';
 import { tokenRefresh } from '../../../common/api/login';
 import PopularPlace from './popularPlace/PopularPlace';
 import TravelHisotryPlace from './travelHistoryPlace/TravelHistoryPlace';
