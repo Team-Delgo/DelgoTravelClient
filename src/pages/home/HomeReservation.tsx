@@ -4,27 +4,32 @@ import RightArrow from '../../icons/right-arrow-black.svg';
 import Location from '../../icons/location.svg';
 import Call from '../../icons/call.svg';
 
-interface Info{
-  location:string;
-  date:number;
+interface Info {
+  location: string;
+  date: number;
 }
 
-function HomeReservation(props: { lists: any[] }) {
-  const { lists } = props;
+function HomeReservation(props: { lists: any[], pageChange: (page: number) => void }) {
+  const { lists, pageChange } = props;
   const scrollRef = useRef<any>(null);
   const [position, setPosition] = useState(0);
   const [startPosition, setStartPosition] = useState(0);
   const [page, setPage] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
   // const [infoArray, setInfoArray] = useState<Info[]>([]);
-  const infoArray = lists.map((list)=>{
+  const infoArray = lists.map((list) => {
     const today = new Date();
     const bookDate = new Date(list.startDt);
     return {
-      location:list.place.address.slice(0,2),
+      location: list.place.address.slice(0, 2),
       date: 1,
     };
   })
+
+  useEffect(() => {
+    pageChange(page);
+    console.log(page);
+  }, [page]);
 
   // console.log(lists);
   // useEffect(() => {
@@ -53,13 +58,15 @@ function HomeReservation(props: { lists: any[] }) {
         });
         setPosition(startPosition - width);
         setPage(Math.floor(el.scrollLeft / width));
+        console.log(Math.floor(el.scrollLeft / width));
       } else if (position > startPosition) {
         el.scrollTo({
           left: (Math.floor(el.scrollLeft / width) + 1) * width,
           behavior: 'smooth',
         });
         setPosition(startPosition + width);
-        setPage(Math.floor(el.scrollLeft / width));
+        console.log(Math.floor(el.scrollLeft / width));
+        setPage(Math.floor(el.scrollLeft / width) + 1);
       } else {
         el.scrollTo({
           left: startPosition,
@@ -162,7 +169,6 @@ function HomeReservation(props: { lists: any[] }) {
       onTouchStart={mouseDownHandler}
       onTouchEnd={mouseLeaveHandler}
     >
-      <div className="homemodal-attach">{infoArray[page]?.location} 여행까지 D-{infoArray[page]?.date}</div>
       {reservationList}
     </div>
   );
