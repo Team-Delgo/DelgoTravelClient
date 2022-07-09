@@ -54,7 +54,7 @@ const areaName = ['제주','서울/경기','전라','전라','광주','대구']
 
 
 function WhereToGo() {
-  const whereToGoAreaName = useSelector((state: any) => state.area.whereToGoArea);
+  const whereToGoAreaName = useSelector((state: any) => state.persist.area.whereToGo)
   const [areaTerm, setAreaTerm] = useState("");
   const [regionSelectionModal, setRegionSelectionModal] = useState(false);
   const userId = useSelector((state: any) => state.persist.user.user.id);
@@ -62,7 +62,7 @@ function WhereToGo() {
   const refreshToken = localStorage.getItem('refreshToken') || '';
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
   const { date, dateString } = useSelector((state: any) => state.date);
-  const { whereToGoScrollY } = useSelector((state: any) => state.scroll);
+  const { whereToGoScrollY } = useSelector((state: any) => state.persist.scroll);
   const sequence = dateString.length ? 2 : 0;
   const location: any = useLocation();
   const allPlacesSkeletons = useMemo(()=>AllPlacesSkeletons(),[])
@@ -70,24 +70,26 @@ function WhereToGo() {
   const endDt = `${date.end.substring(0,4)}-${date.end.substring(4,6)}-${date.end.substring(6,10)}`
   const dispatch = useDispatch()
 
-  const { isLoading, error, data: places, isFetching, refetch } = useQuery(
+  const { isLoading, data: places, refetch } = useQuery(
     'getAllPlaces',
     () => getAllPlaces(userId,startDt,endDt),
     {
       cacheTime: 1000 * 60 * 5,
       staleTime: 1000 * 60 * 3,
-      refetchInterval: false, // 데이터 변경시 fetch하는시간 // default:false : db 데이터값 변경하면 즉시 변경
+      refetchInterval: false, 
       onError: (error: any) => {
         useErrorHandlers(dispatch, error)
       }
     },
   );
-  useEffect(() => { refetch() }, [date])
+  useEffect(() => {
+    refetch();
+  }, [date]);
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
       window.scrollTo(0, whereToGoScrollY);
-      setAreaTerm(whereToGoAreaName)
+        setAreaTerm(whereToGoAreaName);
     } else {
       window.scrollTo(0, 0);
     }
@@ -137,7 +139,7 @@ function WhereToGo() {
           </div>
         ) : (
           <>
-            {areaTerm === '' ? null : areaName.includes(areaTerm) ? (
+            {areaTerm === "" ? null : areaName.includes(areaTerm) ? (
               <header className="region-name">{areaTerm}로 델고가요</header>
             ) : (
               <header className="region-name">{areaTerm}으로 델고가요</header>

@@ -16,8 +16,6 @@ import './ReservationConfirmPage.scss';
 
 function ReservationConfirmPage() {
   const navigate = useNavigate();
-  const {user} = useSelector((state: any) => state.persist.user);
-  const { room, place,date } = useSelector((state: any) => state.persist.reservation);
   const accessToken = useSelector((state: any) => state.token.token);
   const dispatch = useDispatch();
   const [reservationCancleModal, setReservationCancleModal] = useState(false);
@@ -30,13 +28,23 @@ function ReservationConfirmPage() {
     endDt: "",
     finalPrice: "",
     originalPrice: "",
-    placeAddress: "",
-    placeName: "",
     point: 0,
+    registDt: "",
     roomName: "",
     startDt: "",
     userName: "",
-    userPhoneNo: ""
+    userPhoneNo: "",
+    place:{
+      address: "",
+      checkin: "",
+      checkout: "",
+      isBooking: 0,
+      lowestPrice: null,
+      mainPhotoUrl: "",
+      name: "",
+      placeId: 0,
+      wishId: 0
+    }
   })
   const { bookingId } = useParams();
 
@@ -99,11 +107,11 @@ function ReservationConfirmPage() {
         </div>
         <div className="placeinfo">
           <div className="placeinfo-wrapper">
-            <div className="placeinfo-name">{reservationData.placeName}</div>
+            <div className="placeinfo-name">{reservationData.place.name}</div>
             <img src={RightArrow} alt="detail" />
           </div>
-          <p className="placeinfo-address">{reservationData.placeAddress}</p>
-          {/* <p className="placeinfo-room">502호 [온수풀, 더블베드타입]</p> */}
+          <p className="placeinfo-address">{reservationData.place.address}</p>
+          <p className="placeinfo-room">{reservationData.roomName}</p>
         </div>
         <div className="checkin-checkout">  
           <div className="checkin-checkout-date">
@@ -160,7 +168,7 @@ function ReservationConfirmPage() {
           <div className="payment-methods-price">신용카드</div>
         </div>
         <div className="view-policy">
-          {place.name} 정책보기
+        {reservationData.place.name}정책보기
           <img src={RightArrowBlack} alt="detail" />
         </div>
         <div className="cancel-reservation">

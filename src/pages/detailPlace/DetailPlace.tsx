@@ -74,8 +74,9 @@ function DetailPlace() {
   const location: any = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { whereToGoScrollY,detailPlaceScrollY,myStorageY } = useSelector((state: any) => state.scroll);
+  const { whereToGoScrollY,detailPlaceScrollY,myStorageY } = useSelector((state: any) => state.persist.scroll);
   const roomTypeSkeletons = useMemo(()=>RoomTypeSkeletons(),[])
+  const detailPlacePrevPath = useSelector((state: any) => state.persist.prevPath.detailPlace);
 
   const [reviews, setReviews] = useState<Array<any>>([
     {
@@ -118,7 +119,7 @@ function DetailPlace() {
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
-      if(roomTypes.length>0){
+      if (roomTypes.length > 0) {
         window.scroll(0, detailPlaceScrollY);
       }
     } else {
@@ -188,14 +189,20 @@ function DetailPlace() {
   }, []);
 
   const moveToPrevPage = useCallback(() => {
-    if (location.state.prevPath === '/my-storage') navigate('/my-storage', {
-      state: {
-        prevPath: location.pathname,
-      },
-    })
-    else if (location.state.prevPath === '/') navigate("/");
-    else
+    if (detailPlacePrevPath === '/my-storage')
+      navigate('/my-storage', {
+        state: {
+          prevPath: location.pathname,
+        },
+      });
+    else if (detailPlacePrevPath === '/where-to-go')
       navigate('/where-to-go', {
+        state: {
+          prevPath: location.pathname,
+        },
+      });
+    else
+      navigate('/', {
         state: {
           prevPath: location.pathname,
         },

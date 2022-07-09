@@ -11,12 +11,16 @@ import placeSlice from './slice/placeSlice';
 import roomSlice from './slice/roomSlice';
 import scrollSlice from './slice/scrollSlice';
 import areaSlice from './slice/areaSlice';
+import prevPathSlice from './slice/prevPathSlice';
 
 const reducers = combineReducers({
   user: userSlice,
   currentPlace:placeSlice,
   currentRoom:roomSlice,
   reservation: reservationSlice,
+  area:areaSlice,
+  scroll:scrollSlice,
+  prevPath:prevPathSlice
 });
 
 const persistConfig = {
@@ -27,7 +31,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = configureStore({
-  reducer: { persist: persistedReducer, token: tokenSlice, error: errorSlice, date: dateSlice,scroll:scrollSlice,area:areaSlice},
+  reducer: { persist: persistedReducer, token: tokenSlice, error: errorSlice, date: dateSlice},
   devTools: process.env.NODE_ENV !== 'production',
 });
 
