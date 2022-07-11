@@ -63,7 +63,6 @@ function WhereToGo() {
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
   const { date, dateString } = useSelector((state: any) => state.date);
   const { whereToGoScrollY } = useSelector((state: any) => state.persist.scroll);
-  const sequence = dateString.length ? 2 : 0;
   const location: any = useLocation();
   const allPlacesSkeletons = useMemo(()=>AllPlacesSkeletons(),[])
   const startDt =`${date.start.substring(0,4)}-${date.start.substring(4,6)}-${date.start.substring(6,10)}`
