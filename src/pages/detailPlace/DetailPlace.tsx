@@ -314,7 +314,7 @@ function DetailPlace() {
                 state={{ reviews }}
                 key={detailPlace?.data.place.placeId}
               >
-                <div className="detail-place-review-header-more">더보기</div>
+                <div className="detail-place-review-header-more">전체보기</div>
               </Link>
             </div>
           </header>
