@@ -1,3 +1,5 @@
+/* eslint-disable array-callback-return */
+
 import React,{useEffect,useState,useCallback} from 'react';
 import { useLocation,Link,useParams,useNavigate} from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -9,18 +11,39 @@ import './ReviewsPage.scss';
 
 function ReviewsPage() {
   const [reviews, setReviews] = useState<Array<any>>([]);
+  const [checked, setChecked] = useState(false);
+  const [imageReviewsCount,setImageReviewsCount] = useState(0)
   const location: any = useLocation();
   const { placeId } = useParams();
-  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0);
     setReviews(location.state.reviews);
+
+    const reviewImages = location.state.reviews.filter(function(review:any) {
+      if(review.reviewImages.length >0)  {
+        return true;
+      }
+    })
+    setImageReviewsCount(reviewImages.length)
   }, []);
 
-  // const moveToPrevPage = useCallback(() => {
-  //   navigate(-1)
-  // }, []);
+
+  const showImageReviews = useCallback(() => {
+    if (checked === true) {
+      setChecked(!checked);
+      setReviews(location.state.reviews);
+    } else {
+      setChecked(!checked);
+      const imageReviews: React.SetStateAction<string[]> = [];
+      reviews.map((review: any)=>{
+        if (review.reviewImages.length > 0) {
+          imageReviews.push(review);
+        }
+      });
+      setReviews(imageReviews);
+    }
+  },[checked,reviews])
 
   return (
     <>
@@ -36,8 +59,8 @@ function ReviewsPage() {
                 <ReviewStar className="detail-place-review-page-header-review-star" />
                 &nbsp;&nbsp;4.5점
               </div>
-              <input type="checkbox" name="xxx" value="yyy" />
-              <span className="detail-place-review-page-header-image-review">사진 리뷰만 보기(4개)</span>
+              <input type="checkbox"  checked={checked}  name="xxx" value="yyy" onClick={showImageReviews}/>
+              <span className="detail-place-review-page-header-image-review"> 사진 리뷰만 보기({imageReviewsCount}개)</span>
             </header>
             {reviews.map((review) => (
               <Reviews key={review.id} review={review} />

@@ -105,7 +105,7 @@ function MyAccount() {
         <img className="account-profile-image" src={pet?.image} alt="dog" />
         <div className="account-profile-info">
           <div className='account-profile-info-first'>
-            <div className="account-profile-info-name">몽자</div>
+            <div className="account-profile-info-name">{pet.name}</div>
             <span className="account-profile-info-age">/ 5살</span>
             <img
               aria-hidden="true"

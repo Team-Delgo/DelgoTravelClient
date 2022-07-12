@@ -16,8 +16,6 @@ function MyStorage() {
   const dispatch = useDispatch();
   const accessToken = useSelector((state: any) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
-  const location: any = useLocation();
-  const { myStorageY } = useSelector((state: any) => state.scroll);
 
   // useEffect(() => {
   //   if (location.state?.prevPath.includes('/detail-place')) {

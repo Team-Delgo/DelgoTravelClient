@@ -1,44 +1,55 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from "react-redux";
-import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { useDispatch } from 'react-redux';
+import { useQuery } from 'react-query'
 import Footer from '../../common/components/Footer';
 import RecommendedPlaces from './recommenedPlaces/RecommendedPlaces';
 import { tokenActions } from '../../redux/slice/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
 import { bookingGetDataByMain } from '../../common/api/booking';
-import { getAllPlacesMain } from '../../common/api/getPlaces';
+import { getAllPlaces } from '../../common/api/getPlaces';
+import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import Dog from '../../icons/dog.svg';
 import Airplane from '../../icons/airplane.svg';
 import Footprint from '../../icons/footprint.svg';
 import Book from '../../icons/book.svg';
-import Emergency from '../../icons/emergency.svg'
+import Emergency from '../../icons/emergency.svg';
 import './Home.scss';
 import HomeReservation from './HomeReservation';
 import Delgo from '../../icons/delgo.svg';
 
-
 interface EditorPlaceType {
-  id: number
-  image: string
-  subtext: string
-  name: string
+  id: number;
+  image: string;
+  subtext: string;
+  name: string;
 }
 
 interface RecommendedPlaceType {
+  address: string;
+  lowestPrice: string;
+  mainPhotoUrl: string;
+  name: string;
+  placeId: number;
+  registDt: string;
+  wishId: number;
+}
+
+interface PlaceType {
   address: string
+  checkin: string
+  checkout: string
+  isBooking: number
   lowestPrice: string
   mainPhotoUrl: string
   name: string
   placeId: number
-  registDt: string
   wishId: number
 }
 
-
 function Home() {
-  const [places, setPlaces] = useState<Array<RecommendedPlaceType>>([]);
   const [page, setPage] = useState(0);
   const [reservationPlaces, setReservationPlaces] = useState<Array<any>>([]);
   const [editorPlaces, setEditorPlaces] = useState<Array<EditorPlaceType>>([
@@ -53,47 +64,68 @@ function Home() {
       image: `${process.env.PUBLIC_URL}/assets/images/editorThumnail.png`,
       subtext: '바다가 보이는 여름숙소',
       name: '숙초 코코네집',
-    }
+    },
   ]);
   const navigation = useNavigate();
   const dispatch = useDispatch();
   const refreshToken = localStorage.getItem('refreshToken') || '';
   const accessToken = useSelector((state: any) => state.token.token);
-  const userId = useSelector((state: any) => state.persist.user.user.id)
-  const { date, dateString } = useSelector((state: any) => state.date);
+  const userId = useSelector((state: any) => state.persist.user.user.id);
+  const { date } = useSelector((state: any) => state.date);
+  const startDt = `${date.start.substring(0, 4)}-${date.start.substring(4, 6)}-${date.start.substring(6, 10)}`;
+  const endDt = `${date.end.substring(0, 4)}-${date.end.substring(4, 6)}-${date.end.substring(6, 10)}`;
+  const location: any = useLocation();
+  const { homeY } = useSelector((state: any) => state.persist.scroll);
 
-  const startDt = `${date.start.substring(0, 4)}-${date.start.substring(4, 6)}-${date.start.substring(6, 10)}`
-  const endDt = `${date.end.substring(0, 4)}-${date.end.substring(4, 6)}-${date.end.substring(6, 10)}`
+
+  const { isLoading, data: recommendedPlaces } = useQuery('getAllPlaces', () => getAllPlaces(userId, startDt, endDt), {
+    cacheTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 3,
+    refetchInterval: false,
+    onError: (error: any) => {
+      useErrorHandlers(dispatch, error);
+    },
+  });
 
 
   useEffect(() => {
-    getAllPlacesMain(userId, startDt, endDt, (response: AxiosResponse) => {
-      setPlaces(response.data.data);
-    }, dispatch);
-
-    bookingGetDataByMain({ accessToken, userId }, (response: AxiosResponse) => {
-      setReservationPlaces(response.data.data)
-      console.log(response.data.data)
-    }, dispatch);
+    bookingGetDataByMain(
+      { accessToken, userId },
+      (response: AxiosResponse) => {
+        setReservationPlaces(response.data.data);
+      },
+      dispatch,
+    );
   }, []);
 
   useEffect(() => {
-    tokenRefresh({ refreshToken }, (response: AxiosResponse) => {
-      const { code } = response.data;
+    if (location.state?.prevPath.includes('/detail-place')) {
+      window.scrollTo(0, homeY);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [reservationPlaces, recommendedPlaces]);
 
-      if (code === 200) {
-        const accessToken = response.headers.authorization_access;
-        const refreshToken = response.headers.authorization_refresh;
 
-        dispatch(tokenActions.setToken(accessToken),);
-        localStorage.setItem('refreshToken', refreshToken);
-      }
-      else {
-        navigation('/user/signin');
-      }
-    }, dispatch);
+  useEffect(() => {
+    tokenRefresh(
+      { refreshToken },
+      (response: AxiosResponse) => {
+        const { code } = response.data;
+
+        if (code === 200) {
+          const accessToken = response.headers.authorization_access;
+          const refreshToken = response.headers.authorization_refresh;
+
+          dispatch(tokenActions.setToken(accessToken));
+          localStorage.setItem('refreshToken', refreshToken);
+        } else {
+          navigation('/user/signin');
+        }
+      },
+      dispatch,
+    );
   }, [accessToken]);
-
 
   return (
     <>
@@ -154,8 +186,8 @@ function Home() {
           ))}
         </div>
         <div className="recommended-places-text">델고갈만한 숙소</div>
-        {places?.map((place) => (
-          <RecommendedPlaces places={places} setPlaces={setPlaces} place={place} key={place.placeId} />
+        {recommendedPlaces?.data.map((place: PlaceType) => (
+          <RecommendedPlaces place={place} key={place.placeId} />
         ))}
       </div>
       <Footer />
