@@ -98,6 +98,17 @@ function DetailPlace() {
       roomUsed: '301호 (오션뷰) 객실 이용',
       reviewContent: '꼬꼬랑 다녀왔는데 매우만족했습니다. 오션뷰에 마당잔디도 관리가 잘 되어있었어요.',
     },
+    {
+      id: 3,
+      profileImage: `${process.env.PUBLIC_URL}/assets/images/reviewImage.png`,
+      reviewImages: [
+      ],
+      nickName: '꼬꼬맘',
+      starRating: 4,
+      registrationDate: '22.02.01',
+      roomUsed: '301호 (오션뷰) 객실 이용',
+      reviewContent: '꼬꼬랑 다녀왔는데 매우만족했습니다. 오션뷰에 마당잔디도 관리가 잘 되어있었어요.',
+    },
   ]);
 
   const [service, setService] = useState<Array<any>>([
@@ -308,7 +319,7 @@ function DetailPlace() {
             </div>
           </header>
           <body>
-            {reviews.map((review:any) => (
+            {reviews.slice(0,2).map((review:any) => (
               <Reviews key={review.id} review={review} />
             ))}
           </body>
