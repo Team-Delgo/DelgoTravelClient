@@ -51,7 +51,7 @@ function ReservationWaitingPage() {
 
   return (
     <div className="loading-spinner">
-      <LoadingSpin primaryColor="#6E614D" secondaryColor="gray"/>
+      <LoadingSpin primaryColor="#FF9162" secondaryColor="B0A69D"/>
     </div>
   );
 }

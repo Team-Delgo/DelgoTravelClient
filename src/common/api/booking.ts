@@ -21,13 +21,6 @@ async function bookingRequest(
 ) {
   const startDt = `${data.startDt.substring(0,4)}-${data.startDt.substring(4,6)}-${data.startDt.substring(6,10)}`
   const endDt = `${data.endDt.substring(0,4)}-${data.endDt.substring(4,6)}-${data.endDt.substring(6,10)}`
-  console.log(data.userId)
-  console.log(data.placeId)
-  console.log(data.roomId)
-  console.log(data.couponId)
-  console.log(data.point)
-  console.log(data.personExtraNum)
-  console.log(data.petExtraNum)
   try {
     const result = await axios.post(`${url}booking/request`, {
       userId: data.userId,
@@ -78,7 +71,6 @@ async function bookingGetDataByMain(
   dispatch: any,
 ) {
   try {
-    console.log(data.userId)
     const result = await axios.get(`${url}booking/getData/main?userId=${data.userId}`,{
       headers: {
         Authorization_Access: `${data.accessToken}`,
@@ -90,4 +82,10 @@ async function bookingGetDataByMain(
   }
 }
 
-export { bookingRequest, bookingGetData,bookingGetDataByMain };
+async function getBookingHistory(userId: number) {
+  return fetch(`${url}booking/getHistory?userId=${userId}`).then((response) =>
+    response.json()
+  );
+};
+
+export { bookingRequest, bookingGetData,bookingGetDataByMain,getBookingHistory };
