@@ -175,6 +175,7 @@ function PetInfo() {
             type="file"
             accept="image/*"
             name="image"
+            autoComplete="false"
             id="pet"
             onChange={handleImage}
           />
@@ -202,6 +203,7 @@ function PetInfo() {
           className={classNames("login-input petname", { invalid: nameFeedback.length })}
           placeholder="강아지 이름"
           value={enteredInput.name}
+          autoComplete="false"
           id={Id.NAME}
           onChange={inputChangeHandler}
         />

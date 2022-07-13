@@ -85,7 +85,7 @@ function PhoneAuth() {
         인증번호를 입력해주세요.
       </div>
       <div className="login-input-box">
-        <input className="login-input" placeholder="인증번호" value={authNumber} onChange={inputChangeHannler} />
+        <input className="login-input" placeholder="인증번호" value={authNumber} autoComplete="false" onChange={inputChangeHannler} />
         <span className="login-timer reset">
           <Timer isResend={isReSended} resendfunc={resetIsResend} setInValid={() => setTimeIsValid(false)} />
         </span>

@@ -194,6 +194,7 @@ function UserInfo() {
               placeholder="이메일"
               id={Id.EMAIL}
               value={enteredInput.email}
+              autoComplete="false"
               onChange={inputChangeHandler}
               ref={emailRef}
             />
@@ -211,6 +212,7 @@ function UserInfo() {
             placeholder="비밀번호 최소 8자이상 (문자, 숫자 조합)"
             type="password"
             value={enteredInput.password}
+            autoComplete="false"
             id={Id.PASSWORD}
             onChange={inputChangeHandler}
           />
@@ -220,6 +222,7 @@ function UserInfo() {
               placeholder="비밀번호 확인"
               type="password"
               value={enteredInput.confirm}
+              autoComplete="false"
               id={Id.CONFIRM}
               onChange={inputChangeHandler}
             />
@@ -246,6 +249,7 @@ function UserInfo() {
               placeholder="닉네임"
               id={Id.NICKNAME}
               value={enteredInput.nickname}
+              autoComplete="false"
               onChange={inputChangeHandler}
             />
             <p className="input-feedback">{feedback.nickname}</p>
