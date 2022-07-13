@@ -20,14 +20,22 @@ function MyAccount() {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [text, setText] = useState('');
   const [items, setItems] = useState({ coupons: 0, points: 0, reviews: 0 });
+  const [age, setAge] = useState(0);
   const pet = useSelector((state: any) => state.persist.user.pet);
   const navigation = useNavigate();
   const dispatch = useDispatch();
   const email = useSelector((state: any) => state.persist.user.user.email);
   const userId = useSelector((state: any) => state.persist.user.user.id);
+  const dogBirth = useSelector((state:any)=>state.persist.user.pet.birthdat);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    const temp = `${dogBirth.slice(0,4)}-${dogBirth.slice(4,6)}-${dogBirth.slice(6,8)}`;
+    const date = new Date(temp);
+    const now = new Date();
+    // const age = now.getFullYear - date.getFullYear;
+    console.log(now.getFullYear()-date.getFullYear());
+    setAge((now.getFullYear()-date.getFullYear())+1);
     getUserInfo();
   }, []);
 
@@ -106,7 +114,7 @@ function MyAccount() {
         <div className="account-profile-info">
           <div className='account-profile-info-first'>
             <div className="account-profile-info-name">{pet.name}</div>
-            <span className="account-profile-info-age">/ 5살</span>
+            <span className="account-profile-info-age">/ {age}살</span>
             <img
               aria-hidden="true"
               src={RightArrow}
