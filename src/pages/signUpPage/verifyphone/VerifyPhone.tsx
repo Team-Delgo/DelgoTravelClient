@@ -178,6 +178,7 @@ function VerifyPhone() {
           onChange={inputChangeHandler}
           className={classNames("login-input phonenumber", { invalid: phoneIsExist })}
           placeholder="휴대폰 번호"
+          autoComplete="false"
           ref={phoneRef}
         />
         <p className={classNames('input-feedback')}>
@@ -200,6 +201,7 @@ function VerifyPhone() {
             onChange={authChangeHandler}
             className={classNames("login-input authnumber", { invalid: feedback.length })}
             placeholder="인증번호 4자리"
+            autoComplete="false"
             ref={authRef}
           />
           <span className="login-timer">

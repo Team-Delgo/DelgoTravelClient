@@ -54,6 +54,7 @@ function FindPassword() {
           <input
             className={classNames("login-input", { invalid: feedback.length })}
             placeholder="이메일"
+            autoComplete="false"
             value={email}
             ref={inputRef}
             onChange={inputChangeHandler}

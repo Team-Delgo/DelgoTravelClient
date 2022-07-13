@@ -44,7 +44,7 @@ function CouponModal(props: { closeModal: () => void }) {
     <div className='couponmodal-wrapper'>
       <div className='couponmodal-title'>쿠폰등록</div>
       <div className='couponmodal-flex'>
-        <input ref={inputRef} value={enteredInput} className={classNames('couponmodal-input', { invalid })} onChange={inputChangeHandler} />
+        <input ref={inputRef} autoComplete="false" value={enteredInput} className={classNames('couponmodal-input', { invalid })} onChange={inputChangeHandler} />
       </div>
       <span className={classNames('couponmodal-feedback', { invalid })}>{feedback}</span>
     </div>

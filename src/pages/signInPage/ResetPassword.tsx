@@ -66,6 +66,7 @@ function ResetPassword() {
           placeholder="새 비밀번호 (최소8자 이상)"
           id="password"
           type="password"
+          autoComplete="false"
           value={enteredInput.password}
           onChange={inputChangeHandler}
         />
@@ -76,6 +77,7 @@ function ResetPassword() {
           placeholder="새 비밀번호 확인"
           id="passwordConfirm"
           type="password"
+          autoComplete="false"
           value={enteredInput.passwordConfirm}
           onChange={inputChangeHandler}
         />
