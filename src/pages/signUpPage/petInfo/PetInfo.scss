@@ -65,7 +65,9 @@
     line-height: 150%;
     font-family: 'Roboto';
     font-weight: 700;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #b0a69d;
     color: white;
     border-radius: 100%;

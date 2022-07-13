@@ -201,7 +201,7 @@ function PetInfo() {
       <div className="login-input-box">
         <input
           className={classNames("login-input petname", { invalid: nameFeedback.length })}
-          placeholder="강아지 이름"
+          placeholder="강아지 이름 (2~8자)"
           value={enteredInput.name}
           autoComplete="off"
           id={Id.NAME}

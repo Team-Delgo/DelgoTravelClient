@@ -147,7 +147,7 @@ function ChangePetInfo() {
       );
     }
     console.log(userId);
-    // navigation(MY_ACCOUNT_PATH.MAIN);
+    navigation(MY_ACCOUNT_PATH.MAIN);
 
     // 비동기 처리
     // signup({ email, password, nickname, phone, pet: {petName:enteredInput.name,petBirth:enteredInput.birth,petImage:} }, () => {});
