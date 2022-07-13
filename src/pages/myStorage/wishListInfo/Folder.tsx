@@ -41,7 +41,7 @@ function Folder() {
   const location: any = useLocation();
   const { myStorageY } = useSelector((state: any) => state.persist.scroll);
 
-  const { isLoading:getWishedPlacesIsLoading, data: wishedPlaces, refetch } = useQuery(
+  const { isLoading: getWishedPlacesIsLoading, data: wishedPlaces, refetch } = useQuery(
     'getWishedPlaces',
     () => getWishedPlaces(accessToken, userId),
     {

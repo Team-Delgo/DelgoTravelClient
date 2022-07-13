@@ -17,14 +17,6 @@ function MyStorage() {
   const accessToken = useSelector((state: any) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
 
-  // useEffect(() => {
-  //   if (location.state?.prevPath.includes('/detail-place')) {
-  //     console.log(myStorageY)
-  //     window.scrollTo(0, myStorageY);
-  //   } else {
-  //     window.scrollTo(0, 0);
-  //   }
-  // }, []);
 
   useEffect(() => {
     tokenRefresh({ refreshToken }, (response: AxiosResponse) => {
