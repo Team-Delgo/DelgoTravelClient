@@ -11,6 +11,7 @@ import DogType from './DogType';
 import BirthSelector from './BirthSelector';
 import { signup, petImageUpload } from '../../../common/api/signup';
 import Check from "../../../icons/check.svg"
+import { SIGN_UP_PATH } from '../../../constants/path.const';
 
 interface LocationState {
   phone: string;
@@ -150,7 +151,7 @@ function PetInfo() {
         petImageUpload(formData, (response: AxiosResponse) => {
           console.log(response);
         }, dispatch);
-        navigation('/user/signin/login');
+        navigation(SIGN_UP_PATH.COMPLETE);
       } else {
         console.log(codeMsg);
       }

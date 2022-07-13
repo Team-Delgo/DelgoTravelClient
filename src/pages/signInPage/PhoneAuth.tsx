@@ -9,6 +9,7 @@ import Timer from '../signUpPage/verifyphone/Timer';
 import { phoneCheckNumber, phoneSendMessageForFind } from '../../common/api/signup';
 import { SIGN_IN_PATH } from '../../constants/path.const';
 import { errorActions } from '../../redux/slice/errorSlice';
+import "./PhoneAuth.scss";
 
 interface LocationState {
   phone: string;
@@ -65,6 +66,7 @@ function PhoneAuth() {
   const submitAuthNumber = () => {
     phoneCheckNumber({ number: authNumber, smsId: SMSid }, (response: AxiosResponse) => {
       const { code } = response.data;
+      console.log(response);
       if (code === 200) {
         navigation(SIGN_IN_PATH.RESETPASSWORD, { state: email });
       }
@@ -84,7 +86,7 @@ function PhoneAuth() {
       </div>
       <div className="login-input-box">
         <input className="login-input" placeholder="인증번호" value={authNumber} onChange={inputChangeHannler} />
-        <span className="login-timer">
+        <span className="login-timer reset">
           <Timer isResend={isReSended} resendfunc={resetIsResend} setInValid={() => setTimeIsValid(false)} />
         </span>
         <p aria-hidden="true" className="login-authnumber-resend" onClick={authNumberResend}>

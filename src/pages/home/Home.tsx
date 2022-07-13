@@ -117,7 +117,7 @@ function Home() {
   };
 
   useEffect(() => {
-    if (reservationPlaces.length)
+    if (reservationPlaces?.length)
       getDday();
   }, [page, reservationPlaces]);
 
@@ -148,7 +148,7 @@ function Home() {
         <img src={Delgo} alt="delgo" className="delgo" />
         {reservationPlaces?.length && (
           <>
-            <div className='home-reservation-info'>{reservationPlaces[page]?.place.address.slice(0, 2)} 여행까지 D-{dday}</div>
+            <div className='home-reservation-info'>{reservationPlaces[page]?.place.address.slice(0, 2)} 여행까지 D-{dday}✈️</div>
             <HomeReservation
               lists={reservationPlaces}
               pageChange={(number) => {

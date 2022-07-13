@@ -21,6 +21,7 @@ export const SIGN_UP_PATH = {
   TERMS: '/user/signup/terms',
   USER_INFO: '/user/signup/user-info',
   USER_PET_INFO: '/user/signup/pet-info',
+  COMPLETE: '/user/signup/complete',
 };
 
 export const MY_STORAGE_PATH = '/my-storage';

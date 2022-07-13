@@ -8,7 +8,7 @@ import { ReactComponent as Apple } from '../../icons/apple.svg';
 import { SIGN_IN_PATH, SIGN_UP_PATH } from '../../constants/path.const';
 import { tokenActions } from '../../redux/slice/tokenSlice';
 import { KAKAO, NAVER } from '../../constants/url.cosnt'
-
+import Delgo from "../../icons/delgo.svg";
 
 function SignIn() {
   const navigation = useNavigate();
@@ -22,7 +22,8 @@ function SignIn() {
 
   return (
     <div className="login-signin">
-      <div className="login-title">Delgo 가요</div>
+      <img className='login-logo' src={Delgo} alt="login-logo"/>
+      <div className="login-title">강아지 델고 여행가요</div>
       <a href={KAKAO.KAKAO_AUTH_URL}>
         <button type="button" className="login-kakao">
           <Kakao className="icon" />
