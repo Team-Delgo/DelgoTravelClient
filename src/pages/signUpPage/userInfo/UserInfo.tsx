@@ -222,7 +222,7 @@ function UserInfo() {
               placeholder="비밀번호 확인"
               type="password"
               value={enteredInput.confirm}
-              autoComplete="false"
+              autoComplete="off"
               id={Id.CONFIRM}
               onChange={inputChangeHandler}
             />
@@ -249,7 +249,7 @@ function UserInfo() {
               placeholder="닉네임"
               id={Id.NICKNAME}
               value={enteredInput.nickname}
-              autoComplete="false"
+              autoComplete="off"
               onChange={inputChangeHandler}
             />
             <p className="input-feedback">{feedback.nickname}</p>

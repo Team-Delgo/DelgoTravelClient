@@ -167,7 +167,7 @@ function ChangePetInfo() {
             accept="image/*"
             name="image"
             id="pet"
-            autoComplete="false"
+            autoComplete="off"
             onChange={handleImage}
           />
           <Camera className="petinfo-image-icon" />
@@ -194,7 +194,7 @@ function ChangePetInfo() {
           placeholder="강아지 이름"
           value={enteredInput.name}
           id={Id.NAME}
-          autoComplete="false"
+          autoComplete="off"
           onChange={inputChangeHandler}
         />
         <p className="input-feedback">{nameFeedback}</p>
@@ -205,7 +205,7 @@ function ChangePetInfo() {
           placeholder="생일"
           value={enteredInput.birth}
           id={Id.BIRTH}
-          autoComplete="false"
+          autoComplete="off"
           onClick={() => {
             setModalActive(true);
           }}
