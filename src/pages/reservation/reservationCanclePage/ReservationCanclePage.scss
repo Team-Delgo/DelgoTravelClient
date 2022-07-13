@@ -3,6 +3,25 @@
     margin-right: 20px;
     margin-bottom: 150px;
   }
+  .reservation-refund{
+    background: #FFFBF6;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding: 10px 20px;
+  }
+  .reservation-cancle-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #FF9162;
+    color:white;
+    height: 62px;
+    border-radius: 10px;
+    margin-top:50px;
+    font-size: 12px;
+    padding: 0 30px;
+    font-weight: 700;
+  }
   .header {
     display: flex;
     position: relative;
@@ -169,8 +188,8 @@
     }
   }
   .payment-methods {
-    margin-top: 20px;
-    margin-bottom: 100px;
+    // margin-top: 20px;
+    // margin-bottom: 100px;
     display: flex;
     justify-content: space-between;
     &-label{
