@@ -152,7 +152,11 @@ function Home() {
             <HomeReservation
               lists={reservationPlaces}
               pageChange={(number) => {
-                setPage(number);
+                let temp = number;
+                if(temp+1 > reservationPlaces.length)
+                  temp = reservationPlaces.length - 1;
+                setPage(temp);
+                console.log(temp);
               }}
             />
           </>
