@@ -143,6 +143,10 @@ function DetailPlace() {
     },
   });
 
+  useEffect(() => {
+    refetch()
+  }, [date]); 
+
 
   useEffect(() => {
     console.log(detailPlaceRivews?.data)
