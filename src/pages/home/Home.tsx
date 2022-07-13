@@ -147,7 +147,7 @@ function Home() {
     <>
       <div className="home-background">
         <img src={Delgo} alt="delgo" className="delgo" />
-        {reservationPlaces?.length && (
+        {reservationPlaces?.length>0 && (
           <>
             <div className='home-reservation-info'>{reservationPlaces[page]?.place.address.slice(0, 2)} 여행까지 D-{dday}✈️</div>
             <HomeReservation

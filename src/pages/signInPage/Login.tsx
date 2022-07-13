@@ -51,6 +51,7 @@ function Login() {
         if (code === 200) {
           dispatch(
             userActions.signin({
+              couponList: data.couponList,
               user: {
                 id: data.user.userId,
                 nickname: data.user.name,
