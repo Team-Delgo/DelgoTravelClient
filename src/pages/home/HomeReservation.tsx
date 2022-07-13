@@ -29,7 +29,6 @@ function HomeReservation(props: { lists: any[], pageChange: (page: number) => vo
 
   useEffect(() => {
     pageChange(page);
-    console.log(page);
   }, [page]);
 
   // console.log(lists);
@@ -50,7 +49,6 @@ function HomeReservation(props: { lists: any[], pageChange: (page: number) => vo
   const mouseLeaveHandler = () => {
     const el = scrollRef.current;
     const width = el.offsetWidth;
-    console.log(position, startPosition);
     setTimeout(() => {
       if (position < startPosition) {
         el.scrollTo({
@@ -59,14 +57,12 @@ function HomeReservation(props: { lists: any[], pageChange: (page: number) => vo
         });
         setPosition(startPosition - width);
         setPage(Math.floor(el.scrollLeft / width));
-        console.log(Math.floor(el.scrollLeft / width));
       } else if (position > startPosition) {
         el.scrollTo({
           left: (Math.floor(el.scrollLeft / width) + 1) * width,
           behavior: 'smooth',
         });
         setPosition(startPosition + width);
-        console.log(Math.floor(el.scrollLeft / width));
         setPage(Math.floor(el.scrollLeft / width) + 1);
       } else {
         el.scrollTo({
