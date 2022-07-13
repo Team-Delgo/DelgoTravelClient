@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation,useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { wishInsert, wishDelete } from '../../../common/api/wish'
-import Heart from '../../../common/components/Heart'
+// import Heart from '../../../common/components/Heart'
 import { scrollActions } from '../../../redux/slice/scrollSlice';
 import { areaActions } from '../../../redux/slice/areaSlice';
 import {prevPathActions} from "../../../redux/slice/prevPathSlice"
+import { ReactComponent as ActiveHeart } from '../../../icons/heart-active.svg';
+import { ReactComponent as Heart } from '../../../icons/heart.svg';
 import './Place.scss'
 
 interface PlaceTypeProps {
@@ -86,9 +88,9 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
       </div>
       <div className="place-heart">
         {wishList === 0 ? (
-          <Heart wishList={wishList} handleWishList={wishListInsert} />
+          <Heart onClick={wishListInsert} />
         ) : (
-          <Heart wishList={wishList} handleWishList={wishListDelete} />
+          <ActiveHeart onClick={wishListDelete} />
         )}
       </div>
     </div>

@@ -16,8 +16,8 @@
   }
   &-heart {
     position: absolute;
-    top: -15px;
-    right: 0px;
+    top: 20px;
+    right: 15px;
     -webkit-tap-highlight-color : rgba(0,0,0,0)
   }
   &-info {
@@ -52,14 +52,14 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 87vw;
+    // width: 80vw;
     height: 49px;
     background-color: #ffffff;
     color: #3e382f;
     font-size: 16px;
     font-weight: bold;
-    margin: 0 0 100px 5%;
-    padding-left: 4%;
+    margin: 0 0 100px 0;
+    padding: 0 5%;
     border-radius: 5px;
     &-calender {
       margin-right: 15px;
