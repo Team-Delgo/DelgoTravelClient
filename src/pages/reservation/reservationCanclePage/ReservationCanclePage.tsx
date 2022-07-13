@@ -97,7 +97,7 @@ function ReservationCanclePage() {
 
   return (
     <>
-      <div className="reservationPage">
+      <div className="reservationCanclePage">
         <div className="header">
           <Exit className="exit-button" onClick={moveToMainPage} />
           <h1 className="header-title">예약취소</h1>
@@ -124,9 +124,9 @@ function ReservationCanclePage() {
           <div className="reservation-label">상품가격(1박)</div>
           <div className="original-price-amount">100.000원</div>
         </div>
-        <div className="couponsale">
+        <div className="pointsale">
           <div className="reservation-label">결제 시 포인터 사용</div>
-          <div className="couponsale-amount">-1000P</div>
+          <div className="pointsale-amount">-1000P</div>
         </div>
         <div className="couponsale">
           <div className="reservation-label">결제 시 쿠폰 사용</div>
@@ -137,32 +137,36 @@ function ReservationCanclePage() {
           <div className="reservation-label">결제 금액</div>
           <div className="finalprice-price">99.000원</div>
         </div>
-        <div className="payment-methods">
-          <div className="payment-methods-label">결제 수단</div>
-          <div className="payment-methods-price">신용카드</div>
+        <div className="refund-payment-methods">
+          <div className="refund-payment-methods-label">결제 수단</div>
+          <div className="refund-payment-methods-price">신용카드</div>
         </div>
         <div className="reservation-refund">
-          <h2 className="reservation-title second">결제 정보</h2>
+          <h2 className="reservation-title second">취소/환불 정보</h2>
           <div className="original-price">
-            <div className="reservation-label">상품가격(1박)</div>
-            <div className="original-price-amount">100.000원</div>
+            <div className="reservation-label">취소상태</div>
+            <div className="original-price-amount">취소완료</div>
           </div>
           <div className="couponsale">
             <div className="reservation-label">결제 시 포인터 사용</div>
-            <div className="couponsale-amount">-1000P</div>
+            <div className="couponsale-amount">-1.000P</div>
           </div>
           <div className="couponsale">
             <div className="reservation-label">결제 시 쿠폰 사용</div>
             <div className="couponsale-amount">0원</div>
           </div>
           <div className="reservation-devide" />
-          <div className="finalprice">
-            <div className="reservation-label">결제 금액</div>
-            <div className="finalprice-price">99.000원</div>
+          <div className="refund-point">
+            <div className="refund-point-label">포인트 환불</div>
+            <div className="refund-point-price">1,000원</div>
           </div>
-          <div className="payment-methods">
-            <div className="payment-methods-label">결제 수단</div>
-            <div className="payment-methods-price">신용카드</div>
+          <div className="refund-payment-methods">
+            <div className="refund-payment-methods-label">환불방법</div>
+            <div className="refund-payment-methods-price">신용카드 환불</div>
+          </div>
+          <div className="finalprice">
+            <div className="reservation-label">최종 환불금액</div>
+            <div className="finalprice-price">99.000원</div>
           </div>
         </div>
       </div>

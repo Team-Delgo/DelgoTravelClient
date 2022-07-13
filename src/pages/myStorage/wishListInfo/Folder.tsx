@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useQuery } from 'react-query'
 import { useDispatch } from 'react-redux';
 import WishedPlace from './wishedPlace/WishedPlace';
-import { getWishedPlaces } from '../../../common/api/getPlaces';
+import { getWishedPlaces ,getRecommendedPlace} from '../../../common/api/getPlaces';
 import PopularPlace from '../historyInfo/popularPlace/PopularPlace'
 import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
 import { ReactComponent as FootPrintActive } from '../../../icons/foot-print-active.svg';
@@ -21,37 +21,27 @@ interface WishedPlaceType {
   wishId: number;
 }
 
-interface PopularPlaceType  {
-  id: number;
-  image: string;
-  name: string;
-  location: string;
-};
+interface RecommendedPlaceType {
+  address: string
+  checkin: string
+  checkout: string
+  isBooking: number
+  lowestPrice: string
+  mainPhotoUrl: string
+  name: string
+  placeId: number
+  wishId: number
+}
 
 
 function Folder() {
-  // const [wishedPlace, setWishedPlace] = useState<Array<WishedPlaceType>>([]);
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const accessToken = useSelector((state: any) => state.token.token);
   const dispatch = useDispatch()
-  const [popularPlace, setPopularPlace] = useState<Array<PopularPlaceType>>([
-    {
-      id: 1,
-      image: `${process.env.PUBLIC_URL}/assets/images/recommendedPlaceImage.png`,
-      name: '멍멍이네 하우스',
-      location: '강원도 속초시 조앙동',
-    },
-    {
-      id: 2,
-      image: `${process.env.PUBLIC_URL}/assets/images/recommendedPlaceImage.png`,
-      name: '멍멍이네 하우스',
-      location: '강원도 속초시 조앙동',
-    },
-  ]);
   const location: any = useLocation();
   const { myStorageY } = useSelector((state: any) => state.persist.scroll);
 
-  const { isLoading, data: wishedPlaces, refetch } = useQuery(
+  const { isLoading:getWishedPlacesIsLoading, data: wishedPlaces, refetch } = useQuery(
     'getWishedPlaces',
     () => getWishedPlaces(accessToken, userId),
     {
@@ -63,13 +53,26 @@ function Folder() {
     },
   );
 
+  const { isLoading: getRecommendedPlacesIsLoading, data: recommendedPlaces, refetch: getRecommendedPlacesRefetch } = useQuery('getRecommendedPlaces', () => getRecommendedPlace(userId), {
+    cacheTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 3,
+    refetchInterval: false,
+    onError: (error: any) => {
+      useErrorHandlers(dispatch, error);
+    },
+  });
+
+  useEffect(() => {
+    getRecommendedPlacesRefetch()
+  }, [wishedPlaces]);
+
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
         window.scrollTo(0, myStorageY);
     } else {
       window.scrollTo(0, 0);
     }
-  }, [isLoading]);
+  }, [getWishedPlacesIsLoading,getRecommendedPlacesIsLoading]);
   
 
 
@@ -87,7 +90,7 @@ function Folder() {
   //   );
   // }, [accessToken]);
 
-  if (isLoading)
+  if (getWishedPlacesIsLoading||getRecommendedPlacesIsLoading)
     return (
       <div className="wish-list-container">
         &nbsp;
@@ -119,7 +122,7 @@ function Folder() {
                 refetch={refetch}
               />
             ))
-        : popularPlace.map((place) => <PopularPlace place={place} key={place.id} />)}
+        : recommendedPlaces?.data.map((place:RecommendedPlaceType) => <PopularPlace place={place} key={place.placeId} />)}
     </div>
   );
 }

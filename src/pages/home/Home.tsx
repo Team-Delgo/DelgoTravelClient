@@ -9,7 +9,7 @@ import RecommendedPlaces from './recommenedPlaces/RecommendedPlaces';
 import { tokenActions } from '../../redux/slice/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
 import { bookingGetDataByMain } from '../../common/api/booking';
-import { getAllPlaces } from '../../common/api/getPlaces';
+import { getAllPlaces , getRecommendedPlace} from '../../common/api/getPlaces';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import Dog from '../../icons/dog.svg';
 import Airplane from '../../icons/airplane.svg';
@@ -28,16 +28,6 @@ interface EditorPlaceType {
 }
 
 interface RecommendedPlaceType {
-  address: string;
-  lowestPrice: string;
-  mainPhotoUrl: string;
-  name: string;
-  placeId: number;
-  registDt: string;
-  wishId: number;
-}
-
-interface PlaceType {
   address: string
   checkin: string
   checkout: string
@@ -79,17 +69,22 @@ function Home() {
   const { homeY } = useSelector((state: any) => state.persist.scroll);
 
 
-  const { isLoading, data: recommendedPlaces } = useQuery('getAllPlaces', () => getAllPlaces(userId, startDt, endDt), {
+  const { isLoading, data: recommendedPlaces } = useQuery('getRecommendedPlaces', () => getRecommendedPlace(userId), {
     cacheTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 3,
     refetchInterval: false,
+    onSuccess: () => {
+      console.log(recommendedPlaces)
+    },
     onError: (error: any) => {
       useErrorHandlers(dispatch, error);
     },
   });
 
 
+
   useEffect(() => {
+    console.log(recommendedPlaces)
     bookingGetDataByMain(
       { accessToken, userId },
       (response: AxiosResponse) => {
@@ -97,7 +92,7 @@ function Home() {
       },
       dispatch,
     );
-  }, []);
+  }, [recommendedPlaces]);
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
@@ -199,7 +194,7 @@ function Home() {
           ))}
         </div>
         <div className="recommended-places-text">델고갈만한 숙소</div>
-        {recommendedPlaces?.data.map((place: PlaceType) => (
+        {recommendedPlaces?.data.map((place: RecommendedPlaceType) => (
           <RecommendedPlaces place={place} key={place.placeId} />
         ))}
       </div>

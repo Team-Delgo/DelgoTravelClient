@@ -2,19 +2,28 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AxiosResponse } from 'axios';
+import { useQuery } from 'react-query'
 import { tokenActions } from '../../../redux/slice/tokenSlice';
 import { tokenRefresh } from '../../../common/api/login';
+import { getRecommendedPlace } from '../../../common/api/getPlaces';
+import { getBookingHistory } from '../../../common/api/booking';
+import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
 import PopularPlace from './popularPlace/PopularPlace';
 import TravelHisotryPlace from './travelHistoryPlace/TravelHistoryPlace';
 import { ReactComponent as FootPrintActive } from '../../../icons/foot-print-active.svg';
 import './History.scss';
 
-interface PopularPlaceType  {
-  id: number;
-  image: string;
-  name: string;
-  location: string;
-};
+interface RecommendedPlaceType {
+  address: string
+  checkin: string
+  checkout: string
+  isBooking: number
+  lowestPrice: string
+  mainPhotoUrl: string
+  name: string
+  placeId: number
+  wishId: number
+}
 interface TravelHisotryPlaceType {
   id: number,
   period: string,
@@ -29,27 +38,8 @@ function History() {
   const dispatch = useDispatch();
   const accessToken = useSelector((state: any) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
+  const userId = useSelector((state: any) => state.persist.user.user.id);
   const [hasTravelHistorys, setHasTravelHistorys] = useState(false);
-  const [popularPlace, setPopularPlace] = useState<Array<PopularPlaceType>>([
-    {
-      id: 1,
-      image: `${process.env.PUBLIC_URL}/assets/images/recommendedPlaceImage.png`,
-      name: '멍멍이네 하우스',
-      location: '강원도 속초시 조앙동',
-    },
-    {
-      id: 2,
-      image: `${process.env.PUBLIC_URL}/assets/images/recommendedPlaceImage.png`,
-      name: '멍멍이네 하우스',
-      location: '강원도 속초시 조앙동',
-    },
-    {
-      id: 3,
-      image: `${process.env.PUBLIC_URL}/assets/images/recommendedPlaceImage.png`,
-      name: '멍멍이네 하우스',
-      location: '강원도 속초시 조앙동',
-    },
-  ]);
   const [travelHisotryPlace, seTravelHisotryPlace] = useState<Array<TravelHisotryPlaceType>>([
     {
       id: 1,
@@ -77,7 +67,26 @@ function History() {
     },
   ]);
 
+  const { isLoading: getRecommendedPlacesIsLoading, data: recommendedPlaces } = useQuery('getRecommendedPlaces', () => getRecommendedPlace(userId), {
+    cacheTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 3,
+    refetchInterval: false,
+    onError: (error: any) => {
+      useErrorHandlers(dispatch, error);
+    },
+  });
+
+  const { isLoading:getTraveledPlacesIsLoading, data: traveledPlaces } = useQuery('getTraveledPlaces', () => getBookingHistory(userId), {
+    cacheTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 3,
+    refetchInterval: false,
+    onError: (error: any) => {
+      useErrorHandlers(dispatch, error);
+    },
+  });
+
   useEffect(() => {
+    console.log(traveledPlaces)
     tokenRefresh({ refreshToken }, (response: AxiosResponse) => {
       const { code } = response.data;
 
@@ -95,6 +104,14 @@ function History() {
   }, [accessToken]);
 
 
+  if (getRecommendedPlacesIsLoading||getTraveledPlacesIsLoading)
+    return (
+      <div className="travel-history-container">
+        &nbsp;
+      </div>
+    );
+
+
   return (
     <div className="travel-history-container">
       {hasTravelHistorys === true ? (
@@ -103,14 +120,14 @@ function History() {
         </div>
       ) : (
         <div className="travel-history-notice">
-          <FootPrintActive className="travel-history-notice-foot-print"/>
+          <FootPrintActive className="travel-history-notice-foot-print" />
           <div className="travel-history-notice-main">여행내역이 없어요</div>
           <div className="travel-history-notice-sub">이번 주말 델고가요</div>
         </div>
       )}
       {hasTravelHistorys === true
         ? travelHisotryPlace.map((place) => <TravelHisotryPlace place={place} key={place.id} />)
-        : popularPlace.map((place) => <PopularPlace place={place} key={place.id} />)}
+        : recommendedPlaces?.data.map((place: RecommendedPlaceType) => <PopularPlace place={place} key={place.placeId} />)}
     </div>
   );
 }
