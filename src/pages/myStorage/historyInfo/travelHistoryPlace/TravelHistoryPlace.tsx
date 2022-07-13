@@ -3,7 +3,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import './TravelHistoryPlace.scss';
 
-type TravelHisotryPlaceTypeProps = {
+interface TravelHisotryPlaceTypeProps {
     place:TravelHisotryPlaceType
 }
 
@@ -43,7 +43,7 @@ function TravelHisotryPlace({ place }: TravelHisotryPlaceTypeProps) {
       </div>
       <div className="travel-hisotry-place-review">
         <div className="travel-hisotry-place-review-etc">···</div>
-        <Link className="travel-hisotry-place-review-link" to={`/review-writing/${place.place.placeId}`} state={place.place}> 
+        <Link className="travel-hisotry-place-review-link" to={`/review-writing/${place.place.placeId}`} state={place}> 
           <div className="travel-hisotry-place-review-write">리뷰쓰기</div>
         </Link>
         <div className="travel-hisotry-place-review-reservation-detail">예약상세</div>

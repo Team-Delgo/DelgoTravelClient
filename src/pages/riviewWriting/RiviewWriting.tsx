@@ -14,12 +14,21 @@ import './RiviewWriting.scss';
 
 
 interface ReservationPlaceType {
-    id: number,
-    period: string,
-    image: string,
-    name: string,
+  bookingId: string,
+  roomName: string,
+  startDt: string,
+  endDt: string,
+  place: {
     address: string
-    package: string
+    checkin: string
+    checkout: string
+    isBooking: 0
+    lowestPrice: null
+    mainPhotoUrl: string
+    name: string
+    placeId: number
+    wishId: number
+  },
   }
 
 function RiviewWriting() {
@@ -40,6 +49,7 @@ function RiviewWriting() {
   const navigate = useNavigate();
 
   useEffect(()=>{
+    console.log(state)
     console.log(slideRef.current?.offsetWidth)
   },[])
 ;
@@ -175,9 +185,9 @@ function RiviewWriting() {
   return (
     <div className="review-writing">
       <header className="review-writing-header">
-        <img className="review-writing-header-main-image" src={state.image} alt="place-img" />
-        <div className="review-writing-header-place-name">{state.name}</div>
-        <div className="review-writing-header-date">{state.period}</div>
+        <img className="review-writing-header-main-image" src={state.place.mainPhotoUrl} alt="place-img" />
+        <div className="review-writing-header-place-name">{state.place.name}</div>
+        <div className="review-writing-header-date">{state.startDt.substring(5, 7)}.{state.startDt.substring(8, 10)} - {state.endDt.substring(5, 7)}.{state.endDt.substring(8, 10)}</div>
         <LeftArrow className="review-writing-header-previous-page" onClick={moveToPreviousPage} />
       </header>
       <body className="review-writing-body">
@@ -238,7 +248,7 @@ function RiviewWriting() {
           ))}
         </div>
       </body>
-      <div className="review-writing-division-line" />
+      {/* <div className="review-writing-division-line" />
       <footer className="review-writing-footer">
         <h4>칭찬하고 싶은 부분이 있나요?</h4>
         <div className="review-writing-footer-cleanliness" aria-hidden="true" onClick={handleCleanlinessLike}>
@@ -285,7 +295,7 @@ function RiviewWriting() {
         </div>
         <div className="review-writing-footer-etc">기타</div>
         <input type="text" className="review-writing-footer-input" placeholder="(선택) 한 줄 칭찬을 남겨주세요." />
-      </footer>
+      </footer> */}
       <BottomButton text="작성완료" />
     </div>
   );
