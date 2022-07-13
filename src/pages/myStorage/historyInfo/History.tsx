@@ -80,6 +80,9 @@ function History() {
     cacheTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 3,
     refetchInterval: false,
+    onSuccess: () => {
+      console.log(traveledPlaces)
+    },
     onError: (error: any) => {
       useErrorHandlers(dispatch, error);
     },
@@ -113,7 +116,7 @@ function History() {
 
   return (
     <div className="travel-history-container">
-      {traveledPlaces?.data.length>0 ? (
+      {traveledPlaces?.data !==null ? (
         <div className="travel-history-number">
           델고 갔던 {traveledPlaces.data.length}개 장소
         </div>
@@ -124,8 +127,8 @@ function History() {
           <div className="travel-history-notice-sub">이번 주말 델고가요</div>
         </div>
       )}
-      {traveledPlaces?.data.length>0
-        ? traveledPlaces.data.map((place:any) => <TravelHisotryPlace place={place} key={place.id} />)
+      {traveledPlaces?.data !==null
+        ? traveledPlaces?.data.map((place:any) => <TravelHisotryPlace place={place} key={place.id} />)
         : recommendedPlaces?.data.map((place: RecommendedPlaceType) => <PopularPlace place={place} key={place.placeId} />)}
     </div>
   );
