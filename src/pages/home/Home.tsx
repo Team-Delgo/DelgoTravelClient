@@ -41,6 +41,7 @@ interface RecommendedPlaceType {
 function Home() {
   const [places, setPlaces] = useState<Array<RecommendedPlaceType>>([]);
   const [page, setPage] = useState(0);
+  const [dday, setDday] = useState(0);
   const [reservationPlaces, setReservationPlaces] = useState<Array<any>>([]);
   const [editorPlaces, setEditorPlaces] = useState<Array<EditorPlaceType>>([
     {
@@ -95,13 +96,30 @@ function Home() {
     }, dispatch);
   }, [accessToken]);
 
+  const getDday = () => {
+    const startDate = new Date(reservationPlaces[page].startDt);
+    const currentDate = new Date();
+    const dateDif = startDate.getTime() - currentDate.getTime();
+    const dDay = dateDif / (1000 * 60 * 60 * 24);
+
+    setDday(Math.ceil(dDay))
+  };
+
+  useEffect(() => {
+    if (reservationPlaces.length)
+      getDday();
+  }, [page, reservationPlaces]);
 
   return (
     <>
       <div className="home-background">
         <img src={Delgo} alt="delgo" className='delgo' />
-        <div className='home-reservation-info'>{reservationPlaces[page].place.address.slice(0, 2)} 여행까지 D-1</div>
-        <HomeReservation lists={reservationPlaces} pageChange={(number) => { setPage(number); }} />
+        {
+          reservationPlaces.length && <div>
+            <div className='home-reservation-info'>{reservationPlaces[page]?.place.address.slice(0, 2)} 여행까지 D-{dday}</div>
+            <HomeReservation lists={reservationPlaces} pageChange={(number) => { setPage(number); }} />
+          </div>
+        }
         {/* <div className="reservation-places">
           {
             reservationPlaces?.length && reservationPlaces?.map((a) => (
