@@ -8,8 +8,8 @@ import { tokenActions } from '../../redux/slice/tokenSlice';
 import { ReactComponent as Arrow } from '../../icons/left-arrow.svg';
 import ToastMessage from '../../common/dialog/ToastMessage';
 import { login } from '../../common/api/login';
-import "./Login.scss";
-import { checkEmail, checkPasswordLogin } from "../signUpPage/userInfo/ValidCheck";
+import './Login.scss';
+import { checkEmail, checkPasswordLogin } from '../signUpPage/userInfo/ValidCheck';
 
 interface Input {
   email: string;
@@ -23,21 +23,16 @@ function Login() {
   const navigation = useNavigate();
   const dispatch = useDispatch();
 
-
-
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
-    if (id === "email") {
+    if (id === 'email') {
       const response = checkEmail(value);
       setFeedback((prev: Input) => {
-
         return { ...prev, email: response.message };
       });
-    }
-    else if (id === "password") {
+    } else if (id === 'password') {
       const response = checkPasswordLogin(value);
       setFeedback((prev: Input) => {
-
         return { ...prev, password: response.message };
       });
     }
@@ -46,49 +41,52 @@ function Login() {
     });
   };
 
-
   const loginFetch = () => {
-    login(enteredInput, (response: AxiosResponse) => {
-      const { code, data } = response.data;
-      console.log(data);
-      if (code === 200) {
-        dispatch(
-          userActions.signin({
-            user: {
-              id: data.user.userId,
-              nickname: data.user.name,
-              email: data.user.email,
-              phone: data.user.phoneNo,
-            },
-            pet: {
-              petId: data.pet.petId,
-              birthdat: data.pet.birthday,
-              size: data.pet.size,
-              weight: data.pet.weight,
-              name: data.pet.name,
-              image: data.user.profile,
-            },
-          }),
-        );
+    login(
+      enteredInput,
+      (response: AxiosResponse) => {
+        const { code, data } = response.data;
+        console.log(data);
+        console.log(response);
+        if (code === 200) {
+          dispatch(
+            userActions.signin({
+              user: {
+                id: data.user.userId,
+                nickname: data.user.name,
+                email: data.user.email,
+                phone: data.user.phoneNo,
+              },
+              pet: {
+                petId: data.pet.petId,
+                birthdat: data.pet.birthday,
+                size: data.pet.size,
+                weight: data.pet.weight,
+                name: data.pet.name,
+                image: data.user.profile,
+              },
+            }),
+          );
 
-        const accessToken = response.headers.authorization_access;
-        const refreshToken = response.headers.authorization_refresh;
-        dispatch(
-          tokenActions.setToken(accessToken),
-        );
-        localStorage.setItem('refreshToken', refreshToken);
-        navigation('/');
-      } else if (code === 303) {
-        setLoginFailed(true);
-      }
-    }, dispatch);
-  }
+          const accessToken = response.headers.authorization_access;
+          const refreshToken = response.headers.authorization_refresh;
+          dispatch(tokenActions.setToken(accessToken));
+          localStorage.setItem('refreshToken', refreshToken);
+          navigation('/');
+        } else if (code === 304) {
+          setFeedback((prev) => {
+            return { ...prev, password: '아이디 또는 비밀번호를 확인하세요' };
+          });
+          setLoginFailed(true);
+        }
+      },
+      dispatch,
+    );
+  };
 
   const loginButtonHandler = () => {
     loginFetch();
   };
-
-
 
   useEffect(() => {
     if (loginFailed) {
@@ -111,38 +109,35 @@ function Login() {
       <span className="login-span">이메일</span>
       <div className="login-input-box">
         <input
-          className={classNames("login-input", { invalid: feedback.email.length })}
+          className={classNames('login-input', { invalid: feedback.email.length })}
           placeholder="이메일"
           id="email"
-          autoComplete='false'
+          autoComplete="false"
           value={enteredInput.email}
           onChange={inputChangeHandler}
         />
-        <p className="login-feedback">
-          {feedback.email}
-        </p>
+        <p className="login-feedback">{feedback.email}</p>
       </div>
       <span className="login-span">비밀번호</span>
       <div className="login-input-box">
         <input
-          className={classNames("login-input", { invalid: feedback.password.length })}
+          className={classNames('login-input', { invalid: feedback.password.length })}
           placeholder="영문+숫자 포함 8자리 이상"
           id="password"
           type="password"
-          autoComplete='false'
+          autoComplete="false"
           value={enteredInput.password}
           onChange={inputChangeHandler}
         />
-        <p className="login-feedback">
-          {feedback.password}
-        </p>
+        <p className="login-feedback">{feedback.password}</p>
       </div>
-      <div className='login-find_password' aria-hidden="true" onClick={findPassword}>비밀번호찾기</div>
+      <div className="login-find_password" aria-hidden="true" onClick={findPassword}>
+        비밀번호찾기
+      </div>
       <button type="button" className="login-button active loginpage" onClick={loginButtonHandler}>
         로그인
       </button>
 
-      {loginFailed && <ToastMessage message="아이디 비밀번호를 확인해 주세요" />}
     </div>
   );
 }
