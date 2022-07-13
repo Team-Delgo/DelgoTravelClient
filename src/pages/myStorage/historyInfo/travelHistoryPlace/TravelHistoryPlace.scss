@@ -1,11 +1,11 @@
 .travel-hisotry-place{
     background: #FFFBF6;
-    height: 50vw;
+    height: 180px;
     margin-bottom: 3%;
     padding: 5% 0 0 5%;
     &-period{
         color: #3E382F;
-        font-size: 3.5vw;
+        font-size: 14px;
         font-weight: bold;
         padding-bottom: 4%;
     }
@@ -13,23 +13,24 @@
         display: flex;
         &-image{
             width: 20vw;
-            height: 20vw;
+            height: 70px;
             border-radius: 5px;
         }
         &-detail{
             margin-left: 7%;
             &-name{
-                font-size: 4.5vw;
+                font-size: 16px;
                 font-weight: 600;
                 color: #4D483D;
             }
             &-address{
-                font-size: 3.5vw;
+                padding-top: 5px;
+                font-size: 14px;
                 color:#3E382F;
             }
             &-package{
                 padding-top: 5%;
-                font-size: 3.5vw;
+                font-size: 14px;
                 color:#B0A69D;
             }
         }
@@ -37,7 +38,7 @@
     &-review{
         display: flex;
         padding-top: 5%;
-        font-size:3.5vw;
+        font-size: 14px;
         color: #3E382F;
         &-etc{
             display: flex;
@@ -45,9 +46,8 @@
             justify-content: center;
             text-align: center;
             font-weight: bold;
-            font-size:5vw;
             width: 20vw;
-            height: 11vw;
+            height: 43px;
             background-color: #E8E2DC;
             border-radius: 5px
         }
@@ -57,7 +57,7 @@
             justify-content: center;
             text-align: center;
             width: 28vw;
-            height: 11vw;
+            height: 43px;
             background-color: #E8E2DC;
             border-radius: 5px;
             margin-left:25%;
@@ -68,7 +68,7 @@
             justify-content: center;
             text-align: center;       
             width: 28vw;
-            height: 11vw;
+            height: 43px;
             background-color: #E8E2DC;
             border-radius: 5px;
             margin-left:11%;
