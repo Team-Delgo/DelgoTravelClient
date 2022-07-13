@@ -48,14 +48,14 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 87vw;
+    // width: 87vw;
     height: 49px;
     background-color: #ffffff;
     color: #3e382f;
     font-size: 16px;
     font-weight: bold;
-    margin: 0 0 100px 5%;
-    padding-left: 4%;
+    margin: 0 0 100px 0;
+    padding: 0 5%;
     border-radius: 5px;
     &-calender {
       margin-right: 15px;

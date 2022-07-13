@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { wishInsert, wishDelete } from '../../../common/api/wish';
-import Heart from '../../../common/components/Heart';
 import './RecommendedPlaces.scss';
 import { scrollActions } from '../../../redux/slice/scrollSlice';
 import { prevPathActions } from '../../../redux/slice/prevPathSlice';
+import { ReactComponent as ActiveHeart } from '../../../icons/heart-active.svg';
+import { ReactComponent as Heart } from '../../../icons/heart.svg';
 
 interface RedcommendedPlacesProps {
   place: PlaceType;
@@ -24,15 +25,6 @@ interface PlaceType {
   wishId: number;
 }
 
-interface RecommendedPlaceType {
-  address: string;
-  lowestPrice: string;
-  mainPhotoUrl: string;
-  name: string;
-  placeId: number;
-  registDt: string;
-  wishId: number;
-}
 
 function RecommendedPlaces({ place }: RedcommendedPlacesProps) {
   const [wishList, setWishList] = useState(place.wishId);
@@ -43,10 +35,12 @@ function RecommendedPlaces({ place }: RedcommendedPlacesProps) {
   const location: any = useLocation();
 
   const wishListInsert = useCallback(() => {
+    console.log(userId,place.placeId,accessToken)
     wishInsert(
-      { userId, placeId: place.placeId, accessToken },
+      { userId, placeId: place.placeId , accessToken},
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
+          console.log(response.data)
           setWishList(response.data.data.wishId);
         }
       },
@@ -83,9 +77,9 @@ function RecommendedPlaces({ place }: RedcommendedPlacesProps) {
       </div>
       <div className="recommended-places-heart">
         {wishList === 0 ? (
-          <Heart wishList={wishList} handleWishList={wishListInsert} />
+          <Heart onClick={wishListInsert} />
         ) : (
-          <Heart wishList={wishList} handleWishList={wishListDelete} />
+          <ActiveHeart onClick={wishListDelete} />
         )}
       </div>
     </div>

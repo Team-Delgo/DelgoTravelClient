@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useMutation } from 'react-query'
 import { AxiosResponse } from 'axios';
 import AlertConfirm from '../../../../common/dialog/AlertConfirm';
-import Heart from '../../../../common/components/Heart'
+// import Heart from '../../../../common/components/Heart'
 import { wishDelete } from '../../../../common/api/wish'
 import { scrollActions } from '../../../../redux/slice/scrollSlice';
 import {prevPathActions} from "../../../../redux/slice/prevPathSlice"
+import { ReactComponent as ActiveHeart } from '../../../../icons/heart-active.svg';
+import { ReactComponent as Heart } from '../../../../icons/heart.svg';
 import './WishedPlace.scss';
 
 interface WishedPlaceTypeProps {
@@ -74,7 +76,7 @@ function WishedPlace({ place, refetch }: WishedPlaceTypeProps) {
             noButtonHandler={wishListConfirmModalOpenClose}
           />
         )}
-        <Heart wishList={wishList} handleWishList={wishListConfirmModalOpenClose} />
+          <ActiveHeart onClick={wishListDelete} />
       </div>
     </div>
   );

@@ -10,7 +10,9 @@ import RoomType from './roomType/RoomType';
 import Reviews from './reviews/Reviews';
 import ImageSlider from '../../common/utils/ImageSlider';
 import Map from '../../common/utils/Map';
-import Heart from '../../common/components/Heart';
+// import Heart from '../../common/components/Heart';
+import { ReactComponent as ActiveHeart } from '../../icons/heart-active.svg';
+import { ReactComponent as Heart } from '../../icons/heart.svg';
 import { getDetailPlace} from '../../common/api/getPlaces';
 import { getDetailPlaceRivews} from '../../common/api/reivew';
 import { wishInsert, wishDelete } from '../../common/api/wish';
@@ -255,9 +257,9 @@ function DetailPlace() {
         <LeftArrow className="detail-place-previous-page" onClick={moveToPrevPage} />
         <div className="detail-place-heart">
           {detailPlace?.data.place.wishId === 0 ? (
-            <Heart wishList={detailPlace?.data.place.wishId} handleWishList={wishListInsert} />
+            <Heart  onClick={wishListInsert} />
           ) : (
-            <Heart wishList={detailPlace?.data.place.wishId} handleWishList={wishListDelete} />
+            <ActiveHeart  onClick={wishListDelete} />
           )}
         </div>
         <div className="detail-place-info">
