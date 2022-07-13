@@ -112,7 +112,7 @@ function Login() {
           className={classNames('login-input', { invalid: feedback.email.length })}
           placeholder="이메일"
           id="email"
-          autoComplete="false"
+          autoComplete="off"
           value={enteredInput.email}
           onChange={inputChangeHandler}
         />
@@ -125,7 +125,7 @@ function Login() {
           placeholder="영문+숫자 포함 8자리 이상"
           id="password"
           type="password"
-          autoComplete="false"
+          autoComplete="off"
           value={enteredInput.password}
           onChange={inputChangeHandler}
         />
