@@ -20,7 +20,7 @@
     left: 35px;
   }
   &-info {
-    margin: 0 0 15% 5%;
+    margin: 0 0 70px 5%;
     &-name {
       padding: 5% 0 2% 0;
       font-size: 24px;
@@ -29,7 +29,6 @@
     &-accommodation {
       display: flex;
       justify-content: space-between;
-      padding-bottom: 2%;
       font-size: 14px;
       &-check-in-check-out {
         color: #8a8a8a;
@@ -41,7 +40,6 @@
       }
     }
     &-facility {
-      padding-bottom: 10%;
       font-size: 18px;
       color: #6e614d;
     }
@@ -56,43 +54,28 @@
     color: #3e382f;
     font-size: 16px;
     font-weight: bold;
-    margin: 0 0 18% 5%;
+    margin: 0 0 100px 5%;
     padding-left: 4%;
     border-radius: 5px;
     &-calender {
       margin-right: 15px;
     }
   }
-  &-room-select {
-    margin-left: 5%;
-    &-header {
-      font-size: 6vw;
-      font-weight: bold;
-      padding-bottom: 5%;
-    }
-  }
-  &-review {
-    padding-top: 40%;
-    &-header {
-      margin: 0 0 15% 5%;
-      &-number {
-        font-size: 6vw;
-        font-weight: bold;
-      }
-      &-more {
-        color: #ff9162;
-        font-weight: bold;
-        padding-left: 55%;
-      }
-    }
-  }
+  // &-room-select {
+  //   margin-left: 5%;
+  //   &-header {
+  //     font-size: 6vw;
+  //     font-weight: bold;
+  //     padding-bottom: 5%;
+  //   }
+  // }
   &-facility {
-    margin: 0 0 30% 5%;
+    margin: 0 0 100px 5%;
     font-size: 18px;
     color: #3E382F;
     font-weight: 500;
     &-header {
-      padding-bottom: 7%;
+      padding-bottom: 25px;
     }
     &-image-container {
       display: flex;
@@ -103,12 +86,12 @@
   &-notice,
   &-base-information,
   &-additional-personnel-information {
-    margin: 0 5% 30% 5%;
+    margin: 0 5% 100px 5%;
     font-size: 18px;
     color: #3E382F;
     font-weight: 500;
     &-header {
-      padding-bottom: 7%;
+      padding-bottom: 25px;
     }
   }
 }

@@ -1,25 +1,25 @@
 .detail-place-review-page-header{
-    padding : 12% 0 5% 5%;
-    margin-bottom: 13%;
-    border-bottom: 1px solid #a9a5a1;
+    padding : 45px 0 20px 5%;
+    margin-bottom: 60px;
+    border-bottom: 3px solid #E8E2DC;;
     font-weight: bold;
     color: #3E382F;
     &-previous-page{
-        padding-bottom: 7%;
+        padding-bottom: 30px;
     }
     &-number{
-        font-size: 6vw; 
-        padding-bottom: 2%;
+        font-size: 24px;
+        padding-bottom: 5px;
     }
     &-rating-count{
-        font-size: 4.5vw;
-        padding-bottom: 6%;
+        font-size: 16px;
+        padding-bottom: 25px;
     } 
-    &-review-star{
-        padding-top: 1%;
-    }
     &-image-review{
-        padding-left: 2%;
-        font-size: 3.5vw;
+        padding-left: 5px;
+        font-size: 16px;
+    }
+    input[type="checkbox"] {
+        accent-color: #FF9162;
     }
 }

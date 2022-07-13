@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { Link} from 'react-router-dom';
 import './HomeReservation.scss';
 import RightArrow from '../../icons/right-arrow-black.svg';
 import Location from '../../icons/location.svg';
@@ -122,10 +123,12 @@ function HomeReservation(props: { lists: any[], pageChange: (page: number) => vo
         <div className="homemodal-item-card">
           <img className="homemodal-item-image" src={list.place.mainPhotoUrl} alt="placeimage" />
           <div className="homemodal-item-wrapper">
-            <div className="homemodal-item-card-title">
-              <div className="homemodal-item-card-title-place">{list.place.name}</div>
-              <img aria-hidden="true" src={RightArrow} alt="detail" />
-            </div>
+            <Link to={`/reservation-confirm/${list.bookingId}`}>
+              <div className="homemodal-item-card-title">
+                <div className="homemodal-item-card-title-place">{list.place.name}</div>
+                <img aria-hidden="true" src={RightArrow} alt="detail" />
+              </div>
+            </Link>
             <div className="homemodal-item-card-checkinout">
               <div className="homemodal-item-card-first">
                 <div className="homemodal-item-card-check">체크인</div>

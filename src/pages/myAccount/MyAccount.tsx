@@ -7,8 +7,8 @@ import 'react-alert-confirm/dist/index.css';
 import Footer from '../../common/components/Footer';
 import './MyAccount.scss';
 import RightArrow from '../../icons/right-arrow-black.svg';
-import { userActions } from '../../redux/reducers/userSlice';
-import { tokenActions } from '../../redux/reducers/tokenSlice';
+import { userActions } from '../../redux/slice/userSlice';
+import { tokenActions } from '../../redux/slice/tokenSlice';
 import AlertConfirm from '../../common/dialog/AlertConfirm';
 import AlertConfirmOne from '../../common/dialog/AlertConfirmOne';
 import { deleteUser } from '../../common/api/signup';
@@ -105,7 +105,7 @@ function MyAccount() {
         <img className="account-profile-image" src={pet?.image} alt="dog" />
         <div className="account-profile-info">
           <div className='account-profile-info-first'>
-            <div className="account-profile-info-name">몽자</div>
+            <div className="account-profile-info-name">{pet.name}</div>
             <span className="account-profile-info-age">/ 5살</span>
             <img
               aria-hidden="true"

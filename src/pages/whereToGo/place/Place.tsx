@@ -4,11 +4,14 @@ import { useLocation,useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { wishInsert, wishDelete } from '../../../common/api/wish'
 import Heart from '../../../common/components/Heart'
-import { scrollActions } from '../../../redux/reducers/scrollSlice';
+import { scrollActions } from '../../../redux/slice/scrollSlice';
+import { areaActions } from '../../../redux/slice/areaSlice';
+import {prevPathActions} from "../../../redux/slice/prevPathSlice"
 import './Place.scss'
 
 interface PlaceTypeProps {
   place: PlaceType
+  areaTerm:string
 }
 
 interface PlaceType {
@@ -23,7 +26,7 @@ interface PlaceType {
   wishId: number
 }
 
-function Place({ place }: PlaceTypeProps) {
+function Place({ place,areaTerm }: PlaceTypeProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const accessToken = useSelector((state: any) => state.token.token);
   const userId = useSelector((state: any) => state.persist.user.user.id)
@@ -58,20 +61,18 @@ function Place({ place }: PlaceTypeProps) {
   }, [wishList]);
 
 
-  const moveToDetailPage = useCallback(() => {
-    dispatch(scrollActions.scroll({ whereToGo: window.scrollY,detailPlace:0,myStorage:0 }));
-    navigate(`/detail-place/${place.placeId}`, {
-      state: {
-        prevPath: location.pathname,
-      },
-    });
-  }, []);
+  const moveToDetailPage = () => {
+    dispatch(scrollActions.scroll({ whereToGo: window.scrollY, detailPlace: 0, myStorage: 0, homeY: 0 }));
+    dispatch(areaActions.setArea({ areaName: areaTerm }));
+    dispatch(prevPathActions.prevPath({ prevPath: location.pathname }));
+    navigate(`/detail-place/${place.placeId}`);
+  };
 
   return (
     <div className="place" aria-hidden="true">
-      <div aria-hidden onClick={place.isBooking===0 ? moveToDetailPage : undefined}>
-        <img src={place.mainPhotoUrl} alt="place-img"/>
-        </div>
+      <div aria-hidden onClick={place.isBooking === 0 ? moveToDetailPage : undefined}>
+        <img src={place.mainPhotoUrl} alt="place-img" />
+      </div>
       <div className="place-info">
         <div className="place-info-first-line">
           <span className="place-region">
@@ -80,10 +81,7 @@ function Place({ place }: PlaceTypeProps) {
         </div>
         <div className="place-info-second-line">
           <span>{place.name}</span>
-          {
-            place.isBooking===0 ? <span>{place.lowestPrice}~</span>
-            : <span>예약마감</span>
-          }
+          {place.isBooking === 0 ? <span>{place.lowestPrice}~</span> : <span>예약마감</span>}
         </div>
       </div>
       <div className="place-heart">

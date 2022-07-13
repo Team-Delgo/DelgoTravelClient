@@ -8,7 +8,7 @@ import ToastMessage from '../../common/dialog/ToastMessage';
 import Timer from '../signUpPage/verifyphone/Timer';
 import { phoneCheckNumber, phoneSendMessageForFind } from '../../common/api/signup';
 import { SIGN_IN_PATH } from '../../constants/path.const';
-import { errorActions } from '../../redux/reducers/errorSlice';
+import { errorActions } from '../../redux/slice/errorSlice';
 
 interface LocationState {
   phone: string;

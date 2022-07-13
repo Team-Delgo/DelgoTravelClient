@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AxiosError } from 'axios';
 import { useDispatch } from 'react-redux';
-import { errorActions } from '../../redux/reducers/errorSlice';
+import { errorActions } from '../../redux/slice/errorSlice';
 
 function useErrorHandler(error: AxiosError) {
   // const dispatch = useDispatch();
