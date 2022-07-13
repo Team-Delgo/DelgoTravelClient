@@ -7,6 +7,7 @@ import { ReactComponent as Arrow } from '../../icons/left-arrow.svg';
 import { SIGN_IN_PATH } from '../../constants/path.const';
 import { changePassword } from '../../common/api/login';
 import { checkPasswordConfirm } from "../signUpPage/userInfo/ValidCheck";
+import "./ResetPassword.scss";
 
 interface Input {
   password: string;
@@ -61,7 +62,7 @@ function ResetPassword() {
       </div>
       <div className="login-input-box">
         <input
-          className="login-input"
+          className="login-input reset"
           placeholder="새 비밀번호 (최소8자 이상)"
           id="password"
           type="password"
@@ -71,7 +72,7 @@ function ResetPassword() {
       </div>
       <div className="login-input-box">
         <input
-          className="login-input"
+          className="login-input reset-confirm"
           placeholder="새 비밀번호 확인"
           id="passwordConfirm"
           type="password"

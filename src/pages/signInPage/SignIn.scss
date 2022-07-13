@@ -15,7 +15,11 @@
   color: $font;
 }
 .login {
+  &-logo{
+    width: 40vw;
+  }
   &-signin {
+    background-color: white;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -27,13 +31,15 @@
   &-title {
     font-family: 'Spoqa Han Sans Neo';
     font-style: normal;
-    font-weight: 700;
-    font-size: 24px;
+    font-weight: 500;
+    font-size: 18px;
+    margin-top: 11px;
     line-height: 126.19%;
-    color: #4d483d;
+    color: #3e382f;
+    
   }
   &-kakao {
-    margin-top: 93px;
+    margin-top: 65px;
     display: flex;
     align-items: center;
     @include buttonstyle(#ffef5a, #474747);

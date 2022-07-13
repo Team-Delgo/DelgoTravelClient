@@ -1,0 +1,29 @@
+.complete{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &-logo{
+    margin-top: 170px;
+    width: 50vw;
+  }
+  &-circle{
+    margin-top: 74px;
+    width: 65px;
+    height: 65px;
+    border-radius: 100%;
+    background-color: #628f56;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &-check{
+    width: 33px;
+  }
+  &-text{
+    margin-top: 16px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 27px;
+    color: #3e382f;
+  }
+}
