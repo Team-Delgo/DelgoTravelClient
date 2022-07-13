@@ -41,7 +41,7 @@ interface RecommendedPlaceType {
 
 function Home() {
   const [page, setPage] = useState(0);
-  const [dday, setDday] = useState(0);
+  const [dday, setDday] = useState('0');
   const [reservationPlaces, setReservationPlaces] = useState<Array<any>>([]);
   const [editorPlaces, setEditorPlaces] = useState<Array<EditorPlaceType>>([
     {
@@ -107,8 +107,14 @@ function Home() {
     const currentDate = new Date();
     const dateDif = startDate.getTime() - currentDate.getTime();
     const dDay = dateDif / (1000 * 60 * 60 * 24);
-
-    setDday(Math.ceil(dDay))
+    let dDayString;
+    if(dDay < 1){
+      dDayString = 'DAY';
+    }
+    else{
+      dDayString = (Math.ceil(dDay)).toString();
+    }
+    setDday(dDayString);
   };
 
   useEffect(() => {
@@ -151,7 +157,6 @@ function Home() {
                 if(temp+1 > reservationPlaces.length)
                   temp = reservationPlaces.length - 1;
                 setPage(temp);
-                console.log(temp);
               }}
             />
           </>
