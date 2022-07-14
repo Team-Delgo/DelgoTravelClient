@@ -5,7 +5,7 @@ import { useLocation,Link,useParams,useNavigate} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Transition  } from 'react-transition-group';
 import Reviews from '../reviews/Reviews';
-import { ReactComponent as LeftArrow } from '../../../icons/left-arrow2.svg';
+import { ReactComponent as LeftArrow } from '../../../icons/left-arrow.svg';
 import { ReactComponent as ReviewStar } from '../../../icons/review-star.svg';
 import './ReviewsPage.scss';
 
@@ -18,14 +18,15 @@ function ReviewsPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    console.log(location.state.reviews)
     setReviews(location.state.reviews);
 
-    const reviewImages = location.state.reviews.filter(function(review:any) {
-      if(review.reviewImages.length >0)  {
-        return true;
-      }
-    })
-    setImageReviewsCount(reviewImages.length)
+    // const reviewImages = location.state.reviews.filter(function(review:any) {
+    //   if(review.reviewImages.length >0)  {
+    //     return true;
+    //   }
+    // })
+    // setImageReviewsCount(reviewImages.length)
   }, []);
 
 
@@ -36,14 +37,14 @@ function ReviewsPage() {
     } else {
       setChecked(!checked);
       const imageReviews: React.SetStateAction<string[]> = [];
-      reviews.map((review: any)=>{
+      reviews.map((review: any) => {
         if (review.reviewImages.length > 0) {
           imageReviews.push(review);
         }
       });
       setReviews(imageReviews);
     }
-  },[checked,reviews])
+  }, [checked, reviews]);
 
   return (
     <>

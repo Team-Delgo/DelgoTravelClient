@@ -74,11 +74,11 @@
     }
   }
   &-review {
-    padding-top: 100px;
+    padding: 100px 0 60px 0;
     &-header {
       display: flex;
       justify-content: space-between;
-      padding: 0 5% 60px 5%;
+      padding: 0 5% 50px 5%;
       &-number {
         font-size: 24px;
         font-weight: bold;
@@ -93,7 +93,7 @@
   &-facility {
     padding: 0 0 100px 5%;
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 500;
     &-header {
       padding-bottom: 30px;
     }
@@ -110,7 +110,7 @@
   &-etc {
     padding: 0 5% 100px 5%;
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 500;
     &-header {
       padding-bottom: 30px;
     }
