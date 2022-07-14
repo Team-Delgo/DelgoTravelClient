@@ -111,12 +111,14 @@ function VerifyPhone() {
   };
 
   const authNumberResend = () => {
+    const phone = phoneNumber.slice(0, 3) + phoneNumber.slice(4, 8) + phoneNumber.slice(9, 13);
     phoneSendMessage(
-      phoneNumber,
+      phone,
       (response: AxiosResponse) => {
-        const { code } = response.data;
+        const { code,data } = response.data;
 
         if (code === 200) {
+          setSMSid(data);
           setIsReSended(true);
           setButtonIsClicked(true);
           setTimeIsValid(true);

@@ -4,10 +4,10 @@ import classNames from 'classnames';
 import Birth from './Birth';
 
 function BirthSelector(props: { changeBirth: (year: number, month: number, day: number) => void }) {
-  const [selectedYear, setSelectedYear] = useState<number>(1990);
+  const [selectedYear, setSelectedYear] = useState<number>(2000);
   const [selectedMonth, setSelectedMonth] = useState<number>(1);
   const [selectedDay, setSelectedDay] = useState<number>(1);
-  const { years, months, days, leapYear } = Birth(1990, 2022, true);
+  const { years, months, days, leapYear } = Birth(2000, 2022, true);
   const [dayArray, setDayArray] = useState<(number | string)[]>(days[0]);
   const yearRef = useRef<any>(null);
   const monthRef = useRef<any>(null);
@@ -25,7 +25,7 @@ function BirthSelector(props: { changeBirth: (year: number, month: number, day: 
 
   useEffect(() => {
     if (selectedYear) {
-      yearRef.current.scrollTop = (selectedYear - 1990) * 30;
+      yearRef.current.scrollTop = (selectedYear - 2000) * 30;
     }
     if (selectedMonth) {
       monthRef.current.scrollTop = (selectedMonth - 1) * 30;
@@ -63,7 +63,7 @@ function BirthSelector(props: { changeBirth: (year: number, month: number, day: 
 
   const yearScrollHandler = () => {
     const { scrollTop } = yearRef.current;
-    const year = Math.round(scrollTop / 30) + 1990;
+    const year = Math.round(scrollTop / 30) + 2000;
     setSelectedYear(year);
   };
 

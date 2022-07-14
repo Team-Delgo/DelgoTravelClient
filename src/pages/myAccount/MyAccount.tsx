@@ -72,7 +72,7 @@ function MyAccount() {
     );
     dispatch(userActions.signout());
     localStorage.removeItem('refreshToken');
-    // navigation('/user/signin');
+    navigation('/user/signin');
   };
 
   const logOutModalOpen = () => {

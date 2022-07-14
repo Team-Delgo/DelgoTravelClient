@@ -3,13 +3,13 @@ import { useSelector } from 'react-redux';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { useDispatch } from 'react-redux';
-import { useQuery } from 'react-query'
+import { useQuery } from 'react-query';
 import Footer from '../../common/components/Footer';
 import RecommendedPlaces from './recommenedPlaces/RecommendedPlaces';
 import { tokenActions } from '../../redux/slice/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
 import { bookingGetDataByMain } from '../../common/api/booking';
-import { getAllPlaces , getRecommendedPlace} from '../../common/api/getPlaces';
+import { getAllPlaces, getRecommendedPlace } from '../../common/api/getPlaces';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import Dog from '../../icons/dog.svg';
 import Airplane from '../../icons/airplane.svg';
@@ -28,15 +28,15 @@ interface EditorPlaceType {
 }
 
 interface RecommendedPlaceType {
-  address: string
-  checkin: string
-  checkout: string
-  isBooking: number
-  lowestPrice: string
-  mainPhotoUrl: string
-  name: string
-  placeId: number
-  wishId: number
+  address: string;
+  checkin: string;
+  checkout: string;
+  isBooking: number;
+  lowestPrice: string;
+  mainPhotoUrl: string;
+  name: string;
+  placeId: number;
+  wishId: number;
 }
 
 function Home() {
@@ -68,23 +68,20 @@ function Home() {
   const location: any = useLocation();
   const { homeY } = useSelector((state: any) => state.persist.scroll);
 
-
   const { isLoading, data: recommendedPlaces } = useQuery('getRecommendedPlaces', () => getRecommendedPlace(userId), {
     cacheTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 3,
     refetchInterval: false,
     onSuccess: () => {
-      console.log(recommendedPlaces)
+      console.log(recommendedPlaces);
     },
     onError: (error: any) => {
       useErrorHandlers(dispatch, error);
     },
   });
 
-
-
   useEffect(() => {
-    console.log(recommendedPlaces)
+    console.log(recommendedPlaces);
     bookingGetDataByMain(
       { accessToken, userId },
       (response: AxiosResponse) => {
@@ -108,20 +105,17 @@ function Home() {
     const dateDif = startDate.getTime() - currentDate.getTime();
     const dDay = dateDif / (1000 * 60 * 60 * 24);
     let dDayString;
-    if(dDay < 1){
+    if (dDay < 1) {
       dDayString = 'DAY';
-    }
-    else{
-      dDayString = (Math.ceil(dDay)).toString();
+    } else {
+      dDayString = Math.ceil(dDay).toString();
     }
     setDday(dDayString);
   };
 
   useEffect(() => {
-    if (reservationPlaces?.length)
-      getDday();
+    if (reservationPlaces?.length) getDday();
   }, [page, reservationPlaces]);
-
 
   useEffect(() => {
     tokenRefresh(
@@ -136,7 +130,7 @@ function Home() {
           dispatch(tokenActions.setToken(accessToken));
           localStorage.setItem('refreshToken', refreshToken);
         } else {
-          navigation('/user/signin');
+          navigation('/user/signin',{replace:true});
         }
       },
       dispatch,
@@ -147,15 +141,16 @@ function Home() {
     <>
       <div className="home-background">
         <img src={Delgo} alt="delgo" className="delgo" />
-        {reservationPlaces?.length>0 && (
+        {reservationPlaces?.length > 0 && (
           <>
-            <div className='home-reservation-info'>{reservationPlaces[page]?.place.address.slice(0, 2)} 여행까지 D-{dday}✈️</div>
+            <div className="home-reservation-info">
+              {reservationPlaces[page]?.place.address.slice(0, 2)} 여행까지 D-{dday}✈️
+            </div>
             <HomeReservation
               lists={reservationPlaces}
               pageChange={(number) => {
                 let temp = number;
-                if(temp+1 > reservationPlaces.length)
-                  temp = reservationPlaces.length - 1;
+                if (temp + 1 > reservationPlaces.length) temp = reservationPlaces.length - 1;
                 setPage(temp);
               }}
             />
