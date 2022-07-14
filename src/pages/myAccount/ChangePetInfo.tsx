@@ -12,6 +12,7 @@ import BirthSelector from '../signUpPage/petInfo/BirthSelector';
 import { petImageUpload } from '../../common/api/signup';
 import Check from '../../icons/check.svg';
 import { MY_ACCOUNT_PATH } from '../../constants/path.const';
+import { changePetInfo } from '../../common/api/myaccount';
 
 interface Input {
   name: string;
@@ -134,7 +135,16 @@ function ChangePetInfo() {
       birthday: enteredInput.birth,
       size: enteredInput.type,
     };
+    const data = {
+      email:'cksr1@naver.com',
+      name:enteredInput.name,
+      birthday:enteredInput.birth,
+      size:enteredInput.type
+    }
     console.log(imageisChanged);
+    changePetInfo(data,(response:AxiosResponse)=>{
+      console.log(response);
+    },dispatch);
     if (imageisChanged) {
       formData.append('userId', userId.toString());
       formData.append('photo', sendingImage);
