@@ -95,15 +95,24 @@ function ReservationConfirmPage() {
     setReservationCancleModal(false);
   }, []);
 
+  const copyPlaceAddress =  () => {
+    navigator.clipboard.writeText(reservationData.place.address);
+  };
+
+  const copyReservationNumber =  () => {
+    navigator.clipboard.writeText(reservationData.bookingId);
+  };
+
   return (
     <>
       <div className="reservationPage">
         <div className="header">
           <Exit className="exit-button" onClick={moveToMainPage} />
-          {
-            reservationData.bookingState === "W" ? <h1 className="header-title">예약접수 확인</h1>
-            : <h1 className="header-title">예약확정</h1>
-          }
+          {reservationData.bookingState === 'W' ? (
+            <h1 className="header-title">예약접수 확인</h1>
+          ) : (
+            <h1 className="header-title">예약확정</h1>
+          )}
         </div>
         <div className="placeinfo">
           <div className="placeinfo-wrapper">
@@ -113,25 +122,33 @@ function ReservationConfirmPage() {
           <p className="placeinfo-address">{reservationData.place.address}</p>
           <p className="placeinfo-room">{reservationData.roomName}</p>
         </div>
-        <div className="checkin-checkout">  
+        <div className="place-use-info">
+          <div>숙소문의</div>
+          <div aria-hidden="true" onClick={copyPlaceAddress}>주소복사</div>
+          <div>지도보기</div>
+        </div>
+        <div className="checkin-checkout">
           <div className="checkin-checkout-date">
             <span className="check-title">체크인</span>
             <span className="check-date">
-              {/* {date.date.start.substring(2, 4)}.{date.date.start.substring(4, 6)}.{date.date.start.substring(6, 8)}{' '}
-              {date.dateString.substring(5, 8)} */}
-              {reservationData.startDt.substring(2, 4)}.{reservationData.startDt.substring(5, 7)}.{reservationData.startDt.substring(8, 10)}{' '}
-              {/* {reservationData.startDt.substring(5, 8)} */}
+              {reservationData.startDt.substring(2, 4)}.{reservationData.startDt.substring(5, 7)}.
+              {reservationData.startDt.substring(8, 10)}{' '}
             </span>
+            <span className="check-date">{reservationData.place.checkin.substring(0, 5)}</span>
           </div>
           <div className="checkin-checkout-date">
             <span className="check-title">체크아웃</span>
             <span className="check-date">
-              {reservationData.endDt.substring(2, 4)}.{reservationData.endDt.substring(5, 7)}.{reservationData.endDt.substring(8, 10)}{' '}
-              {/* {reservationData.endDt.substring(16, 19)} */}
+              {reservationData.endDt.substring(2, 4)}.{reservationData.endDt.substring(5, 7)}.
+              {reservationData.endDt.substring(8, 10)}{' '}
             </span>
+            <span className="check-date">{reservationData.place.checkout.substring(0, 5)}</span>
           </div>
         </div>
-        <h2 className="reservation-title first">예약정보</h2>
+        <div className="reservation-info-header">
+          <div className="reservation-info-header-label">예약정보</div>
+          <div className="reservation-number-copy" aria-hidden="true" onClick={copyReservationNumber}>예약번호 복사</div>
+        </div>
         <div className="reservation-info">
           <div className="reservation-info-first-line">
             <div className="reservation-info-first-line-number-label">예약번호</div>
@@ -168,23 +185,26 @@ function ReservationConfirmPage() {
           <div className="payment-methods-price">신용카드</div>
         </div>
         <div className="view-policy">
-        {reservationData.place.name}정책보기
+          {reservationData.place.name} 정책보기
           <img src={RightArrowBlack} alt="detail" />
         </div>
         <div className="cancel-reservation">
           <div className="cancel-reservation-label">
-            {reservationData.canCancelDate.substring(0, 4)}년 {reservationData.canCancelDate.substring(5, 7)}월 {reservationData.canCancelDate.substring(8, 10)}일
-            18:00까지 무료 취소 가능합니다.</div>
-          <button className="cancel-reservation-button" type="button" onClick={handleReservationCancleModal}>예약취소</button>
+            {reservationData.canCancelDate.substring(0, 4)}년 {reservationData.canCancelDate.substring(5, 7)}월{' '}
+            {reservationData.canCancelDate.substring(8, 10)}일 18:00까지 무료 취소 가능합니다.
+          </div>
+          <button className="cancel-reservation-button" type="button" onClick={handleReservationCancleModal}>
+            예약취소
+          </button>
         </div>
       </div>
-      {
-        reservationCancleModal && <ReservationCancleModal
+      {reservationCancleModal && (
+        <ReservationCancleModal
           reservationCancleModal={handleReservationCancleModal}
           closeReservationCancleModal={closeReservationCancleModal}
         />
-      }
-      <BottomButton text="예약내역 공유하기" />
+      )}
+      {/* <BottomButton text="예약내역 공유하기" /> */}
     </>
   );
 }

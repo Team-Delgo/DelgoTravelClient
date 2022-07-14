@@ -1,29 +1,36 @@
 .review{
-    margin: 0 0 70px 5%;
+    margin: 0 0 20px 5%;
     color: #3E382F;
     &-header{
         display: flex;
+        img{
+            border-radius: 50%;
+            height:51px;
+        }
         &-info{
-            padding-left: 3%;
+            padding-left: 10px;
             &-nick-name{
+                font-size: 16px;
                 font-weight: bold;
+                padding-bottom: 5px;
             }
             &-star-rating{
                 width: 100%;
             }
-            &-registration-data{
-                 padding-left: 12px;
+            &-registration-date{
+                padding-left: 10px;
                 font-weight: bold;
                 font-size: 12px;
             }
             &-room-used{
-                padding-bottom: 10%;
                 font-size: 12px;
+                padding: 0 0 10px 2px;
                 color:#AD9E87;
             }
         }
     }
     &-content{
+        margin-left: 70px;
         &-description{
             position: relative;
             color:#3E382F;
@@ -46,5 +53,8 @@
                 padding-right: 10px;
             }
         }
+    }
+    .review-header-info-second-line{
+        display: flex;
     }
 }

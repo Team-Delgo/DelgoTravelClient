@@ -95,12 +95,18 @@ function Reservation() {
               {date.date.start.substring(2, 4)}.{date.date.start.substring(4, 6)}.{date.date.start.substring(6, 8)}{' '}
               {date.dateString.substring(5, 8)}
             </span>
+            <span className="check-date">
+              {date.checkIn}
+            </span>
           </div>
           <div className="checkin-checkout-date">
             <span className="check-title">체크아웃</span>
             <span className="check-date">
               {date.date.end.substring(2, 4)}.{date.date.end.substring(4, 6)}.{date.date.end.substring(6, 8)}{' '}
               {date.dateString.substring(16, 19)}
+            </span>
+            <span className="check-date">
+              {date.checkOut}
             </span>
           </div>
         </div>

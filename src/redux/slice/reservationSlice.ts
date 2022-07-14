@@ -10,6 +10,8 @@ const initialState = {
       end: '',
     },
     dateString:'',
+    checkIn:'',
+    checkOut:''
   },
 };
 

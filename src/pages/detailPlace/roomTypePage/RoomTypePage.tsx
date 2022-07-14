@@ -85,7 +85,9 @@ function RoomTypePage() {
         },
         date: {
           date,
-          dateString
+          dateString,
+          checkIn:currentPlace.checkIn.substring(0, 5),
+          checkOut:currentPlace.checkOut.substring(0, 5)
         },
       }),
     );

@@ -1,21 +1,22 @@
-
-import React,{useState,useCallback,useRef,useEffect} from 'react'
-import {useNavigate, useLocation } from 'react-router-dom'; 
+/* eslint-disable array-callback-return */
+import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useSelector,useDispatch } from "react-redux";
+import { AxiosResponse } from 'axios';
 import BottomButton from '../../common/components/BottomButton';
+import  {writeReivew,reviewImageUpload}  from '../../common/api/reivew'
 import { ReactComponent as BigRivewStarActive } from '../../icons/big-review-star-active.svg';
-import { ReactComponent as BigRivewStar} from '../../icons/big-review-star.svg';
-import { ReactComponent as BigRiveHalfwStar} from '../../icons/big-review-half-star.svg';
-import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg'
+import { ReactComponent as BigRivewStar } from '../../icons/big-review-star.svg';
+import { ReactComponent as BigRiveHalfwStar } from '../../icons/big-review-half-star.svg';
+import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg';
 import { ReactComponent as Camera } from '../../icons/camera.svg';
-import { ReactComponent as ThumbUp } from '../../icons/thumb-up.svg';
-import { ReactComponent as ThumbUpActive } from '../../icons/thumb-up-active.svg';
 import { ReactComponent as X } from '../../icons/x.svg';
 import './RiviewWriting.scss';
 
-
-interface ReservationPlaceType {
+interface TraveledHisotryPlaceType {
   bookingId: string,
   roomName: string,
+  roomId:number,
   startDt: string,
   endDt: string,
   place: {
@@ -29,30 +30,28 @@ interface ReservationPlaceType {
     placeId: number
     wishId: number
   },
-  }
+}
 
 function RiviewWriting() {
   const [images, setImages] = useState<Array<any>>([]);
+  const [sendingImage, setSendingImage] = useState<Array<any>>([]);
   const fileUploadRef = useRef<HTMLInputElement>(null);
-  const slideRef = useRef<HTMLDivElement>(null)
-  const [activeStar1,setActiveStar1] = useState(false)
-  const [activeStar2,setActiveStar2] = useState(false)
-  const [activeStar3,setActiveStar3] = useState(false)
-  const [activeStar4,setActiveStar4] = useState(false)
-  const [activeStar5,setActiveStar5] = useState(false)
-  const [cleanlinessLike,setCleanlinessLike] = useState(false)
-  const [facilitiesLike,setFacilitiesLike] = useState(false)
-  const [locationLike,setLocationLike] = useState(false)
-  const [rivewText,setReviewText] = useState("")
-
-  const state = useLocation().state as ReservationPlaceType;
+  const slideRef = useRef<HTMLDivElement>(null);
+  const [activeStar1, setActiveStar1] = useState(true);
+  const [activeStar2, setActiveStar2] = useState(true);
+  const [activeStar3, setActiveStar3] = useState(true);
+  const [activeStar4, setActiveStar4] = useState(true);
+  const [activeStar5, setActiveStar5] = useState(true);
+  const [rivewText, setReviewText] = useState('');
+  const starRaiting = useRef(5);
+  const userId = useSelector((state: any) => state.persist.user.user.id);
+  const petName = useSelector((state: any) => state.persist.user.pet.name);
+  const dispatch = useDispatch();
+  const state = useLocation().state as TraveledHisotryPlaceType;
   const navigate = useNavigate();
+  const formData = new FormData();
+  
 
-  useEffect(()=>{
-    console.log(state)
-    console.log(slideRef.current?.offsetWidth)
-  },[])
-;
   const moveToPreviousPage = useCallback(() => {
     navigate(-1);
   }, []);
@@ -64,8 +63,8 @@ function RiviewWriting() {
   }, []);
 
   const handleUploadFile = (event: { target: HTMLInputElement }) => {
-    if(images.length===4){
-      return
+    if (images.length === 4) {
+      return;
     }
     if (event.target.files) {
       const imageLists = event.target.files;
@@ -80,126 +79,203 @@ function RiviewWriting() {
         imageUrlLists = imageUrlLists.slice(0, 10);
       }
       setImages(imageUrlLists);
+      console.log(imageUrlLists[3]);
+
+      const reader = new FileReader();
+      reader.readAsDataURL(event.target.files![0]);
+      setSendingImage([...sendingImage , event.target.files![0]]);
     }
   };
 
-  const handleDeleteImage = (clickedImage: File) =>(event: React.MouseEvent)  => {
+  const handleDeleteImage = (clickedImage: File) => (event: React.MouseEvent) => {
     const newImages = images.filter((image) => image !== clickedImage);
     setImages(newImages);
   };
 
-  const handleStarRating1 = useCallback((e) => {
-    console.log(e.clientX)
-    if (activeStar1 === false) {
-      setActiveStar1(true)
-      setActiveStar2(false)
-      setActiveStar3(false)
-      setActiveStar4(false)
-      setActiveStar5(false)
-    } else {
-      setActiveStar1(false)
-      setActiveStar2(false)
-      setActiveStar3(false)
-      setActiveStar4(false)
-      setActiveStar5(false)
-    }
-  },[activeStar1,activeStar2,activeStar3,activeStar4,activeStar5])
+  const submitRivew = () => {
+    console.log(sendingImage)
+    console.log(sendingImage[4])
+    writeReivew(
+      {
+        userId,
+        placeId: state.place.placeId,
+        roomId: state.roomId,
+        rating: starRaiting.current,
+        text: rivewText,
+      },
+      (response: AxiosResponse) => {
+        const { code, codeMsg } = response.data;
+        if (code === 200) {
+          const {reviewId} = response.data.data;
+      
+          formData.append('rievewId', reviewId);
+          if (sendingImage[0]!==undefined) {
+            console.log(1)
+            formData.append('photo1', sendingImage[0]);
+          } else {
+            console.log(2)
+            formData.append('photo1', '');
+          }
+          if (sendingImage[1]!==undefined) {
+            console.log(1)
+            formData.append('photo2', sendingImage[1]);
+          } else {
+            console.log(2)
+            formData.append('photo2', '');
+          }
+          if (sendingImage[2]!==undefined) {
+            console.log(1)
+            formData.append('photo3', sendingImage[2]);
+          } else {
+            console.log(2)
+            formData.append('photo3', '');
+          }
+          if (sendingImage[3]!==undefined) {
+            console.log(1)
+            formData.append('photo4', sendingImage[3]);
+          } else {
+            console.log(2)
+            formData.append('photo4', '');
+          }
+          // if (sendingImage[4]!==undefined) {
+          //   console.log(1)
+          //   formData.append('photo5', sendingImage[4]);
+          // }
+          // eslint-disable-next-line no-restricted-syntax, guard-for-in
+          formData.forEach((value: any, key: any) => {
+            console.log(key, value);
+        });
+
+          reviewImageUpload(
+            formData,
+            (response: AxiosResponse) => {
+              console.log(response);
+              const { code, codeMsg } = response.data;
+              if (code === 200) {
+                setTimeout(() => {
+                  navigate('/');
+                }, 1000);
+              } else {
+                console.log(codeMsg);
+              }
+            },
+            dispatch,
+          );
+        } else {
+          console.log(codeMsg);
+        }
+      },
+      dispatch,
+    );
+  };
+
+  const handleStarRating1 = useCallback(() => {
+    starRaiting.current = 1;
+    setActiveStar1(true);
+    setActiveStar2(false);
+    setActiveStar3(false);
+    setActiveStar4(false);
+    setActiveStar5(false);
+  }, [activeStar1, activeStar2, activeStar3, activeStar4, activeStar5]);
   const handleStarRating2 = useCallback(() => {
     if (activeStar2 === false) {
-      setActiveStar1(true)
-      setActiveStar2(true)
-      setActiveStar3(false)
-      setActiveStar4(false)
-      setActiveStar5(false)
+      starRaiting.current = 2;
+      setActiveStar1(true);
+      setActiveStar2(true);
+      setActiveStar3(false);
+      setActiveStar4(false);
+      setActiveStar5(false);
     } else {
-      setActiveStar1(true)
-      setActiveStar2(false)
-      setActiveStar3(false)
-      setActiveStar4(false)
-      setActiveStar5(false)
+      starRaiting.current = 1;
+      setActiveStar1(true);
+      setActiveStar2(false);
+      setActiveStar3(false);
+      setActiveStar4(false);
+      setActiveStar5(false);
     }
-  },[activeStar1,activeStar2,activeStar3,activeStar4,activeStar5])
+  }, [activeStar1, activeStar2, activeStar3, activeStar4, activeStar5]);
   const handleStarRating3 = useCallback(() => {
     if (activeStar3 === false) {
-      setActiveStar1(true)
-      setActiveStar2(true)
-      setActiveStar3(true)
-      setActiveStar4(false)
-      setActiveStar5(false)
+      starRaiting.current = 3;
+      setActiveStar1(true);
+      setActiveStar2(true);
+      setActiveStar3(true);
+      setActiveStar4(false);
+      setActiveStar5(false);
     } else {
-      setActiveStar1(true)
-      setActiveStar2(true)
-      setActiveStar3(false)
-      setActiveStar4(false)
-      setActiveStar5(false)
+      starRaiting.current = 2;
+      setActiveStar1(true);
+      setActiveStar2(true);
+      setActiveStar3(false);
+      setActiveStar4(false);
+      setActiveStar5(false);
     }
-  },[activeStar1,activeStar2,activeStar3,activeStar4,activeStar5])
+  }, [activeStar1, activeStar2, activeStar3, activeStar4, activeStar5]);
   const handleStarRating4 = useCallback(() => {
     if (activeStar4 === false) {
-      setActiveStar1(true)
-      setActiveStar2(true)
-      setActiveStar3(true)
-      setActiveStar4(true)
-      setActiveStar5(false)
+      starRaiting.current = 4;
+      setActiveStar1(true);
+      setActiveStar2(true);
+      setActiveStar3(true);
+      setActiveStar4(true);
+      setActiveStar5(false);
     } else {
-      setActiveStar1(true)
-      setActiveStar2(true)
-      setActiveStar3(true)
-      setActiveStar4(false)
-      setActiveStar5(false)
+      starRaiting.current = 3;
+      setActiveStar1(true);
+      setActiveStar2(true);
+      setActiveStar3(true);
+      setActiveStar4(false);
+      setActiveStar5(false);
     }
-  },[activeStar1,activeStar2,activeStar3,activeStar4,activeStar5])
+  }, [activeStar1, activeStar2, activeStar3, activeStar4, activeStar5]);
   const handleStarRating5 = useCallback(() => {
     if (activeStar5 === false) {
-      setActiveStar1(true)
-      setActiveStar2(true)
-      setActiveStar3(true)
-      setActiveStar4(true)
-      setActiveStar5(true)
+      starRaiting.current = 5;
+      console.log(starRaiting.current);
+      setActiveStar1(true);
+      setActiveStar2(true);
+      setActiveStar3(true);
+      setActiveStar4(true);
+      setActiveStar5(true);
     } else {
-      setActiveStar1(true)
-      setActiveStar2(true)
-      setActiveStar3(true)
-      setActiveStar4(true)
-      setActiveStar5(false)
+      starRaiting.current = 4;
+      setActiveStar1(true);
+      setActiveStar2(true);
+      setActiveStar3(true);
+      setActiveStar4(true);
+      setActiveStar5(false);
     }
-  },[activeStar1,activeStar2,activeStar3,activeStar4,activeStar5])
+  }, [activeStar1, activeStar2, activeStar3, activeStar4, activeStar5]);
 
-
-  const handleCleanlinessLike = useCallback(()=>{
-    setCleanlinessLike(!cleanlinessLike)
-  },[cleanlinessLike])
-
-  const handleFacilitiesLike = useCallback(()=>{
-    setFacilitiesLike(!facilitiesLike)
-  },[facilitiesLike])
-
-  const handleLocationLike = useCallback(()=>{
-    setLocationLike(!locationLike)
-  },[locationLike])
-
-  const handleReviewWrite = useCallback((e)=>{
-    setReviewText(e.target.value)
-  },[])
+  const handleReviewWrite = useCallback((e) => {
+    setReviewText(e.target.value);
+  }, []);
 
   return (
     <div className="review-writing">
       <header className="review-writing-header">
         <img className="review-writing-header-main-image" src={state.place.mainPhotoUrl} alt="place-img" />
         <div className="review-writing-header-place-name">{state.place.name}</div>
-        <div className="review-writing-header-date">{state.startDt.substring(5, 7)}.{state.startDt.substring(8, 10)} - {state.endDt.substring(5, 7)}.{state.endDt.substring(8, 10)}</div>
+        <div className="review-writing-header-date">
+          {state.startDt.substring(5, 7)}.{state.startDt.substring(8, 10)} - {state.endDt.substring(5, 7)}.
+          {state.endDt.substring(8, 10)}
+        </div>
         <LeftArrow className="review-writing-header-previous-page" onClick={moveToPreviousPage} />
       </header>
       <body className="review-writing-body">
-        <h4>쪼꼬와의 이용이 어땠나요?</h4>
+        <h4>{petName}와의 이용이 어땠나요?</h4>
         <div className="review-writing-body-star">
           {activeStar1 ? (
-            <div className="review-star" ref={slideRef}><BigRivewStarActive onClick={handleStarRating1} /></div>
+            <div className="review-star" ref={slideRef}>
+              <BigRivewStarActive onClick={handleStarRating1} />
+            </div>
           ) : (
-            <div className="review-star" ref={slideRef}><BigRivewStar onClick={handleStarRating1} /></div>
+            <div className="review-star" ref={slideRef}>
+              <BigRivewStar onClick={handleStarRating1} />
+            </div>
           )}
           {activeStar2 ? (
-            <BigRivewStarActive onClick={handleStarRating2}/>
+            <BigRivewStarActive onClick={handleStarRating2} />
           ) : (
             <BigRivewStar onClick={handleStarRating2} />
           )}
@@ -248,55 +324,9 @@ function RiviewWriting() {
           ))}
         </div>
       </body>
-      {/* <div className="review-writing-division-line" />
-      <footer className="review-writing-footer">
-        <h4>칭찬하고 싶은 부분이 있나요?</h4>
-        <div className="review-writing-footer-cleanliness" aria-hidden="true" onClick={handleCleanlinessLike}>
-          청결
-          {cleanlinessLike ? (
-            <div className="review-writing-footer-cleanliness-thum-up-active">
-              <ThumbUpActive />
-              좋아요
-            </div>
-          ) : (
-            <div className="review-writing-footer-cleanliness-thum-up">
-              <ThumbUp />
-              좋아요
-            </div>
-          )}
-        </div>
-        <div className="review-writing-footer-facilities" aria-hidden="true" onClick={handleFacilitiesLike}>
-          시설
-          {facilitiesLike ? (
-            <div className="review-writing-footer-facilities-thum-up-active">
-              <ThumbUpActive />
-              좋아요
-            </div>
-          ) : (
-            <div className="review-writing-footer-facilities-thum-up">
-              <ThumbUp />
-              좋아요
-            </div>
-          )}
-        </div>
-        <div className="review-writing-footer-location" aria-hidden="true" onClick={handleLocationLike}>
-          위치
-          {locationLike ? (
-            <div className="review-writing-footer-location-thum-up-active">
-              <ThumbUpActive />
-              좋아요
-            </div>
-          ) : (
-            <div className="review-writing-footer-location-thum-up">
-              <ThumbUp />
-              좋아요
-            </div>
-          )}
-        </div>
-        <div className="review-writing-footer-etc">기타</div>
-        <input type="text" className="review-writing-footer-input" placeholder="(선택) 한 줄 칭찬을 남겨주세요." />
-      </footer> */}
-      <BottomButton text="작성완료" />
+      <div aria-hidden="true" onClick={submitRivew}>
+        <BottomButton text="작성완료" />
+      </div>
     </div>
   );
 }

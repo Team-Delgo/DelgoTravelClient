@@ -40,38 +40,26 @@
         padding-top: 15px;
         font-size: 14px;
         color: #3E382F;
-        &-etc{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-weight: bold;
-            width: 20vw;
-            height: 43px;
-            background-color: #E8E2DC;
-            border-radius: 5px
-        }
         &-write{
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            width: 28vw;
+            width: 42vw;
             height: 43px;
             background-color: #E8E2DC;
             border-radius: 5px;
-            margin-left:25%;
         }
         &-reservation-detail{
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;       
-            width: 28vw;
+            width: 42vw;
             height: 43px;
             background-color: #E8E2DC;
             border-radius: 5px;
-            margin-left:11%;
+            margin:0 5%;
         }
         &-link{
             text-decoration: none;

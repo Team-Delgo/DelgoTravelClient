@@ -25,13 +25,23 @@ interface RecommendedPlaceType {
   wishId: number
 }
 interface TravelHisotryPlaceType {
-  id: number,
-  period: string,
-  image: string,
-  name: string,
-  address: string
-  package: string
-};
+  bookingId: string,
+  roomName: string,
+  roomId:number,
+  startDt: string,
+  endDt: string,
+  place: {
+    address: string
+    checkin: string
+    checkout: string
+    isBooking: 0
+    lowestPrice: null
+    mainPhotoUrl: string
+    name: string
+    placeId: number
+    wishId: number
+  },
+}
 
 function History() {
   const navigation = useNavigate();
@@ -39,33 +49,6 @@ function History() {
   const accessToken = useSelector((state: any) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
   const userId = useSelector((state: any) => state.persist.user.user.id);
-  const [hasTravelHistorys, setHasTravelHistorys] = useState(false);
-  const [travelHisotryPlace, seTravelHisotryPlace] = useState<Array<TravelHisotryPlaceType>>([
-    {
-      id: 1,
-      period: "03.02-03.04",
-      image: `${process.env.PUBLIC_URL}/assets/images/recommendedPlaceImage.png`,
-      name: '멍멍이네 하우스',
-      address: "강원도 속초시 조앙동",
-      package: "슈페리어 더블룸 조식포함패키지"
-    },
-    {
-      id: 2,
-      period: "03.02-03.04",
-      image: `${process.env.PUBLIC_URL}/assets/images/recommendedPlaceImage.png`,
-      name: '멍멍이네 하우스',
-      address: "강원도 속초시 조앙동",
-      package: "슈페리어 더블룸 조식포함패키지"
-    },
-    {
-      id: 3,
-      period: "03.02-03.04",
-      image: `${process.env.PUBLIC_URL}/assets/images/recommendedPlaceImage.png`,
-      name: '멍멍이네 하우스',
-      address: "강원도 속초시 조앙동",
-      package: "슈페리어 더블룸 조식포함패키지"
-    },
-  ]);
 
   const { isLoading: getRecommendedPlacesIsLoading, data: recommendedPlaces } = useQuery('getRecommendedPlaces', () => getRecommendedPlace(userId), {
     cacheTime: 1000 * 60 * 5,
@@ -128,7 +111,7 @@ function History() {
         </div>
       )}
       {traveledPlaces?.data.length>0 
-        ? traveledPlaces?.data.map((place:any) => <TravelHisotryPlace place={place} key={place.id} />)
+        ? traveledPlaces?.data.map((place:TravelHisotryPlaceType) => <TravelHisotryPlace traveledPlace={place} key={place.bookingId} />)
         : recommendedPlaces?.data.map((place: RecommendedPlaceType) => <PopularPlace place={place} key={place.placeId} />)}
     </div>
   );

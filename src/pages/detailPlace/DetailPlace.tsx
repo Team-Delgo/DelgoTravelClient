@@ -257,9 +257,9 @@ function DetailPlace() {
         <LeftArrow className="detail-place-previous-page" onClick={moveToPrevPage} />
         <div className="detail-place-heart">
           {detailPlace?.data.place.wishId === 0 ? (
-            <Heart  onClick={wishListInsert} />
+            <Heart onClick={wishListInsert} />
           ) : (
-            <ActiveHeart  onClick={wishListDelete} />
+            <ActiveHeart onClick={wishListDelete} />
           )}
         </div>
         <div className="detail-place-info">
@@ -270,14 +270,16 @@ function DetailPlace() {
               지도 &gt;
             </span>
           </div>
-          <Link
-            style={{ textDecoration: 'none' }}
-            to={`/detail-place/${detailPlace?.data.place.placeId}/reviews`}
-            state={{ reviews }}
-            key={detailPlace?.data.place.placeId}
-          >
-            <div className="detail-place-info-reviews">★ 9.1 리뷰 12개 &gt;</div>
-          </Link>
+          {detailPlaceRivews?.data && (
+            <Link
+              style={{ textDecoration: 'none' }}
+              to={`/detail-place/${detailPlace?.data.place.placeId}/reviews`}
+              state={{ reviews }}
+              key={detailPlace?.data.place.placeId}
+            >
+              <div className="detail-place-info-reviews">★ 9.1 리뷰 12개 &gt;</div>
+            </Link>
+          )}
           <div className="detail-place-info-facility">소형견,오션뷰,자연휴강,산책코스</div>
         </div>
 
@@ -310,26 +312,30 @@ function DetailPlace() {
                 </div>
               ))}
         </div>
-        <div className="detail-place-review">
-          <header className="detail-place-review-header">
-            <div className="detail-place-review-header-number">리뷰 {detailPlaceRivews?.data.length}개</div>
-            <div aria-hidden="true" onClick={saveDetailPlaceScrollY}>
-              <Link
-                style={{ textDecoration: 'none' }}
-                to={`/detail-place/${detailPlace?.data.place.placeId}/reviews`}
-                state={{ reviews }}
-                key={detailPlace?.data.place.placeId}
-              >
-                <div className="detail-place-review-header-more">전체보기</div>
-              </Link>
-            </div>
-          </header>
-          <body>
-            {reviews.slice(0,2).map((review:any) => (
-              <Reviews key={review.id} review={review} />
-            ))}
-          </body>
-        </div>
+        {detailPlaceRivews?.data && (
+          <div className="detail-place-review">
+            <header className="detail-place-review-header">
+              <div className="detail-place-review-header-number">
+                리뷰 {detailPlaceRivews?.data?.readReviewDTOList.length}개
+              </div>
+              <div aria-hidden="true" onClick={saveDetailPlaceScrollY}>
+                <Link
+                  style={{ textDecoration: 'none' }}
+                  to={`/detail-place/${detailPlace?.data.place.placeId}/reviews`}
+                  state={{ reviews: detailPlaceRivews.data.readReviewDTOList }}
+                  key={detailPlace?.data.place.placeId}
+                >
+                  <div className="detail-place-review-header-more">전체보기</div>
+                </Link>
+              </div>
+            </header>
+            <body>
+              {detailPlaceRivews?.data?.readReviewDTOList.slice(0, 2).map((review: any) => (
+                <Reviews key={review.id} review={review} />
+              ))}
+            </body>
+          </div>
+        )}
         <div className="detail-place-facility">
           <header className="detail-place-facility-header">편의시설 및 서비스</header>
           <div className="detail-place-facility-image-container">
