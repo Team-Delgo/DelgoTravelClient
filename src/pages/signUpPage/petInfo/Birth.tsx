@@ -4,7 +4,7 @@ function Birth(yearStart: number, yearEnd: number, forSelector: boolean) {
   let years: (number | string)[] = [];
   let months: (number | string)[] = [];
   const days: (number | string)[][] = [];
-  const leapYear = [1992, 1996, 2000, 2004, 2008, 2012, 2016, 2020];
+  const leapYear = [2000, 2004, 2008, 2012, 2016, 2020];
   const day31: (number | string)[] = ['.', '.', '.'];
   const day30: (number | string)[] = ['.', '.', '.'];
   const day28: (number | string)[] = ['.', '.', '.'];

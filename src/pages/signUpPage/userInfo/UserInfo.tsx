@@ -42,7 +42,7 @@ function UserInfo() {
   const emailRef = useRef<any>();
   const firstPageIsValid =
     validInput.email.length && validInput.password.length && validInput.confirm.length && !emailDuplicated;
-
+  console.log(validInput);
   useEffect(() => {
     if (!emailDuplicated && validInput.email.length) {
       setFeedback((prev: Input) => {
@@ -94,6 +94,23 @@ function UserInfo() {
     setFeedback((prev: Input) => {
       return { ...prev, password: response.message };
     });
+    if (enteredInput.confirm.length) {
+      const { confirm } = enteredInput;
+      const check = checkPasswordConfirm(value, confirm);
+      setFeedback((prev: Input) => {
+        return { ...prev, confirm: check.message };
+      });
+      if (!check.isValid) {
+        console.log('aa');
+        setValidInput((prev: Input) => {
+          return { ...prev, password: '' };
+        });
+      } else {
+        setValidInput((prev: Input) => {
+          return { ...prev, password: value };
+        });
+      }
+    }
   };
 
   const passwordConfirmValidCheck = (value: string) => {
@@ -162,17 +179,21 @@ function UserInfo() {
   };
 
   const emailDupCheck = async () => {
-    emailCheck(enteredInput.email, (response: AxiosResponse) => {
-      const { code } = response.data;
-      if (code === 200) {
-        setEmailDuplicated(false);
-        setEmailDupCheckFail(false);
-      } else {
-        setEmailDuplicated(true);
-        setEmailDupCheckFail(true);
-        emailRef.current.focus();
-      }
-    }, dispatch);
+    emailCheck(
+      enteredInput.email,
+      (response: AxiosResponse) => {
+        const { code } = response.data;
+        if (code === 200) {
+          setEmailDuplicated(false);
+          setEmailDupCheckFail(false);
+        } else {
+          setEmailDuplicated(true);
+          setEmailDupCheckFail(true);
+          emailRef.current.focus();
+        }
+      },
+      dispatch,
+    );
   };
 
   return (
@@ -190,7 +211,7 @@ function UserInfo() {
           <span className="login-span">이메일</span>
           <div className="login-input-box">
             <input
-              className={classNames("login-input", { invalid: feedback.email.length && emailDuplicated })}
+              className={classNames('login-input', { invalid: feedback.email.length && emailDuplicated })}
               placeholder="이메일"
               id={Id.EMAIL}
               value={enteredInput.email}
@@ -208,7 +229,7 @@ function UserInfo() {
           </div>
           <span className="login-span">비밀번호</span>
           <input
-            className={classNames("login-input password", { invalid: feedback.password.length })}
+            className={classNames('login-input password', { invalid: feedback.password.length })}
             placeholder="비밀번호 최소 8자이상 (문자, 숫자 조합)"
             type="password"
             value={enteredInput.password}
@@ -218,7 +239,7 @@ function UserInfo() {
           />
           <div className="login-input-box">
             <input
-              className={classNames("login-input bitmargin password", { invalid: feedback.confirm.length })}
+              className={classNames('login-input bitmargin password', { invalid: feedback.confirm.length })}
               placeholder="비밀번호 확인"
               type="password"
               value={enteredInput.confirm}
@@ -245,8 +266,8 @@ function UserInfo() {
           <span className="login-span">닉네임</span>
           <div className="login-input-box">
             <input
-              className={classNames("login-input", { invalid: feedback.nickname.length })}
-              placeholder="닉네임"
+              className={classNames('login-input', { invalid: feedback.nickname.length })}
+              placeholder="닉네임(공백, 특수문자 제외)"
               id={Id.NICKNAME}
               value={enteredInput.nickname}
               autoComplete="off"

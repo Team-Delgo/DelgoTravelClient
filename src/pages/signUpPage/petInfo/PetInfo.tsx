@@ -151,7 +151,7 @@ function PetInfo() {
         petImageUpload(formData, (response: AxiosResponse) => {
           console.log(response);
         }, dispatch);
-        navigation(SIGN_UP_PATH.COMPLETE);
+        navigation(SIGN_UP_PATH.COMPLETE,{state:{name:enteredInput.name}});
       } else {
         console.log(codeMsg);
       }

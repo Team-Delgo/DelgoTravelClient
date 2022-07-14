@@ -33,4 +33,10 @@ async function registCoupon(
     });
 }
 
+// async function changePetInfo(){
+//   await axios.post(`${url}socialSign`,{
+    
+//   })
+// }
+
 export { registCoupon, myAccount };
