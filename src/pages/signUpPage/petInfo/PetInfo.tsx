@@ -68,6 +68,7 @@ function PetInfo() {
     setSendingImage(event.target.files![0]);
 
   };
+
   const requireInputCheck = (key: string, value: string) => {
     if (value.length) {
       setIsValid((prev: IsValid) => {
@@ -151,7 +152,7 @@ function PetInfo() {
         petImageUpload(formData, (response: AxiosResponse) => {
           console.log(response);
         }, dispatch);
-        navigation(SIGN_UP_PATH.COMPLETE,{state:{name:enteredInput.name}});
+        navigation(SIGN_UP_PATH.COMPLETE, { state: { name: enteredInput.name } });
       } else {
         console.log(codeMsg);
       }

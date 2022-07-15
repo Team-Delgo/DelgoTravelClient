@@ -34,11 +34,11 @@ async function registCoupon(
 }
 
 async function changePetInfo(
-  data: { email: string; name: string; birthday: string|undefined; size: string },
+  data: { email: string; name: string; birthday: string | undefined; size: string },
   success: (data: AxiosResponse) => void,
   dispatch: any,
 ) {
-  const { email,name,birthday,size } = data;
+  const { email, name, birthday, size } = data;
   await axios
     .post(`${url}changePetInfo`, {
       email,
@@ -54,4 +54,20 @@ async function changePetInfo(
     });
 }
 
-export { registCoupon, myAccount, changePetInfo };
+async function getReviewList(data: { userId: number }, success: (data: AxiosResponse) => void, dispatch: any) {
+  const { userId } = data;
+  await axios
+    .get(`${url}review/getReview/user`, {
+      params: {
+        userId,
+      },
+    })
+    .then((data) => {
+      success(data);
+    })
+    .catch((error) => {
+      useErrorHandlers(dispatch, error);
+    });
+}
+
+export { registCoupon, myAccount, changePetInfo, getReviewList };
