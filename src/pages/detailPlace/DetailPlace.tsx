@@ -95,7 +95,7 @@ function DetailPlace() {
   ]);
 
 
-  const { isLoading, data:detailPlace, refetch } = useQuery(
+  const { isLoading:getDetailPlaceIsLoading, data:detailPlace, refetch } = useQuery(
     'getDetailPlace',
     () => getDetailPlace(userId, placeId as string, startDt, endDt),
     {
@@ -123,13 +123,14 @@ function DetailPlace() {
 
 
   useEffect(() => {
-    console.log(detailPlace)
     if (location.state?.prevPath.includes('/detail-place')) {
       window.scroll(0, detailPlaceScrollY);
-    } else {
-      window.scroll(0, 0);
     }
-  }, [detailPlace]); 
+    else{
+      window.scroll(0, 0);
+    } 
+
+  }, [detailPlace,detailPlaceRivews]); 
 
 
   useEffect(() => {
@@ -204,6 +205,10 @@ function DetailPlace() {
     dispatch(scrollActions.scroll({ whereToGo: whereToGoScrollY, detailPlace: window.scrollY, myStorage: myStorageY }));
   }, []);
 
+  if (getDetailPlaceIsLoading){
+    return <div className='detail-place'>&nbsp;</div>;
+  }
+
   return (
     <>
       {isCalenderOpen && <Calender closeCalender={calenderOpenClose} isRoom={false} />}
@@ -218,7 +223,7 @@ function DetailPlace() {
           > */}
       <div className={classNames('detail-place', { close: isCalenderOpen })}>
         <div style={{ width: '100%' }}>
-          {isLoading ? (
+          {getDetailPlaceIsLoading ? (
             <SkeletonTheme baseColor="#f0e9e9" highlightColor="#e4dddd">
               <Skeleton style={{ height: '375px' }} />
             </SkeletonTheme>
@@ -264,7 +269,7 @@ function DetailPlace() {
           <header className="detail-place-room-select-header">객실선택</header>
         </div>
         <div className="detail-places-room-types">
-          {isLoading
+          {getDetailPlaceIsLoading
             ? roomTypeSkeletons
             : detailPlace.data.roomList.map((room: RoomType) => (
                 <div aria-hidden="true" onClick={saveDetailPlaceScrollY}>
@@ -301,9 +306,9 @@ function DetailPlace() {
                 </Link>
               </div>
             </header>
-            <body>
-              {detailPlaceRivews?.data?.readReviewDTOList.slice(0, 2).map((review: any) => (
-                <Reviews key={review.id} review={review} />
+            <body className="detail-place-review-body">
+              {detailPlaceRivews?.data?.readReviewDTOList.slice(0, 2).map((review: RivewType) => (
+                <Reviews key={review.review.reviewId} review={review} />
               ))}
             </body>
           </div>

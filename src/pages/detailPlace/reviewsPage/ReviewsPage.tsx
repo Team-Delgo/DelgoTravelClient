@@ -15,6 +15,7 @@ function ReviewsPage() {
   const [imageReviewsCount,setImageReviewsCount] = useState(0)
   const location: any = useLocation();
   const { placeId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -46,6 +47,11 @@ function ReviewsPage() {
     }
   }, [checked, reviews]);
 
+
+  // const moveToPreviousPage = useCallback(() => {
+  //   navigate(-1);
+  // }, []);
+
   return (
     <>
       {/* <Transition in timeout={100} appear>
@@ -53,7 +59,7 @@ function ReviewsPage() {
           <div className={`pageSlider pageSlider-${status}`}> */}
             <header className="detail-place-review-page-header">
               <Link to={`/detail-place/${placeId}`} state={{ prevPath: location.pathname }} key={placeId}>
-                <LeftArrow className="detail-place-review-page-header-previous-page"  />
+                <LeftArrow className="detail-place-review-page-header-previous-page" />
               </Link>
               <div className="detail-place-review-page-header-number">리뷰 {reviews.length}개</div>
               <div className="detail-place-review-page-header-rating-count">
@@ -63,9 +69,11 @@ function ReviewsPage() {
               <input type="checkbox"  checked={checked}  name="xxx" value="yyy" onClick={showImageReviews}/>
               <span className="detail-place-review-page-header-image-review"> 사진 리뷰만 보기({imageReviewsCount}개)</span>
             </header>
+            <body className="detail-place-review-page-body">
             {reviews.map((review) => (
               <Reviews key={review.id} review={review} />
             ))}
+            </body>
           {/* </div>
         )}
       </Transition> */}

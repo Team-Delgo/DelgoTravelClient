@@ -1,6 +1,6 @@
 .review{
-    margin: 0 0 20px 5%;
     color: #3E382F;
+    // padding: 0 5% 50px 5%;
     &-header{
         display: flex;
         img{
@@ -38,7 +38,7 @@
             font-size: 14px;
             font-weight: 400;
             padding-bottom: 25px;
-            padding-right: 5%;
+            // padding-right: 5%;
             &-more{
                 position: absolute;
                 font-size: 14px;
