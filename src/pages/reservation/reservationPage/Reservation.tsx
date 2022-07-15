@@ -116,14 +116,20 @@ function Reservation() {
           <div className="reservation-user-info-phone">
             {user.nickname} / {user.phone}
           </div>
-          <div aria-hidden="true" className="reservation-user-info-change">
+          {/* <div aria-hidden="true" className="reservation-user-info-change">
             변경
+          </div> */}
+        </div>
+        <div className="reservation-user-info">
+          <div className="reservation-label">예약 인원  </div>
+          <div className="reservation-user-info-phone">
+            기준 {room.personNum}명 / 기준 {room.petNum}마리
           </div>
         </div>
         <div className="reservation-devide" />
         <h2 className="reservation-title second">할인정보</h2>
         <div className="original-price">
-          <div className="reservation-label">상품가격(1박)</div>
+          <div className="reservation-label">상품가격</div>
           <div className="original-price-amount">{room.price}</div>
         </div>
         <div className="point-sale">

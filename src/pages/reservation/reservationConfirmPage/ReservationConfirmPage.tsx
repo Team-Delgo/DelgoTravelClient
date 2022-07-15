@@ -165,11 +165,17 @@ function ReservationConfirmPage() {
               {reservationData.userName} / {reservationData.userPhoneNo}
             </div>
           </div>
+          {/* <div className="reservation-user-info">
+          <div className="reservation-label">예약 인원  </div>
+          <div className="reservation-user-info-phone">
+            기준 {room.personNum}명 / 기준 {room.petNum}마리
+          </div>
+        </div> */}
         </div>
         <div className="reservation-devide" />
         <h2 className="reservation-title second">결제 정보</h2>
         <div className="original-price">
-          <div className="reservation-label">상품가격(1박)</div>
+          <div className="reservation-label">상품가격</div>
           <div className="original-price-amount">{reservationData.originalPrice}</div>
         </div>
         <div className="couponsale">

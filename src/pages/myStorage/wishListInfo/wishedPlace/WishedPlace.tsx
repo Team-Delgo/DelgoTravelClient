@@ -29,7 +29,6 @@ interface PlaceType {
 }
 
 function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch }: WishedPlaceTypeProps) {
-  const [wishList, setWishList] = useState(true);
   const accessToken = useSelector((state: any) => state.token.token);
   const [wishListAlertConfirmOpen, setWishListAlertConfirmOpen] = useState(false);
   const dispatch = useDispatch();
@@ -41,11 +40,10 @@ function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch
       { wishId: place.wishId, accessToken },
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
-          getWishedPlacesRefetch()
-          getRecommendedPlacesRefetch()
-          // setTimeout(()=>{
-          //   getRecommendedPlacesRefetch()
-          // },0)
+          getRecommendedPlacesRefetch();
+          setTimeout(() => {
+            getWishedPlacesRefetch();
+          }, 100);
         }
       },
       dispatch,

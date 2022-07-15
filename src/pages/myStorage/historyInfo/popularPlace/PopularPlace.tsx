@@ -1,9 +1,12 @@
 import React,{useState,useCallback} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation , useNavigate} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { ReactComponent as ActiveHeart } from '../../../../icons/heart-active.svg';
 import { ReactComponent as Heart } from '../../../../icons/heart.svg';
 import { wishInsert,wishDelete } from '../../../../common/api/wish'
+import { scrollActions } from '../../../../redux/slice/scrollSlice';
+import {prevPathActions} from "../../../../redux/slice/prevPathSlice"
 import './PopularPlace.scss'
 
 type PopularPlaceTypeProps = {
@@ -28,6 +31,8 @@ function PopularPlace({ place }: PopularPlaceTypeProps  ) {
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const accessToken = useSelector((state: any) => state.token.token);
   const dispatch = useDispatch();
+  const location: any = useLocation();
+  const navigate = useNavigate();
   
   const wishListInsert = useCallback(() => {
     wishInsert(
@@ -53,11 +58,17 @@ function PopularPlace({ place }: PopularPlaceTypeProps  ) {
     );
   }
 
+  const moveToDetailPage = useCallback(() => {
+    dispatch(scrollActions.scroll({ whereToGo: 0, detailPlace: 0, myStorage: window.scrollY, homeY: 0 }));
+    dispatch(prevPathActions.prevPath({ prevPath: location.pathname }));
+    navigate(`/detail-place/${place.placeId}`);
+  }, []);
+
   return (
     <div className="popular-place">
-      <img src={place.mainPhotoUrl} alt="popular-place-img" />
-      <div className="popular-place-name">{place.name}</div>
-      <div className="popular-place-location">{place.address}</div>
+      <img src={place.mainPhotoUrl} alt="popular-place-img" aria-hidden="true" onClick={moveToDetailPage}/>
+      <div className="popular-place-name" aria-hidden="true" onClick={moveToDetailPage}>{place.name}</div>
+      <div className="popular-place-location" aria-hidden="true" onClick={moveToDetailPage}>{place.address}</div>
       {wishList ? (
         <ActiveHeart className="popular-place-heart" onClick={wishListDelete} />
       ) : (
