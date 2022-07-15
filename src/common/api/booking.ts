@@ -62,25 +62,36 @@ async function bookingGetData(
   }
 }
 
-async function bookingGetDataByMain(
-  data: {
-    accessToken: string;
-    userId: number;
-  },
-  success: (data: AxiosResponse) => void,
-  dispatch: any,
-) {
-  try {
-    const result = await axios.get(`${url}booking/getData/main?userId=${data.userId}`,{
-      headers: {
-        Authorization_Access: `${data.accessToken}`,
-      },
-    });
-    success(result);
-  } catch (error: AxiosError | any) {
-    useErrorHandlers(dispatch, error);
-  }
+// async function bookingGetDataByMain(
+//   data: {
+//     accessToken: string;
+//     userId: number;
+//   },
+//   success: (data: AxiosResponse) => void,
+//   dispatch: any,
+// ) {
+//   try {
+//     const result = await axios.get(`${url}booking/getData/main?userId=${data.userId}`,{
+//       headers: {
+//         Authorization_Access: `${data.accessToken}`,
+//       },
+//     });
+//     success(result);
+//   } catch (error: AxiosError | any) {
+//     useErrorHandlers(dispatch, error);
+//   }
+// }
+
+async function bookingGetDataByMain(accessToken: string, userId: number) {
+  console.log(accessToken);
+  return fetch(`${url}booking/getData/main?userId=${userId}`).then((response) => response.json());
 }
+
+// , {
+//   headers: {
+//     Authorization: accessToken,
+//   },
+// }
 
 async function getBookingHistory(userId: number) {
   return fetch(`${url}booking/getHistory?userId=${userId}`).then((response) =>

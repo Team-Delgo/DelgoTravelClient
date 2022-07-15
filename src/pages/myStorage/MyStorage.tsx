@@ -11,11 +11,23 @@ import './MyStorage.scss';
 
 
 function MyStorage() {
+  const location: any = useLocation();
   const [currentTab, setCurrentTab] = useState(0);
   const navigation = useNavigate();
   const dispatch = useDispatch();
   const accessToken = useSelector((state: any) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
+  const { myStorageY } = useSelector((state: any) => state.persist.scroll);
+
+  useEffect(() => {
+    if (location.state?.prevPath.includes('/reservation-confirm')) {
+      window.scrollTo(0, myStorageY);
+      setCurrentTab(location.state?.tab);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
 
 
   useEffect(() => {
