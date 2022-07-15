@@ -43,11 +43,13 @@ function RoomTypePage() {
   ]);
 
   useEffect(() => {
+    console.log(room.notice)
     window.scrollTo(0, 0);
     getRoomData(
       room?.roomId,
       (response: AxiosResponse) => {
         setPhotoList(response.data.data.detailRoomPhotos);
+        console.log(response.data.data)
       },
       dispatch,
     );
@@ -144,6 +146,7 @@ function RoomTypePage() {
           </div>
         </div>
         <div className="detail-place-room-type-notice">공지사항</div>
+        <div>{room.notice}</div>
         <div className="detail-place-room-type-base-information">기본정보</div>
         <div className="detail-place-room-type-additional-personnel-information">인원 추가 정보</div>
       </div>

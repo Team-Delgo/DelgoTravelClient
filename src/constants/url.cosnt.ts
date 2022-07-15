@@ -1,5 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
-export const url = 'http://61.97.186.174:8080/';
+// export const url = 'http://61.97.186.174:8080/';
+export const url = 'https://127.0.0.1:8080/';
 
 // let CALL_BACK_URL = ''
 // if(process.env.NODE_ENV === 'production'){

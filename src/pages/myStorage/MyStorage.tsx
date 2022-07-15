@@ -65,7 +65,7 @@ function MyStorage() {
               여행내역
             </div>
           </div>
-          <Folder />
+          <Folder currentTab={currentTab}/>
         </>
       ) : (
         <>
@@ -93,7 +93,7 @@ function MyStorage() {
           </>
         )}
     </div>
-    <Footer />
+    <Footer/>
     </>
   );
 }

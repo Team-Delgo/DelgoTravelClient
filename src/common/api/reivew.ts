@@ -7,12 +7,11 @@ async function getDetailPlaceRivews(placeId: string) {
 }
 
 async function reviewImageUpload(formdata: FormData, success: (data: AxiosResponse) => void, dispatch: any) {
+  formdata?.forEach((value: any, key: any) => {
+    console.log(key, value);
+  });
   try {
-    const result = await axios.post(`${url}photo/upload/reviewPhoto`, formdata, {
-      headers: {
-        'Content-type': 'multipart/form-data',
-      },
-    });
+    const result = await axios.post(`${url}photo/upload/reviewPhoto`, formdata);
     console.log(result)
     success(result);
   } catch (error: AxiosError | any) {
@@ -20,8 +19,14 @@ async function reviewImageUpload(formdata: FormData, success: (data: AxiosRespon
   }
 }
 
+// {
+//   headers: {
+//     'Content-Type': 'multipart/form-data'
+//   }
+// }
+
 async function writeReivew(
-  data: { userId: number; placeId: number; roomId: number; rating: number; text: string },
+  data: { userId: number; placeId: number; roomId: number; rating: number; text: string; bookingId:string},
   success: (data: AxiosResponse) => void,
   dispatch: any,
 ) {
@@ -32,6 +37,7 @@ async function writeReivew(
       roomId: data.roomId,
       rating: data.rating,
       text: data.text,
+      bookingId:data.bookingId
     });
     success(result);
   } catch (error: AxiosError | any) {

@@ -14,7 +14,8 @@ import './WishedPlace.scss';
 
 interface WishedPlaceTypeProps {
   place: PlaceType
-  refetch:any
+  getWishedPlacesRefetch:any
+  getRecommendedPlacesRefetch:any
 }
 
 interface PlaceType {
@@ -27,7 +28,7 @@ interface PlaceType {
   wishId: number;
 }
 
-function WishedPlace({ place, refetch }: WishedPlaceTypeProps) {
+function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch }: WishedPlaceTypeProps) {
   const [wishList, setWishList] = useState(true);
   const accessToken = useSelector((state: any) => state.token.token);
   const [wishListAlertConfirmOpen, setWishListAlertConfirmOpen] = useState(false);
@@ -40,9 +41,11 @@ function WishedPlace({ place, refetch }: WishedPlaceTypeProps) {
       { wishId: place.wishId, accessToken },
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
-          // const updateWishedPlaces = wishedPlace.filter((p) => p.placeId !== place.placeId);
-          // setWishedPlace(updateWishedPlaces);
-          refetch();
+          getWishedPlacesRefetch()
+          getRecommendedPlacesRefetch()
+          // setTimeout(()=>{
+          //   getRecommendedPlacesRefetch()
+          // },0)
         }
       },
       dispatch,
@@ -76,10 +79,10 @@ function WishedPlace({ place, refetch }: WishedPlaceTypeProps) {
             noButtonHandler={wishListConfirmModalOpenClose}
           />
         )}
-          <ActiveHeart onClick={wishListDelete} />
+          <ActiveHeart onClick={wishListConfirmModalOpenClose} />
       </div>
     </div>
   );
 }
 
-export default memo(WishedPlace)
+export default WishedPlace

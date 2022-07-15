@@ -86,7 +86,7 @@ function Reservation() {
             <img src={RightArrow} alt="detail" />
           </div>
           <p className="placeinfo-address">{place.address}</p>
-          {/* <p className="placeinfo-room">502호 [온수풀, 더블베드타입]</p> */}
+          <p className="placeinfo-room">{room.name}</p>
         </div>
         <div className="checkin-checkout">
           <div className="checkin-checkout-date">

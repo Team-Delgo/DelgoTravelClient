@@ -41,7 +41,7 @@ function PopularPlace({ place }: PopularPlaceTypeProps  ) {
     );
   }, [wishList]);
 
-  const wishListDelete = useCallback(() => {
+  const wishListDelete = () => {
     wishDelete(
       { wishId: wishList, accessToken },
       (response: AxiosResponse) => {
@@ -51,7 +51,7 @@ function PopularPlace({ place }: PopularPlaceTypeProps  ) {
       },
       dispatch,
     );
-  }, [wishList]);
+  }
 
   return (
     <div className="popular-place">
