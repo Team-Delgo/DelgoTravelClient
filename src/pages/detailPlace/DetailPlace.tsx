@@ -23,10 +23,21 @@ import './DetailPlace.scss';
 import Calender from '../../common/utils/Calender';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 
-interface PhotoListType {
-  detailPhotoId: number
-  isMain: number
-  url: string
+interface RivewType {
+  profileUrl: string;
+  review: {
+    placeId: number;
+    rating: number;
+    registDt: string;
+    reviewId: number;
+    reviewPhotoList:Array<string>,
+    roomId: number;
+    text: string;
+    updateDt: null;
+    userId: number;
+  };
+  roomName: string;
+  userName: string;
 }
 interface RoomType {
   isBooking: number
@@ -72,46 +83,7 @@ function DetailPlace() {
   const startDt =`${date.start.substring(0,4)}-${date.start.substring(4,6)}-${date.start.substring(6,10)}`
   const endDt = `${date.end.substring(0,4)}-${date.end.substring(4,6)}-${date.end.substring(6,10)}`
 
-  const [reviews, setReviews] = useState<Array<any>>([
-    {
-      id: 1,
-      profileImage: `${process.env.PUBLIC_URL}/assets/images/reviewImage.png`,
-      reviewImages: [
-        `${process.env.PUBLIC_URL}/assets/images/reviewImage1.png`,
-        `${process.env.PUBLIC_URL}/assets/images/reviewImage1.png`,
-      ],
-      nickName: '꼬강맘',
-      starRating: 5,
-      registrationDate: '22.03.01',
-      roomUsed: '103호 (오션뷰) 객실 이용',
-      reviewContent:
-        '꼬강이랑 다녀왔는데 매우만족했습니다. 오션뷰에 마당잔디도 관리가 잘 되어있었어요. 사장님이 꼬강이를 너무 예뻐해주셔서 저도 정말 오기 잘했다고 생각했습니다.재방문 하고싶습니다.꼬강이랑 다녀왔는데 매우만족했습니다. 오션뷰에 마당잔디도 관리가 잘 되어있었어요. 사장님이 꼬강이를 너무 예뻐해주셔서 저도 정말 오기 잘했다고 생각했습니다. 재방문 하고싶습니다',
-    },
-    {
-      id: 2,
-      profileImage: `${process.env.PUBLIC_URL}/assets/images/reviewImage.png`,
-      reviewImages: [
-        `${process.env.PUBLIC_URL}/assets/images/reviewImage1.png`,
-        `${process.env.PUBLIC_URL}/assets/images/reviewImage1.png`,
-      ],
-      nickName: '꼬꼬맘',
-      starRating: 4,
-      registrationDate: '22.02.01',
-      roomUsed: '301호 (오션뷰) 객실 이용',
-      reviewContent: '꼬꼬랑 다녀왔는데 매우만족했습니다. 오션뷰에 마당잔디도 관리가 잘 되어있었어요.',
-    },
-    {
-      id: 3,
-      profileImage: `${process.env.PUBLIC_URL}/assets/images/reviewImage.png`,
-      reviewImages: [
-      ],
-      nickName: '꼬꼬맘',
-      starRating: 4,
-      registrationDate: '22.02.01',
-      roomUsed: '301호 (오션뷰) 객실 이용',
-      reviewContent: '꼬꼬랑 다녀왔는데 매우만족했습니다. 오션뷰에 마당잔디도 관리가 잘 되어있었어요.',
-    },
-  ]);
+
 
   const [service, setService] = useState<Array<any>>([
     `${process.env.PUBLIC_URL}/assets/images/service1.png`,
@@ -151,13 +123,13 @@ function DetailPlace() {
 
 
   useEffect(() => {
-    console.log(detailPlaceRivews?.data)
+    console.log(detailPlace)
     if (location.state?.prevPath.includes('/detail-place')) {
       window.scroll(0, detailPlaceScrollY);
     } else {
       window.scroll(0, 0);
     }
-  }, [detailPlaceRivews]); 
+  }, [detailPlace]); 
 
 
   useEffect(() => {
@@ -248,7 +220,7 @@ function DetailPlace() {
         <div style={{ width: '100%' }}>
           {isLoading ? (
             <SkeletonTheme baseColor="#f0e9e9" highlightColor="#e4dddd">
-              <Skeleton style={{ height: '30vh' }} />
+              <Skeleton style={{ height: '375px' }} />
             </SkeletonTheme>
           ) : (
             <ImageSlider images={detailPlace.data.detailPhotoList} />
@@ -274,10 +246,10 @@ function DetailPlace() {
             <Link
               style={{ textDecoration: 'none' }}
               to={`/detail-place/${detailPlace?.data.place.placeId}/reviews`}
-              state={{ reviews }}
+              state={{ reviews:detailPlaceRivews.data.readReviewDTOList }}
               key={detailPlace?.data.place.placeId}
             >
-              <div className="detail-place-info-reviews">★ 9.1 리뷰 12개 &gt;</div>
+              <div className="detail-place-info-reviews">★ 9.1 리뷰 {detailPlaceRivews?.data?.readReviewDTOList.length}개 &gt;</div>
             </Link>
           )}
           <div className="detail-place-info-facility">소형견,오션뷰,자연휴강,산책코스</div>
@@ -345,6 +317,7 @@ function DetailPlace() {
           </div>
         </div>
         <div className="detail-place-notice">공지사항</div>
+        <div>{detailPlace?.data.place.policy}</div>
         <div className="detail-place-base-information">기본정보</div>
         <div className="detail-place-additional-personnel-information">인원 추가 정보</div>
         <div className="detail-place-cancellation-refund-policy">취소 및 환불 규정</div>

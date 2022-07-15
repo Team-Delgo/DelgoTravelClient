@@ -1,6 +1,6 @@
 import React,{useCallback,useEffect, useState} from "react";
 import { useSelector,useDispatch } from "react-redux";
-import { useNavigate,useParams} from 'react-router-dom';
+import { useNavigate,useParams,useLocation} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
 import RightArrow from "../../../icons/right-arrow.svg";
@@ -47,6 +47,7 @@ function ReservationConfirmPage() {
     }
   })
   const { bookingId } = useParams();
+  const location: any = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -83,7 +84,11 @@ function ReservationConfirmPage() {
           },
         }),
       );
-    }, 300);
+    }, 100);
+  }, []);
+
+  const moveToMyStoragePage = useCallback(() => {
+    navigate('/my-storage')
   }, []);
 
 
@@ -107,9 +112,9 @@ function ReservationConfirmPage() {
     <>
       <div className="reservationPage">
         <div className="header">
-          <Exit className="exit-button" onClick={moveToMainPage} />
+          <Exit className="exit-button" onClick={location.state ? moveToMyStoragePage : moveToMainPage} />
           {reservationData.bookingState === 'W' ? (
-            <h1 className="header-title">예약접수 확인</h1>
+            <h1 className="header-title">예약접수 확인중</h1>
           ) : (
             <h1 className="header-title">예약확정</h1>
           )}
@@ -160,11 +165,17 @@ function ReservationConfirmPage() {
               {reservationData.userName} / {reservationData.userPhoneNo}
             </div>
           </div>
+          {/* <div className="reservation-user-info">
+          <div className="reservation-label">예약 인원  </div>
+          <div className="reservation-user-info-phone">
+            기준 {room.personNum}명 / 기준 {room.petNum}마리
+          </div>
+        </div> */}
         </div>
         <div className="reservation-devide" />
         <h2 className="reservation-title second">결제 정보</h2>
         <div className="original-price">
-          <div className="reservation-label">상품가격(1박)</div>
+          <div className="reservation-label">상품가격</div>
           <div className="original-price-amount">{reservationData.originalPrice}</div>
         </div>
         <div className="couponsale">

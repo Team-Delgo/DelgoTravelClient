@@ -72,7 +72,7 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
 
   return (
     <div className="place" aria-hidden="true">
-      <div aria-hidden onClick={place.isBooking === 0 ? moveToDetailPage : undefined}>
+      <div aria-hidden onClick={moveToDetailPage}>
         <img src={place.mainPhotoUrl} alt="place-img" />
       </div>
       <div className="place-info">

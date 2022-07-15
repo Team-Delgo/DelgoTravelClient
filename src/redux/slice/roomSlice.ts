@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  currentRoom: { roomId: 0, name: '', price: 0 },
+  currentRoom: { roomId: 0, name: '', price: 0, petNum: 0, personNum: 0 },
 };
 
 const roomSlice = createSlice({
@@ -10,7 +10,7 @@ const roomSlice = createSlice({
   reducers: {
     currentRoom(state, action) {
       return {
-        currentRoom: action.payload.room
+        currentRoom: action.payload.room,
       };
     },
     currentRoomCancle() {

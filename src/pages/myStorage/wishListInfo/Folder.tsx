@@ -33,27 +33,34 @@ interface RecommendedPlaceType {
   wishId: number
 }
 
+interface FolderTypeProps {
+  currentTab:number
+}
 
-function Folder() {
+function Folder({currentTab}:FolderTypeProps) {
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const accessToken = useSelector((state: any) => state.token.token);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const location: any = useLocation();
   const { myStorageY } = useSelector((state: any) => state.persist.scroll);
 
-  const { isLoading: getWishedPlacesIsLoading, data: wishedPlaces, refetch } = useQuery(
-    'getWishedPlaces',
-    () => getWishedPlaces(accessToken, userId),
-    {
-      cacheTime: 1000 * 60 * 5,
-      staleTime: 1000 * 60 * 3,
-      onError: (error: any) => {
-        useErrorHandlers(dispatch, error)
-      }
+  const {
+    isLoading: getWishedPlacesIsLoading,
+    data: wishedPlaces,
+    refetch:getWishedPlacesRefetch,
+  } = useQuery('getWishedPlaces', () => getWishedPlaces(accessToken, userId), {
+    cacheTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 3,
+    onError: (error: any) => {
+      useErrorHandlers(dispatch, error);
     },
-  );
+  });
 
-  const { isLoading: getRecommendedPlacesIsLoading, data: recommendedPlaces, refetch: getRecommendedPlacesRefetch } = useQuery('getRecommendedPlaces', () => getRecommendedPlace(userId), {
+  const {
+    isLoading: getRecommendedPlacesIsLoading,
+    data: recommendedPlaces,
+    refetch: getRecommendedPlacesRefetch,
+  } = useQuery('getRecommendedPlaces', () => getRecommendedPlace(userId), {
     cacheTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 3,
     refetchInterval: false,
@@ -63,18 +70,18 @@ function Folder() {
   });
 
   useEffect(() => {
-    getRecommendedPlacesRefetch()
-  }, [wishedPlaces]);
+    getWishedPlacesRefetch();
+    getRecommendedPlacesRefetch();
+  }, [currentTab]);
+
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
-        window.scrollTo(0, myStorageY);
+      window.scrollTo(0, myStorageY);
     } else {
       window.scrollTo(0, 0);
     }
-  }, [getWishedPlacesIsLoading,getRecommendedPlacesIsLoading]);
-  
-
+  }, [getWishedPlacesIsLoading, getRecommendedPlacesIsLoading]);
 
   // useEffect(() => {
   //   getWishedPlaces(
@@ -90,16 +97,17 @@ function Folder() {
   //   );
   // }, [accessToken]);
 
-  if (getWishedPlacesIsLoading||getRecommendedPlacesIsLoading)
-    return (
-      <div className="wish-list-container">
-        &nbsp;
-      </div>
-    );
+  if (getWishedPlacesIsLoading){
+    return <div className="wish-list-container">&nbsp;</div>;
+  }
+
+  if (getRecommendedPlacesIsLoading){
+    return <div className="wish-list-container">&nbsp;</div>;
+  }
 
   return (
     <div className="wish-list-container">
-      {wishedPlaces.data.length>0 ? (
+      {wishedPlaces.data.length > 0 ? (
         <div className="wish-list-header-text" aria-hidden="true">
           델고 갈 {wishedPlaces.data.length}개 장소
         </div>
@@ -110,19 +118,20 @@ function Folder() {
           <div className="wish-list-notice-sub">인기 숙소를 보여드릴게요</div>
         </div>
       )}
-      {wishedPlaces.data.length>0 
+      {wishedPlaces.data.length > 0
         ? wishedPlaces.data
-            .sort((a:WishedPlaceType, b:WishedPlaceType) => b.wishId - a.wishId)
-            .map((place:WishedPlaceType) => (
+            .sort((a: WishedPlaceType, b: WishedPlaceType) => b.wishId - a.wishId)
+            .map((place: WishedPlaceType) => (
               <WishedPlace
                 place={place}
                 key={place.placeId}
-                // wishedPlace={wishedPlace}
-                // setWishedPlace={setWishedPlace}
-                refetch={refetch}
+                getWishedPlacesRefetch={getWishedPlacesRefetch}
+                getRecommendedPlacesRefetch={getRecommendedPlacesRefetch}
               />
             ))
-        : recommendedPlaces?.data.map((place:RecommendedPlaceType) => <PopularPlace place={place} key={place.placeId} />)}
+        : recommendedPlaces?.data.map((place: RecommendedPlaceType) => (
+            <PopularPlace place={place} key={place.placeId} />
+          ))}
     </div>
   );
 }

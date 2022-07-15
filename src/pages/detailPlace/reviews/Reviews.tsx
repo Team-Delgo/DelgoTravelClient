@@ -9,24 +9,20 @@ interface RivewTypeProps {
 }
 
 interface RivewType {
-  photoUrl: string;
+  profileUrl: string;
   review: {
     placeId: number;
     rating: number;
     registDt: string;
     reviewId: number;
-    reviewPhoto1: null;
-    reviewPhoto2: null;
-    reviewPhoto3: null;
-    reviewPhoto4: null;
-    reviewPhoto5: null;
+    reviewPhotoList:Array<string>,
     roomId: number;
     text: string;
     updateDt: null;
     userId: number;
   };
-  roomName: 'A3/스위트';
-  userName: '뽀삐맘';
+  roomName: string;
+  userName: string;
 }
 
 function Reviews({ review }: RivewTypeProps) {
@@ -48,7 +44,7 @@ function Reviews({ review }: RivewTypeProps) {
   return (
     <div className="review">
       <header className="review-header">
-        <img src={review.photoUrl} alt="profile-img" width={60} height={60} />
+        <img src={review.profileUrl} alt="profile-img" width={60} height={60} />
         <div className="review-header-info">
           <div className="review-header-info-nick-name">{review.userName}</div>
           <div className="review-header-info-second-line">

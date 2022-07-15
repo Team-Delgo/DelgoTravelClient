@@ -26,6 +26,7 @@ function RoomTypePage() {
   const navigate = useNavigate();
   const { date, dateString } = useSelector((state: any) => state.date);
   const { currentPlace } = useSelector((state: any) => state.persist.currentPlace);
+  const { currentRoom } = useSelector((state: any) => state.persist.currentRoom);
   const { user } = useSelector((state: any) => state.persist.user);
   const dispatch = useDispatch();
   const location: any = useLocation();
@@ -48,6 +49,7 @@ function RoomTypePage() {
       room?.roomId,
       (response: AxiosResponse) => {
         setPhotoList(response.data.data.detailRoomPhotos);
+        console.log(response.data.data)
       },
       dispatch,
     );
@@ -60,6 +62,8 @@ function RoomTypePage() {
           roomId: room?.roomId,
           name: room?.name,
           price: room?.price,
+          petNum:room?.petStandardNum,
+          personNum:room?.personStandardNum
         },
       }),
     );
@@ -79,9 +83,11 @@ function RoomTypePage() {
           address: currentPlace.address,
         },
         room: {
-          roomId: room.roomId,
-          name: room.name,
-          price: room.price,
+          roomId: currentRoom.roomId,
+          name: currentRoom.name,
+          price: currentRoom.price,
+          petNum:currentRoom.petNum,
+          personNum:currentRoom.personNum
         },
         date: {
           date,
@@ -144,6 +150,7 @@ function RoomTypePage() {
           </div>
         </div>
         <div className="detail-place-room-type-notice">공지사항</div>
+        <div>{room.notice}</div>
         <div className="detail-place-room-type-base-information">기본정보</div>
         <div className="detail-place-room-type-additional-personnel-information">인원 추가 정보</div>
       </div>

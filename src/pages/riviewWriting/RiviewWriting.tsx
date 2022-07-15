@@ -34,7 +34,7 @@ interface TraveledHisotryPlaceType {
 
 function RiviewWriting() {
   const [images, setImages] = useState<Array<any>>([]);
-  const [sendingImage, setSendingImage] = useState<Array<any>>([]);
+  const [sendingImage, setSendingImage] = useState<Array<File>>([]);
   const fileUploadRef = useRef<HTMLInputElement>(null);
   const slideRef = useRef<HTMLDivElement>(null);
   const [activeStar1, setActiveStar1] = useState(true);
@@ -102,45 +102,18 @@ function RiviewWriting() {
         roomId: state.roomId,
         rating: starRaiting.current,
         text: rivewText,
+        bookingId:state.bookingId
       },
       (response: AxiosResponse) => {
         const { code, codeMsg } = response.data;
         if (code === 200) {
           const {reviewId} = response.data.data;
+          console.log(typeof(reviewId))
       
           formData.append('rievewId', reviewId);
-          if (sendingImage[0]!==undefined) {
-            console.log(1)
-            formData.append('photo1', sendingImage[0]);
-          } else {
-            console.log(2)
-            formData.append('photo1', '');
+          for(let i=0; i<sendingImage.length; i+=1){
+            formData.append('photos', sendingImage[i]);
           }
-          if (sendingImage[1]!==undefined) {
-            console.log(1)
-            formData.append('photo2', sendingImage[1]);
-          } else {
-            console.log(2)
-            formData.append('photo2', '');
-          }
-          if (sendingImage[2]!==undefined) {
-            console.log(1)
-            formData.append('photo3', sendingImage[2]);
-          } else {
-            console.log(2)
-            formData.append('photo3', '');
-          }
-          if (sendingImage[3]!==undefined) {
-            console.log(1)
-            formData.append('photo4', sendingImage[3]);
-          } else {
-            console.log(2)
-            formData.append('photo4', '');
-          }
-          // if (sendingImage[4]!==undefined) {
-          //   console.log(1)
-          //   formData.append('photo5', sendingImage[4]);
-          // }
           // eslint-disable-next-line no-restricted-syntax, guard-for-in
           formData.forEach((value: any, key: any) => {
             console.log(key, value);
@@ -161,6 +134,7 @@ function RiviewWriting() {
             },
             dispatch,
           );
+            
         } else {
           console.log(codeMsg);
         }

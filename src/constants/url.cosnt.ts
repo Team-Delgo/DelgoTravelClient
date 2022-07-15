@@ -1,6 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 export const url = 'http://61.97.186.174:8080/';
 
+
 // let CALL_BACK_URL = ''
 // if(process.env.NODE_ENV === 'production'){
 //    CALL_BACK_URL = 'http://49.50.161.156:8080'
