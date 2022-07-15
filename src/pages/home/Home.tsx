@@ -9,7 +9,7 @@ import RecommendedPlaces from './recommenedPlaces/RecommendedPlaces';
 import { tokenActions } from '../../redux/slice/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
 import { bookingGetDataByMain } from '../../common/api/booking';
-import { getAllPlaces, getRecommendedPlace } from '../../common/api/getPlaces';
+import { getRecommendedPlace } from '../../common/api/getPlaces';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import './Home.scss';
 import HomeReservation from './HomeReservation';
@@ -37,7 +37,6 @@ interface RecommendedPlaceType {
 function Home() {
   const [page, setPage] = useState(0);
   const [dday, setDday] = useState('0');
-  // const [reservationPlaces, setReservationPlaces] = useState<Array<any>>([]);
   const [editorPlaces, setEditorPlaces] = useState<Array<EditorPlaceType>>([
     {
       id: 1,
@@ -58,44 +57,27 @@ function Home() {
   const accessToken = useSelector((state: any) => state.token.token);
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const { date } = useSelector((state: any) => state.date);
-  const startDt = `${date.start.substring(0, 4)}-${date.start.substring(4, 6)}-${date.start.substring(6, 10)}`;
-  const endDt = `${date.end.substring(0, 4)}-${date.end.substring(4, 6)}-${date.end.substring(6, 10)}`;
   const location: any = useLocation();
   const { homeY } = useSelector((state: any) => state.persist.scroll);
 
-  const { isLoading, data: recommendedPlaces } = useQuery('getRecommendedPlaces', () => getRecommendedPlace(userId), {
+  const { isLoading:getRecommendedPlacesIsLoading, data: recommendedPlaces } = useQuery('getRecommendedPlaces', () => getRecommendedPlace(userId), {
     cacheTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 3,
     refetchInterval: false,
-    onSuccess: () => {
-      console.log(recommendedPlaces);
-    },
     onError: (error: any) => {
       useErrorHandlers(dispatch, error);
     },
   });
 
-  const { data: reservationPlaces } = useQuery('bookingGetDataByMain', () => bookingGetDataByMain(accessToken,userId), {
+  const { isLoading:getBookingDataIsLoading , data: reservationPlaces } = useQuery('bookingGetDataByMain', () => bookingGetDataByMain(accessToken,userId), {
     cacheTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 3,
     refetchInterval: false,
-    onSuccess: () => {
-      console.log(reservationPlaces);
-    },
     onError: (error: any) => {
       useErrorHandlers(dispatch, error);
     },
   });
 
-  useEffect(() => {
-    // bookingGetDataByMain(
-    //   { accessToken, userId },
-    //   (response: AxiosResponse) => {
-    //     setReservationPlaces(response.data.data);
-    //   },
-    //   dispatch,
-    // );
-  }, []);
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
@@ -143,11 +125,19 @@ function Home() {
     );
   }, [accessToken]);
 
+  if (getRecommendedPlacesIsLoading){
+    return <div className="home-background">&nbsp;</div>;
+  }
+
+  if (getBookingDataIsLoading){
+    return <div className="home-background">&nbsp;</div>;
+  }
+
   return (
     <>
       <div className="home-background">
         <img src={Delgo} alt="delgo" className="delgo" />
-        {reservationPlaces?.data.length > 0 && (
+        {reservationPlaces?.data?.length > 0 && (
           <>
             <div className="home-reservation-info">
               {reservationPlaces?.data[page]?.place.address.slice(0, 2)} 여행까지 D-{dday}✈️
