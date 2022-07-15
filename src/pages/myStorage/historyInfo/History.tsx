@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AxiosResponse } from 'axios';
 import { useQuery } from 'react-query'
@@ -49,6 +49,8 @@ function History() {
   const accessToken = useSelector((state: any) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
   const userId = useSelector((state: any) => state.persist.user.user.id);
+  const location: any = useLocation();
+  const { myStorageY } = useSelector((state: any) => state.persist.scroll);
 
   const {
     isLoading: getRecommendedPlacesIsLoading,
@@ -75,6 +77,16 @@ function History() {
       },
     },
   );
+
+  useEffect(() => {
+    if (location.state?.prevPath.includes('/reservation-confirm')) {
+      window.scrollTo(0, myStorageY);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [getRecommendedPlacesIsLoading, getTraveledPlacesIsLoading]);
+
+
 
   useEffect(() => {
     tokenRefresh(

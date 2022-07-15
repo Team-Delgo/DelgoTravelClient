@@ -11,11 +11,6 @@ import { tokenRefresh } from '../../common/api/login';
 import { bookingGetDataByMain } from '../../common/api/booking';
 import { getAllPlaces, getRecommendedPlace } from '../../common/api/getPlaces';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
-import Dog from '../../icons/dog.svg';
-import Airplane from '../../icons/airplane.svg';
-import Footprint from '../../icons/footprint.svg';
-import Book from '../../icons/book.svg';
-import Emergency from '../../icons/emergency.svg';
 import './Home.scss';
 import HomeReservation from './HomeReservation';
 import Delgo from '../../icons/delgo.svg';
@@ -42,7 +37,7 @@ interface RecommendedPlaceType {
 function Home() {
   const [page, setPage] = useState(0);
   const [dday, setDday] = useState('0');
-  const [reservationPlaces, setReservationPlaces] = useState<Array<any>>([]);
+  // const [reservationPlaces, setReservationPlaces] = useState<Array<any>>([]);
   const [editorPlaces, setEditorPlaces] = useState<Array<EditorPlaceType>>([
     {
       id: 1,
@@ -80,16 +75,27 @@ function Home() {
     },
   });
 
+  const { data: reservationPlaces } = useQuery('bookingGetDataByMain', () => bookingGetDataByMain(accessToken,userId), {
+    cacheTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 3,
+    refetchInterval: false,
+    onSuccess: () => {
+      console.log(reservationPlaces);
+    },
+    onError: (error: any) => {
+      useErrorHandlers(dispatch, error);
+    },
+  });
+
   useEffect(() => {
-    console.log(recommendedPlaces);
-    bookingGetDataByMain(
-      { accessToken, userId },
-      (response: AxiosResponse) => {
-        setReservationPlaces(response.data.data);
-      },
-      dispatch,
-    );
-  }, [recommendedPlaces]);
+    // bookingGetDataByMain(
+    //   { accessToken, userId },
+    //   (response: AxiosResponse) => {
+    //     setReservationPlaces(response.data.data);
+    //   },
+    //   dispatch,
+    // );
+  }, []);
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
@@ -100,7 +106,7 @@ function Home() {
   }, [reservationPlaces, recommendedPlaces]);
 
   const getDday = () => {
-    const startDate = new Date(reservationPlaces[page].startDt);
+    const startDate = new Date(reservationPlaces?.data[page].startDt);
     const currentDate = new Date();
     const dateDif = startDate.getTime() - currentDate.getTime();
     const dDay = dateDif / (1000 * 60 * 60 * 24);
@@ -114,7 +120,7 @@ function Home() {
   };
 
   useEffect(() => {
-    if (reservationPlaces?.length) getDday();
+    if (reservationPlaces?.data?.length) getDday();
   }, [page, reservationPlaces]);
 
   useEffect(() => {
@@ -141,16 +147,16 @@ function Home() {
     <>
       <div className="home-background">
         <img src={Delgo} alt="delgo" className="delgo" />
-        {reservationPlaces?.length > 0 && (
+        {reservationPlaces?.data.length > 0 && (
           <>
             <div className="home-reservation-info">
-              {reservationPlaces[page]?.place.address.slice(0, 2)} 여행까지 D-{dday}✈️
+              {reservationPlaces?.data[page]?.place.address.slice(0, 2)} 여행까지 D-{dday}✈️
             </div>
             <HomeReservation
-              lists={reservationPlaces}
+              lists={reservationPlaces?.data}
               pageChange={(number) => {
                 let temp = number;
-                if (temp + 1 > reservationPlaces.length) temp = reservationPlaces.length - 1;
+                if (temp + 1 > reservationPlaces?.data.length) temp = reservationPlaces.data.length - 1;
                 setPage(temp);
               }}
             />

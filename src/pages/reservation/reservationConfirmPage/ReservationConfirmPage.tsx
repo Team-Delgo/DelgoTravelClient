@@ -88,7 +88,12 @@ function ReservationConfirmPage() {
   }, []);
 
   const moveToMyStoragePage = useCallback(() => {
-    navigate('/my-storage')
+    navigate('/my-storage', {
+      state: {
+        prevPath: location.pathname,
+        tab: 1,
+      },
+    });
   }, []);
 
 
@@ -100,19 +105,32 @@ function ReservationConfirmPage() {
     setReservationCancleModal(false);
   }, []);
 
-  const copyPlaceAddress =  () => {
-    navigator.clipboard.writeText(reservationData.place.address);
-  };
+  const copyPlaceAddress = useCallback(() => {
+      navigator.clipboard.writeText(reservationData.place.address);
+    }, [reservationData]);
 
-  const copyReservationNumber =  () => {
-    navigator.clipboard.writeText(reservationData.bookingId);
-  };
+  const copyReservationNumber = useCallback(() => {
+      navigator.clipboard.writeText(reservationData.bookingId);
+    }, [reservationData]);
+
+
+  const getDate = (date:string) => { 
+
+      const week = ['일', '월', '화', '수', '목', '금', '토'];
+  
+      const dayOfWeek = week[new Date(date).getDay()];
+  
+      return dayOfWeek;
+  
+  }
+
+
 
   return (
     <>
       <div className="reservationPage">
         <div className="header">
-          <Exit className="exit-button" onClick={location.state ? moveToMyStoragePage : moveToMainPage} />
+          <Exit className="exit-button" onClick={location.state?.prevPath ? moveToMyStoragePage : moveToMainPage} />
           {reservationData.bookingState === 'W' ? (
             <h1 className="header-title">예약접수 확인중</h1>
           ) : (
@@ -137,7 +155,7 @@ function ReservationConfirmPage() {
             <span className="check-title">체크인</span>
             <span className="check-date">
               {reservationData.startDt.substring(2, 4)}.{reservationData.startDt.substring(5, 7)}.
-              {reservationData.startDt.substring(8, 10)}{' '}
+              {reservationData.startDt.substring(8, 10)}({getDate(reservationData.startDt)})
             </span>
             <span className="check-date">{reservationData.place.checkin.substring(0, 5)}</span>
           </div>
@@ -145,7 +163,7 @@ function ReservationConfirmPage() {
             <span className="check-title">체크아웃</span>
             <span className="check-date">
               {reservationData.endDt.substring(2, 4)}.{reservationData.endDt.substring(5, 7)}.
-              {reservationData.endDt.substring(8, 10)}{' '}
+              {reservationData.endDt.substring(8, 10)}({getDate(reservationData.endDt)})
             </span>
             <span className="check-date">{reservationData.place.checkout.substring(0, 5)}</span>
           </div>

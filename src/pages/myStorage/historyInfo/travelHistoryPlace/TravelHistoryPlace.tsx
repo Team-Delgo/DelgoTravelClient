@@ -1,6 +1,8 @@
 
-import React from 'react'
-import { Link ,useLocation} from 'react-router-dom';
+import React,{useCallback} from 'react'
+import { Link ,useLocation,useNavigate} from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { scrollActions } from '../../../../redux/slice/scrollSlice';
 import './TravelHistoryPlace.scss';
 
 interface TraveledHisotryPlaceTypeProps {
@@ -27,8 +29,14 @@ interface TraveledHisotryPlaceType {
 }
 
 function TravelHisotryPlace({ traveledPlace }: TraveledHisotryPlaceTypeProps) {
-
+  const dispatch = useDispatch();
   const location: any = useLocation();
+  const navigate = useNavigate();
+
+  const moveToReservationConfirmPage = useCallback(() => {
+    dispatch(scrollActions.scroll({ whereToGo: 0, detailPlace: 0, myStorage: window.scrollY, homeY: 0 }));
+    navigate(`/reservation-confirm/${traveledPlace.bookingId}`, { state: { prevPath: location.pathname } });
+  }, []);
 
   return (
     <div className="travel-hisotry-place">
@@ -56,13 +64,13 @@ function TravelHisotryPlace({ traveledPlace }: TraveledHisotryPlaceTypeProps) {
         >
           <div className="travel-hisotry-place-review-write">리뷰쓰기</div>
         </Link>
-        <Link
+        {/* <Link
           className="travel-hisotry-place-review-reservation-detail"
           to={`/reservation-confirm/${traveledPlace.bookingId}`}
           state={location.pathname}
-        >
-          <div>예약상세</div>
-        </Link>
+        > */}
+          <div className="travel-hisotry-place-review-reservation-detail" aria-hidden="true" onClick={moveToReservationConfirmPage}>예약상세</div>
+        {/* </Link> */}
       </div>
     </div>
   );
