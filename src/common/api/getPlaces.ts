@@ -2,16 +2,6 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useErrorHandlers } from './useErrorHandlers';
 import { url } from '../../constants/url.cosnt';
 
-
-async function getAllPlacesMain(userId: number, startDt: string, endDt: string, success: (data: AxiosResponse) => void, dispatch: any) {
-  try {
-    const result = await axios.get(`${url}place/selectWheretogo?userId=${userId}&startDt=${startDt}&endDt=${endDt}`);
-    success(result);
-  } catch (error: AxiosError | any) {
-    useErrorHandlers(dispatch, error);
-  }
-}
-
 async function getAllPlaces(userId: number, startDt: string, endDt: string) {
   return fetch(`${url}place/selectWheretogo?userId=${userId}&startDt=${startDt}&endDt=${endDt}`).then((response) =>
     response.json()
@@ -40,4 +30,4 @@ async function getRecommendedPlace(userId:number) {
   );
 };
 
-export { getAllPlacesMain,getAllPlaces,getWishedPlaces, getDetailPlace,getRecommendedPlace };
+export { getAllPlaces,getWishedPlaces, getDetailPlace,getRecommendedPlace };
