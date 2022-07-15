@@ -67,22 +67,7 @@ function ReservationConfirmPage() {
     setTimeout(() => {
       navigate('/');
       dispatch(
-        reservationActions.reservation({
-          user: { id: 0, nickname: '', email: '', phone: '' },
-          place: { placeId: 0, name: '', address: '' },
-          room: {
-            roomId: 0,
-            name: '',
-            checkin: '',
-            checkout: '',
-            price: 0,
-            images: [],
-          },
-          date: {
-            date:'',
-            dateString:''
-          },
-        }),
+        reservationActions.reservationCancle()
       );
     }, 100);
   }, []);
@@ -115,13 +100,9 @@ function ReservationConfirmPage() {
 
 
   const getDate = (date:string) => { 
-
       const week = ['일', '월', '화', '수', '목', '금', '토'];
-  
       const dayOfWeek = week[new Date(date).getDay()];
-  
       return dayOfWeek;
-  
   }
 
 

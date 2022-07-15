@@ -83,7 +83,6 @@ async function bookingGetData(
 // }
 
 async function bookingGetDataByMain(accessToken: string, userId: number) {
-  console.log(accessToken);
   return fetch(`${url}booking/getData/main?userId=${userId}`).then((response) => response.json());
 }
 
