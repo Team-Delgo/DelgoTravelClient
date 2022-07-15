@@ -26,16 +26,16 @@ function MyAccount() {
   const dispatch = useDispatch();
   const email = useSelector((state: any) => state.persist.user.user.email);
   const userId = useSelector((state: any) => state.persist.user.user.id);
-  const dogBirth = useSelector((state:any)=>state.persist.user.pet.birthdat);
+  const dogBirth = useSelector((state: any) => state.persist.user.pet.birthdat);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const temp = `${dogBirth.slice(0,4)}-${dogBirth.slice(4,6)}-${dogBirth.slice(6,8)}`;
+    const temp = `${dogBirth.slice(0, 4)}-${dogBirth.slice(4, 6)}-${dogBirth.slice(6, 8)}`;
     const date = new Date(temp);
     const now = new Date();
     // const age = now.getFullYear - date.getFullYear;
-    console.log(now.getFullYear()-date.getFullYear());
-    setAge((now.getFullYear()-date.getFullYear())+1);
+    console.log(now.getFullYear() - date.getFullYear());
+    setAge((now.getFullYear() - date.getFullYear()) + 1);
     getUserInfo();
   }, []);
 
@@ -133,7 +133,7 @@ function MyAccount() {
               <p className="account-profile-info-column">포인트</p>
               <p className="account-profile-info-value">{items.points}</p>
             </div>
-            <div className="account-profile-info-review">
+            <div className="account-profile-info-review" aria-hidden="true" onClick={() => { navigation(MY_ACCOUNT_PATH.REVIEWS) }}>
               <p className="account-profile-info-column">리뷰</p>
               <p className="account-profile-info-value">{items.reviews}건</p>
             </div>

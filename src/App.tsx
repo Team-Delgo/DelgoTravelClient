@@ -48,6 +48,7 @@ import Settings from './pages/myAccount/Settings';
 import ChangePetInfo from './pages/myAccount/ChangePetInfo';
 import ReservationCanclePage from './pages/reservation/reservationCanclePage/ReservationCanclePage';
 import SignUpComplete from './pages/signUpPage/petInfo/SignUpComplete';
+import ReviewList from './pages/myAccount/ReviewList';
 
 function App() {
   const hasError = useSelector((state: any) => state.error.hasError);
@@ -76,13 +77,14 @@ function App() {
         <Route path={SIGN_UP_PATH.USER_INFO} element={<UserInfo />} />
         <Route path={SIGN_UP_PATH.USER_PET_INFO} element={<PetInfo />} />
         <Route path={SIGN_UP_PATH.USER_PET_INFO} element={<PetInfo />} />
-        <Route path={SIGN_UP_PATH.COMPLETE} element={<SignUpComplete/>}/>
+        <Route path={SIGN_UP_PATH.COMPLETE} element={<SignUpComplete />} />
         <Route path={MY_STORAGE_PATH} element={<MyStoragePage />} />
         <Route path={WHERE_TO_GO_PATH} element={<WhereToGoPage />} />
         <Route path={MY_ACCOUNT_PATH.MAIN} element={<MyAccount />} />
         <Route path={MY_ACCOUNT_PATH.COUPON} element={<Coupon />} />
         <Route path={MY_ACCOUNT_PATH.SETTINGS} element={<Settings />} />
         <Route path={MY_ACCOUNT_PATH.PETINFO} element={<ChangePetInfo />} />
+        <Route path={MY_ACCOUNT_PATH.REVIEWS} element={<ReviewList />} />
         <Route path={DETAIL_PLACE_PATH.MAIN} element={<DetailPlace />} />
         <Route path={DETAIL_PLACE_PATH.REVIEWS} element={<ReviewsPage />} />
         <Route path={DETAIL_PLACE_PATH.ROOMTYPES} element={<RoomTypePage />} />
