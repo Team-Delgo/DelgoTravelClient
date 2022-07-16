@@ -6,7 +6,8 @@ import alertConfirm, { Button, alert } from 'react-alert-confirm';
 import 'react-alert-confirm/dist/index.css';
 import Footer from '../../common/components/Footer';
 import './MyAccount.scss';
-import RightArrow from '../../icons/right-arrow-black.svg';
+import RightArrow from '../../icons/right-arrow.svg';
+import RightArrowBlack from '../../icons/right-arrow-black.svg';
 import { userActions } from '../../redux/slice/userSlice';
 import { tokenActions } from '../../redux/slice/tokenSlice';
 import AlertConfirm from '../../common/dialog/AlertConfirm';
@@ -26,16 +27,16 @@ function MyAccount() {
   const dispatch = useDispatch();
   const email = useSelector((state: any) => state.persist.user.user.email);
   const userId = useSelector((state: any) => state.persist.user.user.id);
-  const dogBirth = useSelector((state: any) => state.persist.user.pet.birthdat);
+  const dogBirth = useSelector((state: any) => state.persist.user.pet.birthday);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const temp = `${dogBirth.slice(0, 4)}-${dogBirth.slice(4, 6)}-${dogBirth.slice(6, 8)}`;
+    const temp = `${dogBirth.slice(0, 4)}-${dogBirth.slice(5, 7)}-${dogBirth.slice(8, 10)}`;
     const date = new Date(temp);
     const now = new Date();
     // const age = now.getFullYear - date.getFullYear;
     console.log(now.getFullYear() - date.getFullYear());
-    setAge((now.getFullYear() - date.getFullYear()) + 1);
+    setAge(now.getFullYear() - date.getFullYear() + 1);
     getUserInfo();
   }, []);
 
@@ -112,19 +113,19 @@ function MyAccount() {
       <div className="account-profile">
         <img className="account-profile-image" src={pet?.image} alt="dog" />
         <div className="account-profile-info">
-          <div className='account-profile-info-first'>
+          <div className="account-profile-info-first">
             <div className="account-profile-info-name">{pet.name}</div>
             <span className="account-profile-info-age">/ {age}살</span>
             <img
               aria-hidden="true"
-              src={RightArrow}
+              src={RightArrowBlack}
               onClick={() => {
                 navigation(MY_ACCOUNT_PATH.PETINFO);
               }}
               alt="detail"
             />
           </div>
-          <div className='account-profile-info-second'>
+          <div className="account-profile-info-second">
             <div className="account-profile-info-coupon" aria-hidden="true" onClick={navigateCouponPage}>
               <p className="account-profile-info-column">쿠폰</p>
               <p className="account-profile-info-value">{items.coupons}장</p>
@@ -133,7 +134,13 @@ function MyAccount() {
               <p className="account-profile-info-column">포인트</p>
               <p className="account-profile-info-value">{items.points}</p>
             </div>
-            <div className="account-profile-info-review" aria-hidden="true" onClick={() => { navigation(MY_ACCOUNT_PATH.REVIEWS) }}>
+            <div
+              className="account-profile-info-review"
+              aria-hidden="true"
+              onClick={() => {
+                navigation(MY_ACCOUNT_PATH.REVIEWS);
+              }}
+            >
               <p className="account-profile-info-column">리뷰</p>
               <p className="account-profile-info-value">{items.reviews}건</p>
             </div>
@@ -142,7 +149,7 @@ function MyAccount() {
       </div>
       <div className="account-purchase">
         <div className="account-purchase-reservation">
-          <h1 className="account-title">여행 내역</h1>
+          <h1 className="account-title">예약 현황</h1>
           <div className="account-purchase-reservation-box">
             <div className="account-purchase-reservation-box-wrapper">
               <p className="account-purchase-reservation-box-wrapper-title">밸런스독</p>
@@ -155,18 +162,18 @@ function MyAccount() {
           </div>
         </div>
       </div>
-      <div
-        className="account-settings"
-        aria-hidden="true"
-        onClick={() => {
-          navigation(MY_ACCOUNT_PATH.SETTINGS);
-        }}
-      >
+      <div className="account-settings">
         <div className="account-item first">
           <h2 className="account-item-name">내 정보 관리</h2>
           <img src={RightArrow} alt="detail" />
         </div>
-        <div className="account-item">
+        <div
+          className="account-item"
+          aria-hidden="true"
+          onClick={() => {
+            navigation(MY_ACCOUNT_PATH.SETTINGS);
+          }}
+        >
           <h2 className="account-item-name">설정</h2>
           <img src={RightArrow} alt="detail" />
         </div>
