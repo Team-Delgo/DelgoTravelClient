@@ -4,7 +4,7 @@ const initialState = {
   isSignIn: false,
   couponList:[],
   user: { id: 0, nickname: '', email: '', phone: '' },
-  pet: { name: '', petId: 0, birthday: '', size: '', weight: 0, image: '' },
+  pet: { name: '', petId: 0, birthday: '', size: '', image: '' },
 };
 
 const userSlice = createSlice({
@@ -22,6 +22,20 @@ const userSlice = createSlice({
     signout() {
       return initialState;
     },
+    changepetinfo(state, action){
+      return {
+        isSignIn: state.isSignIn,
+        couponList: state.couponList,
+        user: state.user,
+        pet: {
+          name: action.payload.name,
+          birthday: action.payload.birth,
+          size: action.payload.size,
+          petId: state.pet.petId,
+          image: action.payload.image
+        }
+      }
+    }
   },
 });
 

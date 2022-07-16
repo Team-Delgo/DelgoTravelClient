@@ -60,7 +60,7 @@ function Login() {
               },
               pet: {
                 petId: data.pet.petId,
-                birthdat: data.pet.birthday,
+                birthday: data.pet.birthday,
                 size: data.pet.size,
                 weight: data.pet.weight,
                 name: data.pet.name,

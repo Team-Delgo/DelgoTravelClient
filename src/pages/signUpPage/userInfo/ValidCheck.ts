@@ -65,10 +65,10 @@ function checkPetName(name: string): Feedback {
   const space = /^.{2,8}$/;
 
   if (!check.test(name)) {
-    return { isValid: false, message: '특수문자 제외 2자이상 8자이하로 입력해주세요.' };
+    return { isValid: false, message: '공백, 특수문자는 사용할 수 없습니다.' };
   }
   if (space.test(name) === false) {
-    return { isValid: false, message: '특수문자 제외 2자이상 8자이하로 입력해주세요.' };
+    return { isValid: false, message: '공백, 특수문자는 사용할 수 없습니다.' };
   }
   return { isValid: true, message: '' };
 }

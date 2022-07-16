@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import classNames from "classnames";
-import { AxiosResponse } from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import "./Calender.scss";
+import React, { useState, useEffect } from 'react';
+import classNames from 'classnames';
+import { AxiosResponse } from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import './Calender.scss';
 import { ReactComponent as Exit } from '../../icons/exit.svg';
-import { dateActions } from "../../redux/slice/dateSlice";
-import { getReservedDate } from "../api/calender";
-import { errorActions } from "../../redux/slice/errorSlice";
+import { dateActions } from '../../redux/slice/dateSlice';
+import { getReservedDate } from '../api/calender';
+import { errorActions } from '../../redux/slice/errorSlice';
 
 interface CalenderProps {
-  closeCalender: () => void,
-  isRoom: boolean,
-  roomId?: string,
+  closeCalender: () => void;
+  isRoom: boolean;
+  roomId?: string;
 }
 
 Calender.defaultProps = {
-  roomId: 0
+  roomId: 0,
 };
 
 function Calender(props: CalenderProps) {
@@ -25,8 +25,9 @@ function Calender(props: CalenderProps) {
   const [selectedDate, setSelectedDate] = useState({ start, end });
   const dateExist = dateString.length ? 2 : 0;
   const [sequence, setSequence] = useState(dateExist); // 0개 선택, 1개 선택, 2개 선택
-  const [reservedDate, setReservedDate] = useState<string[]>();
+  const [reservedDate, setReservedDate] = useState<any[]>();
   const { closeCalender, isRoom, roomId } = props;
+  let index = 0;
 
   const errorHandler = () => {
     dispatch(errorActions.setError());
@@ -34,14 +35,17 @@ function Calender(props: CalenderProps) {
 
   useEffect(() => {
     if (isRoom) {
-      getReservedDate({ roomId }, (response: AxiosResponse) => {
-        const { data } = response.data;
-        console.log(response);
-        setReservedDate(data);
-      }, errorHandler);
+      getReservedDate(
+        { roomId },
+        (response: AxiosResponse) => {
+          const { data } = response.data;
+          console.log(response);
+          setReservedDate(data.dateList);
+        },
+        errorHandler,
+      );
     }
   }, []);
-
 
   const getNextYear = (currentMonth: number, currentYear: number, add: number) => {
     if (currentMonth + add > 12) {
@@ -66,7 +70,7 @@ function Calender(props: CalenderProps) {
       setSequence(1);
       setSelectedDate((prev) => {
         return { ...prev, start: date };
-      })
+      });
     } else if (sequence === 1) {
       setSequence(2);
       if (Number(selectedDate.start) > Number(date)) {
@@ -81,7 +85,7 @@ function Calender(props: CalenderProps) {
       setSequence(1);
       setSelectedDate(() => {
         return { start: date, end: '' };
-      })
+      });
     }
   };
 
@@ -120,7 +124,6 @@ function Calender(props: CalenderProps) {
       nextDates.push(i);
     }
 
-
     const dates = prevDates.concat(thisDates, nextDates);
     const firstDateIndex = dates.indexOf(1);
     const lastDateIndex = dates.lastIndexOf(thisLastDate);
@@ -132,14 +135,16 @@ function Calender(props: CalenderProps) {
       currentMonth = `0${currentMonth}`;
     }
 
-
     const datesElement = dates.map((date, i) => {
       let rdate: string | number = date;
       if (date < 10) {
         rdate = date.toString();
         rdate = `0${date}`;
       }
-      const condition = i >= firstDateIndex && i <= lastDateIndex;
+
+      let condition = i >= firstDateIndex && i <= lastDateIndex;
+
+
       const keyCondition = condition ? 'this' : 'other';
       const id = `${currentYear}${currentMonth}${rdate} ${keyCondition}`;
       const circle = sequence === 1 && id.slice(0, 8) === selectedDate.start && keyCondition === 'this';
@@ -150,42 +155,99 @@ function Calender(props: CalenderProps) {
       const numEnd = Number(selectedDate.end);
 
       const middleDate = sequence === 2 && numId > numStart && numId < numEnd && keyCondition === 'this';
-      const secondDate = sequence === 2 && id.slice(0, 8) === selectedDate.end && keyCondition === 'this'
+      const secondDate = sequence === 2 && id.slice(0, 8) === selectedDate.end && keyCondition === 'this';
+
       if (next === 0) {
         const today = Number(getToday());
         const gone = date < today;
+        let isBooking = false;
 
-        return <div
-          key={id}
-          className={classNames('date-day', { able: condition }, { prev: gone }, { circle }, { firstDate }, { middleDate }, { secondDate })}
-          id={id}
-          aria-hidden="true"
-          onClick={condition && !gone ? selectDateHandler : () => { return 0 }}
-        >
-          {date}
-        </div>;
+        if (condition && !gone) {
+          if (reservedDate) {
+            console.log(date , index);
+            if (reservedDate[index].isBooking) {
+              isBooking = true;
+            }
+            index += 1;
+          } 
+        }
+
+        return (
+          <div
+            key={id}
+            className={classNames(
+              'date-day',
+              { able: condition },
+              { prev: gone || isBooking },
+              { circle },
+              { firstDate },
+              { middleDate },
+              { secondDate },
+            )}
+            id={id}
+            aria-hidden="true"
+            onClick={
+              condition && !gone && !isBooking
+                ? selectDateHandler
+                : () => {
+                    return 0;
+                  }
+            }
+          >
+            {date}
+          </div>
+        );
       }
 
-      return <div
-        key={id}
-        className={classNames('date-day', { able: condition }, { circle }, { firstDate }, { middleDate }, { secondDate })}
-        id={id}
-        aria-hidden="true"
-        onClick={condition ? selectDateHandler : () => { return 0 }}
-      >
-        {date}
-      </div>;
-    })
+      let isBooking = false;
+
+      if (condition) {
+        if (reservedDate) {
+          console.log(date , index);
+          if (reservedDate[index].isBooking) {
+            isBooking = true;
+          }
+          if(reservedDate.length-1 > index){
+            index += 1;
+          } else {
+            condition = false;
+          } 
+        }
+      }
+
+      return (
+        <div
+          key={id}
+          className={classNames(
+            'date-day',
+            { able: condition },
+            { prev: isBooking },
+            { circle },
+            { firstDate },
+            { middleDate },
+            { secondDate },
+          )}
+          id={id}
+          aria-hidden="true"
+          onClick={
+            condition && !isBooking
+              ? selectDateHandler
+              : () => {
+                  return 0;
+                }
+          }
+        >
+          {date}
+        </div>
+      );
+    });
 
     return { datesElement, currentYear, currentMonth };
   };
 
-
   const datesElement0 = getDateContext(0);
   const datesElement1 = getDateContext(1);
   const datesElement2 = getDateContext(2);
-  const datesElement3 = getDateContext(3);
-  const datesElement4 = getDateContext(4);
 
   const startMonth = selectedDate.start.slice(4, 6);
   const endMonth = selectedDate.end.slice(4, 6);
@@ -209,19 +271,26 @@ function Calender(props: CalenderProps) {
       count += thisLastDate;
     }
   }
-  const days = (count + Number(endDate)) - Number(startDate);
 
-  let selectedDateContext = sequence === 1 ?
-    <div className="selected-date">
-      {startMonth}.{`0${startDate}`.slice(-2)}({startDay})
-    </div> : <div />;
+  const days = count + Number(endDate) - Number(startDate);
 
-  selectedDateContext = sequence === 2 ?
-    <div className="selected-date">
-      {startMonth}.{`0${startDate}`.slice(-2)}({startDay}) ~ {endMonth}.{`0${endDate}`.slice(-2)}({endDay}) {days}박
-    </div>
-    : selectedDateContext;
+  let selectedDateContext =
+    sequence === 1 ? (
+      <div className="selected-date">
+        {startMonth}.{`0${startDate}`.slice(-2)}({startDay})
+      </div>
+    ) : (
+      <div />
+    );
 
+  selectedDateContext =
+    sequence === 2 ? (
+      <div className="selected-date">
+        {startMonth}.{`0${startDate}`.slice(-2)}({startDay}) ~ {endMonth}.{`0${endDate}`.slice(-2)}({endDay}) {days}박
+      </div>
+    ) : (
+      selectedDateContext
+    );
 
   const resetHandler = () => {
     setSelectedDate({ start: '', end: '' });
@@ -233,12 +302,23 @@ function Calender(props: CalenderProps) {
   };
 
   const confirmDateHandler = () => {
-    const selectedDateString = `${startMonth}.${`0${startDate}`.slice(-2)}(${startDay}) - ${endMonth}.${`0${endDate}`.slice(-2)}(${endDay}) ${days}박`;
-    dispatch(dateActions.setDate({ date: { start: selectedDate.start, end: selectedDate.end }, dateString: selectedDateString }));
+    const selectedDateString = `${startMonth}.${`0${startDate}`.slice(
+      -2,
+    )}(${startDay}) - ${endMonth}.${`0${endDate}`.slice(-2)}(${endDay}) ${days}박`;
+    dispatch(
+      dateActions.setDate({
+        date: { start: selectedDate.start, end: selectedDate.end },
+        dateString: selectedDateString,
+      }),
+    );
     closeCalender();
   };
 
-  const bottomButton = <div className="bottom-select-button" aria-hidden="true" onClick={confirmDateHandler}>{days}박 선택</div>
+  const bottomButton = (
+    <div className="bottom-select-button" aria-hidden="true" onClick={confirmDateHandler}>
+      {days}박 선택
+    </div>
+  );
 
   return (
     <div className="calender">
@@ -268,10 +348,6 @@ function Calender(props: CalenderProps) {
         <div className="date">{datesElement1.datesElement}</div>
         <div className="current-month">{`${datesElement2.currentYear}.${datesElement2.currentMonth}`}</div>
         <div className="date">{datesElement2.datesElement}</div>
-        <div className="current-month">{`${datesElement3.currentYear}.${datesElement3.currentMonth}`}</div>
-        <div className="date">{datesElement3.datesElement}</div>
-        <div className="current-month">{`${datesElement4.currentYear}.${datesElement4.currentMonth}`}</div>
-        <div className="date">{datesElement4.datesElement}</div>
       </div>
       {sequence === 2 && bottomButton}
     </div>

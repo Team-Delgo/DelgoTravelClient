@@ -10,7 +10,7 @@ import './PetInfo.scss';
 import DogType from './DogType';
 import BirthSelector from './BirthSelector';
 import { signup, petImageUpload } from '../../../common/api/signup';
-import Check from "../../../icons/check.svg"
+import Check from '../../../icons/check.svg';
 import { SIGN_UP_PATH } from '../../../constants/path.const';
 
 interface LocationState {
@@ -66,9 +66,7 @@ function PetInfo() {
     // let {petImage} = files;
     reader.readAsDataURL(event.target.files![0]);
     setSendingImage(event.target.files![0]);
-
   };
-
   const requireInputCheck = (key: string, value: string) => {
     if (value.length) {
       setIsValid((prev: IsValid) => {
@@ -118,7 +116,7 @@ function PetInfo() {
     });
     setIsValid((prev: IsValid) => {
       return { ...prev, birth: true };
-    })
+    });
   };
 
   const submitHandler = () => {
@@ -136,28 +134,34 @@ function PetInfo() {
       pet: petInfo,
     };
     console.log(userInfo);
-    signup(userInfo, (response: AxiosResponse) => {
-
-      const { code, codeMsg } = response.data;
-      if (code === 200) {
-        // const accessToken = response.headers.authorization_access;
-        // const refreshToken = response.headers.authorization_refresh;
-        // dispatch(tokenActions.setToken(accessToken));
-        // localStorage.setItem('refreshToken', refreshToken);
-        userId = response.data.data.userId;
-        console.log(response);
-        console.log(userId);
-        formData.append('userId', userId.toString());
-        formData.append('photo', sendingImage);
-        petImageUpload(formData, (response: AxiosResponse) => {
+    signup(
+      userInfo,
+      (response: AxiosResponse) => {
+        const { code, codeMsg } = response.data;
+        if (code === 200) {
+          // const accessToken = response.headers.authorization_access;
+          // const refreshToken = response.headers.authorization_refresh;
+          // dispatch(tokenActions.setToken(accessToken));
+          // localStorage.setItem('refreshToken', refreshToken);
+          userId = response.data.data.userId;
           console.log(response);
-        }, dispatch);
-        navigation(SIGN_UP_PATH.COMPLETE, { state: { name: enteredInput.name } });
-      } else {
-        console.log(codeMsg);
-      }
-
-    }, dispatch)
+          console.log(userId);
+          formData.append('userId', userId.toString());
+          formData.append('photo', sendingImage);
+          petImageUpload(
+            formData,
+            (response: AxiosResponse) => {
+              console.log(response);
+            },
+            dispatch,
+          );
+          navigation(SIGN_UP_PATH.COMPLETE, { state: { name: enteredInput.name } });
+        } else {
+          console.log(codeMsg);
+        }
+      },
+      dispatch,
+    );
 
     // 비동기 처리
     // signup({ email, password, nickname, phone, pet: {petName:enteredInput.name,petBirth:enteredInput.birth,petImage:} }, () => {});
@@ -183,7 +187,6 @@ function PetInfo() {
           <Camera className="petinfo-image-icon" />
         </label>
         <div className="petinfo-image-preview" style={{ backgroundImage: `url(${image})` }} />
-
       </div>
       {modalActive && (
         <div>
@@ -201,7 +204,7 @@ function PetInfo() {
       )}
       <div className="login-input-box">
         <input
-          className={classNames("login-input petname", { invalid: nameFeedback.length })}
+          className={classNames('login-input petname', { invalid: nameFeedback.length })}
           placeholder="강아지 이름 (2~8자)"
           value={enteredInput.name}
           autoComplete="off"
@@ -212,7 +215,7 @@ function PetInfo() {
       </div>
       <div className="login-input-wrapper">
         <input
-          className={classNames("login-input input-birth")}
+          className={classNames('login-input input-birth')}
           placeholder="생일"
           value={enteredInput.birth}
           id={Id.BIRTH}
@@ -240,21 +243,21 @@ function PetInfo() {
         <label htmlFor="S">
           <input type="radio" id="S" name="dogtype" className="dogtype-input" onChange={typeChangeHandler} />
           <span className="dogtype-button">
-            <img className='checkbox-icon' src={Check} alt="check" />
+            <img className={classNames("checkbox-icon",{invisible:modalActive})} src={Check} alt="check" />
           </span>
           소형견
         </label>
         <label htmlFor="M">
           <input type="radio" id="M" name="dogtype" className="dogtype-input" onChange={typeChangeHandler} />
           <span className="dogtype-button">
-            <img className='checkbox-icon' src={Check} alt="check" />
+            <img className={classNames("checkbox-icon",{invisible:modalActive})} src={Check} alt="check" />
           </span>
           중형견
         </label>
         <label htmlFor="L">
           <input type="radio" id="L" name="dogtype" className="dogtype-input" onChange={typeChangeHandler} />
           <span className="dogtype-button">
-            <img className='checkbox-icon' src={Check} alt="check" />
+            <img className={classNames("checkbox-icon",{invisible:modalActive})} src={Check} alt="check" />
           </span>
           대형견
         </label>
