@@ -1,6 +1,6 @@
 .detail-place-room-type {
   z-index: 2;
-  position: absolute;
+  width: 100%;
   margin-bottom: 100px;
   color: #3e382f;
   background-color: #f3efea;
@@ -48,7 +48,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    // width: 87vw;
     height: 49px;
     background-color: #ffffff;
     color: #3e382f;
@@ -61,41 +60,22 @@
       margin-right: 15px;
     }
   }
-  // &-room-select {
-  //   margin-left: 5%;
-  //   &-header {
-  //     font-size: 6vw;
-  //     font-weight: bold;
-  //     padding-bottom: 5%;
-  //   }
-  // }
-  &-facility {
-    margin: 0 0 100px 5%;
-    font-size: 18px;
-    color: #3E382F;
-    font-weight: 500;
-    &-header {
-      padding-bottom: 25px;
+  &-notice{
+    padding: 0 5% 10px 5%;
+    &-title {
+      font-size: 18px;
+      font-weight: 700;
+      padding-bottom: 20px;
     }
-    &-image-container {
-      display: flex;
-      justify-content: space-between;
-      overflow-x: scroll;
-    }
-  }
-  &-notice,
-  &-base-information,
-  &-additional-personnel-information {
-    margin: 0 5% 100px 5%;
-    font-size: 18px;
-    color: #3E382F;
-    font-weight: 500;
-    &-header {
-      padding-bottom: 25px;
+    &-content {
+      font-size: 12px;
+      font-weight: 400;
+      padding-bottom: 50px;
+      line-height:18px
     }
   }
 }
-.reservation-button{
-  position: "absolute";
-  margin-top: 100px;
-}
+// .reservation-button{
+//   position: "absolute";
+//   // margin-top: 100px;
+// }

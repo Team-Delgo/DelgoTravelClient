@@ -122,7 +122,6 @@ function WhereToGo() {
     setIsCalenderOpen(!isCalenderOpen);
   }, [isCalenderOpen]);
 
-
   return (
     <>
       {isCalenderOpen && <Calender closeCalender={handleCalenderOpenClose} isRoom={false} />}

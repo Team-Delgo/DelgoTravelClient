@@ -1,11 +1,12 @@
 
-import React,{useMemo, useState,useCallback ,memo} from 'react'
+import React, { useMemo, useState, useCallback, memo } from 'react'
 import { ReactComponent as ReviewStar } from '../../../icons/review-star.svg'
+import { ReactComponent as ReviewVoidStar } from '../../../icons/review-void-star.svg'
 import './Reviews.scss';
 
 
 interface RivewTypeProps {
-  review:RivewType
+  review: RivewType
 }
 
 interface RivewType {
@@ -15,7 +16,7 @@ interface RivewType {
     rating: number;
     registDt: string;
     reviewId: number;
-    reviewPhotoList:Array<string>,
+    reviewPhotoList: Array<string>,
     roomId: number;
     text: string;
     updateDt: null;
@@ -26,16 +27,20 @@ interface RivewType {
 }
 
 function Reviews({ review }: RivewTypeProps) {
-  const reviewStarCount = useMemo(()=>reviewStarComponents(),[])
-  const [moreDescription,setMoreDescription] = useState(false)
+  const reviewStarCount = useMemo(() => reviewStarComponents(), [])
+  const [moreDescription, setMoreDescription] = useState(false)
 
   function reviewStarComponents() {
     const reviewStarArray = [];
     for (let i = 0; i < review.review.rating; i += 1) {
       reviewStarArray.push(<ReviewStar />);
     }
+    for (let i = 0; i < 5 - review.review.rating; i += 1) {
+      reviewStarArray.push(<ReviewVoidStar />);
+    }
     return reviewStarArray;
   }
+
 
   const handleMoreDescription = useCallback(() => {
     setMoreDescription(!moreDescription);

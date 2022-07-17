@@ -40,6 +40,17 @@
         padding-top: 15px;
         font-size: 14px;
         color: #3E382F;
+        &-write-completion{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 42vw;
+            height: 43px;
+            background-color: #F2F2F2;
+            border-radius: 5px;
+            font-weight: 500;  
+        }
         &-write{
             display: flex;
             align-items: center;

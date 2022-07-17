@@ -43,5 +43,6 @@ export const RESERVATION_PATH = {
   RESERVATION: '/reservation/:placeId/:roomTypeId/:startDate/:endDate',
   RESERVATION_WAITING: '/reservation-waiting/:placeId/:roomTypeId/:startDate/:endDate',
   RESERVATION_CONFIRM: '/reservation-confirm/:bookingId',
+  RESERVATION_CONFIRM_MORE: '/reservation-confirm-more/:bookingId',
   RESERVATION_CANCLE: '/reservation-cancle/:bookingId',
 };

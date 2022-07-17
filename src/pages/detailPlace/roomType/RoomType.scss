@@ -1,7 +1,7 @@
 .room{
     width: 86vw;
     margin: 0 5% 12% 5%;
-    text-align: center;
+    // text-align: center;
     position: relative;
     img{
         width: 90vw;
@@ -11,37 +11,35 @@
         margin-top: -3px;
         position: relative;
         width: 90vw;
-        height: 75px;
+        min-height: 75px;
         background-color: #FFFBF6;
         box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.15);
         &-first-line{
             display: flex;
-            justify-content: space-between;
-            padding: 0 5%;
             &-name{
+                padding: 14px 5% 0 5%;
                 font-size: 18px;
                 font-weight: 700;
                 color: #4D483D;
-            }
-            &-max{
-                font-size: 12px;
-                color: #8A8A8A;
-                padding-top: 7px;
+                // overflow:hidden;
+                // text-overflow:ellipsis;
+                // white-space:nowrap;
             }
         }
         &-second-line{
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 5%;
             .check-in-check-out-time{
-                position: absolute;
-                left :5%;
-                bottom: 18px;
                 font-weight: 500;
                 font-size: 12px;
                 color: #8A8A8A;
+                padding-bottom: 15px;
             }
             .room-price{
                 position: absolute;
                 right :5%;
-                bottom: 13px;
+                bottom: 15px;
                 color: #3E382F;
                 font-weight: bold;
                 font-size: 18px;

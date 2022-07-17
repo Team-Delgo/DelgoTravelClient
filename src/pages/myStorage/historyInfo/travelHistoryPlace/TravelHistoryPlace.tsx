@@ -15,6 +15,7 @@ interface TraveledHisotryPlaceType {
   roomId:number,
   startDt: string,
   endDt: string,
+  reviewExisting: boolean,
   place: {
     address: string
     checkin: string
@@ -57,13 +58,16 @@ function TravelHisotryPlace({ traveledPlace }: TraveledHisotryPlaceTypeProps) {
         </div>
       </div>
       <div className="travel-hisotry-place-review">
-        <Link
-          className="travel-hisotry-place-review-link"
-          to={`/review-writing/${traveledPlace.place.placeId}`}
-          state={traveledPlace}
-        >
-          <div className="travel-hisotry-place-review-write">리뷰쓰기</div>
-        </Link>
+        {
+          traveledPlace.reviewExisting===true ? <div className="travel-hisotry-place-review-write-completion">리뷰작성완료</div> :
+            <Link
+              className="travel-hisotry-place-review-link"
+              to={`/review-writing/${traveledPlace.place.placeId}`}
+              state={traveledPlace}
+            >
+              <div className="travel-hisotry-place-review-write">리뷰쓰기</div>
+            </Link>
+        }
         {/* <Link
           className="travel-hisotry-place-review-reservation-detail"
           to={`/reservation-confirm/${traveledPlace.bookingId}`}

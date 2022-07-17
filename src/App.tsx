@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -49,6 +49,7 @@ import ChangePetInfo from './pages/myAccount/ChangePetInfo';
 import ReservationCanclePage from './pages/reservation/reservationCanclePage/ReservationCanclePage';
 import SignUpComplete from './pages/signUpPage/petInfo/SignUpComplete';
 import ReviewList from './pages/myAccount/ReviewList';
+import ReservationConfirmPageMore from './pages/reservation/reservationConfirmPage/ReservationConfirmPageMore';
 
 function App() {
   const hasError = useSelector((state: any) => state.error.hasError);
@@ -91,6 +92,7 @@ function App() {
         <Route path={RESERVATION_PATH.RESERVATION} element={<Reservation />} />
         <Route path={RESERVATION_PATH.RESERVATION_WAITING} element={<ReservationWaitingPage />} />
         <Route path={RESERVATION_PATH.RESERVATION_CONFIRM} element={<ReservationConfirmPage />} />
+        <Route path={RESERVATION_PATH.RESERVATION_CONFIRM_MORE} element={<ReservationConfirmPageMore />} />
         <Route path={RESERVATION_PATH.RESERVATION_CANCLE} element={<ReservationCanclePage />} />
         <Route path={REVIEW_WRITING_PATH} element={<ReviewWritingPage />} />
         <Route path={KAKAO_REDIRECT_HANDLE_PATH} element={<KakaoRedirectHandler />} />

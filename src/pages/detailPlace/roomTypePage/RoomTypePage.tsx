@@ -33,6 +33,7 @@ function RoomTypePage() {
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
   const { room } = location.state;
   const [photoList, setPhotoList] = useState<Array<PhotoListType>>([]);
+  const [roomNoticeList,setRoomNoticeList] = useState<Array<any>>([])
 
   const [service, setService] = useState<Array<any>>([
     `${process.env.PUBLIC_URL}/assets/images/service1.png`,
@@ -44,16 +45,17 @@ function RoomTypePage() {
   ]);
 
   useEffect(() => {
+    console.log(room)
     window.scrollTo(0, 0);
     getRoomData(
       room?.roomId,
       (response: AxiosResponse) => {
         setPhotoList(response.data.data.detailRoomPhotos);
-        console.log(response.data.data)
+        setRoomNoticeList(response.data.data.roomNoticeList)
       },
       dispatch,
     );
-  }, []);
+  }, [room]);
 
   useEffect(() => {
     dispatch(
@@ -141,25 +143,27 @@ function RoomTypePage() {
             {dateString}&nbsp;&nbsp;&nbsp;&gt;
           </span>
         </div>
-        <div className="detail-place-room-type-facility">
-          <header className="detail-place-room-type-facility-header">편의시설</header>
-          <div className="detail-place-room-type-facility-image-container">
-            {service.map((url) => (
-              <img src={url} alt="service-img" key={url} />
-            ))}
-          </div>
+        {/* {
+          roomNoticeList.map((notice: any) =>
+            <div className="detail-place-notice">
+              <div className="detail-place-notice-title">{notice.title}</div>
+              <div className="detail-place-notice-content">{notice.contents.map((content: any, index: number) => <div>{index + 1}.{content}</div>)}</div>
+            </div>)
+        } */}
+                {
+          roomNoticeList.map((notice: any) =>
+            <div className="detail-place-room-type-notice">
+              <div className="detail-place-room-type-notice-title">{notice.title}</div>
+              <div className="detail-place-room-type-notice-content">{notice.contents.map((content: any, index: number) => <div>{index + 1}.{content}</div>)}</div>
+            </div>)
+        }
+        <div className="reservation-button" aria-hidden="true" onClick={handleReservation}>
+          <BottomButton text="예약하기" />
         </div>
-        <div className="detail-place-room-type-notice">공지사항</div>
-        <div>{room.notice}</div>
-        <div className="detail-place-room-type-base-information">기본정보</div>
-        <div className="detail-place-room-type-additional-personnel-information">인원 추가 정보</div>
       </div>
       {/* </div>
         )}
       </Transition> */}
-      <div className="reservation-button" aria-hidden="true" onClick={handleReservation}>
-        <BottomButton text="예약하기" />
-      </div>
     </>
   );
 }

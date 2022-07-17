@@ -27,7 +27,7 @@ const reservationSlice = createSlice({
         date: action.payload.date,
       };
     },
-    reservationCancle() {
+    reservationInit() {
       return initialState;
     },
   },
