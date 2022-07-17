@@ -197,12 +197,6 @@ function ReservationConfirmPage() {
           <div className="payment-methods-label">결제 수단</div>
           <div className="payment-methods-price">신용카드</div>
         </div>
-        <Link to={`/reservation-confirm-more/${bookingId}`}>
-        <div className="view-policy">
-          {reservationData.place.name} 정책보기
-          <img src={RightArrowBlack} alt="detail" />
-        </div>
-        </Link>
         <div className="cancel-reservation">
           <div className="cancel-reservation-label">
             {reservationData.canCancelDate.substring(0, 4)}년 {reservationData.canCancelDate.substring(5, 7)}월{' '}

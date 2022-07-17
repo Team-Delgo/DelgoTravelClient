@@ -99,7 +99,6 @@ function ReservationConfirmPageMore() {
       <div className="placeinfo">
         <div className="placeinfo-wrapper">
           <div className="placeinfo-name">{reservationData.place.name}</div>
-          <img src={RightArrow} alt="detail" />
         </div>
         <p className="placeinfo-address">{reservationData.place.address}</p>
         <p className="placeinfo-room">{reservationData.roomName}</p>

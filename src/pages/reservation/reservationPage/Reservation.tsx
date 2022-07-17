@@ -83,7 +83,6 @@ function Reservation() {
         <div className="placeinfo">
           <div className="placeinfo-wrapper">
             <div className="placeinfo-name">{place.name}</div>
-            <img src={RightArrow} alt="detail" />
           </div>
           <p className="placeinfo-address">{place.address}</p>
           <p className="placeinfo-room">{room.name}</p>
@@ -123,7 +122,7 @@ function Reservation() {
         <div className="reservation-user-info">
           <div className="reservation-label">예약 인원  </div>
           <div className="reservation-user-info-phone">
-            기준 {room.personNum}명 / 기준 {room.petNum}마리
+            기준 {room.personNum}명 
           </div>
         </div>
         <div className="reservation-devide" />
@@ -132,15 +131,15 @@ function Reservation() {
           <div className="reservation-label">상품가격</div>
           <div className="original-price-amount">{room.price}</div>
         </div>
-        <div className="point-sale">
+        {/* <div className="point-sale">
           <div className="reservation-label">포인터 사용</div>
           <div className="point-sale-amount">-0P</div>
-        </div>
-        <div className="available-point-sale">
+        </div> */}
+        {/* <div className="available-point-sale">
           <div className="available-point-sale-label">전액 사용</div>
           <div/> 
           <div className="available-point-sale-amount">사용가능 : 3000P</div>
-        </div>
+        </div> */}
         <div className="coupon-sale">
           <div className="reservation-label">쿠폰 사용</div>
           <div className="coupon-sale-amount">0원</div>
@@ -150,7 +149,7 @@ function Reservation() {
           <div className="reservation-label">결제 금액</div>
           <div className="finalprice-price">{room.price}</div>
         </div>
-        <div className="reservation-label">결제 수단</div>
+        {/* <div className="reservation-label">결제 수단</div> */}
         {/* <div className="payment-method">
           <div className="payment-method-item" aria-hidden="true" onClick={creditCardPayment}>
             신용카드
