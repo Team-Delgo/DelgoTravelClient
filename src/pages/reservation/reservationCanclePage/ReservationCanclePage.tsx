@@ -116,7 +116,7 @@ function ReservationCanclePage() {
           </div>
         </div>
       </div>
-      <BottomButton text="예약내역 공유하기" />
+      {/* <BottomButton text="예약내역 공유하기" /> */}
     </>
   );
 }

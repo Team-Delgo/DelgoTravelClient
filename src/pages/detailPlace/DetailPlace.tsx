@@ -255,7 +255,7 @@ function DetailPlace() {
               state={{ reviews:detailPlaceRivews.data.readReviewDTOList }}
               key={detailPlace?.data.place.placeId}
             >
-              <div className="detail-place-info-reviews">★ 9.1 리뷰 {detailPlaceRivews?.data?.readReviewDTOList.length}개 &gt;</div>
+              <span className="detail-place-info-reviews">★ 9.1 리뷰 {detailPlaceRivews?.data?.readReviewDTOList.length}개 &gt;</span>
             </Link>
           )}
           <div className="detail-place-info-facility">소형견,오션뷰,자연휴강,산책코스</div>
