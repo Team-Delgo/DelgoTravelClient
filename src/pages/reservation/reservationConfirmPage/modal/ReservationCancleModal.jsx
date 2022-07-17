@@ -2,6 +2,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React from 'react';
 import Modal from 'react-modal';
+import { useLocation,useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import {bookingCancle} from '../../../../common/api/booking'
 import './ReservationCancleModal.scss'
 
 const regionSelectionModalStyle = {
@@ -19,10 +22,29 @@ const regionSelectionModalStyle = {
   overlay: {zIndex: 10},
 };
 
-function ReservationCancleModal({ reservationCancleModal, closeReservationCancleModal }) {
+function ReservationCancleModal({ reservationCancleModal, closeReservationCancleModal,bookingId }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const cancleReservation = () => {
+    console.log(1)
+    bookingCancle(
+      bookingId,
+      (response) => {
+        if (response.data.code === 200) {
+          console.log('성공')
+          setTimeout(() => {
+            navigate(`/reservation-cancle/${bookingId}`);
+          }, 100)
+        }
+      },
+      dispatch,
+    );
+  }
+
   return (
-      <Modal style={regionSelectionModalStyle} isOpen={reservationCancleModal} onRequestClose={closeReservationCancleModal} ariaHideApp={false}>
-        <div className="reservation-cancle-confirm">
+    <Modal style={regionSelectionModalStyle} isOpen={reservationCancleModal} onRequestClose={closeReservationCancleModal} ariaHideApp={false}>
+      <div className="reservation-cancle-confirm">
         <h3 className="reservation-cancle-confirm-label">예약을 취소하시겠어요?</h3>
         <div className="reservation-cancle-place-info">
           <header className="reservation-cancle-place-info-name">밸런스독</header>
@@ -31,8 +53,8 @@ function ReservationCancleModal({ reservationCancleModal, closeReservationCancle
           <div className="reservation-cancle-place-info-date">22.05.06(월) - 22.05.07(화)</div>
         </div>
         <div className="reservation-cancle-button-container">
-          <button type='button' className="reservation-cancle-button">네</button>
-          <button type='button' className="reservation-cancle-button">아니요</button>
+          <button type='button' className="reservation-cancle-button" onClick={cancleReservation}>네</button>
+          <button type='button' className="reservation-cancle-button" onClick={closeReservationCancleModal}>아니요</button>
         </div>
       </div>
     </Modal>

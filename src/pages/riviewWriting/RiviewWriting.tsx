@@ -19,6 +19,7 @@ interface TraveledHisotryPlaceType {
   roomId:number,
   startDt: string,
   endDt: string,
+  reviewExisting: boolean,
   place: {
     address: string
     checkin: string
@@ -61,6 +62,10 @@ function RiviewWriting() {
       fileUploadRef.current.click();
     }
   }, []);
+
+  // const handleBrigeUploadPhoto = () =>{
+  //   window.BRIDGE.testAndroid();
+  // }
 
   const handleUploadFile = (event: { target: HTMLInputElement }) => {
     if (images.length === 4) {
@@ -109,8 +114,9 @@ function RiviewWriting() {
         if (code === 200) {
           const {reviewId} = response.data.data;
           console.log(typeof(reviewId))
+          console.log(typeof(reviewId.toString()))
       
-          formData.append('rievewId', reviewId);
+          // formData.append('rievewId', reviewId.toString());
           for(let i=0; i<sendingImage.length; i+=1){
             formData.append('photos', sendingImage[i]);
           }
@@ -120,7 +126,7 @@ function RiviewWriting() {
         });
 
           reviewImageUpload(
-            formData,
+            formData,reviewId,
             (response: AxiosResponse) => {
               console.log(response);
               const { code, codeMsg } = response.data;
@@ -230,6 +236,7 @@ function RiviewWriting() {
       <header className="review-writing-header">
         <img className="review-writing-header-main-image" src={state.place.mainPhotoUrl} alt="place-img" />
         <div className="review-writing-header-place-name">{state.place.name}</div>
+        <div className="review-writing-header-room-name">{state.roomName}</div>
         <div className="review-writing-header-date">
           {state.startDt.substring(5, 7)}.{state.startDt.substring(8, 10)} - {state.endDt.substring(5, 7)}.
           {state.endDt.substring(8, 10)}
@@ -240,13 +247,9 @@ function RiviewWriting() {
         <h4>{petName}와의 이용이 어땠나요?</h4>
         <div className="review-writing-body-star">
           {activeStar1 ? (
-            <div className="review-star" ref={slideRef}>
               <BigRivewStarActive onClick={handleStarRating1} />
-            </div>
           ) : (
-            <div className="review-star" ref={slideRef}>
               <BigRivewStar onClick={handleStarRating1} />
-            </div>
           )}
           {activeStar2 ? (
             <BigRivewStarActive onClick={handleStarRating2} />
@@ -281,7 +284,7 @@ function RiviewWriting() {
         <div className="review-writing-body-file">
           <div className="review-writing-body-file-uploader" aria-hidden="true" onClick={handleOpenFileUpload}>
             <Camera />
-            <input type="file" multiple ref={fileUploadRef} onChange={handleUploadFile} style={{ display: 'none' }} />
+            <input type="file" accept="image/*;capture=camera" multiple ref={fileUploadRef} onChange={handleUploadFile} style={{ display: 'none' }} />
           </div>
           {images.map((image) => (
             <div className="review-writing-body-file-image-container">

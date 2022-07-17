@@ -6,12 +6,12 @@ async function getDetailPlaceRivews(placeId: string) {
   return fetch(`${url}review/getReview/place?placeId=${placeId}`).then((response) => response.json());
 }
 
-async function reviewImageUpload(formdata: FormData, success: (data: AxiosResponse) => void, dispatch: any) {
+async function reviewImageUpload(formdata: FormData,reviewId:number, success: (data: AxiosResponse) => void, dispatch: any) {
   formdata?.forEach((value: any, key: any) => {
     console.log(key, value);
   });
   try {
-    const result = await axios.post(`${url}photo/upload/reviewPhoto`, formdata);
+    const result = await axios.post(`${url}photo/upload/reviewPhoto/${reviewId}`, formdata);
     console.log(result)
     success(result);
   } catch (error: AxiosError | any) {

@@ -74,55 +74,44 @@
     }
   }
   &-review {
-    padding: 100px 0 60px 0;
+    padding: 100px 0 30px 0;
     &-header {
       display: flex;
       justify-content: space-between;
       padding: 0 5% 50px 5%;
       &-number {
-        font-size: 24px;
+        font-size: 18px;
         font-weight: bold;
       }
       &-more {
         color: #B0A69D;
         font-weight: 500;
-        font-size: 16px;
+        font-size: 14px;
       }
     }
     &-body {
       padding: 0 5% 50px 5%;
     }
   }
-  &-facility {
-    padding: 0 0 100px 5%;
-    font-size: 24px;
-    font-weight: 500;
-    &-header {
-      padding-bottom: 30px;
+  &-notice{
+    padding: 0 5% 10px 5%;
+    &-title {
+      font-size: 18px;
+      font-weight: 700;
+      padding-bottom: 20px;
     }
-    &-image-container {
-      display: flex;
-      justify-content: space-between;
-      overflow-x: scroll;
-    }
-  }
-  &-notice,
-  &-base-information,
-  &-additional-personnel-information,
-  &-cancellation-refund-policy,
-  &-etc {
-    padding: 0 5% 100px 5%;
-    font-size: 24px;
-    font-weight: 500;
-    &-header {
-      padding-bottom: 30px;
+    &-content {
+      font-size: 12px;
+      font-weight: 400;
+      padding-bottom: 50px;
+      line-height:18px
     }
   }
   &-map {
     margin-bottom: 100px;
     &-header {
-      padding: 0 0 30px 5%;
-      font-size: 24px;
+      padding: 0 0 20px 5%;
+      font-size: 18px;
       font-weight: bold;
     }
   }

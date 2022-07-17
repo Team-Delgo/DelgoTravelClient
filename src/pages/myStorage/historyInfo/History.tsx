@@ -30,6 +30,7 @@ interface TravelHisotryPlaceType {
   roomId:number,
   startDt: string,
   endDt: string,
+  reviewExisting: boolean,
   place: {
     address: string
     checkin: string
@@ -107,6 +108,7 @@ function History() {
       dispatch,
     );
   }, [accessToken]);
+  console.log(traveledPlaces)
 
   if (getRecommendedPlacesIsLoading || getTraveledPlacesIsLoading)
     return <div className="travel-history-container">&nbsp;</div>;

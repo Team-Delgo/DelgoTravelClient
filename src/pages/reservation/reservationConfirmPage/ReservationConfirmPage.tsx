@@ -1,6 +1,6 @@
 import React,{useCallback,useEffect, useState} from "react";
 import { useSelector,useDispatch } from "react-redux";
-import { useNavigate,useParams,useLocation} from 'react-router-dom';
+import { useNavigate,useParams,useLocation,Link} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
 import RightArrow from "../../../icons/right-arrow.svg";
@@ -43,6 +43,7 @@ function ReservationConfirmPage() {
       mainPhotoUrl: "",
       name: "",
       placeId: 0,
+      policy:"",
       wishId: 0
     }
   })
@@ -67,7 +68,7 @@ function ReservationConfirmPage() {
     setTimeout(() => {
       navigate('/');
       dispatch(
-        reservationActions.reservationCancle()
+        reservationActions.reservationInit()
       );
     }, 100);
   }, []);
@@ -113,16 +114,18 @@ function ReservationConfirmPage() {
         <div className="header">
           <Exit className="exit-button" onClick={location.state?.prevPath ? moveToMyStoragePage : moveToMainPage} />
           {reservationData.bookingState === 'W' ? (
-            <h1 className="header-title">예약접수 확인중</h1>
+            <header className="header-title">예약접수 확인중</header>
           ) : (
-            <h1 className="header-title">예약확정</h1>
+            <header className="header-title">예약확정</header>
           )}
         </div>
         <div className="placeinfo">
-          <div className="placeinfo-wrapper">
-            <div className="placeinfo-name">{reservationData.place.name}</div>
-            <img src={RightArrow} alt="detail" />
-          </div>
+          <Link to={`/reservation-confirm-more/${bookingId}`}>
+            <div className="placeinfo-wrapper">
+              <div className="placeinfo-name">{reservationData.place.name}</div>
+              <img src={RightArrow} alt="detail" />
+            </div>
+          </Link>
           <p className="placeinfo-address">{reservationData.place.address}</p>
           <p className="placeinfo-room">{reservationData.roomName}</p>
         </div>
@@ -194,10 +197,12 @@ function ReservationConfirmPage() {
           <div className="payment-methods-label">결제 수단</div>
           <div className="payment-methods-price">신용카드</div>
         </div>
+        <Link to={`/reservation-confirm-more/${bookingId}`}>
         <div className="view-policy">
           {reservationData.place.name} 정책보기
           <img src={RightArrowBlack} alt="detail" />
         </div>
+        </Link>
         <div className="cancel-reservation">
           <div className="cancel-reservation-label">
             {reservationData.canCancelDate.substring(0, 4)}년 {reservationData.canCancelDate.substring(5, 7)}월{' '}
@@ -212,6 +217,7 @@ function ReservationConfirmPage() {
         <ReservationCancleModal
           reservationCancleModal={handleReservationCancleModal}
           closeReservationCancleModal={closeReservationCancleModal}
+          bookingId={bookingId}
         />
       )}
       {/* <BottomButton text="예약내역 공유하기" /> */}

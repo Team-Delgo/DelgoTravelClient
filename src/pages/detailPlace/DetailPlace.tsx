@@ -123,6 +123,7 @@ function DetailPlace() {
 
 
   useEffect(() => {
+    console.log(detailPlace?.data.placeNoticeList)
     if (location.state?.prevPath.includes('/detail-place')) {
       window.scroll(0, detailPlaceScrollY);
     }
@@ -276,8 +277,8 @@ function DetailPlace() {
                   <RoomType
                     key={room.roomId}
                     room={room}
-                    checkIn={detailPlace.data.place.checkin}
-                    checkOut={detailPlace.data.place.checkout}
+                    // checkIn={detailPlace.data.place.checkin}
+                    // checkOut={detailPlace.data.place.checkout}
                     navigate={() => {
                       navigate(`/detail-place/${detailPlace.data.place.placeId}/${room.roomId}`, {
                         state: {
@@ -313,20 +314,21 @@ function DetailPlace() {
             </body>
           </div>
         )}
-        <div className="detail-place-facility">
+        {/* <div className="detail-place-facility">
           <header className="detail-place-facility-header">편의시설 및 서비스</header>
           <div className="detail-place-facility-image-container">
             {service.map((url) => (
               <img src={url} alt="service-img" />
             ))}
           </div>
-        </div>
-        <div className="detail-place-notice">공지사항</div>
-        <div>{detailPlace?.data.place.policy}</div>
-        <div className="detail-place-base-information">기본정보</div>
-        <div className="detail-place-additional-personnel-information">인원 추가 정보</div>
-        <div className="detail-place-cancellation-refund-policy">취소 및 환불 규정</div>
-        <div className="detail-place-etc">확인사항 및 기타</div>
+        </div> */}
+        {
+          detailPlace?.data.placeNoticeList.map((notice: any) =>
+            <div className="detail-place-notice">
+              <div className="detail-place-notice-title">{notice.title}</div>
+              <div className="detail-place-notice-content">{notice.contents.map((content: any,index:number) => <div>{index+1}.{content}</div>)}</div>
+            </div>)
+        }
         <div className="detail-place-map">
           <header className="detail-place-map-header">지도</header>
           {detailPlace?.data.place.address ? <Map address={detailPlace.data.place.address} /> : null}

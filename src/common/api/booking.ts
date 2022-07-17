@@ -62,26 +62,6 @@ async function bookingGetData(
   }
 }
 
-// async function bookingGetDataByMain(
-//   data: {
-//     accessToken: string;
-//     userId: number;
-//   },
-//   success: (data: AxiosResponse) => void,
-//   dispatch: any,
-// ) {
-//   try {
-//     const result = await axios.get(`${url}booking/getData/main?userId=${data.userId}`,{
-//       headers: {
-//         Authorization_Access: `${data.accessToken}`,
-//       },
-//     });
-//     success(result);
-//   } catch (error: AxiosError | any) {
-//     useErrorHandlers(dispatch, error);
-//   }
-// }
-
 async function bookingGetDataByMain(accessToken: string, userId: number) {
   return fetch(`${url}booking/getData/main?userId=${userId}`).then((response) => response.json());
 }
@@ -98,4 +78,20 @@ async function getBookingHistory(userId: number) {
   );
 };
 
-export { bookingRequest, bookingGetData,bookingGetDataByMain,getBookingHistory };
+
+async function bookingCancle(
+  bookingId: string,
+  success: (data: AxiosResponse) => void,
+  dispatch: any,
+) {
+  try {
+    console.log(2)
+    const result = await axios.post(`${url}booking/cancel/${bookingId}`);
+    success(result);
+    console.log(result)
+  } catch (error: AxiosError | any) {
+    useErrorHandlers(dispatch, error);
+  }
+}
+
+export { bookingRequest, bookingGetData, bookingGetDataByMain, getBookingHistory,bookingCancle };

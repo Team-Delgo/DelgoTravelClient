@@ -16,37 +16,7 @@ import './ReservationCanclePage.scss';
 
 function ReservationCanclePage() {
   const navigate = useNavigate();
-  const accessToken = useSelector((state: any) => state.token.token);
   const dispatch = useDispatch();
-  const [reservationCancleModal, setReservationCancleModal] = useState(false);
-  const [reservationData, setReservationData] = useState({
-    bookingId: "",
-    bookingState: "",
-    canCancelDate: "",
-    couponId: 0,
-    couponPrice: "",
-    endDt: "",
-    finalPrice: "",
-    originalPrice: "",
-    point: 0,
-    registDt: "",
-    roomName: "",
-    startDt: "",
-    userName: "",
-    userPhoneNo: "",
-    place:{
-      address: "",
-      checkin: "",
-      checkout: "",
-      isBooking: 0,
-      lowestPrice: null,
-      mainPhotoUrl: "",
-      name: "",
-      placeId: 0,
-      wishId: 0
-    }
-  })
-  const { bookingId } = useParams();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -66,33 +36,9 @@ function ReservationCanclePage() {
     setTimeout(() => {
       navigate('/');
       dispatch(
-        reservationActions.reservation({
-          user: { id: 0, nickname: '', email: '', phone: '' },
-          place: { placeId: 0, name: '', address: '' },
-          room: {
-            roomId: 0,
-            name: '',
-            checkin: '',
-            checkout: '',
-            price: 0,
-            images: [],
-          },
-          date: {
-            date:'',
-            dateString:''
-          },
-        }),
-      );
+        reservationActions.reservationInit()
+      )
     }, 300);
-  }, []);
-
-
-  const handleReservationCancleModal = useCallback(() => {
-    setReservationCancleModal(!reservationCancleModal);
-  }, [reservationCancleModal]);
-
-  const closeReservationCancleModal  = useCallback(() => {
-    setReservationCancleModal(false);
   }, []);
 
   return (
