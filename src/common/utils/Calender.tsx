@@ -171,6 +171,12 @@ function Calender(props: CalenderProps) {
             index += 1;
           } 
         }
+        if (firstDate && secondDate){
+          setSequence(0);
+        }
+        if (middleDate && isBooking){
+          setSequence(0);
+        }
 
         return (
           <div
@@ -214,7 +220,12 @@ function Calender(props: CalenderProps) {
           } 
         }
       }
-
+      if (firstDate && secondDate){
+        setSequence(0);
+      }
+      if (middleDate && isBooking){
+        setSequence(0);
+      }
       return (
         <div
           key={id}
