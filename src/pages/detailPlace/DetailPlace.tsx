@@ -83,18 +83,6 @@ function DetailPlace() {
   const startDt =`${date.start.substring(0,4)}-${date.start.substring(4,6)}-${date.start.substring(6,10)}`
   const endDt = `${date.end.substring(0,4)}-${date.end.substring(4,6)}-${date.end.substring(6,10)}`
 
-
-
-  const [service, setService] = useState<Array<any>>([
-    `${process.env.PUBLIC_URL}/assets/images/service1.png`,
-    `${process.env.PUBLIC_URL}/assets/images/service2.png`,
-    `${process.env.PUBLIC_URL}/assets/images/service3.png`,
-    `${process.env.PUBLIC_URL}/assets/images/service4.png`,
-    `${process.env.PUBLIC_URL}/assets/images/service5.png`,
-    `${process.env.PUBLIC_URL}/assets/images/service6.png`,
-  ]);
-
-
   const { isLoading:getDetailPlaceIsLoading, data:detailPlace, refetch } = useQuery(
     'getDetailPlace',
     () => getDetailPlace(userId, placeId as string, startDt, endDt),

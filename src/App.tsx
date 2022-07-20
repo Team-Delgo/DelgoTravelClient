@@ -51,6 +51,8 @@ import SignUpComplete from './pages/signUpPage/petInfo/SignUpComplete';
 import ReviewList from './pages/myAccount/ReviewList';
 import ReservationConfirmPageMore from './pages/reservation/reservationConfirmPage/ReservationConfirmPageMore';
 import ChangeUserInfo from './pages/myAccount/ChangeUserInfo';
+import ReservationHistoryPage from './pages/reservation/reservationHistory/ReservationHistoryPage';
+
 
 function App() {
   const hasError = useSelector((state: any) => state.error.hasError);
@@ -96,6 +98,7 @@ function App() {
         <Route path={RESERVATION_PATH.RESERVATION_CONFIRM} element={<ReservationConfirmPage />} />
         <Route path={RESERVATION_PATH.RESERVATION_CONFIRM_MORE} element={<ReservationConfirmPageMore />} />
         <Route path={RESERVATION_PATH.RESERVATION_CANCLE} element={<ReservationCanclePage />} />
+        <Route path={RESERVATION_PATH.RESERVATION_HISTORY} element={<ReservationHistoryPage />} />
         <Route path={REVIEW_WRITING_PATH} element={<ReviewWritingPage />} />
         <Route path={KAKAO_REDIRECT_HANDLE_PATH} element={<KakaoRedirectHandler />} />
         <Route path={NAVER_REDIRECT_HANDLE_PATH} element={<NaverRedirectHandler />} />
