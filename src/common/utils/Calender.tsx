@@ -31,6 +31,8 @@ function Calender(props: CalenderProps) {
   const [sequence, setSequence] = useState(dateExist); // 0개 선택, 1개 선택, 2개 선택
   const [reservedDate, setReservedDate] = useState<any[]>();
   const { closeCalender, isRoom, roomId } = props;
+  
+  let dateRangeCount = 0;
   let dateCount = 0;
   let index = 0;
   let roomTotalPrice = 0;
@@ -183,6 +185,10 @@ function Calender(props: CalenderProps) {
         let price = 0;
 
         if (condition && !gone) {
+          if (dateRangeCount > 60){
+            condition = false;
+          }
+          dateRangeCount += 1;
           if (reservedDate) {
             if (reservedDate[index].isBooking) {
               isBooking = true;
@@ -235,6 +241,10 @@ function Calender(props: CalenderProps) {
       let isBooking = false;
       let price = 0;
       if (condition) {
+        if (dateRangeCount > 60){
+          condition = false;
+        }
+        dateRangeCount += 1;
         if (reservedDate) {
           if (reservedDate[index].isBooking) {
             isBooking = true;
