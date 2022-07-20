@@ -8,6 +8,7 @@ export const MY_ACCOUNT_PATH = {
   SETTINGS: '/user/myaccount/settings',
   PETINFO: '/user/myaccount/petinfo',
   REVIEWS: '/user/myaccount/reviews',
+  USERINFO: '/user/myaccount/userinfo',
 };
 export const SIGN_IN_PATH = {
   MAIN: '/user/signin',

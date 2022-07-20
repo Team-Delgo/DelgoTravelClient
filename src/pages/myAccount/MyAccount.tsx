@@ -163,7 +163,13 @@ function MyAccount() {
         </div>
       </div>
       <div className="account-settings">
-        <div className="account-item first">
+        <div
+          className="account-item first"
+          aria-hidden="true"
+          onClick={() => {
+            navigation(MY_ACCOUNT_PATH.USERINFO);
+          }}
+        >
           <h2 className="account-item-name">내 정보 관리</h2>
           <img src={RightArrow} alt="detail" />
         </div>
