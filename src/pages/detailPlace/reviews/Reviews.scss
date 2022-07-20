@@ -1,6 +1,6 @@
 .review{
     color: #3E382F;
-    // padding: 0 5% 50px 5%;
+    padding-bottom: 50px;
     &-header{
         display: flex;
         img{
@@ -35,7 +35,6 @@
             font-size: 14px;
             font-weight: 400;
             padding-bottom: 25px;
-            // padding-right: 5%;
             &-more{
                 position: absolute;
                 font-size: 14px;
@@ -48,6 +47,8 @@
             display: flex;
             overflow-x: scroll;
             img{
+                width:150px;
+                height:120px;
                 padding-right: 10px;
             }
         }

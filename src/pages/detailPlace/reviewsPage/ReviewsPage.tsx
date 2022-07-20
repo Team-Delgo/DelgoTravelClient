@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 
-import React,{useEffect,useState,useCallback} from 'react';
+import React,{useEffect,useState,useCallback,useRef} from 'react';
 import { useLocation,Link,useParams,useNavigate} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Transition  } from 'react-transition-group';
@@ -9,8 +9,29 @@ import { ReactComponent as LeftArrow } from '../../../icons/left-arrow.svg';
 import { ReactComponent as ReviewStar } from '../../../icons/review-star.svg';
 import './ReviewsPage.scss';
 
+interface RivewType {
+  placeName: string;
+  profileUrl: string;
+  review: {
+    bookingId: string
+    placeId: number
+    rating: number
+    registDt: string
+    reviewId: number
+    reviewPhotoList:Array<string>
+    roomId: number
+    text: string
+    updateDt: null
+    userId: number
+  };
+  roomName: string;
+  userName: string;
+}
+
+
 function ReviewsPage() {
   const [reviews, setReviews] = useState<Array<any>>([]);
+  const [reviewsCount,setReviewsCount] = useState(0)
   const [checked, setChecked] = useState(false);
   const [imageReviewsCount,setImageReviewsCount] = useState(0)
   const location: any = useLocation();
@@ -19,15 +40,15 @@ function ReviewsPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    console.log(location.state.reviews)
     setReviews(location.state.reviews);
+    setReviewsCount(location.state.reviews.length)
 
-    // const reviewImages = location.state.reviews.filter(function(review:any) {
-    //   if(review.reviewImages.length >0)  {
-    //     return true;
-    //   }
-    // })
-    // setImageReviewsCount(reviewImages.length)
+    const reviewImages = location.state.reviews.filter(function(review:any) {
+      if(review.review.reviewPhotoList.length >0)  {
+        return true;
+      }
+    })
+    setImageReviewsCount(reviewImages.length)
   }, []);
 
 
@@ -38,8 +59,10 @@ function ReviewsPage() {
     } else {
       setChecked(!checked);
       const imageReviews: React.SetStateAction<string[]> = [];
+      console.log(reviews)
       reviews.map((review: any) => {
-        if (review.reviewImages.length > 0) {
+        console.log(review)
+        if (review.review.reviewPhotoList.length > 0) {
           imageReviews.push(review);
         }
       });
@@ -61,7 +84,7 @@ function ReviewsPage() {
               <Link to={`/detail-place/${placeId}`} state={{ prevPath: location.pathname }} key={placeId}>
                 <LeftArrow className="detail-place-review-page-header-previous-page" />
               </Link>
-              <div className="detail-place-review-page-header-number">리뷰 {reviews.length}개</div>
+              <div className="detail-place-review-page-header-number">리뷰 {reviewsCount}개</div>
               <div className="detail-place-review-page-header-rating-count">
                 <ReviewStar className="detail-place-review-page-header-review-star" />
                 &nbsp;&nbsp;4.5점

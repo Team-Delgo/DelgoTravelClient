@@ -21,6 +21,13 @@ interface PhotoListType {
   url: string
 }
 
+interface RoomNoticeType {
+  contents:Array<string>,
+  roomId: number,
+  roomNoticeId: number,
+  title: string
+}
+
 
 function RoomTypePage() {
   const navigate = useNavigate();
@@ -33,16 +40,8 @@ function RoomTypePage() {
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
   const { room } = location.state;
   const [photoList, setPhotoList] = useState<Array<PhotoListType>>([]);
-  const [roomNoticeList,setRoomNoticeList] = useState<Array<any>>([])
+  const [roomNoticeList,setRoomNoticeList] = useState<Array<RoomNoticeType>>([])
 
-  const [service, setService] = useState<Array<any>>([
-    `${process.env.PUBLIC_URL}/assets/images/service1.png`,
-    `${process.env.PUBLIC_URL}/assets/images/service2.png`,
-    `${process.env.PUBLIC_URL}/assets/images/service3.png`,
-    `${process.env.PUBLIC_URL}/assets/images/service4.png`,
-    `${process.env.PUBLIC_URL}/assets/images/service5.png`,
-    `${process.env.PUBLIC_URL}/assets/images/service6.png`,
-  ]);
 
   useEffect(() => {
     console.log(room)
@@ -52,6 +51,7 @@ function RoomTypePage() {
       (response: AxiosResponse) => {
         setPhotoList(response.data.data.detailRoomPhotos);
         setRoomNoticeList(response.data.data.roomNoticeList)
+        console.log(response.data.data.roomNoticeList)
       },
       dispatch,
     );
@@ -150,11 +150,11 @@ function RoomTypePage() {
               <div className="detail-place-notice-content">{notice.contents.map((content: any, index: number) => <div>{index + 1}.{content}</div>)}</div>
             </div>)
         } */}
-                {
-          roomNoticeList.map((notice: any) =>
+        {
+          roomNoticeList.map((notice: RoomNoticeType) =>
             <div className="detail-place-room-type-notice">
               <div className="detail-place-room-type-notice-title">{notice.title}</div>
-              <div className="detail-place-room-type-notice-content">{notice.contents.map((content: any, index: number) => <div>{index + 1}.{content}</div>)}</div>
+              <div className="detail-place-room-type-notice-content">{notice.contents.map((content: string, index: number) => <div>{index + 1}.{content}</div>)}</div>
             </div>)
         }
         <div className="reservation-button" aria-hidden="true" onClick={handleReservation}>

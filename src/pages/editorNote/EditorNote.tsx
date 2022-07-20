@@ -1,4 +1,4 @@
-import React ,{useCallback}from 'react'
+import React ,{useCallback ,useEffect}from 'react'
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg'
 import BottomButton from '../../common/components/BottomButton';
@@ -24,23 +24,28 @@ function EditorNote() {
     },
   ];
 
+  useEffect(() => {
+      window.scrollTo(0, 0);
+  }, []);
+
   const moveToPreviousPage = useCallback(() => {
     navigate(-1)
   }, []);
 
   return (
-    <div className="editor-background">
-      <LeftArrow className="editor-previous-page" onClick={moveToPreviousPage} />
-      <div className="editor-sub-text">바다가 보이는 여름숙소</div>
-      <div className="editor-header-text">속초 코코네집</div>
-      {posts.map((post) => (
-        <div className="editor-place">
-          <img src={post.image} alt="editor-place-img" />
-          <div className="editor-place-description">{post.description}</div>
-        </div>
-      ))}
-      <BottomButton text="자세히 보러가기" />
-    </div>
+    <img className="editor-img" src="https://kr.object.ncloudstorage.com/delgo-pet-profile/%EB%B0%B8%EB%9F%B0%EC%8A%A4%EB%8F%85.png" alt="editor-place-img" />
+    // <div className="editor-background">
+    //   <LeftArrow className="editor-previous-page" onClick={moveToPreviousPage} />
+    //   <div className="editor-sub-text">바다가 보이는 여름숙소</div>
+    //   <div className="editor-header-text">속초 코코네집</div>
+    //   {/* {posts.map((post) => (
+    //     <div className="editor-place">
+    //       <img src="https://kr.object.ncloudstorage.com/delgo-pet-profile/%EB%B0%B8%EB%9F%B0%EC%8A%A4%EB%8F%85.png" alt="editor-place-img" />
+    //       <div className="editor-place-description">{post.description}</div>
+    //     </div>
+    //   ))} */}
+    //   <BottomButton text="자세히 보러가기" />
+    // </div>
   );
 }
 

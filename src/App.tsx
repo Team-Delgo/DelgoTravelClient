@@ -36,7 +36,7 @@ import DetailPlace from './pages/detailPlace/DetailPlace';
 import ReviewsPage from './pages/detailPlace/reviewsPage/ReviewsPage';
 import RoomTypePage from './pages/detailPlace/roomTypePage/RoomTypePage';
 import Reservation from './pages/reservation/reservationPage/Reservation';
-import ReviewWritingPage from './pages/riviewWriting/RiviewWriting';
+import ReviewWritingPage from './pages/reviewWriting/ReviewWriting';
 import KakaoRedirectHandler from './common/socialLogion/KakaoRedirectHandler';
 import NaverRedirectHandler from './common/socialLogion/NaverRedirectHandler';
 import AlertConfirmOne from './common/dialog/AlertConfirmOne';
