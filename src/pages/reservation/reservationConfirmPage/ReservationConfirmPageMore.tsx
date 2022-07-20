@@ -8,6 +8,7 @@ import RightArrowBlack from "../../../icons/right-arrow-black.svg";
 import BottomButton from "../../../common/components/BottomButton";
 import { reservationActions } from '../../../redux/slice/reservationSlice';
 import {bookingGetData} from '../../../common/api/booking'
+import Map from '../../../common/utils/Map';
 import ReservationCancleModal from "./modal/ReservationCancleModal";
 import './ReservationConfirmPageMore.scss';
 
@@ -63,22 +64,13 @@ function ReservationConfirmPageMore() {
     }
   }, []);
 
-  const moveToMainPage = useCallback(() => {
-    setTimeout(() => {
-      navigate('/');
-      dispatch(
-        reservationActions.reservationInit()
-      );
-    }, 100);
+  const moveToMap = useCallback(() => {
+    window.scroll({ top: document.body.scrollHeight, behavior: 'smooth' });
   }, []);
+  
 
-  const moveToMyStoragePage = useCallback(() => {
-    navigate('/my-storage', {
-      state: {
-        prevPath: location.pathname,
-        tab: 1,
-      },
-    });
+  const moveToPrevPage = useCallback(() => {
+    navigate(-1);
   }, []);
 
 
@@ -93,7 +85,7 @@ function ReservationConfirmPageMore() {
   return (
     <div className="reservationPage">
       <div className="header">
-        <Exit className="exit-button" onClick={location.state?.prevPath ? moveToMyStoragePage : moveToMainPage} />
+        <Exit className="exit-button" onClick={moveToPrevPage} />
         <header className="header-title">숙소 정보 및 정책</header>
       </div>
       <div className="placeinfo">
@@ -106,11 +98,14 @@ function ReservationConfirmPageMore() {
       <div className="place-use-info">
         <div>숙소문의</div>
         <div aria-hidden="true" onClick={copyPlaceAddress}>주소복사</div>
-        <div>지도보기</div>
+        <div aria-hidden="true" onClick={moveToMap}>지도보기</div>
       </div>
       <div className="line-devide" />
-      <div className="place-notice">공지사항</div>
       <div>{reservationData.place.policy}</div>
+      <div className="reservation-place-map">
+        <header className="reservation-place-map-header">지도</header>
+        {reservationData.place.address ? <Map address={reservationData.place.address} /> : null}
+      </div>
     </div>
   );
 }
