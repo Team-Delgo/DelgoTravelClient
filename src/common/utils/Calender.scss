@@ -115,9 +115,7 @@
       margin: 7px 0;
       padding: 7px calc(100% / 64);
       z-index: 1;
-      font-weight: bold;
       color: #ffffff;
-      box-shadow: inset -2em 0 #b0a69d;
       &::after {
         width: 32px;
         height: 32px;
@@ -139,7 +137,7 @@
       z-index: 1;
       color: #ffffff;
       &::after {
-        width: 105%;
+        width: 32px;
         height: 32px;
         content: '';
         display: block;
@@ -148,17 +146,16 @@
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: -1;
+        border-radius: 100%;
         background-color: #b0a69d;
       }
     }
     &.secondDate {
       position: relative;
       margin: 7px 0;
-      font-weight: bold;
       padding: 7px calc(100% / 64);
       z-index: 1;
       color: #ffffff;
-      box-shadow: inset 2em 0 #b0a69d;
       &::after {
         width: 32px;
         height: 32px;

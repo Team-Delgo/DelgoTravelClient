@@ -7,6 +7,7 @@ import { ReactComponent as Exit } from '../../icons/exit.svg';
 import { dateActions } from '../../redux/slice/dateSlice';
 import { getReservedDate } from '../api/calender';
 import { errorActions } from '../../redux/slice/errorSlice';
+import { currentRoomActions } from '../../redux/slice/roomSlice';
 
 interface CalenderProps {
   closeCalender: () => void;
@@ -28,6 +29,7 @@ function Calender(props: CalenderProps) {
   const [reservedDate, setReservedDate] = useState<any[]>();
   const { closeCalender, isRoom, roomId } = props;
   let index = 0;
+  let roomTotalPrice = 0;
 
   const errorHandler = () => {
     dispatch(errorActions.setError());
@@ -46,6 +48,15 @@ function Calender(props: CalenderProps) {
       );
     }
   }, []);
+
+  useEffect(() => {
+    if (sequence === 2 && isRoom && roomTotalPrice) {
+      console.log(roomTotalPrice);
+      const tempString = roomTotalPrice.toLocaleString();
+      const priceString = `${tempString}원`;
+      dispatch(currentRoomActions.currentRoomPrice(priceString));
+    }
+  }, [sequence]);
 
   const getNextYear = (currentMonth: number, currentYear: number, add: number) => {
     if (currentMonth + add > 12) {
@@ -144,7 +155,6 @@ function Calender(props: CalenderProps) {
 
       let condition = i >= firstDateIndex && i <= lastDateIndex;
 
-
       const keyCondition = condition ? 'this' : 'other';
       const id = `${currentYear}${currentMonth}${rdate} ${keyCondition}`;
       const circle = sequence === 1 && id.slice(0, 8) === selectedDate.start && keyCondition === 'this';
@@ -161,23 +171,27 @@ function Calender(props: CalenderProps) {
         const today = Number(getToday());
         const gone = date < today;
         let isBooking = false;
+        let price = 0;
 
         if (condition && !gone) {
           if (reservedDate) {
-            console.log(date , index);
             if (reservedDate[index].isBooking) {
               isBooking = true;
             }
+            price = reservedDate[index].price;
             index += 1;
-          } 
+          }
         }
-        if (firstDate && secondDate){
+        if (firstDate && secondDate) {
           setSequence(0);
         }
-        if (middleDate && isBooking){
+        if (middleDate && isBooking) {
           setSequence(0);
         }
-
+        if (firstDate || middleDate) {
+          // setPrice((prev) => prev + price);
+          roomTotalPrice += price;
+        }
         return (
           <div
             key={id}
@@ -206,26 +220,32 @@ function Calender(props: CalenderProps) {
       }
 
       let isBooking = false;
-
+      let price = 0;
       if (condition) {
         if (reservedDate) {
-          console.log(date , index);
           if (reservedDate[index].isBooking) {
             isBooking = true;
           }
-          if(reservedDate.length-1 > index){
+          if (reservedDate.length - 1 > index) {
+            price = reservedDate[index].price;
             index += 1;
           } else {
             condition = false;
-          } 
+          }
         }
       }
-      if (firstDate && secondDate){
+
+      if (firstDate && secondDate) {
         setSequence(0);
       }
-      if (middleDate && isBooking){
+
+      if (middleDate && isBooking) {
         setSequence(0);
       }
+      if (firstDate || middleDate) {
+        roomTotalPrice += price;
+      }
+
       return (
         <div
           key={id}

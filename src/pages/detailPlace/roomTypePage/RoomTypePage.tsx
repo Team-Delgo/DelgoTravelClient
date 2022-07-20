@@ -134,7 +134,7 @@ function RoomTypePage() {
             <div className="detail-place-room-type-info-accommodation-check-in-check-out">
               입실 {currentPlace.checkIn.substring(0, 5)} / 퇴실 {currentPlace.checkOut.substring(0, 5)}
             </div>
-            <div className="detail-place-room-type-info-accommodation-price">{room.price}</div>
+            <div className="detail-place-room-type-info-accommodation-price">{currentRoom.price}</div>
           </div>
         </div>
         <div className="detail-place-room-type-reservation-date-select" aria-hidden="true" onClick={calenderOpenClose}>

@@ -16,6 +16,17 @@ const roomSlice = createSlice({
     currentRoomCancle() {
       return initialState;
     },
+    currentRoomPrice(state, action) {
+      return {
+        currentRoom: {
+          roomId: state.currentRoom.roomId,
+          name: state.currentRoom.name,
+          petNum: state.currentRoom.petNum,
+          personNum: state.currentRoom.personNum,
+          price:action.payload,
+        }
+      };
+    },
   },
 });
 
