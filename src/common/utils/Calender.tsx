@@ -8,6 +8,7 @@ import { dateActions } from '../../redux/slice/dateSlice';
 import { getReservedDate } from '../api/calender';
 import { errorActions } from '../../redux/slice/errorSlice';
 import { currentRoomActions } from '../../redux/slice/roomSlice';
+import AlertConfirmOne from '../dialog/AlertConfirmOne';
 
 interface CalenderProps {
   closeCalender: () => void;
@@ -22,12 +23,15 @@ Calender.defaultProps = {
 function Calender(props: CalenderProps) {
   const dispatch = useDispatch();
   const { date, dateString } = useSelector((state: any) => state.date);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOverRange, setIsOverRange] = useState(false);
   const { start, end } = date;
   const [selectedDate, setSelectedDate] = useState({ start, end });
   const dateExist = dateString.length ? 2 : 0;
   const [sequence, setSequence] = useState(dateExist); // 0개 선택, 1개 선택, 2개 선택
   const [reservedDate, setReservedDate] = useState<any[]>();
   const { closeCalender, isRoom, roomId } = props;
+  let dateCount = 0;
   let index = 0;
   let roomTotalPrice = 0;
 
@@ -50,6 +54,11 @@ function Calender(props: CalenderProps) {
   }, []);
 
   useEffect(() => {
+    if (dateCount >= 14) {
+      setSequence(0);
+      setIsOverRange(true);
+    }
+
     if (sequence === 2 && isRoom && roomTotalPrice) {
       console.log(roomTotalPrice);
       const tempString = roomTotalPrice.toLocaleString();
@@ -187,10 +196,14 @@ function Calender(props: CalenderProps) {
         }
         if (middleDate && isBooking) {
           setSequence(0);
+          setIsModalOpen(true);
         }
         if (firstDate || middleDate) {
           // setPrice((prev) => prev + price);
           roomTotalPrice += price;
+        }
+        if (firstDate || middleDate || secondDate) {
+          dateCount += 1;
         }
         return (
           <div
@@ -240,10 +253,14 @@ function Calender(props: CalenderProps) {
       }
 
       if (middleDate && isBooking) {
+        setIsModalOpen(true);
         setSequence(0);
       }
       if (firstDate || middleDate) {
         roomTotalPrice += price;
+      }
+      if (firstDate || middleDate || secondDate) {
+        dateCount += 1;
       }
 
       return (
@@ -353,6 +370,22 @@ function Calender(props: CalenderProps) {
 
   return (
     <div className="calender">
+      {isModalOpen && (
+        <AlertConfirmOne
+          text="판매완료된 날짜가 포함되어 예약이 불가합니다"
+          buttonHandler={() => {
+            setIsModalOpen(false);
+          }}
+        />
+      )}
+      {isOverRange && (
+        <AlertConfirmOne
+          text="최대 14일까지 예약 가능합니다."
+          buttonHandler={() => {
+            setIsOverRange(false);
+          }}
+        />
+      )}
       <div className="fixed-header">
         <div className="calender-header">
           <Exit onClick={moveToPreviousPage} />
