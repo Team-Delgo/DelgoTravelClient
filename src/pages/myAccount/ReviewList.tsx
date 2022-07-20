@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 import { AxiosResponse } from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getReviewList } from "../../common/api/myaccount";
 import LeftArrow from '../../icons/left-arrow.svg';
@@ -12,6 +12,7 @@ import './ReviewList.scss';
 
 function ReviewList() {
   const [reviewList, setReviewList] = useState([]);
+  const userId = useSelector((state:any)=>state.persist.user.user.id);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -20,7 +21,7 @@ function ReviewList() {
   }, []);
 
   const callReviewList = async () => {
-    const data = { userId: 211 };
+    const data = { userId };
     getReviewList(data, (response: AxiosResponse) => {
       const { data } = response.data;
       console.log(data);
