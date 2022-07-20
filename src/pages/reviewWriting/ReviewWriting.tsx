@@ -10,7 +10,7 @@ import { ReactComponent as BigRivewStar } from '../../icons/big-review-star.svg'
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg';
 import { ReactComponent as Camera } from '../../icons/camera.svg';
 import { ReactComponent as X } from '../../icons/x.svg';
-import './RiviewWriting.scss';
+import './ReviewWriting.scss';
 
 interface TraveledHisotryPlaceType {
   bookingId: string,

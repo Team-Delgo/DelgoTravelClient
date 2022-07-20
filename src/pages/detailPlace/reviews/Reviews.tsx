@@ -10,25 +10,36 @@ interface RivewTypeProps {
 }
 
 interface RivewType {
-  profileUrl: string;
+  placeName: string
+  profileUrl: string
   review: {
-    placeId: number;
-    rating: number;
-    registDt: string;
-    reviewId: number;
-    reviewPhotoList: Array<string>,
-    roomId: number;
-    text: string;
-    updateDt: null;
-    userId: number;
+    bookingId: string
+    placeId: number
+    rating: number
+    registDt: string
+    reviewId: number
+    roomId: number
+    text: string
+    updateDt: null
+    userId: number
+    reviewPhotoList: Array<ReviewPhotoType>
   };
-  roomName: string;
-  userName: string;
+  roomName: string
+  userName: string
 }
 
-function Reviews({ review }: RivewTypeProps) {
+interface ReviewPhotoType {
+  registDt: string
+  reviewPhotoId: number
+  url: string
+}
+
+function Reviews({ review }: any) {
   const reviewStarCount = useMemo(() => reviewStarComponents(), [])
   const [moreDescription, setMoreDescription] = useState(false)
+
+  console.log(review)
+
 
   function reviewStarComponents() {
     const reviewStarArray = [];
@@ -79,11 +90,11 @@ function Reviews({ review }: RivewTypeProps) {
         ) : (
           <div className="review-content-description">{review.review.text}</div>
         )}
-        {/* <div className="review-content-image-container">
-          {review.review.text.map((image: string) => (
-            <img src={image} alt="profile-img" />
+        <div className="review-content-image-container">
+          {review.review.reviewPhotoList.map((image:any )=> (
+            <img src={image.url} alt="profile-img" />
           ))}
-        </div> */}
+        </div>
       </body>
     </div>
   );

@@ -24,21 +24,30 @@ import Calender from '../../common/utils/Calender';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 
 interface RivewType {
-  profileUrl: string;
+  placeName: string
+  profileUrl: string
   review: {
-    placeId: number;
-    rating: number;
-    registDt: string;
-    reviewId: number;
-    reviewPhotoList:Array<string>,
-    roomId: number;
-    text: string;
-    updateDt: null;
-    userId: number;
+    bookingId: string
+    placeId: number
+    rating: number
+    registDt: string
+    reviewId: number
+    roomId: number
+    text: string
+    updateDt: null
+    userId: number
+    reviewPhotoList: Array<ReviewPhotoType>
   };
-  roomName: string;
-  userName: string;
+  roomName: string
+  userName: string
 }
+
+interface ReviewPhotoType {
+  registDt: string
+  reviewPhotoId: number
+  url: string
+}
+
 interface RoomType {
   isBooking: number
   mainPhotoUrl: string
@@ -106,6 +115,7 @@ function DetailPlace() {
   });
 
   useEffect(() => {
+    console.log(detailPlace)
     refetch()
   }, [date]); 
 
@@ -240,10 +250,10 @@ function DetailPlace() {
             <Link
               style={{ textDecoration: 'none' }}
               to={`/detail-place/${detailPlace?.data.place.placeId}/reviews`}
-              state={{ reviews:detailPlaceRivews.data.readReviewDTOList }}
+              state={{ reviews: detailPlaceRivews.data.readReviewDTOList }}
               key={detailPlace?.data.place.placeId}
             >
-              <span className="detail-place-info-reviews">★ 9.1 리뷰 {detailPlaceRivews?.data?.readReviewDTOList.length}개 &gt;</span>
+              <span className="detail-place-info-reviews">★ {detailPlaceRivews.data.ratingAvg} 리뷰 {detailPlaceRivews?.data?.readReviewDTOList.length}개 &gt;</span>
             </Link>
           )}
           <div className="detail-place-info-facility">소형견,오션뷰,자연휴강,산책코스</div>
@@ -257,7 +267,7 @@ function DetailPlace() {
         <div className="detail-place-room-select">
           <header className="detail-place-room-select-header">객실선택</header>
         </div>
-        <div className="detail-places-room-types">
+        <div className="detail-place-room-types">
           {getDetailPlaceIsLoading
             ? roomTypeSkeletons
             : detailPlace.data.roomList.map((room: RoomType) => (
