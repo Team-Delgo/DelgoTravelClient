@@ -8,18 +8,16 @@ import RightArrowBlack from "../../../icons/right-arrow-black.svg";
 import BottomButton from "../../../common/components/BottomButton";
 import { reservationActions } from '../../../redux/slice/reservationSlice';
 import {bookingGetData} from '../../../common/api/booking'
-import ReservationCancleModal from "./modal/ReservationCancleModal";
 import Map from '../../../common/utils/Map';
-import './ReservationConfirmPage.scss';
+import './ReservationHistoryPage.scss';
 
 
 
 
-function ReservationConfirmPage() {
+function ReservationHistoryPage() {
   const navigate = useNavigate();
   const accessToken = useSelector((state: any) => state.token.token);
   const dispatch = useDispatch();
-  const [reservationCancleModal, setReservationCancleModal] = useState(false);
   const [reservationData, setReservationData] = useState({
     bookingId: "",
     bookingState: "",
@@ -84,13 +82,6 @@ function ReservationConfirmPage() {
   }, []);
 
 
-  const handleReservationCancleModal = useCallback(() => {
-    setReservationCancleModal(!reservationCancleModal);
-  }, [reservationCancleModal]);
-
-  const closeReservationCancleModal  = useCallback(() => {
-    setReservationCancleModal(false);
-  }, []);
 
   const copyPlaceAddress = useCallback(() => {
       navigator.clipboard.writeText(reservationData.place.address);
@@ -110,19 +101,14 @@ function ReservationConfirmPage() {
   const moveToMap = useCallback(() => {
     window.scroll({ top: document.body.scrollHeight, behavior: 'smooth' });
   }, []);
-  
+
 
 
   return (
-    <>
       <div className="reservationPage">
         <div className="header">
           <Exit className="exit-button" onClick={location.state?.prevPath ? moveToMyStoragePage : moveToMainPage} />
-          {reservationData.bookingState === 'W' ? (
-            <header className="header-title">예약접수 확인중</header>
-          ) : (
-            <header className="header-title">예약확정</header>
-          )}
+            <header className="header-title">예약내역</header>
         </div>
         <div className="placeinfo">
           <Link to={`/reservation-confirm-more/${bookingId}`}>
@@ -137,7 +123,7 @@ function ReservationConfirmPage() {
         <div className="place-use-info">
           <div>숙소문의</div>
           <div aria-hidden="true" onClick={copyPlaceAddress}>주소복사</div>
-          <div aria-hidden="true" onClick={moveToMap}>지도보기</div>
+          <div aria-hidden="true" onClick={moveToMap} >지도보기</div>
         </div>
         <div className="checkin-checkout">
           <div className="checkin-checkout-date">
@@ -200,32 +186,14 @@ function ReservationConfirmPage() {
         </div>
         <div className="payment-methods">
           <div className="payment-methods-label">결제 수단</div>
-          <div className="payment-methods-price">신용카드</div>
-        </div>
-        <div className="cancel-reservation">
-          <div className="cancel-reservation-label">
-            {reservationData.canCancelDate.substring(0, 4)}년 {reservationData.canCancelDate.substring(5, 7)}월{' '}
-            {reservationData.canCancelDate.substring(8, 10)}일 18:00까지 무료 취소 가능합니다.
-          </div>
-          <button className="cancel-reservation-button" type="button" onClick={handleReservationCancleModal}>
-            예약취소
-          </button>
-        </div>
-        <div className="reservation-place-map">
+        <div className="payment-methods-price">신용카드</div>
+      </div>
+      <div className="reservation-place-map">
         <header className="reservation-place-map-header">지도</header>
         {reservationData.place.address ? <Map address={reservationData.place.address} /> : null}
       </div>
-      </div>
-      {reservationCancleModal && (
-        <ReservationCancleModal
-          reservationCancleModal={handleReservationCancleModal}
-          closeReservationCancleModal={closeReservationCancleModal}
-          bookingId={bookingId}
-        />
-      )}
-      {/* <BottomButton text="예약내역 공유하기" /> */}
-    </>
+    </div>
   );
 }
 
-export default ReservationConfirmPage;
+export default ReservationHistoryPage;

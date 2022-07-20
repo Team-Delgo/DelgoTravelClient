@@ -45,4 +45,5 @@ export const RESERVATION_PATH = {
   RESERVATION_CONFIRM: '/reservation-confirm/:bookingId',
   RESERVATION_CONFIRM_MORE: '/reservation-confirm-more/:bookingId',
   RESERVATION_CANCLE: '/reservation-cancle/:bookingId',
+  RESERVATION_HISTORY: '/reservation-history/:bookingId',
 };

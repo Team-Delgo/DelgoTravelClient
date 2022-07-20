@@ -34,9 +34,9 @@ function TravelHisotryPlace({ traveledPlace }: TraveledHisotryPlaceTypeProps) {
   const location: any = useLocation();
   const navigate = useNavigate();
 
-  const moveToReservationConfirmPage = useCallback(() => {
+  const moveToReservationHistoryPage = useCallback(() => {
     dispatch(scrollActions.scroll({ whereToGo: 0, detailPlace: 0, myStorage: window.scrollY, homeY: 0 }));
-    navigate(`/reservation-confirm/${traveledPlace.bookingId}`, { state: { prevPath: location.pathname } });
+    navigate(`/reservation-history/${traveledPlace.bookingId}`, { state: { prevPath: location.pathname } });
   }, []);
 
   return (
@@ -73,7 +73,7 @@ function TravelHisotryPlace({ traveledPlace }: TraveledHisotryPlaceTypeProps) {
           to={`/reservation-confirm/${traveledPlace.bookingId}`}
           state={location.pathname}
         > */}
-          <div className="travel-hisotry-place-review-reservation-detail" aria-hidden="true" onClick={moveToReservationConfirmPage}>예약상세</div>
+          <div className="travel-hisotry-place-review-reservation-detail" aria-hidden="true" onClick={moveToReservationHistoryPage}>예약상세</div>
         {/* </Link> */}
       </div>
     </div>

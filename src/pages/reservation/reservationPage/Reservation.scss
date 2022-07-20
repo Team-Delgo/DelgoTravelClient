@@ -102,6 +102,11 @@
   display: flex;
   margin: 27px 0;
   justify-content: space-between;
+  &-name {
+    border: 1px solid #B0A69D;
+    padding-left: 10px;
+    width: 50px;
+  }
   &-phone {
     color: #3e382f;
     font-size: 14px;

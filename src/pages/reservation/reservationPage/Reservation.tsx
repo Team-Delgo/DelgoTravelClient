@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector,useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
+import { reservationActions } from '../../../redux/slice/reservationSlice';
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
 import RightArrow from '../../../icons/right-arrow.svg';
 import './Reservation.scss';
@@ -10,13 +11,69 @@ import BottomButton from '../../../common/components/BottomButton';
 import { TOSS } from '../../../constants/url.cosnt';
 
 function Reservation() {
-  const { user,room, place,date } = useSelector((state: any) => state.persist.reservation);
+  const { user,room, place ,date} = useSelector((state: any) => state.persist.reservation);
+  // const { date, dateString } = useSelector((state: any) => state.date);
+  // const { currentPlace } = useSelector((state: any) => state.persist.currentPlace);
+  // const { currentRoom } = useSelector((state: any) => state.persist.currentRoom);
+  // const { user } = useSelector((state: any) => state.persist.user);
+  const [reservationName,setReservationName] = useState("")
+  const dispatch = useDispatch();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  // const handleReservation = () => {
+  //   dispatch(
+  //     reservationActions.reservation({
+  //       user: { id: user.id, nickname: user.nickname, email: user.email, phone: user.phone },
+  //       place: {
+  //         placeId: place.placeId,
+  //         name: place.name,
+  //         address: place.address,
+  //       },
+  //       room: {
+  //         roomId: room.roomId,
+  //         name: room.name,
+  //         price: room.price,
+  //         petNum:room.petNum,
+  //         personNum:room.personNum
+  //       },
+  //       date: {
+  //         date:date.date,
+  //         dateString:date.dateString,
+  //         checkIn:place.checkIn.substring(0, 5),
+  //         checkOut:place.checkOut.substring(0, 5)
+  //       },
+  //     }),
+  //   );
+  // };
+
+
   const creditCardPayment = () => {
+    dispatch(
+      reservationActions.reservation({
+        user: { id: user.id, nickname: reservationName, email: user.email, phone: user.phone },
+        place: {
+          placeId: place.placeId,
+          name: place.name,
+          address: place.address,
+        },
+        room: {
+          roomId: room.roomId,
+          name: room.name,
+          price: room.price,
+          petNum:room.petNum,
+          personNum:room.personNum
+        },
+        date: {
+          date:date.date,
+          dateString:date.dateString,
+          checkIn:date.checkIn.substring(0, 5),
+          checkOut:date.checkOut.substring(0, 5)
+        },
+      }),
+    );
     loadTossPayments(TOSS.CLIENT_KEY).then((tossPayments) => {
       tossPayments.requestPayment('카드', {
         amount: Number(room.price.slice(0, -1).replace(',', '')),
@@ -29,18 +86,18 @@ function Reservation() {
     });
   };
 
-  const BankTransfer = () => {
-    loadTossPayments(TOSS.CLIENT_KEY).then((tossPayments) => {
-      tossPayments.requestPayment('계좌이체', {
-        amount: Number(room.price.slice(0, -1).replace(',', '')),
-        orderId: 'AVw8mD2KHztN_646IGAZF',
-        orderName: place.name + room.name,
-        customerName: user.nickname,
-        successUrl: `${process.env.REACT_APP_BASE_URL}/reservation-confirm/${place.placeId}/${room.roomId}/${date.date.start}/${date.date.end}`,
-        failUrl: `${process.env.REACT_APP_BASE_URL}/reservation/${place.placeId}/${room.roomId}/${date.start}/${date.end}`,
-      });
-    });
-  };
+  // const BankTransfer = () => {
+  //   loadTossPayments(TOSS.CLIENT_KEY).then((tossPayments) => {
+  //     tossPayments.requestPayment('계좌이체', {
+  //       amount: Number(currentRoom.price.slice(0, -1).replace(',', '')),
+  //       orderId: 'AVw8mD2KHztN_646IGAZF',
+  //       orderName: currentPlace.name + currentRoom.name,
+  //       customerName: user.nickname,
+  //       successUrl: `${process.env.REACT_APP_BASE_URL}/reservation-confirm/${currentPlace.placeId}/${currentRoom.roomId}/${date.date.start}/${date.date.end}`,
+  //       failUrl: `${process.env.REACT_APP_BASE_URL}/reservation/${currentPlace.placeId}/${currentRoom.roomId}/${date.start}/${date.end}`,
+  //     });
+  //   });
+  // };
 
   const config = {
     next_redirect_pc_url: '',
@@ -71,11 +128,16 @@ function Reservation() {
     });
   };
 
+  const handleReservationName = (e:any)=>{
+    console.log(e.target.value)
+    setReservationName(e.target.value)
+  }
+
   return (
     <>
       <div className="reservationPage">
         <div className="header">
-          <Link to={`/detail-place/${place.placeId}/${room.roomId}`} key={place.placeId} state={{ room, place }}>
+        <Link to={`/detail-place/${place.placeId}/${room.roomId}`} key={place.placeId} state={{ room, place }}>
             <Exit className="exit-button" />
           </Link>
           <h1 className="header-title">예약</h1>
@@ -85,7 +147,7 @@ function Reservation() {
             <div className="placeinfo-name">{place.name}</div>
           </div>
           <p className="placeinfo-address">{place.address}</p>
-          <p className="placeinfo-room">{room.name}</p>
+          <p className="placeinfo-room">{place.name}</p>
         </div>
         <div className="checkin-checkout">
           <div className="checkin-checkout-date">
@@ -112,15 +174,16 @@ function Reservation() {
         <h2 className="reservation-title first">예약자정보</h2>
         <div className="reservation-user-info">
           <div className="reservation-label">예약자 이름</div>
-          <div className="reservation-user-info-phone">
-            {user.nickname} / {user.phone}
-          </div>
-          {/* <div aria-hidden="true" className="reservation-user-info-change">
-            변경
-          </div> */}
+            <input className="reservation-user-info-name" type="text" onChange={handleReservationName} />
         </div>
         <div className="reservation-user-info">
-          <div className="reservation-label">예약 인원  </div>
+          <div className="reservation-label">핸드폰 번호</div>
+          <div className="reservation-user-info-phone">
+          {user.phone}
+          </div>
+        </div>
+        <div className="reservation-user-info">
+          <div className="reservation-label">예약 인원 </div>
           <div className="reservation-user-info-phone">
             기준 {room.personNum}명 
           </div>
