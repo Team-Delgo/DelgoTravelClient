@@ -1,11 +1,18 @@
-import React from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import RightArrow from '../../icons/right-arrow.svg';
 import LeftArrow from '../../icons/left-arrow.svg';
 import "./ChangeUserInfo.scss";
 
 function ChangeUserInfo() {
   const navigate = useNavigate();
+  const initialNickName = useSelector((state:any)=>state.persist.user.user.nickname);
+  const [nickName, setNickName] = useState(initialNickName);
+
+  const inputChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
+    setNickName(e.target.value);
+  };
 
   return (
     <div className="userinfo">
@@ -24,7 +31,7 @@ function ChangeUserInfo() {
       <div className="userinfo-user">회원정보</div>
       <div className="userinfo-nickname">
         <div className="userinfo-nickname-label">닉네임</div>
-        <input className="userinfo-nickname-input" />
+        <input onChange={inputChangeHandler} className="userinfo-nickname-input" value={nickName} />
       </div>
       <div className="userinfo-phone">
         <div className="userinfo-phone-label">휴대전화</div>
