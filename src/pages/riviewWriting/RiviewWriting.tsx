@@ -7,7 +7,6 @@ import BottomButton from '../../common/components/BottomButton';
 import  {writeReivew,reviewImageUpload}  from '../../common/api/reivew'
 import { ReactComponent as BigRivewStarActive } from '../../icons/big-review-star-active.svg';
 import { ReactComponent as BigRivewStar } from '../../icons/big-review-star.svg';
-import { ReactComponent as BigRiveHalfwStar } from '../../icons/big-review-half-star.svg';
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg';
 import { ReactComponent as Camera } from '../../icons/camera.svg';
 import { ReactComponent as X } from '../../icons/x.svg';
@@ -51,10 +50,19 @@ function RiviewWriting() {
   const state = useLocation().state as TraveledHisotryPlaceType;
   const navigate = useNavigate();
   const formData = new FormData();
+  const location: any = useLocation();
+
+  useEffect(() => {
+      window.scrollTo(0, 0);
+  }, []);
   
 
   const moveToPreviousPage = useCallback(() => {
-    navigate(-1);
+    navigate('/my-storage', {
+      state: {
+        prevPath: location.pathname,
+      },
+    });
   }, []);
 
   const handleOpenFileUpload = useCallback(() => {
@@ -132,8 +140,8 @@ function RiviewWriting() {
               const { code, codeMsg } = response.data;
               if (code === 200) {
                 setTimeout(() => {
-                  navigate('/');
-                }, 1000);
+                  navigate(-1);
+                }, 200);
               } else {
                 console.log(codeMsg);
               }

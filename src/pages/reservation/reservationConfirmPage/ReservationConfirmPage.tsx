@@ -65,23 +65,15 @@ function ReservationConfirmPage() {
     }
   }, []);
 
-  const moveToMainPage = useCallback(() => {
+  const moveToPrevPage = useCallback(() => {
     setTimeout(() => {
-      navigate('/');
+      navigate(-1);
       dispatch(
         reservationActions.reservationInit()
       );
     }, 100);
   }, []);
 
-  const moveToMyStoragePage = useCallback(() => {
-    navigate('/my-storage', {
-      state: {
-        prevPath: location.pathname,
-        tab: 1,
-      },
-    });
-  }, []);
 
 
   const handleReservationCancleModal = useCallback(() => {
@@ -117,7 +109,7 @@ function ReservationConfirmPage() {
     <>
       <div className="reservationPage">
         <div className="header">
-          <Exit className="exit-button" onClick={location.state?.prevPath ? moveToMyStoragePage : moveToMainPage} />
+          <Exit className="exit-button" onClick={moveToPrevPage} />
           {reservationData.bookingState === 'W' ? (
             <header className="header-title">예약접수 확인중</header>
           ) : (

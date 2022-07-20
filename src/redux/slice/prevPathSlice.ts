@@ -5,7 +5,7 @@ const initialState = {
 };
 
 const prevPathSlice = createSlice({
-  name: 'detailPlacePrevPath',
+  name: 'prevPath',
   initialState,
   reducers: {
     prevPath(state, action) {

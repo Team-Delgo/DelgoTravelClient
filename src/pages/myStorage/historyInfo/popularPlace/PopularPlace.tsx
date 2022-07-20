@@ -11,6 +11,7 @@ import './PopularPlace.scss'
 
 type PopularPlaceTypeProps = {
     place:PopularPlaceType
+    getRecommendedPlacesRefetch:any
 }
 
 type PopularPlaceType = {
@@ -26,7 +27,7 @@ type PopularPlaceType = {
   }
 
 
-function PopularPlace({ place }: PopularPlaceTypeProps  ) {
+function PopularPlace({ place,getRecommendedPlacesRefetch }: PopularPlaceTypeProps  ) {
   const [wishList, setWishList] = useState(place.wishId);
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const accessToken = useSelector((state: any) => state.token.token);
@@ -52,6 +53,7 @@ function PopularPlace({ place }: PopularPlaceTypeProps  ) {
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
           setWishList(0);
+          getRecommendedPlacesRefetch()
         }
       },
       dispatch,

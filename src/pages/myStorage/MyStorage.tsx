@@ -17,13 +17,15 @@ function MyStorage() {
   const dispatch = useDispatch();
   const accessToken = useSelector((state: any) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
-  const { myStorageY } = useSelector((state: any) => state.persist.scroll);
 
   useEffect(() => {
-    if (location.state?.prevPath.includes('/reservation-confirm')) {
-      window.scrollTo(0, myStorageY);
-      setCurrentTab(location.state?.tab);
-    } else {
+    if (location.state?.prevPath.includes('/reservation-history')) {
+      setCurrentTab(1);
+    } 
+    if (location.state?.prevPath.includes('/review-writing')) {
+      setCurrentTab(1);
+    }
+    else {
       window.scrollTo(0, 0);
     }
   }, []);
@@ -54,58 +56,58 @@ function MyStorage() {
 
   return (
     <>
-    <div className="wish-list-background">
-      {currentTab === 0 ? (
-        <>
-          <div className="wish-list-tab">
-            <div
-              className="wish-list-tab-folder-active"
-              role="button"
-              tabIndex={0}
-              onClick={changeCurrentTab(0)}
-              aria-hidden="true"
-            >
-              찜
+      <div className="wish-list-background">
+        {currentTab === 0 ? (
+          <>
+            <div className="wish-list-tab">
+              <div
+                className="wish-list-tab-folder-active"
+                role="button"
+                tabIndex={0}
+                onClick={changeCurrentTab(0)}
+                aria-hidden="true"
+              >
+                찜
+              </div>
+              <div
+                className="wish-list-tab-history"
+                role="button"
+                tabIndex={-1}
+                onClick={changeCurrentTab(1)}
+                aria-hidden="true"
+              >
+                여행내역
+              </div>
             </div>
-            <div
-              className="wish-list-tab-history"
-              role="button"
-              tabIndex={-1}
-              onClick={changeCurrentTab(1)}
-              aria-hidden="true"
-            >
-              여행내역
+            <Folder currentTab={currentTab} />
+          </>
+        ) : (
+          <>
+            <div className="wish-list-tab">
+              <div
+                className="wish-list-tab-folder"
+                role="button"
+                tabIndex={0}
+                onClick={changeCurrentTab(0)}
+                aria-hidden="true"
+              >
+                찜
+              </div>
+              <div
+                className="wish-list-tab-history-active"
+                role="button"
+                tabIndex={-1}
+                onClick={changeCurrentTab(1)}
+                aria-hidden="true"
+              >
+                여행내역
+              </div>
             </div>
-          </div>
-          <Folder currentTab={currentTab}/>
-        </>
-      ) : (
-        <>
-          <div className="wish-list-tab">
-            <div
-              className="wish-list-tab-folder"
-              role="button"
-              tabIndex={0}
-              onClick={changeCurrentTab(0)}
-              aria-hidden="true"
-            >
-              찜
-            </div>
-            <div
-              className="wish-list-tab-history-active"
-              role="button"
-              tabIndex={-1}
-              onClick={changeCurrentTab(1)}
-              aria-hidden="true"
-            >
-              여행내역
-            </div>
-          </div>
-          <History/>
+            <History currentTab={currentTab}/>
           </>
         )}
-    </div>
-    <Footer/>
+      </div>
+      <Footer />
     </>
   );
 }
