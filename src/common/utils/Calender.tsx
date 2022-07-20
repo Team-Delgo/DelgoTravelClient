@@ -56,7 +56,7 @@ function Calender(props: CalenderProps) {
   }, []);
 
   useEffect(() => {
-    if (dateCount >= 14) {
+    if (dateCount >= 15) {
       setSequence(0);
       setIsOverRange(true);
     }
