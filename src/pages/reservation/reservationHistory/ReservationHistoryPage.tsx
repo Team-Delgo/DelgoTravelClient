@@ -103,11 +103,20 @@ function ReservationHistoryPage() {
   }, []);
 
 
+  const moveToPrevPage = useCallback(() => {
+    navigate('/my-storage', {
+      state: {
+        prevPath: location.pathname,
+      },
+    });
+  }, []);
+
+
 
   return (
       <div className="reservationPage">
         <div className="header">
-          <Exit className="exit-button" onClick={location.state?.prevPath ? moveToMyStoragePage : moveToMainPage} />
+          <Exit className="exit-button" onClick={moveToPrevPage} />
             <header className="header-title">예약내역</header>
         </div>
         <div className="placeinfo">

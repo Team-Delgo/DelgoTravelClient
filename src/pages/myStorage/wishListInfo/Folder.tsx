@@ -130,7 +130,7 @@ function Folder({currentTab}:FolderTypeProps) {
               />
             ))
         : recommendedPlaces?.data.map((place: RecommendedPlaceType) => (
-            <PopularPlace place={place} key={place.placeId} />
+            <PopularPlace place={place} key={place.placeId} getRecommendedPlacesRefetch={getRecommendedPlacesRefetch} />
           ))}
     </div>
   );

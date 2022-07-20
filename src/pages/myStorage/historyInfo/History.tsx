@@ -44,7 +44,11 @@ interface TravelHisotryPlaceType {
   },
 }
 
-function History() {
+interface FolderTypeProps {
+  currentTab:number
+}
+
+function History({currentTab}:FolderTypeProps) {
   const navigation = useNavigate();
   const dispatch = useDispatch();
   const accessToken = useSelector((state: any) => state.token.token);
@@ -56,7 +60,7 @@ function History() {
   const {
     isLoading: getRecommendedPlacesIsLoading,
     data: recommendedPlaces,
-    refetch: getWishedPlacesRefetch,
+    refetch: getRecommendedPlacesRefetch,
   } = useQuery('getRecommendedPlaces', () => getRecommendedPlace(userId), {
     cacheTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 3,
@@ -80,9 +84,17 @@ function History() {
   );
 
   useEffect(() => {
-    if (location.state?.prevPath.includes('/reservation-confirm')) {
+    getRecommendedPlacesRefetch();
+  }, [currentTab]);
+
+  useEffect(() => {
+    if (location.state?.prevPath.includes('/reservation-history')) {
       window.scrollTo(0, myStorageY);
-    } else {
+    }
+    if (location.state?.prevPath.includes('/review-writing')) {
+      window.scrollTo(0, myStorageY);
+    }
+    else {
       window.scrollTo(0, 0);
     }
   }, [getRecommendedPlacesIsLoading, getTraveledPlacesIsLoading]);
@@ -126,11 +138,11 @@ function History() {
       )}
       {traveledPlaces?.data.length > 0
         ? traveledPlaces?.data.map((place: TravelHisotryPlaceType) => (
-            <TravelHisotryPlace traveledPlace={place} key={place.bookingId} />
-          ))
+          <TravelHisotryPlace traveledPlace={place} key={place.bookingId} />
+        ))
         : recommendedPlaces?.data.map((place: RecommendedPlaceType) => (
-            <PopularPlace place={place} key={place.placeId} />
-          ))}
+          <PopularPlace place={place} key={place.placeId} getRecommendedPlacesRefetch={getRecommendedPlacesRefetch} />
+        ))}
     </div>
   );
 }
