@@ -48,10 +48,8 @@ async function emailAuth(email: string, success: (data: AxiosResponse) => void, 
 async function changePassword(email: string, password: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
     .post(`${url}resetPassword`, {
-      user: {
         email,
         newPassword: password,
-      },
     })
     .then((data) => {
       success(data);
