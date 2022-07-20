@@ -2,6 +2,8 @@
   height: 100vh;
   padding: 20px;
   background-color: white;
+  color: #3e382f;
+
   &-header{
     position: relative;
     padding-top: 34px;;
@@ -76,6 +78,10 @@
   &-password{
     margin-top: 46px;
     display: flex;
+    &-label{
+      font-weight: 500;
+      font-size: 16px;
+    }
     &-button{
     }
   }
