@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   user: { id: 0, nickname: '', email: '', phone: '' },
   place: { placeId: 0, name: '', address: '' },
-  room: { roomId: 0, name: '', price: 0, petNum: 0, personNum: 0 },
+  room: { roomId: 0, name: '', price: 0, personNum: 0 },
   date: {
     date: {
       start: '',

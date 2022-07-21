@@ -64,7 +64,6 @@ function RoomTypePage() {
           roomId: room?.roomId,
           name: room?.name,
           price: room?.price,
-          petNum:room?.petStandardNum,
           personNum:room?.personStandardNum
         },
       }),
@@ -88,7 +87,6 @@ function RoomTypePage() {
           roomId: currentRoom.roomId,
           name: currentRoom.name,
           price: currentRoom.price,
-          petNum:currentRoom.petNum,
           personNum:currentRoom.personNum
         },
         date: {
