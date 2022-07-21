@@ -1,26 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
 import { reservationActions } from '../../../redux/slice/reservationSlice';
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
-import RightArrow from '../../../icons/right-arrow.svg';
 import './Reservation.scss';
 import BottomButton from '../../../common/components/BottomButton';
+import { getCouponList } from '../../../common/api/coupon';
 import { TOSS } from '../../../constants/url.cosnt';
 
 function Reservation() {
-  const { user,room, place ,date} = useSelector((state: any) => state.persist.reservation);
+  const { user, room, place, date } = useSelector((state: any) => state.persist.reservation);
+  const [couponList, setCouponList] = useState<Array<any>>([]);
   // const { date, dateString } = useSelector((state: any) => state.date);
   // const { currentPlace } = useSelector((state: any) => state.persist.currentPlace);
   // const { currentRoom } = useSelector((state: any) => state.persist.currentRoom);
   // const { user } = useSelector((state: any) => state.persist.user);
-  const [reservationName,setReservationName] = useState("")
+  const [reservationName, setReservationName] = useState('');
   const dispatch = useDispatch();
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    getCouponList(
+      user.id,
+      (response: AxiosResponse) => {
+        setCouponList(response.data.data);
+      },
+      dispatch,
+    );
   }, []);
 
   // const handleReservation = () => {
@@ -49,7 +57,6 @@ function Reservation() {
   //   );
   // };
 
-
   const creditCardPayment = () => {
     dispatch(
       reservationActions.reservation({
@@ -63,14 +70,14 @@ function Reservation() {
           roomId: room.roomId,
           name: room.name,
           price: room.price,
-          petNum:room.petNum,
-          personNum:room.personNum
+          petNum: room.petNum,
+          personNum: room.personNum,
         },
         date: {
-          date:date.date,
-          dateString:date.dateString,
-          checkIn:date.checkIn.substring(0, 5),
-          checkOut:date.checkOut.substring(0, 5)
+          date: date.date,
+          dateString: date.dateString,
+          checkIn: date.checkIn.substring(0, 5),
+          checkOut: date.checkOut.substring(0, 5),
         },
       }),
     );
@@ -128,16 +135,16 @@ function Reservation() {
     });
   };
 
-  const handleReservationName = (e:any)=>{
-    console.log(e.target.value)
-    setReservationName(e.target.value)
-  }
+  const handleReservationName = (e: any) => {
+    console.log(e.target.value);
+    setReservationName(e.target.value);
+  };
 
   return (
     <>
       <div className="reservationPage">
         <div className="header">
-        <Link to={`/detail-place/${place.placeId}/${room.roomId}`} key={place.placeId} state={{ room, place }}>
+          <Link to={`/detail-place/${place.placeId}/${room.roomId}`} key={place.placeId} state={{ room, place }}>
             <Exit className="exit-button" />
           </Link>
           <h1 className="header-title">예약</h1>
@@ -156,9 +163,7 @@ function Reservation() {
               {date.date.start.substring(2, 4)}.{date.date.start.substring(4, 6)}.{date.date.start.substring(6, 8)}{' '}
               {date.dateString.substring(5, 8)}
             </span>
-            <span className="check-date">
-              {date.checkIn}
-            </span>
+            <span className="check-date">{date.checkIn}</span>
           </div>
           <div className="checkin-checkout-date">
             <span className="check-title">체크아웃</span>
@@ -166,27 +171,21 @@ function Reservation() {
               {date.date.end.substring(2, 4)}.{date.date.end.substring(4, 6)}.{date.date.end.substring(6, 8)}{' '}
               {date.dateString.substring(16, 19)}
             </span>
-            <span className="check-date">
-              {date.checkOut}
-            </span>
+            <span className="check-date">{date.checkOut}</span>
           </div>
         </div>
         <h2 className="reservation-title first">예약자정보</h2>
         <div className="reservation-user-info">
           <div className="reservation-label">예약자 이름</div>
-            <input className="reservation-user-info-name" type="text" onChange={handleReservationName} />
+          <input className="reservation-user-info-name" type="text" onChange={handleReservationName} />
         </div>
         <div className="reservation-user-info">
           <div className="reservation-label">핸드폰 번호</div>
-          <div className="reservation-user-info-phone">
-          {user.phone}
-          </div>
+          <div className="reservation-user-info-phone">{user.phone}</div>
         </div>
         <div className="reservation-user-info">
           <div className="reservation-label">예약 인원 </div>
-          <div className="reservation-user-info-phone">
-            기준 {room.personNum}명 
-          </div>
+          <div className="reservation-user-info-phone">기준 {room.personNum}명</div>
         </div>
         <div className="reservation-devide" />
         <h2 className="reservation-title second">할인정보</h2>
@@ -224,7 +223,7 @@ function Reservation() {
         </div> */}
       </div>
       <div aria-hidden="true" onClick={creditCardPayment}>
-      <BottomButton text={`${room.price} 결제하기`}/>
+        <BottomButton text={`${room.price} 결제하기`} />
       </div>
     </>
   );

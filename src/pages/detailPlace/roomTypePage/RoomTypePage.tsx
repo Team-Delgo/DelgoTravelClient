@@ -78,7 +78,7 @@ function RoomTypePage() {
   const handleReservation = () => {
     dispatch(
       reservationActions.reservation({
-        user: { id: user.id, nickname: user.nickname, email: user.email, phone: user.phone },
+        user: { id: user.id,  email: user.email, phone: user.phone },
         place: {
           placeId: currentPlace.placeId,
           name: currentPlace.name,
