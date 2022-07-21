@@ -261,7 +261,7 @@ function DetailPlace() {
           )}
           <div className="detail-place-info-facility">소형견,오션뷰,자연휴강,산책코스</div>
         </div>
-        {detailPlace?.data.placeNoticeList && <div className="detail-place-delgo-note">Delgo 노트 보로가기</div>}
+        {/* {detailPlace?.data.placeNoticeList && <div className="detail-place-delgo-note">Delgo 노트 보로가기</div>} */}
         <div className="detail-place-reservation-date-select" aria-hidden="true" onClick={calenderOpenClose}>
           <span>날짜선택</span>
           <span className="detail-place-reservation-date-select-calender">{dateString}&nbsp;&nbsp;&nbsp;&gt;</span>
