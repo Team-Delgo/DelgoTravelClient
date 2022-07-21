@@ -45,15 +45,31 @@
     &-facility {
       padding: 10px 0 30px 0;
       font-size: 14px;
-      color: #6e614d;
+      color:  #3E382F;
+      font-weight: 500;
     }
+  }
+  &-delgo-note{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #FFFFFF;
+    border-radius: 34px;
+    width: 192px;
+    height: 41px;
+    font-weight: 500;
+    font-size: 14px;
+    border: 1px solid #C4C4C4;
+    margin:auto;
+      margin-top: 20px;
+    margin-bottom: 30px;
   }
   &-reservation-date-select {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    // width: 80vw;
-    height: 49px;
+    height: 73px;
     background-color: #ffffff;
     color: #3e382f;
     font-size: 16px;
