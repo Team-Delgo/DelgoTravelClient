@@ -8,9 +8,8 @@ async function bookingRequest(
     placeId: number;
     roomId: number;
     couponId: number;
+    reservedName: string;
     point: number;
-    personExtraNum: number;
-    petExtraNum: number;
     startDt: string;
     endDt: string;
     orderId:string|null;
@@ -27,9 +26,8 @@ async function bookingRequest(
       placeId: data.placeId,
       roomId: data.roomId,
       couponId: data.couponId,
+      reservedName:data.reservedName,
       point: data.point,
-      personExtraNum: data.personExtraNum,
-      petExtraNum: data.petExtraNum,
       startDt,
       endDt,
       orderId:data.orderId,
