@@ -89,9 +89,11 @@ function History({currentTab}:FolderTypeProps) {
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/reservation-history')) {
+      console.log(location.state?.prevPath.includes('/reservation-history'))
+      console.log(myStorageY)
       window.scrollTo(0, myStorageY);
     }
-    if (location.state?.prevPath.includes('/review-writing')) {
+    else if (location.state?.prevPath.includes('/review-writing')) {
       window.scrollTo(0, myStorageY);
     }
     else {
@@ -120,7 +122,7 @@ function History({currentTab}:FolderTypeProps) {
       dispatch,
     );
   }, [accessToken]);
-  console.log(traveledPlaces)
+
 
   if (getRecommendedPlacesIsLoading || getTraveledPlacesIsLoading)
     return <div className="travel-history-container">&nbsp;</div>;

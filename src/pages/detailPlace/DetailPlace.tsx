@@ -10,7 +10,6 @@ import RoomType from './roomType/RoomType';
 import Reviews from './reviews/Reviews';
 import ImageSlider from '../../common/utils/ImageSlider';
 import Map from '../../common/utils/Map';
-// import Heart from '../../common/components/Heart';
 import { ReactComponent as ActiveHeart } from '../../icons/heart-active.svg';
 import { ReactComponent as Heart } from '../../icons/heart.svg';
 import { getDetailPlace} from '../../common/api/getPlaces';
@@ -92,20 +91,20 @@ function DetailPlace() {
   const startDt =`${date.start.substring(0,4)}-${date.start.substring(4,6)}-${date.start.substring(6,10)}`
   const endDt = `${date.end.substring(0,4)}-${date.end.substring(4,6)}-${date.end.substring(6,10)}`
 
-  const { isLoading:getDetailPlaceIsLoading, data:detailPlace, refetch } = useQuery(
-    'getDetailPlace',
-    () => getDetailPlace(userId, placeId as string, startDt, endDt),
-    {
-      cacheTime: 1000 * 60 * 5,
-      staleTime: 1000 * 60 * 3,
-      refetchInterval: false,
-      onError: (error: any) => {
-        useErrorHandlers(dispatch, error);
-      },
+  const {
+    isLoading: getDetailPlaceIsLoading,
+    data: detailPlace,
+    refetch,
+  } = useQuery('getDetailPlace', () => getDetailPlace(userId, placeId as string, startDt, endDt), {
+    cacheTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 3,
+    refetchInterval: false,
+    onError: (error: any) => {
+      useErrorHandlers(dispatch, error);
     },
-  );
+  });
 
-  const { data: detailPlaceRivews } = useQuery('getDetailPlaceRivews', () => getDetailPlaceRivews(placeId as string), {
+  const { isLoading: getDetailPlaceIsLoading2, data: detailPlaceRivews } = useQuery('getDetailPlaceRivews', () => getDetailPlaceRivews(placeId as string), {
     cacheTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 3,
     refetchInterval: false,
@@ -115,13 +114,11 @@ function DetailPlace() {
   });
 
   useEffect(() => {
-    console.log(detailPlace)
     refetch()
   }, [date]); 
 
 
   useEffect(() => {
-    console.log(detailPlace?.data.placeNoticeList)
     if (location.state?.prevPath.includes('/detail-place')) {
       window.scroll(0, detailPlaceScrollY);
     }
@@ -208,6 +205,10 @@ function DetailPlace() {
     return <div className='detail-place'>&nbsp;</div>;
   }
 
+  if (getDetailPlaceIsLoading2){
+    return <div className='detail-place'>&nbsp;</div>;
+  }
+
   return (
     <>
       {isCalenderOpen && <Calender closeCalender={calenderOpenClose} isRoom={false} />}
@@ -228,7 +229,7 @@ function DetailPlace() {
             </SkeletonTheme>
           ) : (
             <ImageSlider images={detailPlace.data.detailPhotoList} />
-          )}
+         )} 
         </div>
         <LeftArrow className="detail-place-previous-page" onClick={moveToPrevPage} />
         <div className="detail-place-heart">
@@ -253,12 +254,14 @@ function DetailPlace() {
               state={{ reviews: detailPlaceRivews.data.readReviewDTOList }}
               key={detailPlace?.data.place.placeId}
             >
-              <span className="detail-place-info-reviews">★ {detailPlaceRivews.data.ratingAvg} 리뷰 {detailPlaceRivews?.data?.readReviewDTOList.length}개 &gt;</span>
+              <span className="detail-place-info-reviews">
+                ★ {detailPlaceRivews.data.ratingAvg} 리뷰 {detailPlaceRivews?.data?.readReviewDTOList.length}개 &gt;
+              </span>
             </Link>
           )}
           <div className="detail-place-info-facility">소형견,오션뷰,자연휴강,산책코스</div>
         </div>
-
+        {/* {detailPlace?.data.placeNoticeList && <div className="detail-place-delgo-note">Delgo 노트 보로가기</div>} */}
         <div className="detail-place-reservation-date-select" aria-hidden="true" onClick={calenderOpenClose}>
           <span>날짜선택</span>
           <span className="detail-place-reservation-date-select-calender">{dateString}&nbsp;&nbsp;&nbsp;&gt;</span>
@@ -320,13 +323,18 @@ function DetailPlace() {
             ))}
           </div>
         </div> */}
-        {
-          detailPlace?.data.placeNoticeList.map((notice: any) =>
-            <div className="detail-place-notice">
-              <div className="detail-place-notice-title">{notice.title}</div>
-              <div className="detail-place-notice-content">{notice.contents.map((content: any,index:number) => <div>{index+1}.{content}</div>)}</div>
-            </div>)
-        }
+        {detailPlace?.data.placeNoticeList.map((notice: any) => (
+          <div className="detail-place-notice">
+            <div className="detail-place-notice-title">{notice.title}</div>
+            <div className="detail-place-notice-content">
+              {notice.contents.map((content: string, index: number) => (
+                <div>
+                  {index + 1}.{content}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
         <div className="detail-place-map">
           <header className="detail-place-map-header">지도</header>
           {detailPlace?.data.place.address ? <Map address={detailPlace.data.place.address} /> : null}

@@ -64,7 +64,6 @@ function RoomTypePage() {
           roomId: room?.roomId,
           name: room?.name,
           price: room?.price,
-          petNum:room?.petStandardNum,
           personNum:room?.personStandardNum
         },
       }),
@@ -78,7 +77,7 @@ function RoomTypePage() {
   const handleReservation = () => {
     dispatch(
       reservationActions.reservation({
-        user: { id: user.id, nickname: user.nickname, email: user.email, phone: user.phone },
+        user: { id: user.id,  email: user.email, phone: user.phone },
         place: {
           placeId: currentPlace.placeId,
           name: currentPlace.name,
@@ -88,7 +87,6 @@ function RoomTypePage() {
           roomId: currentRoom.roomId,
           name: currentRoom.name,
           price: currentRoom.price,
-          petNum:currentRoom.petNum,
           personNum:currentRoom.personNum
         },
         date: {

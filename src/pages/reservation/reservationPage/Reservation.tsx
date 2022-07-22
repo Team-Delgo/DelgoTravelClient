@@ -1,54 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
 import { reservationActions } from '../../../redux/slice/reservationSlice';
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
-import RightArrow from '../../../icons/right-arrow.svg';
+import { ReactComponent as BottomArrow } from '../../../icons/bottom-arrow2.svg';
 import './Reservation.scss';
 import BottomButton from '../../../common/components/BottomButton';
+import { getCouponList } from '../../../common/api/coupon';
 import { TOSS } from '../../../constants/url.cosnt';
 
 function Reservation() {
-  const { user,room, place ,date} = useSelector((state: any) => state.persist.reservation);
+  const { user, room, place, date } = useSelector((state: any) => state.persist.reservation);
+  const [couponList, setCouponList] = useState<Array<any>>([]);
+  const [couponDropDownOpen, setCouponDropDownOpen] = useState(false);
+  const [selectedCouponId, setSelectedCouponId] = useState(0);
+  const [selectCouponDiscount,setSelectCouponDiscount] = useState(0)
   // const { date, dateString } = useSelector((state: any) => state.date);
   // const { currentPlace } = useSelector((state: any) => state.persist.currentPlace);
   // const { currentRoom } = useSelector((state: any) => state.persist.currentRoom);
   // const { user } = useSelector((state: any) => state.persist.user);
-  const [reservationName,setReservationName] = useState("")
+  const [reservationName, setReservationName] = useState('');
   const dispatch = useDispatch();
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    getCouponList(
+      user.id,
+      (response: AxiosResponse) => {
+        setCouponList(response.data.data);
+        console.log(response.data.data);
+      },
+      dispatch,
+    );
   }, []);
-
-  // const handleReservation = () => {
-  //   dispatch(
-  //     reservationActions.reservation({
-  //       user: { id: user.id, nickname: user.nickname, email: user.email, phone: user.phone },
-  //       place: {
-  //         placeId: place.placeId,
-  //         name: place.name,
-  //         address: place.address,
-  //       },
-  //       room: {
-  //         roomId: room.roomId,
-  //         name: room.name,
-  //         price: room.price,
-  //         petNum:room.petNum,
-  //         personNum:room.personNum
-  //       },
-  //       date: {
-  //         date:date.date,
-  //         dateString:date.dateString,
-  //         checkIn:place.checkIn.substring(0, 5),
-  //         checkOut:place.checkOut.substring(0, 5)
-  //       },
-  //     }),
-  //   );
-  // };
-
 
   const creditCardPayment = () => {
     dispatch(
@@ -63,20 +49,23 @@ function Reservation() {
           roomId: room.roomId,
           name: room.name,
           price: room.price,
-          petNum:room.petNum,
-          personNum:room.personNum
+          petNum: room.petNum,
+          personNum: room.personNum,
         },
         date: {
-          date:date.date,
-          dateString:date.dateString,
-          checkIn:date.checkIn.substring(0, 5),
-          checkOut:date.checkOut.substring(0, 5)
+          date: date.date,
+          dateString: date.dateString,
+          checkIn: date.checkIn.substring(0, 5),
+          checkOut: date.checkOut.substring(0, 5),
         },
+        coupon:{
+          couponId:selectedCouponId
+        }
       }),
     );
     loadTossPayments(TOSS.CLIENT_KEY).then((tossPayments) => {
       tossPayments.requestPayment('카드', {
-        amount: Number(room.price.slice(0, -1).replace(',', '')),
+        amount: Number(room.price.slice(0, -1).replace(',', ''))-selectCouponDiscount,
         orderId: 'AVw8mD2KHztN_646IGAZF',
         orderName: place.name + room.name,
         customerName: user.nickname,
@@ -86,58 +75,45 @@ function Reservation() {
     });
   };
 
-  // const BankTransfer = () => {
-  //   loadTossPayments(TOSS.CLIENT_KEY).then((tossPayments) => {
-  //     tossPayments.requestPayment('계좌이체', {
-  //       amount: Number(currentRoom.price.slice(0, -1).replace(',', '')),
-  //       orderId: 'AVw8mD2KHztN_646IGAZF',
-  //       orderName: currentPlace.name + currentRoom.name,
-  //       customerName: user.nickname,
-  //       successUrl: `${process.env.REACT_APP_BASE_URL}/reservation-confirm/${currentPlace.placeId}/${currentRoom.roomId}/${date.date.start}/${date.date.end}`,
-  //       failUrl: `${process.env.REACT_APP_BASE_URL}/reservation/${currentPlace.placeId}/${currentRoom.roomId}/${date.start}/${date.end}`,
-  //     });
-  //   });
-  // };
-
-  const config = {
-    next_redirect_pc_url: '',
-    tid: '',
-    params: {
-      cid: 'TC0ONETIME',
-      partner_order_id: 'partner_order_id',
-      partner_user_id: 'partner_user_id',
-      item_name: '동대문엽기떡볶이',
-      quantity: 1,
-      total_amount: 22000,
-      vat_amount: 0,
-      tax_free_amount: 0,
-      approval_url: 'http://localhost:3000',
-      fail_url: 'http://localhost:3000',
-      cancel_url: 'http://localhost:3000',
-    },
+  const handleReservationName = (e: any) => {
+    console.log(e.target.value);
+    setReservationName(e.target.value);
   };
 
-  const APP_ADMIN_KEY = '280b4b1856b2e89cb30fa6706dd06751';
+  const existCoupon = couponList.map((coupon) => {
+    const priceString = coupon.discountNum.toString();
+    const price = `${priceString.slice(0, priceString.length - 3)},${priceString.slice(priceString.length - 3)}`;
+    const registDate = `${coupon.registDt.slice(0, 4)}.${coupon.registDt.slice(5, 7)}.${coupon.registDt.slice(8, 10)}`;
+    const expireDate = `${coupon.expireDt.slice(0, 4)}.${coupon.expireDt.slice(5, 7)}.${coupon.expireDt.slice(8, 10)}`;
 
-  const postKakaopay = async () => {
-    const data = await axios.post('/api/v1/payment/ready', config, {
-      headers: {
-        Authorization: `KakaoAK ${APP_ADMIN_KEY}`,
-        'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
-      },
-    });
+    return (
+      <div
+        className="coupon-header"
+        aria-hidden="true"
+        onClick={() => selectCoupon(coupon.couponId,  coupon.discountNum)}
+      >
+        [Delgo 가요] {price}원 할인쿠폰
+      </div>
+    );
+  });
+
+  const handleCouponDropDown = () => {
+    setSelectedCouponId(0)
+    setSelectCouponDiscount(0);
+    setCouponDropDownOpen(!couponDropDownOpen);
   };
 
-  const handleReservationName = (e:any)=>{
-    console.log(e.target.value)
-    setReservationName(e.target.value)
-  }
+  const selectCoupon = (couponId: number, discountNum: number) => {
+    setSelectedCouponId(couponId)
+    setCouponDropDownOpen(false);
+    setSelectCouponDiscount(discountNum);
+  };
 
   return (
     <>
       <div className="reservationPage">
         <div className="header">
-        <Link to={`/detail-place/${place.placeId}/${room.roomId}`} key={place.placeId} state={{ room, place }}>
+          <Link to={`/detail-place/${place.placeId}/${room.roomId}`} key={place.placeId} state={{ room, place }}>
             <Exit className="exit-button" />
           </Link>
           <h1 className="header-title">예약</h1>
@@ -156,9 +132,7 @@ function Reservation() {
               {date.date.start.substring(2, 4)}.{date.date.start.substring(4, 6)}.{date.date.start.substring(6, 8)}{' '}
               {date.dateString.substring(5, 8)}
             </span>
-            <span className="check-date">
-              {date.checkIn}
-            </span>
+            <span className="check-date">{date.checkIn}</span>
           </div>
           <div className="checkin-checkout-date">
             <span className="check-title">체크아웃</span>
@@ -166,27 +140,22 @@ function Reservation() {
               {date.date.end.substring(2, 4)}.{date.date.end.substring(4, 6)}.{date.date.end.substring(6, 8)}{' '}
               {date.dateString.substring(16, 19)}
             </span>
-            <span className="check-date">
-              {date.checkOut}
-            </span>
+            <span className="check-date">{date.checkOut}</span>
           </div>
         </div>
+        {/* <div className="reservation-devide" /> */}
         <h2 className="reservation-title first">예약자정보</h2>
         <div className="reservation-user-info">
           <div className="reservation-label">예약자 이름</div>
-            <input className="reservation-user-info-name" type="text" onChange={handleReservationName} />
+          <input className="reservation-user-info-name" type="text" onChange={handleReservationName} />
         </div>
         <div className="reservation-user-info">
           <div className="reservation-label">핸드폰 번호</div>
-          <div className="reservation-user-info-phone">
-          {user.phone}
-          </div>
+          <div className="reservation-user-info-phone">{user.phone}</div>
         </div>
         <div className="reservation-user-info">
           <div className="reservation-label">예약 인원 </div>
-          <div className="reservation-user-info-phone">
-            기준 {room.personNum}명 
-          </div>
+          <div className="reservation-user-info-phone">기준 {room.personNum}명</div>
         </div>
         <div className="reservation-devide" />
         <h2 className="reservation-title second">할인정보</h2>
@@ -205,26 +174,45 @@ function Reservation() {
         </div> */}
         <div className="coupon-sale">
           <div className="reservation-label">쿠폰 사용</div>
-          <div className="coupon-sale-amount">0원</div>
+          <div className="coupon-sale-amount">{selectCouponDiscount === 0 ? <>0원</> : <>{selectCouponDiscount.toLocaleString()}원</>}</div>
         </div>
+        {couponDropDownOpen === false ? (
+          <div className="coupon-drop-down" aria-hidden="true" onClick={handleCouponDropDown}>
+            {selectCouponDiscount === 0 ? (
+              <>
+                보유한 쿠폰 {couponList.length}장 <BottomArrow className="coupon-bottom-arrow" />
+              </>
+            ) : (
+              <>[Delgo 가요]{selectCouponDiscount.toLocaleString()}원 할인쿠폰 </>
+            )}
+          </div>
+        ) : (
+          <div className="coupon-drop-down-full">
+            <div className="coupon-header" aria-hidden="true" onClick={handleCouponDropDown}>
+              보유한 쿠폰 {couponList.length}장 <BottomArrow className="coupon-bottom-arrow" />
+            </div>
+            {existCoupon}
+          </div>
+        )}
+        {/* <div className="coupon-drop-down" aria-hidden="true" onClick={handleCouponDropDown}>
+          보유한 쿠폰 {couponList.length}장 <BottomArrow className="coupon-bottom-arrow" />
+        </div>
+        <div className="coupon-drop-down-full">
+          <div className="coupon-header" aria-hidden="true" onClick={handleCouponDropDown}>
+            보유한 쿠폰 {couponList.length}장 <BottomArrow className="coupon-bottom-arrow" />
+          </div>
+          {existCoupon}
+        </div> */}
         <div className="reservation-devide" />
         <div className="finalprice">
           <div className="reservation-label">결제 금액</div>
-          <div className="finalprice-price">{room.price}</div>
+          <div className="finalprice-price">
+            {(Number(room.price.slice(0, -1).replace(',', ''))-selectCouponDiscount).toLocaleString()}원
+          </div>
         </div>
-        {/* <div className="reservation-label">결제 수단</div> */}
-        {/* <div className="payment-method">
-          <div className="payment-method-item" aria-hidden="true" onClick={creditCardPayment}>
-            신용카드
-          </div>
-          <div className="payment-method-item">카카오페이</div>
-          <div className="payment-method-item" aria-hidden="true" onClick={BankTransfer}>
-            토스
-          </div>
-        </div> */}
       </div>
       <div aria-hidden="true" onClick={creditCardPayment}>
-      <BottomButton text={`${room.price} 결제하기`}/>
+        <BottomButton text={`${(Number(room.price.slice(0, -1).replace(',', ''))-selectCouponDiscount).toLocaleString()}원 결제하기`} />
       </div>
     </>
   );

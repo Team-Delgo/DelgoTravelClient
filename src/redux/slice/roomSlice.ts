@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  currentRoom: { roomId: 0, name: '', price: 0, petNum: 0, personNum: 0 },
+  currentRoom: { roomId: 0, name: '', price: 0, personNum: 0 },
 };
 
 const roomSlice = createSlice({
@@ -21,7 +21,6 @@ const roomSlice = createSlice({
         currentRoom: {
           roomId: state.currentRoom.roomId,
           name: state.currentRoom.name,
-          petNum: state.currentRoom.petNum,
           personNum: state.currentRoom.personNum,
           price:action.payload,
         }

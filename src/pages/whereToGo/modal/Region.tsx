@@ -16,7 +16,7 @@ interface PropsType{
 
 const regions = [
   { id: 0, name: '강원' },
-  { id: 1, name: '서울/경기' },
+  { id: 1, name: '경기' },
   { id: 2, name: '제주' },
   { id: 3, name: '경상' },
   { id: 4, name: '전라' },
