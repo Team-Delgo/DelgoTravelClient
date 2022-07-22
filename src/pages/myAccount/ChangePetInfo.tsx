@@ -120,9 +120,9 @@ function ChangePetInfo() {
   };
 
   const chagneBirthHandler = (year: number, month: number, day: number) => {
-    const birthday = `${year}.${`0${month}`.slice(-2)}.${`0${day}`.slice(-2)}`;
+    const birthday = `${year}-${`0${month}`.slice(-2)}-${`0${day}`.slice(-2)}`;
     setEnteredInput((prev: Input) => {
-      return { ...prev, birthday};
+      return { ...prev, birthday };
     });
     setIsValid((prev: IsValid) => {
       return { ...prev, birth: true };
@@ -252,7 +252,7 @@ function ChangePetInfo() {
             onChange={typeChangeHandler}
           />
           <span className="dogtype-button">
-            <img className={classNames("checkbox-icon",{invisible:modalActive})} src={Check} alt="check" />
+            <img className={classNames("checkbox-icon", { invisible: modalActive })} src={Check} alt="check" />
           </span>
           소형견
         </label>
@@ -266,7 +266,7 @@ function ChangePetInfo() {
             onChange={typeChangeHandler}
           />
           <span className="dogtype-button">
-            <img className={classNames("checkbox-icon",{invisible:modalActive})} src={Check} alt="check" />
+            <img className={classNames("checkbox-icon", { invisible: modalActive })} src={Check} alt="check" />
           </span>
           중형견
         </label>
@@ -280,7 +280,7 @@ function ChangePetInfo() {
             onChange={typeChangeHandler}
           />
           <span className="dogtype-button">
-            <img className={classNames("checkbox-icon",{invisible:modalActive})} src={Check} alt="check" />
+            <img className={classNames("checkbox-icon", { invisible: modalActive })} src={Check} alt="check" />
           </span>
           대형견
         </label>

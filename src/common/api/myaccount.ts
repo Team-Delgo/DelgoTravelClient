@@ -70,4 +70,18 @@ async function getReviewList(data: { userId: number }, success: (data: AxiosResp
     });
 }
 
-export { registCoupon, myAccount, changePetInfo, getReviewList };
+async function changePassword(email: string, password: string, success: (data: AxiosResponse) => void, dispatch: any) {
+  await axios
+    .post(`${url}changePassword`, {
+      email,
+      newPassword: password,
+    })
+    .then((data) => {
+      success(data);
+    })
+    .catch((error) => {
+      useErrorHandlers(dispatch, error);
+    });
+}
+
+export { registCoupon, myAccount, changePetInfo, getReviewList, changePassword };

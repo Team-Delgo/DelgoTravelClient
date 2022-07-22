@@ -48,10 +48,12 @@ function MyAccount() {
     myAccount(
       data,
       (response: AxiosResponse) => {
-        const { data } = response.data;
-        setItems((prev) => {
-          return { ...prev, coupons: data.couponNum, reviews: data.reviewNum };
-        });
+        const { code, data } = response.data;
+        if (code === 200) {
+          setItems((prev) => {
+            return { ...prev, coupons: data.couponNum, reviews: data.reviewNum };
+          });
+        }
       },
       dispatch,
     );
@@ -65,7 +67,7 @@ function MyAccount() {
 
   const deleteHandler = () => {
     deleteUser(
-      email,
+      userId,
       (response: AxiosResponse) => {
         console.log(response);
       },
@@ -194,6 +196,9 @@ function MyAccount() {
         <p className="account-item-p">카카오 플러스친구로 이동</p>
       </div>
       <div className="account-sign">
+        <p className="account-out" aria-hidden="true" onClick={deleteUserModalOpen}>
+          회원탈퇴
+        </p>
         <p className="account-out" aria-hidden="true" onClick={logOutModalOpen}>
           로그아웃
         </p>

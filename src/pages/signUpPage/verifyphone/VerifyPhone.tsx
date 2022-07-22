@@ -115,7 +115,7 @@ function VerifyPhone() {
     phoneSendMessage(
       phone,
       (response: AxiosResponse) => {
-        const { code,data } = response.data;
+        const { code, data } = response.data;
 
         if (code === 200) {
           setSMSid(data);
@@ -181,6 +181,7 @@ function VerifyPhone() {
           className={classNames("login-input phonenumber", { invalid: phoneIsExist })}
           placeholder="휴대폰 번호"
           autoComplete="off"
+          type="number"
           ref={phoneRef}
         />
         <p className={classNames('input-feedback')}>
@@ -204,6 +205,7 @@ function VerifyPhone() {
             className={classNames("login-input authnumber", { invalid: feedback.length })}
             placeholder="인증번호 4자리"
             autoComplete="off"
+            type="number"
             ref={authRef}
           />
           <span className="login-timer">

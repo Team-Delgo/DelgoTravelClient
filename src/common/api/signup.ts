@@ -49,13 +49,9 @@ async function signup(info: SignUpData, success: (data: AxiosResponse) => void, 
     });
 }
 
-async function deleteUser(email: string, success: (data: AxiosResponse) => void, dispatch: any) {
+async function deleteUser(userId: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .post(`${url}deleteUser`, {
-      user: {
-        email,
-      },
-    })
+    .post(`${url}deleteUser/${userId}`)
     .then((data) => {
       success(data);
     })

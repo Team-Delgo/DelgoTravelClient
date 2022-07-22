@@ -103,11 +103,11 @@ function UserInfo() {
       if (!check.isValid) {
         console.log('aa');
         setValidInput((prev: Input) => {
-          return { ...prev, password: '' };
+          return { ...prev, confirm: '' };
         });
       } else {
         setValidInput((prev: Input) => {
-          return { ...prev, password: value };
+          return { ...prev, confirm: value };
         });
       }
     }

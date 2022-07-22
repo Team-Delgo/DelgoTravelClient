@@ -53,6 +53,7 @@ import ReservationConfirmPageMore from './pages/reservation/reservationConfirmPa
 import ChangeUserInfo from './pages/myAccount/ChangeUserInfo';
 import ReservationHistoryPage from './pages/reservation/reservationHistory/ReservationHistoryPage';
 import ChangePasswordCheck from './pages/myAccount/ChangePasswordCheck';
+import ChangePassword from './pages/myAccount/ChangePassword';
 
 
 function App() {
@@ -92,6 +93,7 @@ function App() {
         <Route path={MY_ACCOUNT_PATH.USERINFO} element={<ChangeUserInfo />} />
         <Route path={MY_ACCOUNT_PATH.REVIEWS} element={<ReviewList />} />
         <Route path={MY_ACCOUNT_PATH.PASSWORDCHECK} element={<ChangePasswordCheck />} />
+        <Route path={MY_ACCOUNT_PATH.PASSWORDCHANGE} element={<ChangePassword />} />
         <Route path={DETAIL_PLACE_PATH.MAIN} element={<DetailPlace />} />
         <Route path={DETAIL_PLACE_PATH.REVIEWS} element={<ReviewsPage />} />
         <Route path={DETAIL_PLACE_PATH.ROOMTYPES} element={<RoomTypePage />} />

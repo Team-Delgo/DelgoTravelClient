@@ -12,6 +12,7 @@
   &-input {
     width: 87vw;
     height: 50px;
+    min-height: 50px;
     background-color: white;
     border-radius: 7px;
     margin-top: 5px;
@@ -19,7 +20,7 @@
     text-indent: 22px;
     color: #3e382f;
     font-size: 16px;
-    &.password{
+    &.password {
       font-size: 25px;
     }
     font-weight: 500;
