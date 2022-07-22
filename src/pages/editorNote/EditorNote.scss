@@ -1,41 +1,17 @@
-.editor-img{
-    width: 100%;
-}
 .editor-background{
-    width: 100%;
-    height: 100%;
-    background: #F3EFEA;
-    padding-bottom: 50px;
+    .editor-img{
+        // position: absolute;
+        // top:0; 
+        // left: 0;
+        width: 100%;
+        // height: 100%;
+        // z-index: 0;
+        // background-color: red;
+    }
     .editor-previous-page{
-        margin: 50px 0 0 20px;
-    }
-    .editor-sub-text{
-        padding: 20% 0 4% 4%;
-        font-weight: 500;
-        font-size: 13.5px;
-        line-height: 12px;
-        letter-spacing: -0.03em;
-        color: #3E382F;
-    }
-    .editor-header-text{
-        padding: 0 0 10% 3%;
-        font-weight: 700;
-        font-size: 30px;
-        line-height: 12px;
-        letter-spacing: -0.03em;
-        color: #3E382F;
-    }
-    .editor-place{
-        position: relative;
-        img{
-            width: 100%;
-            height: 324px;
-        }
-        &-description{
-            padding: 5% 6% 25% 5%;
-            font-weight: 300;
-            font-size: 5vw;
-            color: #3E382F;
-        }
+        position: absolute;
+        top:5px;
+        margin: 50px 0 0 25px;
+        z-index: 1;
     }
 }

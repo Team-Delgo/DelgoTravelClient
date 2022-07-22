@@ -39,9 +39,6 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
   const wishListInsert = useCallback(() => {
     wishInsert({ userId, placeId: place.placeId, accessToken }, (response: AxiosResponse) => {
       if (response.data.code === 200) {
-        // const updatePlace = { ...place, wishId: response.data.data.wishId };
-        // const updatePlaces = places.map((p) => (p.placeId === updatePlace.placeId ? { ...p, ...updatePlace } : p));
-        // setPlaces(updatePlaces);
         setWishList(response.data.data.wishId);
       }
     }, dispatch);
@@ -52,9 +49,6 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
       { wishId: wishList, accessToken },
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
-          // const updatePlace = { ...place, wishId: 0 };
-          // const updatePlaces = places.map((p) => (p.placeId === updatePlace.placeId ? { ...p, ...updatePlace } : p));
-          // setPlaces(updatePlaces);
           setWishList(0);
         }
       },

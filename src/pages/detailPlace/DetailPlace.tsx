@@ -22,6 +22,7 @@ import './DetailPlace.scss';
 import Calender from '../../common/utils/Calender';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 
+
 interface RivewType {
   placeName: string
   profileUrl: string
@@ -90,8 +91,9 @@ function DetailPlace() {
   const detailPlacePrevPath = useSelector((state: any) => state.persist.prevPath.detailPlace);
   const startDt =`${date.start.substring(0,4)}-${date.start.substring(4,6)}-${date.start.substring(6,10)}`
   const endDt = `${date.end.substring(0,4)}-${date.end.substring(4,6)}-${date.end.substring(6,10)}`
+  
 
-  const {
+  const { 
     isLoading: getDetailPlaceIsLoading,
     data: detailPlace,
     refetch,
@@ -119,6 +121,7 @@ function DetailPlace() {
 
 
   useEffect(() => {
+    console.log(detailPlace?.data.isEditorNoteExist)
     if (location.state?.prevPath.includes('/detail-place')) {
       window.scroll(0, detailPlaceScrollY);
     }
@@ -229,7 +232,7 @@ function DetailPlace() {
             </SkeletonTheme>
           ) : (
             <ImageSlider images={detailPlace.data.detailPhotoList} />
-         )} 
+          )}
         </div>
         <LeftArrow className="detail-place-previous-page" onClick={moveToPrevPage} />
         <div className="detail-place-heart">
@@ -259,9 +262,18 @@ function DetailPlace() {
               </span>
             </Link>
           )}
-          <div className="detail-place-info-facility">소형견,오션뷰,자연휴강,산책코스</div>
+          <div className="detail-place-info-facility">{detailPlace?.data.place.conceptTag}</div>
         </div>
-        {/* {detailPlace?.data.placeNoticeList && <div className="detail-place-delgo-note">Delgo 노트 보로가기</div>} */}
+        {detailPlace?.data.isEditorNoteExist === true ? (
+          <Link
+            className="editor-thumbnail"
+            to={`/editor-note/${detailPlace?.data.place.placeId}`}
+            state={{ placeId: detailPlace?.data.place.placeId }}
+            key={detailPlace?.data.place.placeId}
+          >
+            <div className="detail-place-delgo-note">Delgo 노트 보로가기</div>
+          </Link>
+        ) : null}
         <div className="detail-place-reservation-date-select" aria-hidden="true" onClick={calenderOpenClose}>
           <span>날짜선택</span>
           <span className="detail-place-reservation-date-select-calender">{dateString}&nbsp;&nbsp;&nbsp;&gt;</span>
