@@ -1,5 +1,10 @@
-.login-timer{
-  &.reset{
+.login-timer {
+  &.reset {
     top: 40%;
   }
+}
+.findauthnum {
+  font-weight: 500;
+  font-size: 18px;
+  color: #3e382f;
 }

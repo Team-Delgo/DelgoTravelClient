@@ -9,6 +9,7 @@ export const MY_ACCOUNT_PATH = {
   PETINFO: '/user/myaccount/petinfo',
   REVIEWS: '/user/myaccount/reviews',
   USERINFO: '/user/myaccount/userinfo',
+  PASSWORDCHECK: '/user/myaccount/userinfo/check',
 };
 export const SIGN_IN_PATH = {
   MAIN: '/user/signin',
