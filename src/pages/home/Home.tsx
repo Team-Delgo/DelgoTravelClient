@@ -9,17 +9,16 @@ import RecommendedPlaces from './recommenedPlaces/RecommendedPlaces';
 import { tokenActions } from '../../redux/slice/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
 import { bookingGetDataByMain } from '../../common/api/booking';
-import { getRecommendedPlace } from '../../common/api/getPlaces';
+import { getRecommendedPlace , getEditorNotePlacesAll } from '../../common/api/getPlaces';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import './Home.scss';
 import HomeReservation from './HomeReservation';
 import Delgo from '../../icons/delgo.svg';
 
 interface EditorPlaceType {
-  id: number;
-  image: string;
-  subtext: string;
-  name: string;
+  mainUrl: string
+  placeId: number
+  thumbnailUrl:string
 }
 
 interface RecommendedPlaceType {
@@ -37,20 +36,6 @@ interface RecommendedPlaceType {
 function Home() {
   const [page, setPage] = useState(0);
   const [dday, setDday] = useState('0');
-  const [editorPlaces, setEditorPlaces] = useState<Array<EditorPlaceType>>([
-    {
-      id: 1,
-      image: `${process.env.PUBLIC_URL}/assets/images/editorThumnail.png`,
-      subtext: '바다가 보이는 여름숙소',
-      name: '숙초 코코네집',
-    },
-    {
-      id: 2,
-      image: `${process.env.PUBLIC_URL}/assets/images/editorThumnail.png`,
-      subtext: '바다가 보이는 여름숙소',
-      name: '숙초 코코네집',
-    },
-  ]);
   const navigation = useNavigate();
   const dispatch = useDispatch();
   // const refreshToken = localStorage.getItem('refreshToken') || '';
@@ -60,23 +45,44 @@ function Home() {
   const location: any = useLocation();
   const { homeY } = useSelector((state: any) => state.persist.scroll);
 
-  const { isLoading: getRecommendedPlacesIsLoading, data: recommendedPlaces } = useQuery('getRecommendedPlaces', () => getRecommendedPlace(userId), {
-    cacheTime: 1000 * 60 * 5,
-    staleTime: 1000 * 60 * 3,
-    refetchInterval: false,
-    onError: (error: any) => {
-      useErrorHandlers(dispatch, error);
+  const { isLoading: getRecommendedPlacesIsLoading, data: recommendedPlaces } = useQuery(
+    'getRecommendedPlaces',
+    () => getRecommendedPlace(userId),
+    {
+      cacheTime: 1000 * 60 * 5,
+      staleTime: 1000 * 60 * 3,
+      refetchInterval: false,
+      onError: (error: any) => {
+        useErrorHandlers(dispatch, error);
+      },
     },
-  });
+  );
 
-  const { isLoading: getBookingDataIsLoading, data: reservationPlaces } = useQuery('bookingGetDataByMain', () => bookingGetDataByMain(accessToken, userId), {
-    cacheTime: 1000 * 60 * 5,
-    staleTime: 1000 * 60 * 3,
-    refetchInterval: false,
-    onError: (error: any) => {
-      useErrorHandlers(dispatch, error);
+  const { isLoading: getBookingDataIsLoading, data: reservationPlaces } = useQuery(
+    'bookingGetDataByMain',
+    () => bookingGetDataByMain(accessToken, userId),
+    {
+      cacheTime: 1000 * 60 * 5,
+      staleTime: 1000 * 60 * 3,
+      refetchInterval: false,
+      onError: (error: any) => {
+        useErrorHandlers(dispatch, error);
+      },
     },
-  });
+  );
+
+  const { isLoading: getEditorNotePlacesIsLoading, data: editorNotePlaces } = useQuery(
+    'getEditorNotePlacesAll',
+    () => getEditorNotePlacesAll(),
+    {
+      cacheTime: 1000 * 60 * 5,
+      staleTime: 1000 * 60 * 3,
+      refetchInterval: false,
+      onError: (error: any) => {
+        useErrorHandlers(dispatch, error);
+      },
+    },
+  );
 
 
   useEffect(() => {
@@ -85,7 +91,7 @@ function Home() {
     } else {
       window.scrollTo(0, 0);
     }
-  }, [reservationPlaces, recommendedPlaces]);
+  }, [reservationPlaces, recommendedPlaces,editorNotePlaces]);
 
   const getDday = () => {
     const startDate = new Date(reservationPlaces?.data[page].startDt);
@@ -133,6 +139,10 @@ function Home() {
     return <div className="home-background">&nbsp;</div>;
   }
 
+  if (getEditorNotePlacesIsLoading) {
+    return <div className="home-background">&nbsp;</div>;
+  }
+
   return (
     <>
       <div className="home-background">
@@ -154,13 +164,9 @@ function Home() {
         )}
         <div className="main-header-text">델고 에디터노트</div>
         <div className="editor-container">
-          {editorPlaces.map((place) => (
-            <Link to={`/editor-note/${place.id}`} key={place.id}>
-              <div className="editor-thumbnail" key={place.id}>
-                <img src={place.image} alt="editor-thumnail-img" />
-                <div className="editor-thumbnail-subtext">{place.subtext}</div>
-                <div className="editor-thumbnail-name">{place.name}</div>
-              </div>
+          {editorNotePlaces.data.map((place: EditorPlaceType) => (
+            <Link className="editor-thumbnail" to={`/editor-note/${place.placeId}`} state={{placeId:place.placeId}} key={place.placeId}>
+              <img src={place.thumbnailUrl} alt="editor-thumnail-img" />
             </Link>
           ))}
         </div>

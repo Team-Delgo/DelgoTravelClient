@@ -43,7 +43,7 @@
       color: #6e614d;
     }
     &-facility {
-      padding: 10px 0 70px 0;
+      padding: 10px 0 60px 0;
       font-size: 14px;
       color:  #3E382F;
       font-weight: 500;
@@ -62,7 +62,6 @@
     font-size: 14px;
     border: 1px solid #C4C4C4;
     margin:auto;
-    // margin-top: 20px;
     margin-bottom: 30px;
   }
   &-reservation-date-select {
@@ -134,6 +133,9 @@
       font-weight: bold;
     }
   }
+}
+.editor-thumbnail{
+  color: #3e382f;
 }
 .room-type-skeleton{
   margin: 0 5% 12% 5%;

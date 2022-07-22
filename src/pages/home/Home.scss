@@ -54,12 +54,13 @@
   .editor-container {
     display: flex;
     overflow-x: scroll;
+    padding-right: 5%;
     .editor-thumbnail {
-      position: relative;
+      margin-left: 5%;
       img {
         width: 75vw;
+        height: 324px;
         border-radius: 5px;
-        padding-left: 2.5%;
       }
       &-subtext {
         position: absolute;

@@ -63,26 +63,6 @@ function ReservationHistoryPage() {
     }
   }, []);
 
-  const moveToMainPage = useCallback(() => {
-    setTimeout(() => {
-      navigate('/');
-      dispatch(
-        reservationActions.reservationInit()
-      );
-    }, 100);
-  }, []);
-
-  const moveToMyStoragePage = useCallback(() => {
-    navigate('/my-storage', {
-      state: {
-        prevPath: location.pathname,
-        tab: 1,
-      },
-    });
-  }, []);
-
-
-
   const copyPlaceAddress = useCallback(() => {
       navigator.clipboard.writeText(reservationData.place.address);
     }, [reservationData]);

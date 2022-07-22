@@ -30,4 +30,16 @@ async function getRecommendedPlace(userId:number) {
   );
 };
 
-export { getAllPlaces,getWishedPlaces, getDetailPlace,getRecommendedPlace };
+async function getEditorNotePlacesAll() {
+  return fetch(`${url}place/getEditorNote/all`).then((response) =>
+    response.json()
+  );
+};
+
+async function getEditorNotePlace(placeId:number) {
+  return fetch(`${url}place/getEditorNote/place?placeId=${placeId}`).then((response) =>
+    response.json()
+  );
+};
+
+export { getAllPlaces,getWishedPlaces, getDetailPlace,getRecommendedPlace,getEditorNotePlacesAll ,getEditorNotePlace};

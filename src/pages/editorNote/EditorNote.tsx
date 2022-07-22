@@ -1,51 +1,60 @@
 import React ,{useCallback ,useEffect}from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate ,useLocation ,useParams } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg'
 import BottomButton from '../../common/components/BottomButton';
+import { getEditorNotePlace } from '../../common/api/getPlaces';
+import { useErrorHandlers } from '../../common/api/useErrorHandlers';
+import {prevPathActions} from "../../redux/slice/prevPathSlice"
 import "./EditorNote.scss";
 
 function EditorNote() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const posts = [
-    {
-      image: `${process.env.PUBLIC_URL}/assets/images/editorImage.png`,
-      description:
-        'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enimvelit mollit. Exercitation veniam consequat sunt nostrud amet.',
-    },
-    {
-      image: `${process.env.PUBLIC_URL}/assets/images/editorImage.png`,
-      description:
-        'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enimvelit mollit. Exercitation veniam consequat sunt nostrud amet.',
-    },
-    {
-      image: `${process.env.PUBLIC_URL}/assets/images/editorImage.png`,
-      description:
-        'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enimvelit mollit. Exercitation veniam consequat sunt nostrud amet.',
-    },
-  ];
+  const location: any = useLocation();
+  const { placeId } = location.state;
 
   useEffect(() => {
-      window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
   }, []);
 
-  const moveToPreviousPage = useCallback(() => {
-    navigate(-1)
+  const { isLoading: getEditorNotePlaceIsLoading, data: editorNotePlace } = useQuery(
+    'getEditorNotePlace',
+    () => getEditorNotePlace(placeId),
+    {
+      cacheTime: 1000 * 60 * 5,
+      staleTime: 1000 * 60 * 3,
+      refetchInterval: false,
+      onError: (error: any) => {
+        useErrorHandlers(dispatch, error);
+      },
+    },
+  );
+
+  const moveToMainPage = useCallback(() => {
+    navigate("/");
   }, []);
+
+  const moveToDetailPage = () => {
+    dispatch(prevPathActions.prevPath({ prevPath: location.pathname }));
+    navigate(`/detail-place/${placeId}`);
+  };
+
+  if (getEditorNotePlaceIsLoading) {
+    return <div className="editor-background">&nbsp;</div>;
+  }
 
   return (
-    <img className="editor-img" src="https://kr.object.ncloudstorage.com/delgo-pet-profile/%EB%B0%B8%EB%9F%B0%EC%8A%A4%EB%8F%85.png" alt="editor-place-img" />
-    // <div className="editor-background">
-    //   <LeftArrow className="editor-previous-page" onClick={moveToPreviousPage} />
-    //   <div className="editor-sub-text">바다가 보이는 여름숙소</div>
-    //   <div className="editor-header-text">속초 코코네집</div>
-    //   {/* {posts.map((post) => (
-    //     <div className="editor-place">
-    //       <img src="https://kr.object.ncloudstorage.com/delgo-pet-profile/%EB%B0%B8%EB%9F%B0%EC%8A%A4%EB%8F%85.png" alt="editor-place-img" />
-    //       <div className="editor-place-description">{post.description}</div>
-    //     </div>
-    //   ))} */}
-    //   <BottomButton text="자세히 보러가기" />
-    // </div>
+    <div className="editor-background">
+      <img className="editor-img" src={editorNotePlace.data.mainUrl} alt="editor-place-img" />
+      <div className="editor-previous-page">
+        <LeftArrow onClick={moveToMainPage} />
+      </div>
+      <div aria-hidden="true" onClick={moveToDetailPage}>
+        <BottomButton text="자세히 보러가기" />
+      </div>
+    </div>
   );
 }
 
