@@ -67,7 +67,7 @@ function ReservationConfirmPage() {
 
   const moveToPrevPage = useCallback(() => {
     setTimeout(() => {
-      navigate(-1);
+      navigate('/');
       dispatch(
         reservationActions.reservationInit()
       );

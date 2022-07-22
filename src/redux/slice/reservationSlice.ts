@@ -13,6 +13,7 @@ const initialState = {
     checkIn: '',
     checkOut: '',
   },
+  coupon:{couponId:0}
 };
 
 const reservationSlice = createSlice({
@@ -25,6 +26,7 @@ const reservationSlice = createSlice({
         place: action.payload.place,
         room: action.payload.room,
         date: action.payload.date,
+        coupon:action.payload.coupon
       };
     },
     reservationInit() {

@@ -48,7 +48,6 @@ async function bookingGetData(
   dispatch: any,
 ) {
   try {
-    console.log(1)
     const result = await axios.get(`${url}booking/getData?bookingId=${data.bookingId}`,{
       headers: {
         Authorization_Access: `${data.accessToken}`,

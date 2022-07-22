@@ -11,7 +11,7 @@ import './ReservationWaitingPage.scss';
 
 function ReservationWaitingPage() {
   // const {user} = useSelector((state: any) => state.persist.user);
-  const { room, place,date,user } = useSelector((state: any) => state.persist.reservation);
+  const { room, place,date,user,coupon } = useSelector((state: any) => state.persist.reservation);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const urlStr = window.location.href
@@ -28,7 +28,7 @@ function ReservationWaitingPage() {
         userId: user.id,
         placeId: place.placeId,
         roomId: room.roomId,
-        couponId: 0,
+        couponId: coupon.couponId,
         reservedName: user.nickname,
         point: 0,
         startDt: date.date.start,
