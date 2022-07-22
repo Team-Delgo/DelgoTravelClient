@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { useDispatch } from 'react-redux';
@@ -20,9 +20,12 @@ function PhoneAuth() {
   const dispatch = useDispatch();
   const [timeIsValid, setTimeIsValid] = useState(true);
   const [SMSid, setSMSid] = useState<number>(0);
+  const [feedback, setFeedback] = useState('');
   const [isReSended, setIsReSended] = useState(false);
   const [buttonIsClicked, setButtonIsClicked] = useState(true);
   const [authNumber, setAuthNumber] = useState('');
+  const [authFailed, setAuthFailed] = useState(false);
+  const authRef = useRef<any>();
   const state = useLocation().state as LocationState;
   const { phone, email } = state;
   const authIsValid = timeIsValid && authNumber.length === 4;
@@ -60,7 +63,9 @@ function PhoneAuth() {
   };
 
   const inputChangeHannler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (authNumber.length === 4 && e.target.value.length > 4) return;
     setAuthNumber(e.target.value);
+    setFeedback('');
   };
 
   const submitAuthNumber = () => {
@@ -69,6 +74,10 @@ function PhoneAuth() {
       console.log(response);
       if (code === 200) {
         navigation(SIGN_IN_PATH.RESETPASSWORD, { state: email });
+      } else {
+        setFeedback('인증번호를 확인해주세요');
+        setAuthFailed(true);
+        authRef.current.focus();
       }
     }, errorHandler);
   };
@@ -85,10 +94,11 @@ function PhoneAuth() {
         인증번호를 입력해주세요.
       </div>
       <div className="login-input-box">
-        <input className="login-input" placeholder="인증번호" value={authNumber} autoComplete="off" onChange={inputChangeHannler} />
+        <input type="number" ref={authRef} className={classNames("login-input findauthnum", { invalid: feedback.length })} placeholder="인증번호" value={authNumber} autoComplete="off" onChange={inputChangeHannler} />
         <span className="login-timer reset">
           <Timer isResend={isReSended} resendfunc={resetIsResend} setInValid={() => setTimeIsValid(false)} />
         </span>
+        <p className="input-feedback">{feedback}</p>
         <p aria-hidden="true" className="login-authnumber-resend" onClick={authNumberResend}>
           인증번호 재전송
         </p>

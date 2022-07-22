@@ -1,94 +1,95 @@
-.userinfo{
+.userinfo {
   height: 100vh;
   padding: 0 20px;
   background-color: white;
   color: #3e382f;
 
-  &-header{
+  &-header {
     position: relative;
-    padding-top: 54px;;
+    padding-top: 54px;
     text-align: center;
     font-weight: 500;
     font-size: 18px;
-    &-back{
+    &-back {
       position: absolute;
       left: 0;
     }
   }
-  &-user{
+  &-user {
     margin-top: 34px;
     font-weight: 700;
     font-size: 16px;
     line-height: 24px;
   }
-  &-nickname{
+  &-nickname {
     margin-top: 30px;
     display: flex;
     font-weight: 500;
     font-size: 16px;
     align-items: center;
-    &-label{
+    &-label {
       width: 30%;
     }
-    &-input{
+    &-input {
       padding: 13px;
       height: 34px;
       border: 1px solid #c4c4c4;
       border-radius: 5px;
       font-size: 16px;
       font-weight: 500;
-      color: #3E382F;
+      color: #3e382f;
       width: 70%;
     }
   }
-  &-phone{
+  &-phone {
     height: 50px;
     margin-top: 21px;
     display: flex;
     align-items: center;
     font-weight: 500;
     font-size: 16px;
-    &-label{
+    &-label {
       width: 30%;
     }
-    &-value{
+    &-value {
       font-size: 14px;
       font-weight: 500;
       color: #8a8a8a;
       width: 70%;
     }
   }
-  &-email{
+  &-email {
     height: 50px;
     margin-top: 21px;
     display: flex;
     align-items: center;
     font-weight: 500;
     font-size: 16px;
-    &-label{
+    &-label {
       width: 30%;
     }
-    &-value{
+    &-value {
       width: 70%;
       font-size: 14px;
       font-weight: 500;
       color: #8a8a8a;
     }
   }
-  &-devide{
+  &-devide {
     margin-top: 44px;
     width: 100%;
     height: 1px;
     background-color: #f3efea;
   }
-  &-password{
+  &-password {
     margin-top: 46px;
     display: flex;
-    &-label{
+    justify-content: space-between;
+    &-label {
       font-weight: 500;
       font-size: 16px;
     }
-    &-button{
+    &-button {
     }
   }
 }

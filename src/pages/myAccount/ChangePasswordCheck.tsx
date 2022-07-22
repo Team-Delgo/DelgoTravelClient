@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import LeftArrow from '../../icons/LeftArrow.svg';
+import LeftArrow from '../../icons/left-arrow.svg';
 
 function ChangePasswordCheck() {
   const navigate = useNavigate();
