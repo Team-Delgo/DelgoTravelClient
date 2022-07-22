@@ -10,6 +10,7 @@ export const MY_ACCOUNT_PATH = {
   REVIEWS: '/user/myaccount/reviews',
   USERINFO: '/user/myaccount/userinfo',
   PASSWORDCHECK: '/user/myaccount/userinfo/check',
+  PASSWORDCHANGE: '/user/myaccount/userinfo/change',
 };
 export const SIGN_IN_PATH = {
   MAIN: '/user/signin',

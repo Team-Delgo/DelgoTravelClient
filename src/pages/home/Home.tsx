@@ -53,14 +53,14 @@ function Home() {
   ]);
   const navigation = useNavigate();
   const dispatch = useDispatch();
-  const refreshToken = localStorage.getItem('refreshToken') || '';
+  // const refreshToken = localStorage.getItem('refreshToken') || '';
   const accessToken = useSelector((state: any) => state.token.token);
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const { date } = useSelector((state: any) => state.date);
   const location: any = useLocation();
   const { homeY } = useSelector((state: any) => state.persist.scroll);
 
-  const { isLoading:getRecommendedPlacesIsLoading, data: recommendedPlaces } = useQuery('getRecommendedPlaces', () => getRecommendedPlace(userId), {
+  const { isLoading: getRecommendedPlacesIsLoading, data: recommendedPlaces } = useQuery('getRecommendedPlaces', () => getRecommendedPlace(userId), {
     cacheTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 3,
     refetchInterval: false,
@@ -69,7 +69,7 @@ function Home() {
     },
   });
 
-  const { isLoading:getBookingDataIsLoading , data: reservationPlaces } = useQuery('bookingGetDataByMain', () => bookingGetDataByMain(accessToken,userId), {
+  const { isLoading: getBookingDataIsLoading, data: reservationPlaces } = useQuery('bookingGetDataByMain', () => bookingGetDataByMain(accessToken, userId), {
     cacheTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 3,
     refetchInterval: false,
@@ -105,31 +105,31 @@ function Home() {
     if (reservationPlaces?.data?.length) getDday();
   }, [page, reservationPlaces]);
 
-  useEffect(() => {
-    tokenRefresh(
-      { refreshToken },
-      (response: AxiosResponse) => {
-        const { code } = response.data;
+  // useEffect(() => {
+  //   tokenRefresh(
+  //     { refreshToken },
+  //     (response: AxiosResponse) => {
+  //       const { code } = response.data;
 
-        if (code === 200) {
-          const accessToken = response.headers.authorization_access;
-          const refreshToken = response.headers.authorization_refresh;
+  //       if (code === 200) {
+  //         const accessToken = response.headers.authorization_access;
+  //         const refreshToken = response.headers.authorization_refresh;
 
-          dispatch(tokenActions.setToken(accessToken));
-          localStorage.setItem('refreshToken', refreshToken);
-        } else {
-          navigation('/user/signin',{replace:true});
-        }
-      },
-      dispatch,
-    );
-  }, [accessToken]);
+  //         dispatch(tokenActions.setToken(accessToken));
+  //         localStorage.setItem('refreshToken', refreshToken);
+  //       } else {
+  //         navigation('/user/signin',{replace:true});
+  //       }
+  //     },
+  //     dispatch,
+  //   );
+  // }, [accessToken]);
 
-  if (getRecommendedPlacesIsLoading){
+  if (getRecommendedPlacesIsLoading) {
     return <div className="home-background">&nbsp;</div>;
   }
 
-  if (getBookingDataIsLoading){
+  if (getBookingDataIsLoading) {
     return <div className="home-background">&nbsp;</div>;
   }
 

@@ -110,7 +110,7 @@ function PetInfo() {
   };
 
   const chagneBirthHandler = (year: number, month: number, day: number) => {
-    const birthday = `${year}.${`0${month}`.slice(-2)}.${`0${day}`.slice(-2)}`;
+    const birthday = `${year}-${`0${month}`.slice(-2)}-${`0${day}`.slice(-2)}`;
     setEnteredInput((prev: Input) => {
       return { ...prev, birth: birthday };
     });
@@ -155,7 +155,7 @@ function PetInfo() {
             },
             dispatch,
           );
-          navigation(SIGN_UP_PATH.COMPLETE, { state: { name: enteredInput.name } });
+          // navigation(SIGN_UP_PATH.COMPLETE, { state: { name: enteredInput.name } });
         } else {
           console.log(codeMsg);
         }
@@ -243,21 +243,21 @@ function PetInfo() {
         <label htmlFor="S">
           <input type="radio" id="S" name="dogtype" className="dogtype-input" onChange={typeChangeHandler} />
           <span className="dogtype-button">
-            <img className={classNames("checkbox-icon",{invisible:modalActive})} src={Check} alt="check" />
+            <img className={classNames("checkbox-icon", { invisible: modalActive })} src={Check} alt="check" />
           </span>
           소형견
         </label>
         <label htmlFor="M">
           <input type="radio" id="M" name="dogtype" className="dogtype-input" onChange={typeChangeHandler} />
           <span className="dogtype-button">
-            <img className={classNames("checkbox-icon",{invisible:modalActive})} src={Check} alt="check" />
+            <img className={classNames("checkbox-icon", { invisible: modalActive })} src={Check} alt="check" />
           </span>
           중형견
         </label>
         <label htmlFor="L">
           <input type="radio" id="L" name="dogtype" className="dogtype-input" onChange={typeChangeHandler} />
           <span className="dogtype-button">
-            <img className={classNames("checkbox-icon",{invisible:modalActive})} src={Check} alt="check" />
+            <img className={classNames("checkbox-icon", { invisible: modalActive })} src={Check} alt="check" />
           </span>
           대형견
         </label>
