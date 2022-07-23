@@ -17,10 +17,10 @@ interface PropsType{
 const regions = [
   { id: 0, name: '강원' },
   { id: 1, name: '경기' },
-  { id: 2, name: '제주' },
-  { id: 3, name: '경상' },
+  { id: 2, name: '충청' },
+  { id: 3, name: '제주' },
   { id: 4, name: '전라' },
-  { id: 5, name: '충청' },
+  { id: 5, name: '경상' },
 ]; 
 
 function Region({ areaTerm,setAreaTerm ,closeRegionSelectionModal}: PropsType) {
@@ -38,41 +38,11 @@ function Region({ areaTerm,setAreaTerm ,closeRegionSelectionModal}: PropsType) {
     } else {
       setAreaTerm(regionName);
     }
-    setTimeout(()=>{
-      closeRegionSelectionModal()
-    },200)
+    closeRegionSelectionModal()
   },[areaTerm]);
   
   return (
     <div className="region-modal" >
-      {/* {areaTerm === '' ? (
-        <header className="region-modal-header-selected">국내 전체</header>
-      ) : (
-        <header className="region-modal-header" onClick={handleSelectAllRegions}>
-          국내 전체
-        </header>
-      )}
-      <section className="region-modal-section">
-        {regions.map((region: RegionType) =>
-          region.name === areaTerm ? (
-            <span
-              className="region-modal-section-region-name-selected"
-              key={region.id}
-              onClick={handleSelectRegion(region.name)}
-            >
-              {region.name}
-            </span>
-          ) : (
-            <span
-              className="region-modal-section-region-name"
-              key={region.id}
-              onClick={handleSelectRegion(region.name)}
-            >
-              {region.name}
-            </span>
-          ),
-        )}
-      </section> */}
       <div className="region-modal-region-name" onClick={handleSelectAllRegions}>국내전체</div>
       {
         regions.map((region: RegionType) =>
