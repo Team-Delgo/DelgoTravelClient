@@ -119,11 +119,11 @@ function ChangePassword() {
       <div className="userinfo-header-title">비밀번호 변경</div>
     </div>
     <div className='userinfo-wrapper'>
-      <input id='password' onChange={inputChangeHandler} type="password" value={enteredInput.password} placeholder='기존 비밀번호' className={classNames('login-input passwordcheck', { invalid: feedback.password.length })} />
+      <input id='password' onChange={inputChangeHandler} type="password" value={enteredInput.password} placeholder='새 비밀번호' className={classNames('login-input passwordcheck', { invalid: feedback.password.length })} />
       <p className="login-feedback">{feedback.password}</p>
     </div>
     <div className='userinfo-wrapper'>
-      <input id='confirm' onChange={inputChangeHandler} type="password" value={enteredInput.confirm} placeholder='기존 비밀번호' className={classNames('login-input passwordchange', { invalid: feedback.confirm.length })} />
+      <input id='confirm' onChange={inputChangeHandler} type="password" value={enteredInput.confirm} placeholder='새 비밀번호 확인' className={classNames('login-input passwordchange', { invalid: feedback.confirm.length })} />
       <p className="login-feedback">{feedback.confirm}</p>
     </div>
     <button onClick={submitButtonHandler} disabled={!isValid} type='button' className={classNames('login-button', { active: isValid })}>새 비밀번호 설정</button>

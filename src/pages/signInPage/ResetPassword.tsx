@@ -6,8 +6,8 @@ import { useDispatch } from 'react-redux';
 import { ReactComponent as Arrow } from '../../icons/left-arrow.svg';
 import { SIGN_IN_PATH } from '../../constants/path.const';
 import { changePassword } from '../../common/api/login';
-import { checkPasswordConfirm } from "../signUpPage/userInfo/ValidCheck";
-import "./ResetPassword.scss";
+import { checkPassword, checkPasswordConfirm } from '../signUpPage/userInfo/ValidCheck';
+import './ResetPassword.scss';
 
 interface Input {
   password: string;
@@ -15,43 +15,104 @@ interface Input {
 }
 
 function ResetPassword() {
-  const [enteredInput, setEnteredInput] = useState<Input>({ password: '', passwordConfirm: '' });
-  const [confirmValid, setConfirmValid] = useState(false);
-  const [feedback, setFeedback] = useState('');
-  const navigation = useNavigate();
+  const [feedback, setFeedback] = useState({ password: '', confirm: '' });
+  const [enteredInput, setEnteredInput] = useState({ password: '', confirm: '' });
+  const [validInput, setValidInput] = useState({ password: '', confirm: '' });
+  const [confirmIsTouched, setConfirmIsTouched] = useState(false);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isValid = validInput.confirm.length && validInput.password.length;
   const email = useLocation().state as string;
-  const isValid = enteredInput.password.length >= 8 && confirmValid;
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    setEnteredInput((prev: Input) => {
+
+    setEnteredInput((prev) => {
       return { ...prev, [id]: value };
     });
 
-    if (id === 'passwordConfirm') {
-      const result = checkPasswordConfirm(enteredInput.password, value);
-      const { isValid, message } = result;
-      setConfirmValid(isValid);
-      setFeedback(message);
+
+    if (id === 'password') {
+      passwordValidCheck(value);
+    } else {
+      passwordConfirmValidCheck(value);
     }
   };
 
-  const submitHandler = () => {
-    // axios
-    if (isValid) {
-      changePassword(email, enteredInput.password, (response: AxiosResponse) => {
-        const { code } = response.data;
-        if (code === 200) {
-          navigation(SIGN_IN_PATH.MAIN);
-        }
-      }, dispatch);
+  const passwordValidCheck = (value: string) => {
+    const response = checkPassword(value);
+    console.log(response);
+    if (!response.isValid) {
+      console.log(response);
+      setValidInput((prev) => {
+        return { ...prev, password: '' };
+      });
+    } else {
+      setValidInput((prev) => {
+        return { ...prev, password: value };
+      });
+    }
+
+    if (confirmIsTouched && !response.isValid) {
+      const { confirm } = enteredInput;
+      const check = checkPasswordConfirm(value, confirm);
+
+      setFeedback((prev) => {
+        return { ...prev, confirm: check.message };
+      });
+    }
+
+    setFeedback((prev) => {
+      return { ...prev, password: response.message };
+    });
+    if (enteredInput.confirm.length) {
+      const { confirm } = enteredInput;
+      const check = checkPasswordConfirm(value, confirm);
+      setFeedback((prev) => {
+        return { ...prev, confirm: check.message };
+      });
+      if (!check.isValid) {
+        console.log('aa');
+        setValidInput((prev) => {
+          return { ...prev, confirm: '' };
+        });
+      } else {
+        setValidInput((prev) => {
+          return { ...prev, confirm: value };
+        });
+      }
     }
   };
 
+  const passwordConfirmValidCheck = (value: string) => {
+    const { password } = enteredInput;
+    const response = checkPasswordConfirm(password, value);
+
+    if (!response.isValid) {
+      setValidInput((prev) => {
+        return { ...prev, confirm: '' };
+      });
+    } else {
+      setValidInput((prev) => {
+        return { ...prev, confirm: value };
+      });
+    }
+    setFeedback((prev) => {
+      return { ...prev, confirm: response.message };
+    });
+    setConfirmIsTouched(true);
+  };
+
+  const submitButtonHandler = () => {
+    changePassword(email, validInput.password, (response: AxiosResponse) => {
+      navigate(SIGN_IN_PATH.MAIN);
+    }, dispatch);
+  };
+  
+  
   return (
     <div className="login">
-      <div aria-hidden="true" className="login-back" onClick={() => navigation(-1)}>
+      <div aria-hidden="true" className="login-back" onClick={() => navigate(-1)}>
         <Arrow />
       </div>
       <header className="login-header">새 비밀번호 설정</header>
@@ -70,20 +131,26 @@ function ResetPassword() {
           value={enteredInput.password}
           onChange={inputChangeHandler}
         />
+        <p className="input-feedback">{feedback.password}</p>
       </div>
       <div className="login-input-box">
         <input
           className="login-input reset-confirm"
           placeholder="새 비밀번호 확인"
-          id="passwordConfirm"
+          id="confirm"
           type="password"
           autoComplete="off"
-          value={enteredInput.passwordConfirm}
+          value={enteredInput.confirm}
           onChange={inputChangeHandler}
         />
-        <p className='input-feedback'>{feedback}</p>
+        <p className="input-feedback">{feedback.confirm}</p>
       </div>
-      <button type="button" disabled={!isValid} className={classNames('login-button', { active: isValid })} onClick={submitHandler}>
+      <button
+        type="button"
+        disabled={!isValid}
+        className={classNames('login-button', { active: isValid })}
+        onClick={submitButtonHandler}
+      >
         확인
       </button>
     </div>

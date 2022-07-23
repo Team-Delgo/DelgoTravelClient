@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import { AxiosResponse } from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import { userActions } from '../../redux/slice/userSlice';
@@ -16,12 +16,18 @@ interface Input {
   password: string;
 }
 
+interface State{
+  email: string;
+}
+
 function Login() {
   const [enteredInput, setEnteredInput] = useState<Input>({ email: '', password: '' });
   const [loginFailed, setLoginFailed] = useState(false);
   const [feedback, setFeedback] = useState({ email: '', password: '' });
   const navigation = useNavigate();
   const dispatch = useDispatch();
+  const state = useLocation().state as State;
+  const {email} = state;
 
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
@@ -43,7 +49,7 @@ function Login() {
 
   const loginFetch = () => {
     login(
-      enteredInput,
+      {email,password:enteredInput.password},
       (response: AxiosResponse) => {
         const { code, data } = response.data;
         console.log(data);
@@ -76,7 +82,7 @@ function Login() {
           navigation('/');
         } else if (code === 304) {
           setFeedback((prev) => {
-            return { ...prev, password: '아이디 또는 비밀번호를 확인하세요' };
+            return { ...prev, password: '비밀번호를 확인하세요' };
           });
           setLoginFailed(true);
         }
@@ -102,43 +108,36 @@ function Login() {
   };
 
   return (
-    <div className="login">
+    <div className="login-signin">
       <div aria-hidden="true" className="login-back" onClick={() => navigation(-1)}>
         <Arrow />
       </div>
-      <header className="login-header">로그인</header>
-      <span className="login-span">이메일</span>
-      <div className="login-input-box">
-        <input
-          className={classNames('login-input', { invalid: feedback.email.length })}
-          placeholder="이메일"
-          id="email"
-          autoComplete="off"
-          value={enteredInput.email}
-          onChange={inputChangeHandler}
-        />
-        <p className="login-feedback">{feedback.email}</p>
+      <div className="login-title-wrapper">
+        <div className="login-title1">우리집 강아지도</div>
+        <div className="login-title2">델고가요</div>
+        <div className="login-subtitle">동반 장소를 발견하고 저장하세요</div>
       </div>
-      <span className="login-span">비밀번호</span>
-      <div className="login-input-box">
-        <input
-          className={classNames('login-input', { invalid: feedback.password.length })}
-          placeholder="영문+숫자 포함 8자리 이상"
-          id="password"
-          type="password"
-          autoComplete="off"
-          value={enteredInput.password}
-          onChange={inputChangeHandler}
-        />
-        <p className="login-feedback">{feedback.password}</p>
-      </div>
-      <div className="login-find_password" aria-hidden="true" onClick={findPassword}>
-        비밀번호찾기
-      </div>
-      <button type="button" className="login-button active loginpage" onClick={loginButtonHandler}>
-        로그인
-      </button>
+      <div className="login-input-flex">
+        <div className="login-input-box">
+          <input
+            className={classNames('login-input', { invalid: feedback.password.length })}
+            placeholder="비밀번호"
+            id="password"
+            type="password"
+            autoComplete="off"
+            value={enteredInput.password}
+            onChange={inputChangeHandler}
+          />
+          <p className="login-feedback">{feedback.password}</p>
+        </div>
 
+        <button type="button" className="login-button active loginpage" onClick={loginButtonHandler}>
+          로그인
+        </button>
+        <div className="login-find_password" aria-hidden="true" onClick={findPassword}>
+          비밀번호찾기
+        </div>
+      </div>
     </div>
   );
 }

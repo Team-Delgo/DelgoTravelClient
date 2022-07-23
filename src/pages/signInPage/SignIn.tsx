@@ -1,16 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import './SignIn.scss';
+import { AxiosResponse } from 'axios';
+import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Kakao } from '../../icons/kakao.svg';
 import { ReactComponent as Naver } from '../../icons/naver.svg';
 import { ReactComponent as Apple } from '../../icons/apple.svg';
-import { SIGN_IN_PATH, SIGN_UP_PATH } from '../../constants/path.const';
+import { ROOT_PATH, SIGN_IN_PATH, SIGN_UP_PATH } from '../../constants/path.const';
 import { tokenActions } from '../../redux/slice/tokenSlice';
-import { KAKAO, NAVER } from '../../constants/url.cosnt'
-import Delgo from "../../icons/delgo.svg";
+import { KAKAO, NAVER } from '../../constants/url.cosnt';
+import Delgo from '../../icons/delgo.svg';
+import { checkEmail } from '../signUpPage/userInfo/ValidCheck';
+import { emailAuth } from '../../common/api/login';
 
 function SignIn() {
+  const [email, setEmail] = useState('');
+  const [feedback, setFeedback] = useState('');
   const navigation = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -18,46 +24,87 @@ function SignIn() {
     localStorage.removeItem('refreshToken');
   }, []);
 
-  
+  const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setEmail(value);
+    const response = checkEmail(value);
+    setFeedback(response.message);
+  };
+
+  const buttonClickHandler = () => {
+    emailAuth(
+      email,
+      (response: AxiosResponse) => {
+        const { code } = response.data;
+        if (code === 200) {
+          navigation(SIGN_IN_PATH.SIGNIN, { state: { email } });
+        } else {
+          setFeedback('가입되지 않은 이메일입니다.');
+        }
+      },
+      dispatch,
+    );
+  };
 
   return (
     <div className="login-signin">
-      <img className='login-logo' src={Delgo} alt="login-logo"/>
-      <div className="login-title">강아지 델고 여행가요</div>
-      <a href={KAKAO.KAKAO_AUTH_URL}>
-        <button type="button" className="login-kakao">
-          <Kakao className="icon" />
-          카카오톡 로그인
+      <div className="login-title-wrapper">
+        <div className="login-title1">우리집 강아지도</div>
+        <div className="login-title2">델고가요</div>
+        <div className="login-subtitle">동반 장소를 발견하고 저장하세요</div>
+      </div>
+      <div className="login-input-flex">
+        <div className="login-input-box">
+          <input
+            placeholder="이메일"
+            autoComplete="off"
+            onChange={inputChangeHandler}
+            value={email}
+            className={classNames('login-input email', { invalid: feedback.length })}
+          />
+          <p className="login-feedback">{feedback}</p>
+        </div>
+
+        <button type="button" className="login-button active signup" onClick={buttonClickHandler}>
+          계속
         </button>
-      </a>
-      <a href={NAVER.NAVER_AUTH_URL}>
-        <button type="button" className="login-naver">
-          <Naver className="icon" />
-          네이버 로그인
-        </button>
-      </a>
-      <button type="button" className="login-apple">
-        <Apple className="icon" />
-        애플 로그인
-      </button>
-      <button
-        type="button"
-        className="login-button active signup"
-        onClick={() => {
-          navigation(SIGN_UP_PATH.TERMS);
-        }}
-      >
-        가입하기
-      </button>
-      <button
-        type="button"
-        className="login-login"
-        onClick={() => {
-          navigation(SIGN_IN_PATH.SIGNIN);
-        }}
-      >
-        기존 회원 로그인
-      </button>
+        <div className="login-signup-wrapper">
+          <div
+            aria-hidden="true"
+            className="login-signup-text"
+            onClick={() => {
+              navigation(ROOT_PATH);
+            }}
+          >
+            가입없이 둘러보기
+          </div>
+          <div
+            aria-hidden="true"
+            className="login-signup-text"
+            onClick={() => {
+              navigation(SIGN_UP_PATH.TERMS);
+            }}
+          >
+            회원가입
+          </div>
+        </div>
+        <div className="login-social-header">소셜 로그인</div>
+        <div className="login-social">
+          <a href={KAKAO.KAKAO_AUTH_URL}>
+            <button type="button" className="login-kakao">
+              <Kakao className="icon" />
+            </button>
+          </a>
+          <a href={NAVER.NAVER_AUTH_URL}>
+            <button type="button" className="login-naver">
+              <Naver className="icon" />
+            </button>
+          </a>
+          <button type="button" className="login-apple">
+            <Apple className="icon" />
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

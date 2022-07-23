@@ -11,6 +11,8 @@ export const MY_ACCOUNT_PATH = {
   USERINFO: '/user/myaccount/userinfo',
   PASSWORDCHECK: '/user/myaccount/userinfo/check',
   PASSWORDCHANGE: '/user/myaccount/userinfo/change',
+  TERM1: '/user/myaccount/term1',
+  TERM2: '/user/myaccount/term2',
 };
 export const SIGN_IN_PATH = {
   MAIN: '/user/signin',

@@ -31,7 +31,7 @@ function checkPasswordLogin(password: string): Feedback {
   const regExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
   if (check.test(password) === false) {
     if (regExp.test(password)) return { isValid: true, message: '' };
-    return { isValid: false, message: '영문+숫자 포함 8자리 이상' };
+    return { isValid: false, message: '영문+숫자 포함 8자리 이상입니다.' };
   }
 
   return { isValid: true, message: '' };

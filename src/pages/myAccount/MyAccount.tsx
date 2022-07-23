@@ -15,6 +15,7 @@ import AlertConfirmOne from '../../common/dialog/AlertConfirmOne';
 import { deleteUser } from '../../common/api/signup';
 import { MY_ACCOUNT_PATH } from '../../constants/path.const';
 import { myAccount } from '../../common/api/myaccount';
+import { tokenRefresh } from '../../common/api/login';
 
 function MyAccount() {
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
@@ -28,8 +29,11 @@ function MyAccount() {
   const email = useSelector((state: any) => state.persist.user.user.email);
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const dogBirth = useSelector((state: any) => state.persist.user.pet.birthday);
+  const accessToken = useSelector((state: any) => state.token.token);
+  const refreshToken = localStorage.getItem('refreshToken') || '';
 
   useEffect(() => {
+    
     window.scrollTo(0, 0);
     const temp = `${dogBirth.slice(0, 4)}-${dogBirth.slice(5, 7)}-${dogBirth.slice(8, 10)}`;
     const date = new Date(temp);
@@ -39,6 +43,23 @@ function MyAccount() {
     setAge(now.getFullYear() - date.getFullYear() + 1);
     getUserInfo();
   }, []);
+
+  useEffect(() => {
+    tokenRefresh({ refreshToken }, (response: AxiosResponse) => {
+      const { code } = response.data;
+
+      if (code === 200) {
+        const accessToken = response.headers.authorization_access;
+        const refreshToken = response.headers.authorization_refresh;
+
+        dispatch(tokenActions.setToken(accessToken),);
+        localStorage.setItem('refreshToken', refreshToken);
+      }
+      else {
+        navigation('/user/signin');
+      }
+    }, dispatch);
+  }, [accessToken]);
 
   const getUserInfo = () => {
     const data = {
@@ -196,9 +217,9 @@ function MyAccount() {
         <p className="account-item-p">카카오 플러스친구로 이동</p>
       </div>
       <div className="account-sign">
-        <p className="account-out" aria-hidden="true" onClick={deleteUserModalOpen}>
+        {/* <p className="account-out" aria-hidden="true" onClick={deleteUserModalOpen}>
           회원탈퇴
-        </p>
+        </p> */}
         <p className="account-out" aria-hidden="true" onClick={logOutModalOpen}>
           로그아웃
         </p>

@@ -22,6 +22,7 @@
     line-height: 24px;
   }
   &-nickname {
+    height: 50px;
     margin-top: 30px;
     display: flex;
     font-weight: 500;
@@ -38,6 +39,12 @@
       font-size: 16px;
       font-weight: 500;
       color: #3e382f;
+      width: 70%;
+    }
+    &-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: #8a8a8a;
       width: 70%;
     }
   }

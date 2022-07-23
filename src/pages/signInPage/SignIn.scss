@@ -1,57 +1,88 @@
-@import '../signUpPage/SignUpPage.scss';
+@import "../signUpPage/SignUpPage.scss";
 
 @mixin buttonstyle($back, $font) {
-  width: 90vw;
-  height: 61px;
+  width: 55px;
+  height: 55px;
   border: none;
   background-color: $back;
   box-shadow: 0px 5px 13px rgba(0, 0, 0, 0.05);
-  border-radius: 7px;
-  font-family: 'Spoqa Han Sans Neo';
+  border-radius: 100%;
+  font-family: "Spoqa Han Sans Neo";
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
   color: $font;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .login {
-  &-logo{
+  &-logo {
     width: 40vw;
   }
   &-signin {
-    background-color: white;
     height: 100vh;
+    padding: 0 20px;
+  }
+
+  // width: 100vw;
+  // height: 100vh;
+  &-input-flex {
     display: flex;
+    width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
-  // width: 100vw;
-  // height: 100vh;
-  &-title {
-    font-family: 'Spoqa Han Sans Neo';
+  &-title-wrapper{
+    padding-top: 136px;
+  }
+  &-title1 {
     font-style: normal;
-    font-weight: 500;
-    font-size: 18px;
+    font-weight: 700;
+    font-size: 26px;
     margin-top: 11px;
-    line-height: 126.19%;
+    line-height: 150%;
     color: #3e382f;
-    
+  }
+  &-title2 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 150%;
+    color: #3e382f;
+  }
+  &-subtitle {
+    font-size: 16px;
+    font-weight: 400;
+    color: #b0a69d;
+    margin-bottom: 32px;
+  }
+  &-social{
+    display: flex;
+    width: 80%;
+    justify-content: space-evenly;
+    &-header{
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 150%;
+      color: #b0a69d;
+      margin-top: 68px;
+      margin-bottom: 13px;
+    }
   }
   &-kakao {
-    margin-top: 65px;
     display: flex;
     align-items: center;
     @include buttonstyle(#ffef5a, #474747);
   }
   &-naver {
-    margin-top: 10px;
     display: flex;
     align-items: center;
     @include buttonstyle(#45d156, #ffffff);
   }
   &-apple {
-    margin-top: 10px;
     display: flex;
     align-items: center;
     @include buttonstyle(#292929, #ffffff);
@@ -67,13 +98,24 @@
     font-weight: 700;
     border: none;
   }
+  &-signup-wrapper{
+    margin-top: 22px;
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+  }
+  &-signup-text{
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: underline;
+    color: #b0a69d;
+    line-height: 150%;
+  }
 }
 
 .icon {
   width: 24px;
   height: 24px;
-  margin-left: 60px;
-  margin-right: 40px;
 }
 
 a {
