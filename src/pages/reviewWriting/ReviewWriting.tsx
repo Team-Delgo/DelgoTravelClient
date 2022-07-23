@@ -139,9 +139,10 @@ function RiviewWriting() {
               console.log(response);
               const { code, codeMsg } = response.data;
               if (code === 200) {
-                setTimeout(() => {
-                  navigate(-1);
-                }, 200);
+                moveToPreviousPage()
+                // setTimeout(() => {
+                //   navigate(-1);
+                // }, 100);
               } else {
                 console.log(codeMsg);
               }
