@@ -1,4 +1,4 @@
-import React, { useCallback,useEffect } from 'react';
+import React, { useCallback,useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as Home } from '../../icons/home.svg';
 import { ReactComponent as Search } from '../../icons/search.svg';
@@ -13,25 +13,24 @@ import './Footer.scss';
 
 function Footer() {
   const location = useLocation();
+  const [OS,setOS] = useState("android") 
 
-  // useEffect(() => {
-  //   const varUA = navigator.userAgent.toLowerCase();
-  //   if (varUA.indexOf('android') > -1) {
-  //     console.log('안드로이드')
-  //   } else if (varUA.indexOf("iphone") > -1 || varUA.indexOf("ipad") > -1 || varUA.indexOf("ipod") > -1) {
-  //     console.log('ios')
-  //   } else {
-  //     console.log('웹')
-  //   }
-  // }, [])
+  useEffect(() => {
+    const varUA = navigator.userAgent.toLowerCase();
+    if (varUA.indexOf('android') > -1) {
+      setOS('android');
+    } else if (varUA.indexOf('iphone') > -1 || varUA.indexOf('ipad') > -1 || varUA.indexOf('ipod') > -1) {
+      setOS('ios');
+    }
+  }, []);
 
   const goToTopScreen = useCallback(() => {
     window.scroll({ top: 0, behavior: 'smooth' });
   }, []);
-
+  // className="home-icon"
   return (
     <div className="footer">
-      <div className="home-icon" aria-hidden="true" onClick={goToTopScreen}>
+      <div className={ OS==="android" ? 'home-icon-android' : 'home-icon-ios'}  aria-hidden="true" onClick={goToTopScreen}>
         {location.pathname === ROOT_PATH ? (
           <>
             <Link to={ROOT_PATH}>
@@ -48,7 +47,7 @@ function Footer() {
           </>
         )}
       </div>
-      <div className="search-icon" aria-hidden="true" onClick={goToTopScreen}>
+      <div className={ OS==="android" ? 'search-icon-android' : 'search-icon-ios'} aria-hidden="true" onClick={goToTopScreen}>
         {location.pathname === WHERE_TO_GO_PATH ? (
           <>
             <Link to={WHERE_TO_GO_PATH}>
@@ -65,7 +64,7 @@ function Footer() {
           </>
         )}
       </div>
-      <div className="bag-icon">
+      <div className={ OS==="android" ? 'bag-icon-android' : 'bag-icon-ios'}>
         {location.pathname === MY_STORAGE_PATH ? (
           <>
             <Link to={MY_STORAGE_PATH}>
@@ -82,7 +81,7 @@ function Footer() {
           </>
         )}
       </div>
-      <div className="person-icon">
+      <div className={ OS==="android" ? 'person-icon-android' : 'person-icon-ios'}>
         {location.pathname === MY_ACCOUNT_PATH.MAIN ? (
           <>
             <Link to={MY_ACCOUNT_PATH.MAIN}>
