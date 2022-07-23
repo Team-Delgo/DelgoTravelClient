@@ -117,12 +117,12 @@ function ReservationConfirmPage() {
           )}
         </div>
         <div className="placeinfo">
-          <Link to={`/reservation-confirm-more/${bookingId}`}>
+          {/* <Link to={`/reservation-confirm-more/${bookingId}`}> */}
             <div className="placeinfo-wrapper">
               <div className="placeinfo-name">{reservationData.place.name}</div>
-              <img src={RightArrow} alt="detail" />
+              {/* <img src={RightArrow} alt="detail" /> */}
             </div>
-          </Link>
+          {/* </Link> */}
           <p className="placeinfo-address">{reservationData.place.address}</p>
           <p className="placeinfo-room">{reservationData.roomName}</p>
         </div>
