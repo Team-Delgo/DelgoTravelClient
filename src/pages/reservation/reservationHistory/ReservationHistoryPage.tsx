@@ -31,7 +31,7 @@ function ReservationHistoryPage() {
     registDt: "",
     roomName: "",
     startDt: "",
-    userName: "",
+    reservedName: "",
     userPhoneNo: "",
     place:{
       address: "",
@@ -144,7 +144,7 @@ function ReservationHistoryPage() {
           <div className="reservation-info-second-line">
             <div className="reservation-info-second-line-name-label">예약자 이름</div>
             <div className="reservation-info-second-line-name">
-              {reservationData?.userName} / {reservationData?.userPhoneNo}
+              {reservationData?.reservedName} / {reservationData?.userPhoneNo}
             </div>
           </div>
           {/* <div className="reservation-user-info">
