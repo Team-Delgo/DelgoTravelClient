@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query'
 import Skeleton , { SkeletonTheme } from 'react-loading-skeleton'
+import Sheet from 'react-modal-sheet';
 import 'react-loading-skeleton/dist/skeleton.css'
 import { getAllPlaces } from '../../common/api/getPlaces';
 import { tokenActions } from '../../redux/slice/tokenSlice';
