@@ -10,25 +10,45 @@
     z-index: 1;
     font-size: 11px;
     color: #8A8A8A;
-    .home-icon{
+    .home-icon-android{
         position: absolute;
         left: 15%;     
         top: 15%;
     }
-    .search-icon{
+    .search-icon-android{
         position: absolute;
         left: 36%;     
         top: 15%;    
     }
-    .bag-icon{
+    .bag-icon-android{
         position: absolute;
         right:36%;
         top: 15%;
     }
-    .person-icon{
+    .person-icon-android{
         position: absolute;
         right:15%;
         top: 15%;
+    }
+    .home-icon-ios{
+        position: absolute;
+        left: 15%;     
+        top: 10%;
+    }
+    .search-icon-ios{
+        position: absolute;
+        left: 36%;     
+        top: 10%;    
+    }
+    .bag-icon-ios{
+        position: absolute;
+        right:36%;
+        top: 10%;
+    }
+    .person-icon-ios{
+        position: absolute;
+        right:15%;
+        top: 10%;
     }
     &-text{
         padding-top: 4px;
