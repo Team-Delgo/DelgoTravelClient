@@ -215,7 +215,6 @@ function ReservationConfirmPage() {
           bookingId={bookingId}
         />
       )}
-      {/* <BottomButton text="예약내역 공유하기" /> */}
     </>
   );
 }

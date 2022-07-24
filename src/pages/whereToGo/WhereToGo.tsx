@@ -51,7 +51,7 @@ function AllPlacesSkeletons() {
   return AllPlacesSkeletonsArray;
 }
 
-const areaName = ['강원','경기','제주','경상','전라','충청']
+const areaName = ['경기','제주','전라']
 
 
 function WhereToGo() {
