@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
-import { persistReducer ,persistCombineReducers} from 'redux-persist';
+import { persistReducer } from 'redux-persist';
 import userSlice from './slice/userSlice';
 import tokenSlice from './slice/tokenSlice';
 import dateSlice from './slice/dateSlice';
@@ -13,34 +13,34 @@ import scrollSlice from './slice/scrollSlice';
 import areaSlice from './slice/areaSlice';
 import prevPathSlice from './slice/prevPathSlice';
 
-const togglePersistConfig = {
-  key: 'toggle',
-  storage
-};
 const persistConfig = {
   key: 'root',
   storage,
   debug: true,
-  whitelist: ['toggle']
+  whitelist: ["user, currentPlace, currentRoom, reservation, area, scroll, prevPath"]
 };
 
-const reducers = {
-  user: persistReducer(togglePersistConfig, userSlice),
-  currentPlace:persistReducer(togglePersistConfig, placeSlice),
-  currentRoom:persistReducer(togglePersistConfig, roomSlice),
-  reservation: persistReducer(togglePersistConfig, reservationSlice),
-  area:persistReducer(togglePersistConfig, areaSlice),
-  scroll:persistReducer(togglePersistConfig, scrollSlice),
-  prevPath:persistReducer(togglePersistConfig, prevPathSlice)
-}
+const reducers = combineReducers({
+  user: userSlice,
+  currentPlace:placeSlice,
+  currentRoom:roomSlice,
+  reservation: reservationSlice,
+  area:areaSlice,
+  scroll:scrollSlice,
+  prevPath:prevPathSlice
+});
 
-const persistedReducer = persistCombineReducers(persistConfig, reducers);
+
+const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = configureStore({
-  reducer: { persist: persistedReducer, token: tokenSlice, error: errorSlice, date: dateSlice },
+  reducer: { persist: persistedReducer, token: tokenSlice, error: errorSlice, date: dateSlice},
   // devTools: process.env.NODE_ENV !== 'production',
   devTools: true,
 });
 
 export default store;
+
+
+
 
