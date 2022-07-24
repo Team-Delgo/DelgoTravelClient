@@ -39,9 +39,10 @@ function ReservationWaitingPage() {
       (response: AxiosResponse) => {
         console.log(response.data.data)
         if (response.data.data !== null) {
-          setTimeout(() => {
-            navigate(`/reservation-confirm/${response.data.data}`);
-          }, 3000);
+          navigate(`/reservation-confirm/${response.data.data}`);
+          // setTimeout(() => {
+          //   navigate(`/reservation-confirm/${response.data.data}`);
+          // }, 3000);
         }
       },
       dispatch,
