@@ -17,9 +17,9 @@ function Footer() {
 
   useEffect(() => {
     const varUA = navigator.userAgent.toLowerCase();
-    if (varUA.indexOf('android') > -1) {
-      setOS('android');
-    } else if (varUA.indexOf('iphone') > -1 || varUA.indexOf('ipad') > -1 || varUA.indexOf('ipod') > -1) {
+    // if (varUA.indexOf('android') > -1) {
+    // } else 
+    if (varUA.indexOf('iphone') > -1 || varUA.indexOf('ipad') > -1 || varUA.indexOf('ipod') > -1) {
       setOS('ios');
     }
   }, []);
@@ -27,7 +27,7 @@ function Footer() {
   const goToTopScreen = useCallback(() => {
     window.scroll({ top: 0, behavior: 'smooth' });
   }, []);
-  // className="home-icon"
+
   return (
     <div className="footer">
       <div className={ OS==="android" ? 'home-icon-android' : 'home-icon-ios'}  aria-hidden="true" onClick={goToTopScreen}>
@@ -36,14 +36,14 @@ function Footer() {
             <Link to={ROOT_PATH}>
               <HomeActive />
             </Link>
-            <div className="footer-text-active">홈</div>
+            <div className={ OS==="android" ? "footer-text-active-android" : "footer-text-active-ios"}>홈</div>
           </>
         ) : (
           <>
             <Link to={ROOT_PATH}>
               <Home />
             </Link>
-            <div className="footer-text">홈</div>
+            <div className={ OS==="android" ? "footer-text-android" : "footer-text-ios"}>홈</div>
           </>
         )}
       </div>
@@ -53,14 +53,14 @@ function Footer() {
             <Link to={WHERE_TO_GO_PATH}>
               <SearchActive />
             </Link>
-            <div className="footer-text-active">찾기</div>
+            <div className={ OS==="android" ? "footer-text-active-android" : "footer-text-active-ios"}>찾기</div>
           </>
         ) : (
           <>
             <Link to={WHERE_TO_GO_PATH}>
               <Search />
             </Link>
-            <div className="footer-text">찾기</div>
+            <div className={ OS==="android" ? "footer-text-android" : "footer-text-ios"}>찾기</div>
           </>
         )}
       </div>
@@ -70,14 +70,14 @@ function Footer() {
             <Link to={MY_STORAGE_PATH}>
               <BagActive />
             </Link>
-            <div className="footer-text-active">내 여행</div>
+            <div className={ OS==="android" ? "footer-text-active-android" : "footer-text-active-ios"}>내 여행</div>
           </>
         ) : (
           <>
             <Link to={MY_STORAGE_PATH}>
               <Bag />
             </Link>
-            <div className="footer-text">내 여행</div>
+            <div className={ OS==="android" ? "footer-text-android" : "footer-text-ios"}>내 여행</div>
           </>
         )}
       </div>
@@ -87,14 +87,14 @@ function Footer() {
             <Link to={MY_ACCOUNT_PATH.MAIN}>
               <PersonActive />
             </Link>
-            <div className="footer-text-active">내 정보</div>
+            <div className={ OS==="android" ? "footer-text-active-android" : "footer-text-active-ios"}>내 정보</div>
           </>
         ) : (
           <>
             <Link to={MY_ACCOUNT_PATH.MAIN}>
               <Person />
             </Link>
-            <div className="footer-text">내 정보</div>
+            <div className={ OS==="android" ? "footer-text-android" : "footer-text-ios"}>내 정보</div>
           </>
         )}
       </div>
