@@ -44,7 +44,7 @@ function MyStorage() {
         localStorage.setItem('refreshToken', refreshToken);
       }
       else {
-        navigation('/user/signin');
+        navigation('/user/signin',{replace:true});
       }
     }, dispatch);
   }, [accessToken]);

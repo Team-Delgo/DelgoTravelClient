@@ -181,7 +181,6 @@ function VerifyPhone() {
           className={classNames("login-input phonenumber", { invalid: phoneIsExist })}
           placeholder="휴대폰 번호"
           autoComplete="off"
-          type="number"
           ref={phoneRef}
         />
         <p className={classNames('input-feedback')}>
