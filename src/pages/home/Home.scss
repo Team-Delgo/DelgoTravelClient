@@ -48,17 +48,17 @@
   .recommended-places-text {
     padding: 15% 0 5% 5%;
     font-weight: 700;
-    font-size: 24px;
+    font-size: 18px;
     color: #3e382f;
   }
   .editor-container {
     display: flex;
     overflow-x: scroll;
-    padding-right: 5%;
+    margin-left: 5%;
     .editor-thumbnail {
-      margin-left: 5%;
+      padding-right: 30px;
       img {
-        width: 75vw;
+        width: 70vw;
         height: 324px;
         border-radius: 5px;
       }

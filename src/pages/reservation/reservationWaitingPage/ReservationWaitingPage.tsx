@@ -28,7 +28,7 @@ function ReservationWaitingPage() {
         userId: user.id,
         placeId: place.placeId,
         roomId: room.roomId,
-        couponId: coupon.couponId,
+        couponId: 0,
         reservedName: user.nickname,
         point: 0,
         startDt: date.date.start,
@@ -39,9 +39,10 @@ function ReservationWaitingPage() {
       (response: AxiosResponse) => {
         console.log(response.data.data)
         if (response.data.data !== null) {
-          setTimeout(() => {
-            navigate(`/reservation-confirm/${response.data.data}`);
-          }, 3000);
+          navigate(`/reservation-confirm/${response.data.data}`);
+          // setTimeout(() => {
+          //   navigate(`/reservation-confirm/${response.data.data}`);
+          // }, 3000);
         }
       },
       dispatch,

@@ -10,6 +10,8 @@ import './Reservation.scss';
 import BottomButton from '../../../common/components/BottomButton';
 import { getCouponList } from '../../../common/api/coupon';
 import { TOSS } from '../../../constants/url.cosnt';
+import AlertConfirmOne from '../../../common/dialog/AlertConfirmOne'
+import { errorActions } from '../../../redux/slice/errorSlice';
 
 function Reservation() {
   const { user, room, place, date } = useSelector((state: any) => state.persist.reservation);
@@ -17,15 +19,13 @@ function Reservation() {
   const [couponDropDownOpen, setCouponDropDownOpen] = useState(false);
   const [selectedCouponId, setSelectedCouponId] = useState(0);
   const [selectCouponDiscount,setSelectCouponDiscount] = useState(0)
-  // const { date, dateString } = useSelector((state: any) => state.date);
-  // const { currentPlace } = useSelector((state: any) => state.persist.currentPlace);
-  // const { currentRoom } = useSelector((state: any) => state.persist.currentRoom);
-  // const { user } = useSelector((state: any) => state.persist.user);
   const [reservationName, setReservationName] = useState('');
   const dispatch = useDispatch();
+  const [reservationNameConfrim,setReservationNameConfrim]=useState(false)
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0);  
+    console.log(room.price.toString())
     getCouponList(
       user.id,
       (response: AxiosResponse) => {
@@ -65,7 +65,7 @@ function Reservation() {
     );
     loadTossPayments(TOSS.CLIENT_KEY).then((tossPayments) => {
       tossPayments.requestPayment('카드', {
-        amount: Number(room.price.slice(0, -1).replace(',', ''))-selectCouponDiscount,
+        amount: Number(room.price.toString().slice(0, -1).replace(',', '')) - selectCouponDiscount,
         orderId: 'AVw8mD2KHztN_646IGAZF',
         orderName: place.name + room.name,
         customerName: user.nickname,
@@ -76,7 +76,6 @@ function Reservation() {
   };
 
   const handleReservationName = (e: any) => {
-    console.log(e.target.value);
     setReservationName(e.target.value);
   };
 
@@ -107,6 +106,14 @@ function Reservation() {
     setSelectedCouponId(couponId)
     setCouponDropDownOpen(false);
     setSelectCouponDiscount(discountNum);
+  };
+
+  const confirmReservationNameOpen = () => {
+    setReservationNameConfrim(true)
+  };
+
+  const confirmReservationNameClose = () => {
+    setReservationNameConfrim(false)
   };
 
   return (
@@ -194,26 +201,18 @@ function Reservation() {
             {existCoupon}
           </div>
         )}
-        {/* <div className="coupon-drop-down" aria-hidden="true" onClick={handleCouponDropDown}>
-          보유한 쿠폰 {couponList.length}장 <BottomArrow className="coupon-bottom-arrow" />
-        </div>
-        <div className="coupon-drop-down-full">
-          <div className="coupon-header" aria-hidden="true" onClick={handleCouponDropDown}>
-            보유한 쿠폰 {couponList.length}장 <BottomArrow className="coupon-bottom-arrow" />
-          </div>
-          {existCoupon}
-        </div> */}
         <div className="reservation-devide" />
         <div className="finalprice">
           <div className="reservation-label">결제 금액</div>
           <div className="finalprice-price">
-            {(Number(room.price.slice(0, -1).replace(',', ''))-selectCouponDiscount).toLocaleString()}원
+            {(Number(room.price.toString().slice(0, -1).replace(',', ''))-selectCouponDiscount).toLocaleString()}원
           </div>
         </div>
       </div>
-      <div aria-hidden="true" onClick={creditCardPayment}>
-        <BottomButton text={`${(Number(room.price.slice(0, -1).replace(',', ''))-selectCouponDiscount).toLocaleString()}원 결제하기`} />
+      <div aria-hidden="true" onClick={reservationName !== '' ? creditCardPayment : confirmReservationNameOpen}>
+        <BottomButton text={`${(Number(room.price.toString().slice(0, -1).replace(',', ''))-selectCouponDiscount).toLocaleString()}원 결제하기`} />
       </div>
+      {reservationNameConfrim && <AlertConfirmOne text="예약자명을 입력하세요" buttonHandler={confirmReservationNameClose} />}
     </>
   );
 }

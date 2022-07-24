@@ -26,13 +26,15 @@ const reducers = combineReducers({
 const persistConfig = {
   key: 'root',
   storage,
+  timeout: null,
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = configureStore({
   reducer: { persist: persistedReducer, token: tokenSlice, error: errorSlice, date: dateSlice},
-  devTools: process.env.NODE_ENV !== 'production',
+  // devTools: process.env.NODE_ENV !== 'production',
+  devTools: true,
 });
 
 export default store;

@@ -36,6 +36,7 @@ function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch
   const navigate = useNavigate();
 
   const wishListDelete = useCallback(() => {
+    setWishListAlertConfirmOpen(false)
     wishDelete(
       { wishId: place.wishId, accessToken },
       (response: AxiosResponse) => {
@@ -50,9 +51,13 @@ function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch
     );
   }, []);
 
-  const wishListConfirmModalOpenClose = useCallback(() => {
-    setWishListAlertConfirmOpen(!wishListAlertConfirmOpen);
-  }, [wishListAlertConfirmOpen]);
+  const wishListConfirmModalOpen =useCallback(() => {
+    setWishListAlertConfirmOpen(true);
+  },[])
+
+  const wishListConfirmModalClose = useCallback(()=> {
+    setWishListAlertConfirmOpen(false);
+  },[])
 
   const moveToDetailPage = useCallback(() => {
     dispatch(scrollActions.scroll({ whereToGo: 0, detailPlace: 0, myStorage: window.scrollY, homeY: 0 }));
@@ -74,10 +79,10 @@ function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch
           <AlertConfirm
             text="정말 찜 목록에서 제거하시겠어요?"
             yesButtonHandler={wishListDelete}
-            noButtonHandler={wishListConfirmModalOpenClose}
+            noButtonHandler={wishListConfirmModalClose}
           />
         )}
-          <ActiveHeart onClick={wishListConfirmModalOpenClose} />
+          <ActiveHeart onClick={wishListConfirmModalOpen} />
       </div>
     </div>
   );

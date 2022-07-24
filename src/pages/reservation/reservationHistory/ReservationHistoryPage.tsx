@@ -31,7 +31,7 @@ function ReservationHistoryPage() {
     registDt: "",
     roomName: "",
     startDt: "",
-    userName: "",
+    reservedName: "",
     userPhoneNo: "",
     place:{
       address: "",
@@ -102,12 +102,12 @@ function ReservationHistoryPage() {
         <div className="placeinfo">
           <Link to={`/reservation-confirm-more/${bookingId}`}>
             <div className="placeinfo-wrapper">
-              <div className="placeinfo-name">{reservationData.place.name}</div>
+              <div className="placeinfo-name">{reservationData?.place.name}</div>
               <img src={RightArrow} alt="detail" />
             </div>
           </Link>
-          <p className="placeinfo-address">{reservationData.place.address}</p>
-          <p className="placeinfo-room">{reservationData.roomName}</p>
+          <p className="placeinfo-address">{reservationData?.place.address}</p>
+          <p className="placeinfo-room">{reservationData?.roomName}</p>
         </div>
         <div className="place-use-info">
           <div>숙소문의</div>
@@ -118,18 +118,18 @@ function ReservationHistoryPage() {
           <div className="checkin-checkout-date">
             <span className="check-title">체크인</span>
             <span className="check-date">
-              {reservationData.startDt.substring(2, 4)}.{reservationData.startDt.substring(5, 7)}.
-              {reservationData.startDt.substring(8, 10)}({getDate(reservationData.startDt)})
+              {reservationData?.startDt.substring(2, 4)}.{reservationData?.startDt.substring(5, 7)}.
+              {reservationData?.startDt.substring(8, 10)}({getDate(reservationData?.startDt)})
             </span>
-            <span className="check-date">{reservationData.place.checkin.substring(0, 5)}</span>
+            <span className="check-date">{reservationData?.place.checkin.substring(0, 5)}</span>
           </div>
           <div className="checkin-checkout-date">
             <span className="check-title">체크아웃</span>
             <span className="check-date">
-              {reservationData.endDt.substring(2, 4)}.{reservationData.endDt.substring(5, 7)}.
-              {reservationData.endDt.substring(8, 10)}({getDate(reservationData.endDt)})
+              {reservationData?.endDt.substring(2, 4)}.{reservationData?.endDt.substring(5, 7)}.
+              {reservationData?.endDt.substring(8, 10)}({getDate(reservationData?.endDt)})
             </span>
-            <span className="check-date">{reservationData.place.checkout.substring(0, 5)}</span>
+            <span className="check-date">{reservationData?.place.checkout.substring(0, 5)}</span>
           </div>
         </div>
         <div className="reservation-info-header">
@@ -139,12 +139,12 @@ function ReservationHistoryPage() {
         <div className="reservation-info">
           <div className="reservation-info-first-line">
             <div className="reservation-info-first-line-number-label">예약번호</div>
-            <div className="reservation-info-first-line-number">{reservationData.bookingId}</div>
+            <div className="reservation-info-first-line-number">{reservationData?.bookingId}</div>
           </div>
           <div className="reservation-info-second-line">
             <div className="reservation-info-second-line-name-label">예약자 이름</div>
             <div className="reservation-info-second-line-name">
-              {reservationData.userName} / {reservationData.userPhoneNo}
+              {reservationData?.reservedName} / {reservationData?.userPhoneNo}
             </div>
           </div>
           {/* <div className="reservation-user-info">
@@ -158,11 +158,11 @@ function ReservationHistoryPage() {
         <h2 className="reservation-title second">결제 정보</h2>
         <div className="original-price">
           <div className="reservation-label">상품가격</div>
-          <div className="original-price-amount">{reservationData.originalPrice}</div>
+          <div className="original-price-amount">{reservationData?.originalPrice}</div>
         </div>
         <div className="couponsale">
           <div className="reservation-label">결제 시 포인터 사용</div>
-          <div className="couponsale-amount">-{reservationData.point}P</div>
+          <div className="couponsale-amount">-{reservationData?.point}P</div>
         </div>
         <div className="couponsale">
           <div className="reservation-label">결제 시 쿠폰 사용</div>
@@ -171,7 +171,7 @@ function ReservationHistoryPage() {
         <div className="reservation-devide" />
         <div className="finalprice">
           <div className="reservation-label">결제 금액</div>
-          <div className="finalprice-price">{reservationData.finalPrice}</div>
+          <div className="finalprice-price">{reservationData?.finalPrice}</div>
         </div>
         <div className="payment-methods">
           <div className="payment-methods-label">결제 수단</div>
@@ -179,7 +179,7 @@ function ReservationHistoryPage() {
       </div>
       <div className="reservation-place-map">
         <header className="reservation-place-map-header">지도</header>
-        {reservationData.place.address ? <Map address={reservationData.place.address} /> : null}
+        {reservationData?.place.address ? <Map address={reservationData?.place.address} /> : null}
       </div>
     </div>
   );

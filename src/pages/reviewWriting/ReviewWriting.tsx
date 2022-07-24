@@ -121,17 +121,11 @@ function RiviewWriting() {
         const { code, codeMsg } = response.data;
         if (code === 200) {
           const {reviewId} = response.data.data;
-          console.log(typeof(reviewId))
-          console.log(typeof(reviewId.toString()))
       
-          // formData.append('rievewId', reviewId.toString());
           for(let i=0; i<sendingImage.length; i+=1){
             formData.append('photos', sendingImage[i]);
           }
-          // eslint-disable-next-line no-restricted-syntax, guard-for-in
-          formData.forEach((value: any, key: any) => {
-            console.log(key, value);
-        });
+
 
           reviewImageUpload(
             formData,reviewId,
@@ -139,9 +133,7 @@ function RiviewWriting() {
               console.log(response);
               const { code, codeMsg } = response.data;
               if (code === 200) {
-                setTimeout(() => {
-                  navigate(-1);
-                }, 200);
+                moveToPreviousPage()
               } else {
                 console.log(codeMsg);
               }
@@ -292,7 +284,7 @@ function RiviewWriting() {
         <div className="review-writing-body-file">
           <div className="review-writing-body-file-uploader" aria-hidden="true" onClick={handleOpenFileUpload}>
             <Camera />
-            <input type="file" accept="image/*;capture=camera"  multiple ref={fileUploadRef} onChange={handleUploadFile} style={{ display: 'none' }} />
+            <input type="file" accept="image/*;capture=camera" multiple ref={fileUploadRef} onChange={handleUploadFile} style={{ display: 'none' }} />
           </div>
           {images.map((image) => (
             <div className="review-writing-body-file-image-container">

@@ -271,7 +271,7 @@ function DetailPlace() {
             state={{ placeId: detailPlace?.data.place.placeId }}
             key={detailPlace?.data.place.placeId}
           >
-            <div className="detail-place-delgo-note">Delgo 노트 보로가기</div>
+            <div className="detail-place-delgo-note">Delgo 노트 보러가기</div>
           </Link>
         ) : null}
         <div className="detail-place-reservation-date-select" aria-hidden="true" onClick={calenderOpenClose}>

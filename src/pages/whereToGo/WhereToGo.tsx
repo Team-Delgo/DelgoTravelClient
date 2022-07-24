@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query'
 import Skeleton , { SkeletonTheme } from 'react-loading-skeleton'
+import Sheet from 'react-modal-sheet';
 import 'react-loading-skeleton/dist/skeleton.css'
 import { getAllPlaces } from '../../common/api/getPlaces';
 import { tokenActions } from '../../redux/slice/tokenSlice';
@@ -50,7 +51,7 @@ function AllPlacesSkeletons() {
   return AllPlacesSkeletonsArray;
 }
 
-const areaName = ['강원','경기','제주','경상','전라','충청']
+const areaName = ['경기','제주','전라']
 
 
 function WhereToGo() {
