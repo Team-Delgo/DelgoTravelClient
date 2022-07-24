@@ -28,7 +28,7 @@ function ReservationWaitingPage() {
         userId: user.id,
         placeId: place.placeId,
         roomId: room.roomId,
-        couponId: coupon.couponId,
+        couponId: coupon?.couponId,
         reservedName: user.nickname,
         point: 0,
         startDt: date.date.start,
