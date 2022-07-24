@@ -86,6 +86,7 @@ function Home() {
 
 
   useEffect(() => {
+    console.log(recommendedPlaces)
     if (location.state?.prevPath.includes('/detail-place')) {
       window.scrollTo(0, homeY);
     } else {
