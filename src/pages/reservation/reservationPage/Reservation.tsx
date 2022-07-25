@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState ,useRef} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
@@ -22,10 +22,11 @@ function Reservation() {
   const [reservationName, setReservationName] = useState('');
   const dispatch = useDispatch();
   const [reservationNameConfrim,setReservationNameConfrim]=useState(false)
+  const reservationNameInput = useRef<HTMLInputElement>(null);
+
 
   useEffect(() => {
     window.scrollTo(0, 0);  
-    console.log(room.price.toString())
     getCouponList(
       user.id,
       (response: AxiosResponse) => {
@@ -116,6 +117,10 @@ function Reservation() {
     setReservationNameConfrim(false)
   },[])
 
+  const inputReservationNameFocus = useCallback(() => {
+    reservationNameInput.current?.scrollIntoView({ behavior: "smooth" })
+  },[])
+
   return (
     <>
       <div className="reservationPage">
@@ -154,7 +159,7 @@ function Reservation() {
         <h2 className="reservation-title first">예약자정보</h2>
         <div className="reservation-user-info">
           <div className="reservation-label">예약자 이름</div>
-          <input className="reservation-user-info-name" type="text" onChange={handleReservationName} />
+          <input className="reservation-user-info-name" type="text" ref={reservationNameInput} onChange={handleReservationName} onFocus={inputReservationNameFocus} />
         </div>
         <div className="reservation-user-info">
           <div className="reservation-label">핸드폰 번호</div>
@@ -181,7 +186,9 @@ function Reservation() {
         </div> */}
         <div className="coupon-sale">
           <div className="reservation-label">쿠폰 사용</div>
-          <div className="coupon-sale-amount">{selectCouponDiscount === 0 ? <>0원</> : <>{selectCouponDiscount.toLocaleString()}원</>}</div>
+          <div className="coupon-sale-amount">
+            {selectCouponDiscount === 0 ? <>0원</> : <>-{selectCouponDiscount.toLocaleString()}원</>}
+          </div>
         </div>
         {couponDropDownOpen === false ? (
           <div className="coupon-drop-down" aria-hidden="true" onClick={handleCouponDropDown}>
@@ -205,14 +212,20 @@ function Reservation() {
         <div className="finalprice">
           <div className="reservation-label">결제 금액</div>
           <div className="finalprice-price">
-            {(Number(room.price.toString().slice(0, -1).replace(',', ''))-selectCouponDiscount).toLocaleString()}원
+            {(Number(room.price.toString().slice(0, -1).replace(',', '')) - selectCouponDiscount).toLocaleString()}원
           </div>
         </div>
       </div>
       <div aria-hidden="true" onClick={reservationName !== '' ? creditCardPayment : confirmReservationNameOpen}>
-        <BottomButton text={`${(Number(room.price.toString().slice(0, -1).replace(',', ''))-selectCouponDiscount).toLocaleString()}원 결제하기`} />
+        <BottomButton
+          text={`${(
+            Number(room.price.toString().slice(0, -1).replace(',', '')) - selectCouponDiscount
+          ).toLocaleString()}원 결제하기`}
+        />
       </div>
-      {reservationNameConfrim && <AlertConfirmOne text="예약자명을 입력하세요" buttonHandler={confirmReservationNameClose} />}
+      {reservationNameConfrim && (
+        <AlertConfirmOne text="예약자명을 입력하세요" buttonHandler={confirmReservationNameClose} />
+      )}
     </>
   );
 }

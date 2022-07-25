@@ -105,8 +105,10 @@
   justify-content: space-between;
   &-name {
     border: 1px solid #B0A69D;
-    padding-left: 10px;
-    width: 100px;
+    padding-left: 15px;
+    width: 150px;
+    height: 30px;
+    margin: -6px 0 -20px 0;
   }
   &-phone {
     color: #3e382f;
@@ -203,10 +205,7 @@
     color: #6E614D;
     border-bottom:  1px solid #F3EFEA;;
   }
-  // display: flex;
   margin: auto;
-  // justify-content: center;
-  // align-items: center;
   width: 90vw;
   min-height: 90px;
   background: #FFFFFF;
