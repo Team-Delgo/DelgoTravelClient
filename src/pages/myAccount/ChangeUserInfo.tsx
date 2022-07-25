@@ -11,6 +11,12 @@ function ChangeUserInfo() {
   const initialNickName = useSelector((state: any) => state.persist.user.user.nickname);
   const [nickName, setNickName] = useState(initialNickName);
 
+  const user = useSelector((state: any) => state.persist.user.user);
+  const { email, phone } = user;
+
+  const phoneNumber = `${phone.slice(0, 3)}-****-${phone.slice(7, 11)}`;
+  const userEmail = `${email.slice(0, 4)}****${email.slice(8,)}`;
+
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setNickName(e.target.value);
   };
@@ -38,11 +44,11 @@ function ChangeUserInfo() {
       </div>
       <div className="userinfo-phone">
         <div className="userinfo-phone-label">휴대전화</div>
-        <span className="userinfo-phone-value">010-5023-9161</span>
+        <span className="userinfo-phone-value">{phoneNumber}</span>
       </div>
       <div className="userinfo-email">
         <div className="userinfo-email-label">이메일</div>
-        <span className="userinfo-email-value">cksr1@naver.com</span>
+        <span className="userinfo-email-value">{userEmail}</span>
       </div>
       <div className='userinfo-devide' />
       <div className="userinfo-password" aria-hidden="true" onClick={() => { navigate(MY_ACCOUNT_PATH.PASSWORDCHECK); }}>
