@@ -17,6 +17,7 @@ function CouponModal(props: { closeModal: () => void }) {
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
+    if (value.length > 16) return;
     setEnteredInput(value);
     setInvalid(false);
     setFeedback('');
@@ -33,11 +34,11 @@ function CouponModal(props: { closeModal: () => void }) {
       console.log(response);
       if (code === 200) {
         closeModal();
-      } else if(code === 312){
+      } else if (code === 312) {
         setInvalid(true);
         setFeedback('이미 등록 된 쿠폰입니다.');
         inputRef.current.focus();
-      } 
+      }
       else {
         setInvalid(true);
         setFeedback('유효하지 않은 쿠폰 코드 입니다.');

@@ -33,7 +33,7 @@ function MyAccount() {
   const refreshToken = localStorage.getItem('refreshToken') || '';
 
   useEffect(() => {
-    
+
     window.scrollTo(0, 0);
     const temp = `${dogBirth.slice(0, 4)}-${dogBirth.slice(5, 7)}-${dogBirth.slice(8, 10)}`;
     const date = new Date(temp);
@@ -56,7 +56,7 @@ function MyAccount() {
         localStorage.setItem('refreshToken', refreshToken);
       }
       else {
-        navigation('/user/signin',{replace:true});
+        navigation('/user/signin', { replace: true });
       }
     }, dispatch);
   }, [accessToken]);
