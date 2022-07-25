@@ -16,8 +16,8 @@ import prevPathSlice from './slice/prevPathSlice';
 const persistConfig = {
   key: 'root',
   storage,
-  debug: true,
-  whitelist: ["user, currentPlace, currentRoom, reservation, area, scroll, prevPath"]
+  // debug: true,
+  // whitelist: ["user, currentPlace, currentRoom, reservation, area, scroll, prevPath"]
 };
 
 const reducers = combineReducers({
@@ -35,7 +35,7 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = configureStore({
   reducer: { persist: persistedReducer, token: tokenSlice, error: errorSlice, date: dateSlice},
-  // devTools: process.env.NODE_ENV !== 'production',
+  // devTools: process.env.NODE_ENV !== 'production', 
   devTools: true,
 });
 

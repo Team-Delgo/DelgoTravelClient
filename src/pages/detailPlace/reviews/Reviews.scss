@@ -4,9 +4,11 @@
     &-header{
         display: flex;
         img{
-            border-radius: 50%;
+            width: 55px;
             height:51px;
-        }
+            object-fit: cover;
+            border-radius: 100%;
+            }
         &-info{
             padding-left: 10px;
             &-nick-name{

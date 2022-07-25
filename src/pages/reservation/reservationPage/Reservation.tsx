@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
@@ -11,7 +11,7 @@ import BottomButton from '../../../common/components/BottomButton';
 import { getCouponList } from '../../../common/api/coupon';
 import { TOSS } from '../../../constants/url.cosnt';
 import AlertConfirmOne from '../../../common/dialog/AlertConfirmOne'
-import { errorActions } from '../../../redux/slice/errorSlice';
+
 
 function Reservation() {
   const { user, room, place, date } = useSelector((state: any) => state.persist.reservation);
@@ -108,13 +108,13 @@ function Reservation() {
     setSelectCouponDiscount(discountNum);
   };
 
-  const confirmReservationNameOpen = () => {
+  const confirmReservationNameOpen = useCallback(() => {
     setReservationNameConfrim(true)
-  };
+  },[])
 
-  const confirmReservationNameClose = () => {
+  const confirmReservationNameClose = useCallback(() => {
     setReservationNameConfrim(false)
-  };
+  },[])
 
   return (
     <>
