@@ -44,6 +44,7 @@ function ReservationConfirmPage() {
       mainPhotoUrl: "",
       name: "",
       placeId: 0,
+      phoneNo:"",
       policy:"",
       wishId: 0
     }
@@ -83,6 +84,10 @@ function ReservationConfirmPage() {
   const closeReservationCancleModal  = useCallback(() => {
     setReservationCancleModal(false);
   }, []);
+
+  const copyPlaceNumber = useCallback(() => {
+    navigator.clipboard.writeText(reservationData.place.phoneNo);
+  }, [reservationData]);
 
   const copyPlaceAddress = useCallback(() => {
       navigator.clipboard.writeText(reservationData.place.address);
@@ -127,7 +132,7 @@ function ReservationConfirmPage() {
           <p className="placeinfo-room">{reservationData.roomName}</p>
         </div>
         <div className="place-use-info">
-          <div>숙소문의</div>
+          <div aria-hidden="true" onClick={copyPlaceNumber}>숙소문의</div>
           <div aria-hidden="true" onClick={copyPlaceAddress}>주소복사</div>
           <div aria-hidden="true" onClick={moveToMap}>지도보기</div>
         </div>
