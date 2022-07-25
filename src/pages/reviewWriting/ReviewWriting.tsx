@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector,useDispatch } from "react-redux";
 import { AxiosResponse } from 'axios';
 import BottomButton from '../../common/components/BottomButton';
+import AlertConfirmOne from '../../common/dialog/AlertConfirmOne'
 import  {writeReivew,reviewImageUpload}  from '../../common/api/reivew'
 import { ReactComponent as BigRivewStarActive } from '../../icons/big-review-star-active.svg';
 import { ReactComponent as BigRivewStar } from '../../icons/big-review-star.svg';
@@ -43,6 +44,8 @@ function RiviewWriting() {
   const [activeStar4, setActiveStar4] = useState(true);
   const [activeStar5, setActiveStar5] = useState(true);
   const [rivewText, setReviewText] = useState('');
+  const [reviewCompleted,setReviewCompleted]=useState(false)
+  const [reviewTextLengthLimit,setReviewTextLengthLimitd]=useState(false)
   const starRaiting = useRef(5);
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const petName = useSelector((state: any) => state.persist.user.pet.name);
@@ -71,9 +74,6 @@ function RiviewWriting() {
     }
   }, []);
 
-  // const handleBrigeUploadPhoto = () =>{
-  //   window.BRIDGE.testAndroid();
-  // }
 
   const handleUploadFile = (event: { target: HTMLInputElement }) => {
     if (images.length === 4) {
@@ -106,47 +106,52 @@ function RiviewWriting() {
   };
 
   const submitRivew = () => {
-    console.log(sendingImage)
-    console.log(sendingImage[4])
-    writeReivew(
-      {
-        userId,
-        placeId: state.place.placeId,
-        roomId: state.roomId,
-        rating: starRaiting.current,
-        text: rivewText,
-        bookingId:state.bookingId
-      },
-      (response: AxiosResponse) => {
-        const { code, codeMsg } = response.data;
-        if (code === 200) {
-          const {reviewId} = response.data.data;
-      
-          for(let i=0; i<sendingImage.length; i+=1){
-            formData.append('photos', sendingImage[i]);
-          }
-
-
-          reviewImageUpload(
-            formData,reviewId,
-            (response: AxiosResponse) => {
-              console.log(response);
-              const { code, codeMsg } = response.data;
-              if (code === 200) {
-                moveToPreviousPage()
-              } else {
-                console.log(codeMsg);
+    if(rivewText.length>0){
+      writeReivew(
+        {
+          userId,
+          placeId: state.place.placeId,
+          roomId: state.roomId,
+          rating: starRaiting.current,
+          text: rivewText,
+          bookingId: state.bookingId,
+        },
+        (response: AxiosResponse) => {
+          const { code, codeMsg } = response.data;
+          if (code === 200) {
+            if (sendingImage.length > 0) {
+              const { reviewId } = response.data.data;
+  
+              for (let i = 0; i < sendingImage.length; i += 1) {
+                formData.append('photos', sendingImage[i]);
               }
-            },
-            dispatch,
-          );
-            
-        } else {
-          console.log(codeMsg);
-        }
-      },
-      dispatch,
-    );
+  
+              reviewImageUpload(
+                formData,
+                reviewId,
+                (response: AxiosResponse) => {
+                  console.log(response);
+                  const { code, codeMsg } = response.data;
+                  if (code === 200) {
+                    console.log('성공')
+                  } else {
+                    console.log(codeMsg);
+                  }
+                },
+                dispatch,
+              );
+            }
+            confirmReviewCompletedOpen()
+          } else {
+            console.log(codeMsg);
+          }
+        },
+        dispatch,
+      );
+    }
+    else{
+      alertReviewLengthLimitOpen()
+    }
   };
 
   const handleStarRating1 = useCallback(() => {
@@ -231,6 +236,23 @@ function RiviewWriting() {
     setReviewText(e.target.value);
   }, []);
 
+  const confirmReviewCompletedOpen = useCallback(() => {
+    setReviewCompleted(true)
+  },[])
+
+  const confirmReviewCompletedClose = useCallback(() => {
+    setReviewCompleted(false)
+    moveToPreviousPage()
+  },[])
+
+  const alertReviewLengthLimitOpen = useCallback(() => {
+    setReviewTextLengthLimitd(true)
+  },[])
+
+  const alertReviewLengthLimitClose = useCallback(() => {
+    setReviewTextLengthLimitd(false)
+  },[])
+
   return (
     <div className="review-writing">
       <header className="review-writing-header">
@@ -284,7 +306,7 @@ function RiviewWriting() {
         <div className="review-writing-body-file">
           <div className="review-writing-body-file-uploader" aria-hidden="true" onClick={handleOpenFileUpload}>
             <Camera />
-            <input type="file" accept="image/*;capture=camera" multiple ref={fileUploadRef} onChange={handleUploadFile} style={{ display: 'none' }} />
+            <input type="file" accept="image/jpeg,image/gif,image/png" multiple ref={fileUploadRef} onChange={handleUploadFile} style={{ display: 'none' }} />
           </div>
           {images.map((image) => (
             <div className="review-writing-body-file-image-container">
@@ -304,6 +326,8 @@ function RiviewWriting() {
       <div aria-hidden="true" onClick={submitRivew}>
         <BottomButton text="작성완료" />
       </div>
+      {reviewCompleted && <AlertConfirmOne text="리뷰 작성이 완료 되었습니다" buttonHandler={confirmReviewCompletedClose} />}
+      {reviewTextLengthLimit && <AlertConfirmOne text="리뷰를 최소 1글자이상 작성하세요" buttonHandler={alertReviewLengthLimitClose} />}
     </div>
   );
 }

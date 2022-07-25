@@ -84,8 +84,9 @@ function History({currentTab}:FolderTypeProps) {
   );
 
   useEffect(() => {
+    console.log(traveledPlaces)
     getRecommendedPlacesRefetch();
-  }, [currentTab]);
+  }, [currentTab,traveledPlaces]);
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/reservation-history')) {
@@ -130,7 +131,7 @@ function History({currentTab}:FolderTypeProps) {
   return (
     <div className="travel-history-container">
       {traveledPlaces?.data.length > 0 ? (
-        <div className="travel-history-number">델고 갔던 {traveledPlaces.data.length}개 장소</div>
+        <div className="travel-history-number">델고 갔던 {traveledPlaces?.data.length}개 장소</div>
       ) : (
         <div className="travel-history-notice">
           <FootPrintActive className="travel-history-notice-foot-print" />
