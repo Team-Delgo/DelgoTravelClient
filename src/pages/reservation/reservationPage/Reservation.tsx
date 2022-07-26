@@ -118,7 +118,10 @@ function Reservation() {
   },[])
 
   const inputReservationNameFocus = useCallback(() => {
-    reservationNameInput.current?.scrollIntoView({ behavior: "smooth" })
+    const varUA = navigator.userAgent.toLowerCase();
+    if (varUA.indexOf('android') > -1) {
+      reservationNameInput.current?.scrollIntoView({ behavior: "smooth" })
+    }
   },[])
 
   return (
