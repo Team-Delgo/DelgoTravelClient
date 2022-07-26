@@ -86,7 +86,7 @@ function ReservationConfirmPage() {
   }, []);
 
   const copyPlaceNumber = useCallback(() => {
-    navigator.clipboard.writeText(reservationData.place.phoneNo);
+    navigator.clipboard.writeText(reservationData.place.phoneNo)
   }, [reservationData]);
 
   const copyPlaceAddress = useCallback(() => {
