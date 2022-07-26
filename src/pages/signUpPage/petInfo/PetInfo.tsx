@@ -155,7 +155,7 @@ function PetInfo() {
             },
             dispatch,
           );
-          // navigation(SIGN_UP_PATH.COMPLETE, { state: { name: enteredInput.name } });
+          navigation(SIGN_UP_PATH.COMPLETE, { state: { name: enteredInput.name } });
         } else {
           console.log(codeMsg);
         }
