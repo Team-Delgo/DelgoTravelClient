@@ -86,16 +86,22 @@ function ReservationConfirmPage() {
   }, []);
 
   const copyPlaceNumber = useCallback(() => {
-    navigator.clipboard.writeText(reservationData.place.phoneNo)
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(reservationData.place.phoneNo);
+    }
   }, [reservationData]);
 
   const copyPlaceAddress = useCallback(() => {
-      navigator.clipboard.writeText(reservationData.place.address);
-    }, [reservationData]);
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(reservationData.place.address);
+    }
+  }, [reservationData]);
 
   const copyReservationNumber = useCallback(() => {
-      navigator.clipboard.writeText(reservationData.bookingId);
-    }, [reservationData]);
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(reservationData.bookingId);
+    }
+  }, [reservationData]);
 
 
   const getDate = (date:string) => { 
