@@ -22,6 +22,17 @@ const userSlice = createSlice({
     signout() {
       return initialState;
     },
+    setpetprofile(state, action){
+      return {
+        isSignIn: state.isSignIn,
+        couponList: state.couponList,
+        user: state.user,
+        pet: {
+          ...state.pet,
+          image: action.payload.image
+        }
+      }
+    },
     changepetinfo(state, action){
       return {
         isSignIn: state.isSignIn,

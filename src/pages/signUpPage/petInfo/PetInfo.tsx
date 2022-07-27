@@ -12,6 +12,8 @@ import BirthSelector from './BirthSelector';
 import { signup, petImageUpload } from '../../../common/api/signup';
 import Check from '../../../icons/check.svg';
 import { SIGN_UP_PATH } from '../../../constants/path.const';
+import { userActions } from '../../../redux/slice/userSlice';
+import { tokenActions } from '../../../redux/slice/tokenSlice';
 
 interface LocationState {
   phone: string;
@@ -137,21 +139,45 @@ function PetInfo() {
     signup(
       userInfo,
       (response: AxiosResponse) => {
-        const { code, codeMsg } = response.data;
+        const { code, codeMsg,data } = response.data;
         if (code === 200) {
-          // const accessToken = response.headers.authorization_access;
-          // const refreshToken = response.headers.authorization_refresh;
-          // dispatch(tokenActions.setToken(accessToken));
-          // localStorage.setItem('refreshToken', refreshToken);
-          userId = response.data.data.userId;
+          const accessToken = response.headers.authorization_access;
+          const refreshToken = response.headers.authorization_refresh;
+          console.log(accessToken);
+          console.log(refreshToken);
+          dispatch(tokenActions.setToken(accessToken));
+          localStorage.setItem('refreshToken', refreshToken);
+          userId = response.data.data.user.userId;
           console.log(response);
           console.log(userId);
+          dispatch(
+            userActions.signin({
+              couponList: [],
+              user: {
+                id: data.user.userId,
+                nickname: data.user.name,
+                email: data.user.email,
+                phone: data.user.phoneNo,
+              },
+              pet: {
+                petId: data.pet.petId,
+                birthday: data.pet.birthday,
+                size: data.pet.size,
+                name: data.pet.name,
+                image: '',
+              },
+            }),
+          );
           formData.append('userId', userId.toString());
           formData.append('photo', sendingImage);
           petImageUpload(
             formData,
             (response: AxiosResponse) => {
               console.log(response);
+              const {code,data} = response.data;
+              if(code===200){
+                dispatch(userActions.setpetprofile({image:data}))
+              }
             },
             dispatch,
           );
@@ -243,21 +269,21 @@ function PetInfo() {
         <label htmlFor="S">
           <input type="radio" id="S" name="dogtype" className="dogtype-input" onChange={typeChangeHandler} />
           <span className="dogtype-button">
-            <img className={classNames("checkbox-icon", { invisible: modalActive })} src={Check} alt="check" />
+            <img className={classNames('checkbox-icon', { invisible: modalActive })} src={Check} alt="check" />
           </span>
           소형견
         </label>
         <label htmlFor="M">
           <input type="radio" id="M" name="dogtype" className="dogtype-input" onChange={typeChangeHandler} />
           <span className="dogtype-button">
-            <img className={classNames("checkbox-icon", { invisible: modalActive })} src={Check} alt="check" />
+            <img className={classNames('checkbox-icon', { invisible: modalActive })} src={Check} alt="check" />
           </span>
           중형견
         </label>
         <label htmlFor="L">
           <input type="radio" id="L" name="dogtype" className="dogtype-input" onChange={typeChangeHandler} />
           <span className="dogtype-button">
-            <img className={classNames("checkbox-icon", { invisible: modalActive })} src={Check} alt="check" />
+            <img className={classNames('checkbox-icon', { invisible: modalActive })} src={Check} alt="check" />
           </span>
           대형견
         </label>

@@ -23,7 +23,7 @@ function SignUpComplete() {
         type="button"
         className="login-button active"
         onClick={() => {
-          navigate(SIGN_IN_PATH.SIGNIN);
+          navigate('/');
         }}
       >
         {state.name}와 여행을 떠나요

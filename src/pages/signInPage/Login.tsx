@@ -17,7 +17,7 @@ interface Input {
   password: string;
 }
 
-interface State{
+interface State {
   email: string;
 }
 
@@ -29,7 +29,7 @@ function Login() {
   const navigation = useNavigate();
   const dispatch = useDispatch();
   const state = useLocation().state as State;
-  const {email} = state;
+  const { email } = state;
 
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
@@ -50,14 +50,14 @@ function Login() {
   };
 
   const loginFetch = () => {
-    setIsLoading(true);
     login(
-      {email,password:enteredInput.password},
+      { email, password: enteredInput.password },
       (response: AxiosResponse) => {
         const { code, data } = response.data;
         console.log(data);
         console.log(response);
         if (code === 200) {
+          setIsLoading(true);
           dispatch(
             userActions.signin({
               couponList: data.couponList,
@@ -71,7 +71,6 @@ function Login() {
                 petId: data.pet.petId,
                 birthday: data.pet.birthday,
                 size: data.pet.size,
-                weight: data.pet.weight,
                 name: data.pet.name,
                 image: data.user.profile,
               },
@@ -82,8 +81,9 @@ function Login() {
           const refreshToken = response.headers.authorization_refresh;
           dispatch(tokenActions.setToken(accessToken));
           localStorage.setItem('refreshToken', refreshToken);
-          navigation('/',{replace:true});
+          navigation('/', { replace: true });
         } else if (code === 304) {
+          setIsLoading(false);
           setFeedback((prev) => {
             return { ...prev, password: '비밀번호를 확인하세요' };
           });
@@ -112,7 +112,7 @@ function Login() {
 
   return (
     <div className="login-signin">
-      {isLoading && <Loading/>}
+      {isLoading && <Loading />}
       <div aria-hidden="true" className="login-back" onClick={() => navigation(-1)}>
         <Arrow />
       </div>

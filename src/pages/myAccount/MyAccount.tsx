@@ -55,9 +55,9 @@ function MyAccount() {
         dispatch(tokenActions.setToken(accessToken),);
         localStorage.setItem('refreshToken', refreshToken);
       }
-      else {
-        navigation('/user/signin', { replace: true });
-      }
+      // else {
+      //   navigation('/user/signin', { replace: true });
+      // }
     }, dispatch);
   }, [accessToken]);
 
@@ -220,9 +220,9 @@ function MyAccount() {
         <p className="account-item-p">카카오 플러스친구로 이동</p>
       </div>
       <div className="account-sign">
-        <p className="account-out" aria-hidden="true" onClick={deleteUserModalOpen}>
+        {/* <p className="account-out" aria-hidden="true" onClick={deleteUserModalOpen}>
           회원탈퇴
-        </p>
+        </p> */}
         <p className="account-out" aria-hidden="true" onClick={logOutModalOpen}>
           로그아웃
         </p>
