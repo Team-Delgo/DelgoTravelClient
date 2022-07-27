@@ -24,12 +24,14 @@ function ReservationConfirmPage() {
     bookingId: "",
     bookingState: "",
     canCancelDate: "",
+    commission:"",
     couponId: 0,
     couponPrice: "",
     endDt: "",
     finalPrice: "",
     originalPrice: "",
     point: 0,
+    refund:"",
     registDt: "",
     roomName: "",
     startDt: "",
@@ -77,9 +79,9 @@ function ReservationConfirmPage() {
 
 
 
-  const handleReservationCancleModal = useCallback(() => {
-    setReservationCancleModal(!reservationCancleModal);
-  }, [reservationCancleModal]);
+  const openReservationCancleModal = useCallback(() => {
+    setReservationCancleModal(true);
+  }, []);
 
   const closeReservationCancleModal  = useCallback(() => {
     setReservationCancleModal(false);
@@ -194,7 +196,7 @@ function ReservationConfirmPage() {
         </div>
         <div className="couponsale">
           <div className="reservation-label">결제 시 쿠폰 사용</div>
-          <div className="couponsale-amount">-{reservationData?.couponPrice}</div>
+          <div className="couponsale-amount">-{reservationData.couponPrice}</div>
         </div>
         <div className="reservation-devide" />
         <div className="finalprice">
@@ -210,7 +212,7 @@ function ReservationConfirmPage() {
             {reservationData.canCancelDate.substring(0, 4)}년 {reservationData.canCancelDate.substring(5, 7)}월{' '}
             {reservationData.canCancelDate.substring(8, 10)}일 18:00까지 무료 취소 가능합니다.
           </div>
-          <button className="cancel-reservation-button" type="button" onClick={handleReservationCancleModal}>
+          <button className="cancel-reservation-button" type="button" onClick={openReservationCancleModal}>
             예약취소
           </button>
         </div>
@@ -219,13 +221,11 @@ function ReservationConfirmPage() {
         {reservationData.place.address ? <Map address={reservationData.place.address} /> : null}
       </div>
       </div>
-      {reservationCancleModal && (
         <ReservationCancleModal
-          reservationCancleModal={handleReservationCancleModal}
+          openReservationCancleModal={reservationCancleModal}
           closeReservationCancleModal={closeReservationCancleModal}
-          bookingId={bookingId}
+          reservationData={reservationData}
         />
-      )}
     </>
   );
 }

@@ -1,14 +1,18 @@
-import React, { useState, useCallback,memo, useEffect } from 'react'
+import React, { useState, useCallback, memo, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation,useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { wishInsert, wishDelete } from '../../../common/api/wish'
 // import Heart from '../../../common/components/Heart'
+import AlertConfirm from '../../../common/dialog/AlertConfirm';
 import { scrollActions } from '../../../redux/slice/scrollSlice';
 import { areaActions } from '../../../redux/slice/areaSlice';
-import {prevPathActions} from "../../../redux/slice/prevPathSlice"
+import { prevPathActions } from "../../../redux/slice/prevPathSlice"
 import { ReactComponent as ActiveHeart } from '../../../icons/heart-active.svg';
 import { ReactComponent as Heart } from '../../../icons/heart.svg';
+import {
+  SIGN_IN_PATH,
+} from '../../../constants/path.const';
 import './Place.scss'
 
 interface PlaceTypeProps {
@@ -35,14 +39,21 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
   const dispatch = useDispatch();
   const location: any = useLocation();
   const navigate = useNavigate();
+  const isSignIn = useSelector((state: any) => state.persist.user.isSignIn);
+  const [logInModalOpen, setLogInModalOpen] = useState(false);
 
   const wishListInsert = useCallback(() => {
-    wishInsert({ userId, placeId: place.placeId, accessToken }, (response: AxiosResponse) => {
-      if (response.data.code === 200) {
-        setWishList(response.data.data.wishId);
-      }
-    }, dispatch);
-  }, [wishList]);
+    if(isSignIn){
+      wishInsert({ userId, placeId: place.placeId, accessToken }, (response: AxiosResponse) => {
+        if (response.data.code === 200) {
+          setWishList(response.data.data.wishId);
+        }
+      }, dispatch);
+    }
+    else{
+      setLogInModalOpen(true);
+    }
+  }, [wishList,isSignIn]);
 
   const wishListDelete = useCallback(() => {
     wishDelete(
@@ -87,6 +98,16 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
           <ActiveHeart onClick={wishListDelete} />
         )}
       </div>
+      {logInModalOpen && <AlertConfirm
+        text="로그인 후 이용 할 수 있습니다."
+        buttonText='로그인'
+        noButtonHandler={() => {
+          setLogInModalOpen(false);
+        }}
+        yesButtonHandler={() => {
+          navigate(SIGN_IN_PATH.MAIN);
+        }}
+      />}
     </div>
   );
 }

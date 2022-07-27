@@ -3,6 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { wishInsert, wishDelete } from '../../../common/api/wish';
+import AlertConfirm from '../../../common/dialog/AlertConfirm';
+import {
+  SIGN_IN_PATH,
+} from '../../../constants/path.const';
 import './RecommendedPlaces.scss';
 import { scrollActions } from '../../../redux/slice/scrollSlice';
 import { prevPathActions } from '../../../redux/slice/prevPathSlice';
@@ -28,14 +32,16 @@ interface PlaceType {
 
 function RecommendedPlaces({ place }: RedcommendedPlacesProps) {
   const [wishList, setWishList] = useState(place.wishId);
+  const [logInModalOpen, setLogInModalOpen] = useState(false);
   const accessToken = useSelector((state: any) => state.token.token);
   const userId = useSelector((state: any) => state.persist.user.user.id);
+  const isSignIn = useSelector((state: any) => state.persist.user.isSignIn);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location: any = useLocation();
 
   const wishListInsert = useCallback(() => {
-    console.log(userId,place.placeId,accessToken)
+    if(isSignIn){
     wishInsert(
       { userId, placeId: place.placeId , accessToken},
       (response: AxiosResponse) => {
@@ -45,8 +51,11 @@ function RecommendedPlaces({ place }: RedcommendedPlacesProps) {
         }
       },
       dispatch,
-    );
-  }, [wishList]);
+    )}
+    else{
+      setLogInModalOpen(true);
+    }
+  }, [wishList,isSignIn]);
 
   const wishListDelete = useCallback(() => {
     wishDelete(
@@ -82,6 +91,16 @@ function RecommendedPlaces({ place }: RedcommendedPlacesProps) {
           <ActiveHeart onClick={wishListDelete} />
         )}
       </div>
+      {logInModalOpen && <AlertConfirm
+        text="로그인 후 이용 할 수 있습니다."
+        buttonText='로그인'
+        noButtonHandler={() => {
+          setLogInModalOpen(false);
+        }}
+        yesButtonHandler={() => {
+          navigate(SIGN_IN_PATH.MAIN);
+        }}
+      />}
     </div>
   );
 }

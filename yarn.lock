@@ -12796,14 +12796,6 @@
   "resolved" "https://registry.npmjs.org/react-loading-skeleton/-/react-loading-skeleton-3.1.0.tgz"
   "version" "3.1.0"
 
-"react-loading-spin@^2.1.9":
-  "integrity" "sha512-dU2dEoH+wER6VGY7Lh1OVoECnXNMifvkpsjoxoWth0DXMO9kQl1qYvm8OsXBg/qE+DspCLQRAQtZYZtGy8vajw=="
-  "resolved" "https://registry.npmjs.org/react-loading-spin/-/react-loading-spin-2.1.9.tgz"
-  "version" "2.1.9"
-  dependencies:
-    "react" "^17.0.2"
-    "react-dom" "^17.0.2"
-
 "react-merge-refs@1.1.0":
   "integrity" "sha512-alTKsjEL0dKH/ru1Iyn7vliS2QRcBp9zZPGoWxUOvRGWPUYgjo+V01is7p04It6KhgrzhJGnIj9GgX8W4bZoCQ=="
   "resolved" "https://registry.npmjs.org/react-merge-refs/-/react-merge-refs-1.1.0.tgz"

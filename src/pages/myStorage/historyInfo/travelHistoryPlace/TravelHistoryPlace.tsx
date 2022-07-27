@@ -1,9 +1,8 @@
 
-import React,{useCallback} from 'react'
-import { Link ,useLocation,useNavigate} from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux";
+import React,{useCallback , memo} from 'react'
+import { useLocation,useNavigate} from 'react-router-dom';
+import { useDispatch } from "react-redux";
 import { scrollActions } from '../../../../redux/slice/scrollSlice';
-import { prevPathActions } from '../../../../redux/slice/prevPathSlice';
 import './TravelHistoryPlace.scss';
 
 interface TraveledHisotryPlaceTypeProps {
@@ -74,4 +73,4 @@ function TravelHisotryPlace({ traveledPlace }: TraveledHisotryPlaceTypeProps) {
   );
 }
 
-export default TravelHisotryPlace;
+export default memo(TravelHisotryPlace);
