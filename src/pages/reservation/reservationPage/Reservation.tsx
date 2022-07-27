@@ -13,10 +13,22 @@ import { TOSS } from '../../../constants/url.cosnt';
 import AlertConfirmOne from '../../../common/dialog/AlertConfirmOne'
 import {RootState} from '../../../redux/store'
 
+interface CouponType {
+  couponId: number
+  couponManagerId: number
+  couponType: string
+  discountNum: number
+  expireDt: string
+  isUsed: number
+  isValid: number
+  registDt: string
+  userId: number
+}
+
 
 function Reservation() {
   const { user, room, place, date } = useSelector((state: RootState) => state.persist.reservation);
-  const [couponList, setCouponList] = useState<Array<any>>([]);
+  const [couponList, setCouponList] = useState<Array<CouponType>>([]);
   const [couponDropDownOpen, setCouponDropDownOpen] = useState(false);
   const [selectedCouponId, setSelectedCouponId] = useState(0);
   const [selectCouponDiscount,setSelectCouponDiscount] = useState(0)
@@ -76,7 +88,7 @@ function Reservation() {
     });
   };
 
-  const handleReservationName = (e: any) => {
+  const handleReservationName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setReservationName(e.target.value);
   };
 
