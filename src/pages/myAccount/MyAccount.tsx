@@ -16,6 +16,7 @@ import { deleteUser } from '../../common/api/signup';
 import { MY_ACCOUNT_PATH } from '../../constants/path.const';
 import { myAccount } from '../../common/api/myaccount';
 import { tokenRefresh } from '../../common/api/login';
+import {RootState} from '../../redux/store'
 
 function MyAccount() {
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
@@ -23,13 +24,13 @@ function MyAccount() {
   const [text, setText] = useState('');
   const [items, setItems] = useState({ coupons: 0, points: 0, reviews: 0 });
   const [age, setAge] = useState(0);
-  const pet = useSelector((state: any) => state.persist.user.pet);
+  const pet = useSelector((state: RootState) => state.persist.user.pet);
   const navigation = useNavigate();
   const dispatch = useDispatch();
-  const email = useSelector((state: any) => state.persist.user.user.email);
-  const userId = useSelector((state: any) => state.persist.user.user.id);
-  const dogBirth = useSelector((state: any) => state.persist.user.pet.birthday);
-  const accessToken = useSelector((state: any) => state.token.token);
+  const email = useSelector((state: RootState) => state.persist.user.user.email);
+  const userId = useSelector((state: RootState) => state.persist.user.user.id);
+  const dogBirth = useSelector((state: RootState) => state.persist.user.pet.birthday);
+  const accessToken = useSelector((state: RootState) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
 
   useEffect(() => {
@@ -89,7 +90,7 @@ function MyAccount() {
 
   const deleteHandler = () => {
     deleteUser(
-      userId,
+      userId.toString(),
       (response: AxiosResponse) => {
         console.log(response);
       },

@@ -5,6 +5,7 @@ import { useSelector,useDispatch } from "react-redux";
 import { AxiosResponse } from 'axios';
 import BottomButton from '../../common/components/BottomButton';
 import AlertConfirmOne from '../../common/dialog/AlertConfirmOne'
+import {RootState} from '../../redux/store'
 import  {writeReivew,reviewImageUpload}  from '../../common/api/reivew'
 import { ReactComponent as BigRivewStarActive } from '../../icons/big-review-star-active.svg';
 import { ReactComponent as BigRivewStar } from '../../icons/big-review-star.svg';
@@ -47,8 +48,8 @@ function RiviewWriting() {
   const [reviewCompleted,setReviewCompleted]=useState(false)
   const [reviewTextLengthLimit,setReviewTextLengthLimitd]=useState(false)
   const starRaiting = useRef(5);
-  const userId = useSelector((state: any) => state.persist.user.user.id);
-  const petName = useSelector((state: any) => state.persist.user.pet.name);
+  const userId = useSelector((state: RootState) => state.persist.user.user.id);
+  const petName = useSelector((state: RootState) => state.persist.user.pet.name);
   const dispatch = useDispatch();
   const state = useLocation().state as TraveledHisotryPlaceType;
   const navigate = useNavigate();

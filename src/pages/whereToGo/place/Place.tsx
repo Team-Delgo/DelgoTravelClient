@@ -8,6 +8,7 @@ import AlertConfirm from '../../../common/dialog/AlertConfirm';
 import { scrollActions } from '../../../redux/slice/scrollSlice';
 import { areaActions } from '../../../redux/slice/areaSlice';
 import { prevPathActions } from "../../../redux/slice/prevPathSlice"
+import {RootState} from '../../../redux/store'
 import { ReactComponent as ActiveHeart } from '../../../icons/heart-active.svg';
 import { ReactComponent as Heart } from '../../../icons/heart.svg';
 import {
@@ -34,12 +35,12 @@ interface PlaceType {
 
 function Place({ place,areaTerm }: PlaceTypeProps) {
   const [wishList, setWishList] = useState(place.wishId);
-  const accessToken = useSelector((state: any) => state.token.token);
-  const userId = useSelector((state: any) => state.persist.user.user.id)
+  const accessToken = useSelector((state: RootState) => state.token.token);
+  const userId = useSelector((state: RootState) => state.persist.user.user.id)
   const dispatch = useDispatch();
   const location: any = useLocation();
   const navigate = useNavigate();
-  const isSignIn = useSelector((state: any) => state.persist.user.isSignIn);
+  const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
   const [logInModalOpen, setLogInModalOpen] = useState(false);
 
   const wishListInsert = useCallback(() => {

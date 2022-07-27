@@ -11,7 +11,7 @@ interface RegionType{
 interface PropsType{
   areaTerm:string
   setAreaTerm:Dispatch<SetStateAction<string>>
-  closeRegionSelectionModal:any
+  closeRegionSelectionModal:()=>void
 }
 
 const regions = [

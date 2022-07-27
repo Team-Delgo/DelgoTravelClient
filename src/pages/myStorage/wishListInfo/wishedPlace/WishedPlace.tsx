@@ -6,6 +6,7 @@ import AlertConfirm from '../../../../common/dialog/AlertConfirm';
 import { wishDelete } from '../../../../common/api/wish'
 import { scrollActions } from '../../../../redux/slice/scrollSlice';
 import {prevPathActions} from "../../../../redux/slice/prevPathSlice"
+import {RootState} from '../../../../redux/store'
 import { ReactComponent as ActiveHeart } from '../../../../icons/heart-active.svg';
 import './WishedPlace.scss';
 
@@ -26,7 +27,7 @@ interface PlaceType {
 }
 
 function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch}: WishedPlaceTypeProps) {
-  const accessToken = useSelector((state: any) => state.token.token);
+  const accessToken = useSelector((state: RootState) => state.token.token);
   const [wishListAlertConfirmOpen, setWishListAlertConfirmOpen] = useState(false);
   const dispatch = useDispatch();
   const location: any = useLocation();

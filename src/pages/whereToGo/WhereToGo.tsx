@@ -1,14 +1,12 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable array-callback-return */
 import React, { useState, useEffect, useCallback,useMemo } from 'react'
-import { useNavigate,useLocation,Link} from 'react-router-dom';
+import { useLocation,Link} from 'react-router-dom';
 import { useSelector } from "react-redux";
-import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query'
 import Skeleton , { SkeletonTheme } from 'react-loading-skeleton'
-import Sheet from 'react-modal-sheet';
 import 'react-loading-skeleton/dist/skeleton.css'
 import { getAllPlaces } from '../../common/api/places';
 import { tokenActions } from '../../redux/slice/tokenSlice';
@@ -17,7 +15,7 @@ import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import Footer from '../../common/components/Footer'
 import RegionSelectionModal from './modal/RegionSelectionModal'
 import Place from './place/Place'
-// import {RootState} from '../../redux/store'
+import {RootState} from '../../redux/store'
 import { ReactComponent as BottomArrow } from '../../icons/bottom-arrow.svg';
 import { ReactComponent as DelgoLogo } from '../../icons/delgo-logo.svg';
 import './WhereToGo.scss';
@@ -55,15 +53,15 @@ const areaName = ['경기','제주','전라']
 
 
 function WhereToGo() {
-  const whereToGoAreaName = useSelector((state: any) => state.persist.area.whereToGo)
+  const whereToGoAreaName = useSelector((state: RootState) => state.persist.area.whereToGo)
   const [areaTerm, setAreaTerm] = useState("");
   const [regionSelectionModal, setRegionSelectionModal] = useState(false);
-  const userId = useSelector((state: any) => state.persist.user.user.id);
-  const accessToken = useSelector((state: any) => state.token.token);
+  const userId = useSelector((state: RootState) => state.persist.user.user.id);
+  const accessToken = useSelector((state: RootState) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
-  const { date, dateString } = useSelector((state: any) => state.date);
-  const { whereToGoScrollY } = useSelector((state: any) => state.persist.scroll);
+  const { date, dateString } = useSelector((state: RootState) => state.date);
+  const { whereToGoScrollY } = useSelector((state: RootState) => state.persist.scroll);
   const location: any = useLocation();
   const allPlacesSkeletons = useMemo(()=>AllPlacesSkeletons(),[])
   const startDt =`${date.start.substring(0,4)}-${date.start.substring(4,6)}-${date.start.substring(6,10)}`
@@ -88,8 +86,8 @@ function WhereToGo() {
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
-      window.scrollTo(0, whereToGoScrollY);
-        setAreaTerm(whereToGoAreaName);
+      window.scrollTo(0, whereToGoScrollY.scrollY);
+        setAreaTerm(whereToGoAreaName.areaName);
     } else {
       window.scrollTo(0, 0);
     }

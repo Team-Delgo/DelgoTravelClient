@@ -4,13 +4,14 @@ import { useNavigate} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import Loading from "../../../common/utils/Loading"
 import {bookingRequest} from '../../../common/api/booking'
+import {RootState} from '../../../redux/store'
 import './ReservationWaitingPage.scss';
 
 
 
 
 function ReservationWaitingPage() {
-  const { room, place,date,user,coupon } = useSelector((state: any) => state.persist.reservation);
+  const { room, place,date,user,coupon } = useSelector((state: RootState) => state.persist.reservation);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const urlStr = window.location.href

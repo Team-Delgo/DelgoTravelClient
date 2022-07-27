@@ -8,6 +8,7 @@ import { tokenRefresh } from '../../../common/api/login';
 import { getRecommendedPlace } from '../../../common/api/places';
 import { getBookingHistory } from '../../../common/api/booking';
 import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
+import {RootState} from '../../../redux/store'
 import PopularPlace from './popularPlace/PopularPlace';
 import TravelHisotryPlace from './travelHistoryPlace/TravelHistoryPlace';
 import { ReactComponent as FootPrintActive } from '../../../icons/foot-print-active.svg';
@@ -51,11 +52,11 @@ interface FolderTypeProps {
 function History({currentTab}:FolderTypeProps) {
   const navigation = useNavigate();
   const dispatch = useDispatch();
-  const accessToken = useSelector((state: any) => state.token.token);
+  const accessToken = useSelector((state: RootState) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
-  const userId = useSelector((state: any) => state.persist.user.user.id);
+  const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const location: any = useLocation();
-  const { myStorageY } = useSelector((state: any) => state.persist.scroll);
+  const { myStorageY } = useSelector((state: RootState) => state.persist.scroll);
 
   const {
     isLoading: getRecommendedPlacesIsLoading,
@@ -90,12 +91,10 @@ function History({currentTab}:FolderTypeProps) {
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/reservation-history')) {
-      console.log(location.state?.prevPath.includes('/reservation-history'))
-      console.log(myStorageY)
-      window.scrollTo(0, myStorageY);
+      window.scrollTo(0, myStorageY.scrollY);
     }
     else if (location.state?.prevPath.includes('/review-writing')) {
-      window.scrollTo(0, myStorageY);
+      window.scrollTo(0, myStorageY.scrollY);
     }
     else {
       window.scrollTo(0, 0);

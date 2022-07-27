@@ -7,6 +7,7 @@ import WishedPlace from './wishedPlace/WishedPlace';
 import { getWishedPlaces ,getRecommendedPlace} from '../../../common/api/places';
 import PopularPlace from '../historyInfo/popularPlace/PopularPlace'
 import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
+import {RootState} from '../../../redux/store'
 import { ReactComponent as FootPrintActive } from '../../../icons/foot-print-active.svg';
 import './Folder.scss';
 
@@ -38,11 +39,11 @@ interface FolderTypeProps {
 }
 
 function Folder({currentTab}:FolderTypeProps) {
-  const userId = useSelector((state: any) => state.persist.user.user.id);
-  const accessToken = useSelector((state: any) => state.token.token);
+  const userId = useSelector((state: RootState) => state.persist.user.user.id);
+  const accessToken = useSelector((state: RootState) => state.token.token);
   const dispatch = useDispatch();
   const location: any = useLocation();
-  const { myStorageY } = useSelector((state: any) => state.persist.scroll);
+  const { myStorageY } = useSelector((state: RootState) => state.persist.scroll);
 
   const {
     isLoading: getWishedPlacesIsLoading,
@@ -77,7 +78,7 @@ function Folder({currentTab}:FolderTypeProps) {
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
-      window.scrollTo(0, myStorageY);
+      window.scrollTo(0, myStorageY.scrollY);
     } else {
       window.scrollTo(0, 0);
     }

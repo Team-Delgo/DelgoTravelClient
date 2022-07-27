@@ -5,13 +5,14 @@ import RightArrow from '../../icons/right-arrow.svg';
 import LeftArrow from '../../icons/left-arrow.svg';
 import "./ChangeUserInfo.scss";
 import { MY_ACCOUNT_PATH } from '../../constants/path.const';
+import {RootState} from '../../redux/store'
 
 function ChangeUserInfo() {
   const navigate = useNavigate();
-  const initialNickName = useSelector((state: any) => state.persist.user.user.nickname);
+  const initialNickName = useSelector((state: RootState) => state.persist.user.user.nickname);
   const [nickName, setNickName] = useState(initialNickName);
 
-  const user = useSelector((state: any) => state.persist.user.user);
+  const user = useSelector((state: RootState) => state.persist.user.user);
   const { email, phone } = user;
 
   const phoneNumber = `${phone.slice(0, 3)}-****-${phone.slice(7, 11)}`;

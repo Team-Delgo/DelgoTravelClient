@@ -10,6 +10,7 @@ import { reservationActions } from '../../../redux/slice/reservationSlice';
 import {bookingGetData} from '../../../common/api/booking'
 import ReservationCancleModal from "./modal/ReservationCancleModal";
 import Map from '../../../common/utils/Map';
+import {RootState} from '../../../redux/store'
 import './ReservationConfirmPage.scss';
 
 
@@ -17,7 +18,7 @@ import './ReservationConfirmPage.scss';
 
 function ReservationConfirmPage() {
   const navigate = useNavigate();
-  const accessToken = useSelector((state: any) => state.token.token);
+  const accessToken = useSelector((state: RootState) => state.token.token);
   const dispatch = useDispatch();
   const [reservationCancleModal, setReservationCancleModal] = useState(false);
   const [reservationData, setReservationData] = useState({

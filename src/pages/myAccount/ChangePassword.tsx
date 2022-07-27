@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { login } from '../../common/api/login';
 import { changePassword } from '../../common/api/myaccount';
 import { MY_ACCOUNT_PATH } from '../../constants/path.const';
+import {RootState} from '../../redux/store'
 import LeftArrow from '../../icons/left-arrow.svg';
 import { checkPassword, checkPasswordConfirm } from '../signUpPage/userInfo/ValidCheck';
 import "./ChangePassword.scss";
@@ -17,7 +18,7 @@ function ChangePassword() {
   const [confirmIsTouched, setConfirmIsTouched] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const email = useSelector((state: any) => state.persist.user.user.email);
+  const email = useSelector((state: RootState) => state.persist.user.user.email);
   const isValid = validInput.confirm.length && validInput.password.length;
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
