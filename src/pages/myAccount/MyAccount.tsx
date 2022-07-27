@@ -118,6 +118,7 @@ function MyAccount() {
       {logoutModalOpen && (
         <AlertConfirm
           text={text}
+          buttonText='확인'
           yesButtonHandler={logoutHandler}
           noButtonHandler={() => {
             setLogoutModalOpen(false);
@@ -127,6 +128,7 @@ function MyAccount() {
       {deleteModalOpen && (
         <AlertConfirm
           text={text}
+          buttonText='확인'
           yesButtonHandler={deleteHandler}
           noButtonHandler={() => {
             setDeleteModalOpen(false);

@@ -4,7 +4,7 @@ import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Audio } from 'react-loader-spinner';
+import { Circles,Grid,Oval,Puff,Rings } from 'react-loader-spinner';
 import { ReactComponent as Kakao } from '../../icons/kakao.svg';
 import { ReactComponent as Naver } from '../../icons/naver.svg';
 import { ReactComponent as Apple } from '../../icons/apple.svg';
@@ -14,6 +14,8 @@ import { KAKAO, NAVER } from '../../constants/url.cosnt';
 import Delgo from '../../icons/delgo.svg';
 import { checkEmail } from '../signUpPage/userInfo/ValidCheck';
 import { emailAuth } from '../../common/api/login';
+import Loading from '../../common/utils/Loading';
+
 
 function SignIn() {
   const [email, setEmail] = useState('');
@@ -25,7 +27,9 @@ function SignIn() {
   useEffect(() => {
     dispatch(tokenActions.setToken(''));
     localStorage.removeItem('refreshToken');
-    setLoading(false);
+    setTimeout(() => {
+      setLoading(false);
+    }, 700);
   }, []);
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -52,16 +56,15 @@ function SignIn() {
 
   return (
     <div className="login-signin">
-      {loading ? <Audio
-        height="80"
-        width="80"
-        color='green'
-        ariaLabel='three-dots-loading' />
-        : <><div className="login-title-wrapper">
-          <div className="login-title1">우리집 강아지도</div>
-          <div className="login-title2">델고가요</div>
-          <div className="login-subtitle">동반 장소를 발견하고 저장하세요</div>
-        </div>
+      {loading ? (
+        <Loading/>
+      ) : (
+        <>
+          <div className="login-title-wrapper">
+            <div className="login-title1">우리집 강아지도</div>
+            <div className="login-title2">델고가요</div>
+            <div className="login-subtitle">동반 장소를 발견하고 저장하세요</div>
+          </div>
           <div className="login-input-flex">
             <div className="login-input-box">
               <input
@@ -113,7 +116,9 @@ function SignIn() {
                 <Apple className="icon" />
               </button>
             </div>
-          </div></>}
+          </div>
+        </>
+      )}
     </div>
   );
 }
