@@ -1,15 +1,12 @@
 import React, { useState, useCallback,memo } from 'react'
-import { Link ,useLocation,useNavigate} from 'react-router-dom';
+import {  useLocation,useNavigate} from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import { useMutation } from 'react-query'
 import { AxiosResponse } from 'axios';
 import AlertConfirm from '../../../../common/dialog/AlertConfirm';
-// import Heart from '../../../../common/components/Heart'
 import { wishDelete } from '../../../../common/api/wish'
 import { scrollActions } from '../../../../redux/slice/scrollSlice';
 import {prevPathActions} from "../../../../redux/slice/prevPathSlice"
 import { ReactComponent as ActiveHeart } from '../../../../icons/heart-active.svg';
-import { ReactComponent as Heart } from '../../../../icons/heart.svg';
 import './WishedPlace.scss';
 
 interface WishedPlaceTypeProps {
@@ -89,4 +86,4 @@ function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch
   );
 }
 
-export default WishedPlace
+export default memo(WishedPlace)

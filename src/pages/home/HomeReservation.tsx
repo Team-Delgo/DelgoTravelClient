@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState ,memo } from 'react';
 import { Link} from 'react-router-dom';
 import './HomeReservation.scss';
 import RightArrow from '../../icons/right-arrow-black.svg';
@@ -173,4 +173,4 @@ function HomeReservation(props: { lists: any[], pageChange: (page: number) => vo
   );
 }
 
-export default HomeReservation;
+export default memo(HomeReservation);

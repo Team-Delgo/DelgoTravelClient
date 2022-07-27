@@ -9,6 +9,10 @@ import { reservationActions } from '../../../redux/slice/reservationSlice';
 import { getRoomData } from '../../../common/api/getRoom';
 import ImageSlider from '../../../common/utils/ImageSlider';
 import BottomButton from '../../../common/components/BottomButton';
+import AlertConfirm from '../../../common/dialog/AlertConfirm';
+import {
+  SIGN_IN_PATH,
+} from '../../../constants/path.const';
 import { ReactComponent as LeftArrow } from '../../../icons/left-arrow2.svg';
 import Calender from '../../../common/utils/Calender';
 import { currentRoomActions } from '../../../redux/slice/roomSlice';
@@ -34,10 +38,11 @@ function RoomTypePage() {
   const { date, dateString } = useSelector((state: any) => state.date);
   const { currentPlace } = useSelector((state: any) => state.persist.currentPlace);
   const { currentRoom } = useSelector((state: any) => state.persist.currentRoom);
-  const { user } = useSelector((state: any) => state.persist.user);
+  const { user ,isSignIn } = useSelector((state: any) => state.persist.user);
   const dispatch = useDispatch();
   const location: any = useLocation();
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
+  const [logInModalOpen, setLogInModalOpen] = useState(false);
   const { room } = location.state;
   const [photoList, setPhotoList] = useState<Array<PhotoListType>>([]);
   const [roomNoticeList,setRoomNoticeList] = useState<Array<RoomNoticeType>>([])
@@ -75,31 +80,36 @@ function RoomTypePage() {
   }, [isCalenderOpen]);
 
   const handleReservation = () => {
-    dispatch(
-      reservationActions.reservation({
-        user: { id: user.id,  email: user.email, phone: user.phone },
-        place: {
-          placeId: currentPlace.placeId,
-          name: currentPlace.name,
-          address: currentPlace.address,
-        },
-        room: {
-          roomId: currentRoom.roomId,
-          name: currentRoom.name,
-          price: currentRoom.price,
-          personNum:currentRoom.personNum
-        },
-        date: {
-          date,
-          dateString,
-          checkIn:currentPlace.checkIn.substring(0, 5),
-          checkOut:currentPlace.checkOut.substring(0, 5)
-        },
-      }),
-    );
-    setTimeout(() => {
-      navigate(`/reservation/${currentPlace.placeId}/${room.roomId}/${date.start}/${date.end}`);
-    }, 300);
+    if(isSignIn){
+      dispatch(
+        reservationActions.reservation({
+          user: { id: user.id,  email: user.email, phone: user.phone },
+          place: {
+            placeId: currentPlace.placeId,
+            name: currentPlace.name,
+            address: currentPlace.address,
+          },
+          room: {
+            roomId: currentRoom.roomId,
+            name: currentRoom.name,
+            price: currentRoom.price,
+            personNum:currentRoom.personNum
+          },
+          date: {
+            date,
+            dateString,
+            checkIn:currentPlace.checkIn.substring(0, 5),
+            checkOut:currentPlace.checkOut.substring(0, 5)
+          },
+        }),
+      );
+      setTimeout(() => {
+        navigate(`/reservation/${currentPlace.placeId}/${room.roomId}/${date.start}/${date.end}`);
+      }, 300);
+    }
+    else{
+      setLogInModalOpen(true);
+    }
   };
 
 
@@ -108,6 +118,16 @@ function RoomTypePage() {
   return (
     <>
       {isCalenderOpen && <Calender closeCalender={calenderOpenClose} isRoom roomId={room.roomId} />}
+      {logInModalOpen && <AlertConfirm
+        text="로그인 후 이용 할 수 있습니다."
+        buttonText='로그인'
+        noButtonHandler={() => {
+          setLogInModalOpen(false);
+        }}
+        yesButtonHandler={() => {
+          navigate(SIGN_IN_PATH.MAIN);
+        }}
+      />}
       {/* <Transition in timeout={100} appear>
         {(status) => (
           <div className={`pageSlider pageSlider-${status}`}> */}

@@ -10,6 +10,10 @@ import RoomType from './roomType/RoomType';
 import Reviews from './reviews/Reviews';
 import ImageSlider from '../../common/utils/ImageSlider';
 import Map from '../../common/utils/Map';
+import AlertConfirm from '../../common/dialog/AlertConfirm';
+import {
+  SIGN_IN_PATH,
+} from '../../constants/path.const';
 import { ReactComponent as ActiveHeart } from '../../icons/heart-active.svg';
 import { ReactComponent as Heart } from '../../icons/heart.svg';
 import { getDetailPlace} from '../../common/api/getPlaces';
@@ -62,32 +66,25 @@ interface RoomType {
   roomId: number
 }
 
-function RoomTypeSkeletons() {
-  const RoomTypeSkeletonsArray = [];
-  for (let i = 0; i < 3; i += 1) {
-    RoomTypeSkeletonsArray.push(
-      <div className="room-type-skeleton">
-        <SkeletonTheme baseColor="#f0e9e9" highlightColor="#e4dddd">
-        <Skeleton style={{height:"25vh"}} borderRadius={5} />
-        <Skeleton height={60} borderRadius={5} />
-        </SkeletonTheme>
-      </div>,
-    );
-  }
-  return RoomTypeSkeletonsArray;
+interface NoticeType {
+  contents:Array<string>
+  placeId: number
+  placeNoticeId: number
+  title:string
 }
 
 function DetailPlace() {
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
+  const [logInModalOpen, setLogInModalOpen] = useState(false);
   const { date, dateString } = useSelector((state: any) => state.date);
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const accessToken = useSelector((state: any) => state.token.token);
+  const isSignIn = useSelector((state: any) => state.persist.user.isSignIn);
   const { placeId } = useParams();
   const location: any = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { whereToGoScrollY,detailPlaceScrollY,myStorageY } = useSelector((state: any) => state.persist.scroll);
-  const roomTypeSkeletons = useMemo(()=>RoomTypeSkeletons(),[])
   const detailPlacePrevPath = useSelector((state: any) => state.persist.prevPath.detailPlace);
   const startDt =`${date.start.substring(0,4)}-${date.start.substring(4,6)}-${date.start.substring(6,10)}`
   const endDt = `${date.end.substring(0,4)}-${date.end.substring(4,6)}-${date.end.substring(6,10)}`
@@ -121,7 +118,6 @@ function DetailPlace() {
 
 
   useEffect(() => {
-    console.log(detailPlace?.data.isEditorNoteExist)
     if (location.state?.prevPath.includes('/detail-place')) {
       window.scroll(0, detailPlaceScrollY);
     }
@@ -147,6 +143,7 @@ function DetailPlace() {
   }, [detailPlace]);
 
   const wishListInsert = useCallback(() => {
+    if(isSignIn){
     wishInsert(
       { userId, placeId: Number(detailPlace?.data.place.placeId), accessToken },
       (response: AxiosResponse) => {
@@ -155,8 +152,11 @@ function DetailPlace() {
         }
       },
       dispatch,
-    );
-  }, [detailPlace]);
+    )}
+    else{
+      setLogInModalOpen(true);
+    }
+  }, [detailPlace,isSignIn]);
 
   const wishListDelete = useCallback(() => {
     wishDelete(
@@ -215,6 +215,16 @@ function DetailPlace() {
   return (
     <>
       {isCalenderOpen && <Calender closeCalender={calenderOpenClose} isRoom={false} />}
+      {logInModalOpen && <AlertConfirm
+        text="로그인 후 이용 할 수 있습니다."
+        buttonText='로그인'
+        noButtonHandler={() => {
+          setLogInModalOpen(false);
+        }}
+        yesButtonHandler={() => {
+          navigate(SIGN_IN_PATH.MAIN);
+        }}
+      />}
       {/* <Transition in timeout={100} appear>
         {(status) => ( */}
       {/* <div
@@ -226,13 +236,7 @@ function DetailPlace() {
           > */}
       <div className={classNames('detail-place', { close: isCalenderOpen })}>
         <div style={{ width: '100%' }}>
-          {getDetailPlaceIsLoading ? (
-            <SkeletonTheme baseColor="#f0e9e9" highlightColor="#e4dddd">
-              <Skeleton style={{ height: '375px' }} />
-            </SkeletonTheme>
-          ) : (
-            <ImageSlider images={detailPlace.data.detailPhotoList} />
-          )}
+            <ImageSlider images={detailPlace?.data.detailPhotoList} />
         </div>
         <LeftArrow className="detail-place-previous-page" onClick={moveToPrevPage} />
         <div className="detail-place-heart">
@@ -283,9 +287,8 @@ function DetailPlace() {
           <header className="detail-place-room-select-header">객실선택</header>
         </div>
         <div className="detail-place-room-types">
-          {getDetailPlaceIsLoading
-            ? roomTypeSkeletons
-            : detailPlace.data.roomList.map((room: RoomType) => (
+          {
+          detailPlace?.data.roomList.map((room: RoomType) => (
                 <div aria-hidden="true" onClick={saveDetailPlaceScrollY}>
                   <RoomType
                     key={room.roomId}
@@ -293,7 +296,7 @@ function DetailPlace() {
                     // checkIn={detailPlace.data.place.checkin}
                     // checkOut={detailPlace.data.place.checkout}
                     navigate={() => {
-                      navigate(`/detail-place/${detailPlace.data.place.placeId}/${room.roomId}`, {
+                      navigate(`/detail-place/${detailPlace?.data.place.placeId}/${room.roomId}`, {
                         state: {
                           room,
                         },
@@ -335,7 +338,7 @@ function DetailPlace() {
             ))}
           </div>
         </div> */}
-        {detailPlace?.data.placeNoticeList.map((notice: any) => (
+        {detailPlace?.data.placeNoticeList.map((notice: NoticeType) => (
           <div className="detail-place-notice">
             <div className="detail-place-notice-title">{notice.title}</div>
             <div className="detail-place-notice-content">

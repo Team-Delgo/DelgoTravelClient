@@ -1,8 +1,7 @@
 /* eslint-disable array-callback-return */
 
-import React,{useEffect,useState,useCallback,useRef} from 'react';
-import { useLocation,Link,useParams,useNavigate} from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import React,{useEffect,useState,useCallback} from 'react';
+import { useLocation,Link,useParams} from 'react-router-dom';
 import { Transition  } from 'react-transition-group';
 import Reviews from '../reviews/Reviews';
 import { ReactComponent as LeftArrow } from '../../../icons/left-arrow.svg';
@@ -30,20 +29,19 @@ interface RivewType {
 
 
 function ReviewsPage() {
-  const [reviews, setReviews] = useState<Array<any>>([]);
+  const [reviews, setReviews] = useState<Array<RivewType>>([]);
   const [reviewsCount,setReviewsCount] = useState(0)
   const [checked, setChecked] = useState(false);
   const [imageReviewsCount,setImageReviewsCount] = useState(0)
   const location: any = useLocation();
   const { placeId } = useParams();
-  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0);
     setReviews(location.state.reviews);
     setReviewsCount(location.state.reviews.length)
 
-    const reviewImages = location.state.reviews.filter(function(review:any) {
+    const reviewImages = location.state.reviews.filter(function(review:RivewType) {
       if(review.review.reviewPhotoList.length >0)  {
         return true;
       }
@@ -58,10 +56,8 @@ function ReviewsPage() {
       setReviews(location.state.reviews);
     } else {
       setChecked(!checked);
-      const imageReviews: React.SetStateAction<string[]> = [];
-      console.log(reviews)
-      reviews.map((review: any) => {
-        console.log(review)
+      const imageReviews: Array<RivewType> = [];
+      reviews.map((review: RivewType) => {
         if (review.review.reviewPhotoList.length > 0) {
           imageReviews.push(review);
         }
@@ -69,11 +65,6 @@ function ReviewsPage() {
       setReviews(imageReviews);
     }
   }, [checked, reviews]);
-
-
-  // const moveToPreviousPage = useCallback(() => {
-  //   navigate(-1);
-  // }, []);
 
   return (
     <>
@@ -94,7 +85,7 @@ function ReviewsPage() {
             </header>
             <body className="detail-place-review-page-body">
             {reviews.map((review) => (
-              <Reviews key={review.id} review={review} />
+              <Reviews key={review.review.bookingId} review={review} />
             ))}
             </body>
           {/* </div>

@@ -2,7 +2,7 @@ import React,{useEffect} from 'react';
 import { useSelector,useDispatch } from "react-redux";
 import { useNavigate} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
-import LoadingSpin from "react-loading-spin";
+import Loading from "../../../common/utils/Loading"
 import {bookingRequest} from '../../../common/api/booking'
 import './ReservationWaitingPage.scss';
 
@@ -10,7 +10,6 @@ import './ReservationWaitingPage.scss';
 
 
 function ReservationWaitingPage() {
-  // const {user} = useSelector((state: any) => state.persist.user);
   const { room, place,date,user,coupon } = useSelector((state: any) => state.persist.reservation);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,9 +39,6 @@ function ReservationWaitingPage() {
         console.log(response.data.data)
         if (response.data.data !== null) {
           navigate(`/reservation-confirm/${response.data.data}`);
-          // setTimeout(() => {
-          //   navigate(`/reservation-confirm/${response.data.data}`);
-          // }, 3000);
         }
       },
       dispatch,
@@ -50,9 +46,7 @@ function ReservationWaitingPage() {
   }, []);
 
   return (
-    <div className="loading-spinner">
-      <LoadingSpin primaryColor="#FF9162" secondaryColor="B0A69D"/>
-    </div>
+    <Loading/>
   );
 }
 

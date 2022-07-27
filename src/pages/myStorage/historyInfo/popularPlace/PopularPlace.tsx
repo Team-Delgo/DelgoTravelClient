@@ -1,4 +1,4 @@
-import React,{useState,useCallback} from 'react'
+import React,{useState,useCallback , memo} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation , useNavigate} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
@@ -80,4 +80,4 @@ function PopularPlace({ place,getRecommendedPlacesRefetch }: PopularPlaceTypePro
   );
 }
 
-export default PopularPlace;
+export default memo(PopularPlace);
