@@ -3,21 +3,75 @@
     color:#3E382F;
     .reservation-cancle-place-info {
         margin: auto;
-        font-weight: 500;
         width: 95%;
-        height: 20vh;
+        // height: 20vh;
         border: 1px solid #E8E2DC;
         border-radius: 7px;
+        font-weight: 400;
         &-name{
             font-weight: 700;
             font-size: 18px;
             padding: 5% 0% 3% 0%;
         }
+        &-date{
+            font-size: 14px;
+            padding-bottom: 10px;
+        }
         &-address{
+            font-size: 12px;
             padding-bottom: 3px;
+            color:#8A8A8A;
         }
         &-room-type{
-            padding-bottom: 10px;
+            font-size: 12px;
+            padding-bottom: 5%;
+            color:#8A8A8A;
+        }
+        .reservation-cancle-devide{
+            width: 85%;
+            height: 1.5px;
+            background-color: #F3EFEA;
+            margin:auto
+        }
+        .reservation-cancle-payment-price{
+            display: flex;
+            justify-content: space-between;
+            padding:20px 60px 13px 60px;
+            &-label{
+                font-size: 14px;
+                font-weight: 400;
+            }
+            &-amount{
+                font-size: 16px;
+                font-weight: 700;
+            }
+        }
+        .reservation-cancle-cancellation-fee{
+            display: flex;
+            justify-content: space-between;
+            padding: 0 60px;
+            &-label{
+                font-size: 14px;
+                font-weight: 400;
+            }
+            &-amount{
+                font-size: 16px;
+                font-weight: 700;
+            }
+        }
+        .reservation-cancle-refund-price{
+            display: flex;
+            justify-content: space-between;
+            padding:13px 60px 20px 60px;
+            &-label{
+                font-size: 14px;
+                font-weight: 400;
+            }
+            &-amount{
+                font-size: 16px;
+                font-weight: 700;
+                color:#FF9162;
+            }
         }
     }
     .reservation-cancle-button-container{
@@ -32,6 +86,7 @@
             border-radius: 7px;
             width: 47%;
             height: 56px;
+            font-weight: bold;
         }
     }
 }

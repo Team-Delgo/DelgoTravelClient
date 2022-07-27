@@ -344,7 +344,7 @@ function DetailPlace() {
             <div className="detail-place-notice-content">
               {notice.contents.map((content: string, index: number) => (
                 <div>
-                  {index + 1}.{content}
+                  * {content}
                 </div>
               ))}
             </div>

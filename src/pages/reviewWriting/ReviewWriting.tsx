@@ -306,7 +306,7 @@ function RiviewWriting() {
         <div className="review-writing-body-file">
           <div className="review-writing-body-file-uploader" aria-hidden="true" onClick={handleOpenFileUpload}>
             <Camera />
-            <input type="file" accept="image/jpeg,image/gif,image/png" multiple ref={fileUploadRef} onChange={handleUploadFile} style={{ display: 'none' }} />
+            <input type="file" accept="image/jpeg,image/gif,image/png;capture=filesystem" multiple ref={fileUploadRef} onChange={handleUploadFile} style={{ display: 'none' }} />
           </div>
           {images.map((image) => (
             <div className="review-writing-body-file-image-container">
