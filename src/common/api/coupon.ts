@@ -15,5 +15,11 @@ async function getCouponList(
       useErrorHandlers(dispatch, error);
     }
   }
+
+  async function getCouponList2(userId: number) {
+    const result = axios.get(`${url}coupon/getCouponList?userId=${userId}`)
+    console.log(result)
+    // return data
+  }
   
   export { getCouponList};

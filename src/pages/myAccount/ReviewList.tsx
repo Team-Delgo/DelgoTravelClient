@@ -3,33 +3,65 @@ import classNames from "classnames";
 import { AxiosResponse } from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getReviewList } from "../../common/api/myaccount";
+import { useQuery } from 'react-query';
+import { getMyReviewList } from "../../common/api/reivew";
+import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import LeftArrow from '../../icons/left-arrow.svg';
 import RightArrow from '../../icons/right-arrow-thin.svg';
 import Star from "../../icons/big-review-star-active.svg";
 import GrayStar from "../../icons/big-review-star.svg";
 import './ReviewList.scss';
 
+interface ReviewType {
+  placeName: string
+  profileUrl: string
+  review: {
+    bookingId: string
+    placeId: number
+    rating: number
+    registDt: string
+    reviewId: number
+    reviewPhotoList:Array<ReviewPhotoListType>
+    roomId: number
+    text: string
+    updateDt: null
+    userId: number
+  }
+  roomName: string
+  userName: string
+}
+
+interface ReviewPhotoListType {
+  registDt: string
+  reviewPhotoId: number
+  url: string
+}
+
 function ReviewList() {
-  const [reviewList, setReviewList] = useState([]);
   const userId = useSelector((state:any)=>state.persist.user.user.id);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    callReviewList();
-  }, []);
 
-  const callReviewList = async () => {
-    const data = { userId };
-    getReviewList(data, (response: AxiosResponse) => {
-      const { data } = response.data;
-      console.log(data);
-      setReviewList(data);
-    }, dispatch)
-  };
+  const { isLoading, data: reviewList } = useQuery(
+    'getMyReviewList',
+    () => getMyReviewList(userId),
+    {
+      cacheTime: 1000 * 60 * 5,
+      staleTime: 1000 * 60 * 3,
+      refetchInterval: false,
+      onError: (error: any) => {
+        useErrorHandlers(dispatch, error)
+      }
+    },
+  );
 
-  const reivews = reviewList.map((review: any) => {
+  if (isLoading) {
+    return <div className="reviewlist">&nbsp;</div>
+  }
+
+
+  const reivews = reviewList?.data.map((review: ReviewType) => {
     const temp = review.review.registDt;
     const date = `${temp.slice(2, 4)}.${temp.slice(5, 7)}.${temp.slice(8, 10)}`
     const photos = review.review.reviewPhotoList;
@@ -106,7 +138,7 @@ function ReviewList() {
 
   return <div className="reviewlist">
     <img aria-hidden="true" className="reviewlist-back" src={LeftArrow} alt="back" onClick={() => { navigate(-1); }} />
-    <div className="reviewlist-header">내가 쓴 리뷰 {reviewList.length}개</div>
+    <div className="reviewlist-header">내가 쓴 리뷰 {reviewList?.data.length}개</div>
     {reivews}
   </div>;
 };

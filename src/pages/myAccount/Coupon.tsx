@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef ,useCallback } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +8,7 @@ import './Coupon.scss';
 import { tokenActions } from '../../redux/slice/tokenSlice';
 import { url } from '../../constants/url.cosnt';
 import { tokenRefresh } from '../../common/api/login';
+import AlertConfirmOne from '../../common/dialog/AlertConfirmOne'
 import { ReactComponent as FootPrintActive } from "../../icons/foot-print-active.svg";
 import CouponModal from './CouponModal';
 
@@ -26,6 +27,7 @@ function Coupon() {
   const [scheduledCoupon, setScheduledCoupon] = useState<number>(0);
   const [couponList, setCouponList] = useState<CouponType[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [couponRegistrationCompleted ,setCouponRegistrationCompleted]=useState(false)
   const userId = useSelector((state: any) => state.persist.user.user.id);
   const accessToken = useSelector((state: any) => state.token.token);
   const dispatch = useDispatch();
@@ -96,6 +98,13 @@ function Coupon() {
       setIsModalOpen(false);
     }
   };
+  const confirmCouponRegisterCompletedOpen = useCallback(() => {
+    setCouponRegistrationCompleted(true)
+  },[])
+
+  const confirmCouponRegisterCompletedClose = useCallback(() => {
+    setCouponRegistrationCompleted(false)
+  },[])
 
   const existCoupon = couponList.map((coupon) => {
     const priceString = coupon.discountNum.toString();
@@ -115,7 +124,8 @@ function Coupon() {
 
   return (
     <div className="coupon">
-      {isModalOpen && <CouponModal closeModal={modalClose} />}
+      <CouponModal openModal={isModalOpen} closeModal={modalClose} confirmCouponRegisterCompletedOpen={confirmCouponRegisterCompletedOpen}/>
+      {couponRegistrationCompleted && <AlertConfirmOne text="쿠폰 등록이 완료 되었습니다" buttonHandler={confirmCouponRegisterCompletedClose} />}
       <div className="coupon-backdrop" aria-hidden="true" onClick={modalClose}>
         <div aria-hidden="true" className="myaccount-back" onClick={() => navigate(-1)}>
           <Arrow />
