@@ -4,7 +4,7 @@ import { useNavigate ,useLocation ,useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg'
 import BottomButton from '../../common/components/BottomButton';
-import { getEditorNotePlace } from '../../common/api/getPlaces';
+import { getEditorNotePlace } from '../../common/api/places';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import {prevPathActions} from "../../redux/slice/prevPathSlice"
 import "./EditorNote.scss";

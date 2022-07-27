@@ -5,7 +5,7 @@ import { AxiosResponse } from 'axios';
 import { useQuery } from 'react-query'
 import { tokenActions } from '../../../redux/slice/tokenSlice';
 import { tokenRefresh } from '../../../common/api/login';
-import { getRecommendedPlace } from '../../../common/api/getPlaces';
+import { getRecommendedPlace } from '../../../common/api/places';
 import { getBookingHistory } from '../../../common/api/booking';
 import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
 import PopularPlace from './popularPlace/PopularPlace';
