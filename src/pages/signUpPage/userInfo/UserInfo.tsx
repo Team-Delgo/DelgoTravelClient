@@ -7,7 +7,8 @@ import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import './UserInfo.scss';
 import { SIGN_UP_PATH } from '../../../constants/path.const';
 import { checkEmail, checkPassword, checkPasswordConfirm, checkNickname } from './ValidCheck';
-import { emailCheck } from '../../../common/api/signup';
+import { emailCheck, nicknameCheck } from '../../../common/api/signup';
+import Check from '../../../icons/check.svg';
 
 interface LocationState {
   phone: string;
@@ -39,17 +40,13 @@ function UserInfo() {
   const [confirmIsTouched, setConfirmIsTouched] = useState(false);
   const [emailDuplicated, setEmailDuplicated] = useState(true);
   const [emailDupCheckFail, setEmailDupCheckFail] = useState(false);
+  const [nicknameDuplicated, setNicknameDuplicated] = useState(true);
+  const [nicknameDupCheckFail, setNicknameDupCheckFail] = useState(false);
   const emailRef = useRef<any>();
+  const nicknameRef = useRef<any>();
   const firstPageIsValid =
     validInput.email.length && validInput.password.length && validInput.confirm.length && !emailDuplicated;
   console.log(validInput);
-  useEffect(() => {
-    if (!emailDuplicated && validInput.email.length) {
-      setFeedback((prev: Input) => {
-        return { ...prev, email: '사용 가능한 이메일입니다.' };
-      });
-    }
-  }, [feedback.email, emailDuplicated]);
 
   const emailValidCheck = (value: string) => {
     const response = checkEmail(value);
@@ -175,21 +172,43 @@ function UserInfo() {
       passwordConfirmValidCheck(value);
     } else {
       nicknameValidCheck(value);
+      setNicknameDuplicated(true);
+      setNicknameDupCheckFail(false);
     }
   };
 
   const emailDupCheck = async () => {
-    emailCheck(
-      enteredInput.email,
+    if (validInput.email) {
+      emailCheck(
+        enteredInput.email,
+        (response: AxiosResponse) => {
+          const { code } = response.data;
+          if (code === 200) {
+            setEmailDuplicated(false);
+            setEmailDupCheckFail(false);
+          } else {
+            setEmailDuplicated(true);
+            setEmailDupCheckFail(true);
+            emailRef.current.focus();
+          }
+        },
+        dispatch,
+      );
+    }
+  };
+
+  const nicknameDupCheck = () => {
+    nicknameCheck(
+      enteredInput.nickname,
       (response: AxiosResponse) => {
         const { code } = response.data;
         if (code === 200) {
-          setEmailDuplicated(false);
-          setEmailDupCheckFail(false);
+          setNicknameDuplicated(false);
+          setNicknameDupCheckFail(false);
         } else {
-          setEmailDuplicated(true);
-          setEmailDupCheckFail(true);
-          emailRef.current.focus();
+          setNicknameDuplicated(true);
+          setNicknameDupCheckFail(true);
+          nicknameRef.current.focus();
         }
       },
       dispatch,
@@ -211,7 +230,7 @@ function UserInfo() {
           <span className="login-span">이메일</span>
           <div className="login-input-box">
             <input
-              className={classNames('login-input', { invalid: feedback.email.length && emailDuplicated })}
+              className={classNames('login-input email', { invalid: feedback.email || emailDupCheckFail })}
               placeholder="이메일"
               id={Id.EMAIL}
               value={enteredInput.email}
@@ -219,6 +238,11 @@ function UserInfo() {
               onChange={inputChangeHandler}
               ref={emailRef}
             />
+            {!emailDuplicated && validInput.email && (
+              <span className={classNames('login-input-clear', { checked: !emailDuplicated })}>
+                <img src={Check} alt="check" />
+              </span>
+            )}
             <p className={classNames('input-feedback', { fine: !emailDuplicated && validInput.email.length })}>
               {emailDupCheckFail ? '이미 사용중인 이메일입니다.' : feedback.email}
             </p>
@@ -266,19 +290,32 @@ function UserInfo() {
           <span className="login-span">닉네임</span>
           <div className="login-input-box">
             <input
-              className={classNames('login-input', { invalid: feedback.nickname.length })}
+              className={classNames('login-input email', {
+                invalid: feedback.nickname || nicknameDupCheckFail,
+              })}
               placeholder="닉네임(공백, 특수문자 제외)"
               id={Id.NICKNAME}
               value={enteredInput.nickname}
               autoComplete="off"
               onChange={inputChangeHandler}
+              ref={nicknameRef}
             />
-            <p className="input-feedback">{feedback.nickname}</p>
+            {!nicknameDuplicated && validInput.nickname && (
+              <span className={classNames('login-input-clear', { checked: !nicknameDuplicated })}>
+                <img src={Check} alt="check" />
+              </span>
+            )}
+            <p className={classNames('input-feedback', { fine: !nicknameDuplicated && validInput.nickname.length })}>
+              {nicknameDupCheckFail ? '이미 사용중인 닉네임입니다.' : feedback.nickname}
+            </p>
+            <span aria-hidden="true" className="input-email-check" onClick={nicknameDupCheck}>
+              중복확인
+            </span>
           </div>
           <button
             type="button"
-            disabled={!validInput.nickname.length}
-            className={classNames('login-button', { active: validInput.nickname.length })}
+            disabled={!validInput.nickname.length || nicknameDuplicated}
+            className={classNames('login-button', { active: validInput.nickname.length && !nicknameDuplicated })}
             onClick={submitHandler}
           >
             다음

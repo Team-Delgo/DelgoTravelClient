@@ -20,7 +20,11 @@
     text-indent: 22px;
     color: #3e382f;
     font-size: 16px;
+    &.email{
+      margin-top: 0;
+    }
     &.password {
+      margin-top: 0;
       font-size: 25px;
     }
     font-weight: 500;

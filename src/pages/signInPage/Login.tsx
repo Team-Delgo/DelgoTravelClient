@@ -10,6 +10,7 @@ import ToastMessage from '../../common/dialog/ToastMessage';
 import { login } from '../../common/api/login';
 import './Login.scss';
 import { checkEmail, checkPasswordLogin } from '../signUpPage/userInfo/ValidCheck';
+import Loading from '../../common/utils/Loading';
 
 interface Input {
   email: string;
@@ -24,6 +25,7 @@ function Login() {
   const [enteredInput, setEnteredInput] = useState<Input>({ email: '', password: '' });
   const [loginFailed, setLoginFailed] = useState(false);
   const [feedback, setFeedback] = useState({ email: '', password: '' });
+  const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigate();
   const dispatch = useDispatch();
   const state = useLocation().state as State;
@@ -48,6 +50,7 @@ function Login() {
   };
 
   const loginFetch = () => {
+    setIsLoading(true);
     login(
       {email,password:enteredInput.password},
       (response: AxiosResponse) => {
@@ -79,7 +82,7 @@ function Login() {
           const refreshToken = response.headers.authorization_refresh;
           dispatch(tokenActions.setToken(accessToken));
           localStorage.setItem('refreshToken', refreshToken);
-          navigation('/');
+          navigation('/',{replace:true});
         } else if (code === 304) {
           setFeedback((prev) => {
             return { ...prev, password: '비밀번호를 확인하세요' };
@@ -109,6 +112,7 @@ function Login() {
 
   return (
     <div className="login-signin">
+      {isLoading && <Loading/>}
       <div aria-hidden="true" className="login-back" onClick={() => navigation(-1)}>
         <Arrow />
       </div>

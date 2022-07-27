@@ -24,6 +24,19 @@ async function emailCheck(email: string, success: (data: AxiosResponse) => void,
     });
 }
 
+async function nicknameCheck(name: string, success: (data: AxiosResponse) => void, dispatch: any) {
+  await axios
+    .get(`${url}nameCheck`, {
+      params: { name },
+    })
+    .then((data) => {
+      success(data);
+    })
+    .catch((error) => {
+      useErrorHandlers(dispatch, error);
+    });
+}
+
 async function signup(info: SignUpData, success: (data: AxiosResponse) => void, dispatch: any) {
   const { nickname, email, password, phone, pet } = info;
   await axios
@@ -122,4 +135,13 @@ async function petImageUpload(formdata: FormData, success: (data: AxiosResponse)
     });
 }
 
-export { emailCheck, signup, deleteUser, phoneSendMessageForFind, phoneCheckNumber, phoneSendMessage, petImageUpload };
+export {
+  emailCheck,
+  nicknameCheck,
+  signup,
+  deleteUser,
+  phoneSendMessageForFind,
+  phoneCheckNumber,
+  phoneSendMessage,
+  petImageUpload,
+};
