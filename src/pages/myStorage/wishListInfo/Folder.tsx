@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useQuery } from 'react-query'
 import { useDispatch } from 'react-redux';
 import WishedPlace from './wishedPlace/WishedPlace';
-import { getWishedPlaces ,getRecommendedPlace} from '../../../common/api/getPlaces';
+import { getWishedPlaces ,getRecommendedPlace} from '../../../common/api/places';
 import PopularPlace from '../historyInfo/popularPlace/PopularPlace'
 import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
 import { ReactComponent as FootPrintActive } from '../../../icons/foot-print-active.svg';

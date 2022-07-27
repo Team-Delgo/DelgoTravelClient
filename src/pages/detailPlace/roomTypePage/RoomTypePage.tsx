@@ -6,7 +6,7 @@ import { Transition  } from 'react-transition-group';
 import { AxiosResponse } from 'axios';
 import Skeleton , { SkeletonTheme } from 'react-loading-skeleton'
 import { reservationActions } from '../../../redux/slice/reservationSlice';
-import { getRoomData } from '../../../common/api/getRoom';
+import { getRoomData } from '../../../common/api/room';
 import ImageSlider from '../../../common/utils/ImageSlider';
 import BottomButton from '../../../common/components/BottomButton';
 import AlertConfirm from '../../../common/dialog/AlertConfirm';

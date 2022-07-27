@@ -9,7 +9,7 @@ import RecommendedPlaces from './recommenedPlaces/RecommendedPlaces';
 import { tokenActions } from '../../redux/slice/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
 import { bookingGetDataByMain } from '../../common/api/booking';
-import { getRecommendedPlace , getEditorNotePlacesAll } from '../../common/api/getPlaces';
+import { getRecommendedPlace , getEditorNotePlacesAll } from '../../common/api/places';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import './Home.scss';
 import HomeReservation from './HomeReservation';
