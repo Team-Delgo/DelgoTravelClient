@@ -1,5 +1,5 @@
-import React, { useCallback,useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ReactComponent as Home } from '../../icons/home.svg';
 import { ReactComponent as Search } from '../../icons/search.svg';
 import { ReactComponent as Bag } from '../../icons/bag.svg';
@@ -13,88 +13,87 @@ import './Footer.scss';
 
 function Footer() {
   const location = useLocation();
-  const [OS,setOS] = useState("android") 
+  const [OS, setOS] = useState("android")
+  const navigate = useNavigate();
 
   useEffect(() => {
     const varUA = navigator.userAgent.toLowerCase();
-    // if (varUA.indexOf('android') > -1) {
-    // } else 
     if (varUA.indexOf('iphone') > -1 || varUA.indexOf('ipad') > -1 || varUA.indexOf('ipod') > -1) {
       setOS('ios');
     }
   }, []);
 
-  const goToTopScreen = useCallback(() => {
+  const moveToTopScreen = useCallback(() => {
     window.scroll({ top: 0, behavior: 'smooth' });
+  }, []);
+
+  const moveToMyStoragePage = useCallback(() => {
+    navigate(MY_STORAGE_PATH);
+  }, []);
+
+  const moveToMyAccountPage = useCallback(() => {
+    navigate(MY_ACCOUNT_PATH.MAIN);
   }, []);
 
   return (
     <div className="footer">
-      <div className={ OS==="android" ? 'home-icon-android' : 'home-icon-ios'}  aria-hidden="true" onClick={goToTopScreen}>
+      <div className={OS === "android" ? 'home-icon-android' : 'home-icon-ios'}>
         {location.pathname === ROOT_PATH ? (
-          <>
+          <div aria-hidden="true" onClick={moveToTopScreen}>
             <Link to={ROOT_PATH}>
               <HomeActive />
             </Link>
-            <div className={ OS==="android" ? "footer-text-active-android" : "footer-text-active-ios"}>홈</div>
-          </>
+            <div className={OS === "android" ? "footer-text-active-android" : "footer-text-active-ios"}>홈</div>
+          </div>
         ) : (
           <>
             <Link to={ROOT_PATH}>
               <Home />
             </Link>
-            <div className={ OS==="android" ? "footer-text-android" : "footer-text-ios"}>홈</div>
+            <div className={OS === "android" ? "footer-text-android" : "footer-text-ios"}>홈</div>
           </>
         )}
       </div>
-      <div className={ OS==="android" ? 'search-icon-android' : 'search-icon-ios'} aria-hidden="true" onClick={goToTopScreen}>
+      <div className={OS === "android" ? 'search-icon-android' : 'search-icon-ios'}>
         {location.pathname === WHERE_TO_GO_PATH ? (
-          <>
+          <div aria-hidden="true" onClick={moveToTopScreen}>
             <Link to={WHERE_TO_GO_PATH}>
               <SearchActive />
             </Link>
-            <div className={ OS==="android" ? "footer-text-active-android" : "footer-text-active-ios"}>찾기</div>
-          </>
+            <div className={OS === "android" ? "footer-text-active-android" : "footer-text-active-ios"}>찾기</div>
+          </div>
         ) : (
           <>
             <Link to={WHERE_TO_GO_PATH}>
               <Search />
             </Link>
-            <div className={ OS==="android" ? "footer-text-android" : "footer-text-ios"}>찾기</div>
+            <div className={OS === "android" ? "footer-text-android" : "footer-text-ios"}>찾기</div>
           </>
         )}
       </div>
-      <div className={ OS==="android" ? 'bag-icon-android' : 'bag-icon-ios'}>
+      <div className={OS === "android" ? 'bag-icon-android' : 'bag-icon-ios'} aria-hidden="true" onClick={moveToMyStoragePage}>
         {location.pathname === MY_STORAGE_PATH ? (
           <>
-            <Link to={MY_STORAGE_PATH}>
-              <BagActive />
-            </Link>
-            <div className={ OS==="android" ? "footer-text-active-android" : "footer-text-active-ios"}>내 여행</div>
+            <BagActive />
+            <div className={OS === "android" ? "footer-text-active-android" : "footer-text-active-ios"}>내 여행</div>
           </>
         ) : (
           <>
-            <Link to={MY_STORAGE_PATH}>
-              <Bag />
-            </Link>
-            <div className={ OS==="android" ? "footer-text-android" : "footer-text-ios"}>내 여행</div>
+            <Bag />
+            <div className={OS === "android" ? "footer-text-android" : "footer-text-ios"}>내 여행</div>
           </>
         )}
       </div>
-      <div className={ OS==="android" ? 'person-icon-android' : 'person-icon-ios'}>
+      <div className={OS === "android" ? 'person-icon-android' : 'person-icon-ios'} aria-hidden="true" onClick={moveToMyAccountPage}>
         {location.pathname === MY_ACCOUNT_PATH.MAIN ? (
           <>
-            <Link to={MY_ACCOUNT_PATH.MAIN}>
-              <PersonActive />
-            </Link>
-            <div className={ OS==="android" ? "footer-text-active-android" : "footer-text-active-ios"}>내 정보</div>
+            <PersonActive />
+            <div className={OS === "android" ? "footer-text-active-android" : "footer-text-active-ios"}>내 정보</div>
           </>
         ) : (
           <>
-            <Link to={MY_ACCOUNT_PATH.MAIN}>
-              <Person />
-            </Link>
-            <div className={ OS==="android" ? "footer-text-android" : "footer-text-ios"}>내 정보</div>
+            <Person />
+            <div className={OS === "android" ? "footer-text-android" : "footer-text-ios"}>내 정보</div>
           </>
         )}
       </div>

@@ -190,7 +190,7 @@ function Reservation() {
         <div className="coupon-sale">
           <div className="reservation-label">쿠폰 사용</div>
           <div className="coupon-sale-amount">
-            {selectCouponDiscount === 0 ? <>0원</> : <>-{selectCouponDiscount.toLocaleString()}원</>}
+            {selectCouponDiscount === 0 ? <>-0원</> : <>-{selectCouponDiscount.toLocaleString()}원</>}
           </div>
         </div>
         {couponDropDownOpen === false ? (
