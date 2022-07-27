@@ -34,12 +34,9 @@ interface ReviewPhotoType {
   url: string
 }
 
-function Reviews({ review }: any) {
+function Reviews({ review }: RivewTypeProps) {
   const reviewStarCount = useMemo(() => reviewStarComponents(), [])
   const [moreDescription, setMoreDescription] = useState(false)
-
-  console.log(review)
-
 
   function reviewStarComponents() {
     const reviewStarArray = [];
@@ -91,7 +88,7 @@ function Reviews({ review }: any) {
           <div className="review-content-description">{review.review.text}</div>
         )}
         <div className="review-content-image-container">
-          {review.review.reviewPhotoList.map((image:any )=> (
+          {review.review.reviewPhotoList.map((image:ReviewPhotoType )=> (
             <img src={image.url} alt="profile-img" />
           ))}
         </div>

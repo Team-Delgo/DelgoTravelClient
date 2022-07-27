@@ -9,22 +9,28 @@ import { ReactComponent as ReviewStar } from '../../../icons/review-star.svg';
 import './ReviewsPage.scss';
 
 interface RivewType {
-  placeName: string;
-  profileUrl: string;
+  placeName: string
+  profileUrl: string
   review: {
     bookingId: string
     placeId: number
     rating: number
     registDt: string
     reviewId: number
-    reviewPhotoList:Array<string>
     roomId: number
     text: string
     updateDt: null
     userId: number
+    reviewPhotoList: Array<ReviewPhotoType>
   };
-  roomName: string;
-  userName: string;
+  roomName: string
+  userName: string
+}
+
+interface ReviewPhotoType {
+  registDt: string
+  reviewPhotoId: number
+  url: string
 }
 
 
@@ -84,7 +90,7 @@ function ReviewsPage() {
               <span className="detail-place-review-page-header-image-review"> 사진 리뷰만 보기({imageReviewsCount}개)</span>
             </header>
             <body className="detail-place-review-page-body">
-            {reviews.map((review) => (
+            {reviews.map((review:RivewType) => (
               <Reviews key={review.review.bookingId} review={review} />
             ))}
             </body>

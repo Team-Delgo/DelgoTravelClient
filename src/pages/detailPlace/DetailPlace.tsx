@@ -1,10 +1,9 @@
-import React, { useState, useCallback, useEffect,useMemo } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useNavigate,useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
 import { Transition  } from 'react-transition-group';
-import Skeleton , { SkeletonTheme } from 'react-loading-skeleton'
 import { useQuery } from 'react-query'
 import RoomType from './roomType/RoomType';
 import Reviews from './reviews/Reviews';
@@ -26,6 +25,7 @@ import { scrollActions } from '../../redux/slice/scrollSlice';
 import './DetailPlace.scss';
 import Calender from '../../common/utils/Calender';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
+import Notice from './notice/Notice'
 
 
 interface RivewType {
@@ -104,14 +104,18 @@ function DetailPlace() {
     },
   });
 
-  const { isLoading: getDetailPlaceIsLoading2, data: detailPlaceRivews } = useQuery('getDetailPlaceRivews', () => getDetailPlaceRivews(placeId as string), {
-    cacheTime: 1000 * 60 * 5,
-    staleTime: 1000 * 60 * 3,
-    refetchInterval: false,
-    onError: (error: any) => {
-      useErrorHandlers(dispatch, error);
+  const { isLoading: getDetailPlaceIsLoading2, data: detailPlaceRivews } = useQuery(
+    'getDetailPlaceRivews',
+    () => getDetailPlaceRivews(placeId as string),
+    {
+      cacheTime: 1000 * 60 * 5,
+      staleTime: 1000 * 60 * 3,
+      refetchInterval: false,
+      onError: (error: any) => {
+        useErrorHandlers(dispatch, error);
+      },
     },
-  });
+  );
 
   useEffect(() => {
     console.log(detailPlacePrevPath)
@@ -296,8 +300,6 @@ function DetailPlace() {
                   <RoomType
                     key={room.roomId}
                     room={room}
-                    // checkIn={detailPlace.data.place.checkin}
-                    // checkOut={detailPlace.data.place.checkout}
                     navigate={() => {
                       navigate(`/detail-place/${detailPlace?.data.place.placeId}/${room.roomId}`, {
                         state: {
@@ -333,25 +335,8 @@ function DetailPlace() {
             </body>
           </div>
         )}
-        {/* <div className="detail-place-facility">
-          <header className="detail-place-facility-header">편의시설 및 서비스</header>
-          <div className="detail-place-facility-image-container">
-            {service.map((url) => (
-              <img src={url} alt="service-img" />
-            ))}
-          </div>
-        </div> */}
         {detailPlace?.data.placeNoticeList.map((notice: NoticeType) => (
-          <div className="detail-place-notice">
-            <div className="detail-place-notice-title">{notice.title}</div>
-            <div className="detail-place-notice-content">
-              {notice.contents.map((content: string, index: number) => (
-                <div>
-                  * {content}
-                </div>
-              ))}
-            </div>
-          </div>
+          <Notice notice={notice} key={notice.placeNoticeId}/>
         ))}
         <div className="detail-place-map">
           <header className="detail-place-map-header">지도</header>
