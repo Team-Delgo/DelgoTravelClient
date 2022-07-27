@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from 'react-query';
 import { getMyReviewList } from "../../common/api/reivew";
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
+import {RootState} from '../../redux/store'
 import LeftArrow from '../../icons/left-arrow.svg';
 import RightArrow from '../../icons/right-arrow-thin.svg';
 import Star from "../../icons/big-review-star-active.svg";
@@ -38,7 +39,7 @@ interface ReviewPhotoListType {
 }
 
 function ReviewList() {
-  const userId = useSelector((state:any)=>state.persist.user.user.id);
+  const userId = useSelector((state:RootState)=>state.persist.user.user.id);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

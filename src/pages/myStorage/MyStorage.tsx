@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { tokenActions } from '../../redux/slice/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
 import Footer from '../../common/components/Footer';
+import {RootState} from '../../redux/store'
 import Folder from './wishListInfo/Folder';
 import History from './historyInfo/History';
 import './MyStorage.scss';
@@ -15,7 +16,7 @@ function MyStorage() {
   const [currentTab, setCurrentTab] = useState(0);
   const navigation = useNavigate();
   const dispatch = useDispatch();
-  const accessToken = useSelector((state: any) => state.token.token);
+  const accessToken = useSelector((state: RootState) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
 
   useEffect(() => {

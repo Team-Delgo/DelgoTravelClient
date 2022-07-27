@@ -14,6 +14,7 @@ import Check from '../../icons/check.svg';
 import { userActions } from '../../redux/slice/userSlice';
 import { MY_ACCOUNT_PATH } from '../../constants/path.const';
 import { changePetInfo } from '../../common/api/myaccount';
+import {RootState} from '../../redux/store'
 
 interface Input {
   name: string;
@@ -37,8 +38,8 @@ function ChangePetInfo() {
   const dispatch = useDispatch();
   const navigation = useNavigate();
 
-  const state = useSelector((state: any) => state.persist.user.pet);
-  const userId = useSelector((state: any) => state.persist.user.user.id);
+  const state = useSelector((state: RootState) => state.persist.user.pet);
+  const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const { petId, birthday, name, size, image: petImage } = state;
 
   const [image, setImage] = useState<any>(petImage);

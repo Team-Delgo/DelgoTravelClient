@@ -7,6 +7,7 @@ import { ReactComponent as Heart } from '../../../../icons/heart.svg';
 import { wishInsert,wishDelete } from '../../../../common/api/wish'
 import { scrollActions } from '../../../../redux/slice/scrollSlice';
 import {prevPathActions} from "../../../../redux/slice/prevPathSlice"
+import {RootState} from '../../../../redux/store'
 import './PopularPlace.scss'
 
 type PopularPlaceTypeProps = {
@@ -29,8 +30,8 @@ type PopularPlaceType = {
 
 function PopularPlace({ place,getRecommendedPlacesRefetch }: PopularPlaceTypeProps  ) {
   const [wishList, setWishList] = useState(place.wishId);
-  const userId = useSelector((state: any) => state.persist.user.user.id);
-  const accessToken = useSelector((state: any) => state.token.token);
+  const userId = useSelector((state: RootState) => state.persist.user.user.id);
+  const accessToken = useSelector((state: RootState) => state.token.token);
   const dispatch = useDispatch();
   const location: any = useLocation();
   const navigate = useNavigate();

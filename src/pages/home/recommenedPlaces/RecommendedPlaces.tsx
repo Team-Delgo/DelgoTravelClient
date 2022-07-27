@@ -10,6 +10,7 @@ import {
 import './RecommendedPlaces.scss';
 import { scrollActions } from '../../../redux/slice/scrollSlice';
 import { prevPathActions } from '../../../redux/slice/prevPathSlice';
+import {RootState} from '../../../redux/store'
 import { ReactComponent as ActiveHeart } from '../../../icons/heart-active.svg';
 import { ReactComponent as Heart } from '../../../icons/heart.svg';
 
@@ -33,9 +34,9 @@ interface PlaceType {
 function RecommendedPlaces({ place }: RedcommendedPlacesProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const [logInModalOpen, setLogInModalOpen] = useState(false);
-  const accessToken = useSelector((state: any) => state.token.token);
-  const userId = useSelector((state: any) => state.persist.user.user.id);
-  const isSignIn = useSelector((state: any) => state.persist.user.isSignIn);
+  const accessToken = useSelector((state: RootState) => state.token.token);
+  const userId = useSelector((state: RootState) => state.persist.user.user.id);
+  const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location: any = useLocation();

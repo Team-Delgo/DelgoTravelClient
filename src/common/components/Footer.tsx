@@ -16,6 +16,7 @@ import {
   MY_ACCOUNT_PATH,
   SIGN_IN_PATH,
 } from '../../constants/path.const';
+import {RootState} from '../../redux/store'
 import './Footer.scss';
 import AlertConfirm from '../dialog/AlertConfirm';
 
@@ -23,7 +24,7 @@ function Footer() {
   const location = useLocation();
   const [OS, setOS] = useState('android');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const isSignIn = useSelector((state: any) => state.persist.user.isSignIn);
+  const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
   const navigate = useNavigate();
 
   useEffect(() => {

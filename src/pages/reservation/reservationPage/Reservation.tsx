@@ -11,10 +11,11 @@ import BottomButton from '../../../common/components/BottomButton';
 import { getCouponList } from '../../../common/api/coupon';
 import { TOSS } from '../../../constants/url.cosnt';
 import AlertConfirmOne from '../../../common/dialog/AlertConfirmOne'
+import {RootState} from '../../../redux/store'
 
 
 function Reservation() {
-  const { user, room, place, date } = useSelector((state: any) => state.persist.reservation);
+  const { user, room, place, date } = useSelector((state: RootState) => state.persist.reservation);
   const [couponList, setCouponList] = useState<Array<any>>([]);
   const [couponDropDownOpen, setCouponDropDownOpen] = useState(false);
   const [selectedCouponId, setSelectedCouponId] = useState(0);
@@ -50,7 +51,6 @@ function Reservation() {
           roomId: room.roomId,
           name: room.name,
           price: room.price,
-          petNum: room.petNum,
           personNum: room.personNum,
         },
         date: {

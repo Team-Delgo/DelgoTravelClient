@@ -14,6 +14,7 @@ import AlertConfirm from '../../common/dialog/AlertConfirm';
 import {
   SIGN_IN_PATH,
 } from '../../constants/path.const';
+import {RootState} from '../../redux/store'
 import { ReactComponent as ActiveHeart } from '../../icons/heart-active.svg';
 import { ReactComponent as Heart } from '../../icons/heart.svg';
 import { getDetailPlace} from '../../common/api/places';
@@ -76,16 +77,16 @@ interface NoticeType {
 function DetailPlace() {
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
   const [logInModalOpen, setLogInModalOpen] = useState(false);
-  const { date, dateString } = useSelector((state: any) => state.date);
-  const userId = useSelector((state: any) => state.persist.user.user.id);
-  const accessToken = useSelector((state: any) => state.token.token);
-  const isSignIn = useSelector((state: any) => state.persist.user.isSignIn);
+  const { date, dateString } = useSelector((state: RootState) => state.date);
+  const userId = useSelector((state: RootState) => state.persist.user.user.id);
+  const accessToken = useSelector((state: RootState) => state.token.token);
+  const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
   const { placeId } = useParams();
   const location: any = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { whereToGoScrollY,detailPlaceScrollY,myStorageY } = useSelector((state: any) => state.persist.scroll);
-  const detailPlacePrevPath = useSelector((state: any) => state.persist.prevPath.detailPlace);
+  const { whereToGoScrollY,detailPlaceScrollY,myStorageY } = useSelector((state: RootState) => state.persist.scroll);
+  const detailPlacePrevPath = useSelector((state: RootState) => state.persist.prevPath.detailPlace);
   const startDt =`${date.start.substring(0,4)}-${date.start.substring(4,6)}-${date.start.substring(6,10)}`
   const endDt = `${date.end.substring(0,4)}-${date.end.substring(4,6)}-${date.end.substring(6,10)}`
   
@@ -119,7 +120,7 @@ function DetailPlace() {
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
-      window.scroll(0, detailPlaceScrollY);
+      window.scroll(0, detailPlaceScrollY.scrollY);
     }
     else{
       window.scroll(0, 0);
@@ -179,13 +180,13 @@ function DetailPlace() {
   }, []);
 
   const moveToPrevPage = useCallback(() => {
-    if (detailPlacePrevPath === '/my-storage')
+    if (detailPlacePrevPath.prevPath === '/my-storage')
       navigate('/my-storage', {
         state: {
           prevPath: location.pathname,
         },
       });
-    else if (detailPlacePrevPath === '/where-to-go')
+    else if (detailPlacePrevPath.prevPath === '/where-to-go')
       navigate('/where-to-go', {
         state: {
           prevPath: location.pathname,

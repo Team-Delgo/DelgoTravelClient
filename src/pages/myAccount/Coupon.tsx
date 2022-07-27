@@ -9,6 +9,7 @@ import { tokenActions } from '../../redux/slice/tokenSlice';
 import { url } from '../../constants/url.cosnt';
 import { tokenRefresh } from '../../common/api/login';
 import AlertConfirmOne from '../../common/dialog/AlertConfirmOne'
+import {RootState} from '../../redux/store'
 import { ReactComponent as FootPrintActive } from "../../icons/foot-print-active.svg";
 import CouponModal from './CouponModal';
 
@@ -28,8 +29,8 @@ function Coupon() {
   const [couponList, setCouponList] = useState<CouponType[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [couponRegistrationCompleted ,setCouponRegistrationCompleted]=useState(false)
-  const userId = useSelector((state: any) => state.persist.user.user.id);
-  const accessToken = useSelector((state: any) => state.token.token);
+  const userId = useSelector((state: RootState) => state.persist.user.user.id);
+  const accessToken = useSelector((state: RootState) => state.token.token);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const refreshToken = localStorage.getItem('refreshToken') || '';

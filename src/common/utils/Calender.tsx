@@ -7,6 +7,7 @@ import { ReactComponent as Exit } from '../../icons/exit.svg';
 import { dateActions } from '../../redux/slice/dateSlice';
 import { getReservedDate } from '../api/calender';
 import { errorActions } from '../../redux/slice/errorSlice';
+import {RootState} from '../../redux/store'
 import { currentRoomActions } from '../../redux/slice/roomSlice';
 import AlertConfirmOne from '../dialog/AlertConfirmOne';
 
@@ -22,7 +23,7 @@ Calender.defaultProps = {
 
 function Calender(props: CalenderProps) {
   const dispatch = useDispatch();
-  const { date, dateString } = useSelector((state: any) => state.date);
+  const { date, dateString } = useSelector((state: RootState) => state.date);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isOverRange, setIsOverRange] = useState(false);
   const { start, end } = date;

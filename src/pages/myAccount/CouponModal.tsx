@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Sheet from 'react-modal-sheet';
 import { registCoupon } from '../../common/api/myaccount';
 import AlertConfirmOne from '../../common/dialog/AlertConfirmOne'
+import {RootState} from '../../redux/store'
 import "./CouponModal.scss";
 
 
@@ -14,7 +15,7 @@ function CouponModal(props: { closeModal: () => void; openModal: boolean; confir
   const [invalid, setInvalid] = useState(false);
   const dispatch = useDispatch();
   const inputRef = useRef<any>();
-  const { id } = useSelector((state: any) => state.persist.user.user);
+  const { id } = useSelector((state: RootState) => state.persist.user.user);
   const { closeModal ,openModal ,confirmCouponRegisterCompletedOpen} = props;
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {

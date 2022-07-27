@@ -16,6 +16,7 @@ import {
 import { ReactComponent as LeftArrow } from '../../../icons/left-arrow2.svg';
 import Calender from '../../../common/utils/Calender';
 import { currentRoomActions } from '../../../redux/slice/roomSlice';
+import {RootState} from '../../../redux/store'
 import './RoomTypePage.scss';
 
 
@@ -35,10 +36,10 @@ interface RoomNoticeType {
 
 function RoomTypePage() {
   const navigate = useNavigate();
-  const { date, dateString } = useSelector((state: any) => state.date);
-  const { currentPlace } = useSelector((state: any) => state.persist.currentPlace);
-  const { currentRoom } = useSelector((state: any) => state.persist.currentRoom);
-  const { user ,isSignIn } = useSelector((state: any) => state.persist.user);
+  const { date, dateString } = useSelector((state: RootState) => state.date);
+  const { currentPlace } = useSelector((state: RootState) => state.persist.currentPlace);
+  const { currentRoom } = useSelector((state: RootState) => state.persist.currentRoom);
+  const { user ,isSignIn } = useSelector((state: RootState) => state.persist.user);
   const dispatch = useDispatch();
   const location: any = useLocation();
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);

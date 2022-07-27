@@ -9,6 +9,7 @@ import BottomButton from "../../../common/components/BottomButton";
 import { reservationActions } from '../../../redux/slice/reservationSlice';
 import {bookingGetData} from '../../../common/api/booking'
 import Map from '../../../common/utils/Map';
+import {RootState} from '../../../redux/store'
 import './ReservationHistoryPage.scss';
 
 
@@ -16,7 +17,7 @@ import './ReservationHistoryPage.scss';
 
 function ReservationHistoryPage() {
   const navigate = useNavigate();
-  const accessToken = useSelector((state: any) => state.token.token);
+  const accessToken = useSelector((state: RootState) => state.token.token);
   const dispatch = useDispatch();
   const [reservationData, setReservationData] = useState({
     bookingId: "",

@@ -11,6 +11,7 @@ import { tokenRefresh } from '../../common/api/login';
 import { bookingGetDataByMain } from '../../common/api/booking';
 import { getRecommendedPlace , getEditorNotePlacesAll } from '../../common/api/places';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
+import {RootState} from '../../redux/store'
 import './Home.scss';
 import HomeReservation from './HomeReservation';
 import Delgo from '../../icons/delgo.svg';
@@ -39,11 +40,10 @@ function Home() {
   const navigation = useNavigate();
   const dispatch = useDispatch();
   // const refreshToken = localStorage.getItem('refreshToken') || '';
-  const accessToken = useSelector((state: any) => state.token.token);
-  const userId = useSelector((state: any) => state.persist.user.user.id);
-  const { date } = useSelector((state: any) => state.date);
+  const accessToken = useSelector((state: RootState) => state.token.token);
+  const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const location: any = useLocation();
-  const { homeY } = useSelector((state: any) => state.persist.scroll);
+  const { homeY } = useSelector((state: RootState) => state.persist.scroll);
 
   const { isLoading: getRecommendedPlacesIsLoading, data: recommendedPlaces } = useQuery(
     'getRecommendedPlaces',
@@ -88,7 +88,7 @@ function Home() {
   useEffect(() => {
     console.log(reservationPlaces)
     if (location.state?.prevPath.includes('/detail-place')) {
-      window.scrollTo(0, homeY);
+      window.scrollTo(0, homeY.scrollY);
     } else {
       window.scrollTo(0, 0);
     }
