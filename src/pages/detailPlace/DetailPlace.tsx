@@ -114,13 +114,15 @@ function DetailPlace() {
   });
 
   useEffect(() => {
+    console.log(detailPlacePrevPath)
     refetch()
   }, [date]); 
 
 
   useEffect(() => {
+    console.log(detailPlaceScrollY)
     if (location.state?.prevPath.includes('/detail-place')) {
-      window.scroll(0, detailPlaceScrollY.scrollY);
+      window.scroll(0, Number(detailPlaceScrollY));
     }
     else{
       window.scroll(0, 0);
@@ -180,13 +182,13 @@ function DetailPlace() {
   }, []);
 
   const moveToPrevPage = useCallback(() => {
-    if (detailPlacePrevPath.prevPath === '/my-storage')
+    if (detailPlacePrevPath.toString() === '/my-storage')
       navigate('/my-storage', {
         state: {
           prevPath: location.pathname,
         },
       });
-    else if (detailPlacePrevPath.prevPath === '/where-to-go')
+    else if (detailPlacePrevPath.toString() === '/where-to-go')
       navigate('/where-to-go', {
         state: {
           prevPath: location.pathname,

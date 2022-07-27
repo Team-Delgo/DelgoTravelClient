@@ -86,8 +86,8 @@ function WhereToGo() {
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
-      window.scrollTo(0, whereToGoScrollY.scrollY);
-        setAreaTerm(whereToGoAreaName.areaName);
+      window.scrollTo(0, Number(whereToGoScrollY));
+      setAreaTerm(whereToGoAreaName.toString());
     } else {
       window.scrollTo(0, 0);
     }

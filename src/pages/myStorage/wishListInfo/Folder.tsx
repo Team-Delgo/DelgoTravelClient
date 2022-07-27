@@ -71,6 +71,7 @@ function Folder({currentTab}:FolderTypeProps) {
   });
 
   useEffect(() => {
+    console.log(myStorageY)
     getWishedPlacesRefetch();
     getRecommendedPlacesRefetch();
   }, [currentTab]);
@@ -78,7 +79,7 @@ function Folder({currentTab}:FolderTypeProps) {
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
-      window.scrollTo(0, myStorageY.scrollY);
+      window.scrollTo(0, Number(myStorageY));
     } else {
       window.scrollTo(0, 0);
     }
