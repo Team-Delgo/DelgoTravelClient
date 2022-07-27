@@ -4,9 +4,9 @@ import { createPortal } from 'react-dom';
 import "./AlertConfirm.scss";
 import { useState } from 'react';
 
-function AlertConfirm(props: { text: string, yesButtonHandler: () => void, noButtonHandler: () => void }) {
+function AlertConfirm(props: { text: string,buttonText:string, yesButtonHandler: () => void, noButtonHandler: () => void }) {
   const [unmount, setUnmount] = useState(false);
-  const { text, yesButtonHandler, noButtonHandler } = props;
+  const { text, buttonText, yesButtonHandler, noButtonHandler } = props;
   useEffect(() => {
     document.body.style.cssText = `
       position: fixed;
@@ -38,7 +38,7 @@ function AlertConfirm(props: { text: string, yesButtonHandler: () => void, noBut
       <div className='alertConfirm-text'>{text}</div>
       <div className='alertConfirm-wrapper'>
         <button type='button' className='alertConfirm-button' onClick={noUnmount}>취소</button>
-        <button type='button' className='alertConfirm-button' onClick={yesUnmount}>확인</button>
+        <button type='button' className='alertConfirm-button' onClick={yesUnmount}>{buttonText}</button>
       </div>
     </div>
   </div>, el);

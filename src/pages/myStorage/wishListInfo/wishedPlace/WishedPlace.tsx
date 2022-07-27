@@ -78,6 +78,7 @@ function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch
         {wishListAlertConfirmOpen && (
           <AlertConfirm
             text="정말 찜 목록에서 제거하시겠어요?"
+            buttonText='확인'
             yesButtonHandler={wishListDelete}
             noButtonHandler={wishListConfirmModalClose}
           />
