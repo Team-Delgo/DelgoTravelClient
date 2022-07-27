@@ -45,4 +45,14 @@ async function writeReivew(
   }
 }
 
-export { getDetailPlaceRivews, reviewImageUpload,writeReivew };
+async function getMyReviewList(userId: number) {
+  const {data} = await axios
+  .get(`${url}review/getReview/user`, {
+    params: {
+      userId,
+    },
+  })
+  return data
+}
+
+export { getDetailPlaceRivews, reviewImageUpload, writeReivew, getMyReviewList };

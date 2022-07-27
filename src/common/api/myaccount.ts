@@ -54,22 +54,6 @@ async function changePetInfo(
     });
 }
 
-async function getReviewList(data: { userId: number }, success: (data: AxiosResponse) => void, dispatch: any) {
-  const { userId } = data;
-  await axios
-    .get(`${url}review/getReview/user`, {
-      params: {
-        userId,
-      },
-    })
-    .then((data) => {
-      success(data);
-    })
-    .catch((error) => {
-      useErrorHandlers(dispatch, error);
-    });
-}
-
 async function changePassword(email: string, password: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
     .post(`${url}changePassword`, {
@@ -84,4 +68,4 @@ async function changePassword(email: string, password: string, success: (data: A
     });
 }
 
-export { registCoupon, myAccount, changePetInfo, getReviewList, changePassword };
+export { registCoupon, myAccount, changePetInfo, changePassword };
