@@ -39,9 +39,9 @@ function ChangeUserInfo() {
       <div className="userinfo-user">회원정보</div>
       <div className="userinfo-nickname">
         <div className="userinfo-nickname-label">닉네임</div>
-        <span className="userinfo-phone-value">{nickName}</span>
+        {/* <span className="userinfo-phone-value">{nickName}</span> */}
         {/* 아직 닉네임 변경 api가 없어서 막아놈 */}
-        {/* <input onChange={inputChangeHandler} className="userinfo-nickname-input" value={nickName} /> */}
+        <input onChange={inputChangeHandler} className="userinfo-nickname-input" value={nickName} />
       </div>
       <div className="userinfo-phone">
         <div className="userinfo-phone-label">휴대전화</div>
