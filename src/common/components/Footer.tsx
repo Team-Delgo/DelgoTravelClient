@@ -73,10 +73,10 @@ function Footer() {
       </div>
       <div className={OS === "android" ? 'bag-icon-android' : 'bag-icon-ios'} aria-hidden="true" onClick={moveToMyStoragePage}>
         {location.pathname === MY_STORAGE_PATH ? (
-          <>
+          <div aria-hidden="true" onClick={moveToTopScreen}>
             <BagActive />
             <div className={OS === "android" ? "footer-text-active-android" : "footer-text-active-ios"}>내 여행</div>
-          </>
+          </div>
         ) : (
           <>
             <Bag />
@@ -86,10 +86,10 @@ function Footer() {
       </div>
       <div className={OS === "android" ? 'person-icon-android' : 'person-icon-ios'} aria-hidden="true" onClick={moveToMyAccountPage}>
         {location.pathname === MY_ACCOUNT_PATH.MAIN ? (
-          <>
+          <div aria-hidden="true" onClick={moveToTopScreen}>
             <PersonActive />
             <div className={OS === "android" ? "footer-text-active-android" : "footer-text-active-ios"}>내 정보</div>
-          </>
+          </div>
         ) : (
           <>
             <Person />
