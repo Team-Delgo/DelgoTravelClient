@@ -177,7 +177,7 @@ function ReservationHistoryPage() {
         </div>
         <div className="couponsale">
           <div className="reservation-label">결제 시 쿠폰 사용</div>
-          <div className="couponsale-amount">{reservationData?.couponPrice}</div>
+          <div className="couponsale-amount">-{reservationData?.couponPrice}</div>
         </div>
         <div className="reservation-devide" />
         <div className="finalprice">
