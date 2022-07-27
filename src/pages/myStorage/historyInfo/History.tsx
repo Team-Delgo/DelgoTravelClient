@@ -85,16 +85,15 @@ function History({currentTab}:FolderTypeProps) {
   );
 
   useEffect(() => {
-    console.log(traveledPlaces)
     getRecommendedPlacesRefetch();
   }, [currentTab,traveledPlaces]);
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/reservation-history')) {
-      window.scrollTo(0, myStorageY.scrollY);
+      window.scrollTo(0, Number(myStorageY));
     }
     else if (location.state?.prevPath.includes('/review-writing')) {
-      window.scrollTo(0, myStorageY.scrollY);
+      window.scrollTo(0, Number(myStorageY));
     }
     else {
       window.scrollTo(0, 0);

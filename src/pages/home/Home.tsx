@@ -37,13 +37,11 @@ interface RecommendedPlaceType {
 function Home() {
   const [page, setPage] = useState(0);
   const [dday, setDday] = useState('0');
-  const navigation = useNavigate();
   const dispatch = useDispatch();
-  // const refreshToken = localStorage.getItem('refreshToken') || '';
   const accessToken = useSelector((state: RootState) => state.token.token);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const location: any = useLocation();
-  const { homeY } = useSelector((state: RootState) => state.persist.scroll);
+  const homeY = useSelector((state: RootState) => state.persist.scroll.homeY);
 
   const { isLoading: getRecommendedPlacesIsLoading, data: recommendedPlaces } = useQuery(
     'getRecommendedPlaces',
@@ -86,9 +84,8 @@ function Home() {
 
 
   useEffect(() => {
-    console.log(reservationPlaces)
     if (location.state?.prevPath.includes('/detail-place')) {
-      window.scrollTo(0, homeY.scrollY);
+      window.scrollTo(0, Number(homeY));
     } else {
       window.scrollTo(0, 0);
     }

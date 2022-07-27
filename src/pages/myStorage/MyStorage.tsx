@@ -20,6 +20,7 @@ function MyStorage() {
   const refreshToken = localStorage.getItem('refreshToken') || '';
 
   useEffect(() => {
+    console.log(location.state?.prevPath)
     if (location.state?.prevPath.includes('/reservation-history')) {
       setCurrentTab(1);
     } 
