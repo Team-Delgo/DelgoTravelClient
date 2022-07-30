@@ -160,11 +160,11 @@ function Home() {
             />
           </>
         )}
-        <div className="main-header-text">델고 에디터노트</div>
+        <div className="editor-header-text">델고 에디터노트</div>
         <div className="editor-container">
           {editorNotePlaces.data.map((place: EditorPlaceType) => (
             <Link className="editor-thumbnail" to={`/editor-note/${place.placeId}`} state={{placeId:place.placeId}} key={place.placeId}>
-              <img src={place.thumbnailUrl} alt="editor-thumnail-img" />
+              <img src={place.thumbnailUrl} alt="editor-thumnail-img"/>
             </Link>
           ))}
         </div>
