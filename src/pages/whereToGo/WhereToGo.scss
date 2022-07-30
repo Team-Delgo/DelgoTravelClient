@@ -1,10 +1,14 @@
 .where-to-go-background {
-  margin-left: 7.5%;
+  margin: 0 5%;
   z-index: 0;
   height: 100%;
   background: #f3efea;
   padding: 10% 0 15% 0;
   font-size: 16px;
+  .delgo-logo{
+    width: 33vw;
+    margin-bottom: 10px;
+  }
   &.close {
     display: none;
   }
@@ -17,7 +21,6 @@
   .search-region-date {
     display: flex;
     margin-top: 15px;
-    width: 88vw;
     height: 43px;
     color: #474747;
     font-weight: 500;
@@ -27,12 +30,13 @@
       justify-content: center;
       text-align: center;
       background: #ffffff;
-      width: 24vw;
+      width: 38vw;
       border-radius: 5px;
       font-size: 14px;
+      font-weight: 500;
     }
     .search-date {
-      width: 59vw;
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -61,11 +65,11 @@
   }
   .filter-skeleton{
     margin-top: 12px;
-    width: 88vw;
+    width: 100%;
     height: 49px;
     }
     .skeleton {
-      width: 87vw;
+      width: 100%;
       padding-bottom: 40px;
     }
     }

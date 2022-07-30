@@ -17,7 +17,7 @@ import RegionSelectionModal from './modal/RegionSelectionModal'
 import Place from './place/Place'
 import {RootState} from '../../redux/store'
 import { ReactComponent as BottomArrow } from '../../icons/bottom-arrow.svg';
-import { ReactComponent as DelgoLogo } from '../../icons/delgo-logo.svg';
+import Delgo from '../../icons/delgo.svg';
 import './WhereToGo.scss';
 import Calender from '../../common/utils/Calender'; 
 
@@ -126,7 +126,7 @@ function WhereToGo() {
       {isCalenderOpen && <Calender closeCalender={handleCalenderOpenClose} isRoom={false} />}
       <div className={classNames('where-to-go-background', { close: isCalenderOpen })}>
         <Link to="/">
-          <DelgoLogo className="delgo-logo" width={120} height={50} />
+          <img src={Delgo} alt="delgo" className="delgo-logo" />
         </Link>
         {isLoading ? (
           <div className="filter-skeleton">
@@ -136,7 +136,7 @@ function WhereToGo() {
           </div>
         ) : (
           <>
-            {areaTerm === "" ? null : areaName.includes(areaTerm) ? (
+            {areaTerm === '' ? null : areaName.includes(areaTerm) ? (
               <header className="region-name">{areaTerm}로 델고가요</header>
             ) : (
               <header className="region-name">{areaTerm}으로 델고가요</header>
@@ -158,7 +158,7 @@ function WhereToGo() {
             ? allPlacesSkeletons
             : places.data.map((place: PlaceType) => {
                 if (place.address.includes(areaTerm)) {
-                  return <Place key={place.placeId} place={place}  areaTerm={areaTerm}/>;
+                  return <Place key={place.placeId} place={place} areaTerm={areaTerm} />;
                 }
               })}
         </div>
