@@ -4,6 +4,16 @@
   background: #f3efea;
   padding: 10% 0 50px 0;
   font-style: normal;
+  .home-reservation-info {
+    font-size: 18px;
+    font-weight: 700;
+    color: #3e382f;
+    margin: 5vw;
+  }
+  .delgo {
+    width: 33vw;
+    margin-left: 5%;
+  }
   .reservation-places {
     display: flex;
     overflow-x: scroll;
@@ -39,7 +49,7 @@
       }
     }
   }
-  .main-header-text {
+  .editor-header-text {
     padding: 10% 0 5% 5%;
     font-weight: 600;
     font-size: 18px;
@@ -59,7 +69,7 @@
       padding-right: 30px;
       img {
         width: 70vw;
-        height: 324px;
+        height: 300px;
         border-radius: 5px;
       }
       &-subtext {
@@ -84,14 +94,3 @@
   }
 }
 
-.home-reservation-info {
-  font-size: 18px;
-  font-weight: 700;
-  color: #3e382f;
-  margin: 5vw;
-}
-
-.delgo {
-  width: 33vw;
-  margin-left: 5%;
-}
