@@ -36,7 +36,8 @@
   height: 30px;
   color: #c4c4c4;
   &.selected {
-    color: black;
+    color: #3e382f;
+    font-weight: 400;
   }
   &.blank {
     color: white;

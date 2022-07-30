@@ -16,7 +16,7 @@ import { deleteUser } from '../../common/api/signup';
 import { MY_ACCOUNT_PATH } from '../../constants/path.const';
 import { myAccount } from '../../common/api/myaccount';
 import { tokenRefresh } from '../../common/api/login';
-import {RootState} from '../../redux/store'
+import { RootState } from '../../redux/store'
 
 function MyAccount() {
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
@@ -221,9 +221,9 @@ function MyAccount() {
         <p className="account-item-p">카카오 플러스친구로 이동</p>
       </div>
       <div className="account-sign">
-        {/* <p className="account-out" aria-hidden="true" onClick={deleteUserModalOpen}>
+        <p className="account-out" aria-hidden="true" onClick={deleteUserModalOpen}>
           회원탈퇴
-        </p> */}
+        </p>
         <p className="account-out" aria-hidden="true" onClick={logOutModalOpen}>
           로그아웃
         </p>

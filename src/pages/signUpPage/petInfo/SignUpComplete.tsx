@@ -5,8 +5,8 @@ import Delgo from '../../../icons/delgo.svg';
 import Check from '../../../icons/check.svg';
 import { SIGN_IN_PATH } from '../../../constants/path.const';
 
-interface PetName{
-  name:string;
+interface PetName {
+  name: string;
 }
 
 function SignUpComplete() {
@@ -26,7 +26,7 @@ function SignUpComplete() {
           navigate('/');
         }}
       >
-        {state.name}와 여행을 떠나요
+        {state.name}와(과) 여행을 떠나요
       </button>
     </div>
   );
