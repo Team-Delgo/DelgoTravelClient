@@ -1,11 +1,8 @@
 import React,{useCallback,useEffect, useState} from "react";
 import { useSelector,useDispatch } from "react-redux";
-import { useNavigate,useParams,useLocation,Link} from 'react-router-dom';
+import { useNavigate,useParams,useLocation} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
-import RightArrow from "../../../icons/right-arrow.svg";
-import RightArrowBlack from "../../../icons/right-arrow-black.svg";
-import BottomButton from "../../../common/components/BottomButton";
 import { reservationActions } from '../../../redux/slice/reservationSlice';
 import {bookingGetData} from '../../../common/api/booking'
 import ReservationCancleModal from "./modal/ReservationCancleModal";
@@ -131,12 +128,9 @@ function ReservationConfirmPage() {
           )}
         </div>
         <div className="placeinfo">
-          {/* <Link to={`/reservation-confirm-more/${bookingId}`}> */}
             <div className="placeinfo-wrapper">
               <div className="placeinfo-name">{reservationData.place.name}</div>
-              {/* <img src={RightArrow} alt="detail" /> */}
             </div>
-          {/* </Link> */}
           <p className="placeinfo-address">{reservationData.place.address}</p>
           <p className="placeinfo-room">{reservationData.roomName}</p>
         </div>
