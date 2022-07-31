@@ -15,6 +15,7 @@ import {RootState} from '../../redux/store'
 import './HomePage.scss';
 import HomeReservation from './homeReservation/HomeReservation';
 import Delgo from '../../icons/delgo.svg';
+import Loading from '../../common/utils/Loading'
 
 interface EditorPlaceType {
   mainUrl: string
