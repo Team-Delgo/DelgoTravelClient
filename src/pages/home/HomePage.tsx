@@ -5,15 +5,15 @@ import { AxiosResponse } from 'axios';
 import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
 import Footer from '../../common/components/Footer';
-import RecommendedPlaces from './recommenedPlaces/RecommendedPlaces';
+import RecommendedPlace from './recommenedPlaces/RecommendedPlace';
 import { tokenActions } from '../../redux/slice/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
 import { bookingGetDataByMain } from '../../common/api/booking';
 import { getRecommendedPlace , getEditorNotePlacesAll } from '../../common/api/places';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import {RootState} from '../../redux/store'
-import './Home.scss';
-import HomeReservation from './HomeReservation';
+import './HomePage.scss';
+import HomeReservation from './homeReservation/HomeReservation';
 import Delgo from '../../icons/delgo.svg';
 
 interface EditorPlaceType {
@@ -34,7 +34,7 @@ interface RecommendedPlaceType {
   wishId: number;
 }
 
-function Home() {
+function HomePage() {
   const [page, setPage] = useState(0);
   const [dday, setDday] = useState('0');
   const dispatch = useDispatch();
@@ -144,7 +144,7 @@ function Home() {
   return (
     <>
       <div className="home-background">
-        <img src={Delgo} alt="delgo" className="delgo" />
+        <img src={Delgo} alt="delgo" className="delgo"/>
         {reservationPlaces?.data?.length > 0 && (
           <>
             <div className="home-reservation-info">
@@ -160,7 +160,7 @@ function Home() {
             />
           </>
         )}
-        <div className="editor-header-text">델고 에디터노트</div>
+        <header className="editor-header-text">델고 에디터노트</header>
         <div className="editor-container">
           {editorNotePlaces.data.map((place: EditorPlaceType) => (
             <Link className="editor-thumbnail" to={`/editor-note/${place.placeId}`} state={{placeId:place.placeId}} key={place.placeId}>
@@ -168,9 +168,9 @@ function Home() {
             </Link>
           ))}
         </div>
-        <div className="recommended-places-text">델고갈만한 숙소</div>
+        <header className="recommended-places-text">델고갈만한 숙소</header>
         {recommendedPlaces?.data.map((place: RecommendedPlaceType) => (
-          <RecommendedPlaces place={place} key={place.placeId} />
+          <RecommendedPlace place={place} key={place.placeId} />
         ))}
       </div>
       <Footer />
@@ -178,4 +178,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;

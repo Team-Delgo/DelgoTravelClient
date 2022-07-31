@@ -3,7 +3,7 @@
 import React,{useEffect,useState,useCallback} from 'react';
 import { useLocation,Link,useParams} from 'react-router-dom';
 import { Transition  } from 'react-transition-group';
-import Reviews from '../reviews/Reviews';
+import Review from '../review/Review';
 import { ReactComponent as LeftArrow } from '../../../icons/left-arrow.svg';
 import { ReactComponent as ReviewStar } from '../../../icons/review-star.svg';
 import './ReviewsPage.scss';
@@ -91,7 +91,7 @@ function ReviewsPage() {
             </header>
             <body className="detail-place-review-page-body">
             {reviews.map((review:RivewType) => (
-              <Reviews key={review.review.bookingId} review={review} />
+              <Review key={review.review.bookingId} review={review} />
             ))}
             </body>
           {/* </div>

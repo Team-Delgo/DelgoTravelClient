@@ -3,16 +3,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import HomePage from './pages/home/Home';
-import EditorNote from './pages/editorNote/EditorNote';
+import HomePage from './pages/home/HomePage';
+import EditorNote from './pages/editorNote/EditorNotePage';
 import SignInPage from './pages/signInPage/SignIn';
 import VerifyPhonePage from './pages/signUpPage/verifyphone/VerifyPhone';
 import TermsPage from './pages/signUpPage/terms/Terms';
 import UserInfo from './pages/signUpPage/userInfo/UserInfo';
 import PetInfo from './pages/signUpPage/petInfo/PetInfo';
 import Login from './pages/signInPage/Login';
-import MyStoragePage from './pages/myStorage/MyStorage';
-import WhereToGoPage from './pages/whereToGo/WhereToGo';
+import MyStoragePage from './pages/myStorage/MyStoragePage';
+import WhereToGoPage from './pages/whereToGo/WhereToGoPage';
 import {
   EDITOR_NOTE_PATH,
   ROOT_PATH,
@@ -32,11 +32,11 @@ import MyAccount from './pages/myAccount/MyAccount';
 import FindPassword from './pages/signInPage/FindPassword';
 import ResetPassword from './pages/signInPage/ResetPassword';
 import PhoneAuth from './pages/signInPage/PhoneAuth';
-import DetailPlace from './pages/detailPlace/DetailPlace';
+import DetailPlacePage from './pages/detailPlace/DetailPlacePage';
 import ReviewsPage from './pages/detailPlace/reviewsPage/ReviewsPage';
 import RoomTypePage from './pages/detailPlace/roomTypePage/RoomTypePage';
-import Reservation from './pages/reservation/reservationPage/Reservation';
-import ReviewWritingPage from './pages/reviewWriting/ReviewWriting';
+import Reservation from './pages/reservation/reservationPage/ReservationPage';
+import ReviewWritingPage from './pages/reviewWriting/ReviewWritingPage';
 import KakaoRedirectHandler from './common/socialLogion/KakaoRedirectHandler';
 import NaverRedirectHandler from './common/socialLogion/NaverRedirectHandler';
 import AlertConfirmOne from './common/dialog/AlertConfirmOne';
@@ -50,7 +50,7 @@ import ReservationCanclePage from './pages/reservation/reservationCanclePage/Res
 import SignUpComplete from './pages/signUpPage/petInfo/SignUpComplete';
 import ReviewList from './pages/myAccount/ReviewList';
 import ChangeUserInfo from './pages/myAccount/ChangeUserInfo';
-import ReservationHistoryPage from './pages/reservation/reservationHistory/ReservationHistoryPage';
+import ReservationHistoryPage from './pages/reservation/reservationHistoryPage/ReservationHistoryPage';
 import ChangePasswordCheck from './pages/myAccount/ChangePasswordCheck';
 import ChangePassword from './pages/myAccount/ChangePassword';
 import ServiceTerm from './pages/myAccount/ServiceTerm';
@@ -95,7 +95,7 @@ function App() {
         <Route path={MY_ACCOUNT_PATH.PASSWORDCHANGE} element={<ChangePassword />} />
         <Route path={MY_ACCOUNT_PATH.TERM1} element={<ServiceTerm id={1}/>} />
         <Route path={MY_ACCOUNT_PATH.TERM2} element={<ServiceTerm id={2}/>} />
-        <Route path={DETAIL_PLACE_PATH.MAIN} element={<DetailPlace />} />
+        <Route path={DETAIL_PLACE_PATH.MAIN} element={<DetailPlacePage />} />
         <Route path={DETAIL_PLACE_PATH.REVIEWS} element={<ReviewsPage />} />
         <Route path={DETAIL_PLACE_PATH.ROOMTYPES} element={<RoomTypePage />} />
         <Route path={RESERVATION_PATH.RESERVATION} element={<Reservation />} />

@@ -5,7 +5,7 @@ import { useQuery } from 'react-query'
 import { useDispatch } from 'react-redux';
 import WishedPlace from './wishedPlace/WishedPlace';
 import { getWishedPlaces ,getRecommendedPlace} from '../../../common/api/places';
-import PopularPlace from '../historyInfo/popularPlace/PopularPlace'
+import RecommendedPlace from '../../../common/components/RecommendedPlace'
 import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
 import {RootState} from '../../../redux/store'
 import { ReactComponent as FootPrintActive } from '../../../icons/foot-print-active.svg';
@@ -132,7 +132,7 @@ function Folder({currentTab}:FolderTypeProps) {
               />
             ))
         : recommendedPlaces?.data.map((place: RecommendedPlaceType) => (
-            <PopularPlace place={place} key={place.placeId} getRecommendedPlacesRefetch={getRecommendedPlacesRefetch} />
+            <RecommendedPlace place={place} key={place.placeId} getRecommendedPlacesRefetch={getRecommendedPlacesRefetch} />
           ))}
     </div>
   );

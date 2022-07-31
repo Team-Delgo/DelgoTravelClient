@@ -8,8 +8,8 @@ import { tokenRefresh } from '../../../common/api/login';
 import { getRecommendedPlace } from '../../../common/api/places';
 import { getBookingHistory } from '../../../common/api/booking';
 import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
-import {RootState} from '../../../redux/store'
-import PopularPlace from './popularPlace/PopularPlace';
+import {RootState} from '../../../redux/store';
+import RecommendedPlace from '../../../common/components/RecommendedPlace';
 import TravelHisotryPlace from './travelHistoryPlace/TravelHistoryPlace';
 import { ReactComponent as FootPrintActive } from '../../../icons/foot-print-active.svg';
 import './History.scss';
@@ -142,7 +142,7 @@ function History({currentTab}:FolderTypeProps) {
           <TravelHisotryPlace traveledPlace={place} key={place.bookingId} />
         ))
         : recommendedPlaces?.data.map((place: RecommendedPlaceType) => (
-          <PopularPlace place={place} key={place.placeId} getRecommendedPlacesRefetch={getRecommendedPlacesRefetch} />
+          <RecommendedPlace place={place} key={place.placeId} getRecommendedPlacesRefetch={getRecommendedPlacesRefetch} />
         ))}
     </div>
   );

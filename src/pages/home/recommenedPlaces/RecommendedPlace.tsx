@@ -7,7 +7,7 @@ import AlertConfirm from '../../../common/dialog/AlertConfirm';
 import {
   SIGN_IN_PATH,
 } from '../../../constants/path.const';
-import './RecommendedPlaces.scss';
+import './RecommendedPlace.scss';
 import { scrollActions } from '../../../redux/slice/scrollSlice';
 import { prevPathActions } from '../../../redux/slice/prevPathSlice';
 import {RootState} from '../../../redux/store'
@@ -31,7 +31,7 @@ interface PlaceType {
 }
 
 
-function RecommendedPlaces({ place }: RedcommendedPlacesProps) {
+function RecommendedPlace({ place }: RedcommendedPlacesProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const [logInModalOpen, setLogInModalOpen] = useState(false);
   const accessToken = useSelector((state: RootState) => state.token.token);
@@ -106,4 +106,4 @@ function RecommendedPlaces({ place }: RedcommendedPlacesProps) {
   );
 }
 
-export default memo(RecommendedPlaces);
+export default memo(RecommendedPlace);

@@ -2,7 +2,7 @@
 import React, { useMemo, useState, useCallback, memo } from 'react'
 import { ReactComponent as ReviewStar } from '../../../icons/review-star.svg'
 import { ReactComponent as ReviewVoidStar } from '../../../icons/review-void-star.svg'
-import './Reviews.scss';
+import './Review.scss';
 
 
 interface RivewTypeProps {
@@ -34,7 +34,7 @@ interface ReviewPhotoType {
   url: string
 }
 
-function Reviews({ review }: RivewTypeProps) {
+function Review({ review }: RivewTypeProps) {
   const reviewStarCount = useMemo(() => reviewStarComponents(), [])
   const [moreDescription, setMoreDescription] = useState(false)
 
@@ -97,4 +97,4 @@ function Reviews({ review }: RivewTypeProps) {
   );
 }
 
-export default memo(Reviews);
+export default memo(Review);
