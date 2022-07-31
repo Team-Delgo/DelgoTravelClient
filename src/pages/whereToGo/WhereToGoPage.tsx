@@ -18,7 +18,7 @@ import Place from './place/Place'
 import {RootState} from '../../redux/store'
 import { ReactComponent as BottomArrow } from '../../icons/bottom-arrow.svg';
 import Delgo from '../../icons/delgo.svg';
-import './WhereToGo.scss';
+import './WhereToGoPage.scss';
 import Calender from '../../common/utils/Calender'; 
 
 
@@ -52,7 +52,7 @@ function AllPlacesSkeletons() {
 const areaName = ['경기','제주','전라']
 
 
-function WhereToGo() {
+function WhereToGoPage() {
   const whereToGoAreaName = useSelector((state: RootState) => state.persist.area.whereToGo)
   const [areaTerm, setAreaTerm] = useState("");
   const [regionSelectionModal, setRegionSelectionModal] = useState(false);
@@ -174,4 +174,4 @@ function WhereToGo() {
   );
 }
 
-export default WhereToGo;
+export default WhereToGoPage;

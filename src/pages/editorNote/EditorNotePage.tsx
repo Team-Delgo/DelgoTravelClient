@@ -1,15 +1,15 @@
 import React ,{useCallback ,useEffect}from 'react'
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate ,useLocation ,useParams } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { useNavigate ,useLocation  } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg'
 import BottomButton from '../../common/components/BottomButton';
 import { getEditorNotePlace } from '../../common/api/places';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import {prevPathActions} from "../../redux/slice/prevPathSlice"
-import "./EditorNote.scss";
+import "./EditorNotePage.scss";
 
-function EditorNote() {
+function EditorNotePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location: any = useLocation();
@@ -58,4 +58,4 @@ function EditorNote() {
   );
 }
 
-export default EditorNote;
+export default EditorNotePage;

@@ -2,20 +2,20 @@ import React,{useState,useCallback , memo} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation , useNavigate} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
-import { ReactComponent as ActiveHeart } from '../../../../icons/heart-active.svg';
-import { ReactComponent as Heart } from '../../../../icons/heart.svg';
-import { wishInsert,wishDelete } from '../../../../common/api/wish'
-import { scrollActions } from '../../../../redux/slice/scrollSlice';
-import {prevPathActions} from "../../../../redux/slice/prevPathSlice"
-import {RootState} from '../../../../redux/store'
-import './PopularPlace.scss'
+import { ReactComponent as ActiveHeart } from '../../icons/heart-active.svg';
+import { ReactComponent as Heart } from '../../icons/heart.svg';
+import { wishInsert,wishDelete } from '../api/wish'
+import { scrollActions } from '../../redux/slice/scrollSlice';
+import {prevPathActions} from "../../redux/slice/prevPathSlice"
+import {RootState} from '../../redux/store'
+import './RecommendedPlace.scss'
 
-type PopularPlaceTypeProps = {
-    place:PopularPlaceType
-    getRecommendedPlacesRefetch:any
+type RecommendedPlaceProps = {
+    place:RecommendedPlaceType
+    getRecommendedPlacesRefetch:() => void
 }
 
-type PopularPlaceType = {
+type RecommendedPlaceType = {
   address: string
   checkin: string
   checkout: string
@@ -28,7 +28,7 @@ type PopularPlaceType = {
   }
 
 
-function PopularPlace({ place,getRecommendedPlacesRefetch }: PopularPlaceTypeProps  ) {
+function RecommendedPlace({ place,getRecommendedPlacesRefetch }: RecommendedPlaceProps  ) {
   const [wishList, setWishList] = useState(place.wishId);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const accessToken = useSelector((state: RootState) => state.token.token);
@@ -81,4 +81,4 @@ function PopularPlace({ place,getRecommendedPlacesRefetch }: PopularPlaceTypePro
   );
 }
 
-export default memo(PopularPlace);
+export default memo(RecommendedPlace);

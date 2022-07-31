@@ -8,10 +8,10 @@ import Footer from '../../common/components/Footer';
 import {RootState} from '../../redux/store'
 import Folder from './wishListInfo/Folder';
 import History from './historyInfo/History';
-import './MyStorage.scss';
+import './MyStoragePage.scss';
 
 
-function MyStorage() {
+function MyStoragePage() {
   const location: any = useLocation();
   const [currentTab, setCurrentTab] = useState(0);
   const navigation = useNavigate();
@@ -114,4 +114,4 @@ function MyStorage() {
   );
 }
 
-export default MyStorage;
+export default MyStoragePage;

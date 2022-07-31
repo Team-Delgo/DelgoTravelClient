@@ -6,7 +6,7 @@ import { loadTossPayments } from '@tosspayments/payment-sdk';
 import { reservationActions } from '../../../redux/slice/reservationSlice';
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
 import { ReactComponent as BottomArrow } from '../../../icons/bottom-arrow2.svg';
-import './Reservation.scss';
+import './ReservationPage.scss';
 import BottomButton from '../../../common/components/BottomButton';
 import { getCouponList } from '../../../common/api/coupon';
 import { TOSS } from '../../../constants/url.cosnt';
@@ -26,7 +26,7 @@ interface CouponType {
 }
 
 
-function Reservation() {
+function ReservationPage() {
   const { user, room, place, date } = useSelector((state: RootState) => state.persist.reservation);
   const [couponList, setCouponList] = useState<Array<CouponType>>([]);
   const [couponDropDownOpen, setCouponDropDownOpen] = useState(false);
@@ -245,4 +245,4 @@ function Reservation() {
   );
 }
 
-export default Reservation;
+export default ReservationPage;

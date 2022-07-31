@@ -12,7 +12,7 @@ import { ReactComponent as BigRivewStar } from '../../icons/big-review-star.svg'
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg';
 import { ReactComponent as Camera } from '../../icons/camera.svg';
 import { ReactComponent as X } from '../../icons/x.svg';
-import './ReviewWriting.scss';
+import './ReviewWritingPage.scss';
 
 interface TraveledHisotryPlaceType {
   bookingId: string,
@@ -34,11 +34,10 @@ interface TraveledHisotryPlaceType {
   },
 }
 
-function RiviewWriting() {
-  const [images, setImages] = useState<Array<any>>([]);
+function RiviewWritingPage() {
+  const [images, setImages] = useState<Array<string>>([]);
   const [sendingImage, setSendingImage] = useState<Array<File>>([]);
   const fileUploadRef = useRef<HTMLInputElement>(null);
-  const slideRef = useRef<HTMLDivElement>(null);
   const [activeStar1, setActiveStar1] = useState(true);
   const [activeStar2, setActiveStar2] = useState(true);
   const [activeStar3, setActiveStar3] = useState(true);
@@ -93,7 +92,6 @@ function RiviewWriting() {
         imageUrlLists = imageUrlLists.slice(0, 10);
       }
       setImages(imageUrlLists);
-      console.log(imageUrlLists[3]);
 
       const reader = new FileReader();
       reader.readAsDataURL(event.target.files![0]);
@@ -101,13 +99,13 @@ function RiviewWriting() {
     }
   };
 
-  const handleDeleteImage = (clickedImage: File) => (event: React.MouseEvent) => {
+  const handleDeleteImage = (clickedImage: string) => (event: React.MouseEvent) => {
     const newImages = images.filter((image) => image !== clickedImage);
     setImages(newImages);
   };
 
   const submitRivew = () => {
-    if(rivewText.length>0){
+    if(rivewText.length>9){
       writeReivew(
         {
           userId,
@@ -234,7 +232,8 @@ function RiviewWriting() {
   }, [activeStar1, activeStar2, activeStar3, activeStar4, activeStar5]);
 
   const handleReviewWrite = useCallback((e) => {
-    setReviewText(e.target.value);
+    setReviewText(e.target.value.replace(/ /g,""));
+    console.log(e.target.value.replace(/ /g,""))
   }, []);
 
   const confirmReviewCompletedOpen = useCallback(() => {
@@ -328,9 +327,9 @@ function RiviewWriting() {
         <BottomButton text="작성완료" />
       </div>
       {reviewCompleted && <AlertConfirmOne text="리뷰 작성이 완료 되었습니다" buttonHandler={confirmReviewCompletedClose} />}
-      {reviewTextLengthLimit && <AlertConfirmOne text="리뷰를 최소 1글자이상 작성하세요" buttonHandler={alertReviewLengthLimitClose} />}
+      {reviewTextLengthLimit && <AlertConfirmOne text="리뷰를 최소 10글자이상 작성하세요" buttonHandler={alertReviewLengthLimitClose} />}
     </div>
   );
 }
 
-export default RiviewWriting;
+export default RiviewWritingPage;

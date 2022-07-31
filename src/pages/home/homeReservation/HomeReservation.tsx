@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, useState ,memo } from 'react';
 import { Link} from 'react-router-dom';
 import './HomeReservation.scss';
-import RightArrow from '../../icons/right-arrow-black.svg';
-import Location from '../../icons/location.svg';
-import Call from '../../icons/call.svg';
+import RightArrow from '../../../icons/right-arrow-black.svg';
+import Location from '../../../icons/location.svg';
+import Call from '../../../icons/call.svg';
 
 interface Info {
   location: string;

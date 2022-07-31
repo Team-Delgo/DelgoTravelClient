@@ -6,7 +6,7 @@ import { AxiosResponse } from 'axios';
 import { Transition  } from 'react-transition-group';
 import { useQuery } from 'react-query'
 import RoomType from './roomType/RoomType';
-import Reviews from './reviews/Reviews';
+import Review from './review/Review';
 import ImageSlider from '../../common/utils/ImageSlider';
 import Map from '../../common/utils/Map';
 import AlertConfirm from '../../common/dialog/AlertConfirm';
@@ -22,7 +22,7 @@ import { wishInsert, wishDelete } from '../../common/api/wish';
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg';
 import { currentPlaceActions } from '../../redux/slice/placeSlice';
 import { scrollActions } from '../../redux/slice/scrollSlice';
-import './DetailPlace.scss';
+import './DetailPlacePage.scss';
 import Calender from '../../common/utils/Calender';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import Notice from './notice/Notice'
@@ -74,7 +74,7 @@ interface NoticeType {
   title:string
 }
 
-function DetailPlace() {
+function DetailPlacePage() {
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
   const [logInModalOpen, setLogInModalOpen] = useState(false);
   const { date, dateString } = useSelector((state: RootState) => state.date);
@@ -330,7 +330,7 @@ function DetailPlace() {
             </header>
             <body className="detail-place-review-body">
               {detailPlaceRivews?.data?.readReviewDTOList.slice(0, 2).map((review: RivewType) => (
-                <Reviews key={review.review.reviewId} review={review} />
+                <Review key={review.review.reviewId} review={review} />
               ))}
             </body>
           </div>
@@ -350,4 +350,4 @@ function DetailPlace() {
   );
 }
 
-export default DetailPlace;
+export default DetailPlacePage;
