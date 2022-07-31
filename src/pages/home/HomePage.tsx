@@ -4,6 +4,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
+import { Ellipsis , Circle, Grid , DualRing,Ring,Hourglass,Ripple,Roller,Wave,} from 'react-css-spinners'
 import Footer from '../../common/components/Footer';
 import RecommendedPlace from './recommenedPlaces/RecommendedPlace';
 import { tokenActions } from '../../redux/slice/tokenSlice';
@@ -142,9 +143,11 @@ function HomePage() {
     return <div className="home-background">&nbsp;</div>;
   }
 
+
   return (
     <>
       <div className="home-background">
+      {/* <Roller color="#FF9162" size={40} /> */}
         <img src={Delgo} alt="delgo" className="delgo"/>
         {reservationPlaces?.data?.length > 0 && (
           <>
