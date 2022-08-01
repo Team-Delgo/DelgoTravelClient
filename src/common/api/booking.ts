@@ -21,7 +21,7 @@ async function bookingRequest(
   const startDt = `${data.startDt.substring(0,4)}-${data.startDt.substring(4,6)}-${data.startDt.substring(6,10)}`
   const endDt = `${data.endDt.substring(0,4)}-${data.endDt.substring(4,6)}-${data.endDt.substring(6,10)}`
   try {
-    const result = await axios.post(`${url}booking/request`, {
+    const result = await axios.post(`${process.env.REACT_APP_API_URL}/booking/request`, {
       userId: data.userId,
       placeId: data.placeId,
       roomId: data.roomId,
@@ -48,7 +48,7 @@ async function bookingGetData(
   dispatch: any,
 ) {
   try {
-    const result = await axios.get(`${url}booking/getData?bookingId=${data.bookingId}`,{
+    const result = await axios.get(`${process.env.REACT_APP_API_URL}/booking/getData?bookingId=${data.bookingId}`,{
       headers: {
         Authorization_Access: `${data.accessToken}`,
       },
@@ -60,7 +60,7 @@ async function bookingGetData(
 }
 
 async function bookingGetDataByMain(accessToken: string, userId: number) {
-  return fetch(`${url}booking/getData/main?userId=${userId}`).then((response) => response.json());
+  return fetch(`${process.env.REACT_APP_API_URL}/booking/getData/main?userId=${userId}`).then((response) => response.json());
 }
 
 // , {
@@ -70,7 +70,7 @@ async function bookingGetDataByMain(accessToken: string, userId: number) {
 // }
 
 async function getBookingHistory(userId: number) {
-  return fetch(`${url}booking/getHistory?userId=${userId}`).then((response) =>
+  return fetch(`${process.env.REACT_APP_API_URL}/booking/getHistory?userId=${userId}`).then((response) =>
     response.json()
   );
 };
@@ -83,7 +83,7 @@ async function bookingCancle(
 ) {
   try {
     console.log(2)
-    const result = await axios.post(`${url}booking/cancel/${bookingId}`);
+    const result = await axios.post(`${process.env.REACT_APP_API_URL}/booking/cancel/${bookingId}`);
     success(result);
     console.log(result)
   } catch (error: AxiosError | any) {

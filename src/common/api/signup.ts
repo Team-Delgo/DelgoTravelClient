@@ -13,7 +13,7 @@ interface SignUpData {
 
 async function emailCheck(email: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .get(`${url}emailCheck`, {
+    .get(`${process.env.REACT_APP_API_URL}/emailCheck`, {
       params: { email },
     })
     .then((data) => {
@@ -26,7 +26,7 @@ async function emailCheck(email: string, success: (data: AxiosResponse) => void,
 
 async function nicknameCheck(name: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .get(`${url}nameCheck`, {
+    .get(`${process.env.REACT_APP_API_URL}/nameCheck`, {
       params: { name },
     })
     .then((data) => {
@@ -40,7 +40,7 @@ async function nicknameCheck(name: string, success: (data: AxiosResponse) => voi
 async function signup(info: SignUpData, success: (data: AxiosResponse) => void, dispatch: any) {
   const { nickname, email, password, phone, pet } = info;
   await axios
-    .post(`${url}signup`, {
+    .post(`${process.env.REACT_APP_API_URL}/signup`, {
       user: {
         name: nickname,
         email,
@@ -64,7 +64,7 @@ async function signup(info: SignUpData, success: (data: AxiosResponse) => void, 
 
 async function deleteUser(userId: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .post(`${url}deleteUser/${userId}`)
+    .post(`${process.env.REACT_APP_API_URL}/deleteUser/${userId}`)
     .then((data) => {
       success(data);
     })
@@ -75,7 +75,7 @@ async function deleteUser(userId: string, success: (data: AxiosResponse) => void
 
 async function phoneSendMessage(phone: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .get(`${url}phoneNoAuth`, {
+    .get(`${process.env.REACT_APP_API_URL}/phoneNoAuth`, {
       params: {
         phoneNo: phone,
       },
@@ -90,7 +90,7 @@ async function phoneSendMessage(phone: string, success: (data: AxiosResponse) =>
 
 async function phoneSendMessageForFind(phone: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .get(`${url}phoneNoCheck`, {
+    .get(`${process.env.REACT_APP_API_URL}/phoneNoCheck`, {
       params: {
         phoneNo: phone,
       },
@@ -110,7 +110,7 @@ async function phoneCheckNumber(
 ) {
   const { number, smsId } = data;
   await axios
-    .get(`${url}authRandNum`, {
+    .get(`${process.env.REACT_APP_API_URL}/authRandNum`, {
       params: {
         smsId,
         enterNum: number,
@@ -126,7 +126,7 @@ async function phoneCheckNumber(
 
 async function petImageUpload(formdata: FormData, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .post(`${url}photo/upload/petProfile`, formdata)
+    .post(`${process.env.REACT_APP_API_URL}/photo/upload/petProfile`, formdata)
     .then((data) => {
       success(data);
     })

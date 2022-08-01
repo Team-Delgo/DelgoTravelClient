@@ -5,7 +5,7 @@ import { url } from '../../constants/url.cosnt';
 
 async function login(data: { email: string; password: string }, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .post(`${url}login`, {
+    .post(`${process.env.REACT_APP_API_URL}/login`, {
       email: data.email,
       password: data.password,
     })
@@ -19,7 +19,7 @@ async function login(data: { email: string; password: string }, success: (data: 
 
 async function tokenRefresh(data: { refreshToken: string }, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .get(`${url}tokenReissue`, {
+    .get(`${process.env.REACT_APP_API_URL}/tokenReissue`, {
       headers: {
         Authorization_Refresh: `${data.refreshToken}`,
       },
@@ -34,7 +34,7 @@ async function tokenRefresh(data: { refreshToken: string }, success: (data: Axio
 
 async function emailAuth(email: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .get(`${url}emailAuth`, {
+    .get(`${process.env.REACT_APP_API_URL}/emailAuth`, {
       params: { email },
     })
     .then((data) => {
@@ -47,7 +47,7 @@ async function emailAuth(email: string, success: (data: AxiosResponse) => void, 
 
 async function changePassword(email: string, password: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .post(`${url}resetPassword`, {
+    .post(`${process.env.REACT_APP_API_URL}/resetPassword`, {
         email,
         newPassword: password,
     })

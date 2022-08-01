@@ -4,7 +4,7 @@ import { url } from '../../constants/url.cosnt';
 
 async function myAccount(data: { userId: number }, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .get(`${url}myAccount`, {
+    .get(`${process.env.REACT_APP_API_URL}/myAccount`, {
       params: { userId: data.userId },
     })
     .then((data) => {
@@ -21,7 +21,7 @@ async function registCoupon(
   dispatch: any,
 ) {
   await axios
-    .post(`${url}coupon/regist`, {
+    .post(`${process.env.REACT_APP_API_URL}/coupon/regist`, {
       userId: data.userId,
       couponCode: data.couponCode,
     })
@@ -40,7 +40,7 @@ async function changePetInfo(
 ) {
   const { email, name, birthday, size } = data;
   await axios
-    .post(`${url}changePetInfo`, {
+    .post(`${process.env.REACT_APP_API_URL}/changePetInfo`, {
       email,
       name,
       birthday,
@@ -56,7 +56,7 @@ async function changePetInfo(
 
 async function changePassword(email: string, password: string, success: (data: AxiosResponse) => void, dispatch: any) {
   await axios
-    .post(`${url}changePassword`, {
+    .post(`${process.env.REACT_APP_API_URL}/changePassword`, {
       email,
       newPassword: password,
     })

@@ -9,7 +9,7 @@ async function getReservedDate(
 ) {
   const { roomId } = data;
   await axios
-    .get(`${url}calendar/getDetailRoomCalendarData`, {
+    .get(`${process.env.REACT_APP_API_URL}/scalendar/getDetailRoomCalendarData`, {
       params: {
         roomId,
       },
