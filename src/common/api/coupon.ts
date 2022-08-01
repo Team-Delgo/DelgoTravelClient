@@ -9,7 +9,7 @@ async function getCouponList(
     dispatch: any,
   ) {
     try {
-      const result = await axios.get(`${url}coupon/getCouponList?userId=${userId}`);
+      const result = await axios.get(`${process.env.REACT_APP_API_URL}/coupon/getCouponList?userId=${userId}`);
       success(result);
     } catch (error: AxiosError | any) {
       useErrorHandlers(dispatch, error);
@@ -17,7 +17,7 @@ async function getCouponList(
   }
 
   async function getCouponList2(userId: number) {
-    const result = axios.get(`${url}coupon/getCouponList?userId=${userId}`)
+    const result = axios.get(`${process.env.REACT_APP_API_URL}/coupon/getCouponList?userId=${userId}`)
     console.log(result)
     // return data
   }

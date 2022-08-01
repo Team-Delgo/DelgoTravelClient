@@ -1,15 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 
-export const url = 'http://61.97.186.174:8080/';
-// export const url = 'http://127.0.0.1:8080/';
+export const url = 'http://www.delgo.pet:8080/';
 
-// let CALL_BACK_URL = ''
-// if(process.env.NODE_ENV === 'production'){
-//    CALL_BACK_URL = 'http://49.50.161.156:8080'
-// }
-// else{
-//    CALL_BACK_URL = 'http://localhost:3000'
-// }
 export const KAKAO = {
     REST_API_KEY : "ed29d568272e3eb51b493659e2d6e9eb",
     CALL_BACK_URL : `${process.env.REACT_APP_BASE_URL}/oauth/callback/kakao`,

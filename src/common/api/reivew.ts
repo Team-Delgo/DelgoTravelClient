@@ -3,7 +3,7 @@ import { useErrorHandlers } from './useErrorHandlers';
 import { url } from '../../constants/url.cosnt';
 
 async function getDetailPlaceRivews(placeId: string) {
-  return fetch(`${url}review/getReview/place?placeId=${placeId}`).then((response) => response.json());
+  return fetch(`${process.env.REACT_APP_API_URL}/review/getReview/place?placeId=${placeId}`).then((response) => response.json());
 }
 
 async function reviewImageUpload(formdata: FormData,reviewId:number, success: (data: AxiosResponse) => void, dispatch: any) {
@@ -11,7 +11,7 @@ async function reviewImageUpload(formdata: FormData,reviewId:number, success: (d
     console.log(key, value);
   });
   try {
-    const result = await axios.post(`${url}photo/upload/reviewPhoto/${reviewId}`, formdata);
+    const result = await axios.post(`${process.env.REACT_APP_API_URL}/photo/upload/reviewPhoto/${reviewId}`, formdata);
     console.log(result)
     success(result);
   } catch (error: AxiosError | any) {
@@ -31,7 +31,7 @@ async function writeReivew(
   dispatch: any,
 ) {
   try {
-    const result = await axios.post(`${url}review/write`, {
+    const result = await axios.post(`${process.env.REACT_APP_API_URL}/review/write`, {
       userId: data.userId,
       placeId: data.placeId,
       roomId: data.roomId,
@@ -47,7 +47,7 @@ async function writeReivew(
 
 async function getMyReviewList(userId: number) {
   const {data} = await axios
-  .get(`${url}review/getReview/user`, {
+  .get(`${process.env.REACT_APP_API_URL}/review/getReview/user`, {
     params: {
       userId,
     },
