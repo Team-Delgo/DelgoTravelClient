@@ -89,7 +89,6 @@ function DetailPlacePage() {
   const detailPlacePrevPath = useSelector((state: RootState) => state.persist.prevPath.detailPlace);
   const startDt =`${date.start.substring(0,4)}-${date.start.substring(4,6)}-${date.start.substring(6,10)}`
   const endDt = `${date.end.substring(0,4)}-${date.end.substring(4,6)}-${date.end.substring(6,10)}`
-  
 
   const { 
     isLoading: getDetailPlaceIsLoading,
@@ -118,14 +117,12 @@ function DetailPlacePage() {
   );
 
   useEffect(() => {
-    console.log(detailPlacePrevPath)
     refetch()
   }, [date]); 
 
 
   useEffect(() => {
-    console.log(detailPlaceScrollY)
-    if (location.state?.prevPath.includes('/detail-place')) {
+    if (location.state?.prevPath?.includes('/detail-place')) {
       window.scroll(0, Number(detailPlaceScrollY));
     }
     else{
@@ -190,6 +187,7 @@ function DetailPlacePage() {
       navigate('/my-storage', {
         state: {
           prevPath: location.pathname,
+          myStorageTab:location.state
         },
       });
     else if (detailPlacePrevPath.toString() === '/where-to-go')

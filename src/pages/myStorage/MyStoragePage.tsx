@@ -3,6 +3,7 @@ import { useNavigate ,useLocation} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { tokenActions } from '../../redux/slice/tokenSlice';
+import { scrollActions } from '../../redux/slice/scrollSlice';
 import { tokenRefresh } from '../../common/api/login';
 import Footer from '../../common/components/Footer';
 import {RootState} from '../../redux/store'
@@ -20,14 +21,17 @@ function MyStoragePage() {
   const refreshToken = localStorage.getItem('refreshToken') || '';
 
   useEffect(() => {
-    console.log(location.state?.prevPath)
     if (location.state?.prevPath.includes('/reservation-history')) {
       setCurrentTab(1);
-    } 
+    }
     if (location.state?.prevPath.includes('/review-writing')) {
       setCurrentTab(1);
     }
-    else {
+    if (location.state?.prevPath.includes('/detail-place')) {
+      if (location.state?.myStorageTab !== null) {
+        setCurrentTab(location.state?.myStorageTab);
+      }
+    } else {
       window.scrollTo(0, 0);
     }
   }, []);
@@ -52,6 +56,7 @@ function MyStoragePage() {
   }, [accessToken]);
 
   const changeCurrentTab = useCallback((tabNumber: number) => (event: React.MouseEvent) => {
+    dispatch(scrollActions.scrollInit())
     setCurrentTab(tabNumber);
   }, [])
 

@@ -95,6 +95,9 @@ function History({currentTab}:FolderTypeProps) {
     else if (location.state?.prevPath.includes('/review-writing')) {
       window.scrollTo(0, Number(myStorageY));
     }
+    else if (location.state?.prevPath.includes('/detail-place')) {
+      window.scrollTo(0, Number(myStorageY));
+    } 
     else {
       window.scrollTo(0, 0);
     }
@@ -142,7 +145,7 @@ function History({currentTab}:FolderTypeProps) {
           <TravelHisotryPlace traveledPlace={place} key={place.bookingId} />
         ))
         : recommendedPlaces?.data.map((place: RecommendedPlaceType) => (
-          <RecommendedPlace place={place} key={place.placeId} getRecommendedPlacesRefetch={getRecommendedPlacesRefetch} />
+          <RecommendedPlace place={place} key={place.placeId} getRecommendedPlacesRefetch={getRecommendedPlacesRefetch} currentTab={currentTab}/>
         ))}
     </div>
   );
