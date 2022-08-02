@@ -7,6 +7,7 @@ import BottomButton from '../../common/components/BottomButton';
 import { getEditorNotePlace } from '../../common/api/places';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import {prevPathActions} from "../../redux/slice/prevPathSlice"
+import { scrollActions } from '../../redux/slice/scrollSlice';
 import "./EditorNotePage.scss";
 
 function EditorNotePage() {
@@ -17,6 +18,7 @@ function EditorNotePage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    dispatch(scrollActions.scrollInit());
   }, []);
 
   const { isLoading: getEditorNotePlaceIsLoading, data: editorNotePlace } = useQuery(
