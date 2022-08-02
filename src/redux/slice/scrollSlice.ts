@@ -19,7 +19,7 @@ const scrollSlice = createSlice({
         homeY: action.payload.home,
       };
     },
-    scrollCancle() {
+    scrollInit() {
       return initialState;
     },
   },
