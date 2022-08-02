@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import qs from "qs";
-import {KAKAO} from '../../constants/url.cosnt'
+import { KAKAO } from '../../constants/url.cosnt'
 import { tokenActions } from '../../redux/slice/tokenSlice';
 
 
@@ -21,7 +21,7 @@ function KakaoRedirectHandler() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(code==null){
+    if (code == null) {
       navigate('/user/signin')
     }
     getToken();
@@ -33,7 +33,7 @@ function KakaoRedirectHandler() {
       grant_type: "authorization_code",
       client_id: KAKAO.REST_API_KEY,
       redirect_uri: KAKAO.CALL_BACK_URL,
-      code ,
+      code,
       client_secret: CLIENT_SECRET,
     });
     try {
@@ -41,10 +41,11 @@ function KakaoRedirectHandler() {
         "https://kauth.kakao.com/oauth/token",
         payload
       );
+      console.log(res);
       window.Kakao.init(KAKAO.REST_API_KEY);
       window.Kakao.Auth.setAccessToken(res.data.access_token);
 
-      const accessToken = res.data.access_token;  
+      const accessToken = res.data.access_token;
       const refreshToken = res.data.refresh_token;
       dispatch(
         tokenActions.setToken(accessToken),
@@ -60,19 +61,22 @@ function KakaoRedirectHandler() {
     try {
       window.Kakao.API.request({
         url: '/v2/user/me',
-        success(response:any) {
-            console.log(response);
+        data: {
+          property_keys: ["kakao_account.phone_number"]
         },
-        fail(error:any) {
-            console.log(error);
+        success(response: any) {
+          console.log(response);
+        },
+        fail(error: any) {
+          console.log(error);
         }
-    });
+      });
     } catch (err) {
       console.log(err);
     }
   };
 
-  const KakaoLogOut = ()=>{
+  const KakaoLogOut = () => {
     window.Kakao.API.request({
       url: '/v1/user/unlink',
     });
@@ -83,7 +87,7 @@ function KakaoRedirectHandler() {
     카카오 로그인
     <button type="button" onClick={KakaoLogOut}> 로그아웃</button>
   </div>
-  ;
+    ;
 };
 
 export default KakaoRedirectHandler;
