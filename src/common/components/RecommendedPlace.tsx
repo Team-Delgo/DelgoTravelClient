@@ -13,6 +13,7 @@ import './RecommendedPlace.scss'
 type RecommendedPlaceProps = {
     place:RecommendedPlaceType
     getRecommendedPlacesRefetch:() => void
+    currentTab:number
 }
 
 type RecommendedPlaceType = {
@@ -28,7 +29,7 @@ type RecommendedPlaceType = {
   }
 
 
-function RecommendedPlace({ place,getRecommendedPlacesRefetch }: RecommendedPlaceProps  ) {
+function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: RecommendedPlaceProps  ) {
   const [wishList, setWishList] = useState(place.wishId);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const accessToken = useSelector((state: RootState) => state.token.token);
@@ -48,7 +49,7 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch }: RecommendedPlac
     );
   }, [wishList]);
 
-  const wishListDelete = () => {
+  const wishListDelete = useCallback(() => {
     wishDelete(
       { wishId: wishList, accessToken },
       (response: AxiosResponse) => {
@@ -59,13 +60,14 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch }: RecommendedPlac
       },
       dispatch,
     );
-  }
+  }, [wishList]);
 
-  const moveToDetailPage = useCallback(() => {
+  const moveToDetailPage = () => {
+    console.log(currentTab)
     dispatch(scrollActions.scroll({ whereToGo: 0, detailPlace: 0, myStorage: window.scrollY, homeY: 0 }));
     dispatch(prevPathActions.prevPath({ prevPath: location.pathname }));
-    navigate(`/detail-place/${place.placeId}`);
-  }, []);
+    navigate(`/detail-place/${place.placeId}`, { state: currentTab })
+  }
 
   return (
     <div className="popular-place">

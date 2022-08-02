@@ -71,7 +71,6 @@ function Folder({currentTab}:FolderTypeProps) {
   });
 
   useEffect(() => {
-    console.log(myStorageY)
     getWishedPlacesRefetch();
     getRecommendedPlacesRefetch();
   }, [currentTab]);
@@ -132,7 +131,7 @@ function Folder({currentTab}:FolderTypeProps) {
               />
             ))
         : recommendedPlaces?.data.map((place: RecommendedPlaceType) => (
-            <RecommendedPlace place={place} key={place.placeId} getRecommendedPlacesRefetch={getRecommendedPlacesRefetch} />
+            <RecommendedPlace place={place} key={place.placeId} getRecommendedPlacesRefetch={getRecommendedPlacesRefetch} currentTab={currentTab}/>
           ))}
     </div>
   );

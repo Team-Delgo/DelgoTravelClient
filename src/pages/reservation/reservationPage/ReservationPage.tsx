@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState ,useRef} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
 import { reservationActions } from '../../../redux/slice/reservationSlice';
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
@@ -88,15 +88,13 @@ function ReservationPage() {
     });
   };
 
-  const handleReservationName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setReservationName(e.target.value);
-  };
+  const handleReservationName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setReservationName(e.target.value.replace(/ /g,""));
+  },[]);
 
   const existCoupon = couponList.map((coupon) => {
     const priceString = coupon.discountNum.toString();
     const price = `${priceString.slice(0, priceString.length - 3)},${priceString.slice(priceString.length - 3)}`;
-    const registDate = `${coupon.registDt.slice(0, 4)}.${coupon.registDt.slice(5, 7)}.${coupon.registDt.slice(8, 10)}`;
-    const expireDate = `${coupon.expireDt.slice(0, 4)}.${coupon.expireDt.slice(5, 7)}.${coupon.expireDt.slice(8, 10)}`;
 
     return (
       <div
