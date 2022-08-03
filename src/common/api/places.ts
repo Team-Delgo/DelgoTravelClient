@@ -1,45 +1,47 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
-import { useErrorHandlers } from './useErrorHandlers';
-import { url } from '../../constants/url.cosnt';
+import axios from 'axios';
+
+
 
 async function getAllPlaces(userId: number, startDt: string, endDt: string) {
-  return fetch(`${process.env.REACT_APP_API_URL}/place/selectWheretogo?userId=${userId}&startDt=${startDt}&endDt=${endDt}`).then((response) =>
-    response.json()
-  );
-};
+  const { data } = await axios
+    .get(`${process.env.REACT_APP_API_URL}/place/selectWheretogo?userId=${userId}&startDt=${startDt}&endDt=${endDt}`)
+  return data
+}
 
-async function getWishedPlaces(accessToken: string ,userId: number) {
-  return fetch(`${process.env.REACT_APP_API_URL}/wish/select?userId=${userId}`, {
-    // headers: {
-    //   Authorization: accessToken
-    // }
-  }).then((response) =>
-    response.json()
-  );
-};
+async function getWishedPlaces(accessToken: string, userId: number) {
+  const { data } = await axios
+    .get(`${process.env.REACT_APP_API_URL}/wish/select?userId=${userId}`, {
+    })
+  return data
+}
 
 async function getDetailPlace(userId: number, placeId: string, startDt: string, endDt: string) {
-  return fetch( `${process.env.REACT_APP_API_URL}/place/selectDetail?userId=${userId}&placeId=${placeId}&startDt=${startDt}&endDt=${endDt}`).then((response) =>
-    response.json()
-  );
-};
+  const { data } = await axios
+    .get(`${process.env.REACT_APP_API_URL}/place/selectDetail?userId=${userId}&placeId=${placeId}&startDt=${startDt}&endDt=${endDt}`, {
+    })
+  return data
+}
 
-async function getRecommendedPlace(userId:number) {
-  return fetch(`${process.env.REACT_APP_API_URL}/place/recommend?userId=${userId}`).then((response) =>
-    response.json()
-  );
-};
+async function getRecommendedPlace(userId: number) {
+  const { data } = await axios
+    .get(`${process.env.REACT_APP_API_URL}/place/recommend?userId=${userId}`, {
+    })
+  return data
+}
 
 async function getEditorNotePlacesAll() {
-  return fetch(`${process.env.REACT_APP_API_URL}/place/getEditorNote/all`).then((response) =>
-    response.json()
-  );
-};
+  const { data } = await axios
+    .get(`${process.env.REACT_APP_API_URL}/place/getEditorNote/all`, {
+    })
+  return data
+}
 
-async function getEditorNotePlace(placeId:number) {
-  return fetch(`${process.env.REACT_APP_API_URL}/place/getEditorNote/place?placeId=${placeId}`).then((response) =>
-    response.json()
-  );
-};
+async function getEditorNotePlace(placeId: number) {
+  const { data } = await axios
+    .get(`${process.env.REACT_APP_API_URL}/place/getEditorNote/place?placeId=${placeId}`, {
+    })
+  return data
+}
 
-export { getAllPlaces,getWishedPlaces, getDetailPlace,getRecommendedPlace,getEditorNotePlacesAll ,getEditorNotePlace};
+
+export { getAllPlaces, getWishedPlaces, getDetailPlace, getRecommendedPlace, getEditorNotePlacesAll, getEditorNotePlace };

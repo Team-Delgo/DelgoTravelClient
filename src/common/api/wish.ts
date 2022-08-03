@@ -1,6 +1,6 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { useErrorHandlers } from './useErrorHandlers';
-import { url } from '../../constants/url.cosnt';
+
 
 
 async function wishInsert(

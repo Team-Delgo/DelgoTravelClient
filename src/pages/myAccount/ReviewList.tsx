@@ -44,8 +44,8 @@ function ReviewList() {
   const dispatch = useDispatch();
 
 
-  const { isLoading, data: reviewList } = useQuery(
-    'getMyReviewList',
+  const { isLoading:getReviewListIsLoading, data: reviewList } = useQuery(
+    'getReviewList',
     () => getMyReviewList(userId),
     {
       cacheTime: 1000 * 60 * 5,
@@ -57,7 +57,7 @@ function ReviewList() {
     },
   );
 
-  if (isLoading) {
+  if (getReviewListIsLoading) {
     return <div className="reviewlist">&nbsp;</div>
   }
 

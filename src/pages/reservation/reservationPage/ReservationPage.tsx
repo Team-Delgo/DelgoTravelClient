@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
+import { useQuery } from 'react-query';
 import { reservationActions } from '../../../redux/slice/reservationSlice';
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
 import { ReactComponent as BottomArrow } from '../../../icons/bottom-arrow2.svg';
@@ -11,6 +12,7 @@ import BottomButton from '../../../common/components/BottomButton';
 import { getCouponList } from '../../../common/api/coupon';
 import { TOSS } from '../../../constants/url.cosnt';
 import AlertConfirmOne from '../../../common/dialog/AlertConfirmOne'
+import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
 import {RootState} from '../../../redux/store'
 
 interface CouponType {
@@ -28,7 +30,7 @@ interface CouponType {
 
 function ReservationPage() {
   const { user, room, place, date } = useSelector((state: RootState) => state.persist.reservation);
-  const [couponList, setCouponList] = useState<Array<CouponType>>([]);
+  // const [couponList, setCouponList] = useState<Array<CouponType>>([]);
   const [couponDropDownOpen, setCouponDropDownOpen] = useState(false);
   const [selectedCouponId, setSelectedCouponId] = useState(0);
   const [selectCouponDiscount,setSelectCouponDiscount] = useState(0)
@@ -37,18 +39,19 @@ function ReservationPage() {
   const [reservationNameConfrim,setReservationNameConfrim]=useState(false)
   const reservationNameInput = useRef<HTMLInputElement>(null);
 
+  const { isLoading:getCouponListIsLoading, data: couponList,refetch} = useQuery(
+    'getCouponList',
+    () => getCouponList(user.id),
+    {
+      cacheTime: 1000 * 60 * 5,
+      staleTime: 1000 * 60 * 3,
+      refetchInterval: false,
+      onError: (error: any) => {
+        useErrorHandlers(dispatch, error)
+      }
+    },
+  );
 
-  useEffect(() => {
-    window.scrollTo(0, 0);  
-    getCouponList(
-      user.id,
-      (response: AxiosResponse) => {
-        setCouponList(response.data.data);
-        console.log(response.data.data);
-      },
-      dispatch,
-    );
-  }, []);
 
   const creditCardPayment = () => {
     dispatch(
@@ -92,7 +95,7 @@ function ReservationPage() {
     setReservationName(e.target.value.replace(/ /g,""));
   },[]);
 
-  const existCoupon = couponList.map((coupon) => {
+  const existCoupon = couponList?.data.map((coupon:CouponType) => {
     const priceString = coupon.discountNum.toString();
     const price = `${priceString.slice(0, priceString.length - 3)},${priceString.slice(priceString.length - 3)}`;
 
@@ -133,6 +136,10 @@ function ReservationPage() {
       reservationNameInput.current?.scrollIntoView({ behavior: "smooth" })
     }
   },[])
+
+  if (getCouponListIsLoading) {
+    return <div className="reservationPage">&nbsp;</div>
+  }
 
   return (
     <>
@@ -207,7 +214,7 @@ function ReservationPage() {
           <div className="coupon-drop-down" aria-hidden="true" onClick={handleCouponDropDown}>
             {selectCouponDiscount === 0 ? (
               <>
-                보유한 쿠폰 {couponList.length}장 <BottomArrow className="coupon-bottom-arrow" />
+                보유한 쿠폰 {couponList?.data.length}장 <BottomArrow className="coupon-bottom-arrow" />
               </>
             ) : (
               <>[Delgo 가요]{selectCouponDiscount.toLocaleString()}원 할인쿠폰 </>
@@ -216,7 +223,7 @@ function ReservationPage() {
         ) : (
           <div className="coupon-drop-down-full">
             <div className="coupon-header" aria-hidden="true" onClick={handleCouponDropDown}>
-              보유한 쿠폰 {couponList.length}장 <BottomArrow className="coupon-bottom-arrow" />
+              보유한 쿠폰 {couponList.data.length}장 <BottomArrow className="coupon-bottom-arrow" />
             </div>
             {existCoupon}
           </div>

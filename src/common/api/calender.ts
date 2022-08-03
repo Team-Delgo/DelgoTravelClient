@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from 'axios';
-import { url } from '../../constants/url.cosnt';
 import { useErrorHandler } from './useErrorHandler';
 
 async function getReservedDate(
