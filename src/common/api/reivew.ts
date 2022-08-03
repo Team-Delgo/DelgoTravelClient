@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useErrorHandlers } from './useErrorHandlers';
-import { url } from '../../constants/url.cosnt';
+
 
 async function getDetailPlaceRivews(placeId: string) {
   return fetch(`${process.env.REACT_APP_API_URL}/review/getReview/place?placeId=${placeId}`).then((response) => response.json());

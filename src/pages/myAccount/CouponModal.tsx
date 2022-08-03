@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import React, { ChangeEvent, useRef, useState,useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Sheet from 'react-modal-sheet';
-import { registCoupon } from '../../common/api/myaccount';
+import { registCoupon } from '../../common/api/coupon';
 import AlertConfirmOne from '../../common/dialog/AlertConfirmOne'
 import {RootState} from '../../redux/store'
 import "./CouponModal.scss";

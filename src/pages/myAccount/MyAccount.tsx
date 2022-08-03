@@ -2,19 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
-import alertConfirm, { Button, alert } from 'react-alert-confirm';
+import { useQuery } from 'react-query';
 import 'react-alert-confirm/dist/index.css';
 import Footer from '../../common/components/Footer';
+import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import './MyAccount.scss';
 import RightArrow from '../../icons/right-arrow.svg';
 import RightArrowBlack from '../../icons/right-arrow-black.svg';
 import { userActions } from '../../redux/slice/userSlice';
 import { tokenActions } from '../../redux/slice/tokenSlice';
 import AlertConfirm from '../../common/dialog/AlertConfirm';
-import AlertConfirmOne from '../../common/dialog/AlertConfirmOne';
 import { deleteUser } from '../../common/api/signup';
 import { MY_ACCOUNT_PATH } from '../../constants/path.const';
-import { myAccount } from '../../common/api/myaccount';
+import { getMyAccountDataList } from '../../common/api/myaccount';
 import { tokenRefresh } from '../../common/api/login';
 import { RootState } from '../../redux/store'
 
@@ -22,7 +22,6 @@ function MyAccount() {
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [text, setText] = useState('');
-  const [items, setItems] = useState({ coupons: 0, points: 0, reviews: 0 });
   const [age, setAge] = useState(0);
   const pet = useSelector((state: RootState) => state.persist.user.pet);
   const navigation = useNavigate();
@@ -33,6 +32,22 @@ function MyAccount() {
   const accessToken = useSelector((state: RootState) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
 
+  const { isLoading:getMyAccountDataListIsLoading, data: myAccountDataList,refetch} = useQuery(
+    'getMyAccountDataList',
+    () => getMyAccountDataList(userId),
+    {
+      cacheTime: 1000 * 60 * 5,
+      staleTime: 1000 * 60 * 3,
+      refetchInterval: false,
+      onSuccess: () => {
+        console.log(myAccountDataList)
+      },
+      onError: (error: any) => {
+        useErrorHandlers(dispatch, error)
+      }
+    },
+  );
+
   useEffect(() => {
 
     window.scrollTo(0, 0);
@@ -42,7 +57,6 @@ function MyAccount() {
     // const age = now.getFullYear - date.getFullYear;
     console.log(now.getFullYear() - date.getFullYear());
     setAge(now.getFullYear() - date.getFullYear() + 1);
-    getUserInfo();
   }, []);
 
   useEffect(() => {
@@ -61,26 +75,6 @@ function MyAccount() {
       // }
     }, dispatch);
   }, [accessToken]);
-
-  const getUserInfo = () => {
-    const data = {
-      userId,
-    };
-    console.log(data);
-    myAccount(
-      data,
-      (response: AxiosResponse) => {
-        const { code, data } = response.data;
-        console.log(response);
-        if (code === 200) {
-          setItems((prev) => {
-            return { ...prev, coupons: data.couponNum, reviews: data.reviewNum };
-          });
-        }
-      },
-      dispatch,
-    );
-  };
 
   const logoutHandler = () => {
     dispatch(userActions.signout());
@@ -114,6 +108,11 @@ function MyAccount() {
   const navigateCouponPage = () => {
     navigation('/user/myaccount/coupon');
   };
+
+  if (getMyAccountDataListIsLoading) {
+    return <div className="account">&nbsp;</div>
+  }
+
 
   return (
     <div className="account">
@@ -155,11 +154,11 @@ function MyAccount() {
           <div className="account-profile-info-second">
             <div className="account-profile-info-coupon" aria-hidden="true" onClick={navigateCouponPage}>
               <p className="account-profile-info-column">쿠폰</p>
-              <p className="account-profile-info-value">{items.coupons}장</p>
+              <p className="account-profile-info-value">{myAccountDataList?.data.couponNum}장</p>
             </div>
             <div className="account-profile-info-point">
               <p className="account-profile-info-column">포인트</p>
-              <p className="account-profile-info-value">{items.points}</p>
+              <p className="account-profile-info-value">0P</p>
             </div>
             <div
               className="account-profile-info-review"
@@ -169,7 +168,7 @@ function MyAccount() {
               }}
             >
               <p className="account-profile-info-column">리뷰</p>
-              <p className="account-profile-info-value">{items.reviews}건</p>
+              <p className="account-profile-info-value">{myAccountDataList?.data.reviewNum}건</p>
             </div>
           </div>
         </div>

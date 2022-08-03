@@ -1,6 +1,4 @@
 import axios, { AxiosResponse } from 'axios';
-import { stringify } from 'querystring';
-import { url } from '../../constants/url.cosnt';
 import { useErrorHandlers } from './useErrorHandlers';
 
 interface SignUpData {

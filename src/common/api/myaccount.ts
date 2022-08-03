@@ -1,36 +1,13 @@
 import axios, { AxiosResponse } from 'axios';
 import { useErrorHandlers } from './useErrorHandlers';
-import { url } from '../../constants/url.cosnt';
 
-async function myAccount(data: { userId: number }, success: (data: AxiosResponse) => void, dispatch: any) {
-  await axios
+async function getMyAccountDataList(userId: number ) {
+  const { data } = await axios
     .get(`${process.env.REACT_APP_API_URL}/myAccount`, {
-      params: { userId: data.userId },
+      params: { userId },
     })
-    .then((data) => {
-      success(data);
-    })
-    .catch((error) => {
-      useErrorHandlers(dispatch, error);
-    });
-}
-
-async function registCoupon(
-  data: { userId: number; couponCode: string },
-  success: (data: AxiosResponse) => void,
-  dispatch: any,
-) {
-  await axios
-    .post(`${process.env.REACT_APP_API_URL}/coupon/regist`, {
-      userId: data.userId,
-      couponCode: data.couponCode,
-    })
-    .then((data) => {
-      success(data);
-    })
-    .catch((error) => {
-      useErrorHandlers(dispatch, error);
-    });
+    console.log(data)
+  return data
 }
 
 async function changePetInfo(
@@ -68,4 +45,4 @@ async function changePassword(email: string, password: string, success: (data: A
     });
 }
 
-export { registCoupon, myAccount, changePetInfo, changePassword };
+export { getMyAccountDataList, changePetInfo, changePassword };

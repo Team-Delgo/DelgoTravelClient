@@ -1,6 +1,5 @@
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { useErrorHandlers } from './useErrorHandlers';
-import { url } from '../../constants/url.cosnt';
 
 async function bookingRequest(
   data: {
@@ -59,8 +58,11 @@ async function bookingGetData(
   }
 }
 
+
 async function bookingGetDataByMain(accessToken: string, userId: number) {
-  return fetch(`${process.env.REACT_APP_API_URL}/booking/getData/main?userId=${userId}`).then((response) => response.json());
+  const {data} = await axios
+  .get(`${process.env.REACT_APP_API_URL}/booking/getData/main?userId=${userId}`)
+  return data
 }
 
 // , {
@@ -70,11 +72,10 @@ async function bookingGetDataByMain(accessToken: string, userId: number) {
 // }
 
 async function getBookingHistory(userId: number) {
-  return fetch(`${process.env.REACT_APP_API_URL}/booking/getHistory?userId=${userId}`).then((response) =>
-    response.json()
-  );
-};
-
+  const {data} = await axios
+  .get(`${process.env.REACT_APP_API_URL}/booking/getHistory?userId=${userId}`)
+  return data
+}
 
 async function bookingCancle(
   bookingId: string,

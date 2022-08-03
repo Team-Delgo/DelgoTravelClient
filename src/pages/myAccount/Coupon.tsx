@@ -3,12 +3,14 @@ import { useEffect, useState, useRef ,useCallback } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useQuery } from 'react-query';
 import { ReactComponent as Arrow } from '../../icons/left-arrow.svg';
 import './Coupon.scss';
 import { tokenActions } from '../../redux/slice/tokenSlice';
-import { url } from '../../constants/url.cosnt';
 import { tokenRefresh } from '../../common/api/login';
+import { getCouponList } from '../../common/api/coupon';
 import AlertConfirmOne from '../../common/dialog/AlertConfirmOne'
+import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import {RootState} from '../../redux/store'
 import { ReactComponent as FootPrintActive } from "../../icons/foot-print-active.svg";
 import CouponModal from './CouponModal';
@@ -26,7 +28,6 @@ interface CouponType {
 
 function Coupon() {
   const [scheduledCoupon, setScheduledCoupon] = useState<number>(0);
-  const [couponList, setCouponList] = useState<CouponType[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [couponRegistrationCompleted ,setCouponRegistrationCompleted]=useState(false)
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
@@ -36,8 +37,21 @@ function Coupon() {
   const refreshToken = localStorage.getItem('refreshToken') || '';
   let count;
 
+  const { isLoading:getCouponListIsLoading, data: couponList,refetch} = useQuery(
+    'getCouponList',
+    () => getCouponList(userId),
+    {
+      cacheTime: 1000 * 60 * 5,
+      staleTime: 1000 * 60 * 3,
+      refetchInterval: false,
+      onError: (error: any) => {
+        useErrorHandlers(dispatch, error)
+      }
+    },
+  );
+
   useEffect(()=>{
-    getCouponList();
+    refetch()
   },[isModalOpen])
 
   useEffect(() => {
@@ -64,20 +78,11 @@ function Coupon() {
     );
   }, [accessToken]);
 
-  const getCouponList = async () => {
-    const response = await axios.get(`${url}coupon/getCouponList?userId=${userId}`);
-    const { data } = response.data;
-    setCouponList(data);
-    console.log(response);
-    console.log(data);
-
-  };
-
   const getScheduledCoupon = () => {
     let count = 0;
     const date = new Date();
     const currentDateTime = date.getTime();
-    couponList.map((coupon) => {
+    couponList?.data.map((coupon: CouponType) => {
       const expireDateString = coupon.expireDt;
       const expireDate = new Date(expireDateString);
       const expireDateTime = expireDate.getTime();
@@ -107,7 +112,7 @@ function Coupon() {
     setCouponRegistrationCompleted(false)
   },[])
 
-  const existCoupon = couponList.map((coupon) => {
+  const existCoupon = couponList?.data.map((coupon:CouponType) => {
     const priceString = coupon.discountNum.toString();
     const price = `${priceString.slice(0, priceString.length - 3)},${priceString.slice(priceString.length - 3)}`;
     const registDate = `${coupon.registDt.slice(0, 4)}.${coupon.registDt.slice(5, 7)}.${coupon.registDt.slice(8, 10)}`;
@@ -123,6 +128,10 @@ function Coupon() {
     );
   });
 
+  if (getCouponListIsLoading) {
+    return <div className="reviewlist">&nbsp;</div>
+  }
+
   return (
     <div className="coupon">
       <CouponModal openModal={isModalOpen} closeModal={modalClose} confirmCouponRegisterCompletedOpen={confirmCouponRegisterCompletedOpen}/>
@@ -133,14 +142,14 @@ function Coupon() {
         </div>
         <header className="myaccount-header">쿠폰함</header>
         <div className="coupon-headline">
-          <div className="coupon-count">쿠폰 {couponList && couponList.length}장</div>
+          <div className="coupon-count">쿠폰 {couponList.data.length}장</div>
           <span>30일 이내 소멸예정 쿠폰 {scheduledCoupon}장</span>
         </div>
         <div className="coupon-flexwrapper">
           <div aria-hidden="true" className="coupon-regist" onClick={modalOpen}>
             쿠폰등록하기
           </div>
-          {existCoupon.length ?
+          {existCoupon?.length ?
             existCoupon :
             <div className='coupon-nocoupon'>
               <FootPrintActive />
