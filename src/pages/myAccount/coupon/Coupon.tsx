@@ -4,15 +4,15 @@ import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from 'react-query';
-import { ReactComponent as Arrow } from '../../icons/left-arrow.svg';
+import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import './Coupon.scss';
-import { tokenActions } from '../../redux/slice/tokenSlice';
-import { tokenRefresh } from '../../common/api/login';
-import { getCouponList } from '../../common/api/coupon';
-import AlertConfirmOne from '../../common/dialog/AlertConfirmOne'
-import { useErrorHandlers } from '../../common/api/useErrorHandlers';
-import {RootState} from '../../redux/store'
-import { ReactComponent as FootPrintActive } from "../../icons/foot-print-active.svg";
+import { tokenActions } from '../../../redux/slice/tokenSlice';
+import { tokenRefresh } from '../../../common/api/login';
+import { getCouponList } from '../../../common/api/coupon';
+import AlertConfirmOne from '../../../common/dialog/AlertConfirmOne'
+import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
+import {RootState} from '../../../redux/store'
+import { ReactComponent as FootPrintActive } from "../../../icons/foot-print-active.svg";
 import CouponModal from './CouponModal';
 
 interface CouponType {

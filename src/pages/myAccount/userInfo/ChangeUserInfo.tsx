@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import RightArrow from '../../icons/right-arrow.svg';
-import LeftArrow from '../../icons/left-arrow.svg';
+import RightArrow from '../../../icons/right-arrow.svg';
+import LeftArrow from '../../../icons/left-arrow.svg';
 import "./ChangeUserInfo.scss";
-import { MY_ACCOUNT_PATH } from '../../constants/path.const';
-import {RootState} from '../../redux/store'
+import { MY_ACCOUNT_PATH } from '../../../constants/path.const';
+import {RootState} from '../../../redux/store'
 
 function ChangeUserInfo() {
   const navigate = useNavigate();
