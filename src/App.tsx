@@ -54,6 +54,7 @@ import ReservationHistoryPage from './pages/reservation/reservationHistoryPage/R
 import ChangePasswordCheck from './pages/myAccount/ChangePasswordCheck';
 import ChangePassword from './pages/myAccount/ChangePassword';
 import ServiceTerm from './pages/myAccount/ServiceTerm';
+import SocialNickname from './pages/signUpPage/forSocial/SocialNickname';
 
 function App() {
   const hasError = useSelector((state: any) => state.error.hasError);
@@ -83,6 +84,7 @@ function App() {
         <Route path={SIGN_UP_PATH.USER_PET_INFO} element={<PetInfo />} />
         <Route path={SIGN_UP_PATH.USER_PET_INFO} element={<PetInfo />} />
         <Route path={SIGN_UP_PATH.COMPLETE} element={<SignUpComplete />} />
+        <Route path={SIGN_UP_PATH.SOCIAL.NICKNAME} element={<SocialNickname/>}/>
         <Route path={MY_STORAGE_PATH} element={<MyStoragePage />} />
         <Route path={WHERE_TO_GO_PATH} element={<WhereToGoPage />} />
         <Route path={MY_ACCOUNT_PATH.MAIN} element={<MyAccount />} />

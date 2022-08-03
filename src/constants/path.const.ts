@@ -28,6 +28,10 @@ export const SIGN_UP_PATH = {
   USER_INFO: '/user/signup/user-info',
   USER_PET_INFO: '/user/signup/pet-info',
   COMPLETE: '/user/signup/complete',
+  SOCIAL: {
+    NICKNAME: '/user/signup/social/nickname',
+    USER_PET_INFO: '/user/signup/social/pet-info'
+  }
 };
 
 export const MY_STORAGE_PATH = '/my-storage';

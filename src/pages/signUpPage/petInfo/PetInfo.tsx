@@ -20,6 +20,7 @@ interface LocationState {
   email: string;
   nickname: string;
   password: string;
+  isSocial: boolean;
 }
 
 interface Input {
@@ -44,7 +45,7 @@ function PetInfo() {
   const dispatch = useDispatch();
   const navigation = useNavigate();
   const state = useLocation().state as LocationState;
-  const { email, password, nickname, phone } = state;
+  const { email, password, nickname, phone, isSocial } = state;
   const [image, setImage] = useState<any>();
   const [sendingImage, setSendingImage] = useState<any>();
   const [enteredInput, setEnteredInput] = useState<Input>({ name: '', birth: undefined, type: '' });

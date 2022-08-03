@@ -151,7 +151,7 @@ function UserInfo() {
     //  유저정보 보내기
 
     navigation(SIGN_UP_PATH.USER_PET_INFO, {
-      state: { email: enteredInput.email, password: enteredInput.password, nickname: enteredInput.nickname, phone },
+      state: { email: enteredInput.email, password: enteredInput.password, nickname: enteredInput.nickname, phone, isSocial:false },
     });
   };
 
