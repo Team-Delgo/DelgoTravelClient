@@ -5,9 +5,9 @@ export const url = 'http://www.delgo.pet:8080/';
 export const KAKAO = {
   // REST_API_KEY : "ed29d568272e3eb51b493659e2d6e9eb",
   REST_API_KEY: 'b40f84b68ce44634317bb5530b0166c1',
-  // CALL_BACK_URL: `${process.env.REACT_APP_BASE_URL}/oauth/callback/kakao`,
-  CALL_BACK_URL: `https://delgo.pet/oauth/callback/kakao`,
-  KAKAO_AUTH_URL: `https://kauth.kakao.com/oauth/authorize?client_id=b40f84b68ce44634317bb5530b0166c1&redirect_uri=https://delgo.pet/oauth/callback/kakao&response_type=code`,
+  CALL_BACK_URL: `${process.env.REACT_APP_BASE_URL}/oauth/callback/kakao`,
+  // CALL_BACK_URL: `https://delgo.pet/oauth/callback/kakao`,
+  KAKAO_AUTH_URL: `https://kauth.kakao.com/oauth/authorize?client_id=b40f84b68ce44634317bb5530b0166c1&redirect_uri=${process.env.REACT_APP_BASE_URL}/oauth/callback/kakao&response_type=code`,
 };
 
 export const NAVER = {
