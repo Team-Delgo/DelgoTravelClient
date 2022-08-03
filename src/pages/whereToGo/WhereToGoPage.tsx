@@ -12,7 +12,7 @@ import { getAllPlaces } from '../../common/api/places';
 import { tokenActions } from '../../redux/slice/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
-import Footer from '../../common/components/Footer'
+import Footer from '../../common/components/FooterNavigation'
 import RegionSelectionModal from './modal/RegionSelectionModal'
 import Place from './place/Place'
 import {RootState} from '../../redux/store'
