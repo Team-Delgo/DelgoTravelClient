@@ -3,10 +3,10 @@ import classNames from 'classnames';
 import React, { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../../common/api/login';
-import { MY_ACCOUNT_PATH } from '../../constants/path.const';
-import {RootState} from '../../redux/store'
-import LeftArrow from '../../icons/left-arrow.svg';
+import { login } from '../../../common/api/login';
+import { MY_ACCOUNT_PATH } from '../../../constants/path.const';
+import {RootState} from '../../../redux/store'
+import LeftArrow from '../../../icons/left-arrow.svg';
 import "./ChangePasswordCheck.scss";
 
 function ChangePasswordCheck() {

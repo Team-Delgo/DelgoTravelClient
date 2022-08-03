@@ -3,18 +3,18 @@ import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { checkPetName } from '../signUpPage/userInfo/ValidCheck';
-import { ReactComponent as Arrow } from '../../icons/left-arrow.svg';
-import { ReactComponent as Camera } from '../../icons/camera.svg';
-import '../signUpPage/petInfo/PetInfo.scss';
-import DogType from '../signUpPage/petInfo/DogType';
-import BirthSelector from '../signUpPage/petInfo/BirthSelector';
-import { petImageUpload } from '../../common/api/signup';
-import Check from '../../icons/check.svg';
-import { userActions } from '../../redux/slice/userSlice';
-import { MY_ACCOUNT_PATH } from '../../constants/path.const';
-import { changePetInfo } from '../../common/api/myaccount';
-import {RootState} from '../../redux/store'
+import { checkPetName } from '../../signUpPage/userInfo/ValidCheck';
+import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
+import { ReactComponent as Camera } from '../../../icons/camera.svg';
+import '../../signUpPage/petInfo/PetInfo.scss';
+import DogType from '../../signUpPage/petInfo/DogType';
+import BirthSelector from '../../signUpPage/petInfo/BirthSelector';
+import { petImageUpload } from '../../../common/api/signup';
+import Check from '../../../icons/check.svg';
+import { userActions } from '../../../redux/slice/userSlice';
+import { MY_ACCOUNT_PATH } from '../../../constants/path.const';
+import { changePetInfo } from '../../../common/api/myaccount';
+import {RootState} from '../../../redux/store'
 
 interface Input {
   name: string;

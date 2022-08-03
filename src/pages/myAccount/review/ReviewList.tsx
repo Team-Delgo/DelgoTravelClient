@@ -4,13 +4,13 @@ import { AxiosResponse } from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from 'react-query';
-import { getMyReviewList } from "../../common/api/reivew";
-import { useErrorHandlers } from '../../common/api/useErrorHandlers';
-import {RootState} from '../../redux/store'
-import LeftArrow from '../../icons/left-arrow.svg';
-import RightArrow from '../../icons/right-arrow-thin.svg';
-import Star from "../../icons/big-review-star-active.svg";
-import GrayStar from "../../icons/big-review-star.svg";
+import { getMyReviewList } from "../../../common/api/reivew";
+import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
+import {RootState} from '../../../redux/store'
+import LeftArrow from '../../../icons/left-arrow.svg';
+import RightArrow from '../../../icons/right-arrow-thin.svg';
+import Star from "../../../icons/big-review-star-active.svg";
+import GrayStar from "../../../icons/big-review-star.svg";
 import './ReviewList.scss';
 
 interface ReviewType {

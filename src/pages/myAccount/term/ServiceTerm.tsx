@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import React, { DOMAttributes, UIEventHandler } from 'react';
-import '../signUpPage/terms/DetailTerm.scss';
-import { ReactComponent as Arrow } from '../../icons/left-arrow.svg';
-import term from '../signUpPage/terms/TermContents';
+import '../../signUpPage/terms/DetailTerm.scss';
+import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
+import term from '../../signUpPage/terms/TermContents';
 import './ServiceTerm.scss';
 
 function DetailTerm(props: { id: number }) {
