@@ -4,7 +4,7 @@ import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Circles,Grid,Oval,Puff,Rings } from 'react-loader-spinner';
+import { Circles, Grid, Oval, Puff, Rings } from 'react-loader-spinner';
 import { ReactComponent as Kakao } from '../../icons/kakao.svg';
 import { ReactComponent as Naver } from '../../icons/naver.svg';
 import { ReactComponent as Apple } from '../../icons/apple.svg';
@@ -15,7 +15,6 @@ import Delgo from '../../icons/delgo.svg';
 import { checkEmail } from '../signUpPage/userInfo/ValidCheck';
 import { emailAuth } from '../../common/api/login';
 import Loading from '../../common/utils/Loading';
-
 
 function SignIn() {
   const [email, setEmail] = useState('');
@@ -57,7 +56,7 @@ function SignIn() {
   return (
     <div className="login-signin">
       {loading ? (
-        <Loading/>
+        <Loading />
       ) : (
         <>
           <div className="login-title-wrapper">
@@ -94,7 +93,7 @@ function SignIn() {
                 aria-hidden="true"
                 className="login-signup-text"
                 onClick={() => {
-                  navigation(SIGN_UP_PATH.TERMS);
+                  navigation(SIGN_UP_PATH.TERMS, { state: { isSocial: false } });
                 }}
               >
                 회원가입
