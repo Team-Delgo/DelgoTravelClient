@@ -39,18 +39,27 @@ async function signup(info: SignUpData, success: (data: AxiosResponse) => void, 
   const { nickname, email, password, phone, pet } = info;
   await axios
     .post(`${process.env.REACT_APP_API_URL}/signup`, {
-      user: {
-        name: nickname,
+      // user: {
+      //   name: nickname,
+      //   email,
+      //   password,
+      //   phoneNo: phone,
+      // },
+      // pet: {
+      //   name: pet.name,
+      //   birthday: pet.birthday,
+      //   size: pet.size,
+      //   // weight: 4.3,
+      // },
+      
+        userName: nickname,
         email,
         password,
         phoneNo: phone,
-      },
-      pet: {
-        name: pet.name,
+        petName: pet.name,
         birthday: pet.birthday,
-        size: pet.size,
+        petSize: pet.size,
         // weight: 4.3,
-      },
     })
     .then((data) => {
       success(data);
