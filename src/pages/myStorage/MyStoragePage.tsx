@@ -38,22 +38,22 @@ function MyStoragePage() {
 
 
 
-  useEffect(() => {
-    tokenRefresh({ refreshToken }, (response: AxiosResponse) => {
-      const { code } = response.data;
+  // useEffect(() => {
+  //   tokenRefresh({ refreshToken }, (response: AxiosResponse) => {
+  //     const { code } = response.data;
 
-      if (code === 200) {
-        const accessToken = response.headers.authorization_access;
-        const refreshToken = response.headers.authorization_refresh;
+  //     if (code === 200) {
+  //       const accessToken = response.headers.authorization_access;
+  //       const refreshToken = response.headers.authorization_refresh;
 
-        dispatch(tokenActions.setToken(accessToken),);
-        localStorage.setItem('refreshToken', refreshToken);
-      }
-      else {
-        navigation('/user/signin',{replace:true});
-      }
-    }, dispatch);
-  }, [accessToken]);
+  //       dispatch(tokenActions.setToken(accessToken),);
+  //       localStorage.setItem('refreshToken', refreshToken);
+  //     }
+  //     else {
+  //       navigation('/user/signin',{replace:true});
+  //     }
+  //   }, dispatch);
+  // }, [accessToken]);
 
   const changeCurrentTab = useCallback((tabNumber: number) => (event: React.MouseEvent) => {
     dispatch(scrollActions.scrollInit())

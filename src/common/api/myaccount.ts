@@ -1,13 +1,12 @@
 import axios, { AxiosResponse } from 'axios';
 import { useErrorHandlers } from './useErrorHandlers';
 
-async function getMyAccountDataList(userId: number ) {
-  const { data } = await axios
-    .get(`${process.env.REACT_APP_API_URL}/myAccount`, {
-      params: { userId },
-    })
-    console.log(data)
-  return data
+async function getMyAccountDataList(userId: number) {
+  const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/myAccount`, {
+    params: { userId },
+  });
+  console.log(data);
+  return data;
 }
 
 async function changePetInfo(
@@ -45,4 +44,17 @@ async function changePassword(email: string, password: string, success: (data: A
     });
 }
 
-export { getMyAccountDataList, changePetInfo, changePassword };
+async function getBookingState(userId: number, success: (data: AxiosResponse) => void, dispatch: any) {
+  await axios
+    .get(`${process.env.REACT_APP_API_URL}/booking/getData/account`, {
+      params: { userId },
+    })
+    .then((data) => {
+      success(data);
+    })
+    .catch((error) => {
+      useErrorHandlers(dispatch, error);
+    });
+}
+
+export { getMyAccountDataList, changePetInfo, changePassword, getBookingState };

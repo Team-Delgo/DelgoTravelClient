@@ -14,15 +14,16 @@ import { tokenActions } from '../../redux/slice/tokenSlice';
 import AlertConfirm from '../../common/dialog/AlertConfirm';
 import { deleteUser } from '../../common/api/signup';
 import { MY_ACCOUNT_PATH } from '../../constants/path.const';
-import { getMyAccountDataList } from '../../common/api/myaccount';
+import { getBookingState, getMyAccountDataList } from '../../common/api/myaccount';
 import { tokenRefresh } from '../../common/api/login';
-import { RootState } from '../../redux/store'
+import { RootState } from '../../redux/store';
 
 function MyAccount() {
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [text, setText] = useState('');
   const [age, setAge] = useState(0);
+  const [bookingData, setBookingData] = useState({ place: '', room: '', startDt: '', endDt: '', state: 'W' });
   const pet = useSelector((state: RootState) => state.persist.user.pet);
   const navigation = useNavigate();
   const dispatch = useDispatch();
@@ -32,24 +33,23 @@ function MyAccount() {
   const accessToken = useSelector((state: RootState) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
 
-  const { isLoading:getMyAccountDataListIsLoading, data: myAccountDataList,refetch} = useQuery(
-    'getMyAccountDataList',
-    () => getMyAccountDataList(userId),
-    {
-      cacheTime: 1000 * 60 * 5,
-      staleTime: 1000 * 60 * 3,
-      refetchInterval: false,
-      onSuccess: () => {
-        console.log(myAccountDataList)
-      },
-      onError: (error: any) => {
-        useErrorHandlers(dispatch, error)
-      }
+  const {
+    isLoading: getMyAccountDataListIsLoading,
+    data: myAccountDataList,
+    refetch,
+  } = useQuery('getMyAccountDataList', () => getMyAccountDataList(userId), {
+    cacheTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 3,
+    refetchInterval: false,
+    onSuccess: () => {
+      console.log(myAccountDataList);
     },
-  );
+    onError: (error: any) => {
+      useErrorHandlers(dispatch, error);
+    },
+  });
 
   useEffect(() => {
-
     window.scrollTo(0, 0);
     const temp = `${dogBirth.slice(0, 4)}-${dogBirth.slice(5, 7)}-${dogBirth.slice(8, 10)}`;
     const date = new Date(temp);
@@ -57,23 +57,28 @@ function MyAccount() {
     // const age = now.getFullYear - date.getFullYear;
     console.log(now.getFullYear() - date.getFullYear());
     setAge(now.getFullYear() - date.getFullYear() + 1);
+    getBookingData();
   }, []);
 
   useEffect(() => {
-    tokenRefresh({ refreshToken }, (response: AxiosResponse) => {
-      const { code } = response.data;
+    tokenRefresh(
+      { refreshToken },
+      (response: AxiosResponse) => {
+        const { code } = response.data;
 
-      if (code === 200) {
-        const accessToken = response.headers.authorization_access;
-        const refreshToken = response.headers.authorization_refresh;
+        if (code === 200) {
+          const accessToken = response.headers.authorization_access;
+          const refreshToken = response.headers.authorization_refresh;
 
-        dispatch(tokenActions.setToken(accessToken),);
-        localStorage.setItem('refreshToken', refreshToken);
-      }
-      // else {
-      //   navigation('/user/signin', { replace: true });
-      // }
-    }, dispatch);
+          dispatch(tokenActions.setToken(accessToken));
+          localStorage.setItem('refreshToken', refreshToken);
+        }
+        // else {
+        //   navigation('/user/signin', { replace: true });
+        // }
+      },
+      dispatch,
+    );
   }, [accessToken]);
 
   const logoutHandler = () => {
@@ -109,17 +114,34 @@ function MyAccount() {
     navigation('/user/myaccount/coupon');
   };
 
-  if (getMyAccountDataListIsLoading) {
-    return <div className="account">&nbsp;</div>
-  }
+  const getBookingData = () => {
+    getBookingState(
+      userId,
+      (response: AxiosResponse) => {
+        console.log(response);
+        const { data } = response.data;
+        setBookingData({
+          place: data[0].place.name,
+          room: data[0].roomName,
+          startDt: data[0].startDt,
+          endDt: data[0].endDt,
+          state: data[0].bookingState,
+        });
+      },
+      dispatch,
+    );
+  };
 
+  if (getMyAccountDataListIsLoading) {
+    return <div className="account">&nbsp;</div>;
+  }
 
   return (
     <div className="account">
       {logoutModalOpen && (
         <AlertConfirm
           text={text}
-          buttonText='확인'
+          buttonText="확인"
           yesButtonHandler={logoutHandler}
           noButtonHandler={() => {
             setLogoutModalOpen(false);
@@ -129,7 +151,7 @@ function MyAccount() {
       {deleteModalOpen && (
         <AlertConfirm
           text={text}
-          buttonText='확인'
+          buttonText="확인"
           yesButtonHandler={deleteHandler}
           noButtonHandler={() => {
             setDeleteModalOpen(false);
@@ -178,9 +200,9 @@ function MyAccount() {
           <h1 className="account-title">예약 현황</h1>
           <div className="account-purchase-reservation-box">
             <div className="account-purchase-reservation-box-wrapper">
-              <p className="account-purchase-reservation-box-wrapper-title">밸런스독</p>
-              <p className="account-purchase-reservation-box-wrapper-room">프리미엄 한옥빌라[102동 온수...</p>
-              <p className="account-purchase-reservation-box-wrapper-date">05.06~05.07 1박</p>
+              <p className="account-purchase-reservation-box-wrapper-title">{bookingData.place}</p>
+              <p className="account-purchase-reservation-box-wrapper-room">{bookingData.room}</p>
+              <p className="account-purchase-reservation-box-wrapper-date">{bookingData.startDt.slice(5,)}~{bookingData.endDt.slice(5,)} 1박</p>
             </div>
             <button type="button" className="account-purchase-reservation-box-state">
               취소완료

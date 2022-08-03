@@ -14,7 +14,7 @@ function ChangeUserInfo() {
 
   const user = useSelector((state: RootState) => state.persist.user.user);
   const { email, phone } = user;
-
+  
   const phoneNumber = `${phone.slice(0, 3)}-****-${phone.slice(7, 11)}`;
   const userEmail = `${email.slice(0, 4)}****${email.slice(8,)}`;
 
@@ -47,15 +47,15 @@ function ChangeUserInfo() {
         <div className="userinfo-phone-label">휴대전화</div>
         <span className="userinfo-phone-value">{phoneNumber}</span>
       </div>
-      <div className="userinfo-email">
+      {email.length > 0 && <div className="userinfo-email">
         <div className="userinfo-email-label">이메일</div>
         <span className="userinfo-email-value">{userEmail}</span>
-      </div>
+      </div>}
       <div className='userinfo-devide' />
-      <div className="userinfo-password" aria-hidden="true" onClick={() => { navigate(MY_ACCOUNT_PATH.PASSWORDCHECK); }}>
+      {email.length > 0 && <div className="userinfo-password" aria-hidden="true" onClick={() => { navigate(MY_ACCOUNT_PATH.PASSWORDCHECK); }}>
         <div className="userinfo-password-label">비밀번호 변경</div>
         <img className="userinfo-password-button" alt="button" src={RightArrow} />
-      </div>
+      </div>}
     </div>
   );
 }

@@ -49,7 +49,7 @@ function SocialNickname() {
     //  유저정보 보내기
 
     navigate(SIGN_UP_PATH.USER_PET_INFO, {
-      state: { nickname: enteredInput, phone },
+      state: { email:'', password:'', nickname: enteredInput, phone, isSocial:true },
     });
   };
 
