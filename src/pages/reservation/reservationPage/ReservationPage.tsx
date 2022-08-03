@@ -239,7 +239,7 @@ function ReservationPage() {
       <div aria-hidden="true" onClick={reservationName !== '' ? creditCardPayment : confirmReservationNameOpen}>
         <BottomButton
           text={`${(
-            Number(room.price.toString().slice(0, -1).replace(',', '')) - selectCouponDiscount
+            Number(room.price.toString().slice(0, -1).replace(',', ''))-selectCouponDiscount
           ).toLocaleString()}원 결제하기`}
         />
       </div>

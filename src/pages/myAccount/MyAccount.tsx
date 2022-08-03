@@ -4,7 +4,7 @@ import { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import 'react-alert-confirm/dist/index.css';
-import Footer from '../../common/components/Footer';
+import Footer from '../../common/components/FooterNavigation';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import './MyAccount.scss';
 import RightArrow from '../../icons/right-arrow.svg';

@@ -17,19 +17,22 @@ import {
   SIGN_IN_PATH,
 } from '../../constants/path.const';
 import {RootState} from '../../redux/store'
-import './Footer.scss';
+import './FooterNavigation.scss';
 import AlertConfirm from '../dialog/AlertConfirm';
 
 function Footer() {
   const location = useLocation();
-  const [OS, setOS] = useState('android');
+  const [OS, setOS] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
   const navigate = useNavigate();
 
   useEffect(() => {
     const varUA = navigator.userAgent.toLowerCase();
-    if (varUA.indexOf('iphone') > -1 || varUA.indexOf('ipad') > -1 || varUA.indexOf('ipod') > -1) {
+    if ( varUA.indexOf('android') > -1) {
+      setOS('android');
+    }
+    else if (varUA.indexOf('iphone') > -1 || varUA.indexOf('ipad') > -1 || varUA.indexOf('ipod') > -1) {
       setOS('ios');
     }
   }, []);
@@ -55,7 +58,7 @@ function Footer() {
   }, [isSignIn]);
 
   return (
-    <div className="footer">
+    <div className={OS === 'android' ? 'footer-android' : 'footer-ios'}>
       {isModalOpen && <AlertConfirm
         text="로그인 후 이용 할 수 있습니다."
         buttonText='로그인'
@@ -66,71 +69,71 @@ function Footer() {
           navigate(SIGN_IN_PATH.MAIN);
         }}
       />}
-      <div className={OS === 'android' ? 'home-icon-android' : 'home-icon-ios'}>
+      <div className='home-icon'>
         {location.pathname === ROOT_PATH ? (
           <div aria-hidden="true" onClick={moveToTopScreen}>
             <Link to={ROOT_PATH}>
               <HomeActive />
             </Link>
-            <div className={OS === 'android' ? 'footer-text-active-android' : 'footer-text-active-ios'}>홈</div>
+            <div className='footer-text-active'>홈</div>
           </div>
         ) : (
           <>
             <Link to={ROOT_PATH}>
               <Home />
             </Link>
-            <div className={OS === 'android' ? 'footer-text-android' : 'footer-text-ios'}>홈</div>
+            <div className='footer-text-active'>홈</div>
           </>
         )}
       </div>
-      <div className={OS === 'android' ? 'search-icon-android' : 'search-icon-ios'}>
+      <div className='search-icon'>
         {location.pathname === WHERE_TO_GO_PATH ? (
           <div aria-hidden="true" onClick={moveToTopScreen}>
             <Link to={WHERE_TO_GO_PATH}>
               <SearchActive />
             </Link>
-            <div className={OS === 'android' ? 'footer-text-active-android' : 'footer-text-active-ios'}>찾기</div>
+            <div className='footer-text-active'>찾기</div>
           </div>
         ) : (
           <>
             <Link to={WHERE_TO_GO_PATH}>
               <Search />
             </Link>
-            <div className={OS === 'android' ? 'footer-text-android' : 'footer-text-ios'}>찾기</div>
+            <div className='footer-text'>찾기</div>
           </>
         )}
       </div>
       <div
-        className={OS === 'android' ? 'bag-icon-android' : 'bag-icon-ios'}
+        className='bag-icon'
         aria-hidden="true"
         onClick={moveToMyStoragePage}
       >
         {location.pathname === MY_STORAGE_PATH ? (
           <div aria-hidden="true" onClick={moveToTopScreen}>
             <BagActive />
-            <div className={OS === "android" ? "footer-text-active-android" : "footer-text-active-ios"}>내 여행</div>
+            <div className='footer-text-active'>내 여행</div>
           </div>
         ) : (
           <>
             <Bag />
-            <div className={OS === 'android' ? 'footer-text-android' : 'footer-text-ios'}>내 여행</div>
+            <div className='footer-text'>내 여행</div>
           </>
         )}
       </div>
       <div
-        className={OS === 'android' ? 'person-icon-android' : 'person-icon-ios'}
+        className='person-icon'
         aria-hidden="true"
         onClick={moveToMyAccountPage}
       >
         {location.pathname === MY_ACCOUNT_PATH.MAIN ? (
           <div aria-hidden="true" onClick={moveToTopScreen}>
             <PersonActive />
-            <div className={OS === "android" ? "footer-text-active-android" : "footer-text-active-ios"}>내 정보</div>
+            <div className='footer-text-active'>내 정보</div>
           </div>
         ) : (
           <>
             <Person />
-            <div className={OS === 'android' ? 'footer-text-android' : 'footer-text-ios'}>내 정보</div>
+            <div className='footer-text'>내 정보</div>
           </>
         )}
       </div>

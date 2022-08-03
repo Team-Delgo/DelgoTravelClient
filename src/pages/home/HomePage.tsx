@@ -4,7 +4,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
-import Footer from '../../common/components/Footer';
+import Footer from '../../common/components/FooterNavigation';
 import RecommendedPlace from './recommenedPlaces/RecommendedPlace';
 import { tokenActions } from '../../redux/slice/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';

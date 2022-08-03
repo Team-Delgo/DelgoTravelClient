@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { tokenActions } from '../../redux/slice/tokenSlice';
 import { scrollActions } from '../../redux/slice/scrollSlice';
 import { tokenRefresh } from '../../common/api/login';
-import Footer from '../../common/components/Footer';
+import Footer from '../../common/components/FooterNavigation';
 import {RootState} from '../../redux/store'
 import Folder from './wishListInfo/Folder';
 import History from './historyInfo/History';
