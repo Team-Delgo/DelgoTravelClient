@@ -64,6 +64,13 @@ function ReservationCancleModal({ openReservationCancleModal, closeReservationCa
     );
   }
 
+  const getDate = (date:string) => { 
+    const week = ['일', '월', '화', '수', '목', '금', '토'];
+    const dayOfWeek = week[new Date(date).getDay()];
+    return dayOfWeek;
+}
+
+
   return (
     <Sheet isOpen={openReservationCancleModal} onClose={closeReservationCancleModal} snapPoints={[500, 500, 100, 0]}>
       <Sheet.Container>
@@ -73,22 +80,27 @@ function ReservationCancleModal({ openReservationCancleModal, closeReservationCa
             <h3 className="reservation-cancle-confirm-label">예약을 취소하시겠어요?</h3>
             <div className="reservation-cancle-place-info">
               <header className="reservation-cancle-place-info-name">{reservationData.place.name}</header>
-              <div className="reservation-cancle-place-info-date">22.05.06(월) - 22.05.07(화)</div>
+              <div className="reservation-cancle-place-info-date">
+                {reservationData.startDt.substring(2, 4)}.{reservationData.startDt.substring(5, 7)}.
+                {reservationData.startDt.substring(8, 10)}({getDate(reservationData.startDt)}) -{' '}
+                {reservationData.endDt.substring(2, 4)}.{reservationData.endDt.substring(5, 7)}.
+                {reservationData.endDt.substring(8, 10)}({getDate(reservationData.endDt)})
+              </div>
               <div className="reservation-cancle-place-info-address">{reservationData.place.address}</div>
               <div className="reservation-cancle-place-info-room-type">{reservationData.roomName}</div>
               <div className="reservation-cancle-devide" />
               <div className="reservation-cancle-payment-price">
                 <div className="reservation-cancle-payment-price-label">결제금액</div>
                 <div className="reservation-cancle-payment-price-amount">{reservationData.finalPrice}</div>
-                </div>
+              </div>
               <div className="reservation-cancle-cancellation-fee">
                 <div className="reservation-cancle-cancellation-fee-label">취소 수수료</div>
                 <div className="reservation-cancle-cancellation-fee-amount">-{reservationData.commission}</div>
-                </div>
+              </div>
               <div className="reservation-cancle-refund-price">
                 <div className="reservation-cancle-refund-price-label">환불금액</div>
                 <div className="reservation-cancle-refund-price-amount">{reservationData.refund}</div>
-                </div>
+              </div>
             </div>
             <div className="reservation-cancle-button-container">
               <button type="button" className="reservation-cancle-button" onClick={cancleReservation}>
