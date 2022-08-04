@@ -10,8 +10,11 @@ import Map from '../../../common/utils/Map';
 import {RootState} from '../../../redux/store'
 import './ReservationConfirmPage.scss';
 
-
-
+declare global{
+  interface Window{
+    BRIDGE:any
+  }
+}
 
 function ReservationConfirmPage() {
   const navigate = useNavigate();
@@ -64,6 +67,9 @@ function ReservationConfirmPage() {
         dispatch,
       );
     }
+    window.addEventListener("android", async (e:any) => {
+      console.log(e.detail);
+  });
   }, []);
 
   const moveToPrevPage = useCallback(() => {
@@ -87,20 +93,23 @@ function ReservationConfirmPage() {
 
   const copyPlaceNumber = useCallback(() => {
     if (navigator.clipboard && window.isSecureContext) {
-      return navigator.clipboard.writeText(reservationData.place.phoneNo);
+      navigator.clipboard.writeText(reservationData.place.phoneNo)
+      window.BRIDGE.copyToClipboard(reservationData.place.phoneNo);
     }
   }, [reservationData]);
 
   const copyPlaceAddress = useCallback(() => {
     if (navigator.clipboard && window.isSecureContext) {
-      return navigator.clipboard.writeText(reservationData.place.address);
-    }
+    navigator.clipboard.writeText(reservationData.place.address)
+    window.BRIDGE.copyToClipboard(reservationData.place.address);
+  }
   }, [reservationData]);
 
   const copyReservationNumber = useCallback(() => {
     if (navigator.clipboard && window.isSecureContext) {
-      return navigator.clipboard.writeText(reservationData.bookingId);
-    }
+    navigator.clipboard.writeText(reservationData.bookingId)
+    window.BRIDGE.copyToClipboard(reservationData.bookingId);
+  }
   }, [reservationData]);
 
 

@@ -9,7 +9,11 @@ import {RootState} from '../../../redux/store'
 import './ReservationHistoryPage.scss';
 
 
-
+declare global{
+  interface Window{
+    BRIDGE:any
+  }
+}
 
 function ReservationHistoryPage() {
   const navigate = useNavigate();
@@ -63,20 +67,23 @@ function ReservationHistoryPage() {
 
   const copyPlaceNumber = useCallback(() => {
     if (navigator.clipboard && window.isSecureContext) {
-      return navigator.clipboard.writeText(reservationData.place.phoneNo);
+      navigator.clipboard.writeText(reservationData.place.phoneNo)
+      window.BRIDGE.copyToClipboard(reservationData.place.phoneNo);
     }
   }, [reservationData]);
 
   const copyPlaceAddress = useCallback(() => {
     if (navigator.clipboard && window.isSecureContext) {
-      return navigator.clipboard.writeText(reservationData.place.address);
-    }
+    navigator.clipboard.writeText(reservationData.place.address)
+    window.BRIDGE.copyToClipboard(reservationData.place.address);
+  }
   }, [reservationData]);
 
   const copyReservationNumber = useCallback(() => {
     if (navigator.clipboard && window.isSecureContext) {
-      return navigator.clipboard.writeText(reservationData.bookingId);
-    }
+    navigator.clipboard.writeText(reservationData.bookingId)
+    window.BRIDGE.copyToClipboard(reservationData.bookingId);
+  }
   }, [reservationData]);
 
 
@@ -123,16 +130,16 @@ function ReservationHistoryPage() {
           <div className="checkin-checkout-date">
             <span className="check-title">체크인</span>
             <span className="check-date">
-              {reservationData?.startDt.substring(2, 4)}.{reservationData?.startDt.substring(5, 7)}.
-              {reservationData?.startDt.substring(8, 10)}({getDate(reservationData?.startDt)})
+              {reservationData.startDt.substring(2, 4)}.{reservationData.startDt.substring(5, 7)}.
+              {reservationData.startDt.substring(8, 10)}({getDate(reservationData.startDt)})
             </span>
             <span className="check-date">{reservationData?.place.checkin.substring(0, 5)}</span>
           </div>
           <div className="checkin-checkout-date">
             <span className="check-title">체크아웃</span>
             <span className="check-date">
-              {reservationData?.endDt.substring(2, 4)}.{reservationData?.endDt.substring(5, 7)}.
-              {reservationData?.endDt.substring(8, 10)}({getDate(reservationData?.endDt)})
+              {reservationData.endDt.substring(2, 4)}.{reservationData.endDt.substring(5, 7)}.
+              {reservationData.endDt.substring(8, 10)}({getDate(reservationData.endDt)})
             </span>
             <span className="check-date">{reservationData?.place.checkout.substring(0, 5)}</span>
           </div>
