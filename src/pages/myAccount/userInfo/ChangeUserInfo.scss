@@ -23,23 +23,26 @@
   }
   &-nickname {
     height: 50px;
-    margin-top: 30px;
+    margin-top: 10px;
     display: flex;
     font-weight: 500;
     font-size: 16px;
     align-items: center;
     &-label {
+      margin-top: 46px;
+      font-weight: 500;
       width: 30%;
     }
     &-input {
       padding: 13px;
+      margin-top: 10px;
       height: 34px;
       border: 1px solid #c4c4c4;
       border-radius: 5px;
       font-size: 16px;
       font-weight: 500;
       color: #3e382f;
-      width: 70%;
+      width: 100%;
     }
     &-value {
       font-size: 14px;
