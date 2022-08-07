@@ -1,5 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 
+export const url = 'http://www.delgo.pet:8080/';
+
 export const KAKAO = {
   // REST_API_KEY : "ed29d568272e3eb51b493659e2d6e9eb",
   REST_API_KEY: 'b40f84b68ce44634317bb5530b0166c1',
