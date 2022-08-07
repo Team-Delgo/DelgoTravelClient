@@ -9,18 +9,18 @@ import RecommendedPlace from './recommenedPlaces/RecommendedPlace';
 import { tokenActions } from '../../redux/slice/tokenSlice';
 import { tokenRefresh } from '../../common/api/login';
 import { bookingGetDataByMain } from '../../common/api/booking';
-import { getRecommendedPlace , getEditorNotePlacesAll } from '../../common/api/places';
+import { getRecommendedPlace, getEditorNotePlacesAll } from '../../common/api/places';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
-import {RootState} from '../../redux/store'
+import { RootState } from '../../redux/store';
 import './HomePage.scss';
 import HomeReservation from './homeReservation/HomeReservation';
 import Delgo from '../../icons/delgo.svg';
-import Loading from '../../common/utils/Loading'
+import Loading from '../../common/utils/Loading';
 
 interface EditorPlaceType {
-  mainUrl: string
-  placeId: number
-  thumbnailUrl:string
+  mainUrl: string;
+  placeId: number;
+  thumbnailUrl: string;
 }
 
 interface RecommendedPlaceType {
@@ -43,6 +43,18 @@ function HomePage() {
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const location: any = useLocation();
   const homeY = useSelector((state: RootState) => state.persist.scroll.homeY);
+
+  const preventGoBack = () => {
+    window.history.pushState(null, '', location.href);
+  };
+
+  useEffect(() => {
+    window.history.pushState(null, '', location.href);
+    window.addEventListener('popstate', preventGoBack);
+    return () => {
+      window.removeEventListener('popstate', preventGoBack);
+    };
+  }, []);
 
   const { isLoading: getRecommendedPlacesIsLoading, data: recommendedPlaces } = useQuery(
     'getRecommendedPlaces',
@@ -83,14 +95,13 @@ function HomePage() {
     },
   );
 
-
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
       window.scrollTo(0, Number(homeY));
     } else {
       window.scrollTo(0, 0);
     }
-  }, [reservationPlaces, recommendedPlaces,editorNotePlaces]);
+  }, [reservationPlaces, recommendedPlaces, editorNotePlaces]);
 
   const getDday = () => {
     const startDate = new Date(reservationPlaces?.data[page].startDt);
@@ -142,11 +153,10 @@ function HomePage() {
     return <div className="home-background">&nbsp;</div>;
   }
 
-
   return (
     <>
       <div className="home-background">
-        <img src={Delgo} alt="delgo" className="delgo"/>
+        <img src={Delgo} alt="delgo" className="delgo" />
         {reservationPlaces?.data?.length > 0 && (
           <>
             <div className="home-reservation-info">
@@ -165,8 +175,13 @@ function HomePage() {
         <header className="editor-header-text">델고 에디터노트</header>
         <div className="editor-container">
           {editorNotePlaces.data.map((place: EditorPlaceType) => (
-            <Link className="editor-thumbnail" to={`/editor-note/${place.placeId}`} state={{placeId:place.placeId}} key={place.placeId}>
-              <img src={place.thumbnailUrl} alt="editor-thumnail-img"/>
+            <Link
+              className="editor-thumbnail"
+              to={`/editor-note/${place.placeId}`}
+              state={{ placeId: place.placeId }}
+              key={place.placeId}
+            >
+              <img src={place.thumbnailUrl} alt="editor-thumnail-img" />
             </Link>
           ))}
         </div>

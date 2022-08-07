@@ -1,11 +1,12 @@
 /* eslint-disable no-undef */
 import React, { useEffect } from "react";
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import qs from "qs";
 import { KAKAO } from '../../constants/url.cosnt'
 import { tokenActions } from '../../redux/slice/tokenSlice';
+import { setAccessCode } from "../api/social";
 
 
 declare global {
@@ -20,12 +21,12 @@ function KakaoRedirectHandler() {
   const code = new URL(window.location.href).searchParams.get("code");
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (code == null) {
-  //     navigate('/user/signin')
-  //   }
-  //   getToken();
-  // }, []);
+  useEffect(() => {
+    if (code == null) {
+      navigate('/user/signin');
+    }
+    getAccessToken();
+  }, []);
 
 
   // const getToken = async () => {
@@ -75,6 +76,12 @@ function KakaoRedirectHandler() {
   //     console.log(err);
   //   }
   // };
+
+  const getAccessToken = () => {
+    setAccessCode(code,(response:AxiosResponse)=>{
+      console.log(response);
+    },dispatch);
+  };
 
   const KakaoLogOut = () => {
     window.Kakao.API.request({

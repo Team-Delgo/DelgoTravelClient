@@ -11,6 +11,7 @@ import {RootState} from '../../../redux/store'
 import {bookingGetData} from '../../../common/api/booking'
 // import ReservationCancleModal from "./modal/ReservationCancleModal";
 import './ReservationCanclePage.scss';
+import { ROOT_PATH } from "../../../constants/path.const";
 
 
 
@@ -69,7 +70,7 @@ function ReservationCanclePage() {
 
   const moveToMainPage = useCallback(() => {
     setTimeout(() => {
-      navigate('/');
+      navigate(ROOT_PATH);
       dispatch(
         reservationActions.reservationInit()
       )

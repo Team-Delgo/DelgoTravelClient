@@ -137,58 +137,62 @@ function PetInfo() {
       pet: petInfo,
     };
     console.log(userInfo);
-    signup(
-      userInfo,
-      (response: AxiosResponse) => {
-        const { code, codeMsg,data } = response.data;
-        if (code === 200) {
-          const accessToken = response.headers.authorization_access;
-          const refreshToken = response.headers.authorization_refresh;
-          console.log(accessToken);
-          console.log(refreshToken);
-          dispatch(tokenActions.setToken(accessToken));
-          localStorage.setItem('refreshToken', refreshToken);
-          userId = response.data.data.user.userId;
-          console.log(response);
-          console.log(userId);
-          dispatch(
-            userActions.signin({
-              couponList: [],
-              user: {
-                id: data.user.userId,
-                nickname: data.user.name,
-                email: data.user.email,
-                phone: data.user.phoneNo,
+    if (isSocial) {
+      // oauthSignup();
+    } else {
+      signup(
+        userInfo,
+        (response: AxiosResponse) => {
+          const { code, codeMsg, data } = response.data;
+          if (code === 200) {
+            const accessToken = response.headers.authorization_access;
+            const refreshToken = response.headers.authorization_refresh;
+            console.log(accessToken);
+            console.log(refreshToken);
+            dispatch(tokenActions.setToken(accessToken));
+            localStorage.setItem('refreshToken', refreshToken);
+            userId = response.data.data.user.userId;
+            console.log(response);
+            console.log(userId);
+            dispatch(
+              userActions.signin({
+                couponList: [],
+                user: {
+                  id: data.user.userId,
+                  nickname: data.user.name,
+                  email: data.user.email,
+                  phone: data.user.phoneNo,
+                },
+                pet: {
+                  petId: data.pet.petId,
+                  birthday: data.pet.birthday,
+                  size: data.pet.size,
+                  name: data.pet.name,
+                  image: '',
+                },
+              }),
+            );
+            formData.append('userId', userId.toString());
+            formData.append('photo', sendingImage);
+            petImageUpload(
+              formData,
+              (response: AxiosResponse) => {
+                console.log(response);
+                const { code, data } = response.data;
+                if (code === 200) {
+                  dispatch(userActions.setpetprofile({ image: data }));
+                }
               },
-              pet: {
-                petId: data.pet.petId,
-                birthday: data.pet.birthday,
-                size: data.pet.size,
-                name: data.pet.name,
-                image: '',
-              },
-            }),
-          );
-          formData.append('userId', userId.toString());
-          formData.append('photo', sendingImage);
-          petImageUpload(
-            formData,
-            (response: AxiosResponse) => {
-              console.log(response);
-              const {code,data} = response.data;
-              if(code===200){
-                dispatch(userActions.setpetprofile({image:data}))
-              }
-            },
-            dispatch,
-          );
-          navigation(SIGN_UP_PATH.COMPLETE, { state: { name: enteredInput.name } });
-        } else {
-          console.log(codeMsg);
-        }
-      },
-      dispatch,
-    );
+              dispatch,
+            );
+            navigation(SIGN_UP_PATH.COMPLETE, { state: { name: enteredInput.name } });
+          } else {
+            console.log(codeMsg);
+          }
+        },
+        dispatch,
+      );
+    }
 
     // 비동기 처리
     // signup({ email, password, nickname, phone, pet: {petName:enteredInput.name,petBirth:enteredInput.birth,petImage:} }, () => {});

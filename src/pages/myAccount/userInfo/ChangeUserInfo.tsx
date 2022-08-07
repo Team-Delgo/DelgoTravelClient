@@ -1,29 +1,69 @@
-import React, { ChangeEvent, useState } from 'react';
+
+import React, { ChangeEvent, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AxiosResponse } from 'axios';
 import { useNavigate,useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import RightArrow from '../../../icons/right-arrow.svg';
 import LeftArrow from '../../../icons/left-arrow.svg';
 import './ChangeUserInfo.scss';
 import { MY_ACCOUNT_PATH } from '../../../constants/path.const';
 import { RootState } from '../../../redux/store';
+import { nicknameCheck } from '../../../common/api/signup';
+import { checkNickname } from '../../signUpPage/userInfo/ValidCheck';
 
 function ChangeUserInfo() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const initialNickName = useSelector((state: RootState) => state.persist.user.user.nickname);
-  const [nickName, setNickName] = useState(initialNickName);
+  const [enteredInput, setEnteredInput] = useState(initialNickName);
+  const [validInput, setValidInput] = useState('');
+  const [nicknameDuplicated, setNicknameDuplicated] = useState(true);
+  const [nicknameDupCheckFail, setNicknameDupCheckFail] = useState(false);
   const [feedback, setFeedback] = useState('');
-  // const []
   const user = useSelector((state: RootState) => state.persist.user.user);
   const { email, phone } = user;
-
+  const nicknameRef = useRef<any>();
   const phoneNumber = `${phone.slice(0, 3)}-****-${phone.slice(7, 11)}`;
   const userEmail = `${email.slice(0, 4)}****${email.slice(8)}`;
   const location: any = useLocation();
 
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setNickName(e.target.value);
+    setEnteredInput(e.target.value);
+    nicknameValidCheck(e.target.value);
+    setNicknameDuplicated(true);
+    setNicknameDupCheckFail(false);
+  };
+
+  const nicknameDupCheck = () => {
+    nicknameCheck(
+      enteredInput,
+      (response: AxiosResponse) => {
+        const { code } = response.data;
+        if (code === 200) {
+          setNicknameDuplicated(false);
+          setNicknameDupCheckFail(false);
+        } else {
+          setNicknameDuplicated(true);
+          setNicknameDupCheckFail(true);
+          nicknameRef.current.focus();
+        }
+      },
+      dispatch,
+    );
+  };
+
+  const nicknameValidCheck = (value: string) => {
+    const response = checkNickname(value);
+
+    if (!response.isValid) {
+      setValidInput('');
+    } else {
+      setValidInput(value);
+    }
+
+    setFeedback(response.message);
   };
 
   const moveToMyAccountMainPage = () => {
@@ -50,13 +90,13 @@ function ChangeUserInfo() {
       <div className="userinfo-nickname">
         {/* <span className="userinfo-phone-value">{nickName}</span> */}
         {/* 아직 닉네임 변경 api가 없어서 막아놈 */}
-        <input onChange={inputChangeHandler} className="userinfo-nickname-input" value={nickName} />
-        {/* <p className={classNames('input-feedback', { fine: !nicknameDuplicated && validInput.length })}>
-          {nicknameDupCheckFail ? '이미 사용중인 닉네임입니다.' : feedback.nickname}
-        </p> */}
-        {/* <span aria-hidden="true" className="input-email-check" onClick={nicknameDupCheck}>
+        <input onChange={inputChangeHandler} className="login-input change-nickname" value={enteredInput} ref={nicknameRef} />
+        <p className={classNames('input-feedback', { fine: !nicknameDuplicated && validInput })}>
+          {nicknameDupCheckFail ? '이미 사용중인 닉네임입니다.' : feedback}
+        </p>
+        <span aria-hidden="true" className="input-email-check" onClick={nicknameDupCheck}>
           중복확인
-        </span> */}
+        </span>
       </div>
       <div className="userinfo-phone">
         <div className="userinfo-phone-label">휴대전화</div>

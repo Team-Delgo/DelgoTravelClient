@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './SignUpComplete.scss';
 import Delgo from '../../../icons/delgo.svg';
 import Check from '../../../icons/check.svg';
-import { SIGN_IN_PATH } from '../../../constants/path.const';
+import { ROOT_PATH, SIGN_IN_PATH } from '../../../constants/path.const';
 
 interface PetName {
   name: string;
@@ -23,7 +23,7 @@ function SignUpComplete() {
         type="button"
         className="login-button active"
         onClick={() => {
-          navigate('/');
+          navigate(ROOT_PATH);
         }}
       >
         {state.name}와(과) 여행을 떠나요

@@ -28,6 +28,7 @@
     font-weight: 500;
     font-size: 16px;
     align-items: center;
+    position: relative;
     &-label {
       margin-top: 46px;
       font-weight: 500;
@@ -102,4 +103,7 @@
     &-button {
     }
   }
+}
+.change-nickname{
+  border: 2px solid #e3e3e3;
 }
