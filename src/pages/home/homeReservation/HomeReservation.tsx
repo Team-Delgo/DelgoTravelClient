@@ -122,6 +122,8 @@ function HomeReservation(props: { lists: any[], pageChange: (page: number) => vo
     const placeTelePhonNumber =list.place.phoneNo
     const placeNaverMapUrl =list.place.mapUrl
 
+    // target="_blank"
+
     return (
       <div className="homemodal-item">
         <div className="homemodal-item-card">
