@@ -258,11 +258,13 @@ function MyAccount() {
           <h2 className="account-item-name">공지사항</h2>
           <img src={RightArrow} alt="detail" />
         </div>
-        <div className="account-item last">
-          <h2 className="account-item-name">문의</h2>
-          <img src={RightArrow} alt="detail" />
-        </div>
-        <p className="account-item-p">카카오 플러스친구로 이동</p>
+        <a href="http://plus.kakao.com/home/@delgo">
+          <div className="account-item last">
+            <h2 className="account-item-name">문의</h2>
+            <img src={RightArrow} alt="detail" />
+          </div>
+        </a>
+        <a href="http://plus.kakao.com/home/@delgo"> <p className="account-item-p">카카오 플러스친구로 이동</p></a>
       </div>
       <div className="account-sign">
         <p className="account-out" aria-hidden="true" onClick={deleteUserModalOpen}>

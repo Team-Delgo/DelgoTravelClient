@@ -138,12 +138,12 @@ function ReservationPage() {
   },[])
 
   if (getCouponListIsLoading) {
-    return <div className="reservationPage">&nbsp;</div>
+    return <div className="reservation-page">&nbsp;</div>
   }
 
   return (
     <>
-      <div className="reservationPage">
+      <div className="reservation-page">
         <div className="header">
           <Link to={`/detail-place/${place.placeId}/${room.roomId}`} key={place.placeId} state={{ room, place }}>
             <Exit className="exit-button" />
@@ -236,13 +236,9 @@ function ReservationPage() {
           </div>
         </div>
       </div>
-      <div aria-hidden="true" onClick={reservationName !== '' ? creditCardPayment : confirmReservationNameOpen}>
-        <BottomButton
-          text={`${(
-            Number(room.price.toString().slice(0, -1).replace(',', ''))-selectCouponDiscount
-          ).toLocaleString()}원 결제하기`}
-        />
-      </div>
+      <div className="reservation-payment-button" aria-hidden="true" onClick={reservationName !== '' ? creditCardPayment : confirmReservationNameOpen}>
+          {(Number(room.price.toString().slice(0, -1).replace(',', '')) - selectCouponDiscount).toLocaleString()}원 결제하기
+        </div>
       {reservationNameConfrim && (
         <AlertConfirmOne text="예약자명을 입력하세요" buttonHandler={confirmReservationNameClose} />
       )}
