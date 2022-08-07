@@ -205,7 +205,7 @@ function ReservationConfirmPage() {
         <div className="cancel-reservation">
           <div className="cancel-reservation-label">
             {reservationData.canCancelDate.substring(0, 4)}년 {reservationData.canCancelDate.substring(5, 7)}월{' '}
-            {reservationData.canCancelDate.substring(8, 10)}일 18:00까지 무료 취소 가능합니다.
+            {reservationData.canCancelDate.substring(8, 10)}일까지 무료 취소 가능합니다.
           </div>
           <button className="cancel-reservation-button" type="button" onClick={openReservationCancleModal}>
             예약취소

@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 import RightArrow from '../../../icons/right-arrow.svg';
@@ -19,9 +19,19 @@ function ChangeUserInfo() {
 
   const phoneNumber = `${phone.slice(0, 3)}-****-${phone.slice(7, 11)}`;
   const userEmail = `${email.slice(0, 4)}****${email.slice(8)}`;
+  const location: any = useLocation();
+
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setNickName(e.target.value);
+  };
+
+  const moveToMyAccountMainPage = () => {
+    navigate(MY_ACCOUNT_PATH.MAIN,{
+      state: {
+        prevPath: location.pathname,
+      },
+    })
   };
 
   return (
@@ -32,9 +42,7 @@ function ChangeUserInfo() {
           alt="back"
           aria-hidden="true"
           className="userinfo-header-back"
-          onClick={() => {
-            navigate(-1);
-          }}
+          onClick={moveToMyAccountMainPage}
         />
         <div className="userinfo-header-title">내 정보 관리</div>
       </div>

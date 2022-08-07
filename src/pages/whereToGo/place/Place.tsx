@@ -77,7 +77,7 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
 
 
   const moveToDetailPage = () => {
-    dispatch(scrollActions.scroll({ whereToGo: window.scrollY, detailPlace: 0, myStorage: 0, homeY: 0 }));
+    dispatch(scrollActions.scroll({ whereToGo: window.scrollY}));
     dispatch(areaActions.setArea({ areaName: areaTerm }));
     dispatch(prevPathActions.prevPath({ prevPath: location.pathname }));
     navigate(`/detail-place/${place.placeId}`);
