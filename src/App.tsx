@@ -1,6 +1,7 @@
-import React from 'react';
+import React,{useEffect} from 'react';
+import axios, { AxiosResponse, AxiosError } from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import HomePage from './pages/home/HomePage';
@@ -40,7 +41,10 @@ import ReviewWritingPage from './pages/reviewWriting/ReviewWritingPage';
 import KakaoRedirectHandler from './common/socialLogion/KakaoRedirectHandler';
 import NaverRedirectHandler from './common/socialLogion/NaverRedirectHandler';
 import AlertConfirmOne from './common/dialog/AlertConfirmOne';
+import { tokenActions } from './redux/slice/tokenSlice';
+import { tokenRefresh } from './common/api/login';
 import { errorActions } from './redux/slice/errorSlice';
+import {RootState} from './redux/store'
 import ReservationConfirmPage from './pages/reservation/reservationConfirmPage/ReservationConfirmPage';
 import Coupon from './pages/myAccount/coupon/Coupon';
 import ReservationWaitingPage from './pages/reservation/reservationWaitingPage/ReservationWaitingPage';
@@ -57,13 +61,49 @@ import ServiceTerm from './pages/myAccount/term/ServiceTerm';
 import SocialNickname from './pages/signUpPage/forSocial/SocialNickname';
 
 function App() {
-  const hasError = useSelector((state: any) => state.error.hasError);
+  const hasError = useSelector((state: RootState) => state.error.hasError);
   const dispatch = useDispatch();
+  const queryClient = new QueryClient();
+  const location = useLocation()
+  const refreshToken = localStorage.getItem('refreshToken') || '';
+  const navigation = useNavigate()
+
+  useEffect(() => {
+    axios.interceptors.response.use(
+      response => {
+        return response;
+      },
+      async error => {
+        const {
+          config,
+          response: { status },
+        } = error;
+        if (status === 303) {
+          tokenRefresh({ refreshToken }, (response: AxiosResponse) => {
+            const { code } = response.data;
+
+            if (code === 200) {
+              const accessToken = response.headers.authorization_access;
+              const refreshToken = response.headers.authorization_refresh;
+
+              dispatch(tokenActions.setToken(accessToken));
+              localStorage.setItem('refreshToken', refreshToken);
+              const originalRequest = config;
+
+              originalRequest.headers.authorization = accessToken;
+
+              return axios(originalRequest);
+            }
+          }, dispatch);
+        }
+        return Promise.reject(error);
+      },
+    );
+  }, []);
+
   const alertButtonHandler = () => {
     dispatch(errorActions.setFine());
   };
-  const queryClient = new QueryClient();
-  const location = useLocation()
 
   return (
     <QueryClientProvider client={queryClient}>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AxiosResponse } from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import 'react-alert-confirm/dist/index.css';
 import Footer from '../../common/components/FooterNavigation';
@@ -11,6 +11,7 @@ import RightArrow from '../../icons/right-arrow.svg';
 import RightArrowBlack from '../../icons/right-arrow-black.svg';
 import { userActions } from '../../redux/slice/userSlice';
 import { tokenActions } from '../../redux/slice/tokenSlice';
+import { scrollActions } from '../../redux/slice/scrollSlice';
 import AlertConfirm from '../../common/dialog/AlertConfirm';
 import { deleteUser } from '../../common/api/signup';
 import { MY_ACCOUNT_PATH } from '../../constants/path.const';
@@ -32,6 +33,8 @@ function MyAccount() {
   const dogBirth = useSelector((state: RootState) => state.persist.user.pet.birthday);
   const accessToken = useSelector((state: RootState) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
+  const location: any = useLocation();
+  const { myAccountY } = useSelector((state: RootState) => state.persist.scroll);
 
   const {
     isLoading: getMyAccountDataListIsLoading,
@@ -48,6 +51,16 @@ function MyAccount() {
       useErrorHandlers(dispatch, error);
     }, 
   });
+
+  useEffect(() => {
+    if (location.state?.prevPath?.includes('/myaccount')) {
+      window.scroll(0, Number(myAccountY));
+    }
+    else{
+      window.scroll(0, 0);
+    } 
+
+  }, [getMyAccountDataListIsLoading]); 
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -111,10 +124,6 @@ function MyAccount() {
     setText('정말 회원탈퇴 하시겠어요?ㅠㅠ');
   };
 
-  const navigateCouponPage = () => {
-    navigation('/user/myaccount/coupon');
-  };
-
   const getBookingData = () => {
     getBookingState(
       userId,
@@ -131,6 +140,28 @@ function MyAccount() {
       },
       dispatch,
     );
+  };
+  const moveToMyAccountPetInfoPage = () => {
+    dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
+    navigation(MY_ACCOUNT_PATH.PETINFO);
+  };
+  const moveToMyAccountCouponPage = () => {
+    dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
+    navigation(MY_ACCOUNT_PATH.COUPON);
+  };
+  const moveToMyAccountReviewsPage = () => {
+    dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
+    navigation(MY_ACCOUNT_PATH.REVIEWS);
+  };
+
+  const moveToMyAccountUserInfoPage = () => {
+    dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
+    navigation(MY_ACCOUNT_PATH.USERINFO);
+  };
+
+  const moveToMyAccountSettingsPage = () => {
+    dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
+    navigation(MY_ACCOUNT_PATH.SETTINGS);
   };
 
   if (getMyAccountDataListIsLoading) {
@@ -168,14 +199,12 @@ function MyAccount() {
             <img
               aria-hidden="true"
               src={RightArrowBlack}
-              onClick={() => {
-                navigation(MY_ACCOUNT_PATH.PETINFO);
-              }}
+              onClick={moveToMyAccountPetInfoPage}
               alt="detail"
             />
           </div>
           <div className="account-profile-info-second">
-            <div className="account-profile-info-coupon" aria-hidden="true" onClick={navigateCouponPage}>
+            <div className="account-profile-info-coupon" aria-hidden="true" onClick={moveToMyAccountCouponPage}>
               <p className="account-profile-info-column">쿠폰</p>
               <p className="account-profile-info-value">{myAccountDataList?.data.couponNum}장</p>
             </div>
@@ -186,9 +215,7 @@ function MyAccount() {
             <div
               className="account-profile-info-review"
               aria-hidden="true"
-              onClick={() => {
-                navigation(MY_ACCOUNT_PATH.REVIEWS);
-              }}
+              onClick={moveToMyAccountReviewsPage}
             >
               <p className="account-profile-info-column">리뷰</p>
               <p className="account-profile-info-value">{myAccountDataList?.data.reviewNum}건</p>
@@ -215,9 +242,7 @@ function MyAccount() {
         <div
           className="account-item first"
           aria-hidden="true"
-          onClick={() => {
-            navigation(MY_ACCOUNT_PATH.USERINFO);
-          }}
+          onClick={moveToMyAccountUserInfoPage}
         >
           <h2 className="account-item-name">내 정보 관리</h2>
           <img src={RightArrow} alt="detail" />
@@ -225,9 +250,7 @@ function MyAccount() {
         <div
           className="account-item"
           aria-hidden="true"
-          onClick={() => {
-            navigation(MY_ACCOUNT_PATH.SETTINGS);
-          }}
+          onClick={moveToMyAccountSettingsPage}
         >
           <h2 className="account-item-name">설정</h2>
           <img src={RightArrow} alt="detail" />

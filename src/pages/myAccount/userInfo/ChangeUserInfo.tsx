@@ -1,7 +1,8 @@
+
 import React, { ChangeEvent, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AxiosResponse } from 'axios';
+import { useNavigate,useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 import RightArrow from '../../../icons/right-arrow.svg';
 import LeftArrow from '../../../icons/left-arrow.svg';
@@ -25,6 +26,8 @@ function ChangeUserInfo() {
   const nicknameRef = useRef<any>();
   const phoneNumber = `${phone.slice(0, 3)}-****-${phone.slice(7, 11)}`;
   const userEmail = `${email.slice(0, 4)}****${email.slice(8)}`;
+  const location: any = useLocation();
+
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setEnteredInput(e.target.value);
@@ -63,6 +66,14 @@ function ChangeUserInfo() {
     setFeedback(response.message);
   };
 
+  const moveToMyAccountMainPage = () => {
+    navigate(MY_ACCOUNT_PATH.MAIN,{
+      state: {
+        prevPath: location.pathname,
+      },
+    })
+  };
+
   return (
     <div className="userinfo">
       <div className="userinfo-header">
@@ -71,9 +82,7 @@ function ChangeUserInfo() {
           alt="back"
           aria-hidden="true"
           className="userinfo-header-back"
-          onClick={() => {
-            navigate(-1);
-          }}
+          onClick={moveToMyAccountMainPage}
         />
         <div className="userinfo-header-title">내 정보 관리</div>
       </div>

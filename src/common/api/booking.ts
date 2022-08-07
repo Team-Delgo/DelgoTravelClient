@@ -48,9 +48,9 @@ async function bookingGetData(
 ) {
   try {
     const result = await axios.get(`${process.env.REACT_APP_API_URL}/booking/getData?bookingId=${data.bookingId}`,{
-      headers: {
-        Authorization_Access: `${data.accessToken}`,
-      },
+      // headers: {
+      //   Authorization_Access: `${data.accessToken}`,
+      // },
     });
     success(result);
   } catch (error: AxiosError | any) {

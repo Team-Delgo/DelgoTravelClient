@@ -46,6 +46,7 @@ function ReservationConfirmPage() {
       isBooking: 0,
       lowestPrice: null,
       mainPhotoUrl: "",
+      mapUrl:"",
       name: "",
       placeId: 0,
       phoneNo:"",
@@ -92,13 +93,6 @@ function ReservationConfirmPage() {
     setReservationCancleModal(false);
   }, []);
 
-  const copyPlaceNumber = useCallback(() => {
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(reservationData.place.phoneNo)
-      window.BRIDGE.copyToClipboard(reservationData.place.phoneNo);
-    }
-  }, [reservationData]);
-
   const copyPlaceAddress = useCallback(() => {
     if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(reservationData.place.address)
@@ -120,9 +114,6 @@ function ReservationConfirmPage() {
       return dayOfWeek;
   }
 
-  const moveToMap = useCallback(() => {
-    window.scroll({ top: document.body.scrollHeight, behavior: 'smooth' });
-  }, []);
   
 
 
@@ -145,9 +136,9 @@ function ReservationConfirmPage() {
           <p className="placeinfo-room">{reservationData.roomName}</p>
         </div>
         <div className="place-use-info">
-          <div aria-hidden="true" onClick={copyPlaceNumber}>숙소문의</div>
+          <a href={`tel: ${reservationData.place.phoneNo}`}><div>숙소문의</div></a>
           <div aria-hidden="true" onClick={copyPlaceAddress}>주소복사</div>
-          <div aria-hidden="true" onClick={moveToMap}>지도보기</div>
+          <a href={reservationData.place.mapUrl}><div >지도보기</div></a>
         </div>
         <div className="checkin-checkout">
           <div className="checkin-checkout-date">
@@ -215,7 +206,7 @@ function ReservationConfirmPage() {
         <div className="cancel-reservation">
           <div className="cancel-reservation-label">
             {reservationData.canCancelDate.substring(0, 4)}년 {reservationData.canCancelDate.substring(5, 7)}월{' '}
-            {reservationData.canCancelDate.substring(8, 10)}일 18:00까지 무료 취소 가능합니다.
+            {reservationData.canCancelDate.substring(8, 10)}일까지 무료 취소 가능합니다.
           </div>
           <button className="cancel-reservation-button" type="button" onClick={openReservationCancleModal}>
             예약취소

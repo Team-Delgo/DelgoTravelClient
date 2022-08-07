@@ -5,6 +5,7 @@ const initialState = {
   detailPlaceScrollY: { scrollY: 0 },
   myStorageY: { scrollY: 0 },
   homeY: { scrollY: 0 },
+  myAccountY:{ scrollY: 0 },
 };
 
 const scrollSlice = createSlice({
@@ -17,6 +18,7 @@ const scrollSlice = createSlice({
         detailPlaceScrollY: action.payload.detailPlace,
         myStorageY: action.payload.myStorage,
         homeY: action.payload.home,
+        myAccountY:action.payload.myAccount
       };
     },
     scrollInit() {
