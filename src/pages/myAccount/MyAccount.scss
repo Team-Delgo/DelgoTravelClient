@@ -14,7 +14,7 @@
     display: flex;
     justify-content: space-between;
     margin: 22px;
-    &.first{
+    &.first {
       margin-top: 64px;
     }
     &.last {
@@ -55,20 +55,20 @@
       border-radius: 15px 15px 0px 0px;
       padding: 40px 54px;
       justify-content: space-between;
-      &-first{
+      &-first {
         display: flex;
       }
-      &-second{
+      &-second {
         margin-top: 24px;
         display: flex;
         justify-content: space-between;
       }
-      &-name{
+      &-name {
         font-size: 24px;
         font-weight: 700;
         line-height: 36px;
       }
-      &-age{
+      &-age {
         margin-left: 5px;
         margin-right: 8px;
         font-size: 18px;
@@ -91,7 +91,6 @@
         line-height: 150%;
         color: #3e382f;
       }
-      
     }
   }
   &-purchase {
@@ -130,7 +129,18 @@
         }
 
         &-state {
-          background-color: #ff9162;
+          &.W {
+            background-color: #ff9162;
+          }
+          &.F {
+            background-color: #00b860;
+          }
+          &.CW {
+            background-color: #ff2063;
+          }
+          &.CF {
+            background-color: #8a8a8a;
+          }
           border-radius: 37px;
           width: 78px;
           height: 33px;

@@ -136,6 +136,29 @@ function MyAccount() {
     return <div className="account">&nbsp;</div>;
   }
 
+  const bookingState = () => {
+    if (bookingData.state === 'W') {
+      return <div className="account-purchase-reservation-box-state W">
+        예약요청
+      </div>;
+    }
+    if (bookingData.state === 'F') {
+      return <div className="account-purchase-reservation-box-state F">
+        예약확정
+      </div>;
+    }
+    if (bookingData.state === 'CW') {
+      return <div className="account-purchase-reservation-box-state CW">
+        취소요청
+      </div>;
+    }
+
+    return <div className="account-purchase-reservation-box-state CF">
+      취소완료
+    </div>;
+
+  };
+
   return (
     <div className="account">
       {logoutModalOpen && (
@@ -204,9 +227,7 @@ function MyAccount() {
               <p className="account-purchase-reservation-box-wrapper-room">{bookingData.room}</p>
               <p className="account-purchase-reservation-box-wrapper-date">{bookingData.startDt.slice(5,)}~{bookingData.endDt.slice(5,)} 1박</p>
             </div>
-            <button type="button" className="account-purchase-reservation-box-state">
-              취소완료
-            </button>
+            {bookingState()}
           </div>
         </div>
       </div>
