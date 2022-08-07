@@ -153,7 +153,6 @@ function DetailPlacePage() {
   }, [detailPlace]);
 
   const wishListInsert = useCallback(() => {
-    window.BRIDGE.vibrate() 
     if(isSignIn){
     wishInsert(
       { userId, placeId: Number(detailPlace?.data.place.placeId), accessToken },
@@ -163,14 +162,15 @@ function DetailPlacePage() {
         }
       },
       dispatch,
-    )}
+    )
+    window.BRIDGE.vibrate() 
+  }
     else{
       setLogInModalOpen(true);
     }
   }, [detailPlace,isSignIn]);
 
   const wishListDelete = useCallback(() => {
-    window.BRIDGE.vibrate() 
     wishDelete(
       { wishId: Number(detailPlace?.data.place.wishId), accessToken },
       (response: AxiosResponse) => {
@@ -180,6 +180,7 @@ function DetailPlacePage() {
       },
       dispatch,
     );
+    window.BRIDGE.vibrate() 
   }, [detailPlace]);
 
   const calenderOpenClose = useCallback(() => {

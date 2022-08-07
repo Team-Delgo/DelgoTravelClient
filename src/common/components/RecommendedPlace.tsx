@@ -43,7 +43,6 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
   const navigate = useNavigate();
   
   const wishListInsert = useCallback(() => {
-    window.BRIDGE.vibrate() 
     wishInsert(
       { userId, placeId: place.placeId, accessToken },
       (response: AxiosResponse) => {
@@ -53,10 +52,10 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
       },
       dispatch,
     );
+    window.BRIDGE.vibrate() 
   }, [wishList]);
 
   const wishListDelete = useCallback(() => {
-    window.BRIDGE.vibrate() 
     wishDelete(
       { wishId: wishList, accessToken },
       (response: AxiosResponse) => {
@@ -67,6 +66,7 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
       },
       dispatch,
     );
+    window.BRIDGE.vibrate() 
   }, [wishList]);
 
   const moveToDetailPage = () => {
