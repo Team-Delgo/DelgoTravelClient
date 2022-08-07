@@ -41,6 +41,7 @@ function ReservationHistoryPage() {
       isBooking: 0,
       lowestPrice: null,
       mainPhotoUrl: "",
+      mapUrl:"",
       name: "",
       placeId: 0,
       phoneNo:"",
@@ -65,13 +66,6 @@ function ReservationHistoryPage() {
     }
   }, []);
 
-  const copyPlaceNumber = useCallback(() => {
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(reservationData.place.phoneNo)
-      window.BRIDGE.copyToClipboard(reservationData.place.phoneNo);
-    }
-  }, [reservationData]);
-
   const copyPlaceAddress = useCallback(() => {
     if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(reservationData.place.address)
@@ -92,10 +86,6 @@ function ReservationHistoryPage() {
       const dayOfWeek = week[new Date(date).getDay()];
       return dayOfWeek;
   }
-
-  const moveToMap = useCallback(() => {
-    window.scroll({ top: document.body.scrollHeight, behavior: 'smooth' });
-  }, []);
 
 
   const moveToPrevPage = useCallback(() => {
@@ -121,11 +111,11 @@ function ReservationHistoryPage() {
           <p className="placeinfo-address">{reservationData?.place.address}</p>
           <p className="placeinfo-room">{reservationData?.roomName}</p>
         </div>
-        <div className="place-use-info">
-          <div aria-hidden="true" onClick={copyPlaceNumber}>숙소문의</div>
-          <div aria-hidden="true" onClick={copyPlaceAddress}>주소복사</div>
-          <div aria-hidden="true" onClick={moveToMap} >지도보기</div>
-        </div>
+      <div className="place-use-info">
+        <a href={`tel: ${reservationData.place.phoneNo}`}><div>숙소문의</div></a>
+        <div aria-hidden="true" onClick={copyPlaceAddress}>주소복사</div>
+        <a href={reservationData.place.mapUrl}><div >지도보기</div></a>
+      </div>
         <div className="checkin-checkout">
           <div className="checkin-checkout-date">
             <span className="check-title">체크인</span>

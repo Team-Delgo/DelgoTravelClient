@@ -30,6 +30,11 @@ interface PlaceType {
   wishId: number;
 }
 
+declare global{
+  interface Window{
+    BRIDGE:any
+  }
+}
 
 function RecommendedPlace({ place }: RedcommendedPlacesProps) {
   const [wishList, setWishList] = useState(place.wishId);
@@ -42,12 +47,12 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
   const location: any = useLocation();
 
   const wishListInsert = useCallback(() => {
+    window.BRIDGE.vibrate() 
     if(isSignIn){
     wishInsert(
       { userId, placeId: place.placeId , accessToken},
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
-          console.log(response.data)
           setWishList(response.data.data.wishId);
         }
       },
@@ -59,6 +64,7 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
   }, [wishList,isSignIn]);
 
   const wishListDelete = useCallback(() => {
+    window.BRIDGE.vibrate() 
     wishDelete(
       { wishId: wishList, accessToken },
       (response: AxiosResponse) => {

@@ -28,6 +28,11 @@ type RecommendedPlaceType = {
   wishId: number
   }
 
+  declare global{
+    interface Window{
+      BRIDGE:any
+    }
+  }
 
 function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: RecommendedPlaceProps  ) {
   const [wishList, setWishList] = useState(place.wishId);
@@ -38,6 +43,7 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
   const navigate = useNavigate();
   
   const wishListInsert = useCallback(() => {
+    window.BRIDGE.vibrate() 
     wishInsert(
       { userId, placeId: place.placeId, accessToken },
       (response: AxiosResponse) => {
@@ -50,6 +56,7 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
   }, [wishList]);
 
   const wishListDelete = useCallback(() => {
+    window.BRIDGE.vibrate() 
     wishDelete(
       { wishId: wishList, accessToken },
       (response: AxiosResponse) => {
@@ -63,7 +70,6 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
   }, [wishList]);
 
   const moveToDetailPage = () => {
-    console.log(currentTab)
     dispatch(scrollActions.scroll({ whereToGo: 0, detailPlace: 0, myStorage: window.scrollY, homeY: 0 }));
     dispatch(prevPathActions.prevPath({ prevPath: location.pathname }));
     navigate(`/detail-place/${place.placeId}`, { state: currentTab })

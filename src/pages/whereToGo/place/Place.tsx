@@ -32,6 +32,11 @@ interface PlaceType {
   placeId: number
   wishId: number
 }
+declare global{
+  interface Window{
+    BRIDGE:any
+  }
+}
 
 function Place({ place,areaTerm }: PlaceTypeProps) {
   const [wishList, setWishList] = useState(place.wishId);
@@ -44,6 +49,7 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
   const [logInModalOpen, setLogInModalOpen] = useState(false);
 
   const wishListInsert = useCallback(() => {
+    window.BRIDGE.vibrate() 
     if(isSignIn){
       wishInsert({ userId, placeId: place.placeId, accessToken }, (response: AxiosResponse) => {
         if (response.data.code === 200) {
@@ -57,6 +63,7 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
   }, [wishList,isSignIn]);
 
   const wishListDelete = useCallback(() => {
+    window.BRIDGE.vibrate() 
     wishDelete(
       { wishId: wishList, accessToken },
       (response: AxiosResponse) => {
@@ -70,7 +77,7 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
 
 
   const moveToDetailPage = () => {
-    dispatch(scrollActions.scroll({ whereToGo: window.scrollY, detailPlace: 0, myStorage: 0, homeY: 0 }));
+    dispatch(scrollActions.scroll({ whereToGo: window.scrollY}));
     dispatch(areaActions.setArea({ areaName: areaTerm }));
     dispatch(prevPathActions.prevPath({ prevPath: location.pathname }));
     navigate(`/detail-place/${place.placeId}`);

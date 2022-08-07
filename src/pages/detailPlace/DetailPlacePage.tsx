@@ -74,6 +74,12 @@ interface NoticeType {
   title:string
 }
 
+declare global{
+  interface Window{
+    BRIDGE:any
+  }
+}
+
 function DetailPlacePage() {
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
   const [logInModalOpen, setLogInModalOpen] = useState(false);
@@ -147,6 +153,7 @@ function DetailPlacePage() {
   }, [detailPlace]);
 
   const wishListInsert = useCallback(() => {
+    window.BRIDGE.vibrate() 
     if(isSignIn){
     wishInsert(
       { userId, placeId: Number(detailPlace?.data.place.placeId), accessToken },
@@ -163,6 +170,7 @@ function DetailPlacePage() {
   }, [detailPlace,isSignIn]);
 
   const wishListDelete = useCallback(() => {
+    window.BRIDGE.vibrate() 
     wishDelete(
       { wishId: Number(detailPlace?.data.place.wishId), accessToken },
       (response: AxiosResponse) => {
