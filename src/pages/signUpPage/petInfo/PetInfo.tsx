@@ -14,6 +14,7 @@ import Check from '../../../icons/check.svg';
 import { SIGN_UP_PATH } from '../../../constants/path.const';
 import { userActions } from '../../../redux/slice/userSlice';
 import { tokenActions } from '../../../redux/slice/tokenSlice';
+import { oAuthSignup } from '../../../common/api/social';
 
 interface LocationState {
   phone: string;
@@ -139,6 +140,16 @@ function PetInfo() {
     console.log(userInfo);
     if (isSocial) {
       // oauthSignup();
+      const requestBody = {
+        nickname,
+        phoneNo:phone,
+        petName:enteredInput.name,
+        petSize:enteredInput.type,
+        birthday:enteredInput.birth
+      }
+      oAuthSignup(requestBody,(response:AxiosResponse)=>{
+        console.log(response);
+      },dispatch);
     } else {
       signup(
         userInfo,

@@ -45,11 +45,11 @@ function HomePage() {
   const homeY = useSelector((state: RootState) => state.persist.scroll.homeY);
 
   const preventGoBack = () => {
-    window.history.pushState(null, '', location.href);
+    window.history.pushState(null, '', null);
   };
 
   useEffect(() => {
-    window.history.pushState(null, '', location.href);
+    window.history.pushState(null, '', null);
     window.addEventListener('popstate', preventGoBack);
     return () => {
       window.removeEventListener('popstate', preventGoBack);
