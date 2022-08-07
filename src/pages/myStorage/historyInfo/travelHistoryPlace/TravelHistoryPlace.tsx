@@ -35,12 +35,12 @@ function TravelHisotryPlace({ traveledPlace }: TraveledHisotryPlaceTypeProps) {
   const navigate = useNavigate();
 
   const moveToReservationHistoryPage = useCallback(() => {
-    dispatch(scrollActions.scroll({ whereToGo: 0, detailPlace: 0, myStorage: window.scrollY, homeY: 0 }));
+    dispatch(scrollActions.scroll({ myStorage: window.scrollY}));
     navigate(`/reservation-history/${traveledPlace.bookingId}`, { state: { prevPath: location.pathname } });
   }, []);
 
   const moveToReviewWritingPage = useCallback(() => {
-    dispatch(scrollActions.scroll({ whereToGo: 0, detailPlace: 0, myStorage: window.scrollY, homeY: 0 }));
+    dispatch(scrollActions.scroll({ myStorage: window.scrollY}));
     navigate(`/review-writing/${traveledPlace.place.placeId}`, { state: traveledPlace });
   }, []);
 

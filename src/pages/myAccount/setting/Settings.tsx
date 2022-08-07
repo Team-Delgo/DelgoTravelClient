@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link,useLocation } from 'react-router-dom';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import './Settings.scss';
 import { MY_ACCOUNT_PATH } from '../../../constants/path.const';
@@ -14,6 +14,7 @@ declare global{
 function Settings() {
   const [alert, setAlert] = useState(false);
   const navigate = useNavigate();
+  const location: any = useLocation();
 
   const alertToggleHandler = () => {
     setAlert(!alert);
@@ -21,13 +22,21 @@ function Settings() {
     // dipatch ?
   };
 
+  const moveToMyAccountMainPage = () => {
+    navigate(MY_ACCOUNT_PATH.MAIN,{
+      state: {
+        prevPath: location.pathname,
+      },
+    })
+  };
+
   const moveToPhoneSetting = () => {
     window.BRIDGE.setNotify();
   };
 
-  return (
+  return (  
     <div className="setting">
-      <div aria-hidden="true" className="myaccount-back" onClick={() => navigate(-1)}>
+      <div aria-hidden="true" className="myaccount-back" onClick={moveToMyAccountMainPage}>
         <Arrow />
       </div>
       <header className="setting-header">설정</header>
