@@ -1,13 +1,13 @@
 /* eslint-disable no-undef */
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import qs from "qs";
-import { KAKAO } from '../../constants/url.cosnt'
+import qs from 'qs';
+import { KAKAO } from '../../constants/url.cosnt';
 import { tokenActions } from '../../redux/slice/tokenSlice';
-import { setAccessCode } from "../api/social";
-
+import { setAccessCode } from '../api/social';
+import { SIGN_UP_PATH } from '../../constants/path.const';
 
 declare global {
   interface Window {
@@ -17,8 +17,8 @@ declare global {
 
 function KakaoRedirectHandler() {
   const dispatch = useDispatch();
-  const CLIENT_SECRET = "[본인 CLIENT SECRET 값]";
-  const code = new URL(window.location.href).searchParams.get("code");
+  const CLIENT_SECRET = '[본인 CLIENT SECRET 값]';
+  const code = new URL(window.location.href).searchParams.get('code');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,7 +27,6 @@ function KakaoRedirectHandler() {
     }
     getAccessToken();
   }, []);
-
 
   // const getToken = async () => {
   //   const payload = qs.stringify({
@@ -78,23 +77,44 @@ function KakaoRedirectHandler() {
   // };
 
   const getAccessToken = () => {
-    setAccessCode(code,(response:AxiosResponse)=>{
-      console.log(response);
-    },dispatch);
+    setAccessCode(
+      code,
+      (response: AxiosResponse) => {
+        console.log(response);
+        const { code, data } = response.data;
+        if(code === 200){
+          console.log("로그인 성공");
+        } else if(code === 370){
+          console.log("소셜 회원가입");
+          navigate(SIGN_UP_PATH.SOCIAL.NICKNAME);
+        } else if(code === 380){
+          console.log("카카오 전화번호 x");
+        } else if(code === 381){
+          console.log("연동");
+        } else{
+          console.log("카카오 가입 에러");
+        }
+      },
+      dispatch,
+    );
   };
 
   const KakaoLogOut = () => {
     window.Kakao.API.request({
       url: '/v1/user/unlink',
     });
-    navigate('/user/signin')
-  }
+    navigate('/user/signin');
+  };
 
-  return <div>
-    카카오 로그인
-    <button type="button" onClick={KakaoLogOut}> 로그아웃</button>
-  </div>
-    ;
-};
+  return (
+    <div>
+      카카오 로그인
+      <button type="button" onClick={KakaoLogOut}>
+        {' '}
+        로그아웃
+      </button>
+    </div>
+  );
+}
 
 export default KakaoRedirectHandler;

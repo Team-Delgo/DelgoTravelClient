@@ -12,4 +12,24 @@ async function setAccessCode(code: string | null, success: (data: AxiosResponse)
     });
 }
 
-export { setAccessCode };
+async function oAuthSignup(data: {nickname:string,phoneNo:string,petName:string,petSize:string,birthday:string|undefined} , success: (data: AxiosResponse) => void, dispatch: any) {
+  const {nickname,phoneNo,petName,petSize,birthday} = data;
+  await axios
+    .post(`${process.env.REACT_APP_API_URL}/oAuthSignup`,{
+      userName: nickname,
+      phoneNo,
+      petName,
+      petSize,
+      birthday
+    })
+    .then((data) => {
+      success(data);
+    })
+    .catch((error) => {
+      useErrorHandlers(dispatch, error);
+    });
+}
+
+export { setAccessCode, oAuthSignup };
+
+
