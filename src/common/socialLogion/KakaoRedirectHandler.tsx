@@ -19,62 +19,62 @@ function KakaoRedirectHandler() {
   const CLIENT_SECRET = "[본인 CLIENT SECRET 값]";
   const code = new URL(window.location.href).searchParams.get("code");
   const navigate = useNavigate();
+  console.log('re');
+  useEffect(() => {
+    if (code == null) {
+      navigate('/user/signin')
+    }
+    getToken();
+  }, []);
 
-  // useEffect(() => {
-  //   if (code == null) {
-  //     navigate('/user/signin')
-  //   }
-  //   getToken();
-  // }, []);
 
+  const getToken = async () => {
+    const payload = qs.stringify({
+      grant_type: "authorization_code",
+      client_id: KAKAO.REST_API_KEY,
+      redirect_uri: KAKAO.CALL_BACK_URL,
+      code,
+      client_secret: CLIENT_SECRET,
+    });
+    try {
+      const res = await axios.post(
+        "https://kauth.kakao.com/oauth/token",
+        payload
+      );
+      console.log(res);
+      window.Kakao.init(KAKAO.REST_API_KEY);
+      window.Kakao.Auth.setAccessToken(res.data.access_token);
 
-  // const getToken = async () => {
-  //   const payload = qs.stringify({
-  //     grant_type: "authorization_code",
-  //     client_id: KAKAO.REST_API_KEY,
-  //     redirect_uri: KAKAO.CALL_BACK_URL,
-  //     code,
-  //     client_secret: CLIENT_SECRET,
-  //   });
-  //   try {
-  //     const res = await axios.post(
-  //       "https://kauth.kakao.com/oauth/token",
-  //       payload
-  //     );
-  //     console.log(res);
-  //     window.Kakao.init(KAKAO.REST_API_KEY);
-  //     window.Kakao.Auth.setAccessToken(res.data.access_token);
+      const accessToken = res.data.access_token;
+      const refreshToken = res.data.refresh_token;
+      dispatch(
+        tokenActions.setToken(accessToken),
+      );
+      localStorage.setItem('refreshToken', refreshToken);
+      getProfile()
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  //     const accessToken = res.data.access_token;
-  //     const refreshToken = res.data.refresh_token;
-  //     dispatch(
-  //       tokenActions.setToken(accessToken),
-  //     );
-  //     localStorage.setItem('refreshToken', refreshToken);
-  //     getProfile()
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // const getProfile = async () => {
-  //   try {
-  //     window.Kakao.API.request({
-  //       url: '/v2/user/me',
-  //       data: {
-  //         property_keys: ["kakao_account.phone_number"]
-  //       },
-  //       success(response: any) {
-  //         console.log(response);
-  //       },
-  //       fail(error: any) {
-  //         console.log(error);
-  //       }
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const getProfile = async () => {
+    try {
+      window.Kakao.API.request({
+        url: '/v2/user/me',
+        data: {
+          property_keys: ["kakao_account.phone_number"]
+        },
+        success(response: any) {
+          console.log(response);
+        },
+        fail(error: any) {
+          console.log(error);
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const KakaoLogOut = () => {
     window.Kakao.API.request({
