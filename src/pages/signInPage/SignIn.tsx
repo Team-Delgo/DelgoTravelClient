@@ -24,6 +24,7 @@ function SignIn() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+
     dispatch(tokenActions.setToken(''));
     localStorage.removeItem('refreshToken');
     setTimeout(() => {
@@ -84,7 +85,7 @@ function SignIn() {
                 aria-hidden="true"
                 className="login-signup-text"
                 onClick={() => {
-                  navigation(ROOT_PATH);
+                  navigation(ROOT_PATH, {replace:true});
                 }}
               >
                 가입없이 둘러보기
