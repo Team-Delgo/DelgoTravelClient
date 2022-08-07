@@ -16,9 +16,9 @@ async function wishInsert(
           placeId: data.placeId,
       },
       {
-        headers: {
-          Authorization_Access: `${data.accessToken}`,
-        },
+        // headers: {
+        //   Authorization_Access: `${data.accessToken}`,
+        // },
       },
     );
     success(result);
@@ -36,9 +36,9 @@ async function wishDelete(
     const result = await axios.post(
       `${process.env.REACT_APP_API_URL}/wish/delete/${data.wishId}`,
       {
-        headers: {
-          Authorization_Access: `${data.accessToken}`,
-        },
+        // headers: {
+        //   Authorization_Access: `${data.accessToken}`,
+        // },
       },
     );
     success(result);

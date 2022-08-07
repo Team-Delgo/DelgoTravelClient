@@ -29,6 +29,7 @@ function HomeReservation(props: { lists: any[], pageChange: (page: number) => vo
 
   useEffect(() => {
     pageChange(page);
+    console.log(lists)
   }, [page]);
 
   // console.log(lists);
@@ -118,6 +119,9 @@ function HomeReservation(props: { lists: any[], pageChange: (page: number) => vo
     }
     const endDayTemp = new Date(list.endDt);
     const endDay = days[endDayTemp.getDay()];
+    const placeTelePhonNumber =list.place.phoneNo
+    const placeNaverMapUrl =list.place.mapUrl
+
     return (
       <div className="homemodal-item">
         <div className="homemodal-item-card">
@@ -136,10 +140,12 @@ function HomeReservation(props: { lists: any[], pageChange: (page: number) => vo
                   {startDate} {startDay}
                 </div>
                 <div className="homemodal-item-card-time">{list.place.checkin.slice(0, 5)}</div>
-                <div className="homemodal-item-card-button">
-                  <img className="homemodal-item-card-location" src={Location} alt="location" />
-                  <div className="homemodal-item-card-label">지도</div>
-                </div>
+                <a href={placeNaverMapUrl}>
+                  <div className="homemodal-item-card-button">
+                    <img className="homemodal-item-card-location" src={Location} alt="location" />
+                    <div className="homemodal-item-card-label">지도</div>
+                  </div>
+                </a>
               </div>
               <div className="homemodal-item-card-second">
                 <div className="homemodal-item-card-check">체크아웃</div>
@@ -147,10 +153,12 @@ function HomeReservation(props: { lists: any[], pageChange: (page: number) => vo
                   {endDate} {endDay}
                 </div>
                 <div className="homemodal-item-card-time">{list.place.checkout.slice(0, 5)}</div>
-                <div className="homemodal-item-card-button">
-                  <img className="homemodal-item-card-location" src={Call} alt="call" />
-                  <div className="homemodal-item-card-label">전화</div>
-                </div>
+                <a href={`tel: ${placeTelePhonNumber}`}>
+                  <div className="homemodal-item-card-button" aria-hidden="true">
+                    <img className="homemodal-item-card-location" src={Call} alt="call" />
+                    <div className="homemodal-item-card-label">전화</div>
+                  </div>
+                </a>
               </div>
             </div>
           </div>
