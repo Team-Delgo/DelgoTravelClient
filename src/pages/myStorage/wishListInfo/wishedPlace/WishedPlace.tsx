@@ -47,6 +47,7 @@ function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch
       },
       dispatch,
     );
+    window.BRIDGE.vibrate() 
   }, []);
 
   const wishListConfirmModalOpen =useCallback(() => {

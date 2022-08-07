@@ -47,7 +47,6 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
   const location: any = useLocation();
 
   const wishListInsert = useCallback(() => {
-    window.BRIDGE.vibrate() 
     if(isSignIn){
     wishInsert(
       { userId, placeId: place.placeId , accessToken},
@@ -57,14 +56,15 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
         }
       },
       dispatch,
-    )}
+    )
+    window.BRIDGE.vibrate() 
+  }
     else{
       setLogInModalOpen(true);
     }
   }, [wishList,isSignIn]);
 
   const wishListDelete = useCallback(() => {
-    window.BRIDGE.vibrate() 
     wishDelete(
       { wishId: wishList, accessToken },
       (response: AxiosResponse) => {
@@ -74,6 +74,7 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
       },
       dispatch,
     );
+    window.BRIDGE.vibrate() 
   }, [wishList]);
 
   const moveToDetailPage = useCallback(() => {

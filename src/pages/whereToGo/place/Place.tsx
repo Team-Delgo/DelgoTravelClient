@@ -49,13 +49,13 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
   const [logInModalOpen, setLogInModalOpen] = useState(false);
 
   const wishListInsert = useCallback(() => {
-    window.BRIDGE.vibrate() 
     if(isSignIn){
       wishInsert({ userId, placeId: place.placeId, accessToken }, (response: AxiosResponse) => {
         if (response.data.code === 200) {
           setWishList(response.data.data.wishId);
         }
       }, dispatch);
+      window.BRIDGE.vibrate() 
     }
     else{
       setLogInModalOpen(true);
@@ -63,7 +63,6 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
   }, [wishList,isSignIn]);
 
   const wishListDelete = useCallback(() => {
-    window.BRIDGE.vibrate() 
     wishDelete(
       { wishId: wishList, accessToken },
       (response: AxiosResponse) => {
@@ -73,6 +72,7 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
       },
       dispatch,
     );
+    window.BRIDGE.vibrate() 
   }, [wishList]);
 
 
