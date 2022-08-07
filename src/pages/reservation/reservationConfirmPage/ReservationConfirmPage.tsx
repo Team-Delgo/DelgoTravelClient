@@ -9,6 +9,7 @@ import ReservationCancleModal from "./modal/ReservationCancleModal";
 import Map from '../../../common/utils/Map';
 import {RootState} from '../../../redux/store'
 import './ReservationConfirmPage.scss';
+import { ROOT_PATH } from "../../../constants/path.const";
 
 declare global{
   interface Window{
@@ -74,7 +75,7 @@ function ReservationConfirmPage() {
 
   const moveToPrevPage = useCallback(() => {
     setTimeout(() => {
-      navigate('/');
+      navigate(ROOT_PATH);
       dispatch(
         reservationActions.reservationInit()
       );

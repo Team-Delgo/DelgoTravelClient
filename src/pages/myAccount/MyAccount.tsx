@@ -46,7 +46,7 @@ function MyAccount() {
     },
     onError: (error: any) => {
       useErrorHandlers(dispatch, error);
-    },
+    }, 
   });
 
   useEffect(() => {
@@ -82,6 +82,7 @@ function MyAccount() {
   }, [accessToken]);
 
   const logoutHandler = () => {
+    dispatch(tokenActions.setToken(''));
     dispatch(userActions.signout());
     localStorage.removeItem('refreshToken');
     navigation('/user/signin');

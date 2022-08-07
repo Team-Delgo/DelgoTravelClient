@@ -11,6 +11,7 @@ import { login } from '../../common/api/login';
 import './Login.scss';
 import { checkEmail, checkPasswordLogin } from '../signUpPage/userInfo/ValidCheck';
 import Loading from '../../common/utils/Loading';
+import { ROOT_PATH } from '../../constants/path.const';
 
 interface Input {
   email: string;
@@ -81,7 +82,7 @@ function Login() {
           const refreshToken = response.headers.authorization_refresh;
           dispatch(tokenActions.setToken(accessToken));
           localStorage.setItem('refreshToken', refreshToken);
-          navigation('/', { replace: true });
+          navigation(ROOT_PATH, { replace: true });
         } else if (code === 304) {
           setIsLoading(false);
           setFeedback((prev) => {
