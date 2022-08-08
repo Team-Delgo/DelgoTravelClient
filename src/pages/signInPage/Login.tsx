@@ -61,12 +61,14 @@ function Login() {
           setIsLoading(true);
           dispatch(
             userActions.signin({
+              isSignIn: true,
               couponList: data.couponList,
               user: {
                 id: data.user.userId,
                 nickname: data.user.name,
                 email: data.user.email,
                 phone: data.user.phoneNo,
+                isSocial: false,
               },
               pet: {
                 petId: data.pet.petId,

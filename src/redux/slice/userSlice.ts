@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isSignIn: false,
-  couponList:[],
-  user: { id: 0, nickname: '', email: '', phone: '' },
+  couponList: [],
+  user: { id: 0, nickname: '', email: '', phone: '', isSocial: false },
   pet: { name: '', petId: 0, birthday: '', size: '', image: '' },
 };
 
@@ -22,18 +22,18 @@ const userSlice = createSlice({
     signout() {
       return initialState;
     },
-    setpetprofile(state, action){
+    setpetprofile(state, action) {
       return {
         isSignIn: state.isSignIn,
         couponList: state.couponList,
         user: state.user,
         pet: {
           ...state.pet,
-          image: action.payload.image
-        }
-      }
+          image: action.payload.image,
+        },
+      };
     },
-    changepetinfo(state, action){
+    changepetinfo(state, action) {
       return {
         isSignIn: state.isSignIn,
         couponList: state.couponList,
@@ -43,10 +43,10 @@ const userSlice = createSlice({
           birthday: action.payload.birth,
           size: action.payload.size,
           petId: state.pet.petId,
-          image: action.payload.image
-        }
-      }
-    }
+          image: action.payload.image,
+        },
+      };
+    },
   },
 });
 

@@ -104,6 +104,15 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        &.empty{
+          background-color: #E8E2DC;
+          color: #3e382f;
+          padding: 30px;
+          font-weight: 500;
+          font-size: 16px;
+          text-align: center;
+          justify-content: center;
+        }
         &-wrapper {
           &-title {
             margin: 0;
@@ -141,6 +150,9 @@
           &.CF {
             background-color: #8a8a8a;
           }
+          display: flex;
+          justify-content: center;
+          align-items: center;
           border-radius: 37px;
           width: 78px;
           height: 33px;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AxiosResponse } from 'axios';
-import { useNavigate,useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import 'react-alert-confirm/dist/index.css';
 import Footer from '../../common/components/FooterNavigation';
@@ -24,6 +24,7 @@ function MyAccount() {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [text, setText] = useState('');
   const [age, setAge] = useState(0);
+  const [days, setDays] = useState('');
   const [bookingData, setBookingData] = useState({ place: '', room: '', startDt: '', endDt: '', state: 'W' });
   const pet = useSelector((state: RootState) => state.persist.user.pet);
   const navigation = useNavigate();
@@ -49,18 +50,16 @@ function MyAccount() {
     },
     onError: (error: any) => {
       useErrorHandlers(dispatch, error);
-    }, 
+    },
   });
 
   useEffect(() => {
     if (location.state?.prevPath?.includes('/myaccount')) {
       window.scroll(0, Number(myAccountY));
-    }
-    else{
+    } else {
       window.scroll(0, 0);
-    } 
-
-  }, [getMyAccountDataListIsLoading]); 
+    }
+  }, [getMyAccountDataListIsLoading]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -130,13 +129,21 @@ function MyAccount() {
       (response: AxiosResponse) => {
         console.log(response);
         const { data } = response.data;
-        setBookingData({
-          place: data[0].place.name,
-          room: data[0].roomName,
-          startDt: data[0].startDt,
-          endDt: data[0].endDt,
-          state: data[0].bookingState,
-        });
+        if (data.length > 0) {
+          setBookingData({
+            place: data[0].place.name,
+            room: data[0].roomName,
+            startDt: data[0].startDt,
+            endDt: data[0].endDt,
+            state: data[0].bookingState,
+          });
+          const startDate = new Date(data[0].startDt);
+          const endDate = new Date(data[0].endDt);
+          const dateDif = endDate.getTime()- startDate.getTime();
+          const dDay = dateDif / (1000 * 60 * 60 * 24);
+          const dDayString = Math.ceil(dDay).toString();
+          setDays(dDayString);
+          }
       },
       dispatch,
     );
@@ -170,26 +177,32 @@ function MyAccount() {
 
   const bookingState = () => {
     if (bookingData.state === 'W') {
-      return <div className="account-purchase-reservation-box-state W">
-        예약요청
-      </div>;
+      return <div className="account-purchase-reservation-box-state W">예약요청</div>;
     }
     if (bookingData.state === 'F') {
-      return <div className="account-purchase-reservation-box-state F">
-        예약확정
-      </div>;
+      return <div className="account-purchase-reservation-box-state F">예약확정</div>;
     }
     if (bookingData.state === 'CW') {
-      return <div className="account-purchase-reservation-box-state CW">
-        취소요청
-      </div>;
+      return <div className="account-purchase-reservation-box-state CW">취소요청</div>;
     }
 
-    return <div className="account-purchase-reservation-box-state CF">
-      취소완료
-    </div>;
-
+    return <div className="account-purchase-reservation-box-state CF">취소완료</div>;
   };
+
+  const bookingCard = bookingData.place ? (
+    <div className="account-purchase-reservation-box">
+      <div className="account-purchase-reservation-box-wrapper">
+        <p className="account-purchase-reservation-box-wrapper-title">{bookingData.place}</p>
+        <p className="account-purchase-reservation-box-wrapper-room">{bookingData.room}</p>
+        <p className="account-purchase-reservation-box-wrapper-date">
+          {bookingData.startDt.slice(5,7)}.{bookingData.startDt.slice(8,10)} ~ {bookingData.endDt.slice(5,7)}.{bookingData.endDt.slice(8,10)} {days}박
+        </p>
+      </div>
+      {bookingState()}
+    </div>
+  ) : (
+    <div className="account-purchase-reservation-box empty">최근 예약한 숙소가 없어요</div>
+  );
 
   return (
     <div className="account">
@@ -219,12 +232,7 @@ function MyAccount() {
           <div className="account-profile-info-first">
             <div className="account-profile-info-name">{pet.name}</div>
             <span className="account-profile-info-age">/ {age}살</span>
-            <img
-              aria-hidden="true"
-              src={RightArrowBlack}
-              onClick={moveToMyAccountPetInfoPage}
-              alt="detail"
-            />
+            <img aria-hidden="true" src={RightArrowBlack} onClick={moveToMyAccountPetInfoPage} alt="detail" />
           </div>
           <div className="account-profile-info-second">
             <div className="account-profile-info-coupon" aria-hidden="true" onClick={moveToMyAccountCouponPage}>
@@ -235,11 +243,7 @@ function MyAccount() {
               <p className="account-profile-info-column">포인트</p>
               <p className="account-profile-info-value">0P</p>
             </div>
-            <div
-              className="account-profile-info-review"
-              aria-hidden="true"
-              onClick={moveToMyAccountReviewsPage}
-            >
+            <div className="account-profile-info-review" aria-hidden="true" onClick={moveToMyAccountReviewsPage}>
               <p className="account-profile-info-column">리뷰</p>
               <p className="account-profile-info-value">{myAccountDataList?.data.reviewNum}건</p>
             </div>
@@ -249,30 +253,15 @@ function MyAccount() {
       <div className="account-purchase">
         <div className="account-purchase-reservation">
           <h1 className="account-title">예약 현황</h1>
-          <div className="account-purchase-reservation-box">
-            <div className="account-purchase-reservation-box-wrapper">
-              <p className="account-purchase-reservation-box-wrapper-title">{bookingData.place}</p>
-              <p className="account-purchase-reservation-box-wrapper-room">{bookingData.room}</p>
-              <p className="account-purchase-reservation-box-wrapper-date">{bookingData.startDt.slice(5,)}~{bookingData.endDt.slice(5,)} 1박</p>
-            </div>
-            {bookingState()}
-          </div>
+          {bookingCard}
         </div>
       </div>
       <div className="account-settings">
-        <div
-          className="account-item first"
-          aria-hidden="true"
-          onClick={moveToMyAccountUserInfoPage}
-        >
+        <div className="account-item first" aria-hidden="true" onClick={moveToMyAccountUserInfoPage}>
           <h2 className="account-item-name">내 정보 관리</h2>
           <img src={RightArrow} alt="detail" />
         </div>
-        <div
-          className="account-item"
-          aria-hidden="true"
-          onClick={moveToMyAccountSettingsPage}
-        >
+        <div className="account-item" aria-hidden="true" onClick={moveToMyAccountSettingsPage}>
           <h2 className="account-item-name">설정</h2>
           <img src={RightArrow} alt="detail" />
         </div>
@@ -286,7 +275,10 @@ function MyAccount() {
             <img src={RightArrow} alt="detail" />
           </div>
         </a>
-        <a href="http://plus.kakao.com/home/@delgo"> <p className="account-item-p">카카오 플러스친구로 이동</p></a>
+        <a href="http://plus.kakao.com/home/@delgo">
+          {' '}
+          <p className="account-item-p">카카오 플러스친구로 이동</p>
+        </a>
       </div>
       <div className="account-sign">
         <p className="account-out" aria-hidden="true" onClick={deleteUserModalOpen}>

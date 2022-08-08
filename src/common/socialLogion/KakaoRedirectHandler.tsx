@@ -86,7 +86,7 @@ function KakaoRedirectHandler() {
           console.log("로그인 성공");
         } else if(code === 370){
           console.log("소셜 회원가입");
-          navigate(SIGN_UP_PATH.SOCIAL.NICKNAME);
+          navigate(SIGN_UP_PATH.SOCIAL.NICKNAME,{state:{phone:data}});
         } else if(code === 380){
           console.log("카카오 전화번호 x");
         } else if(code === 381){

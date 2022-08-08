@@ -142,17 +142,13 @@ function PetInfo() {
       // oauthSignup();
       const requestBody = {
         nickname,
-        phoneNo:phone,
-        petName:enteredInput.name,
-        petSize:enteredInput.type,
-        birthday:enteredInput.birth
-      }
-      oAuthSignup(requestBody,(response:AxiosResponse)=>{
-        console.log(response);
-      },dispatch);
-    } else {
-      signup(
-        userInfo,
+        phoneNo: phone,
+        petName: enteredInput.name,
+        petSize: enteredInput.type,
+        birthday: enteredInput.birth,
+      };
+      oAuthSignup(
+        requestBody,
         (response: AxiosResponse) => {
           const { code, codeMsg, data } = response.data;
           if (code === 200) {
@@ -171,8 +167,63 @@ function PetInfo() {
                 user: {
                   id: data.user.userId,
                   nickname: data.user.name,
+                  email: "",
+                  phone: data.user.phoneNo,
+                },
+                pet: {
+                  petId: data.pet.petId,
+                  birthday: data.pet.birthday,
+                  size: data.pet.size,
+                  name: data.pet.name,
+                  image: '',
+                },
+              }),
+            );
+            formData.append('userId', userId.toString());
+            formData.append('photo', sendingImage);
+            petImageUpload(
+              formData,
+              (response: AxiosResponse) => {
+                console.log(response);
+                const { code, data } = response.data;
+                if (code === 200) {
+                  dispatch(userActions.setpetprofile({ image: data }));
+                }
+              },
+              dispatch,
+            );
+            navigation(SIGN_UP_PATH.COMPLETE, { state: { name: enteredInput.name } });
+          } else {
+            console.log(codeMsg);
+          }
+        },
+        dispatch,
+      );
+    } else {
+      signup(
+        userInfo,
+        (response: AxiosResponse) => {
+          const { code, codeMsg, data } = response.data;
+          if (code === 200) {
+            const accessToken = response.headers.authorization_access;
+            const refreshToken = response.headers.authorization_refresh;
+            console.log(accessToken);
+            console.log(refreshToken);
+            dispatch(tokenActions.setToken(accessToken));
+            localStorage.setItem('refreshToken', refreshToken);
+            userId = response.data.data.user.userId;
+            console.log(response);
+            console.log(userId);
+            dispatch(
+              userActions.signin({
+                isSignIn: true,
+                couponList: [],
+                user: {
+                  id: data.user.userId,
+                  nickname: data.user.name,
                   email: data.user.email,
                   phone: data.user.phoneNo,
+                  isSocial: false,
                 },
                 pet: {
                   petId: data.pet.petId,
