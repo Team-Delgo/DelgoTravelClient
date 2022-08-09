@@ -8,7 +8,6 @@ import Map from '../../../common/utils/Map';
 import {RootState} from '../../../redux/store'
 import './ReservationHistoryPage.scss';
 
-
 declare global{
   interface Window{
     BRIDGE:any
