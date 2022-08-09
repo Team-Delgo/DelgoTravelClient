@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AxiosResponse } from 'axios';
-import { useNavigate,useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import 'react-alert-confirm/dist/index.css';
 import Footer from '../../common/components/FooterNavigation';
@@ -11,7 +11,6 @@ import RightArrow from '../../icons/right-arrow.svg';
 import RightArrowBlack from '../../icons/right-arrow-black.svg';
 import { userActions } from '../../redux/slice/userSlice';
 import { tokenActions } from '../../redux/slice/tokenSlice';
-import { scrollActions } from '../../redux/slice/scrollSlice';
 import AlertConfirm from '../../common/dialog/AlertConfirm';
 import { deleteUser } from '../../common/api/signup';
 import { MY_ACCOUNT_PATH } from '../../constants/path.const';
@@ -33,8 +32,6 @@ function MyAccount() {
   const dogBirth = useSelector((state: RootState) => state.persist.user.pet.birthday);
   const accessToken = useSelector((state: RootState) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
-  const location: any = useLocation();
-  const { myAccountY } = useSelector((state: RootState) => state.persist.scroll);
 
   const {
     isLoading: getMyAccountDataListIsLoading,
@@ -49,18 +46,8 @@ function MyAccount() {
     },
     onError: (error: any) => {
       useErrorHandlers(dispatch, error);
-    }, 
+    },
   });
-
-  useEffect(() => {
-    if (location.state?.prevPath?.includes('/myaccount')) {
-      window.scroll(0, Number(myAccountY));
-    }
-    else{
-      window.scroll(0, 0);
-    } 
-
-  }, [getMyAccountDataListIsLoading]); 
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -95,7 +82,6 @@ function MyAccount() {
   }, [accessToken]);
 
   const logoutHandler = () => {
-    dispatch(tokenActions.setToken(''));
     dispatch(userActions.signout());
     localStorage.removeItem('refreshToken');
     navigation('/user/signin');
@@ -124,6 +110,10 @@ function MyAccount() {
     setText('정말 회원탈퇴 하시겠어요?ㅠㅠ');
   };
 
+  const navigateCouponPage = () => {
+    navigation('/user/myaccount/coupon');
+  };
+
   const getBookingData = () => {
     getBookingState(
       userId,
@@ -141,34 +131,12 @@ function MyAccount() {
       dispatch,
     );
   };
-  const moveToMyAccountPetInfoPage = () => {
-    dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
-    navigation(MY_ACCOUNT_PATH.PETINFO);
-  };
-  const moveToMyAccountCouponPage = () => {
-    dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
-    navigation(MY_ACCOUNT_PATH.COUPON);
-  };
-  const moveToMyAccountReviewsPage = () => {
-    dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
-    navigation(MY_ACCOUNT_PATH.REVIEWS);
-  };
-
-  const moveToMyAccountUserInfoPage = () => {
-    dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
-    navigation(MY_ACCOUNT_PATH.USERINFO);
-  };
-
-  const moveToMyAccountSettingsPage = () => {
-    dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
-    navigation(MY_ACCOUNT_PATH.SETTINGS);
-  };
 
   if (getMyAccountDataListIsLoading) {
     return <div className="account">&nbsp;</div>;
   }
 
-  const bookingState = () => {
+  const bookingStateFunc = () => {
     if (bookingData.state === 'W') {
       return <div className="account-purchase-reservation-box-state W">
         예약요청
@@ -184,12 +152,14 @@ function MyAccount() {
         취소요청
       </div>;
     }
-
-    return <div className="account-purchase-reservation-box-state CF">
-      취소완료
-    </div>;
-
+    if (bookingData.state === 'CF') {
+      return <div className="account-purchase-reservation-box-state CF">
+        취소완료
+      </div>;
+    }
   };
+
+  const bookingState = bookingStateFunc();
 
   return (
     <div className="account">
@@ -222,12 +192,14 @@ function MyAccount() {
             <img
               aria-hidden="true"
               src={RightArrowBlack}
-              onClick={moveToMyAccountPetInfoPage}
+              onClick={() => {
+                navigation(MY_ACCOUNT_PATH.PETINFO);
+              }}
               alt="detail"
             />
           </div>
           <div className="account-profile-info-second">
-            <div className="account-profile-info-coupon" aria-hidden="true" onClick={moveToMyAccountCouponPage}>
+            <div className="account-profile-info-coupon" aria-hidden="true" onClick={navigateCouponPage}>
               <p className="account-profile-info-column">쿠폰</p>
               <p className="account-profile-info-value">{myAccountDataList?.data.couponNum}장</p>
             </div>
@@ -238,7 +210,9 @@ function MyAccount() {
             <div
               className="account-profile-info-review"
               aria-hidden="true"
-              onClick={moveToMyAccountReviewsPage}
+              onClick={() => {
+                navigation(MY_ACCOUNT_PATH.REVIEWS);
+              }}
             >
               <p className="account-profile-info-column">리뷰</p>
               <p className="account-profile-info-value">{myAccountDataList?.data.reviewNum}건</p>
@@ -255,7 +229,7 @@ function MyAccount() {
               <p className="account-purchase-reservation-box-wrapper-room">{bookingData.room}</p>
               <p className="account-purchase-reservation-box-wrapper-date">{bookingData.startDt.slice(5,)}~{bookingData.endDt.slice(5,)} 1박</p>
             </div>
-            {bookingState()}
+            {bookingState}
           </div>
         </div>
       </div>
@@ -263,7 +237,9 @@ function MyAccount() {
         <div
           className="account-item first"
           aria-hidden="true"
-          onClick={moveToMyAccountUserInfoPage}
+          onClick={() => {
+            navigation(MY_ACCOUNT_PATH.USERINFO);
+          }}
         >
           <h2 className="account-item-name">내 정보 관리</h2>
           <img src={RightArrow} alt="detail" />
@@ -271,7 +247,9 @@ function MyAccount() {
         <div
           className="account-item"
           aria-hidden="true"
-          onClick={moveToMyAccountSettingsPage}
+          onClick={() => {
+            navigation(MY_ACCOUNT_PATH.SETTINGS);
+          }}
         >
           <h2 className="account-item-name">설정</h2>
           <img src={RightArrow} alt="detail" />
@@ -280,13 +258,11 @@ function MyAccount() {
           <h2 className="account-item-name">공지사항</h2>
           <img src={RightArrow} alt="detail" />
         </div>
-        <a href="http://plus.kakao.com/home/@delgo">
-          <div className="account-item last">
-            <h2 className="account-item-name">문의</h2>
-            <img src={RightArrow} alt="detail" />
-          </div>
-        </a>
-        <a href="http://plus.kakao.com/home/@delgo"> <p className="account-item-p">카카오 플러스친구로 이동</p></a>
+        <div className="account-item last">
+          <h2 className="account-item-name">문의</h2>
+          <img src={RightArrow} alt="detail" />
+        </div>
+        <p className="account-item-p">카카오 플러스친구로 이동</p>
       </div>
       <div className="account-sign">
         <p className="account-out" aria-hidden="true" onClick={deleteUserModalOpen}>
