@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import ToastMessage from '../../../common/dialog/ToastMessage';
 import Timer from '../../signUpPage/verifyphone/Timer';
-import { phoneCheckNumber, phoneSendMessageForFind } from '../../../common/api/signup';
+import { phoneCheckNumber, phoneSendMessage, phoneSendMessageForFind } from '../../../common/api/signup';
 import { SIGN_IN_PATH, SIGN_UP_PATH } from '../../../constants/path.const';
 import { errorActions } from '../../../redux/slice/errorSlice';
 import './PhoneAuth.scss';
@@ -46,20 +46,36 @@ function PhoneAuth() {
   };
 
   const authNumberResend = () => {
-    phoneSendMessageForFind(
-      phone,
-      (response: AxiosResponse) => {
-        const { code, data } = response.data;
-        console.log(response);
-        if (code === 200) {
-          setSMSid(data);
-          setIsReSended(true);
-          setButtonIsClicked(true);
-          setTimeIsValid(true);
-        }
-      },
-      errorHandler,
-    );
+    if (isSocial) {
+      phoneSendMessage(
+        phone,
+        (response: AxiosResponse) => {
+          const { code, data } = response.data;
+          if (code === 200) {
+            setSMSid(data);
+            setButtonIsClicked(true);
+          } else {
+            console.log('network error!');
+          }
+        },
+        errorHandler,
+      );
+    } else {
+      phoneSendMessageForFind(
+        phone,
+        (response: AxiosResponse) => {
+          const { code, data } = response.data;
+          console.log(response);
+          if (code === 200) {
+            setSMSid(data);
+            setIsReSended(true);
+            setButtonIsClicked(true);
+            setTimeIsValid(true);
+          }
+        },
+        errorHandler,
+      );
+    }
     //  인증번호 전송 요청
   };
 
