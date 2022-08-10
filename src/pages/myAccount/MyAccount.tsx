@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AxiosResponse } from 'axios';
+<<<<<<< HEAD
 import { useNavigate, useLocation } from 'react-router-dom';
+=======
+import { useNavigate } from 'react-router-dom';
+>>>>>>> ad926c534a3fda1d1a3fdd5723a2daf4c969b188
 import { useQuery } from 'react-query';
 import 'react-alert-confirm/dist/index.css';
 import Footer from '../../common/components/FooterNavigation';
@@ -11,7 +15,6 @@ import RightArrow from '../../icons/right-arrow.svg';
 import RightArrowBlack from '../../icons/right-arrow-black.svg';
 import { userActions } from '../../redux/slice/userSlice';
 import { tokenActions } from '../../redux/slice/tokenSlice';
-import { scrollActions } from '../../redux/slice/scrollSlice';
 import AlertConfirm from '../../common/dialog/AlertConfirm';
 import { deleteUser } from '../../common/api/signup';
 import { MY_ACCOUNT_PATH } from '../../constants/path.const';
@@ -34,8 +37,6 @@ function MyAccount() {
   const dogBirth = useSelector((state: RootState) => state.persist.user.pet.birthday);
   const accessToken = useSelector((state: RootState) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
-  const location: any = useLocation();
-  const { myAccountY } = useSelector((state: RootState) => state.persist.scroll);
 
   const {
     isLoading: getMyAccountDataListIsLoading,
@@ -54,6 +55,7 @@ function MyAccount() {
   });
 
   useEffect(() => {
+<<<<<<< HEAD
     if (location.state?.prevPath?.includes('/myaccount')) {
       window.scroll(0, Number(myAccountY));
     } else {
@@ -62,6 +64,8 @@ function MyAccount() {
   }, [getMyAccountDataListIsLoading]);
 
   useEffect(() => {
+=======
+>>>>>>> ad926c534a3fda1d1a3fdd5723a2daf4c969b188
     window.scrollTo(0, 0);
     const temp = `${dogBirth.slice(0, 4)}-${dogBirth.slice(5, 7)}-${dogBirth.slice(8, 10)}`;
     const date = new Date(temp);
@@ -94,7 +98,6 @@ function MyAccount() {
   }, [accessToken]);
 
   const logoutHandler = () => {
-    dispatch(tokenActions.setToken(''));
     dispatch(userActions.signout());
     localStorage.removeItem('refreshToken');
     navigation('/user/signin');
@@ -123,6 +126,10 @@ function MyAccount() {
     setText('정말 회원탈퇴 하시겠어요?ㅠㅠ');
   };
 
+  const navigateCouponPage = () => {
+    navigation('/user/myaccount/coupon');
+  };
+
   const getBookingData = () => {
     getBookingState(
       userId,
@@ -148,34 +155,12 @@ function MyAccount() {
       dispatch,
     );
   };
-  const moveToMyAccountPetInfoPage = () => {
-    dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
-    navigation(MY_ACCOUNT_PATH.PETINFO);
-  };
-  const moveToMyAccountCouponPage = () => {
-    dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
-    navigation(MY_ACCOUNT_PATH.COUPON);
-  };
-  const moveToMyAccountReviewsPage = () => {
-    dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
-    navigation(MY_ACCOUNT_PATH.REVIEWS);
-  };
-
-  const moveToMyAccountUserInfoPage = () => {
-    dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
-    navigation(MY_ACCOUNT_PATH.USERINFO);
-  };
-
-  const moveToMyAccountSettingsPage = () => {
-    dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
-    navigation(MY_ACCOUNT_PATH.SETTINGS);
-  };
 
   if (getMyAccountDataListIsLoading) {
     return <div className="account">&nbsp;</div>;
   }
 
-  const bookingState = () => {
+  const bookingStateFunc = () => {
     if (bookingData.state === 'W') {
       return <div className="account-purchase-reservation-box-state W">예약요청</div>;
     }
@@ -185,6 +170,7 @@ function MyAccount() {
     if (bookingData.state === 'CW') {
       return <div className="account-purchase-reservation-box-state CW">취소요청</div>;
     }
+<<<<<<< HEAD
 
     return <div className="account-purchase-reservation-box-state CF">취소완료</div>;
   };
@@ -203,6 +189,16 @@ function MyAccount() {
   ) : (
     <div className="account-purchase-reservation-box empty">최근 예약한 숙소가 없어요</div>
   );
+=======
+    if (bookingData.state === 'CF') {
+      return <div className="account-purchase-reservation-box-state CF">
+        취소완료
+      </div>;
+    }
+  };
+
+  const bookingState = bookingStateFunc();
+>>>>>>> ad926c534a3fda1d1a3fdd5723a2daf4c969b188
 
   return (
     <div className="account">
@@ -232,10 +228,21 @@ function MyAccount() {
           <div className="account-profile-info-first">
             <div className="account-profile-info-name">{pet.name}</div>
             <span className="account-profile-info-age">/ {age}살</span>
+<<<<<<< HEAD
             <img aria-hidden="true" src={RightArrowBlack} onClick={moveToMyAccountPetInfoPage} alt="detail" />
+=======
+            <img
+              aria-hidden="true"
+              src={RightArrowBlack}
+              onClick={() => {
+                navigation(MY_ACCOUNT_PATH.PETINFO);
+              }}
+              alt="detail"
+            />
+>>>>>>> ad926c534a3fda1d1a3fdd5723a2daf4c969b188
           </div>
           <div className="account-profile-info-second">
-            <div className="account-profile-info-coupon" aria-hidden="true" onClick={moveToMyAccountCouponPage}>
+            <div className="account-profile-info-coupon" aria-hidden="true" onClick={navigateCouponPage}>
               <p className="account-profile-info-column">쿠폰</p>
               <p className="account-profile-info-value">{myAccountDataList?.data.couponNum}장</p>
             </div>
@@ -243,7 +250,17 @@ function MyAccount() {
               <p className="account-profile-info-column">포인트</p>
               <p className="account-profile-info-value">0P</p>
             </div>
+<<<<<<< HEAD
             <div className="account-profile-info-review" aria-hidden="true" onClick={moveToMyAccountReviewsPage}>
+=======
+            <div
+              className="account-profile-info-review"
+              aria-hidden="true"
+              onClick={() => {
+                navigation(MY_ACCOUNT_PATH.REVIEWS);
+              }}
+            >
+>>>>>>> ad926c534a3fda1d1a3fdd5723a2daf4c969b188
               <p className="account-profile-info-column">리뷰</p>
               <p className="account-profile-info-value">{myAccountDataList?.data.reviewNum}건</p>
             </div>
@@ -253,6 +270,7 @@ function MyAccount() {
       <div className="account-purchase">
         <div className="account-purchase-reservation">
           <h1 className="account-title">예약 현황</h1>
+<<<<<<< HEAD
           {bookingCard}
         </div>
       </div>
@@ -262,6 +280,36 @@ function MyAccount() {
           <img src={RightArrow} alt="detail" />
         </div>
         <div className="account-item" aria-hidden="true" onClick={moveToMyAccountSettingsPage}>
+=======
+          <div className="account-purchase-reservation-box">
+            <div className="account-purchase-reservation-box-wrapper">
+              <p className="account-purchase-reservation-box-wrapper-title">{bookingData.place}</p>
+              <p className="account-purchase-reservation-box-wrapper-room">{bookingData.room}</p>
+              <p className="account-purchase-reservation-box-wrapper-date">{bookingData.startDt.slice(5,)}~{bookingData.endDt.slice(5,)} 1박</p>
+            </div>
+            {bookingState}
+          </div>
+        </div>
+      </div>
+      <div className="account-settings">
+        <div
+          className="account-item first"
+          aria-hidden="true"
+          onClick={() => {
+            navigation(MY_ACCOUNT_PATH.USERINFO);
+          }}
+        >
+          <h2 className="account-item-name">내 정보 관리</h2>
+          <img src={RightArrow} alt="detail" />
+        </div>
+        <div
+          className="account-item"
+          aria-hidden="true"
+          onClick={() => {
+            navigation(MY_ACCOUNT_PATH.SETTINGS);
+          }}
+        >
+>>>>>>> ad926c534a3fda1d1a3fdd5723a2daf4c969b188
           <h2 className="account-item-name">설정</h2>
           <img src={RightArrow} alt="detail" />
         </div>
@@ -269,6 +317,7 @@ function MyAccount() {
           <h2 className="account-item-name">공지사항</h2>
           <img src={RightArrow} alt="detail" />
         </div>
+<<<<<<< HEAD
         <a href="http://plus.kakao.com/home/@delgo">
           <div className="account-item last">
             <h2 className="account-item-name">문의</h2>
@@ -279,6 +328,13 @@ function MyAccount() {
           {' '}
           <p className="account-item-p">카카오 플러스친구로 이동</p>
         </a>
+=======
+        <div className="account-item last">
+          <h2 className="account-item-name">문의</h2>
+          <img src={RightArrow} alt="detail" />
+        </div>
+        <p className="account-item-p">카카오 플러스친구로 이동</p>
+>>>>>>> ad926c534a3fda1d1a3fdd5723a2daf4c969b188
       </div>
       <div className="account-sign">
         <p className="account-out" aria-hidden="true" onClick={deleteUserModalOpen}>
