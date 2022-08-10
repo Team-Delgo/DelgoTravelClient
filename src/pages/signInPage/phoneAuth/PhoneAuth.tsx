@@ -90,6 +90,7 @@ function PhoneAuth() {
   };
 
   const submitAuthNumber = () => {
+    console.log(isSocial);
     phoneCheckNumber(
       { number: authNumber, smsId: SMSid },
       (response: AxiosResponse) => {
@@ -97,9 +98,12 @@ function PhoneAuth() {
         console.log(response);
         if (code === 200) {
           if (isSocial) {
+            console.log(isSocial);
+
             navigation(SIGN_UP_PATH.SOCIAL.NICKNAME, { state: { phone, isSocial } });
+          } else {
+            navigation(SIGN_IN_PATH.RESETPASSWORD, { state: email });
           }
-          navigation(SIGN_IN_PATH.RESETPASSWORD, { state: email });
         } else {
           setFeedback('인증번호를 확인해주세요');
           setAuthFailed(true);
