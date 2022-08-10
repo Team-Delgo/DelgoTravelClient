@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import './SignIn.scss';
 import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
@@ -20,17 +20,25 @@ function SignIn() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(true);
   const [feedback, setFeedback] = useState('');
+  const emailRef = useRef<any>();
   const navigation = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-
     dispatch(tokenActions.setToken(''));
     localStorage.removeItem('refreshToken');
     setTimeout(() => {
       setLoading(false);
     }, 700);
   }, []);
+
+  const enterKey = (e: KeyboardEvent) => {
+    if(e.key === 'Enter'){
+      buttonClickHandler();
+    }
+  };
+
+  window.addEventListener('keyup', enterKey);
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -48,6 +56,7 @@ function SignIn() {
           navigation(SIGN_IN_PATH.SIGNIN, { state: { email } });
         } else {
           setFeedback('가입되지 않은 이메일입니다.');
+          emailRef.current.focus();
         }
       },
       dispatch,
@@ -72,6 +81,7 @@ function SignIn() {
                 autoComplete="off"
                 onChange={inputChangeHandler}
                 value={email}
+                ref={emailRef}
                 className={classNames('login-input email', { invalid: feedback.length })}
               />
               <p className="login-feedback">{feedback}</p>
@@ -85,7 +95,7 @@ function SignIn() {
                 aria-hidden="true"
                 className="login-signup-text"
                 onClick={() => {
-                  navigation(ROOT_PATH, {replace:true});
+                  navigation(ROOT_PATH, { replace: true });
                 }}
               >
                 가입없이 둘러보기
