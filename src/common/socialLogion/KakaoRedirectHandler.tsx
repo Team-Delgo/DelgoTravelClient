@@ -9,6 +9,8 @@ import { tokenActions } from '../../redux/slice/tokenSlice';
 import { setAccessCode } from '../api/social';
 import { ROOT_PATH, SIGN_UP_PATH } from '../../constants/path.const';
 import { userActions } from '../../redux/slice/userSlice';
+import Loading from '../../common/utils/Loading';
+
 
 declare global {
   interface Window {
@@ -134,11 +136,7 @@ function KakaoRedirectHandler() {
 
   return (
     <div>
-      카카오 로그인
-      <button type="button" onClick={KakaoLogOut}>
-        {' '}
-        로그아웃
-      </button>
+      <Loading/>
     </div>
   );
 }

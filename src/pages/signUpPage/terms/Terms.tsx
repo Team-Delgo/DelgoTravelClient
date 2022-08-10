@@ -3,12 +3,13 @@ import classNames from 'classnames';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import DetailTerm from './DetailTerm';
-import { SIGN_UP_PATH } from '../../../constants/path.const';
+import { SIGN_IN_PATH, SIGN_UP_PATH } from '../../../constants/path.const';
 import './Terms.scss';
 import Check from '../../../icons/check.svg';
 
 interface LocationState {
   isSocial: boolean;
+  phone:string;
 }
 
 interface Term {
@@ -20,7 +21,7 @@ interface Term {
 function Terms() {
   const navigation = useNavigate();
   const state = useLocation().state as LocationState;
-  const { isSocial } = state;
+  const { isSocial, phone } = state;
   const [eachTermChecked, setEachTermChecked] = useState<any>({ term1: false, term2: false, term3: false });
   const [selectedId, setSelctedId] = useState(0);
   const [allChecked, setAllChecked] = useState(false);
@@ -60,7 +61,7 @@ function Terms() {
 
   const nextClickHandler = () => {
     if(isSocial){
-      navigation(SIGN_UP_PATH.SOCIAL.NICKNAME);
+      navigation(SIGN_IN_PATH.PHONEAUTH, {state:{phone,isSocial}});
     }else{
       navigation(SIGN_UP_PATH.VERIFY);
     }

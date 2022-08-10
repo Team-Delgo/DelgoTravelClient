@@ -7,13 +7,14 @@ import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import ToastMessage from '../../../common/dialog/ToastMessage';
 import Timer from '../../signUpPage/verifyphone/Timer';
 import { phoneCheckNumber, phoneSendMessageForFind } from '../../../common/api/signup';
-import { SIGN_IN_PATH } from '../../../constants/path.const';
+import { SIGN_IN_PATH, SIGN_UP_PATH } from '../../../constants/path.const';
 import { errorActions } from '../../../redux/slice/errorSlice';
-import "./PhoneAuth.scss";
+import './PhoneAuth.scss';
 
 interface LocationState {
   phone: string;
   email: string;
+  isSocial: string;
 }
 
 function PhoneAuth() {
@@ -27,7 +28,7 @@ function PhoneAuth() {
   const [authFailed, setAuthFailed] = useState(false);
   const authRef = useRef<any>();
   const state = useLocation().state as LocationState;
-  const { phone, email } = state;
+  const { phone, email, isSocial } = state;
   const authIsValid = timeIsValid && authNumber.length === 4;
   const navigation = useNavigate();
 
@@ -45,16 +46,20 @@ function PhoneAuth() {
   };
 
   const authNumberResend = () => {
-    phoneSendMessageForFind(phone, (response: AxiosResponse) => {
-      const { code, data } = response.data;
-      console.log(response);
-      if (code === 200) {
-        setSMSid(data);
-        setIsReSended(true);
-        setButtonIsClicked(true);
-        setTimeIsValid(true);
-      }
-    }, errorHandler);
+    phoneSendMessageForFind(
+      phone,
+      (response: AxiosResponse) => {
+        const { code, data } = response.data;
+        console.log(response);
+        if (code === 200) {
+          setSMSid(data);
+          setIsReSended(true);
+          setButtonIsClicked(true);
+          setTimeIsValid(true);
+        }
+      },
+      errorHandler,
+    );
     //  인증번호 전송 요청
   };
 
@@ -69,17 +74,24 @@ function PhoneAuth() {
   };
 
   const submitAuthNumber = () => {
-    phoneCheckNumber({ number: authNumber, smsId: SMSid }, (response: AxiosResponse) => {
-      const { code } = response.data;
-      console.log(response);
-      if (code === 200) {
-        navigation(SIGN_IN_PATH.RESETPASSWORD, { state: email });
-      } else {
-        setFeedback('인증번호를 확인해주세요');
-        setAuthFailed(true);
-        authRef.current.focus();
-      }
-    }, errorHandler);
+    phoneCheckNumber(
+      { number: authNumber, smsId: SMSid },
+      (response: AxiosResponse) => {
+        const { code } = response.data;
+        console.log(response);
+        if (code === 200) {
+          if (isSocial) {
+            navigation(SIGN_UP_PATH.SOCIAL.NICKNAME, { state: { phone, isSocial } });
+          }
+          navigation(SIGN_IN_PATH.RESETPASSWORD, { state: email });
+        } else {
+          setFeedback('인증번호를 확인해주세요');
+          setAuthFailed(true);
+          authRef.current.focus();
+        }
+      },
+      errorHandler,
+    );
   };
 
   return (
@@ -94,7 +106,15 @@ function PhoneAuth() {
         인증번호를 입력해주세요.
       </div>
       <div className="login-input-box">
-        <input type="number" ref={authRef} className={classNames("login-input findauthnum", { invalid: feedback.length })} placeholder="인증번호" value={authNumber} autoComplete="off" onChange={inputChangeHannler} />
+        <input
+          type="number"
+          ref={authRef}
+          className={classNames('login-input findauthnum', { invalid: feedback.length })}
+          placeholder="인증번호"
+          value={authNumber}
+          autoComplete="off"
+          onChange={inputChangeHannler}
+        />
         <span className="login-timer reset">
           <Timer isResend={isReSended} resendfunc={resetIsResend} setInValid={() => setTimeIsValid(false)} />
         </span>
