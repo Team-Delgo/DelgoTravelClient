@@ -68,7 +68,7 @@ function Login() {
                 nickname: data.user.name,
                 email: data.user.email,
                 phone: data.user.phoneNo,
-                isSocial: false,
+                userSocial: data.user.userSocial,
               },
               pet: {
                 petId: data.pet.petId,

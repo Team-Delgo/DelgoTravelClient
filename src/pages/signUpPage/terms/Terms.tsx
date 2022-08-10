@@ -9,6 +9,7 @@ import Check from '../../../icons/check.svg';
 
 interface LocationState {
   isSocial: boolean;
+  phone: string;
 }
 
 interface Term {
@@ -20,7 +21,7 @@ interface Term {
 function Terms() {
   const navigation = useNavigate();
   const state = useLocation().state as LocationState;
-  const { isSocial } = state;
+  const { isSocial, phone } = state;
   const [eachTermChecked, setEachTermChecked] = useState<any>({ term1: false, term2: false, term3: false });
   const [selectedId, setSelctedId] = useState(0);
   const [allChecked, setAllChecked] = useState(false);
@@ -59,9 +60,9 @@ function Terms() {
   }, [allChecked]);
 
   const nextClickHandler = () => {
-    if(isSocial){
-      navigation(SIGN_UP_PATH.SOCIAL.NICKNAME);
-    }else{
+    if (isSocial) {
+      navigation(SIGN_UP_PATH.SOCIAL.NICKNAME, { state: { isSocial: 'k', phone } });
+    } else {
       navigation(SIGN_UP_PATH.VERIFY);
     }
   };

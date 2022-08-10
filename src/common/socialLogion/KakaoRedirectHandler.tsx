@@ -7,7 +7,8 @@ import qs from 'qs';
 import { KAKAO } from '../../constants/url.cosnt';
 import { tokenActions } from '../../redux/slice/tokenSlice';
 import { setAccessCode } from '../api/social';
-import { SIGN_UP_PATH } from '../../constants/path.const';
+import { ROOT_PATH, SIGN_UP_PATH } from '../../constants/path.const';
+import { userActions } from '../../redux/slice/userSlice';
 
 declare global {
   interface Window {
@@ -82,17 +83,42 @@ function KakaoRedirectHandler() {
       (response: AxiosResponse) => {
         console.log(response);
         const { code, data } = response.data;
-        if(code === 200){
-          console.log("로그인 성공");
-        } else if(code === 370){
-          console.log("소셜 회원가입");
-          navigate(SIGN_UP_PATH.SOCIAL.NICKNAME,{state:{phone:data}});
-        } else if(code === 380){
-          console.log("카카오 전화번호 x");
-        } else if(code === 381){
-          console.log("연동");
-        } else{
-          console.log("카카오 가입 에러");
+        if (code === 200) {
+          console.log('로그인 성공');
+          dispatch(
+            userActions.signin({
+              isSignIn: true,
+              couponList: data.couponList,
+              user: {
+                id: data.user.userId,
+                nickname: data.user.name,
+                email: data.user.email,
+                phone: data.user.phoneNo,
+                userSocial: data.user.userSocial,
+              },
+              pet: {
+                petId: data.pet.petId,
+                birthday: data.pet.birthday,
+                size: data.pet.size,
+                name: data.pet.name,
+                image: data.user.profile,
+              },
+            }),
+          );
+          const accessToken = response.headers.authorization_access;
+          const refreshToken = response.headers.authorization_refresh;
+          dispatch(tokenActions.setToken(accessToken));
+          localStorage.setItem('refreshToken', refreshToken);
+          navigate(ROOT_PATH, { replace: true });
+        } else if (code === 370) {
+          console.log('소셜 회원가입');
+          navigate(SIGN_UP_PATH.SOCIAL.NICKNAME, { state: { phone: data } });
+        } else if (code === 380) {
+          console.log('카카오 전화번호 x');
+        } else if (code === 381) {
+          console.log('연동');
+        } else {
+          console.log('카카오 가입 에러');
         }
       },
       dispatch,

@@ -21,7 +21,7 @@ interface LocationState {
   email: string;
   nickname: string;
   password: string;
-  isSocial: boolean;
+  isSocial: string;
 }
 
 interface Input {
@@ -146,7 +146,7 @@ function PetInfo() {
         petName: enteredInput.name,
         petSize: enteredInput.type,
         birthday: enteredInput.birth,
-        userSocial: 'K',
+        userSocial: isSocial,
       };
       oAuthSignup(
         requestBody,
