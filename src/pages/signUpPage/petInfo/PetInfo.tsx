@@ -146,6 +146,7 @@ function PetInfo() {
         petName: enteredInput.name,
         petSize: enteredInput.type,
         birthday: enteredInput.birth,
+        userSocial: 'K',
       };
       oAuthSignup(
         requestBody,
