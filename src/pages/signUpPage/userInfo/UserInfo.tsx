@@ -149,10 +149,17 @@ function UserInfo() {
 
   const submitHandler = () => {
     //  유저정보 보내기
-
-    navigation(SIGN_UP_PATH.USER_PET_INFO, {
-      state: { email: enteredInput.email, password: enteredInput.password, nickname: enteredInput.nickname, phone, isSocial:false },
-    });
+    setTimeout(() => {
+      navigation(SIGN_UP_PATH.USER_PET_INFO, {
+        state: {
+          email: enteredInput.email,
+          password: enteredInput.password,
+          nickname: enteredInput.nickname,
+          phone,
+          isSocial: false,
+        },
+      });
+    }, 200);
   };
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -220,7 +227,15 @@ function UserInfo() {
       <div
         aria-hidden="true"
         className="login-back"
-        onClick={!nextPage ? () => navigation(-1) : () => setNextPage(false)}
+        onClick={
+          !nextPage
+            ? () => {
+                setTimeout(() => {
+                  navigation(-1);
+                }, 200);
+              }
+            : () => setNextPage(false)
+        }
       >
         <Arrow />
       </div>

@@ -1,4 +1,4 @@
-@import '../SignUpPage.scss';
+@import "../SignUpPage.scss";
 
 .login {
   &-description {
@@ -15,8 +15,15 @@
       position: absolute;
       font-size: 14px;
       margin: 0;
+      border-radius: 10%;
+      padding: 5px;
       right: 0;
       bottom: -34px;
+      transition: .3s;
+      &:active {
+        bottom: -36px;
+        background-color: #d9d6d2;
+      }
       @include typosettings(14, $color-light-grey);
     }
   }
@@ -47,6 +54,7 @@
     }
 
     &-clear {
+      animation: upAnimation .4s ease-in-out;
       width: 24px;
       height: 24px;
       text-align: center;
@@ -59,9 +67,24 @@
       transform: translateY(-50%);
       border-radius: 100px;
       background-color: #f3efea;
+      &-exit{
+        width: 10px;
+        height: 10px;
+      }
       &.checked {
         background-color: $color-orange;
       }
+      
     }
+  }
+}
+
+@keyframes upAnimation{
+  0%{
+    top: calc(70%);
+    opacity: 0;
+  }100%{
+    top: calc(50%);
+    opacity: 1;
   }
 }

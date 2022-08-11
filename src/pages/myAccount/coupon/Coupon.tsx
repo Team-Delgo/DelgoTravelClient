@@ -71,7 +71,7 @@ function Coupon() {
           dispatch(tokenActions.setToken(accessToken));
           localStorage.setItem('refreshToken', refreshToken);
         } else {
-          navigate('/user/signin');
+          // navigate('/user/signin');
         }
       },
       dispatch,

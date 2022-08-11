@@ -9,7 +9,7 @@ import Check from '../../../icons/check.svg';
 
 interface LocationState {
   isSocial: boolean;
-  phone:string;
+  phone: string;
 }
 
 interface Term {
@@ -60,11 +60,13 @@ function Terms() {
   }, [allChecked]);
 
   const nextClickHandler = () => {
-    if(isSocial){
-      navigation(SIGN_IN_PATH.PHONEAUTH, {state:{phone,isSocial}});
-    }else{
-      navigation(SIGN_UP_PATH.VERIFY);
-    }
+    setTimeout(() => {
+      if (isSocial) {
+        navigation(SIGN_IN_PATH.PHONEAUTH, { state: { phone, isSocial } });
+      } else {
+        navigation(SIGN_UP_PATH.VERIFY);
+      }
+    }, 300);
   };
 
   const viewOpenHandler = (event: any) => {
@@ -85,7 +87,9 @@ function Terms() {
         onClick={
           !selectedId
             ? () => {
-                navigation(-1);
+                setTimeout(() => {
+                  navigation(-1);
+                }, 200);
               }
             : viewCloesHandler
         }
