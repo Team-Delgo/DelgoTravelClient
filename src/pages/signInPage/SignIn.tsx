@@ -33,7 +33,7 @@ function SignIn() {
   }, []);
 
   const enterKey = (e: KeyboardEvent) => {
-    if(e.key === 'Enter'){
+    if (e.key === 'Enter') {
       buttonClickHandler();
     }
   };
@@ -48,19 +48,20 @@ function SignIn() {
   };
 
   const buttonClickHandler = () => {
-    emailAuth(
-      email,
-      (response: AxiosResponse) => {
-        const { code } = response.data;
-        if (code === 200) {
-          navigation(SIGN_IN_PATH.SIGNIN, { state: { email } });
-        } else {
-          setFeedback('가입되지 않은 이메일입니다.');
-          emailRef.current.focus();
-        }
-      },
-      dispatch,
-    );
+    setTimeout(() => {
+      emailAuth(
+        email,
+        (response: AxiosResponse) => {
+          const { code } = response.data;
+          if (code === 200) {
+            navigation(SIGN_IN_PATH.SIGNIN, { state: { email } });
+          } else {
+            setFeedback('가입되지 않은 이메일입니다.');
+          }
+        },
+        dispatch,
+      );
+    }, 1000);
   };
 
   return (

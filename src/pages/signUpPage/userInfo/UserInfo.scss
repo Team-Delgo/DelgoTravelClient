@@ -1,4 +1,4 @@
-@import '../SignUpPage.scss';
+@import "../SignUpPage.scss";
 @mixin spanposition {
   margin: 0 auto 0 0;
   padding-left: 30px;
@@ -20,7 +20,7 @@
     text-indent: 22px;
     color: #3e382f;
     font-size: 16px;
-    &.email{
+    &.email {
       margin-top: 0;
     }
     &.password {
@@ -51,8 +51,15 @@
   position: absolute;
   margin: 0;
   bottom: -30px;
-  right: 16px;
+  border-radius: 10%;
+  padding: 5px;
+  right: 11px;
   cursor: pointer;
+  transition: .3s;
+  &:active {
+    bottom: -33px;
+    background-color: #d9d6d2;
+  }
   @include typosettings(14px, $color-light-grey);
   font-weight: 300;
 }

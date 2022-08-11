@@ -10,6 +10,7 @@ import Timer from './Timer';
 import { SIGN_UP_PATH } from '../../../constants/path.const';
 import { ReactComponent as Check } from '../../../icons/check.svg';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
+import { ReactComponent as Exit} from "../../../icons/x.svg";
 import { phoneSendMessage, phoneCheckNumber } from '../../../common/api/signup';
 
 function VerifyPhone() {
@@ -31,27 +32,27 @@ function VerifyPhone() {
   const isValid = phoneNumber.length === 13;
   const isEntered = phoneNumber.length > 0;
 
-
   const buttonClickHandler = () => {
     //  인증번호 전송 요청
-    const phone = phoneNumber.slice(0, 3) + phoneNumber.slice(4, 8) + phoneNumber.slice(9, 13);
-    phoneSendMessage(
-      phone,
-      (response: AxiosResponse) => {
-        const { code, data } = response.data;
+    
+      const phone = phoneNumber.slice(0, 3) + phoneNumber.slice(4, 8) + phoneNumber.slice(9, 13);
+      phoneSendMessage(
+        phone,
+        (response: AxiosResponse) => {
+          const { code, data } = response.data;
 
-        if (code === 200) {
-          setSMSid(data);
-          setButtonIsClicked(true);
-          setIsSended(true);
-          setPhoneIsExist(false);
-        } else {
-          setPhoneIsExist(true);
-          phoneRef.current.focus();
-        }
-      },
-      errorHandler,
-    );
+          if (code === 200) {
+            setSMSid(data);
+            setButtonIsClicked(true);
+            setIsSended(true);
+            setPhoneIsExist(false);
+          } else {
+            setPhoneIsExist(true);
+            phoneRef.current.focus();
+          }
+        },
+        errorHandler,
+      );
   };
 
   const dispatch = useDispatch();
@@ -72,23 +73,15 @@ function VerifyPhone() {
     const { value } = event.target;
     // const onlyNumber = value.replace(/[^-0-9]/g, '');
     let temp = value;
-    if (
-      (value.length === 3 && phoneNumber.length === 2) ||
-      (value.length === 8 && phoneNumber.length === 7)) {
+    if ((value.length === 3 && phoneNumber.length === 2) || (value.length === 8 && phoneNumber.length === 7)) {
       temp = value.concat(' ');
     }
 
-    if (
-      (value.length === 9 && phoneNumber.length === 8) ||
-      (value.length === 4 && phoneNumber.length === 3)
-    ) {
+    if ((value.length === 9 && phoneNumber.length === 8) || (value.length === 4 && phoneNumber.length === 3)) {
       temp = `${phoneNumber} ${value.slice(-1)}`;
     }
 
-    if (
-      (value.length === 9 && phoneNumber.length === 10) ||
-      (value.length === 4 && phoneNumber.length === 5)
-    ) {
+    if ((value.length === 9 && phoneNumber.length === 10) || (value.length === 4 && phoneNumber.length === 5)) {
       temp = value.slice(0, -1);
     }
 
@@ -135,21 +128,23 @@ function VerifyPhone() {
   };
 
   const submitAuthNumber = () => {
-    phoneCheckNumber(
-      { number: authNumber, smsId: SMSid },
-      (response: AxiosResponse) => {
-        const { code } = response.data;
-        console.log(response);
-        if (code === 200) {
-          navigation(SIGN_UP_PATH.USER_INFO, { state: { phone: phoneNumber } });
-        } else {
-          setFeedback('인증번호를 확인해주세요');
-          setAuthFailed(true);
-          authRef.current.focus();
-        }
-      },
-      errorHandler,
-    );
+    setTimeout(()=>{
+      phoneCheckNumber(
+        { number: authNumber, smsId: SMSid },
+        (response: AxiosResponse) => {
+          const { code } = response.data;
+          console.log(response);
+          if (code === 200) {
+            navigation(SIGN_UP_PATH.USER_INFO, { state: { phone: phoneNumber } });
+          } else {
+            setFeedback('인증번호를 확인해주세요');
+            setAuthFailed(true);
+            authRef.current.focus();
+          }
+        },
+        errorHandler,
+      );
+    },200)
   };
 
   const buttonContext = !isSended ? (
@@ -169,7 +164,15 @@ function VerifyPhone() {
 
   return (
     <div className="login">
-      <div aria-hidden="true" className="login-back" onClick={() => navigation(-1)}>
+      <div
+        aria-hidden="true"
+        className="login-back"
+        onClick={() =>
+          setTimeout(() => {
+            navigation(-1);
+          }, 200)
+        }
+      >
         <Arrow />
       </div>
       <header className="login-header">휴대폰 인증</header>
@@ -178,21 +181,19 @@ function VerifyPhone() {
         <input
           value={phoneNumber}
           onChange={inputChangeHandler}
-          className={classNames("login-input phonenumber", { invalid: phoneIsExist })}
+          className={classNames('login-input phonenumber', { invalid: phoneIsExist })}
           placeholder="휴대폰 번호"
           autoComplete="off"
           ref={phoneRef}
         />
-        <p className={classNames('input-feedback')}>
-          {phoneIsExist && '이미 가입된 전화번호입니다.'}
-        </p>
+        <p className={classNames('input-feedback')}>{phoneIsExist && '이미 가입된 전화번호입니다.'}</p>
         {isEntered && (
           <span
             aria-hidden="true"
-            className={classNames('login-input-clear', { checked: isSended })}
+            className={classNames('login-input-clear', { checked: isSended})}
             onClick={clearButtonHandler}
           >
-            {isSended ? <Check /> : <div style={{ fontWeight: 700 }}>X</div>}
+            {isSended ? <Check /> : <Exit className='login-input-clear-exit'/>}
           </span>
         )}
       </div>
@@ -201,7 +202,7 @@ function VerifyPhone() {
           <input
             value={authNumber}
             onChange={authChangeHandler}
-            className={classNames("login-input authnumber", { invalid: feedback.length })}
+            className={classNames('login-input authnumber', { invalid: feedback.length })}
             placeholder="인증번호 4자리"
             autoComplete="off"
             type="number"
@@ -218,7 +219,7 @@ function VerifyPhone() {
       )}
       {buttonContext}
       {buttonIsClicked && <ToastMessage message="인증번호가 전송 되었습니다" />}
-      { }
+      {}
     </div>
   );
 }
