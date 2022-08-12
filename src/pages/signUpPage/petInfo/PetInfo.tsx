@@ -263,7 +263,7 @@ function PetInfo() {
 
   return (
     <div className="login">
-      <div aria-hidden="true" className="login-back" onClick={() => navigation(-1)}>
+      <div aria-hidden="true" className="login-back" onClick={() => { setTimeout(() => { navigation(-1) }, 200) }}>
         <Arrow />
       </div>
       <header className="login-header">대표 강아지 정보</header>
@@ -361,7 +361,11 @@ function PetInfo() {
         type="button"
         disabled={!pageIsValid}
         className={classNames('login-button', { active: pageIsValid })}
-        onClick={submitHandler}
+        onClick={() => {
+          setTimeout(() => {
+            submitHandler();
+          }, 300)
+        }}
       >
         저장하기
       </button>

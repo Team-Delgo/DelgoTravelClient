@@ -10,7 +10,7 @@ import Timer from './Timer';
 import { SIGN_UP_PATH } from '../../../constants/path.const';
 import { ReactComponent as Check } from '../../../icons/check.svg';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
-import { ReactComponent as Exit} from "../../../icons/x.svg";
+import { ReactComponent as Exit } from "../../../icons/x.svg";
 import { phoneSendMessage, phoneCheckNumber } from '../../../common/api/signup';
 
 function VerifyPhone() {
@@ -34,25 +34,25 @@ function VerifyPhone() {
 
   const buttonClickHandler = () => {
     //  인증번호 전송 요청
-    
-      const phone = phoneNumber.slice(0, 3) + phoneNumber.slice(4, 8) + phoneNumber.slice(9, 13);
-      phoneSendMessage(
-        phone,
-        (response: AxiosResponse) => {
-          const { code, data } = response.data;
 
-          if (code === 200) {
-            setSMSid(data);
-            setButtonIsClicked(true);
-            setIsSended(true);
-            setPhoneIsExist(false);
-          } else {
-            setPhoneIsExist(true);
-            phoneRef.current.focus();
-          }
-        },
-        errorHandler,
-      );
+    const phone = phoneNumber.slice(0, 3) + phoneNumber.slice(4, 8) + phoneNumber.slice(9, 13);
+    phoneSendMessage(
+      phone,
+      (response: AxiosResponse) => {
+        const { code, data } = response.data;
+
+        if (code === 200) {
+          setSMSid(data);
+          setButtonIsClicked(true);
+          setIsSended(true);
+          setPhoneIsExist(false);
+        } else {
+          setPhoneIsExist(true);
+          phoneRef.current.focus();
+        }
+      },
+      errorHandler,
+    );
   };
 
   const dispatch = useDispatch();
@@ -128,7 +128,7 @@ function VerifyPhone() {
   };
 
   const submitAuthNumber = () => {
-    setTimeout(()=>{
+    setTimeout(() => {
       phoneCheckNumber(
         { number: authNumber, smsId: SMSid },
         (response: AxiosResponse) => {
@@ -144,7 +144,7 @@ function VerifyPhone() {
         },
         errorHandler,
       );
-    },200)
+    }, 200)
   };
 
   const buttonContext = !isSended ? (
@@ -187,15 +187,15 @@ function VerifyPhone() {
           ref={phoneRef}
         />
         <p className={classNames('input-feedback')}>{phoneIsExist && '이미 가입된 전화번호입니다.'}</p>
-        {isEntered && (
-          <span
-            aria-hidden="true"
-            className={classNames('login-input-clear', { checked: isSended})}
-            onClick={clearButtonHandler}
-          >
-            {isSended ? <Check /> : <Exit className='login-input-clear-exit'/>}
-          </span>
-        )}
+
+        <span
+          aria-hidden="true"
+          className={classNames('login-input-clear', { checked: isSended, isMount: isEntered, isUnMount: !isEntered })}
+          onClick={clearButtonHandler}
+        >
+          {isSended ? <Check /> : <Exit className='login-input-clear-exit' />}
+        </span>
+
       </div>
       {isSended && (
         <div className="login-authnumber">
@@ -219,7 +219,7 @@ function VerifyPhone() {
       )}
       {buttonContext}
       {buttonIsClicked && <ToastMessage message="인증번호가 전송 되었습니다" />}
-      {}
+      { }
     </div>
   );
 }

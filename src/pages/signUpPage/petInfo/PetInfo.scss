@@ -23,6 +23,10 @@
     height: 41px;
     border-radius: 100%;
     background-color: white;
+    transition: 0.2s;
+    &:active {
+      transform: scale(0.9);
+    }
   }
   &-icon {
     position: absolute;
@@ -103,7 +107,7 @@
     left: -1px;
     border-radius: 100%;
     background-color: #ff9162;
-    animation: mount .3s ease-out;
+    animation: checkboxCheck 0.3s ease-out;
   }
   &-icon {
     position: absolute;
@@ -111,7 +115,6 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    
   }
 }
 
@@ -133,17 +136,18 @@
   overflow: hidden;
 }
 
-.invisible{
+.invisible {
   opacity: 0;
 }
 
-@keyframes mount{
-  0%{
+@keyframes checkboxCheck {
+  0% {
     transform: scale(0.5);
-  }50%{
+  }
+  50% {
     transform: scale(1.1);
   }
-  100%{
+  100% {
     transform: scale(1);
   }
 }
