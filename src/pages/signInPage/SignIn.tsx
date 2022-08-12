@@ -61,7 +61,7 @@ function SignIn() {
         },
         dispatch,
       );
-    }, 1000);
+    }, 200);
   };
 
   return (

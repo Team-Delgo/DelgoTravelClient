@@ -1,4 +1,4 @@
-@import "../signUpPage/SignUpPage.scss";
+@import '../signUpPage/SignUpPage.scss';
 
 @mixin buttonstyle($back, $font) {
   width: 55px;
@@ -7,7 +7,7 @@
   background-color: $back;
   box-shadow: 0px 5px 13px rgba(0, 0, 0, 0.05);
   border-radius: 100%;
-  font-family: "Spoqa Han Sans Neo";
+  font-family: 'Spoqa Han Sans Neo';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -22,7 +22,7 @@
     width: 40vw;
   }
   &-signin {
-    &-loading{
+    &-loading {
       height: 100vh;
       display: flex;
       justify-content: center;
@@ -41,7 +41,7 @@
     justify-content: center;
     align-items: center;
   }
-  &-title-wrapper{
+  &-title-wrapper {
     padding-top: 30%;
   }
   &-title1 {
@@ -64,11 +64,11 @@
     color: #b0a69d;
     margin-bottom: 32px;
   }
-  &-social{
+  &-social {
     display: flex;
     width: 80%;
     justify-content: space-evenly;
-    &-header{
+    &-header {
       font-size: 14px;
       font-weight: 500;
       line-height: 150%;
@@ -81,16 +81,28 @@
     display: flex;
     align-items: center;
     @include buttonstyle(#ffef5a, #474747);
+    transition: 0.1s all ease;
+    &:active {
+      transform: translateY(5px);
+    }
   }
   &-naver {
     display: flex;
     align-items: center;
     @include buttonstyle(#45d156, #ffffff);
+    transition: 0.1s;
+    &:active {
+      transform: translateY(5px);
+    }
   }
   &-apple {
     display: flex;
     align-items: center;
     @include buttonstyle(#292929, #ffffff);
+    transition: 0.1s;
+    &:active {
+      transform: translateY(5px);
+    }
   }
   &-button.signup {
     position: relative;
@@ -103,14 +115,14 @@
     font-weight: 700;
     border: none;
   }
-  &-signup-wrapper{
+  &-signup-wrapper {
     margin-top: 22px;
     display: flex;
     width: 90%;
     margin-right: 10%;
     justify-content: space-evenly;
   }
-  &-signup-text{
+  &-signup-text {
     font-size: 14px;
     font-weight: 500;
     text-decoration: underline;

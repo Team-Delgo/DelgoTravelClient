@@ -139,36 +139,47 @@ function MyAccount() {
           });
           const startDate = new Date(data[0].startDt);
           const endDate = new Date(data[0].endDt);
-          const dateDif = endDate.getTime()- startDate.getTime();
+          const dateDif = endDate.getTime() - startDate.getTime();
           const dDay = dateDif / (1000 * 60 * 60 * 24);
           const dDayString = Math.ceil(dDay).toString();
           setDays(dDayString);
-          }
+        }
       },
       dispatch,
     );
   };
   const moveToMyAccountPetInfoPage = () => {
-    dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
-    navigation(MY_ACCOUNT_PATH.PETINFO);
+    setTimeout(() => {
+      dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
+      navigation(MY_ACCOUNT_PATH.PETINFO);
+    }, 200);
   };
   const moveToMyAccountCouponPage = () => {
-    dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
-    navigation(MY_ACCOUNT_PATH.COUPON);
+    setTimeout(() => {
+      dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
+      navigation(MY_ACCOUNT_PATH.COUPON);
+    }, 200);
   };
   const moveToMyAccountReviewsPage = () => {
-    dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
-    navigation(MY_ACCOUNT_PATH.REVIEWS);
+    setTimeout(() => {
+      dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
+      navigation(MY_ACCOUNT_PATH.REVIEWS);
+    }, 200);
   };
 
   const moveToMyAccountUserInfoPage = () => {
-    dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
-    navigation(MY_ACCOUNT_PATH.USERINFO);
+    setTimeout(() => {
+      dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
+      navigation(MY_ACCOUNT_PATH.USERINFO);
+    }, 200)
+
   };
 
   const moveToMyAccountSettingsPage = () => {
-    dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
-    navigation(MY_ACCOUNT_PATH.SETTINGS);
+    setTimeout(() => {
+      dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
+      navigation(MY_ACCOUNT_PATH.SETTINGS);
+    }, 200);
   };
 
   if (getMyAccountDataListIsLoading) {
@@ -195,7 +206,7 @@ function MyAccount() {
         <p className="account-purchase-reservation-box-wrapper-title">{bookingData.place}</p>
         <p className="account-purchase-reservation-box-wrapper-room">{bookingData.room}</p>
         <p className="account-purchase-reservation-box-wrapper-date">
-          {bookingData.startDt.slice(5,7)}.{bookingData.startDt.slice(8,10)} ~ {bookingData.endDt.slice(5,7)}.{bookingData.endDt.slice(8,10)} {days}박
+          {bookingData.startDt.slice(5, 7)}.{bookingData.startDt.slice(8, 10)} ~ {bookingData.endDt.slice(5, 7)}.{bookingData.endDt.slice(8, 10)} {days}박
         </p>
       </div>
       {bookingState()}
@@ -271,14 +282,12 @@ function MyAccount() {
         </div>
         <a href="http://plus.kakao.com/home/@delgo">
           <div className="account-item last">
-            <h2 className="account-item-name">문의</h2>
+            <h2 className="account-item-name">문의
+              <p className="account-item-p">카카오 플러스친구로 이동</p></h2>
             <img src={RightArrow} alt="detail" />
           </div>
         </a>
-        <a href="http://plus.kakao.com/home/@delgo">
-          {' '}
-          <p className="account-item-p">카카오 플러스친구로 이동</p>
-        </a>
+
       </div>
       <div className="account-sign">
         <p className="account-out" aria-hidden="true" onClick={deleteUserModalOpen}>

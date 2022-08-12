@@ -132,6 +132,17 @@
     margin-left: 7px;
     margin-right: 13px;
   }
+  &-input + span::before {
+    content: '';
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border: 1px solid #c4c4c4;
+    top: -1px;
+    left: -1px;
+    border-radius: 100%;
+    background-color: white;
+  }
   &-input:checked + span::before {
     content: '';
     position: absolute;
@@ -142,6 +153,7 @@
     left: -1px;
     border-radius: 100%;
     background-color: #ff9162;
+    animation: checkboxCheck 0.3s ease-out;
   }
   &-icon {
     position: absolute;
@@ -149,5 +161,17 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes checkboxCheck {
+  0% {
+    transform: scale(0.5);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
   }
 }
