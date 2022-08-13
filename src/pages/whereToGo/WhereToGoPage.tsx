@@ -1,12 +1,12 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable array-callback-return */
-import React, { useState, useEffect, useCallback,useMemo } from 'react'
-import { useLocation,Link} from 'react-router-dom';
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
+import { useLocation, Link } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query'
-import Skeleton , { SkeletonTheme } from 'react-loading-skeleton'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { getAllPlaces } from '../../common/api/places';
 import { tokenActions } from '../../redux/slice/tokenSlice';
@@ -15,11 +15,11 @@ import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import Footer from '../../common/components/FooterNavigation'
 import RegionSelectionModal from './modal/RegionSelectionModal'
 import Place from './place/Place'
-import {RootState} from '../../redux/store'
+import { RootState } from '../../redux/store'
 import { ReactComponent as BottomArrow } from '../../icons/bottom-arrow.svg';
 import Delgo from '../../icons/delgo.svg';
 import './WhereToGoPage.scss';
-import Calender from '../../common/utils/Calender'; 
+import Calender from '../../common/utils/Calender';
 
 
 interface PlaceType {
@@ -40,8 +40,8 @@ function AllPlacesSkeletons() {
     AllPlacesSkeletonsArray.push(
       <div className="skeleton">
         <SkeletonTheme baseColor="#f0e9e9" highlightColor="#e4dddd">
-        <Skeleton style={{height:"30vh"}} borderRadius={5} />
-        <Skeleton height={60} borderRadius={5} />
+          <Skeleton style={{ height: "30vh" }} borderRadius={5} />
+          <Skeleton height={60} borderRadius={5} />
         </SkeletonTheme>
       </div>,
     );
@@ -49,7 +49,7 @@ function AllPlacesSkeletons() {
   return AllPlacesSkeletonsArray;
 }
 
-const areaName = ['경기','제주','전라']
+const areaName = ['경기', '제주', '전라']
 
 
 function WhereToGoPage() {
@@ -63,18 +63,18 @@ function WhereToGoPage() {
   const { date, dateString } = useSelector((state: RootState) => state.date);
   const { whereToGoScrollY } = useSelector((state: RootState) => state.persist.scroll);
   const location: any = useLocation();
-  const allPlacesSkeletons = useMemo(()=>AllPlacesSkeletons(),[])
-  const startDt =`${date.start.substring(0,4)}-${date.start.substring(4,6)}-${date.start.substring(6,10)}`
-  const endDt = `${date.end.substring(0,4)}-${date.end.substring(4,6)}-${date.end.substring(6,10)}`
+  const allPlacesSkeletons = useMemo(() => AllPlacesSkeletons(), [])
+  const startDt = `${date.start.substring(0, 4)}-${date.start.substring(4, 6)}-${date.start.substring(6, 10)}`
+  const endDt = `${date.end.substring(0, 4)}-${date.end.substring(4, 6)}-${date.end.substring(6, 10)}`
   const dispatch = useDispatch()
 
   const { isLoading, data: places, refetch } = useQuery(
     'getAllPlaces',
-    () => getAllPlaces(userId,startDt,endDt),
+    () => getAllPlaces(userId, startDt, endDt),
     {
       cacheTime: 1000 * 60 * 5,
       staleTime: 1000 * 60 * 3,
-      refetchInterval: false, 
+      refetchInterval: false,
       onError: (error: any) => {
         useErrorHandlers(dispatch, error)
       }
@@ -118,7 +118,9 @@ function WhereToGoPage() {
   }, []);
 
   const handleCalenderOpenClose = useCallback(() => {
-    setIsCalenderOpen(!isCalenderOpen);
+    setTimeout(() => {
+      setIsCalenderOpen(!isCalenderOpen);
+    }, 200);
   }, [isCalenderOpen]);
 
   return (
@@ -157,10 +159,10 @@ function WhereToGoPage() {
           {isLoading
             ? allPlacesSkeletons
             : places.data.map((place: PlaceType) => {
-                if (place.address.includes(areaTerm)) {
-                  return <Place key={place.placeId} place={place} areaTerm={areaTerm} />;
-                }
-              })}
+              if (place.address.includes(areaTerm)) {
+                return <Place key={place.placeId} place={place} areaTerm={areaTerm} />;
+              }
+            })}
         </div>
         <RegionSelectionModal
           regionSelectionModal={regionSelectionModal}

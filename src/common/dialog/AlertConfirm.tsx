@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 import "./AlertConfirm.scss";
 import { useState } from 'react';
 
-function AlertConfirm(props: { text: string,buttonText:string, yesButtonHandler: () => void, noButtonHandler: () => void }) {
+function AlertConfirm(props: { text: string, buttonText: string, yesButtonHandler: () => void, noButtonHandler: () => void }) {
   const [unmount, setUnmount] = useState(false);
   const { text, buttonText, yesButtonHandler, noButtonHandler } = props;
   useEffect(() => {
@@ -22,13 +22,17 @@ function AlertConfirm(props: { text: string,buttonText:string, yesButtonHandler:
   }, []);
 
   const yesUnmount = () => {
-    setUnmount(true);
-    setTimeout(yesButtonHandler, 400);
+    setTimeout(() => {
+      setUnmount(true);
+      setTimeout(yesButtonHandler, 400);
+    }, 100)
   };
 
   const noUnmount = () => {
-    setUnmount(true);
-    setTimeout(noButtonHandler, 400);
+    setTimeout(() => {
+      setUnmount(true);
+      setTimeout(noButtonHandler, 400);
+    }, 100)
   };
 
   const el = document.getElementById('modal') as Element;
