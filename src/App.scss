@@ -4,6 +4,30 @@ body {
   background-color: #f3efea;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+.transition-group {
+}
+
+.pageSlider-enter {
+  opacity: 0;
+  transform: scale(1.1);
+}
+
+.pageSlider-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.pageSlider-exit {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.pageSlider-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 300ms, transform 300ms;
+}
 
 @font-face {
   font-family: 'Spoqa Han Sans Neo';
@@ -31,8 +55,6 @@ body {
 
 .transition-group {
   position: relative;
-  overflow: hidden;
-  height: calc(var(--vh, 1vh) * 100);
   width: 100vw;
 }
 .slide-enter {

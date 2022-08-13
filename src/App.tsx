@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
@@ -44,7 +44,7 @@ import AlertConfirmOne from './common/dialog/AlertConfirmOne';
 import { tokenActions } from './redux/slice/tokenSlice';
 import { tokenRefresh } from './common/api/login';
 import { errorActions } from './redux/slice/errorSlice';
-import {RootState} from './redux/store'
+import { RootState } from './redux/store'
 import ReservationConfirmPage from './pages/reservation/reservationConfirmPage/ReservationConfirmPage';
 import Coupon from './pages/myAccount/coupon/Coupon';
 import ReservationWaitingPage from './pages/reservation/reservationWaitingPage/ReservationWaitingPage';
@@ -59,6 +59,7 @@ import ChangePasswordCheck from './pages/myAccount/password/ChangePasswordCheck'
 import ChangePassword from './pages/myAccount/password/ChangePassword';
 import ServiceTerm from './pages/myAccount/term/ServiceTerm';
 import SocialNickname from './pages/signUpPage/forSocial/SocialNickname';
+import SocialMiddle from './pages/signUpPage/forSocial/SocialMiddle';
 
 function App() {
   const hasError = useSelector((state: RootState) => state.error.hasError);
@@ -107,9 +108,12 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+
       {hasError && <AlertConfirmOne text="네트워크를 확인해주세요" buttonHandler={alertButtonHandler} />}
       {/* <TransitionGroup className="transition-group">
-      <CSSTransition exact key={location.pathname.includes('/detail-place')===true ?location.pathname:null} classNames="slide" timeout={200}> */}
+        <CSSTransition exact key={location.pathname.includes('/signup') === true ? location.pathname : null} classNames="slide" timeout={200}> */}
+      {/* <TransitionGroup className="transition-group">
+        <CSSTransition key={location.pathname} classNames="pageSlider" timeout={500}> */}
       <Routes location={location}>
         <Route path={ROOT_PATH} element={<HomePage />} />
         <Route path={EDITOR_NOTE_PATH} element={<EditorNote />} />
@@ -124,7 +128,8 @@ function App() {
         <Route path={SIGN_UP_PATH.USER_PET_INFO} element={<PetInfo />} />
         <Route path={SIGN_UP_PATH.USER_PET_INFO} element={<PetInfo />} />
         <Route path={SIGN_UP_PATH.COMPLETE} element={<SignUpComplete />} />
-        <Route path={SIGN_UP_PATH.SOCIAL.NICKNAME} element={<SocialNickname/>}/>
+        <Route path={SIGN_UP_PATH.SOCIAL.NICKNAME} element={<SocialNickname />} />
+        <Route path={SIGN_UP_PATH.SOCIAL.NO_PHONE} element={<SocialMiddle />} />
         <Route path={MY_STORAGE_PATH} element={<MyStoragePage />} />
         <Route path={WHERE_TO_GO_PATH} element={<WhereToGoPage />} />
         <Route path={MY_ACCOUNT_PATH.MAIN} element={<MyAccount />} />
@@ -135,8 +140,8 @@ function App() {
         <Route path={MY_ACCOUNT_PATH.REVIEWS} element={<ReviewList />} />
         <Route path={MY_ACCOUNT_PATH.PASSWORDCHECK} element={<ChangePasswordCheck />} />
         <Route path={MY_ACCOUNT_PATH.PASSWORDCHANGE} element={<ChangePassword />} />
-        <Route path={MY_ACCOUNT_PATH.TERM1} element={<ServiceTerm id={1}/>} />
-        <Route path={MY_ACCOUNT_PATH.TERM2} element={<ServiceTerm id={2}/>} />
+        <Route path={MY_ACCOUNT_PATH.TERM1} element={<ServiceTerm id={1} />} />
+        <Route path={MY_ACCOUNT_PATH.TERM2} element={<ServiceTerm id={2} />} />
         <Route path={DETAIL_PLACE_PATH.MAIN} element={<DetailPlacePage />} />
         <Route path={DETAIL_PLACE_PATH.REVIEWS} element={<ReviewsPage />} />
         <Route path={DETAIL_PLACE_PATH.ROOMTYPES} element={<RoomTypePage />} />
@@ -150,7 +155,7 @@ function App() {
         <Route path={NAVER_REDIRECT_HANDLE_PATH} element={<NaverRedirectHandler />} />
       </Routes>
       {/* </CSSTransition>
-   		 </TransitionGroup>  */}
+      </TransitionGroup> */}
     </QueryClientProvider>
   );
 }
