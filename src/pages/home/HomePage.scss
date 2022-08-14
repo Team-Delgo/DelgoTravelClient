@@ -67,27 +67,28 @@
     margin-left: 5%;
     .editor-thumbnail {
       padding-right: 30px;
+      position: relative;
       img {
         width: 70vw;
         height: 300px;
         border-radius: 5px;
       }
-      &-subtext {
+      &-sub-title {
         position: absolute;
         height: 18px;
-        left: 12%;
-        bottom: 19%;
+        left: 4%;
+        bottom: 17%;
         font-weight: 500;
-        font-size: 3vw;
+        font-size: 14px;
         color: #ffffff;
       }
-      &-name {
+      &-title {
         position: absolute;
         height: 18px;
-        left: 12%;
-        bottom: 15%;
+        left: 4%;
+        bottom: 10%;
         font-weight: 700;
-        font-size: 5vw;
+        font-size: 24px;
         color: #ffffff;
       }
     }
