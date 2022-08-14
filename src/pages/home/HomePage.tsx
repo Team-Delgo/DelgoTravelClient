@@ -143,15 +143,15 @@ function HomePage() {
   // }, [accessToken]);
 
   if (getRecommendedPlacesIsLoading) {
-    return <div className="home-background">&nbsp;</div>;
+    return <div className="home-background"><Footer/></div>;
   }
 
   if (getBookingDataIsLoading) {
-    return <div className="home-background">&nbsp;</div>;
+    return <div className="home-background"><Footer/></div>;
   }
 
   if (getEditorNotePlacesIsLoading) {
-    return <div className="home-background">&nbsp;</div>;
+    return <div className="home-background"><Footer/></div>;
   }
 
   return (
