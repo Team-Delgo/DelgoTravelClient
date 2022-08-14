@@ -57,7 +57,10 @@ function MyStoragePage() {
 
   const changeCurrentTab = useCallback((tabNumber: number) => (event: React.MouseEvent) => {
     dispatch(scrollActions.scrollInit())
-    setCurrentTab(tabNumber);
+    setTimeout(()=>{
+
+      setCurrentTab(tabNumber);
+    },150);
   }, [])
 
 

@@ -60,6 +60,7 @@ import ChangePassword from './pages/myAccount/password/ChangePassword';
 import ServiceTerm from './pages/myAccount/term/ServiceTerm';
 import SocialNickname from './pages/signUpPage/forSocial/SocialNickname';
 import SocialMiddle from './pages/signUpPage/forSocial/SocialMiddle';
+import SocialExist from './pages/signUpPage/forSocial/SocialExist';
 
 function App() {
   const hasError = useSelector((state: RootState) => state.error.hasError);
@@ -130,6 +131,7 @@ function App() {
         <Route path={SIGN_UP_PATH.COMPLETE} element={<SignUpComplete />} />
         <Route path={SIGN_UP_PATH.SOCIAL.NICKNAME} element={<SocialNickname />} />
         <Route path={SIGN_UP_PATH.SOCIAL.NO_PHONE} element={<SocialMiddle />} />
+        <Route path={SIGN_UP_PATH.SOCIAL.OTHER} element={<SocialExist/>}/>
         <Route path={MY_STORAGE_PATH} element={<MyStoragePage />} />
         <Route path={WHERE_TO_GO_PATH} element={<WhereToGoPage />} />
         <Route path={MY_ACCOUNT_PATH.MAIN} element={<MyAccount />} />

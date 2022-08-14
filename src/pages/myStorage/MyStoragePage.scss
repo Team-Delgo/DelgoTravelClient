@@ -13,9 +13,36 @@
         font-weight: 700;
         &-folder,&-history{
             padding-top: 50px;
-            color:#B0A69D
+            text-align: center;
+            width: 50%;
+            color:#B0A69D;
+            &::before {
+                -webkit-transition: 0.1s all ease;
+                transition: 0.1s all ease;
+                position: absolute;
+                top: 0;
+                left: 50%;
+                right: 50%;
+                bottom: 0;
+                opacity: 0;
+                content: '';
+                background-color: #e0ddd9;
+                z-index: -2;
+              }
+              &:active {
+                transform: scale(0.97);
+                &::before {
+                  -webkit-transition: 0.15s all ease;
+                  transition: 0.15s all ease;
+                  left: 0;
+                  right: 0;
+                  opacity: 1;
+                }
+              }
         }
         &-folder-active,&-history-active{
+            width: 50%;
+            text-align: center;
             padding-top: 50px;
             color:#3E382F;
         }

@@ -175,7 +175,7 @@ function HomePage() {
         )}
         <header className="editor-header-text">델고 에디터노트</header>
         <div className="editor-container">
-          {/* {editorNotePlaces.data.map((place: EditorPlaceType) => (
+          {editorNotePlaces.data.map((place: EditorPlaceType) => (
             <Link
               className="editor-thumbnail"
               to={`/editor-note/${place.placeId}`}
@@ -184,7 +184,7 @@ function HomePage() {
             >
               <img src={place.thumbnailUrl} alt="editor-thumnail-img" />
             </Link>
-          ))} */}
+          ))}
         </div>
         <header className="recommended-places-text">델고갈만한 숙소</header>
         {recommendedPlaces?.data.map((place: RecommendedPlaceType) => (

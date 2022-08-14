@@ -246,15 +246,15 @@ function MyAccount() {
             <img aria-hidden="true" src={RightArrowBlack} onClick={moveToMyAccountPetInfoPage} alt="detail" />
           </div>
           <div className="account-profile-info-second">
-            <div className="account-profile-info-coupon" aria-hidden="true" onClick={moveToMyAccountCouponPage}>
+            <div className="account-profile-info-item" aria-hidden="true" onClick={moveToMyAccountCouponPage}>
               <p className="account-profile-info-column">쿠폰</p>
               <p className="account-profile-info-value">{myAccountDataList?.data.couponNum}장</p>
             </div>
-            <div className="account-profile-info-point">
+            <div className="account-profile-info-item">
               <p className="account-profile-info-column">포인트</p>
               <p className="account-profile-info-value">0P</p>
             </div>
-            <div className="account-profile-info-review" aria-hidden="true" onClick={moveToMyAccountReviewsPage}>
+            <div className="account-profile-info-item" aria-hidden="true" onClick={moveToMyAccountReviewsPage}>
               <p className="account-profile-info-column">리뷰</p>
               <p className="account-profile-info-value">{myAccountDataList?.data.reviewNum}건</p>
             </div>

@@ -11,7 +11,6 @@ import { ROOT_PATH, SIGN_UP_PATH } from '../../constants/path.const';
 import { userActions } from '../../redux/slice/userSlice';
 import Loading from '../../common/utils/Loading';
 
-
 declare global {
   interface Window {
     Kakao: any;
@@ -114,11 +113,13 @@ function KakaoRedirectHandler() {
           navigate(ROOT_PATH, { replace: true });
         } else if (code === 370) {
           console.log('소셜 회원가입');
-          navigate(SIGN_UP_PATH.TERMS, { state: { isSocial:'k' ,phone: data } });
+          navigate(SIGN_UP_PATH.TERMS, { state: { isSocial: 'k', phone: data } });
         } else if (code === 380) {
           console.log('카카오 전화번호 x');
+          navigate(SIGN_UP_PATH.SOCIAL.NO_PHONE, { state: { social: '카카오' } });
         } else if (code === 381) {
-          console.log('연동');
+          console.log('다른 로그인');
+          navigate(SIGN_UP_PATH.SOCIAL.OTHER, { state: { social: data.userSoical, email: data.email } });
         } else {
           console.log('카카오 가입 에러');
         }
@@ -136,7 +137,7 @@ function KakaoRedirectHandler() {
 
   return (
     <div>
-      <Loading/>
+      <Loading />
     </div>
   );
 }
