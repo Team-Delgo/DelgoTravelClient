@@ -20,6 +20,8 @@ import Loading from '../../common/utils/Loading';
 interface EditorPlaceType {
   mainUrl: string;
   placeId: number;
+  thumbnailSubtitle: string;
+  thumbnailTitle: string;
   thumbnailUrl: string;
 }
 
@@ -183,6 +185,12 @@ function HomePage() {
               key={place.placeId}
             >
               <img src={place.thumbnailUrl} alt="editor-thumnail-img" />
+              <div className="editor-thumbnail-title">
+                {place.thumbnailTitle}
+              </div>
+              <div className="editor-thumbnail-sub-title">
+                {place.thumbnailSubtitle}
+              </div>
             </Link>
           ))}
         </div>
