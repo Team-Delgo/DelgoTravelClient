@@ -32,6 +32,7 @@ export const SIGN_UP_PATH = {
     NICKNAME: '/user/signup/social/nickname',
     USER_PET_INFO: '/user/signup/social/pet-info',
     NO_PHONE: '/user/signup/social/no-phone',
+    OTHER: '/user/signup/social/other',
   },
 };
 

@@ -81,7 +81,7 @@
       flex-direction: column;
       background: #fffbf6;
       border-radius: 15px 15px 0px 0px;
-      padding: 40px 54px;
+      padding: 30px 54px;
       justify-content: space-between;
       &-first {
         display: flex;
@@ -90,6 +90,13 @@
         margin-top: 24px;
         display: flex;
         justify-content: space-between;
+      }
+      &-item{
+        padding: 10px;
+        border-radius: 5px;
+        &:active{
+          background-color: #e0ddd9;
+        }
       }
       &-name {
         font-size: 24px;
