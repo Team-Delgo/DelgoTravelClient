@@ -42,7 +42,7 @@ function HomePage() {
   const accessToken = useSelector((state: RootState) => state.token.token);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const location: any = useLocation();
-  const homeY = useSelector((state: RootState) => state.persist.scroll.homeY);
+  const {homeScrollY} = useSelector((state: RootState) => state.persist.scroll);
 
   const preventGoBack = () => {
     window.history.pushState(null, '', null);
@@ -96,8 +96,9 @@ function HomePage() {
   );
 
   useEffect(() => {
+    console.log(editorNotePlaces)
     if (location.state?.prevPath.includes('/detail-place')) {
-      window.scrollTo(0, Number(homeY));
+      window.scrollTo(0, homeScrollY);
     } else {
       window.scrollTo(0, 0);
     }

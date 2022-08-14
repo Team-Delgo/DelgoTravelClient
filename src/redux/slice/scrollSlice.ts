@@ -1,11 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  whereToGoScrollY: { scrollY: 0 },
-  detailPlaceScrollY: { scrollY: 0 },
-  myStorageY: { scrollY: 0 },
-  homeY: { scrollY: 0 },
-  myAccountY:{ scrollY: 0 },
+  // whereToGoScrollY: { scrollY: 0 },
+  // detailPlaceScrollY: { scrollY: 0 },
+  // myStorageY: { scrollY: 0 },
+  // homeY: { scrollY: 0 },
+  // myAccountY:{ scrollY: 0 },
+  whereToGoScrollY: 0,
+  detailPlaceScrollY: 0,
+  myStorageScrollY: 0,
+  homeScrollY: 0,
+  myAccountScrollY:0,
 };
 
 const scrollSlice = createSlice({
@@ -16,9 +21,9 @@ const scrollSlice = createSlice({
       return {
         whereToGoScrollY: action.payload.whereToGo,
         detailPlaceScrollY: action.payload.detailPlace,
-        myStorageY: action.payload.myStorage,
-        homeY: action.payload.home,
-        myAccountY:action.payload.myAccount
+        myStorageScrollY: action.payload.myStorage,
+        homeScrollY: action.payload.home,
+        myAccountScrollY:action.payload.myAccount
       };
     },
     scrollInit() {

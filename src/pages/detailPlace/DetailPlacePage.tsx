@@ -91,7 +91,7 @@ function DetailPlacePage() {
   const location: any = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { whereToGoScrollY,detailPlaceScrollY,myStorageY } = useSelector((state: RootState) => state.persist.scroll);
+  const { whereToGoScrollY,detailPlaceScrollY,myStorageScrollY } = useSelector((state: RootState) => state.persist.scroll);
   const detailPlacePrevPath = useSelector((state: RootState) => state.persist.prevPath.detailPlace);
   const startDt =`${date.start.substring(0,4)}-${date.start.substring(4,6)}-${date.start.substring(6,10)}`
   const endDt = `${date.end.substring(0,4)}-${date.end.substring(4,6)}-${date.end.substring(6,10)}`
@@ -129,7 +129,7 @@ function DetailPlacePage() {
 
   useEffect(() => {
     if (location.state?.prevPath?.includes('/detail-place')) {
-      window.scroll(0, Number(detailPlaceScrollY));
+      window.scroll(0, detailPlaceScrollY);
     }
     else{
       window.scroll(0, 0);
@@ -215,7 +215,7 @@ function DetailPlacePage() {
 
 
   const saveDetailPlaceScrollY = useCallback(() => {
-    dispatch(scrollActions.scroll({ whereToGo: whereToGoScrollY, detailPlace: window.scrollY, myStorage: myStorageY }));
+    dispatch(scrollActions.scroll({ whereToGo: whereToGoScrollY, detailPlace: window.scrollY, myStorage: myStorageScrollY }));
   }, []);
 
   if (getDetailPlaceIsLoading){

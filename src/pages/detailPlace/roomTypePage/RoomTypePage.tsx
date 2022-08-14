@@ -106,7 +106,7 @@ function RoomTypePage() {
       );
       setTimeout(() => {
         navigate(`/reservation/${currentPlace.placeId}/${room.roomId}/${date.start}/${date.end}`);
-      }, 300);
+      }, 100);
     }
     else{
       setLogInModalOpen(true);
@@ -129,9 +129,6 @@ function RoomTypePage() {
           navigate(SIGN_IN_PATH.MAIN);
         }}
       />}
-      {/* <Transition in timeout={100} appear>
-        {(status) => (
-          <div className={`pageSlider pageSlider-${status}`}> */}
       <div className={classNames('detail-place-room-type', { close: isCalenderOpen })}>
         {photoList.length > 0 ? 
           <ImageSlider images={photoList} />
@@ -162,13 +159,6 @@ function RoomTypePage() {
             {dateString}&nbsp;&nbsp;&nbsp;&gt;
           </span>
         </div>
-        {/* {
-          roomNoticeList.map((notice: any) =>
-            <div className="detail-place-notice">
-              <div className="detail-place-notice-title">{notice.title}</div>
-              <div className="detail-place-notice-content">{notice.contents.map((content: any, index: number) => <div>{index + 1}.{content}</div>)}</div>
-            </div>)
-        } */}
         {
           roomNoticeList.map((notice: RoomNoticeType) =>
             <div className="detail-place-room-type-notice">
@@ -180,9 +170,6 @@ function RoomTypePage() {
           <BottomButton text="예약하기" />
         </div>
       </div>
-      {/* </div>
-        )}
-      </Transition> */}
     </>
   );
 }

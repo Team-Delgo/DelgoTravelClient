@@ -56,7 +56,7 @@ function History({currentTab}:FolderTypeProps) {
   const refreshToken = localStorage.getItem('refreshToken') || '';
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const location: any = useLocation();
-  const { myStorageY } = useSelector((state: RootState) => state.persist.scroll);
+  const { myStorageScrollY } = useSelector((state: RootState) => state.persist.scroll);
 
   const {
     isLoading: getRecommendedPlacesIsLoading,
@@ -90,13 +90,13 @@ function History({currentTab}:FolderTypeProps) {
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/reservation-history')) {
-      window.scrollTo(0, Number(myStorageY));
+      window.scrollTo(0, myStorageScrollY);
     }
     else if (location.state?.prevPath.includes('/review-writing')) {
-      window.scrollTo(0, Number(myStorageY));
+      window.scrollTo(0, myStorageScrollY);
     }
     else if (location.state?.prevPath.includes('/detail-place')) {
-      window.scrollTo(0, Number(myStorageY));
+      window.scrollTo(0, myStorageScrollY);
     } 
     else {
       window.scrollTo(0, 0);

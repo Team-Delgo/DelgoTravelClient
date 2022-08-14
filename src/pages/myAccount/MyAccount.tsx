@@ -35,7 +35,7 @@ function MyAccount() {
   const accessToken = useSelector((state: RootState) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
   const location: any = useLocation();
-  const { myAccountY } = useSelector((state: RootState) => state.persist.scroll);
+  const { myAccountScrollY } = useSelector((state: RootState) => state.persist.scroll);
 
   const {
     isLoading: getMyAccountDataListIsLoading,
@@ -55,7 +55,7 @@ function MyAccount() {
 
   useEffect(() => {
     if (location.state?.prevPath?.includes('/myaccount')) {
-      window.scroll(0, Number(myAccountY));
+      window.scroll(0, myAccountScrollY);
     } else {
       window.scroll(0, 0);
     }
