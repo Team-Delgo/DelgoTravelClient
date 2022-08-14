@@ -22,9 +22,10 @@
 
 | Part                 | Name                                                |
 | -------------------- | --------------------------------------------------- |
-| **Android & Leader** | <a href="https://github.com/H43RO">김현준 </a>      |
-| **Back-end**         | <a href="https://github.com/pukuba">남승원 </a>     |
-| **Front-end**        | <a href="https://github.com/Jongminfire">이종민</a> |
+| **front-end**        | <a href="https://github.com/wjdtjrdn1234">정석우</a> |
+| **front-end**        | <a href="https://github.com/ckrb63">김찬규</a> |
+| **back-end* | <a href="https://github.com/Gupuroom">이동재 </a>      |
+| **back-end**         | <a href="https://github.com/danpung2">조현서 </a>     |
 
 <hr>
 
