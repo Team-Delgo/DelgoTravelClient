@@ -24,7 +24,7 @@
 | -------------------- | --------------------------------------------------- |
 | **front-end**        | <a href="https://github.com/wjdtjrdn1234">정석우</a> |
 | **front-end**        | <a href="https://github.com/ckrb63">김찬규</a> |
-| **back-end* | <a href="https://github.com/Gupuroom">이동재 </a>      |
+| **back-end**         | <a href="https://github.com/Gupuroom">이동재 </a>      |
 | **back-end**         | <a href="https://github.com/danpung2">조현서 </a>     |
 
 <hr>
