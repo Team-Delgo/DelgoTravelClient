@@ -31,6 +31,7 @@ type RecommendedPlaceType = {
   declare global{
     interface Window{
       BRIDGE:any
+      webkit:any
     }
   }
 
@@ -53,6 +54,7 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
       dispatch,
     );
     window.BRIDGE.vibrate() 
+    window.webkit.messageHandlers.vibrate.pushMessage()
   }, [wishList]);
 
   const wishListDelete = useCallback(() => {
@@ -67,6 +69,7 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
       dispatch,
     );
     window.BRIDGE.vibrate() 
+    window.webkit.messageHandlers.vibrate.pushMessage()
   }, [wishList]);
 
   const moveToDetailPage = () => {

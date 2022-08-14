@@ -82,23 +82,6 @@ function HomeReservation(props: { lists: any[], pageChange: (page: number) => vo
     setStartPosition(main);
   };
 
-  // useEffect(() => {
-  //   const el = scrollRef.current;
-  //   const width = el.offsetWidth;
-  //   const currentPosition = el.scrollLeft;
-  //   console.log(currentPosition);
-  //   setTimeout(() => {
-  //     el.scrollTo({
-  //       left: (Math.floor(currentPosition / width)) * width,
-  //       behavior: "smooth"
-  //     });
-  //     console.log(currentPosition);
-  //   }, 500);
-
-  // }, [endPosition]);
-
-  // console.log(page);
-
   const reservationList = lists.map((list) => {
     const days = ['일', '월', '화', '수', '목', '금', '토'];
     let startDate = `${list.startDt.slice(5, 7)}/${list.startDt.slice(8, 10)}`;

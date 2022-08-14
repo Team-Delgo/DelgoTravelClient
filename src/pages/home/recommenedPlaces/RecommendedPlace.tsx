@@ -33,6 +33,7 @@ interface PlaceType {
 declare global{
   interface Window{
     BRIDGE:any
+    webkit:any
   }
 }
 
@@ -47,22 +48,23 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
   const location: any = useLocation();
 
   const wishListInsert = useCallback(() => {
-    if(isSignIn){
-    wishInsert(
-      { userId, placeId: place.placeId , accessToken},
-      (response: AxiosResponse) => {
-        if (response.data.code === 200) {
-          setWishList(response.data.data.wishId);
-        }
-      },
-      dispatch,
-    )
-    window.BRIDGE.vibrate() 
-  }
-    else{
+    if (isSignIn) {
+      wishInsert(
+        { userId, placeId: place.placeId, accessToken },
+        (response: AxiosResponse) => {
+          if (response.data.code === 200) {
+            setWishList(response.data.data.wishId);
+          }
+        },
+        dispatch,
+      )
+      window.BRIDGE.vibrate()
+      window.webkit.messageHandlers.vibrate.pushMessage()
+    }
+    else {
       setLogInModalOpen(true);
     }
-  }, [wishList,isSignIn]);
+  }, [isSignIn,wishList]);
 
   const wishListDelete = useCallback(() => {
     wishDelete(
@@ -74,7 +76,8 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
       },
       dispatch,
     );
-    window.BRIDGE.vibrate() 
+    window.BRIDGE.vibrate()
+    window.webkit.messageHandlers.vibrate.pushMessage()
   }, [wishList]);
 
   const moveToDetailPage = useCallback(() => {

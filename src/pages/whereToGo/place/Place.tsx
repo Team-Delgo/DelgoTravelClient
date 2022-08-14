@@ -48,7 +48,7 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
   const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
   const [logInModalOpen, setLogInModalOpen] = useState(false);
 
-  const wishListInsert = useCallback(() => {
+  const wishListInsert = () => {
     if(isSignIn){
       wishInsert({ userId, placeId: place.placeId, accessToken }, (response: AxiosResponse) => {
         if (response.data.code === 200) {
@@ -60,9 +60,9 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
     else{
       setLogInModalOpen(true);
     }
-  }, [wishList,isSignIn]);
+  }
 
-  const wishListDelete = useCallback(() => {
+  const wishListDelete = () => {
     wishDelete(
       { wishId: wishList, accessToken },
       (response: AxiosResponse) => {
@@ -72,16 +72,16 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
       },
       dispatch,
     );
-    window.BRIDGE.vibrate() 
-  }, [wishList]);
+    window.BRIDGE.vibrate()
+  }
 
 
-  const moveToDetailPage = () => {
-    dispatch(scrollActions.scroll({ whereToGo: window.scrollY}));
+  const moveToDetailPage = useCallback(() => {
+    dispatch(scrollActions.scroll({ whereToGo: window.scrollY }));
     dispatch(areaActions.setArea({ areaName: areaTerm }));
     dispatch(prevPathActions.prevPath({ prevPath: location.pathname }));
     navigate(`/detail-place/${place.placeId}`);
-  };
+  }, [])
 
   return (
     <div className="place" aria-hidden="true">

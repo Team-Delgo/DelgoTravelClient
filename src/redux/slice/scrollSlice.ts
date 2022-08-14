@@ -1,11 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  // whereToGoScrollY: { scrollY: 0 },
-  // detailPlaceScrollY: { scrollY: 0 },
-  // myStorageY: { scrollY: 0 },
-  // homeY: { scrollY: 0 },
-  // myAccountY:{ scrollY: 0 },
   whereToGoScrollY: 0,
   detailPlaceScrollY: 0,
   myStorageScrollY: 0,

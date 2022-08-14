@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  detailPlace:{prevPath:""},
+//   detailPlace:{prevPath:""},
+detailPlacePrevPath:"",
 };
 
 const prevPathSlice = createSlice({
@@ -10,7 +11,7 @@ const prevPathSlice = createSlice({
   reducers: {
     prevPath(state, action) {
       return {
-        detailPlace: action.payload.prevPath,
+        detailPlacePrevPath: action.payload.prevPath,
       };
     },
     initPrevPath() {

@@ -84,20 +84,6 @@ function Folder({currentTab}:FolderTypeProps) {
     }
   }, [getWishedPlacesIsLoading, getRecommendedPlacesIsLoading]);
 
-  // useEffect(() => {
-  //   getWishedPlaces(
-  //     { accessToken, userId },
-  //     (response: AxiosResponse) => {
-  //       setWishedPlace(response.data.data);
-  //       setIsLoading(false)
-  //       // if(response.data.data.length>0){
-  //       //   setIsLoading(false)
-  //       // }
-  //     },
-  //     dispatch,
-  //   );
-  // }, [accessToken]);
-
   if (getWishedPlacesIsLoading){
     return <div className="wish-list-container">&nbsp;</div>;
   }

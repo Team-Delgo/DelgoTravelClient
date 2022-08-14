@@ -2,7 +2,6 @@
 
 import React,{useEffect,useState,useCallback} from 'react';
 import { useLocation,Link,useParams} from 'react-router-dom';
-import { Transition  } from 'react-transition-group';
 import Review from '../review/Review';
 import { ReactComponent as LeftArrow } from '../../../icons/left-arrow.svg';
 import { ReactComponent as ReviewStar } from '../../../icons/review-star.svg';
@@ -74,29 +73,23 @@ function ReviewsPage() {
 
   return (
     <>
-      {/* <Transition in timeout={100} appear>
-        {(status) => (
-          <div className={`pageSlider pageSlider-${status}`}> */}
-            <header className="detail-place-review-page-header">
-              <Link to={`/detail-place/${placeId}`} state={{ prevPath: location.pathname }} key={placeId}>
-                <LeftArrow className="detail-place-review-page-header-previous-page" />
-              </Link>
-              <div className="detail-place-review-page-header-number">리뷰 {reviewsCount}개</div>
-              <div className="detail-place-review-page-header-rating-count">
-                <ReviewStar className="detail-place-review-page-header-review-star" />
-                &nbsp;&nbsp;4.5점
-              </div>
-              <input type="checkbox"  checked={checked}  name="xxx" value="yyy" onClick={showImageReviews}/>
-              <span className="detail-place-review-page-header-image-review"> 사진 리뷰만 보기({imageReviewsCount}개)</span>
-            </header>
-            <body className="detail-place-review-page-body">
-            {reviews.map((review:RivewType) => (
-              <Review key={review.review.bookingId} review={review} />
-            ))}
-            </body>
-          {/* </div>
-        )}
-      </Transition> */}
+      <header className="detail-place-review-page-header">
+        <Link to={`/detail-place/${placeId}`} state={{ prevPath: location.pathname }} key={placeId}>
+          <LeftArrow className="detail-place-review-page-header-previous-page" />
+        </Link>
+        <div className="detail-place-review-page-header-number">리뷰 {reviewsCount}개</div>
+        <div className="detail-place-review-page-header-rating-count">
+          <ReviewStar className="detail-place-review-page-header-review-star" />
+          &nbsp;&nbsp;4.5점
+        </div>
+        <input type="checkbox" checked={checked} name="xxx" value="yyy" onClick={showImageReviews} />
+        <span className="detail-place-review-page-header-image-review"> 사진 리뷰만 보기({imageReviewsCount}개)</span>
+      </header>
+      <body className="detail-place-review-page-body">
+        {reviews.map((review: RivewType) => (
+          <Review key={review.review.bookingId} review={review} />
+        ))}
+      </body>
     </>
   );
 }

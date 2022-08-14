@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable array-callback-return */
-import React,{useCallback, Dispatch, SetStateAction } from 'react'
+import React,{useCallback, Dispatch, SetStateAction,memo } from 'react'
 import './Region.scss'
 
 interface RegionType{
@@ -32,14 +32,14 @@ function Region({ areaTerm,setAreaTerm ,closeRegionSelectionModal}: PropsType) {
     },200)
   }, []);
 
-  const handleSelectRegion = useCallback((regionName: string) => (event: React.MouseEvent) => {
+  const handleSelectRegion = (regionName: string) => (event: React.MouseEvent) => {
     if (areaTerm === regionName) {
       setAreaTerm('');
     } else {
       setAreaTerm(regionName);
     }
     closeRegionSelectionModal()
-  },[areaTerm]);
+  };
   
   return (
     <div className="region-modal" >
@@ -58,4 +58,4 @@ function Region({ areaTerm,setAreaTerm ,closeRegionSelectionModal}: PropsType) {
   );
 }
 
-export default Region;
+export default memo(Region);
