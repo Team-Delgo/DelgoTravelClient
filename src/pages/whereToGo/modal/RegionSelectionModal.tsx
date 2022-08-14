@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{memo} from 'react';
 import Sheet from 'react-modal-sheet';
 import Region from './Region';
 
@@ -20,4 +20,4 @@ function RegionSelectionModal({ regionSelectionModal, closeRegionSelectionModal,
     </Sheet>
   );
 }
-export default RegionSelectionModal;
+export default memo(RegionSelectionModal);

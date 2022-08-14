@@ -1,16 +1,18 @@
-import React,{useCallback,useEffect, useState} from "react";
-import { useSelector,useDispatch } from "react-redux";
-import { useNavigate,useParams,useLocation} from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
-import {bookingGetData} from '../../../common/api/booking'
+import { bookingGetData } from '../../../common/api/booking'
 import Map from '../../../common/utils/Map';
-import {RootState} from '../../../redux/store'
+import { MY_STORAGE_PATH } from '../../../constants/path.const';
+import { RootState } from '../../../redux/store'
 import './ReservationHistoryPage.scss';
 
 declare global{
   interface Window{
     BRIDGE:any
+    webkit:any
   }
 }
 
@@ -69,6 +71,7 @@ function ReservationHistoryPage() {
     if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(reservationData.place.address)
     window.BRIDGE.copyToClipboard(reservationData.place.address);
+    window.webkit.messageHandlers.copyToClipboard.pushMessage(reservationData.place.address)
   }
   }, [reservationData]);
 
@@ -76,6 +79,7 @@ function ReservationHistoryPage() {
     if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(reservationData.bookingId)
     window.BRIDGE.copyToClipboard(reservationData.bookingId);
+    window.webkit.messageHandlers.copyToClipboard.pushMessage(reservationData.bookingId)
   }
   }, [reservationData]);
 
@@ -88,7 +92,7 @@ function ReservationHistoryPage() {
 
 
   const moveToPrevPage = useCallback(() => {
-    navigate('/my-storage', {
+    navigate(MY_STORAGE_PATH, {
       state: {
         prevPath: location.pathname,
       },

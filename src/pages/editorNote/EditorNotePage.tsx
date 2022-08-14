@@ -1,12 +1,13 @@
-import React ,{useCallback ,useEffect}from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useDispatch } from "react-redux";
-import { useNavigate ,useLocation  } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg'
 import BottomButton from '../../common/components/BottomButton';
 import { getEditorNotePlace } from '../../common/api/places';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
-import {prevPathActions} from "../../redux/slice/prevPathSlice"
+import { ROOT_PATH } from '../../constants/path.const';
+import { prevPathActions } from "../../redux/slice/prevPathSlice"
 import { scrollActions } from '../../redux/slice/scrollSlice';
 import "./EditorNotePage.scss";
 
@@ -34,9 +35,9 @@ function EditorNotePage() {
     },
   );
 
-  const moveToMainPage = useCallback(() => {
-    navigate("/");
-  }, []);
+  const moveToMainPage = () => {
+    navigate(ROOT_PATH);
+  }
 
   const moveToDetailPage = () => {
     dispatch(prevPathActions.prevPath({ prevPath: location.pathname }));

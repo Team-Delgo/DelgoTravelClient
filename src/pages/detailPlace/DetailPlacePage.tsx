@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams, useNavigate,useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
-import { Transition  } from 'react-transition-group';
 import { useQuery } from 'react-query'
 import RoomType from './roomType/RoomType';
 import Review from './review/Review';
@@ -11,6 +10,9 @@ import ImageSlider from '../../common/utils/ImageSlider';
 import Map from '../../common/utils/Map';
 import AlertConfirm from '../../common/dialog/AlertConfirm';
 import {
+  ROOT_PATH,
+  MY_STORAGE_PATH,
+  WHERE_TO_GO_PATH,
   SIGN_IN_PATH,
 } from '../../constants/path.const';
 import {RootState} from '../../redux/store'
@@ -77,6 +79,7 @@ interface NoticeType {
 declare global{
   interface Window{
     BRIDGE:any
+    webkit:any
   }
 }
 
@@ -92,7 +95,7 @@ function DetailPlacePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { whereToGoScrollY,detailPlaceScrollY,myStorageScrollY } = useSelector((state: RootState) => state.persist.scroll);
-  const detailPlacePrevPath = useSelector((state: RootState) => state.persist.prevPath.detailPlace);
+  const detailPlacePrevPath = useSelector((state: RootState) => state.persist.prevPath.detailPlacePrevPath);
   const startDt =`${date.start.substring(0,4)}-${date.start.substring(4,6)}-${date.start.substring(6,10)}`
   const endDt = `${date.end.substring(0,4)}-${date.end.substring(4,6)}-${date.end.substring(6,10)}`
 
@@ -134,7 +137,6 @@ function DetailPlacePage() {
     else{
       window.scroll(0, 0);
     } 
-
   }, [detailPlace,detailPlaceRivews]); 
 
 
@@ -164,6 +166,7 @@ function DetailPlacePage() {
       dispatch,
     )
     window.BRIDGE.vibrate() 
+    window.webkit.messageHandlers.vibrate.pushMessage()
   }
     else{
       setLogInModalOpen(true);
@@ -181,6 +184,7 @@ function DetailPlacePage() {
       dispatch,
     );
     window.BRIDGE.vibrate() 
+    window.webkit.messageHandlers.vibrate.pushMessage()
   }, [detailPlace]);
 
   const calenderOpenClose = useCallback(() => {
@@ -192,21 +196,21 @@ function DetailPlacePage() {
   }, []);
 
   const moveToPrevPage = useCallback(() => {
-    if (detailPlacePrevPath.toString() === '/my-storage')
-      navigate('/my-storage', {
+    if (detailPlacePrevPath.toString() === MY_STORAGE_PATH)
+      navigate(MY_STORAGE_PATH, {
         state: {
           prevPath: location.pathname,
           myStorageTab:location.state
         },
       });
-    else if (detailPlacePrevPath.toString() === '/where-to-go')
-      navigate('/where-to-go', {
+    else if (detailPlacePrevPath.toString() === WHERE_TO_GO_PATH)
+      navigate(WHERE_TO_GO_PATH, {
         state: {
           prevPath: location.pathname,
         },
       });
     else
-      navigate('/', {
+      navigate(ROOT_PATH, {
         state: {
           prevPath: location.pathname,
         },
@@ -239,15 +243,6 @@ function DetailPlacePage() {
           navigate(SIGN_IN_PATH.MAIN);
         }}
       />}
-      {/* <Transition in timeout={100} appear>
-        {(status) => ( */}
-      {/* <div
-            // className={
-            //   location.state.prevPath.includes('detail-place') === false
-            //     ? `pageSlider pageSlider-${status}`
-            //     : `pageSlider pageSlider2-${status}`
-            // }
-          > */}
       <div className={classNames('detail-place', { close: isCalenderOpen })}>
         <div style={{ width: '100%' }}>
             <ImageSlider images={detailPlace?.data.detailPhotoList} />
@@ -350,9 +345,6 @@ function DetailPlacePage() {
           {detailPlace?.data.place.address ? <Map address={detailPlace.data.place.address} /> : null}
         </div>
       </div>
-      {/* </div> */}
-      {/* //   )}
-      // </Transition> */}
     </>
   );
 }
