@@ -113,7 +113,7 @@ function KakaoRedirectHandler() {
           navigate(ROOT_PATH, { replace: true });
         } else if (code === 370) {
           console.log('소셜 회원가입');
-          navigate(SIGN_UP_PATH.TERMS, { state: { isSocial: 'k', phone: data } });
+          navigate(SIGN_UP_PATH.TERMS, { state: { isSocial: data.userSocial, phone: data.phoneNo, email:data.email } });
         } else if (code === 380) {
           console.log('카카오 전화번호 x');
           navigate(SIGN_UP_PATH.SOCIAL.NO_PHONE, { state: { social: '카카오' } });
