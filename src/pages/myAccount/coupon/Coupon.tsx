@@ -11,6 +11,7 @@ import { tokenRefresh } from '../../../common/api/login';
 import { getCouponList } from '../../../common/api/coupon';
 import AlertConfirmOne from '../../../common/dialog/AlertConfirmOne'
 import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
+import BottomButton from '../../../common/components/BottomButton';
 import {RootState} from '../../../redux/store'
 import { ReactComponent as FootPrintActive } from "../../../icons/foot-print-active.svg";
 import CouponModal from './CouponModal';
@@ -36,6 +37,10 @@ function Coupon() {
   const navigate = useNavigate();
   const refreshToken = localStorage.getItem('refreshToken') || '';
   let count;
+
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
 
   const { isLoading:getCouponListIsLoading, data: couponList,refetch} = useQuery(
     'getCouponList',
@@ -129,7 +134,7 @@ function Coupon() {
   });
 
   if (getCouponListIsLoading) {
-    return <div className="reviewlist">&nbsp;</div>
+    return <div className="coupon">&nbsp;</div>
   }
 
   return (
@@ -146,9 +151,9 @@ function Coupon() {
           <span>30일 이내 소멸예정 쿠폰 {scheduledCoupon}장</span>
         </div>
         <div className="coupon-flexwrapper">
-          <div aria-hidden="true" className="coupon-regist" onClick={modalOpen}>
+          {/* <div aria-hidden="true" className="coupon-regist" onClick={modalOpen}>
             쿠폰등록하기
-          </div>
+          </div> */}
           {existCoupon?.length ?
             existCoupon :
             <div className='coupon-nocoupon'>
@@ -158,6 +163,7 @@ function Coupon() {
             </div>}
         </div>
       </div>
+      <div aria-hidden="true" onClick={modalOpen}><BottomButton text="쿠폰등록하기" /></div>
     </div>
   );
 }

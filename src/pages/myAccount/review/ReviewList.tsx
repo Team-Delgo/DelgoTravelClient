@@ -43,6 +43,10 @@ function ReviewList() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
+
 
   const { isLoading:getReviewListIsLoading, data: reviewList } = useQuery(
     'getReviewList',

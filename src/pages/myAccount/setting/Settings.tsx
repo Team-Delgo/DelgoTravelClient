@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate,Link,useLocation } from 'react-router-dom';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import './Settings.scss';
@@ -15,6 +15,10 @@ function Settings() {
   const [alert, setAlert] = useState(false);
   const navigate = useNavigate();
   const location: any = useLocation();
+
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
 
   const alertToggleHandler = () => {
     setAlert(!alert);

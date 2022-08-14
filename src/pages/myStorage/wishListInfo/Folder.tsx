@@ -43,7 +43,7 @@ function Folder({currentTab}:FolderTypeProps) {
   const accessToken = useSelector((state: RootState) => state.token.token);
   const dispatch = useDispatch();
   const location: any = useLocation();
-  const { myStorageY } = useSelector((state: RootState) => state.persist.scroll);
+  const { myStorageScrollY } = useSelector((state: RootState) => state.persist.scroll);
 
   const {
     isLoading: getWishedPlacesIsLoading,
@@ -78,7 +78,7 @@ function Folder({currentTab}:FolderTypeProps) {
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
-      window.scrollTo(0, Number(myStorageY));
+      window.scrollTo(0, myStorageScrollY);
     } else {
       window.scrollTo(0, 0);
     }

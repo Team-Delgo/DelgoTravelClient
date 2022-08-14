@@ -20,9 +20,10 @@
 }
 
 .coupon {
-  &-backdrop {
-    height: 80vh;
-  }
+  padding-bottom: 100px;
+  // &-backdrop {
+  //   height: 80vh;
+  // }
   &-headline {
     margin: 20px;
     span {

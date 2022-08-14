@@ -1,5 +1,5 @@
 
-import React, { ChangeEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AxiosResponse } from 'axios';
 import { useNavigate,useLocation } from 'react-router-dom';
@@ -27,6 +27,10 @@ function ChangeUserInfo() {
   const phoneNumber = `${phone.slice(0, 3)}-****-${phone.slice(7, 11)}`;
   const userEmail = `${email.slice(0, 4)}****${email.slice(8)}`;
   const location: any = useLocation();
+
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
 
 
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
