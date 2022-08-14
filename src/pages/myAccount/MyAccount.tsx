@@ -280,7 +280,7 @@ function MyAccount() {
           <h2 className="account-item-name">공지사항</h2>
           <img src={RightArrow} alt="detail" />
         </div>
-        <a href="http://plus.kakao.com/home/@delgo">
+        <a href="http://plus.kakao.com/home/@delgo" target='_blank' rel='noreferrer'>
           <div className="account-item last">
             <h2 className="account-item-name">문의
               <p className="account-item-p">카카오 플러스친구로 이동</p></h2>

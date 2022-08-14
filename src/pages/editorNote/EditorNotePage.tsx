@@ -11,16 +11,19 @@ import { prevPathActions } from "../../redux/slice/prevPathSlice"
 import { scrollActions } from '../../redux/slice/scrollSlice';
 import "./EditorNotePage.scss";
 
+interface EditorImgType {
+  editorNoteId: number
+  order: number
+  placeId: number
+  thumbnailUrl: string
+  url: string
+}
+
 function EditorNotePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location: any = useLocation();
   const { placeId } = location.state;
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    dispatch(scrollActions.scrollInit());
-  }, []);
 
   const { isLoading: getEditorNotePlaceIsLoading, data: editorNotePlace } = useQuery(
     'getEditorNotePlace',
@@ -34,6 +37,11 @@ function EditorNotePage() {
       },
     },
   );
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    dispatch(scrollActions.scrollInit());
+  }, []);
 
   const moveToMainPage = () => {
     navigate(ROOT_PATH);
@@ -50,7 +58,9 @@ function EditorNotePage() {
 
   return (
     <div className="editor-background">
-      <img className="editor-img" src={editorNotePlace.data.mainUrl} alt="editor-place-img" />
+      {
+        editorNotePlace.data.map((place: EditorImgType) => <img className="editor-img" src={place.url} alt="editor-place-img" />)
+      }
       <div className="editor-previous-page">
         <LeftArrow onClick={moveToMainPage} />
       </div>
