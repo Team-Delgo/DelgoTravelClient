@@ -3,7 +3,6 @@ import axios, { AxiosResponse, AxiosError } from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { TransitionGroup, CSSTransition } from "react-transition-group";
 import HomePage from './pages/home/HomePage';
 import EditorNote from './pages/editorNote/EditorNotePage';
 import SignInPage from './pages/signInPage/SignIn';
@@ -111,10 +110,6 @@ function App() {
     <QueryClientProvider client={queryClient}>
 
       {hasError && <AlertConfirmOne text="네트워크를 확인해주세요" buttonHandler={alertButtonHandler} />}
-      {/* <TransitionGroup className="transition-group">
-        <CSSTransition exact key={location.pathname.includes('/signup') === true ? location.pathname : null} classNames="slide" timeout={200}> */}
-      {/* <TransitionGroup className="transition-group">
-        <CSSTransition key={location.pathname} classNames="pageSlider" timeout={500}> */}
       <Routes location={location}>
         <Route path={ROOT_PATH} element={<HomePage />} />
         <Route path={EDITOR_NOTE_PATH} element={<EditorNote />} />
@@ -156,8 +151,6 @@ function App() {
         <Route path={KAKAO_REDIRECT_HANDLE_PATH} element={<KakaoRedirectHandler />} />
         <Route path={NAVER_REDIRECT_HANDLE_PATH} element={<NaverRedirectHandler />} />
       </Routes>
-      {/* </CSSTransition>
-      </TransitionGroup> */}
     </QueryClientProvider>
   );
 }

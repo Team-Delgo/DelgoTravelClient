@@ -54,6 +54,8 @@ function ReservationPage() {
 
 
   const creditCardPayment = () => {
+    const random = new Date().getTime() + Math.random()
+    const randomId = btoa(random.toString())
     dispatch(
       reservationActions.reservation({
         user: { id: user.id, nickname: reservationName, email: user.email, phone: user.phone },
@@ -79,10 +81,11 @@ function ReservationPage() {
         }
       }),
     );
-    loadTossPayments(TOSS.CLIENT_KEY).then((tossPayments) => {
+    loadTossPayments(`${process.env.REACT_APP_TOSS_CLIENT_KEY}`).then((tossPayments) => {
       tossPayments.requestPayment('카드', {
         amount: Number(room.price.toString().slice(0, -1).replace(',', '')) - selectCouponDiscount,
-        orderId: 'AVw8mD2KHztN_646IGAZF',
+        // orderId: 'AVw8mD2KHztN_646IGAZF',
+        orderId: randomId,
         orderName: place.name + room.name,
         customerName: user.nickname,
         successUrl: `${process.env.REACT_APP_BASE_URL}/reservation-waiting/${place.placeId}/${room.roomId}/${date.date.start}/${date.date.end}`,

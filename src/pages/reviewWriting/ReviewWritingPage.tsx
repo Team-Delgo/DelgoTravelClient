@@ -1,12 +1,13 @@
 /* eslint-disable array-callback-return */
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { AxiosResponse } from 'axios';
 import BottomButton from '../../common/components/BottomButton';
 import AlertConfirmOne from '../../common/dialog/AlertConfirmOne'
-import {RootState} from '../../redux/store'
-import  {writeReivew,reviewImageUpload}  from '../../common/api/reivew'
+import { MY_STORAGE_PATH, } from '../../constants/path.const';
+import { RootState } from '../../redux/store'
+import { writeReivew, reviewImageUpload } from '../../common/api/reivew'
 import { ReactComponent as BigRivewStarActive } from '../../icons/big-review-star-active.svg';
 import { ReactComponent as BigRivewStar } from '../../icons/big-review-star.svg';
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg';
@@ -61,7 +62,7 @@ function RiviewWritingPage() {
   
 
   const moveToPreviousPage = useCallback(() => {
-    navigate('/my-storage', {
+    navigate(MY_STORAGE_PATH, {
       state: {
         prevPath: location.pathname,
       },
@@ -232,8 +233,7 @@ function RiviewWritingPage() {
   }, [activeStar1, activeStar2, activeStar3, activeStar4, activeStar5]);
 
   const handleReviewWrite = useCallback((e) => {
-    setReviewText(e.target.value.replace(/ /g,""));
-    console.log(e.target.value.replace(/ /g,""))
+    setReviewText(e.target.value);
   }, []);
 
   const confirmReviewCompletedOpen = useCallback(() => {
@@ -301,7 +301,7 @@ function RiviewWritingPage() {
             onChange={handleReviewWrite}
             maxLength={150}
           />
-          <div className="review-writing-body-textarea-length">{rivewText.length}/150</div>
+          <div className="review-writing-body-textarea-length">{rivewText.replace(/ /g,"").length}/150</div>
         </div>
         <div className="review-writing-body-file">
           <div className="review-writing-body-file-uploader" aria-hidden="true" onClick={handleOpenFileUpload}>

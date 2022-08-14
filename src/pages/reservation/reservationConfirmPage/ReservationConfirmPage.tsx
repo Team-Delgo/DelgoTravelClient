@@ -14,6 +14,7 @@ import { ROOT_PATH } from "../../../constants/path.const";
 declare global{
   interface Window{
     BRIDGE:any
+    webkit:any
   }
 }
 
@@ -96,14 +97,16 @@ function ReservationConfirmPage() {
   const copyPlaceAddress = useCallback(() => {
     if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(reservationData.place.address)
-    window.BRIDGE.copyToClipboard(reservationData.place.address);
+    window.BRIDGE.copyToClipboard(reservationData.place.address)
+    window.webkit.messageHandlers.copyToClipboard.pushMessage(reservationData.place.address)
   }
   }, [reservationData]);
 
   const copyReservationNumber = useCallback(() => {
     if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(reservationData.bookingId)
-    window.BRIDGE.copyToClipboard(reservationData.bookingId);
+    window.BRIDGE.copyToClipboard(reservationData.bookingId)
+    window.webkit.messageHandlers.copyToClipboard.pushMessage(reservationData.bookingId)
   }
   }, [reservationData]);
 
@@ -113,9 +116,6 @@ function ReservationConfirmPage() {
       const dayOfWeek = week[new Date(date).getDay()];
       return dayOfWeek;
   }
-
-  
-
 
   return (
     <>
