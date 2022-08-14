@@ -272,7 +272,7 @@ function PetInfo() {
           <input
             className="petinfo-image-input"
             type="file"
-            accept="image/*"
+            accept="image/jpeg,image/gif,image/png;capture=filesystem"
             name="image"
             autoComplete="off"
             id="pet"

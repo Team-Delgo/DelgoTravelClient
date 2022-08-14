@@ -180,7 +180,7 @@ function ChangePetInfo() {
           <input
             className="petinfo-image-input"
             type="file"
-            accept="image/*"
+            accept="image/jpeg,image/gif,image/png;capture=filesystem"
             name="image"
             id="pet"
             autoComplete="off"
