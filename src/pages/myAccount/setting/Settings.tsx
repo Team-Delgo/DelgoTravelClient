@@ -7,7 +7,8 @@ import { MY_ACCOUNT_PATH } from '../../../constants/path.const';
 
 declare global{
   interface Window{
-    setNotify:any
+    BRIDGE:any
+    webkit:any
   }
 }
 
@@ -35,7 +36,8 @@ function Settings() {
   };
 
   const moveToPhoneSetting = () => {
-    window.BRIDGE.setNotify();
+    window.BRIDGE.setNotify()
+    window.webkit.messageHandlers.setNotify.pushMessage()
   };
 
   return (  

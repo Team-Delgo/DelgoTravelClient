@@ -1,25 +1,29 @@
-import React ,{useCallback ,useEffect}from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useDispatch } from "react-redux";
-import { useNavigate ,useLocation  } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg'
 import BottomButton from '../../common/components/BottomButton';
 import { getEditorNotePlace } from '../../common/api/places';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
-import {prevPathActions} from "../../redux/slice/prevPathSlice"
+import { ROOT_PATH } from '../../constants/path.const';
+import { prevPathActions } from "../../redux/slice/prevPathSlice"
 import { scrollActions } from '../../redux/slice/scrollSlice';
 import "./EditorNotePage.scss";
+
+interface EditorImgType {
+  editorNoteId: number
+  order: number
+  placeId: number
+  thumbnailUrl: string
+  url: string
+}
 
 function EditorNotePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location: any = useLocation();
   const { placeId } = location.state;
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    dispatch(scrollActions.scrollInit());
-  }, []);
 
   const { isLoading: getEditorNotePlaceIsLoading, data: editorNotePlace } = useQuery(
     'getEditorNotePlace',
@@ -34,9 +38,14 @@ function EditorNotePage() {
     },
   );
 
-  const moveToMainPage = useCallback(() => {
-    navigate("/");
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    dispatch(scrollActions.scrollInit());
   }, []);
+
+  const moveToMainPage = () => {
+    navigate(ROOT_PATH);
+  }
 
   const moveToDetailPage = () => {
     dispatch(prevPathActions.prevPath({ prevPath: location.pathname }));
@@ -49,7 +58,9 @@ function EditorNotePage() {
 
   return (
     <div className="editor-background">
-      <img className="editor-img" src={editorNotePlace.data.mainUrl} alt="editor-place-img" />
+      {
+        editorNotePlace.data.map((place: EditorImgType) => <img className="editor-img" src={place.url} alt="editor-place-img" />)
+      }
       <div className="editor-previous-page">
         <LeftArrow onClick={moveToMainPage} />
       </div>

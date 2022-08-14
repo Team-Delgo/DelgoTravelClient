@@ -9,8 +9,6 @@ import { useQuery } from 'react-query'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { getAllPlaces } from '../../common/api/places';
-import { tokenActions } from '../../redux/slice/tokenSlice';
-import { tokenRefresh } from '../../common/api/login';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import Footer from '../../common/components/FooterNavigation'
 import RegionSelectionModal from './modal/RegionSelectionModal'
@@ -92,22 +90,6 @@ function WhereToGoPage() {
       window.scrollTo(0, 0);
     }
   }, []);
-
-  // useEffect(() => {
-  //   tokenRefresh({ refreshToken }, (response: AxiosResponse) => {
-  //     const { code } = response.data;
-
-  //     if (code === 200) {
-  //       const accessToken = response.headers.authorization_access;
-  //       const refreshToken = response.headers.authorization_refresh;
-
-  //       dispatch(tokenActions.setToken(accessToken));
-  //       localStorage.setItem('refreshToken', refreshToken);
-  //     } else {
-  //       navigation('/user/signin');
-  //     }
-  //   }, dispatch);
-  // }, [accessToken]);
 
   const handleRegionSelectionModal = useCallback(() => {
     setRegionSelectionModal(!regionSelectionModal);

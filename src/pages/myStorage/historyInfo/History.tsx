@@ -103,9 +103,13 @@ function History({currentTab}:FolderTypeProps) {
     }
   }, [getRecommendedPlacesIsLoading, getTraveledPlacesIsLoading]);
 
-  if (getRecommendedPlacesIsLoading || getTraveledPlacesIsLoading)
+  if (getRecommendedPlacesIsLoading){
     return <div className="travel-history-container">&nbsp;</div>;
-
+  }
+  if (getTraveledPlacesIsLoading){
+    return <div className="travel-history-container">&nbsp;</div>;
+  }
+  
   return (
     <div className="travel-history-container">
       {traveledPlaces?.data.length > 0 ? (

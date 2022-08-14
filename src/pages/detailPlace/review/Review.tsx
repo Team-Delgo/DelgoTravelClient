@@ -50,9 +50,9 @@ function Review({ review }: RivewTypeProps) {
   }
 
 
-  const handleMoreDescription = useCallback(() => {
+  const handleMoreDescription = () => {
     setMoreDescription(!moreDescription);
-  }, [moreDescription]);
+  }
 
   return (
     <div className="review">
