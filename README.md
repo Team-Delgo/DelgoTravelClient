@@ -67,11 +67,8 @@
 
 <h2 id="3">🏙 Result</h2>
 ![5555](https://user-images.githubusercontent.com/54196723/184522677-52bd8d0f-f816-442e-8898-678ea98ff4e8.png)
-![fafafa](https://user-images.githubusercontent.com/54196723/184522682-684b1257-ba38-4f4a-a3f1-ba4cc430f06f.png)
-
 ![asdfs](https://user-images.githubusercontent.com/54196723/184522679-0ce50d9d-3853-4bbb-99fe-a35dd86cf7ca.png)
 ![fsdfs](https://user-images.githubusercontent.com/54196723/184522681-63e18f6f-794d-410a-9d96-91db8b59e524.png)
-ubusercontent.com/54196723/184522561-78bf6c90-a933-4a10-82d8-21dbb1148138.png)
 ![2![1111](https://user-images.githubusercontent.com/54196723/184522676-d0a8b401-bbcd-42c4-abd5-14180840e432.png)
 ![Untitled](https://user-images.githubusercontent.com/54196723/184522623-09df9531-23c5-4724-b97b-88f4ef0864e9.png)
 ![22 (1)](https://user-images.githubusercontent.com/54196723/184522627-f58876fe-430f-4ac3-b11d-c3b720717322.png)
