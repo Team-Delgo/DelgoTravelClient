@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios, { AxiosResponse, AxiosError } from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import HomePage from './pages/home/HomePage';
 import EditorNote from './pages/editorNote/EditorNotePage';
 import SignInPage from './pages/signInPage/SignIn';
@@ -26,7 +26,7 @@ import {
   REVIEW_WRITING_PATH,
   KAKAO_REDIRECT_HANDLE_PATH,
   NAVER_REDIRECT_HANDLE_PATH,
-  RESERVATION_PATH
+  RESERVATION_PATH,
 } from './constants/path.const';
 import './App.scss';
 import MyAccount from './pages/myAccount/MyAccount';
@@ -44,7 +44,7 @@ import AlertConfirmOne from './common/dialog/AlertConfirmOne';
 import { tokenActions } from './redux/slice/tokenSlice';
 import { tokenRefresh } from './common/api/login';
 import { errorActions } from './redux/slice/errorSlice';
-import { RootState } from './redux/store'
+import { RootState } from './redux/store';
 import ReservationConfirmPage from './pages/reservation/reservationConfirmPage/ReservationConfirmPage';
 import Coupon from './pages/myAccount/coupon/Coupon';
 import ReservationWaitingPage from './pages/reservation/reservationWaitingPage/ReservationWaitingPage';
@@ -61,42 +61,59 @@ import ServiceTerm from './pages/myAccount/term/ServiceTerm';
 import SocialNickname from './pages/signUpPage/forSocial/SocialNickname';
 import SocialMiddle from './pages/signUpPage/forSocial/SocialMiddle';
 import SocialExist from './pages/signUpPage/forSocial/SocialExist';
+import Footer from './common/components/FooterNavigation';
+import { deviceAction } from './redux/slice/deviceSlice';
 
 function App() {
+  const [OS, setOS] = useState('');
   const hasError = useSelector((state: RootState) => state.error.hasError);
   const dispatch = useDispatch();
   const queryClient = new QueryClient();
-  const location = useLocation()
+  const location = useLocation();
   const refreshToken = localStorage.getItem('refreshToken') || '';
-  const navigation = useNavigate()
+  const navigation = useNavigate();
+
+  useEffect(() => {
+    const varUA = navigator.userAgent.toLowerCase();
+    if ( varUA.indexOf('android') > -1) {
+      dispatch(deviceAction.android());
+    }
+    else if (varUA.indexOf('iphone') > -1 || varUA.indexOf('ipad') > -1 || varUA.indexOf('ipod') > -1) {
+      dispatch(deviceAction.ios());
+    }
+  }, []);
 
   useEffect(() => {
     axios.interceptors.response.use(
-      response => {
+      (response) => {
         return response;
       },
-      async error => {
+      async (error) => {
         const {
           config,
           response: { status },
         } = error;
         if (status === 303) {
-          tokenRefresh({ refreshToken }, (response: AxiosResponse) => {
-            const { code } = response.data;
+          tokenRefresh(
+            { refreshToken },
+            (response: AxiosResponse) => {
+              const { code } = response.data;
 
-            if (code === 200) {
-              const accessToken = response.headers.authorization_access;
-              const refreshToken = response.headers.authorization_refresh;
+              if (code === 200) {
+                const accessToken = response.headers.authorization_access;
+                const refreshToken = response.headers.authorization_refresh;
 
-              dispatch(tokenActions.setToken(accessToken));
-              localStorage.setItem('refreshToken', refreshToken);
-              const originalRequest = config;
+                dispatch(tokenActions.setToken(accessToken));
+                localStorage.setItem('refreshToken', refreshToken);
+                const originalRequest = config;
 
-              originalRequest.headers.authorization = accessToken;
+                originalRequest.headers.authorization = accessToken;
 
-              return axios(originalRequest);
-            }
-          }, dispatch);
+                return axios(originalRequest);
+              }
+            },
+            dispatch,
+          );
         }
         return Promise.reject(error);
       },
@@ -109,7 +126,6 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-
       {hasError && <AlertConfirmOne text="네트워크를 확인해주세요" buttonHandler={alertButtonHandler} />}
       {/* <TransitionGroup className="transition-group">
         <CSSTransition exact key={location.pathname.includes('/signup') === true ? location.pathname : null} classNames="slide" timeout={200}> */}
@@ -131,7 +147,7 @@ function App() {
         <Route path={SIGN_UP_PATH.COMPLETE} element={<SignUpComplete />} />
         <Route path={SIGN_UP_PATH.SOCIAL.NICKNAME} element={<SocialNickname />} />
         <Route path={SIGN_UP_PATH.SOCIAL.NO_PHONE} element={<SocialMiddle />} />
-        <Route path={SIGN_UP_PATH.SOCIAL.OTHER} element={<SocialExist/>}/>
+        <Route path={SIGN_UP_PATH.SOCIAL.OTHER} element={<SocialExist />} />
         <Route path={MY_STORAGE_PATH} element={<MyStoragePage />} />
         <Route path={WHERE_TO_GO_PATH} element={<WhereToGoPage />} />
         <Route path={MY_ACCOUNT_PATH.MAIN} element={<MyAccount />} />

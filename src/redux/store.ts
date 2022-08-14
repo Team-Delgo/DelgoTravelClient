@@ -12,6 +12,7 @@ import roomSlice from './slice/roomSlice';
 import scrollSlice from './slice/scrollSlice';
 import areaSlice from './slice/areaSlice';
 import prevPathSlice from './slice/prevPathSlice';
+import deviceSlice from './slice/deviceSlice';
 
 const persistConfig = {
   key: 'root',
@@ -27,7 +28,8 @@ const reducers = combineReducers({
   reservation: reservationSlice,
   area:areaSlice,
   scroll:scrollSlice,
-  prevPath:prevPathSlice
+  prevPath:prevPathSlice,
+  device:deviceSlice,
 });
 
 

@@ -183,7 +183,7 @@ function MyAccount() {
   };
 
   if (getMyAccountDataListIsLoading) {
-    return <div className="account">&nbsp;</div>;
+    return <div className="account"><Footer/></div>;
   }
 
   const bookingState = () => {
