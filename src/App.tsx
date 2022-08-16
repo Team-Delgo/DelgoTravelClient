@@ -3,8 +3,6 @@ import axios, { AxiosResponse, AxiosError } from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
-
 import HomePage from './pages/home/HomePage';
 import EditorNote from './pages/editorNote/EditorNotePage';
 import SignInPage from './pages/signInPage/SignIn';

@@ -90,16 +90,17 @@ function DetailPlacePage() {
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const accessToken = useSelector((state: RootState) => state.token.token);
   const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
+  const OS = useSelector((state:any)=>state.persist.device);
   const { placeId } = useParams();
   const location: any = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { whereToGoScrollY,detailPlaceScrollY,myStorageScrollY } = useSelector((state: RootState) => state.persist.scroll);
+  const { whereToGoScrollY, detailPlaceScrollY, myStorageScrollY } = useSelector((state: RootState) => state.persist.scroll);
   const detailPlacePrevPath = useSelector((state: RootState) => state.persist.prevPath.detailPlacePrevPath);
-  const startDt =`${date.start.substring(0,4)}-${date.start.substring(4,6)}-${date.start.substring(6,10)}`
-  const endDt = `${date.end.substring(0,4)}-${date.end.substring(4,6)}-${date.end.substring(6,10)}`
+  const startDt = `${date.start.substring(0, 4)}-${date.start.substring(4, 6)}-${date.start.substring(6, 10)}`
+  const endDt = `${date.end.substring(0, 4)}-${date.end.substring(4, 6)}-${date.end.substring(6, 10)}`
 
-  const { 
+  const {
     isLoading: getDetailPlaceIsLoading,
     data: detailPlace,
     refetch,
@@ -155,23 +156,27 @@ function DetailPlacePage() {
   }, [detailPlace]);
 
   const wishListInsert = useCallback(() => {
-    if(isSignIn){
-    wishInsert(
-      { userId, placeId: Number(detailPlace?.data.place.placeId), accessToken },
-      (response: AxiosResponse) => {
-        if (response.data.code === 200) {
-          refetch()
-        }
-      },
-      dispatch,
-    )
-    window.BRIDGE.vibrate() 
-    window.webkit.messageHandlers.vibrate.pushMessage()
-  }
-    else{
+    if (isSignIn) {
+      wishInsert(
+        { userId, placeId: Number(detailPlace?.data.place.placeId), accessToken },
+        (response: AxiosResponse) => {
+          if (response.data.code === 200) {
+            refetch()
+          }
+        },
+        dispatch,
+      )
+      if (OS === 'android') {
+        window.BRIDGE.vibrate()
+      }
+      else {
+        window.webkit.messageHandlers.vibrate.pushMessage()
+      }
+    }
+    else {
       setLogInModalOpen(true);
     }
-  }, [detailPlace,isSignIn]);
+  }, [detailPlace, isSignIn]);
 
   const wishListDelete = useCallback(() => {
     wishDelete(
@@ -323,7 +328,7 @@ function DetailPlacePage() {
                 <Link
                   style={{ textDecoration: 'none' }}
                   to={`/detail-place/${detailPlace?.data.place.placeId}/reviews`}
-                  state={{ reviews: detailPlaceRivews.data.readReviewDTOList }}
+                  state={{ reviews: detailPlaceRivews.data.readReviewDTOList, reviewsAvg: detailPlaceRivews.data.ratingAvg }}
                   key={detailPlace?.data.place.placeId}
                 >
                   <div className="detail-place-review-header-more">전체보기</div>

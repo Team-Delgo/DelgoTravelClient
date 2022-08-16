@@ -52,6 +52,7 @@ function ReservationHistoryPage() {
   })
   const { bookingId } = useParams();
   const location: any = useLocation();
+  const OS = useSelector((state:any)=>state.persist.device);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -70,16 +71,24 @@ function ReservationHistoryPage() {
   const copyPlaceAddress = useCallback(() => {
     if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(reservationData.place.address)
-    window.BRIDGE.copyToClipboard(reservationData.place.address);
-    window.webkit.messageHandlers.copyToClipboard.pushMessage(reservationData.place.address)
+    if(OS==='android'){
+      window.BRIDGE.copyToClipboard(reservationData.place.address)
+    }
+    else{
+      window.webkit.messageHandlers.copyToClipboard.pushMessage(reservationData.place.address)
+    }
   }
   }, [reservationData]);
 
   const copyReservationNumber = useCallback(() => {
     if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(reservationData.bookingId)
-    window.BRIDGE.copyToClipboard(reservationData.bookingId);
-    window.webkit.messageHandlers.copyToClipboard.pushMessage(reservationData.bookingId)
+    if(OS==='android'){
+      window.BRIDGE.copyToClipboard(reservationData.place.address)
+    }
+    else{
+      window.webkit.messageHandlers.copyToClipboard.pushMessage(reservationData.place.address)
+    }
   }
   }, [reservationData]);
 

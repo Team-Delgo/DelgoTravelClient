@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React, { useState, useEffect } from 'react';
 import { useNavigate,Link,useLocation } from 'react-router-dom';
+import { useSelector } from "react-redux";
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import './Settings.scss';
 import { MY_ACCOUNT_PATH } from '../../../constants/path.const';
@@ -16,6 +17,7 @@ function Settings() {
   const [alert, setAlert] = useState(false);
   const navigate = useNavigate();
   const location: any = useLocation();
+  const OS = useSelector((state:any)=>state.persist.device);
 
   useEffect(() => {
     window.scroll(0, 0);
@@ -36,8 +38,12 @@ function Settings() {
   };
 
   const moveToPhoneSetting = () => {
-    window.BRIDGE.setNotify()
-    window.webkit.messageHandlers.setNotify.pushMessage()
+    if(OS==='android'){
+      window.BRIDGE.setNotify()
+    }
+    else{
+      window.webkit.messageHandlers.setNotify.pushMessage()
+    }
   };
 
   return (  
