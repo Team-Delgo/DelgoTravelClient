@@ -14,7 +14,7 @@ import { tokenActions } from '../../redux/slice/tokenSlice';
 import { scrollActions } from '../../redux/slice/scrollSlice';
 import AlertConfirm from '../../common/dialog/AlertConfirm';
 import { deleteUser } from '../../common/api/signup';
-import { MY_ACCOUNT_PATH } from '../../constants/path.const';
+import { MY_ACCOUNT_PATH, SIGN_IN_PATH } from '../../constants/path.const';
 import { getBookingState, getMyAccountDataList } from '../../common/api/myaccount';
 import { tokenRefresh } from '../../common/api/login';
 import { RootState } from '../../redux/store';
@@ -54,7 +54,7 @@ function MyAccount() {
   });
 
   useEffect(() => {
-    if (location.state?.prevPath?.includes('/myaccount')) {
+    if (location.state?.prevPath.includes(MY_ACCOUNT_PATH.MAIN)) {
       window.scroll(0, myAccountScrollY);
     } else {
       window.scroll(0, 0);
@@ -97,7 +97,7 @@ function MyAccount() {
     dispatch(tokenActions.setToken(''));
     dispatch(userActions.signout());
     localStorage.removeItem('refreshToken');
-    navigation('/user/signin');
+    navigation(SIGN_IN_PATH.MAIN);
   };
 
   const deleteHandler = () => {
@@ -110,7 +110,7 @@ function MyAccount() {
     );
     dispatch(userActions.signout());
     localStorage.removeItem('refreshToken');
-    navigation('/user/signin');
+    navigation(SIGN_IN_PATH.MAIN);
   };
 
   const logOutModalOpen = () => {
