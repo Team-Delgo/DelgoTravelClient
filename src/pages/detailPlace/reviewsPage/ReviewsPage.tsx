@@ -35,7 +35,6 @@ interface ReviewPhotoType {
 
 function ReviewsPage() {
   const [reviews, setReviews] = useState<Array<RivewType>>([]);
-  const [reviewsCount,setReviewsCount] = useState(0)
   const [checked, setChecked] = useState(false);
   const [imageReviewsCount,setImageReviewsCount] = useState(0)
   const location: any = useLocation();
@@ -44,7 +43,6 @@ function ReviewsPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
     setReviews(location.state.reviews);
-    setReviewsCount(location.state.reviews.length)
 
     const reviewImages = location.state.reviews.filter(function(review:RivewType) {
       if(review.review.reviewPhotoList.length >0)  {
@@ -77,10 +75,10 @@ function ReviewsPage() {
         <Link to={`/detail-place/${placeId}`} state={{ prevPath: location.pathname }} key={placeId}>
           <LeftArrow className="detail-place-review-page-header-previous-page" />
         </Link>
-        <div className="detail-place-review-page-header-number">리뷰 {reviewsCount}개</div>
+        <div className="detail-place-review-page-header-number">리뷰 {location.state.reviews.length}개</div>
         <div className="detail-place-review-page-header-rating-count">
           <ReviewStar className="detail-place-review-page-header-review-star" />
-          &nbsp;&nbsp;4.5점
+          &nbsp;&nbsp;{location.state.reviewsAvg}점
         </div>
         <input type="checkbox" checked={checked} name="xxx" value="yyy" onClick={showImageReviews} />
         <span className="detail-place-review-page-header-image-review"> 사진 리뷰만 보기({imageReviewsCount}개)</span>

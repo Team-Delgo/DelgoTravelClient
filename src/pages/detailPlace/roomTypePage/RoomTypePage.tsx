@@ -2,7 +2,6 @@ import React, { useCallback, useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Transition  } from 'react-transition-group';
 import { AxiosResponse } from 'axios';
 import Skeleton , { SkeletonTheme } from 'react-loading-skeleton'
 import { reservationActions } from '../../../redux/slice/reservationSlice';
