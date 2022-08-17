@@ -42,7 +42,7 @@ function Settings() {
       window.BRIDGE.setNotify()
     }
     else{
-      window.webkit.messageHandlers.setNotify.pushMessage()
+      window.webkit.messageHandlers.setNotify.postMessage('') 
     }
   };
 

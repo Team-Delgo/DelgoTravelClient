@@ -90,7 +90,7 @@ function DetailPlacePage() {
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const accessToken = useSelector((state: RootState) => state.token.token);
   const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
-  const OS = useSelector((state:any)=>state.persist.device);
+  const {OS} = useSelector((state:any)=>state.persist.device);
   const { placeId } = useParams();
   const location: any = useLocation();
   const navigate = useNavigate();
@@ -170,7 +170,7 @@ function DetailPlacePage() {
         window.BRIDGE.vibrate()
       }
       else {
-        window.webkit.messageHandlers.vibrate.pushMessage()
+        window.webkit.messageHandlers.vibrate.postMessage('') 
       }
     }
     else {
@@ -188,8 +188,12 @@ function DetailPlacePage() {
       },
       dispatch,
     );
-    window.BRIDGE.vibrate() 
-    window.webkit.messageHandlers.vibrate.pushMessage()
+    if (OS === 'android') {
+      window.BRIDGE.vibrate()
+    }
+    else {
+      window.webkit.messageHandlers.vibrate.postMessage('') 
+    }
   }, [detailPlace]);
 
   const calenderOpenClose = useCallback(() => {
