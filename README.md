@@ -1,6 +1,7 @@
 # <b>🐕 Delgo Client Repository 🐕</b>
 ![logo_1](https://user-images.githubusercontent.com/54196723/185036077-7ec238dd-88f6-4c82-adc9-89eaca0b3c2c.png)
 
+<br/>
 <hr>
 
 ## <b> 📚 Contents </b>
@@ -11,6 +12,7 @@
 -   ### <b> <a href="#2"> 🐶 Technology </a> </b>
 -   ### <b> <a href="#3"> 🐶 Result </a> </b>
 
+<br/>
 <hr>
 
 <h2 id="0.5">
@@ -24,6 +26,7 @@
 | **back-end**         | <a href="https://github.com/Gupuroom">이동재 </a>      |
 | **back-end**         | <a href="https://github.com/danpung2">조현서 </a>     |
 
+<br/>
 <hr>
 
 <h2 id="0.5">
@@ -38,6 +41,7 @@
 -   장비가 없더라도 녹음한 커버에 대하여 각종 정제가 들어가서 장비 없이도 고퀄리티의 녹음이 가능
 -   다양한 세션들을 조합하여 리스너의 취향대로 듣기 가능
 
+<br/>
 <hr>
 
 <h2 id="1">
@@ -48,6 +52,7 @@
 -   ### <b> <a href="https://github.com/Team-Delgo/DelgoClient" > 🐶 Delgo-Frontend </a> </b>
 -   ### <b> <a href="https://github.com/Team-Delgo/DelgoServer" > 🐶 Delgo-Backend </a> </b>
 
+<br/>
 <hr>
 
 <h2 id="2">🛠 Technology</h2>
@@ -60,12 +65,14 @@
 
 `MVC`
 
+<br/>
 <hr>
 
 <h2 id="3">📅 Develop period</h2>
 
 22.03.15 ~ 운영 관리 중
 
+<br/>
 <hr>
 
 <h2 id="3">🚩 Result</h2>
