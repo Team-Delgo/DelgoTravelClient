@@ -63,7 +63,7 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
         window.BRIDGE.vibrate()
       }
       else {
-        window.webkit.messageHandlers.vibrate.pushMessage()
+        window.webkit.messageHandlers.vibrate.postMessage('')
       }
     }
     else {
@@ -85,7 +85,7 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
       window.BRIDGE.vibrate()
     }
     else {
-      window.webkit.messageHandlers.vibrate.pushMessage()
+      window.webkit.messageHandlers.vibrate.postMessage('')
     }
   }, [wishList]);
 

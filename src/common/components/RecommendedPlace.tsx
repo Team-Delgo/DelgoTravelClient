@@ -58,7 +58,7 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
       window.BRIDGE.vibrate() 
     }
     else{
-      window.webkit.messageHandlers.vibrate.pushMessage()
+      window.webkit.messageHandlers.vibrate.postMessage('') 
     }
   }, [wishList]);
 
@@ -77,7 +77,7 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
       window.BRIDGE.vibrate() 
     }
     else{
-      window.webkit.messageHandlers.vibrate.pushMessage()
+      window.webkit.messageHandlers.vibrate.postMessage('')
     }
   }, [wishList]);
 
