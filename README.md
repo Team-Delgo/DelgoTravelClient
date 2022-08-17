@@ -2,7 +2,7 @@
 ![logo_1](https://user-images.githubusercontent.com/54196723/185036077-7ec238dd-88f6-4c82-adc9-89eaca0b3c2c.png)
 
 <br/>
-<hr>
+
 
 ## <b> 📚 Contents </b>
 
@@ -10,10 +10,12 @@
 -   ### <b> <a href="#0.5"> 🐶 Service introduce </a> </b>
 -   ### <b> <a href="#1"> 🐶 Other Repositories </a> </b>
 -   ### <b> <a href="#2"> 🐶 Technology </a> </b>
--   ### <b> <a href="#3"> 🐶 Result </a> </b>
+-   ### <b> <a href="#3"> 🐶 Store link </a> </b>
+-   ### <b> <a href="#4"> 🐶 Develop period </a> </b>
+-   ### <b> <a href="#5"> 🐶 Result </a> </b>
 
 <br/>
-<hr>
+
 
 <h2 id="0.5">
     <b>💁 Team  introduce </b>
@@ -27,7 +29,7 @@
 | **back-end**         | <a href="https://github.com/danpung2">조현서 </a>     |
 
 <br/>
-<hr>
+
 
 <h2 id="0.5">
     <b>💁 Service introduce</b>
@@ -42,18 +44,18 @@
 -   다양한 세션들을 조합하여 리스너의 취향대로 듣기 가능
 
 <br/>
-<hr>
+
 
 <h2 id="1">
 <b>📂 Repositories</b>
 </h2>
 
--   ### <b> <a href="https://github.com/Team-Delgo"> 🐶 Delgo-Organization </a> </b>
--   ### <b> <a href="https://github.com/Team-Delgo/DelgoClient" > 🐶 Delgo-Frontend </a> </b>
--   ### <b> <a href="https://github.com/Team-Delgo/DelgoServer" > 🐶 Delgo-Backend </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo"> 🔗 Delgo-Organization </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo/DelgoClient" > 🔗 Delgo-Frontend </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo/DelgoServer" > 🔗 Delgo-Backend </a> </b>
 
 <br/>
-<hr>
+
 
 <h2 id="2">🛠 Technology</h2>
 
@@ -66,13 +68,21 @@
 `MVC`
 
 <br/>
-<hr>
+
+
+<h2 id="3">🛒 Store link</h2>
+
+-   ### <b> <a href="https://play.google.com/store/apps/details?id=com.delgo.delgoandroid"> 🔗 Android </a> </b>
+-   ### <b> <a href=""> 🔗 IOS </a> </b>
+
+<br/>
+
 
 <h2 id="3">📅 Develop period</h2>
 
-22.03.15 ~ 운영 관리 중
+<b>22.03.15 ~ 운영 관리 중</b>
 
 <br/>
-<hr>
+
 
 <h2 id="3">🚩 Result</h2>
