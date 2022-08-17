@@ -1,10 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react'
 import { useNavigate ,useLocation} from 'react-router-dom';
-import { AxiosResponse } from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { tokenActions } from '../../redux/slice/tokenSlice';
 import { scrollActions } from '../../redux/slice/scrollSlice';
-import { tokenRefresh } from '../../common/api/login';
 import Footer from '../../common/components/FooterNavigation';
 import {RootState} from '../../redux/store'
 import Folder from './wishListInfo/Folder';
@@ -15,7 +12,6 @@ import './MyStoragePage.scss';
 function MyStoragePage() {
   const location: any = useLocation();
   const [currentTab, setCurrentTab] = useState(0);
-  const navigation = useNavigate();
   const dispatch = useDispatch();
   const accessToken = useSelector((state: RootState) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
@@ -24,10 +20,10 @@ function MyStoragePage() {
     if (location.state?.prevPath.includes('/reservation-history')) {
       setCurrentTab(1);
     }
-    if (location.state?.prevPath.includes('/review-writing')) {
+    else if (location.state?.prevPath.includes('/review-writing')) {
       setCurrentTab(1);
     }
-    if (location.state?.prevPath.includes('/detail-place')) {
+    else if (location.state?.prevPath.includes('/detail-place')) {
       if (location.state?.myStorageTab !== null) {
         setCurrentTab(location.state?.myStorageTab);
       }
@@ -38,10 +34,10 @@ function MyStoragePage() {
 
   const changeCurrentTab = useCallback((tabNumber: number) => (event: React.MouseEvent) => {
     dispatch(scrollActions.scrollInit())
-    setTimeout(()=>{
-
-      setCurrentTab(tabNumber);
-    },150);
+    setCurrentTab(tabNumber)
+    // setTimeout(()=>{
+    //   setCurrentTab(tabNumber);
+    // },150);
   }, [])
 
 

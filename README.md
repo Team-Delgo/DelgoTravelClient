@@ -1,24 +1,21 @@
-# <b>🎵 Pentatonic-Android Repository 🎵</b>
-
-<img src="https://penta-tonic.com/static/media/Logo.c2134bc5.png" width="100%" style="border:2px solid #9F81F7; border-radius:25px;">
-
-## <b> 🗂️ Contents </b>
-
--   ### <b> <a href="#0"> 🔗 Team introduce </a> </b>
--   ### <b> <a href="#0.5"> 🔗 Service introduce </a> </b>
--   ### <b> <a href="#1"> 🔗 Other Repositories & Page </a> </b>
--   ### <b> <a href="#2"> 🔗 Technology </a> </b>
--   ### <b> <a href="#3"> 🔗 Result </a> </b>
+# <b>🐕 Delgo-Client Repository 🐕</b>
+![logo_1](https://user-images.githubusercontent.com/54196723/185036077-7ec238dd-88f6-4c82-adc9-89eaca0b3c2c.png)
 
 <hr>
 
-<h2 id="0">
+## <b> 🗂️ Contents </b>
+
+-   ### <b> <a href="#0"> 🐶 Team introduce </a> </b>
+-   ### <b> <a href="#0.5"> 🐶 Service introduce </a> </b>
+-   ### <b> <a href="#1"> 🐶 Other Repositories & Page </a> </b>
+-   ### <b> <a href="#2"> 🐶 Technology </a> </b>
+-   ### <b> <a href="#3"> 🐶 Result </a> </b>
+
+<hr>
+
+<h2 id="0.5">
     <b>💁 Team  introduce </b>
 </h2>
-
-<img src="https://cdn.discordapp.com/attachments/843498829781008387/906020785318137926/unknown.png">
-
-<b>고등학생 대학생 백수가 모여서 만든 팀 고대백 입니다</b>
 
 | Part                 | Name                                                |
 | -------------------- | --------------------------------------------------- |
@@ -33,7 +30,7 @@
     <b>💁 Service introduce</b>
 </h2>
 
-### 시간적 제약, 공간적 제약, 금전적 제약을 해결하며 온라인에서 밴드 활동을 할 수 있는 플랫폼
+### 전국민 반려인을 위한 반려견 동반 여행 O2O 서비스 플랫폼
 
 -   녹음 기반의 밴드 음악 연주 및 커버 플랫폼
 -   시간적, 실력적 부담 없이 밴드 음악을 즐길 수 있음
@@ -44,13 +41,12 @@
 <hr>
 
 <h2 id="1">
-<b>📘 제 12기 SW 마에스트로 고대백 팀 프로젝트<br>'Pentatonic (펜타토닉)' 의 Android 레포지토리 입니다. </b><br><br>
-<b>📚 Other Repositories & Page</b>
+<b>📚 Other Repositories</b>
 </h2>
 
--   ### <b> <a href="https://git.swmgit.org/swm-12/12_swm39"> 🔗 Pentatonic-Organization </a> </b>
--   ### <b> <a href="https://git.swmgit.org/swm-12/12_swm39/Pentatonic-backend" > 🔗 Pentatonic-Backend </a> </b>
--   ### <b> <a href="https://git.swmgit.org/swm-12/12_swm39/Pentatonic-Web" > 🔗 Pentatonic-Web </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo"> 🐶 Delgo-Organization </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo/DelgoClient" > 🐶 Delgo-FrontEnd </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo/DelgoServer" > 🐶 Delgo-Backend </a> </b>
 
 <hr>
 
@@ -58,7 +54,7 @@
 
 ### 🛠 Tech Stack
 
-`Kotlin`, `JetPack`, `DataBinding`, `ViewModel`, `AAC`, `LiveData`, `Apollo-Client`, `OkHttp`, `GraphQL` `Koin`, `Timber`, `Glide`, `RxJava`, `Coroutine`, `ExoPlayer`, `AudioRecorder`, `AudioEffect`, `Navigation Component`, `FCM`, `Firebase Analytics`, `CustomView`
+`React`, `Redux-Toolkit`, `React-Query`, `TypeScript`, `SCSS`, `SpringBoot`, `JPA`, `MariaDB`, `Nginx` `Apache-Tomcat`, `NCP`, `ObjectStoreage`
 
 ### ⚙️ Architecture
 
