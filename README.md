@@ -56,6 +56,10 @@
 -   ### <b> <a href="https://github.com/Team-Delgo"> 🔗 Delgo-Organization </a> </b>
 -   ### <b> <a href="https://github.com/Team-Delgo/DelgoClient" > 🔗 Delgo-Frontend </a> </b>
 -   ### <b> <a href="https://github.com/Team-Delgo/DelgoServer" > 🔗 Delgo-Backend </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo/DelgoAndroid" > 🔗 Delgo-Android </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo/DelgoIOS"> 🔗 Delgo-IOS </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo/PMS" > 🔗 Delgo-PMS-Frontend </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo/PMS_SERVER" > 🔗 Delgo-PMS-Backend </a> </b>
 
 <br/>
 
