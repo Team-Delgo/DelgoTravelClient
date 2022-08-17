@@ -50,9 +50,9 @@
 
 <hr>
 
-<h2 id="2">🚀 Technology</h2>
+<h2 id="2">🛠 Technology</h2>
 
-### 🛠 Tech Stack
+### ⚙️ Tech Stack
 
 `React`, `Redux-Toolkit`, `React-Query`, `TypeScript`, `SCSS`, `SpringBoot`, `JPA`, `MariaDB`, `Nginx` `Apache-Tomcat`, `NCP`, `ObjectStoreage`
 
