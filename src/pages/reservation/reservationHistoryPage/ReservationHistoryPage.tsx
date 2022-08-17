@@ -52,7 +52,7 @@ function ReservationHistoryPage() {
   })
   const { bookingId } = useParams();
   const location: any = useLocation();
-  const OS = useSelector((state:any)=>state.persist.device);
+  const {OS} = useSelector((state:any)=>state.persist.device);
 
   useEffect(() => {
     window.scrollTo(0, 0);

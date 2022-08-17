@@ -27,7 +27,7 @@ function Footer() {
   const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
   const navigate = useNavigate();
 
-  const OS = useSelector((state:any)=>state.persist.device);
+  const {OS} = useSelector((state:any)=>state.persist.device);
 
   // useEffect(() => {
   //   const varUA = navigator.userAgent.toLowerCase();
