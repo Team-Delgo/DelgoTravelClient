@@ -75,7 +75,7 @@ function ReservationHistoryPage() {
       window.BRIDGE.copyToClipboard(reservationData.place.address)
     }
     else{
-      window.webkit.messageHandlers.copyToClipboard.pushMessage(reservationData.place.address)
+      window.webkit.messageHandlers.copyToClipboard.postMessage(reservationData.place.address)
     }
   }
   }, [reservationData]);
@@ -87,7 +87,7 @@ function ReservationHistoryPage() {
       window.BRIDGE.copyToClipboard(reservationData.place.address)
     }
     else{
-      window.webkit.messageHandlers.copyToClipboard.pushMessage(reservationData.place.address)
+      window.webkit.messageHandlers.copyToClipboard.postMessage(reservationData.place.address)
     }
   }
   }, [reservationData]);

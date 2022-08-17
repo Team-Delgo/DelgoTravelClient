@@ -95,14 +95,13 @@ function ReservationConfirmPage() {
   }, []);
 
   const copyPlaceAddress = useCallback(() => {
-    console.log(OS)
     if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(reservationData.place.address)
     if(OS==='android'){
       window.BRIDGE.copyToClipboard(reservationData.place.address)
     }
     else{
-      window.webkit.messageHandlers.copyToClipboard.pushMessage(reservationData.place.address)
+      window.webkit.messageHandlers.copyToClipboard.postMessage(reservationData.place.address)
     }
   }
   }, [reservationData]);
@@ -114,7 +113,7 @@ function ReservationConfirmPage() {
       window.BRIDGE.copyToClipboard(reservationData.place.address)
     }
     else{
-      window.webkit.messageHandlers.copyToClipboard.pushMessage(reservationData.place.address)
+      window.webkit.messageHandlers.copyToClipboard.postMessage(reservationData.place.address)
     }
   }
   }, [reservationData]);
