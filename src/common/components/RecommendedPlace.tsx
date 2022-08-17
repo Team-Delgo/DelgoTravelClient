@@ -89,7 +89,7 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
 
   return (
     <div className="popular-place">
-      <img src={place.mainPhotoUrl} alt="popular-place-img" aria-hidden="true" onClick={moveToDetailPage}/>
+      <img src={place.mainPhotoUrl} alt="popular-place-img" aria-hidden="true" onClick={moveToDetailPage} />
       <div className="popular-place-name" aria-hidden="true" onClick={moveToDetailPage}>{place.name}</div>
       <div className="popular-place-location" aria-hidden="true" onClick={moveToDetailPage}>{place.address}</div>
       {wishList ? (
