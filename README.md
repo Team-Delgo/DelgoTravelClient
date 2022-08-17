@@ -1,4 +1,4 @@
-# <b>🐕 Delgo-Client Repository 🐕</b>
+# <b>🐕 Delgo Client Repository 🐕</b>
 ![logo_1](https://user-images.githubusercontent.com/54196723/185036077-7ec238dd-88f6-4c82-adc9-89eaca0b3c2c.png)
 
 <hr>
@@ -54,7 +54,7 @@
 
 ### ⚙️ Tech Stack
 
-`React`, `Redux-Toolkit`, `React-Query`, `TypeScript`, `SCSS`, `SpringBoot`, `JPA`, `MariaDB`, `Nginx` `Apache-Tomcat`, `NCP`, `ObjectStoreage`
+`React`, `ReduxToolkit`, `ReactQuery`, `TypeScript`, `SCSS`, `SpringBoot`, `JPA`, `MariaDB`, `Nginx` `ApacheTomcat`, `NCP`, `ObjectStoreage`
 
 ### ⚙️ Architecture
 
