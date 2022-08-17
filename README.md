@@ -3,11 +3,11 @@
 
 <hr>
 
-## <b> 🗂️ Contents </b>
+## <b> 📚 Contents </b>
 
 -   ### <b> <a href="#0"> 🐶 Team introduce </a> </b>
 -   ### <b> <a href="#0.5"> 🐶 Service introduce </a> </b>
--   ### <b> <a href="#1"> 🐶 Other Repositories & Page </a> </b>
+-   ### <b> <a href="#1"> 🐶 Other Repositories </a> </b>
 -   ### <b> <a href="#2"> 🐶 Technology </a> </b>
 -   ### <b> <a href="#3"> 🐶 Result </a> </b>
 
@@ -41,11 +41,11 @@
 <hr>
 
 <h2 id="1">
-<b>📚 Other Repositories</b>
+<b>📂 Repositories</b>
 </h2>
 
 -   ### <b> <a href="https://github.com/Team-Delgo"> 🐶 Delgo-Organization </a> </b>
--   ### <b> <a href="https://github.com/Team-Delgo/DelgoClient" > 🐶 Delgo-FrontEnd </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo/DelgoClient" > 🐶 Delgo-Frontend </a> </b>
 -   ### <b> <a href="https://github.com/Team-Delgo/DelgoServer" > 🐶 Delgo-Backend </a> </b>
 
 <hr>
@@ -58,8 +58,8 @@
 
 ### ⚙️ Architecture
 
-`MVVM`
+`MVC`
 
 <hr>
 
-<h2 id="3">🏙 Result</h2>
+<h2 id="3">🚩 Result</h2>
