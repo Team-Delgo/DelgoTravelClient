@@ -116,7 +116,7 @@ function Folder({currentTab}:FolderTypeProps) {
                 getRecommendedPlacesRefetch={getRecommendedPlacesRefetch}
               />
             ))
-        : recommendedPlaces?.data.map((place: RecommendedPlaceType) => (
+        : recommendedPlaces.data.map((place: RecommendedPlaceType) => (
             <RecommendedPlace place={place} key={place.placeId} getRecommendedPlacesRefetch={getRecommendedPlacesRefetch} currentTab={currentTab}/>
           ))}
     </div>
