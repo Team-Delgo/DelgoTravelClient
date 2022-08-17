@@ -30,7 +30,7 @@ interface CouponType {
 
 function ReservationPage() {
   const { user, room, place, date } = useSelector((state: RootState) => state.persist.reservation);
-  // const [couponList, setCouponList] = useState<Array<CouponType>>([]);
+  const {OS} = useSelector((state:any)=>state.persist.device);
   const [couponDropDownOpen, setCouponDropDownOpen] = useState(false);
   const [selectedCouponId, setSelectedCouponId] = useState(0);
   const [selectCouponDiscount,setSelectCouponDiscount] = useState(0)
@@ -84,7 +84,6 @@ function ReservationPage() {
     loadTossPayments(`${process.env.REACT_APP_TOSS_CLIENT_KEY}`).then((tossPayments) => {
       tossPayments.requestPayment('카드', {
         amount: Number(room.price.toString().slice(0, -1).replace(',', '')) - selectCouponDiscount,
-        // orderId: 'AVw8mD2KHztN_646IGAZF',
         orderId: randomId,
         orderName: place.name + room.name,
         customerName: user.nickname,
@@ -134,11 +133,10 @@ function ReservationPage() {
   },[])
 
   const inputReservationNameFocus = useCallback(() => {
-    const varUA = navigator.userAgent.toLowerCase();
-    if (varUA.indexOf('android') > -1) {
+    if (OS === 'android') {
       reservationNameInput.current?.scrollIntoView({ behavior: "smooth" })
     }
-  },[])
+  }, [])
 
   if (getCouponListIsLoading) {
     return <div className="reservation-page">&nbsp;</div>

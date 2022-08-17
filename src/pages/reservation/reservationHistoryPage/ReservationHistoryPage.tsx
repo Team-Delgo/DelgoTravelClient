@@ -70,35 +70,38 @@ function ReservationHistoryPage() {
 
   const copyPlaceAddress = useCallback(() => {
     if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(reservationData.place.address)
-    if(OS==='android'){
-      window.BRIDGE.copyToClipboard(reservationData.place.address)
+      navigator.clipboard.writeText(reservationData.place.address)
+      if (OS === 'android') {
+        window.BRIDGE.copyToClipboard(reservationData.place.address)
+      }
+      else {
+        window.webkit.messageHandlers.copyToClipboard.postMessage(reservationData.place.address)
+      }
     }
-    else{
-      window.webkit.messageHandlers.copyToClipboard.postMessage(reservationData.place.address)
-    }
-  }
   }, [reservationData]);
 
   const copyReservationNumber = useCallback(() => {
     if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(reservationData.bookingId)
-    if(OS==='android'){
-      window.BRIDGE.copyToClipboard(reservationData.place.address)
+      navigator.clipboard.writeText(reservationData.bookingId)
+      if (OS === 'android') {
+        window.BRIDGE.copyToClipboard(reservationData.bookingId)
+      }
+      else {
+
+        window.webkit.messageHandlers.copyToClipboard.postMessage(reservationData.bookingId)
+      }
     }
-    else{
-      window.webkit.messageHandlers.copyToClipboard.postMessage(reservationData.place.address)
-    }
-  }
   }, [reservationData]);
 
+  const moveToCallApp = useCallback(() => {
+    window.webkit.messageHandlers.numToCall.postMessage(`tel: ${reservationData.place.phoneNo}`)
+  }, [reservationData]);
 
-  const getDate = (date:string) => { 
-      const week = ['일', '월', '화', '수', '목', '금', '토'];
-      const dayOfWeek = week[new Date(date).getDay()];
-      return dayOfWeek;
+  const getDate = (date: string) => {
+    const week = ['일', '월', '화', '수', '목', '금', '토'];
+    const dayOfWeek = week[new Date(date).getDay()];
+    return dayOfWeek;
   }
-
 
   const moveToPrevPage = useCallback(() => {
     navigate(MY_STORAGE_PATH, {
@@ -107,8 +110,6 @@ function ReservationHistoryPage() {
       },
     });
   }, []);
-
-
 
   return (
       <div className="reservationPage">
@@ -124,12 +125,15 @@ function ReservationHistoryPage() {
           <p className="placeinfo-room">{reservationData?.roomName}</p>
         </div>
       <div className="place-use-info">
-        <a href={`tel: ${reservationData.place.phoneNo}`}><div>숙소문의</div></a>
+        {
+          OS === 'ios' ? <div aria-hidden="true" onClick={moveToCallApp}>숙소문의</div>
+            : <a href={`tel: ${reservationData.place.phoneNo}`}><div>숙소문의</div></a>
+        }
         <div aria-hidden="true" onClick={copyPlaceAddress}>주소복사</div>
         <a href={reservationData.place.mapUrl}><div >지도보기</div></a>
       </div>
-        <div className="checkin-checkout">
-          <div className="checkin-checkout-date">
+      <div className="checkin-checkout">
+        <div className="checkin-checkout-date">
             <span className="check-title">체크인</span>
             <span className="check-date">
               {reservationData.startDt.substring(2, 4)}.{reservationData.startDt.substring(5, 7)}.
