@@ -26,7 +26,6 @@ function SignIn() {
   const navigation = useNavigate();
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     dispatch(tokenActions.setToken(''));
     localStorage.removeItem('refreshToken');
@@ -127,7 +126,10 @@ function SignIn() {
               {/* <button type="button" className="login-apple">
                 <Apple className="icon" />
               </button> */}
-              <AppleLoginButton/>
+              <div className="login-apple">
+              <Apple className="icon" />
+                <AppleLoginButton />
+              </div>
             </div>
           </div>
         </>
