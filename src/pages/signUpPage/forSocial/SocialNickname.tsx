@@ -12,13 +12,14 @@ import { SIGN_UP_PATH } from '../../../constants/path.const';
 interface LocationState {
   phone: string;
   isSocial: string;
+  email: string;
 }
 
 function SocialNickname() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const state = useLocation().state as LocationState;
-  const { isSocial, phone } = state;
+  const { isSocial, phone, email } = state;
   const [enteredInput, setEnteredInput] = useState('');
   const [validInput, setValidInput] = useState('');
   const [feedback, setFeedback] = useState('');
@@ -50,7 +51,7 @@ function SocialNickname() {
     //  유저정보 보내기
 
     navigate(SIGN_UP_PATH.USER_PET_INFO, {
-      state: { email:'', password:'', nickname: enteredInput, phone, isSocial },
+      state: { email, password:'', nickname: enteredInput, phone, isSocial },
     });
   };
 

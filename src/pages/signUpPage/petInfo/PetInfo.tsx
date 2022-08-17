@@ -146,6 +146,7 @@ function PetInfo() {
     if (isSocial) {
       // oauthSignup();
       const requestBody = {
+        email,
         nickname,
         phoneNo: phone,
         petName: enteredInput.name,
@@ -248,7 +249,7 @@ function PetInfo() {
                 console.log(response);
                 const { code, data } = response.data;
                 if (code === 200) {
-                  dispatch(userActions.setpetprofile({ image: data }));
+                  dispatch(userActions.setpetprofile({ image }));
                 }
               },
               dispatch,

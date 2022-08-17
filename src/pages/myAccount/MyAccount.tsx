@@ -293,6 +293,9 @@ function MyAccount() {
         <p className="account-out" aria-hidden="true" onClick={logOutModalOpen}>
           로그아웃
         </p>
+        <p className="account-out" aria-hidden="true" onClick={deleteUserModalOpen}>
+          회원탈퇴
+        </p>
       </div>
       <Footer />
     </div>
