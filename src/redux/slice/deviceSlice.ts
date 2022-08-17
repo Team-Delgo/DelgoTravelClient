@@ -10,7 +10,7 @@ const deviceSlice = createSlice({
   reducers: {
     android() {
       return {
-        device : 'anroid'
+        device : 'android'
       };
     },
     ios() {
