@@ -7,17 +7,17 @@
 ## <b> 📚 Contents </b>
 
 -   ### <b> <a href="#0"> 🐶 Team introduce </a> </b>
--   ### <b> <a href="#0.5"> 🐶 Service introduce </a> </b>
--   ### <b> <a href="#1"> 🐶 Other Repositories </a> </b>
--   ### <b> <a href="#2"> 🐶 Technology </a> </b>
--   ### <b> <a href="#3"> 🐶 Store link </a> </b>
--   ### <b> <a href="#4"> 🐶 Develop period </a> </b>
--   ### <b> <a href="#5"> 🐶 Result </a> </b>
+-   ### <b> <a href="#1"> 🐶 Service introduce </a> </b>
+-   ### <b> <a href="#2"> 🐶 Repositories </a> </b>
+-   ### <b> <a href="#3"> 🐶 Technology </a> </b>
+-   ### <b> <a href="#4"> 🐶 Store link </a> </b>
+-   ### <b> <a href="#5"> 🐶 Develop period </a> </b>
+-   ### <b> <a href="#6"> 🐶 Result </a> </b>
 
 <br/>
 
 
-<h2 id="0.5">
+<h2 id="0">
     <b>💁 Team  introduce </b>
 </h2>
 
@@ -31,7 +31,7 @@
 <br/>
 
 
-<h2 id="0.5">
+<h2 id="1">
     <b>💁 Service introduce</b>
 </h2>
 
@@ -46,7 +46,7 @@
 <br/>
 
 
-<h2 id="1">
+<h2 id="2">
 <b>📂 Repositories</b>
 </h2>
 
@@ -57,7 +57,7 @@
 <br/>
 
 
-<h2 id="2">🛠 Technology</h2>
+<h2 id="3">🛠 Technology</h2>
 
 ### ⚙️ Tech Stack
 
@@ -70,7 +70,7 @@
 <br/>
 
 
-<h2 id="3">🛒 Store link</h2>
+<h2 id="4">🛒 Store link</h2>
 
 -   ### <b> <a href="https://play.google.com/store/apps/details?id=com.delgo.delgoandroid"> 🔗 Android </a> </b>
 -   ### <b> <a href=""> 🔗 IOS </a> </b>
@@ -78,11 +78,11 @@
 <br/>
 
 
-<h2 id="3">📅 Develop period</h2>
+<h2 id="5">📅 Develop period</h2>
 
 <b>22.03.15 ~ 운영 관리 중</b>
 
 <br/>
 
 
-<h2 id="3">🚩 Result</h2>
+<h2 id="6">🚩 Result</h2>
