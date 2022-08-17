@@ -56,7 +56,7 @@ function ReservationConfirmPage() {
     }
   })
   const { bookingId } = useParams();
-  const OS = useSelector((state:any)=>state.persist.device);
+  const {OS} = useSelector((state:any)=>state.persist.device);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -95,6 +95,7 @@ function ReservationConfirmPage() {
   }, []);
 
   const copyPlaceAddress = useCallback(() => {
+    console.log(OS)
     if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(reservationData.place.address)
     if(OS==='android'){
