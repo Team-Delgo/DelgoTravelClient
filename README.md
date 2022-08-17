@@ -72,7 +72,7 @@
 
 <h2 id="4">🛒 Store link</h2>
 
--   ### <b> <a href="https://play.google.com/store/apps/details?id=com.delgo.delgoandroid" target="_blank"> 🔗 Android </a> </b>
+-   ### <b> <a href="https://play.google.com/store/apps/details?id=com.delgo.delgoandroid" target="_blank" > 🔗 Android </a> </b>
 -   ### <b> <a href=""> 🔗 IOS </a> </b>
 
 <br/>
