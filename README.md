@@ -68,7 +68,7 @@
 
 ### ⚙️ Tech Stack
 
-`React`, `ReduxToolkit`, `ReactQuery`, `TypeScript`, `SCSS`, `SpringBoot`, `JPA`, `MariaDB`, `Nginx` `ApacheTomcat`, `NCP`, `ObjectStoreage`
+`React`, `Redux Toolkit`, `React Query`, `SCSS`, `TypeScript`, `Eslint`, `Prettier`, `Kakao Map`, `Toss Payments`, `Spring Boot`, `JPA`, `Maria DB`, `Nginx`, `Apache Tomcat`, `NCP, Object Storage` , `JWT`, `OAuth 2.0`, `REST API`
 
 ### ⚙️ Architecture
 
