@@ -92,4 +92,4 @@
 <br/>
 
 
-<h2 id="6">🚩 Result</h2>
+<h2 id="6">📷 Result</h2>
