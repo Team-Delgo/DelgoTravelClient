@@ -63,14 +63,19 @@ function PetInfo() {
 
   const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
-    reader.onload = function () {
-      setImage(reader.result);
-    };
-    const { files } = event.target;
+    
+    if(event.target.files){
+      const currentImage = event.target.files;
+      const currentImageUrl = URL.createObjectURL(currentImage[0]);
+    
+      setImage(currentImageUrl);
+      reader.readAsDataURL(event.target.files![0]);
+      setSendingImage(event.target.files![0]);
+    }
+
     // let {petImage} = files;
-    reader.readAsDataURL(event.target.files![0]);
-    setSendingImage(event.target.files![0]);
   };
+
   const requireInputCheck = (key: string, value: string) => {
     if (value.length) {
       setIsValid((prev: IsValid) => {
