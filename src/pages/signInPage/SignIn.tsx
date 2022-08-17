@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import './SignIn.scss';
 import { AxiosResponse } from 'axios';
+import AppleLogin from 'react-apple-login';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +16,7 @@ import Delgo from '../../icons/delgo.svg';
 import { checkEmail } from '../signUpPage/userInfo/ValidCheck';
 import { emailAuth } from '../../common/api/login';
 import Loading from '../../common/utils/Loading';
+import AppleLoginButton from './AppleLogin';
 
 function SignIn() {
   const [email, setEmail] = useState('');
@@ -23,6 +25,7 @@ function SignIn() {
   const emailRef = useRef<any>();
   const navigation = useNavigate();
   const dispatch = useDispatch();
+
 
   useEffect(() => {
     dispatch(tokenActions.setToken(''));
@@ -48,20 +51,18 @@ function SignIn() {
   };
 
   const buttonClickHandler = () => {
-    setTimeout(() => {
-      emailAuth(
-        email,
-        (response: AxiosResponse) => {
-          const { code } = response.data;
-          if (code === 200) {
-            navigation(SIGN_IN_PATH.SIGNIN, { state: { email } });
-          } else {
-            setFeedback('가입되지 않은 이메일입니다.');
-          }
-        },
-        dispatch,
-      );
-    }, 200);
+    emailAuth(
+      email,
+      (response: AxiosResponse) => {
+        const { code } = response.data;
+        if (code === 200) {
+          navigation(SIGN_IN_PATH.SIGNIN, { state: { email } });
+        } else {
+          setFeedback('가입되지 않은 이메일입니다.');
+        }
+      },
+      dispatch,
+    );
   };
 
   return (
@@ -123,9 +124,10 @@ function SignIn() {
                   <Naver className="icon" />
                 </button>
               </a>
-              <button type="button" className="login-apple">
+              {/* <button type="button" className="login-apple">
                 <Apple className="icon" />
-              </button>
+              </button> */}
+              <AppleLoginButton/>
             </div>
           </div>
         </>

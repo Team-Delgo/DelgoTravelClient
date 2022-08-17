@@ -100,7 +100,7 @@ function PhoneAuth() {
           if (isSocial) {
             console.log(isSocial);
 
-            navigation(SIGN_UP_PATH.SOCIAL.NICKNAME, { state: { phone, isSocial } });
+            navigation(SIGN_UP_PATH.SOCIAL.NICKNAME, { state: { phone, isSocial, email } });
           } else {
             navigation(SIGN_IN_PATH.RESETPASSWORD, { state: email });
           }
