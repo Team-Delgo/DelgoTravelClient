@@ -24,7 +24,7 @@
 | Name        | Part   | Development                                   |
 | ------------| -------|-----------------------------------------------|
 |<a href="https://github.com/wjdtjrdn1234">정석우</a>|**front-end**||
-|<a href="https://github.com/ckrb63">김찬규</a>| **front-end**|로그인 서비스 개발<li>JWT Access, Refresh Token 관리</li> <li>비밀번호 찾기</li> <li>OAuth2.0 로그인 Kakao, Naver, Apple </li> <li>Redux로 회원 정보 상태 관리</li><br/>회원가입 서비스 개발<li>핸드폰 인증을 통한 회원가입 구현</li><li>입력값 정규식으로 유효성 검사, 불필요한 통신 최소화</li><li>FormData로 강아지 사진 등록</li><li>OAuth2.0 회원가입 Kakao, Naver, Apple </li><br/>회원 정보 페이지 서비스 개발<li>강아지 정보, 사진 수정</li><li>회원 정보 수정</li><li>예약 현황 확인</li><li>로그아웃, 회원탈퇴</li><li>쿠폰 조회,등록</li><li>리뷰 목록 페이지</li><li>설정 페이지</li><br/>체험 기능 구현<li>로그인이 필요한 기능은 SignIn페이지로 보내는 Alert</li><br/>Redux를 통한 전역 비동기 Error Alert 기능 개발<br/><br/>자체 Calendar 개발<li>Room Type에 따른 예약 가능 날짜,가격 동기화</li><br/>홈 화면 내부 페이징 가능한 예약현황 확인 서비스 개발<br/><br/>앱 내부 애니메이션, 효과|
+|<a href="https://github.com/ckrb63">김찬규</a>| **front-end**|로그인 서비스 개발<li>JWT Access, Refresh Token 관리</li> <li>비밀번호 찾기</li> <li>OAuth2.0 로그인 Kakao, Naver, Apple </li> <li>Redux로 회원 정보 상태 관리</li><br/>회원가입 서비스 개발<li>핸드폰 인증을 통한 회원가입 구현</li><li>입력값 정규식으로 유효성 검사, 불필요한 통신 최소화</li><li>FormData로 강아지 사진 등록</li><li>OAuth2.0 회원가입 Kakao, Naver, Apple </li><br/>회원 정보 페이지 서비스 개발<li>강아지 정보, 사진 수정</li><li>회원 정보 수정</li><li>예약 현황 확인</li><li>로그아웃, 회원탈퇴</li><li>쿠폰 조회,등록</li><li>리뷰 목록 페이지</li><li>설정 페이지</li><br/>체험 기능 구현<li>로그인이 필요한 기능은 SignIn페이지로 보내는 Alert</li><br/>Redux를 통한 전역 비동기 Error Alert 기능 개발<br/><br/>Calendar 개발<li>Room Type에 따른 예약 가능 날짜,가격 동기화</li><br/>홈 화면 내부 페이징 가능한 예약현황 확인 서비스 개발<br/><br/>앱 내부 애니메이션, 효과|
 |<a href="https://github.com/Gupuroom">이동재 </a>|**back-end**||
 | <a href="https://github.com/danpung2">조현서 </a>|**back-end**||
 
