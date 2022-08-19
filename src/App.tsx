@@ -63,6 +63,13 @@ import SocialExist from './pages/signUpPage/forSocial/SocialExist';
 import Footer from './common/components/FooterNavigation';
 import { deviceAction } from './redux/slice/deviceSlice';
 
+declare global{
+  interface Window{
+    BRIDGE:any
+    webkit:any
+  }
+}
+
 function App() {
   const hasError = useSelector((state: RootState) => state.error.hasError);
   const dispatch = useDispatch();
