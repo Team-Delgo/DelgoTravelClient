@@ -94,7 +94,7 @@ function ReservationHistoryPage() {
   }, [reservationData]);
 
   const moveToCallApp = useCallback(() => {
-    window.webkit.messageHandlers.numToCall.postMessage(`tel: ${reservationData.place.phoneNo}`)
+    window.webkit.messageHandlers.numToCall.postMessage(`tel://${reservationData.place.phoneNo}`)
   }, [reservationData]);
 
   const getDate = (date: string) => {
