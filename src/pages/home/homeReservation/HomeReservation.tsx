@@ -84,7 +84,7 @@ function HomeReservation(props: { lists: any[], pageChange: (page: number) => vo
   };
 
   const moveToCallApp = (placeTelePhoneNumber: string) => (event: React.MouseEvent) => {
-    window.webkit.messageHandlers.numToCall.postMessage(`tel: ${placeTelePhoneNumber}`)
+    window.webkit.messageHandlers.numToCall.postMessage(`tel: //${placeTelePhoneNumber}`)
   };
 
   const reservationList = lists.map((list) => {

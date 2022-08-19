@@ -228,7 +228,9 @@ function DetailPlacePage() {
 
 
   const saveDetailPlaceScrollY = useCallback(() => {
-    dispatch(scrollActions.scroll({ whereToGo: whereToGoScrollY, detailPlace: window.scrollY, myStorage: myStorageScrollY }));
+    dispatch(
+      scrollActions.scroll({ whereToGo: whereToGoScrollY, detailPlace: window.scrollY, myStorage: myStorageScrollY }),
+    );
   }, []);
 
   if (getDetailPlaceIsLoading){
