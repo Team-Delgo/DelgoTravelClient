@@ -19,6 +19,13 @@ import { getBookingState, getMyAccountDataList } from '../../common/api/myaccoun
 import { tokenRefresh } from '../../common/api/login';
 import { RootState } from '../../redux/store';
 
+declare global{
+  interface Window{
+    BRIDGE:any
+    webkit:any
+  }
+}
+
 function MyAccount() {
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -36,6 +43,7 @@ function MyAccount() {
   const refreshToken = localStorage.getItem('refreshToken') || '';
   const location: any = useLocation();
   const { myAccountScrollY } = useSelector((state: RootState) => state.persist.scroll);
+  const {OS} = useSelector((state:any)=>state.persist.device);
 
   const {
     isLoading: getMyAccountDataListIsLoading,
@@ -182,6 +190,14 @@ function MyAccount() {
     }, 200);
   };
 
+  const moveToKakaoPlusFriend = () => {
+    if (OS === 'android') {
+      window.BRIDGE.goToPlusFriends();
+    } else {
+      window.webkit.messageHandlers.goToPlusFriends.postMessage('');
+    }
+  };
+
   if (getMyAccountDataListIsLoading) {
     return <div className="account"><Footer/></div>;
   }
@@ -280,14 +296,11 @@ function MyAccount() {
           <h2 className="account-item-name">공지사항</h2>
           <img src={RightArrow} alt="detail" />
         </div>
-        <a href="http://plus.kakao.com/home/@delgo">
-          <div className="account-item last">
+          <div className="account-item last" aria-hidden="true"  onClick={moveToKakaoPlusFriend}>
             <h2 className="account-item-name">문의
               <p className="account-item-p">카카오 플러스친구로 이동</p></h2>
             <img src={RightArrow} alt="detail" />
           </div>
-        </a>
-
       </div>
       <div className="account-sign">
         <p className="account-out" aria-hidden="true" onClick={logOutModalOpen}>
