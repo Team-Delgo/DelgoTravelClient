@@ -15,8 +15,8 @@ import { scrollActions } from '../../redux/slice/scrollSlice';
 import AlertConfirm from '../../common/dialog/AlertConfirm';
 import { deleteUser } from '../../common/api/signup';
 import { MY_ACCOUNT_PATH, SIGN_IN_PATH } from '../../constants/path.const';
-import { getBookingState, getMyAccountDataList } from '../../common/api/myaccount';
-import { tokenRefresh } from '../../common/api/login';
+import {  getMyAccountDataList } from '../../common/api/myaccount';
+import { getBookingState } from '../../common/api/booking';
 import { RootState } from '../../redux/store';
 
 declare global{
@@ -31,12 +31,10 @@ function MyAccount() {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [text, setText] = useState('');
   const [age, setAge] = useState(0);
-  const [days, setDays] = useState('');
-  const [bookingData, setBookingData] = useState({ place: '', room: '', startDt: '', endDt: '', state: 'W' });
+  const [days, setDays] = useState('1');
   const pet = useSelector((state: RootState) => state.persist.user.pet);
   const navigation = useNavigate();
   const dispatch = useDispatch();
-  const email = useSelector((state: RootState) => state.persist.user.user.email);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const dogBirth = useSelector((state: RootState) => state.persist.user.pet.birthday);
   const accessToken = useSelector((state: RootState) => state.token.token);
@@ -48,7 +46,7 @@ function MyAccount() {
   const {
     isLoading: getMyAccountDataListIsLoading,
     data: myAccountDataList,
-    refetch,
+    refetch:getMyAccountDataListRefetch,
   } = useQuery('getMyAccountDataList', () => getMyAccountDataList(userId), {
     cacheTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 3,
@@ -61,13 +59,35 @@ function MyAccount() {
     },
   });
 
+  const {
+    isLoading: getBookingStateIsLoading,
+    data: bookingStateDataList,
+    refetch: getBookingStateRefetch,
+  } = useQuery('getBookingStateDateList', () => getBookingState(userId), {
+    cacheTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 3,
+    refetchInterval: false,
+    onError: (error: any) => {
+      useErrorHandlers(dispatch, error);
+    },
+  });
+
   useEffect(() => {
     if (location.state?.prevPath.includes(MY_ACCOUNT_PATH.MAIN)) {
       window.scroll(0, myAccountScrollY);
     } else {
       window.scroll(0, 0);
     }
-  }, [getMyAccountDataListIsLoading]);
+  }, [getMyAccountDataListIsLoading, getBookingStateIsLoading]);
+
+  useEffect(() => {
+    const startDate = new Date(bookingStateDataList?.data[0].startDt);
+    const endDate = new Date(bookingStateDataList?.data[0].endDt);
+    const dateDif = endDate.getTime() - startDate.getTime();
+    const dDay = dateDif / (1000 * 60 * 60 * 24);
+    const dDayString = Math.ceil(dDay).toString();
+    setDays(dDayString);
+  }, [getBookingStateIsLoading]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -75,31 +95,10 @@ function MyAccount() {
     const date = new Date(temp);
     const now = new Date();
     // const age = now.getFullYear - date.getFullYear;
-    console.log(now.getFullYear() - date.getFullYear());
     setAge(now.getFullYear() - date.getFullYear() + 1);
-    getBookingData();
   }, []);
 
-  useEffect(() => {
-    tokenRefresh(
-      { refreshToken },
-      (response: AxiosResponse) => {
-        const { code } = response.data;
 
-        if (code === 200) {
-          const accessToken = response.headers.authorization_access;
-          const refreshToken = response.headers.authorization_refresh;
-
-          dispatch(tokenActions.setToken(accessToken));
-          localStorage.setItem('refreshToken', refreshToken);
-        }
-        // else {
-        //   navigation('/user/signin', { replace: true });
-        // }
-      },
-      dispatch,
-    );
-  }, [accessToken]);
 
   const logoutHandler = () => {
     dispatch(tokenActions.setToken(''));
@@ -131,31 +130,6 @@ function MyAccount() {
     setText('정말 회원탈퇴 하시겠어요?ㅠㅠ');
   };
 
-  const getBookingData = () => {
-    getBookingState(
-      userId,
-      (response: AxiosResponse) => {
-        console.log(response);
-        const { data } = response.data;
-        if (data.length > 0) {
-          setBookingData({
-            place: data[0].place.name,
-            room: data[0].roomName,
-            startDt: data[0].startDt,
-            endDt: data[0].endDt,
-            state: data[0].bookingState,
-          });
-          const startDate = new Date(data[0].startDt);
-          const endDate = new Date(data[0].endDt);
-          const dateDif = endDate.getTime() - startDate.getTime();
-          const dDay = dateDif / (1000 * 60 * 60 * 24);
-          const dDayString = Math.ceil(dDay).toString();
-          setDays(dDayString);
-        }
-      },
-      dispatch,
-    );
-  };
   const moveToMyAccountPetInfoPage = () => {
     setTimeout(() => {
       dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
@@ -202,27 +176,31 @@ function MyAccount() {
     return <div className="account"><Footer/></div>;
   }
 
+  if (getBookingStateIsLoading) {
+    return <div className="account"><Footer/></div>;
+  }
+
   const bookingState = () => {
-    if (bookingData.state === 'W') {
+    if (bookingStateDataList.data[0].bookingState === 'W') {
       return <div className="account-purchase-reservation-box-state W">예약요청</div>;
     }
-    if (bookingData.state === 'F') {
+    if (bookingStateDataList.data[0].bookingState === 'F') {
       return <div className="account-purchase-reservation-box-state F">예약확정</div>;
     }
-    if (bookingData.state === 'CW') {
+    if (bookingStateDataList.data[0].bookingState === 'CW') {
       return <div className="account-purchase-reservation-box-state CW">취소요청</div>;
     }
 
     return <div className="account-purchase-reservation-box-state CF">취소완료</div>;
   };
 
-  const bookingCard = bookingData.place ? (
+  const bookingCard = bookingStateDataList?.data.length > 0 ? (
     <div className="account-purchase-reservation-box">
       <div className="account-purchase-reservation-box-wrapper">
-        <p className="account-purchase-reservation-box-wrapper-title">{bookingData.place}</p>
-        <p className="account-purchase-reservation-box-wrapper-room">{bookingData.room}</p>
+        <p className="account-purchase-reservation-box-wrapper-title">{bookingStateDataList?.data[0].place.name}</p>
+        <p className="account-purchase-reservation-box-wrapper-room">{bookingStateDataList?.data[0].roomName}</p>
         <p className="account-purchase-reservation-box-wrapper-date">
-          {bookingData.startDt.slice(5, 7)}.{bookingData.startDt.slice(8, 10)} ~ {bookingData.endDt.slice(5, 7)}.{bookingData.endDt.slice(8, 10)} {days}박
+          {bookingStateDataList?.data[0].startDt.slice(5, 7)}.{bookingStateDataList?.data[0].startDt.slice(8, 10)} ~ {bookingStateDataList?.data[0].endDt.slice(5, 7)}.{bookingStateDataList?.data[0].endDt.slice(8, 10)} {days}박
         </p>
       </div>
       {bookingState()}

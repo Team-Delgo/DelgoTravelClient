@@ -65,11 +65,6 @@ async function bookingGetDataByMain(accessToken: string, userId: number) {
   return data
 }
 
-// , {
-//   headers: {
-//     Authorization: accessToken,
-//   },
-// }
 
 async function getBookingHistory(userId: number) {
   const {data} = await axios
@@ -83,13 +78,19 @@ async function bookingCancle(
   dispatch: any,
 ) {
   try {
-    console.log(2)
     const result = await axios.post(`${process.env.REACT_APP_API_URL}/booking/cancel/${bookingId}`);
     success(result);
-    console.log(result)
   } catch (error: AxiosError | any) {
     useErrorHandlers(dispatch, error);
   }
 }
 
-export { bookingRequest, bookingGetData, bookingGetDataByMain, getBookingHistory,bookingCancle };
+async function getBookingState(userId: number) {
+  const { data } = await axios
+    .get(`${process.env.REACT_APP_API_URL}/booking/getData/account`, {
+      params: { userId },
+    })
+  return data
+}
+
+export { bookingRequest, bookingGetData, bookingGetDataByMain, getBookingHistory, bookingCancle, getBookingState };
