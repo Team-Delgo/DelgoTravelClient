@@ -3,10 +3,11 @@ import AppleLogin from 'react-apple-login';
 import "./AppleLoginButton.scss";
 
 function AppleLoginButton() {
+  const appleClientId = process.env.REACT_APP_APPLE_CLIENT_ID;
   return (
     <div className='apple-login-button'>
       <AppleLogin
-        clientId="pet.delgo"
+        clientId={`${appleClientId}`}
         redirectURI="https://delgo.pet/oauth/redirect/apple"
         responseType="code"
         responseMode="query"

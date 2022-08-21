@@ -48,7 +48,7 @@ function PetInfo() {
   const state = useLocation().state as LocationState;
   const { email, password, nickname, phone, isSocial } = state;
   const [image, setImage] = useState<any>();
-  const [sendingImage, setSendingImage] = useState<any>();
+  const [sendingImage, setSendingImage] = useState<Array<File>>([]);
   const [enteredInput, setEnteredInput] = useState<Input>({ name: '', birth: undefined, type: '' });
   const [nameFeedback, setNameFeedback] = useState('');
   const [modalActive, setModalActive] = useState(false);
@@ -70,7 +70,7 @@ function PetInfo() {
     
       setImage(currentImageUrl);
       reader.readAsDataURL(event.target.files![0]);
-      setSendingImage(event.target.files![0]);
+      setSendingImage([event.target.files![0]]);
     }
 
     // let {petImage} = files;
@@ -187,7 +187,7 @@ function PetInfo() {
               }),
             );
             // formData.append('photo', sendingImage);
-            formData.append('photo', 'asdf');
+            formData.append('photo', sendingImage[0]);
             petImageUpload(
               {formdata:formData,userId},
               (response: AxiosResponse) => {
@@ -241,7 +241,7 @@ function PetInfo() {
                 },
               }),
             );
-            formData.append('photo', sendingImage);
+            formData.append('photo', sendingImage[0]);
             petImageUpload(
               {formdata:formData,userId},
               (response: AxiosResponse) => {
