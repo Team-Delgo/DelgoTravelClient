@@ -151,10 +151,9 @@ function ChangePetInfo() {
       dispatch,
     );
     if (imageisChanged) {
-      formData.append('userId', userId.toString());
       formData.append('photo', sendingImage);
       petImageUpload(
-        formData,
+        {formdata:formData,userId},
         (response: AxiosResponse) => {
           console.log(response);
         },

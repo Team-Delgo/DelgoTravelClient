@@ -186,10 +186,9 @@ function PetInfo() {
                 },
               }),
             );
-            formData.append('userId', userId.toString());
             formData.append('photo', sendingImage);
             petImageUpload(
-              formData,
+              {formdata:formData,userId},
               (response: AxiosResponse) => {
                 console.log(response);
                 const { code, data } = response.data;
@@ -241,10 +240,9 @@ function PetInfo() {
                 },
               }),
             );
-            formData.append('userId', userId.toString());
             formData.append('photo', sendingImage);
             petImageUpload(
-              formData,
+              {formdata:formData,userId},
               (response: AxiosResponse) => {
                 console.log(response);
                 const { code, data } = response.data;
