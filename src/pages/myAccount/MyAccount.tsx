@@ -81,8 +81,8 @@ function MyAccount() {
   }, [getMyAccountDataListIsLoading, getBookingStateIsLoading]);
 
   useEffect(() => {
-    const startDate = new Date(bookingStateDataList?.data[0].startDt);
-    const endDate = new Date(bookingStateDataList?.data[0].endDt);
+    const startDate = new Date(bookingStateDataList?.data[0]?.startDt);
+    const endDate = new Date(bookingStateDataList?.data[0]?.endDt);
     const dateDif = endDate.getTime() - startDate.getTime();
     const dDay = dateDif / (1000 * 60 * 60 * 24);
     const dDayString = Math.ceil(dDay).toString();
