@@ -241,6 +241,7 @@ function PetInfo() {
                 },
               }),
             );
+            console.log(new Date(), userId);
             formData.append('photo', sendingImage[0]);
             petImageUpload(
               {formdata:formData,userId},
@@ -253,6 +254,7 @@ function PetInfo() {
               },
               dispatch,
             );
+            console.log(new Date());
             navigation(SIGN_UP_PATH.COMPLETE, { state: { name: enteredInput.name } });
           } else {
             console.log(codeMsg);
