@@ -51,15 +51,15 @@ async function signup(info: SignUpData, success: (data: AxiosResponse) => void, 
       //   size: pet.size,
       //   // weight: 4.3,
       // },
-      
-        userName: nickname,
-        email,
-        password,
-        phoneNo: phone,
-        petName: pet.name,
-        birthday: pet.birthday,
-        petSize: pet.size,
-        // weight: 4.3,
+
+      userName: nickname,
+      email,
+      password,
+      phoneNo: phone,
+      petName: pet.name,
+      birthday: pet.birthday,
+      petSize: pet.size,
+      // weight: 4.3,
     })
     .then((data) => {
       success(data);
@@ -131,9 +131,17 @@ async function phoneCheckNumber(
     });
 }
 
-async function petImageUpload(data:{formdata:FormData,userId:number,}, success: (data: AxiosResponse) => void, dispatch: any) {
+async function petImageUpload(
+  data: { formdata: FormData; userId: number },
+  success: (data: AxiosResponse) => void,
+  dispatch: any,
+) {
   await axios
-    .post(`${process.env.REACT_APP_API_URL}/photo/upload/petProfile/${data.userId}`, data.formdata)
+    .post(`${process.env.REACT_APP_API_URL}/photo/upload/petProfile/${data.userId}`, data.formdata, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
     .then((data) => {
       success(data);
     })
