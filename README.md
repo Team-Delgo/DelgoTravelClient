@@ -62,6 +62,10 @@
 
 `MVC`
 
+### ⚙️ ERD
+
+![KakaoTalk_20220821_120505217](https://user-images.githubusercontent.com/54196723/185776809-d8868cdb-918c-4ba9-a75e-8e568074aad2.jpg)
+
 <br/>
 
 <h2 id="0">
