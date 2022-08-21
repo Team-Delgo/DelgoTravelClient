@@ -323,8 +323,11 @@ function RiviewWritingPage() {
           ))}
         </div>
       </body>
-      <div aria-hidden="true" onClick={submitRivew}>
+      {/* <div aria-hidden="true" onClick={submitRivew}>
         <BottomButton text="작성완료" />
+      </div> */}
+      <div className="review-submit-button" aria-hidden="true" onClick={submitRivew}>
+        작성완료
       </div>
       {reviewCompleted && <AlertConfirmOne text="리뷰 작성이 완료 되었습니다" buttonHandler={confirmReviewCompletedClose} />}
       {reviewTextLengthLimit && <AlertConfirmOne text="리뷰를 최소 10글자이상 작성하세요" buttonHandler={alertReviewLengthLimitClose} />}

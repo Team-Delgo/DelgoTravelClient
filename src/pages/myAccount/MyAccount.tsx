@@ -19,12 +19,12 @@ import {  getMyAccountDataList } from '../../common/api/myaccount';
 import { getBookingState } from '../../common/api/booking';
 import { RootState } from '../../redux/store';
 
-declare global{
-  interface Window{
-    BRIDGE:any
-    webkit:any
-  }
-}
+// declare global{
+//   interface Window{
+//     BRIDGE:any
+//     webkit:any
+//   }
+// }
 
 function MyAccount() {
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
