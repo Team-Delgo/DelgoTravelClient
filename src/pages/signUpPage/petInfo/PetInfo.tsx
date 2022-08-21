@@ -186,7 +186,8 @@ function PetInfo() {
                 },
               }),
             );
-            formData.append('photo', sendingImage);
+            // formData.append('photo', sendingImage);
+            formData.append('photo', 'asdf');
             petImageUpload(
               {formdata:formData,userId},
               (response: AxiosResponse) => {
