@@ -189,7 +189,7 @@ function PetInfo() {
             // formData.append('photo', sendingImage);
             formData.append('photo', sendingImage[0]);
             petImageUpload(
-              {formdata:formData,userId},
+              {formData,userId},
               (response: AxiosResponse) => {
                 console.log(response);
                 const { code, data } = response.data;
@@ -246,7 +246,7 @@ function PetInfo() {
             console.log(sendingImage[0]);
             console.log(formData);
             await petImageUpload(
-              {formdata:formData,userId},
+              {formData,userId},
               (response: AxiosResponse) => {
                 console.log(response);
                 const { code, data } = response.data;

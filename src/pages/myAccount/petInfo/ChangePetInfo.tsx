@@ -2,6 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import imageCompression from 'browser-image-compression';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { checkPetName } from '../../signUpPage/userInfo/ValidCheck';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
@@ -14,7 +15,7 @@ import Check from '../../../icons/check.svg';
 import { userActions } from '../../../redux/slice/userSlice';
 import { MY_ACCOUNT_PATH } from '../../../constants/path.const';
 import { changePetInfo } from '../../../common/api/myaccount';
-import {RootState} from '../../../redux/store'
+import { RootState } from '../../../redux/store';
 
 interface Input {
   name: string;
@@ -66,15 +67,28 @@ function ChangePetInfo() {
     isChecked.l = true;
   }
 
-  const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleImage = async (event: ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
     reader.onload = function () {
       setImage(reader.result);
     };
     const { files } = event.target;
     // let {petImage} = files;
-    reader.readAsDataURL(event.target.files![0]);
-    setSendingImage(event.target.files![0]);
+    const options = {
+      maxSizeMB: 0.2,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    };
+    const compressedFile = await imageCompression(event.target.files![0], options);
+    reader.readAsDataURL(compressedFile);
+    reader.onloadend = () => {
+      // 변환 완료!
+    const base64data = reader.result;
+
+      // formData 만드는 함수
+    console.log(compressedFile.type);
+    setSendingImage(base64data);
+    }
     setImageIsChanged(true);
   };
 
@@ -84,6 +98,25 @@ function ChangePetInfo() {
         return { ...prev, [key]: true };
       });
     }
+  };
+
+  const handlingDataForm = async (dataURI:any) => {
+    const byteString = atob(dataURI.split(",")[1]);
+  
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i+=1) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([ia], {
+      type: "image/jpeg"
+    });
+    const file = new File([blob], "image.jpg");
+  
+    const formData = new FormData();
+    formData.append("photo", file);
+
+    return formData;
   };
 
   const nameInputCheck = (name: string) => {
@@ -130,7 +163,7 @@ function ChangePetInfo() {
     });
   };
 
-  const submitHandler = () => {
+  const submitHandler = async () => {
     const petInfo = {
       name: enteredInput.name,
       birthday: enteredInput.birthday,
@@ -151,9 +184,9 @@ function ChangePetInfo() {
       dispatch,
     );
     if (imageisChanged) {
-      formData.append('photo', sendingImage);
+      const formData = await handlingDataForm(sendingImage);
       petImageUpload(
-        {formdata:formData,userId},
+        { formData, userId },
         (response: AxiosResponse) => {
           console.log(response);
         },
@@ -161,7 +194,14 @@ function ChangePetInfo() {
       );
     }
     console.log(userId);
-    dispatch(userActions.changepetinfo({ name: enteredInput.name, birth: enteredInput.birthday, size: enteredInput.type, image }));
+    dispatch(
+      userActions.changepetinfo({
+        name: enteredInput.name,
+        birth: enteredInput.birthday,
+        size: enteredInput.type,
+        image,
+      }),
+    );
     navigation(MY_ACCOUNT_PATH.MAIN);
 
     // 비동기 처리
@@ -252,7 +292,7 @@ function ChangePetInfo() {
             onChange={typeChangeHandler}
           />
           <span className="dogtype-button">
-            <img className={classNames("checkbox-icon", { invisible: modalActive })} src={Check} alt="check" />
+            <img className={classNames('checkbox-icon', { invisible: modalActive })} src={Check} alt="check" />
           </span>
           소형견
         </label>
@@ -266,7 +306,7 @@ function ChangePetInfo() {
             onChange={typeChangeHandler}
           />
           <span className="dogtype-button">
-            <img className={classNames("checkbox-icon", { invisible: modalActive })} src={Check} alt="check" />
+            <img className={classNames('checkbox-icon', { invisible: modalActive })} src={Check} alt="check" />
           </span>
           중형견
         </label>
@@ -280,7 +320,7 @@ function ChangePetInfo() {
             onChange={typeChangeHandler}
           />
           <span className="dogtype-button">
-            <img className={classNames("checkbox-icon", { invisible: modalActive })} src={Check} alt="check" />
+            <img className={classNames('checkbox-icon', { invisible: modalActive })} src={Check} alt="check" />
           </span>
           대형견
         </label>

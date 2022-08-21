@@ -132,12 +132,12 @@ async function phoneCheckNumber(
 }
 
 async function petImageUpload(
-  data: { formdata: FormData; userId: number },
+  data: { formData: FormData; userId: number },
   success: (data: AxiosResponse) => void,
   dispatch: any,
 ) {
   await axios
-    .post(`${process.env.REACT_APP_API_URL}/photo/upload/petProfile/${data.userId}`, data.formdata, {
+    .post(`${process.env.REACT_APP_API_URL}/photo/upload/petProfile/${data.userId}`, data.formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
