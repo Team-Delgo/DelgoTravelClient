@@ -78,7 +78,7 @@ function MyAccount() {
     } else {
       window.scroll(0, 0);
     }
-  }, [getMyAccountDataListIsLoading, getBookingStateIsLoading]);
+  }, [getMyAccountDataListIsLoading, getBookingStateIsLoading, age, days]);
 
   useEffect(() => {
     const startDate = new Date(bookingStateDataList?.data[0]?.startDt);
@@ -94,7 +94,6 @@ function MyAccount() {
     const temp = `${dogBirth.slice(0, 4)}-${dogBirth.slice(5, 7)}-${dogBirth.slice(8, 10)}`;
     const date = new Date(temp);
     const now = new Date();
-    // const age = now.getFullYear - date.getFullYear;
     setAge(now.getFullYear() - date.getFullYear() + 1);
   }, []);
 
@@ -194,7 +193,7 @@ function MyAccount() {
     return <div className="account-purchase-reservation-box-state CF">취소완료</div>;
   };
 
-  const bookingCard = bookingStateDataList?.data.length > 0 ? (
+  const bookingCard = bookingStateDataList?.data?.length > 0 ? (
     <div className="account-purchase-reservation-box">
       <div className="account-purchase-reservation-box-wrapper">
         <p className="account-purchase-reservation-box-wrapper-title">{bookingStateDataList?.data[0].place.name}</p>
