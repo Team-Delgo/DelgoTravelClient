@@ -209,7 +209,7 @@ function PetInfo() {
     } else {
       signup(
         userInfo,
-        (response: AxiosResponse) => {
+        async (response: AxiosResponse) => {
           const { code, codeMsg, data } = response.data;
           if (code === 200) {
             const accessToken = response.headers.authorization_access;
@@ -241,9 +241,11 @@ function PetInfo() {
                 },
               }),
             );
-            console.log(new Date(), userId);
+            console.log(1, userId);
             formData.append('photo', sendingImage[0]);
-            petImageUpload(
+            console.log(sendingImage[0]);
+            console.log(formData);
+            await petImageUpload(
               {formdata:formData,userId},
               (response: AxiosResponse) => {
                 console.log(response);
@@ -254,7 +256,7 @@ function PetInfo() {
               },
               dispatch,
             );
-            console.log(new Date());
+            console.log(2);
             navigation(SIGN_UP_PATH.COMPLETE, { state: { name: enteredInput.name } });
           } else {
             console.log(codeMsg);
