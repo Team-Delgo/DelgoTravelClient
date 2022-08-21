@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState ,memo } from 'react';
+import { useSelector } from "react-redux";
 import { Link} from 'react-router-dom';
 import './HomeReservation.scss';
 import RightArrow from '../../../icons/right-arrow-black.svg';
@@ -17,7 +18,7 @@ function HomeReservation(props: { lists: any[], pageChange: (page: number) => vo
   const [startPosition, setStartPosition] = useState(0);
   const [page, setPage] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
-  // const [infoArray, setInfoArray] = useState<Info[]>([]);
+  const {OS} = useSelector((state:any)=>state.persist.device);
   const infoArray = lists.map((list) => {
     const today = new Date();
     const bookDate = new Date(list.startDt);
@@ -82,6 +83,10 @@ function HomeReservation(props: { lists: any[], pageChange: (page: number) => vo
     setStartPosition(main);
   };
 
+  const moveToCallApp = (placeTelePhoneNumber: string) => (event: React.MouseEvent) => {
+    window.webkit.messageHandlers.numToCall.postMessage(`tel://${placeTelePhoneNumber}`)
+  };
+
   const reservationList = lists.map((list) => {
     const days = ['일', '월', '화', '수', '목', '금', '토'];
     let startDate = `${list.startDt.slice(5, 7)}/${list.startDt.slice(8, 10)}`;
@@ -104,8 +109,6 @@ function HomeReservation(props: { lists: any[], pageChange: (page: number) => vo
     const endDay = days[endDayTemp.getDay()];
     const placeTelePhonNumber =list.place.phoneNo
     const placeNaverMapUrl =list.place.mapUrl
-
-    // target="_blank"
 
     return (
       <div className="homemodal-item">
@@ -138,12 +141,18 @@ function HomeReservation(props: { lists: any[], pageChange: (page: number) => vo
                   {endDate} {endDay}
                 </div>
                 <div className="homemodal-item-card-time">{list.place.checkout.slice(0, 5)}</div>
-                <a href={`tel: ${placeTelePhonNumber}`}>
-                  <div className="homemodal-item-card-button" aria-hidden="true">
-                    <img className="homemodal-item-card-location" src={Call} alt="call" />
-                    <div className="homemodal-item-card-label">전화</div>
-                  </div>
-                </a>
+                {
+                  OS === 'android' ? <a href={`tel: ${placeTelePhonNumber}`}>
+                    <div className="homemodal-item-card-button" aria-hidden="true">
+                      <img className="homemodal-item-card-location" src={Call} alt="call" />
+                      <div className="homemodal-item-card-label">전화</div>
+                    </div>
+                  </a>
+                    : <div className="homemodal-item-card-button" aria-hidden="true" onClick={moveToCallApp(placeTelePhonNumber)}>
+                      <img className="homemodal-item-card-location" src={Call} alt="call" />
+                      <div className="homemodal-item-card-label">전화</div>
+                    </div>
+                }
               </div>
             </div>
           </div>

@@ -50,7 +50,6 @@ interface FolderTypeProps {
 }
 
 function History({currentTab}:FolderTypeProps) {
-  const navigation = useNavigate();
   const dispatch = useDispatch();
   const accessToken = useSelector((state: RootState) => state.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
@@ -89,6 +88,7 @@ function History({currentTab}:FolderTypeProps) {
   }, [currentTab,traveledPlaces]);
 
   useEffect(() => {
+    console.log(location.state?.prevPath)
     if (location.state?.prevPath.includes('/reservation-history')) {
       window.scrollTo(0, myStorageScrollY);
     }
@@ -101,19 +101,19 @@ function History({currentTab}:FolderTypeProps) {
     else {
       window.scrollTo(0, 0);
     }
-  }, [getRecommendedPlacesIsLoading, getTraveledPlacesIsLoading]);
+  }, [traveledPlaces,recommendedPlaces]);
 
-  if (getRecommendedPlacesIsLoading){
+  if (getRecommendedPlacesIsLoading) {
     return <div className="travel-history-container">&nbsp;</div>;
   }
-  if (getTraveledPlacesIsLoading){
+  if (getTraveledPlacesIsLoading) {
     return <div className="travel-history-container">&nbsp;</div>;
   }
   
   return (
     <div className="travel-history-container">
-      {traveledPlaces?.data.length > 0 ? (
-        <div className="travel-history-number">델고 갔던 {traveledPlaces?.data.length}개 장소</div>
+      {traveledPlaces.data.length > 0 ? (
+        <div className="travel-history-number">델고 갔던 {traveledPlaces.data.length}개 장소</div>
       ) : (
         <div className="travel-history-notice">
           <FootPrintActive className="travel-history-notice-foot-print" />
@@ -121,12 +121,12 @@ function History({currentTab}:FolderTypeProps) {
           <div className="travel-history-notice-sub">이번 주말 델고가요</div>
         </div>
       )}
-      {traveledPlaces?.data.length > 0
-        ? traveledPlaces?.data.map((place: TravelHisotryPlaceType) => (
+      {traveledPlaces.data.length > 0
+        ? traveledPlaces.data.map((place: TravelHisotryPlaceType) => (
           <TravelHisotryPlace traveledPlace={place} key={place.bookingId} />
         ))
-        : recommendedPlaces?.data.map((place: RecommendedPlaceType) => (
-          <RecommendedPlace place={place} key={place.placeId} getRecommendedPlacesRefetch={getRecommendedPlacesRefetch} currentTab={currentTab}/>
+        : recommendedPlaces.data.map((place: RecommendedPlaceType) => (
+          <RecommendedPlace place={place} key={place.placeId} getRecommendedPlacesRefetch={getRecommendedPlacesRefetch} currentTab={currentTab} />
         ))}
     </div>
   );

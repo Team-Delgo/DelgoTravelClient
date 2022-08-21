@@ -17,7 +17,7 @@ function Settings() {
   const [alert, setAlert] = useState(false);
   const navigate = useNavigate();
   const location: any = useLocation();
-  const OS = useSelector((state:any)=>state.persist.device);
+  const {OS} = useSelector((state:any)=>state.persist.device);
 
   useEffect(() => {
     window.scroll(0, 0);
@@ -42,7 +42,7 @@ function Settings() {
       window.BRIDGE.setNotify()
     }
     else{
-      window.webkit.messageHandlers.setNotify.pushMessage()
+      window.webkit.messageHandlers.setNotify.postMessage('') 
     }
   };
 

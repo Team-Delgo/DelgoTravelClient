@@ -63,14 +63,19 @@ import SocialExist from './pages/signUpPage/forSocial/SocialExist';
 import Footer from './common/components/FooterNavigation';
 import { deviceAction } from './redux/slice/deviceSlice';
 
+declare global{
+  interface Window{
+    BRIDGE:any
+    webkit:any
+  }
+}
+
 function App() {
-  const [OS, setOS] = useState('');
   const hasError = useSelector((state: RootState) => state.error.hasError);
   const dispatch = useDispatch();
   const queryClient = new QueryClient();
   const location = useLocation();
   const refreshToken = localStorage.getItem('refreshToken') || '';
-  const navigation = useNavigate();
 
   useEffect(() => {
     const varUA = navigator.userAgent.toLowerCase();
