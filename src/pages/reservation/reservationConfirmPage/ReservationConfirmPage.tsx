@@ -27,36 +27,36 @@ function ReservationConfirmPage() {
     bookingId: "",
     bookingState: "",
     canCancelDate: "",
-    commission:"",
+    commission: "",
     couponId: 0,
     couponPrice: "",
     endDt: "",
     finalPrice: "",
     originalPrice: "",
     point: 0,
-    refund:"",
+    refund: "",
     registDt: "",
     roomName: "",
     startDt: "",
     reservedName: "",
     userPhoneNo: "",
-    place:{
+    place: {
       address: "",
       checkin: "",
       checkout: "",
       isBooking: 0,
       lowestPrice: null,
       mainPhotoUrl: "",
-      mapUrl:"",
+      mapUrl: "",
       name: "",
       placeId: 0,
-      phoneNo:"",
-      policy:"",
+      phoneNo: "",
+      policy: "",
       wishId: 0
     }
   })
   const { bookingId } = useParams();
-  const {OS} = useSelector((state:any)=>state.persist.device);
+  const { OS } = useSelector((state: any) => state.persist.device);
 
   useEffect(() => {
     window.scrollTo(0, 0);
