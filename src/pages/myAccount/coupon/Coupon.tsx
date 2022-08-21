@@ -151,9 +151,6 @@ function Coupon() {
           <span>30일 이내 소멸예정 쿠폰 {scheduledCoupon}장</span>
         </div>
         <div className="coupon-flexwrapper">
-          {/* <div aria-hidden="true" className="coupon-regist" onClick={modalOpen}>
-            쿠폰등록하기
-          </div> */}
           {existCoupon?.length ?
             existCoupon :
             <div className='coupon-nocoupon'>

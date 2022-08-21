@@ -39,7 +39,7 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
   const [wishList, setWishList] = useState(place.wishId);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const accessToken = useSelector((state: RootState) => state.token.token);
-  const OS = useSelector((state:any)=>state.persist.device);
+  const {OS} = useSelector((state:any)=>state.persist.device);
   const dispatch = useDispatch();
   const location: any = useLocation();
   const navigate = useNavigate();
@@ -58,7 +58,7 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
       window.BRIDGE.vibrate() 
     }
     else{
-      window.webkit.messageHandlers.vibrate.pushMessage()
+      window.webkit.messageHandlers.vibrate.postMessage('') 
     }
   }, [wishList]);
 
@@ -77,7 +77,7 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
       window.BRIDGE.vibrate() 
     }
     else{
-      window.webkit.messageHandlers.vibrate.pushMessage()
+      window.webkit.messageHandlers.vibrate.postMessage('')
     }
   }, [wishList]);
 
@@ -89,7 +89,7 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
 
   return (
     <div className="popular-place">
-      <img src={place.mainPhotoUrl} alt="popular-place-img" aria-hidden="true" onClick={moveToDetailPage}/>
+      <img src={place.mainPhotoUrl} alt="popular-place-img" aria-hidden="true" onClick={moveToDetailPage} />
       <div className="popular-place-name" aria-hidden="true" onClick={moveToDetailPage}>{place.name}</div>
       <div className="popular-place-location" aria-hidden="true" onClick={moveToDetailPage}>{place.address}</div>
       {wishList ? (

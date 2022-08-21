@@ -37,8 +37,7 @@ const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = configureStore({
   reducer: { persist: persistedReducer, token: tokenSlice, error: errorSlice, date: dateSlice},
-  // devTools: process.env.NODE_ENV !== 'production', 
-  devTools: true,
+  devTools: process.env.NODE_ENV !== 'production', 
 });
 export type RootState = ReturnType<typeof store.getState>
 export default store;

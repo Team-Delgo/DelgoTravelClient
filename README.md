@@ -1,69 +1,97 @@
-# <b>🎵 Pentatonic-Android Repository 🎵</b>
+# <b>🐕 Delgo Client Repository 🐕</b>
+![logo_1](https://user-images.githubusercontent.com/54196723/185036077-7ec238dd-88f6-4c82-adc9-89eaca0b3c2c.png)
 
-<img src="https://penta-tonic.com/static/media/Logo.c2134bc5.png" width="100%" style="border:2px solid #9F81F7; border-radius:25px;">
+<br/>
 
-## <b> 🗂️ Contents </b>
 
--   ### <b> <a href="#0"> 🔗 Team introduce </a> </b>
--   ### <b> <a href="#0.5"> 🔗 Service introduce </a> </b>
--   ### <b> <a href="#1"> 🔗 Other Repositories & Page </a> </b>
--   ### <b> <a href="#2"> 🔗 Technology </a> </b>
--   ### <b> <a href="#3"> 🔗 Result </a> </b>
+## <b> 📚 Contents </b>
 
-<hr>
+-   ### <b> <a href="#1"> 🐶 Service introduce </a> </b>
+-   ### <b> <a href="#2"> 🐶 Repositories </a> </b>
+-   ### <b> <a href="#3"> 🐶 Technology </a> </b>
+-   ### <b> <a href="#0"> 🐶 Team introduce </a> </b>
+-   ### <b> <a href="#4"> 🐶 Store link </a> </b>
+-   ### <b> <a href="#5"> 🐶 Develop period </a> </b>
+-   ### <b> <a href="#6"> 🐶 Result </a> </b>
+
+<br/>
+
+
+
+
+<h2 id="1">
+    <b>💁 Service introduce</b>
+</h2>
+
+### 전국민 반려인을 위한 반려견 동반 여행 O2O 서비스 플랫폼
+
+-   <b>지역별 다양한 숙소정보 제공</b>
+-   <b>실시간 가격 비교</b>
+-   <b>일정별 예약 현황 확인</b>
+-   <b>간편한 예약 결제</b>
+-   <b>쿠폰/포인트 할인</b>
+-   <b>리뷰를 통한 솔직한 후기</b></b>
+-   <b>마음에 드는 숙소찜</b>
+-   <b>delgo 자체 숙소 추천</b>
+
+<br/>
+
+
+<h2 id="2">
+<b>📂 Repositories</b>
+</h2>
+
+-   ### <b> <a href="https://github.com/Team-Delgo"> 🔗 Delgo-Organization </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo/DelgoClient" > 🔗 Delgo-Frontend </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo/DelgoServer" > 🔗 Delgo-Backend </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo/DelgoAndroid" > 🔗 Delgo-Android </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo/DelgoIOS"> 🔗 Delgo-IOS </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo/PMS" > 🔗 Delgo-PMS-Frontend </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo/PMS_SERVER" > 🔗 Delgo-PMS-Backend </a> </b>
+
+<br/>
+
+
+<h2 id="3">🛠 Technology</h2>
+
+### ⚙️ Tech Stack
+
+`React`, `Redux Toolkit`, `React Query`, `SCSS`, `TypeScript`, `Eslint`, `Prettier`, `Kakao Map`, `Toss Payments`, `Spring Boot`, `JPA`, `Maria DB`, `Nginx`, `Apache Tomcat`, `NCP`, `Object Storage`, `JWT`, `OAuth 2.0`, `REST API`
+
+### ⚙️ Architecture
+
+`MVC`
+
+<br/>
 
 <h2 id="0">
     <b>💁 Team  introduce </b>
 </h2>
 
-<img src="https://cdn.discordapp.com/attachments/843498829781008387/906020785318137926/unknown.png">
+| Name        | Part   | Development                                   |
+| ------------| -------|-----------------------------------------------|
+|<a href="https://github.com/wjdtjrdn1234">정석우</a>|**front-end**|숙소 검색 서비스 구현</li> <li>지역별 숙소 필터링 구현</li> <li>일정별 숙소 예약현황,가격정보 노출</li> <li>데이터 로딩시 보여줄 skeleton UI 개발 </li><br/>나의 저장소 서비스 구현<li>위시리스트 숙소리스트 노출 </li><li> 예약내역 리스트 노출 </li><li>위시리스트,여행내역 없을시 추천숙소 노출</li><br/>리뷰 작성 서비스 구현<li>formdata & FileReader 이용한 이미지확장자 파일 업로드(리뷰사진)</li><li>별점,텍스트,이미지를 통한 리뷰작성</li><br/>숙소 상세 서비스 구현<li>숙소사진,별점,리뷰,룸리스트,예약현황,가격,주소,숙소공지,환불규정 노출</li><li>일정별 예약현황,가격 다르게 노출</li><li>리뷰사진 있는 후기 필터링</li><li>Kakao Map API사용해 숙소위치 노출</li><li>react-responsive-carousel 라이브러리 사용해 숙소사진 슬라이더화</li><li>Redux Toolkit을 이용한 숙소정보,룸정보 상태관리</li><br/>예약 결제 서비스 구현 <li>Toss Payments API이용한 예약결제</li><li>쿠폰,포인트 이용한 할인</li><li>Redux Toolkit을 이용한 예약정보 상태관리(예약자명,숙소명,방타입명,쿠폰사용 유무,결제가격,일정)</li><br/>예약 조회 서비스 구현 <li>예약대기,예약확정에 따른 조건부 랜더링</li><li>예약 취소 구현 -> 취소시 예약취소 조회 페이지로 이동</li><br/>네이티브 Bridge 함수 연결 <li>Ios,Android copyToClipboard 연결</li><li>Ios,Android vibrate 연결</li><li>Ios,Android goToPlusFriends 연결</li><li>Ios,Android setNotify 연결</li><br/> 에디터 노트 서비스 구현 <br/><br/>위시리스트 추가,삭제 구현 <br/><br/>React Query를 이용한 데이터 패칭,에러핸들링,로딩처리 비동기처리와 서버상태 관리<br/><br/>Redux Toolkit을 이용한 스크롤위치,지역명,탭 상태관리|
+|<a href="https://github.com/ckrb63">김찬규</a>| **front-end**|로그인 서비스 개발<li>JWT Access, Refresh Token 관리</li> <li>비밀번호 찾기</li> <li>OAuth2.0 로그인 Kakao, Naver, Apple </li> <li>Redux Toolkit으로 회원 정보 상태 관리</li><br/>회원가입 서비스 개발<li>핸드폰 인증을 통한 회원가입 구현</li><li>입력값 정규식으로 유효성 검사, 불필요한 통신 최소화</li><li>FormData로 강아지 사진 등록</li><li>OAuth2.0 회원가입 Kakao, Naver, Apple </li><br/>회원 정보 페이지 서비스 개발<li>강아지 정보, 사진 수정</li><li>회원 정보 수정</li><li>예약 현황 확인</li><li>로그아웃, 회원탈퇴</li><li>쿠폰 조회,등록</li><li>리뷰 목록 페이지</li><li>설정 페이지</li><br/>체험 기능 구현<li>로그인이 필요한 기능은 SignIn페이지로 보내는 Alert</li><br/>Redux Toolkit을 통한 전역 비동기 Error Alert 기능 개발<br/><br/>Calendar 개발<li>Room Type에 따른 예약 가능 날짜,가격 동기화</li><br/>홈 화면 내부 페이징 가능한 예약현황 확인 서비스 개발<br/><br/>앱 내부 애니메이션, 효과|
+|<a href="https://github.com/Gupuroom">이동재 </a>|**back-end**||
+| <a href="https://github.com/danpung2">조현서 </a>|**back-end**||
 
-<b>고등학생 대학생 백수가 모여서 만든 팀 고대백 입니다</b>
+<br/>
 
-| Part                 | Name                                                |
-| -------------------- | --------------------------------------------------- |
-| **front-end**        | <a href="https://github.com/wjdtjrdn1234">정석우</a> |
-| **front-end**        | <a href="https://github.com/ckrb63">김찬규</a> |
-| **back-end**         | <a href="https://github.com/Gupuroom">이동재 </a>      |
-| **back-end**         | <a href="https://github.com/danpung2">조현서 </a>     |
 
-<hr>
 
-<h2 id="0.5">
-    <b>💁 Service introduce</b>
-</h2>
+<h2 id="4">🛒 Store link</h2>
 
-### 시간적 제약, 공간적 제약, 금전적 제약을 해결하며 온라인에서 밴드 활동을 할 수 있는 플랫폼
+-   ### <b> <a href="https://play.google.com/store/apps/details?id=com.delgo.delgoandroid" target="_blank" > 🔗 Android </a> </b>
+-   ### <b> <a href=""> 🔗 IOS </a> </b>
 
--   녹음 기반의 밴드 음악 연주 및 커버 플랫폼
--   시간적, 실력적 부담 없이 밴드 음악을 즐길 수 있음
--   다양한 이펙터를 제공함으로 재미있게 커버할 수 있음
--   장비가 없더라도 녹음한 커버에 대하여 각종 정제가 들어가서 장비 없이도 고퀄리티의 녹음이 가능
--   다양한 세션들을 조합하여 리스너의 취향대로 듣기 가능
+<br/>
 
-<hr>
 
-<h2 id="1">
-<b>📘 제 12기 SW 마에스트로 고대백 팀 프로젝트<br>'Pentatonic (펜타토닉)' 의 Android 레포지토리 입니다. </b><br><br>
-<b>📚 Other Repositories & Page</b>
-</h2>
+<h2 id="5">📅 Develop period</h2>
 
--   ### <b> <a href="https://git.swmgit.org/swm-12/12_swm39"> 🔗 Pentatonic-Organization </a> </b>
--   ### <b> <a href="https://git.swmgit.org/swm-12/12_swm39/Pentatonic-backend" > 🔗 Pentatonic-Backend </a> </b>
--   ### <b> <a href="https://git.swmgit.org/swm-12/12_swm39/Pentatonic-Web" > 🔗 Pentatonic-Web </a> </b>
+<b>22.03.15 ~ 운영 관리 중</b>
 
-<hr>
+<br/>
 
-<h2 id="2">🚀 Technology</h2>
 
-### 🛠 Tech Stack
-
-`Kotlin`, `JetPack`, `DataBinding`, `ViewModel`, `AAC`, `LiveData`, `Apollo-Client`, `OkHttp`, `GraphQL` `Koin`, `Timber`, `Glide`, `RxJava`, `Coroutine`, `ExoPlayer`, `AudioRecorder`, `AudioEffect`, `Navigation Component`, `FCM`, `Firebase Analytics`, `CustomView`
-
-### ⚙️ Architecture
-
-`MVVM`
-
-<hr>
-
-<h2 id="3">🏙 Result</h2>
+<h2 id="6">📷 Result</h2>

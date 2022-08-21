@@ -43,7 +43,7 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
   const accessToken = useSelector((state: RootState) => state.token.token);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
-  const OS = useSelector((state:any)=>state.persist.device);
+  const {OS} = useSelector((state:any)=>state.persist.device);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location: any = useLocation();
@@ -63,7 +63,7 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
         window.BRIDGE.vibrate()
       }
       else {
-        window.webkit.messageHandlers.vibrate.pushMessage()
+        window.webkit.messageHandlers.vibrate.postMessage('')
       }
     }
     else {
@@ -85,7 +85,7 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
       window.BRIDGE.vibrate()
     }
     else {
-      window.webkit.messageHandlers.vibrate.pushMessage()
+      window.webkit.messageHandlers.vibrate.postMessage('')
     }
   }, [wishList]);
 
