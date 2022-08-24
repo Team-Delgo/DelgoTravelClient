@@ -65,7 +65,7 @@ function PetInfo() {
   const pageIsValid = isValid.name && isValid.birth && isValid.type;
   const formData = new FormData();
 
-  const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleImage = async (event: ChangeEvent<HTMLInputElement>) => {
     if(!reviewImgExtension.includes((event.target.files as FileList)[0].type)){
       setReviewImgExtensionAlert(true)
       return
