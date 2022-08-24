@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState,useCallback } from 'react';
 import classNames from 'classnames';
+import imageCompression from 'browser-image-compression';
 import { AxiosResponse } from 'axios';
 import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -50,7 +51,7 @@ function PetInfo() {
   const state = useLocation().state as LocationState;
   const { email, password, nickname, phone, isSocial } = state;
   const [image, setImage] = useState<any>();
-  const [sendingImage, setSendingImage] = useState<Array<File>>([]);
+  const [sendingImage, setSendingImage] = useState<any>([]);
   const [enteredInput, setEnteredInput] = useState<Input>({ name: '', birth: undefined, type: '' });
   const [nameFeedback, setNameFeedback] = useState('');
   const [modalActive, setModalActive] = useState(false);
@@ -70,18 +71,46 @@ function PetInfo() {
       return
     }
     const reader = new FileReader();
-    
-    if(event.target.files){
-      const currentImage = event.target.files;
-      const currentImageUrl = URL.createObjectURL(currentImage[0]);
-    
-      setImage(currentImageUrl);
-      reader.readAsDataURL(event.target.files![0]);
-      setSendingImage([event.target.files![0]]);
+    reader.onload = function () {
+      setImage(reader.result);
+    };
+    const { files } = event.target;
+    // let {petImage} = files;
+    const options = {
+      maxSizeMB: 0.2,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    };
+    const compressedFile = await imageCompression(event.target.files![0], options);
+    reader.readAsDataURL(compressedFile);
+    reader.onloadend = () => {
+      const base64data = reader.result;
+      console.log(compressedFile.type);
+      setSendingImage(base64data);
     }
 
     // let {petImage} = files;
   };
+
+  const handlingDataForm = async (dataURI: any) => {
+    const byteString = atob(dataURI.split(",")[1]);
+
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i += 1) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([ia], {
+      type: "image/jpeg"
+    });
+    const file = new File([blob], "image.jpg");
+
+    const formData = new FormData();
+    formData.append("photo", file);
+
+    return formData;
+  };
+
 
   const requireInputCheck = (key: string, value: string) => {
     if (value.length) {
@@ -135,7 +164,8 @@ function PetInfo() {
     });
   };
 
-  const submitHandler = () => {
+  const submitHandler = async () => {
+    const formData = await handlingDataForm(sendingImage);
     let userId = 0;
     const petInfo = {
       name: enteredInput.name,
@@ -193,10 +223,8 @@ function PetInfo() {
                 },
               }),
             );
-            // formData.append('photo', sendingImage);
-            formData.append('photo', sendingImage[0]);
             petImageUpload(
-              {formData,userId},
+              { formData, userId },
               (response: AxiosResponse) => {
                 console.log(response);
                 const { code, data } = response.data;
@@ -253,7 +281,7 @@ function PetInfo() {
             console.log(sendingImage[0]);
             console.log(formData);
             await petImageUpload(
-              {formData,userId},
+              { formData, userId },
               (response: AxiosResponse) => {
                 console.log(response);
                 const { code, data } = response.data;
