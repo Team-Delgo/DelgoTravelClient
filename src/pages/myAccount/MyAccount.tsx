@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AxiosResponse } from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -19,12 +19,7 @@ import {  getMyAccountDataList } from '../../common/api/myaccount';
 import { getBookingState } from '../../common/api/booking';
 import { RootState } from '../../redux/store';
 
-// declare global{
-//   interface Window{
-//     BRIDGE:any
-//     webkit:any
-//   }
-// }
+const loadingScreenHeight = { height: window.innerHeight * 2 }
 
 function MyAccount() {
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
@@ -41,7 +36,7 @@ function MyAccount() {
   const refreshToken = localStorage.getItem('refreshToken') || '';
   const location: any = useLocation();
   const { myAccountScrollY } = useSelector((state: RootState) => state.persist.scroll);
-  const {OS} = useSelector((state:any)=>state.persist.device);
+  const { OS } = useSelector((state: any) => state.persist.device);
 
   const {
     isLoading: getMyAccountDataListIsLoading,
@@ -51,9 +46,6 @@ function MyAccount() {
     cacheTime: 1000 * 60 * 5,
     staleTime: 1000 * 60 * 3,
     refetchInterval: false,
-    onSuccess: () => {
-      console.log(myAccountDataList);
-    },
     onError: (error: any) => {
       useErrorHandlers(dispatch, error);
     },
@@ -75,10 +67,11 @@ function MyAccount() {
   useEffect(() => {
     if (location.state?.prevPath.includes(MY_ACCOUNT_PATH.MAIN)) {
       window.scroll(0, myAccountScrollY);
-    } else {
+    }
+    else {
       window.scroll(0, 0);
     }
-  }, [getMyAccountDataListIsLoading, getBookingStateIsLoading, age, days]);
+  }, [getMyAccountDataListIsLoading, getBookingStateIsLoading]);
 
   useEffect(() => {
     const startDate = new Date(bookingStateDataList?.data[0]?.startDt);
@@ -90,7 +83,6 @@ function MyAccount() {
   }, [getBookingStateIsLoading]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     const temp = `${dogBirth.slice(0, 4)}-${dogBirth.slice(5, 7)}-${dogBirth.slice(8, 10)}`;
     const date = new Date(temp);
     const now = new Date();
@@ -171,14 +163,6 @@ function MyAccount() {
     }
   };
 
-  if (getMyAccountDataListIsLoading) {
-    return <div className="account"><Footer/></div>;
-  }
-
-  if (getBookingStateIsLoading) {
-    return <div className="account"><Footer/></div>;
-  }
-
   const bookingState = () => {
     if (bookingStateDataList.data[0].bookingState === 'W') {
       return <div className="account-purchase-reservation-box-state W">예약요청</div>;
@@ -191,7 +175,7 @@ function MyAccount() {
     }
 
     return <div className="account-purchase-reservation-box-state CF">취소완료</div>;
-  };
+  }
 
   const bookingCard = bookingStateDataList?.data?.length > 0 ? (
     <div className="account-purchase-reservation-box">
@@ -206,7 +190,15 @@ function MyAccount() {
     </div>
   ) : (
     <div className="account-purchase-reservation-box empty">최근 예약한 숙소가 없어요</div>
-  );
+  )
+
+  if (getMyAccountDataListIsLoading) {
+    return <div className="account" style={loadingScreenHeight}><Footer /></div>;
+  }
+
+  if (getBookingStateIsLoading) {
+    return <div className="account" style={loadingScreenHeight}><Footer /></div>;
+  }
 
   return (
     <div className="account">
@@ -231,7 +223,7 @@ function MyAccount() {
         />
       )}
       <div className="account-profile">
-        <img className="account-profile-image" src={pet?.image} alt="dog" />
+        <img className="account-profile-image" src={pet.image} alt="dog" />
         <div className="account-profile-info">
           <div className="account-profile-info-first">
             <div className="account-profile-info-name">{pet.name}</div>

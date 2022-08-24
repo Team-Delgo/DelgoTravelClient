@@ -38,6 +38,8 @@ interface FolderTypeProps {
   currentTab:number
 }
 
+const loadingScreenHeight = { height: window.innerHeight * 2 }
+
 function Folder({currentTab}:FolderTypeProps) {
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const accessToken = useSelector((state: RootState) => state.token.token);
@@ -75,7 +77,6 @@ function Folder({currentTab}:FolderTypeProps) {
     getRecommendedPlacesRefetch();
   }, [currentTab]);
 
-
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
       window.scrollTo(0, myStorageScrollY);
@@ -85,11 +86,11 @@ function Folder({currentTab}:FolderTypeProps) {
   }, [getWishedPlacesIsLoading, getRecommendedPlacesIsLoading]);
 
   if (getWishedPlacesIsLoading){
-    return <div className="wish-list-container">&nbsp;</div>;
+    return <div className="wish-list-container" style={loadingScreenHeight}>&nbsp;</div>;
   }
 
   if (getRecommendedPlacesIsLoading){
-    return <div className="wish-list-container">&nbsp;</div>;
+    return <div className="wish-list-container" style={loadingScreenHeight}>&nbsp;</div>;
   }
 
   return (

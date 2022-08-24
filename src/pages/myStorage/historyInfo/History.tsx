@@ -48,6 +48,7 @@ interface TravelHisotryPlaceType {
 interface FolderTypeProps {
   currentTab:number
 }
+const loadingScreenHeight = { height: window.innerHeight * 2 }
 
 function History({currentTab}:FolderTypeProps) {
   const dispatch = useDispatch();
@@ -101,13 +102,13 @@ function History({currentTab}:FolderTypeProps) {
     else {
       window.scrollTo(0, 0);
     }
-  }, [traveledPlaces,recommendedPlaces]);
+  }, [getRecommendedPlacesIsLoading,getTraveledPlacesIsLoading]);
 
   if (getRecommendedPlacesIsLoading) {
-    return <div className="travel-history-container">&nbsp;</div>;
+    return <div className="travel-history-container" style={loadingScreenHeight}>&nbsp;</div>;
   }
   if (getTraveledPlacesIsLoading) {
-    return <div className="travel-history-container">&nbsp;</div>;
+    return <div className="travel-history-container" style={loadingScreenHeight}>&nbsp;</div>;
   }
   
   return (
