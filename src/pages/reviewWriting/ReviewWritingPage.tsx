@@ -35,6 +35,8 @@ interface TraveledHisotryPlaceType {
   },
 }
 
+const reviewImgExtension = ["image/jpeg","image/gif","image/png","image/jpg"]
+
 function RiviewWritingPage() {
   const [images, setImages] = useState<Array<string>>([]);
   const [sendingImage, setSendingImage] = useState<Array<File>>([]);
@@ -45,8 +47,9 @@ function RiviewWritingPage() {
   const [activeStar4, setActiveStar4] = useState(true);
   const [activeStar5, setActiveStar5] = useState(true);
   const [rivewText, setReviewText] = useState('');
-  const [reviewCompleted,setReviewCompleted]=useState(false)
-  const [reviewTextLengthLimit,setReviewTextLengthLimitd]=useState(false)
+  const [reviewCompleteAlert,setReviewCompleteAlert]=useState(false)
+  const [reviewTextLengthLimitAlert,setReviewTextLengthLimitAlert]=useState(false)
+  const [reviewImgExtensionAlert,setReviewImgExtensionAlert]=useState(false)
   const starRaiting = useRef(5);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const petName = useSelector((state: RootState) => state.persist.user.pet.name);
@@ -77,7 +80,10 @@ function RiviewWritingPage() {
 
 
   const handleUploadFile = (event: { target: HTMLInputElement }) => {
-    console.log((event.target.files as FileList)[0].type)
+    if(!reviewImgExtension.includes((event.target.files as FileList)[0].type)){
+      setReviewImgExtensionAlert(true)
+      return
+    }
     if (images.length === 4) {
       return;
     }
@@ -142,7 +148,7 @@ function RiviewWritingPage() {
                 dispatch,
               );
             }
-            confirmReviewCompletedOpen()
+            setReviewCompleteAlert(true)
           } else {
             console.log(codeMsg);
           }
@@ -151,7 +157,7 @@ function RiviewWritingPage() {
       );
     }
     else{
-      alertReviewLengthLimitOpen()
+      setReviewTextLengthLimitAlert(true)
     }
   };
 
@@ -217,7 +223,6 @@ function RiviewWritingPage() {
   const handleStarRating5 = useCallback(() => {
     if (activeStar5 === false) {
       starRaiting.current = 5;
-      console.log(starRaiting.current);
       setActiveStar1(true);
       setActiveStar2(true);
       setActiveStar3(true);
@@ -237,21 +242,17 @@ function RiviewWritingPage() {
     setReviewText(e.target.value);
   }, []);
 
-  const confirmReviewCompletedOpen = useCallback(() => {
-    setReviewCompleted(true)
-  },[])
-
   const confirmReviewCompletedClose = useCallback(() => {
-    setReviewCompleted(false)
+    setReviewCompleteAlert(false)
     moveToPreviousPage()
   },[])
 
-  const alertReviewLengthLimitOpen = useCallback(() => {
-    setReviewTextLengthLimitd(true)
+  const alertReviewLengthLimitClose = useCallback(() => {
+    setReviewTextLengthLimitAlert(false)
   },[])
 
-  const alertReviewLengthLimitClose = useCallback(() => {
-    setReviewTextLengthLimitd(false)
+  const alertReviewImgExtensionClose = useCallback(() => {
+    setReviewImgExtensionAlert(false)
   },[])
 
   return (
@@ -324,14 +325,12 @@ function RiviewWritingPage() {
           ))}
         </div>
       </body>
-      {/* <div aria-hidden="true" onClick={submitRivew}>
-        <BottomButton text="작성완료" />
-      </div> */}
       <div className="review-submit-button" aria-hidden="true" onClick={submitRivew}>
         작성완료
       </div>
-      {reviewCompleted && <AlertConfirmOne text="리뷰 작성이 완료 되었습니다" buttonHandler={confirmReviewCompletedClose} />}
-      {reviewTextLengthLimit && <AlertConfirmOne text="리뷰를 최소 10글자이상 작성하세요" buttonHandler={alertReviewLengthLimitClose} />}
+      {reviewCompleteAlert && <AlertConfirmOne text="리뷰 작성이 완료 되었습니다" buttonHandler={confirmReviewCompletedClose} />}
+      {reviewTextLengthLimitAlert && <AlertConfirmOne text="리뷰를 최소 10글자이상 작성하세요" buttonHandler={alertReviewLengthLimitClose} />}
+      {reviewImgExtensionAlert && <AlertConfirmOne text="이미지 확장자 파일만 올려주세요" buttonHandler={alertReviewImgExtensionClose} />}
     </div>
   );
 }
