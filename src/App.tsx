@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import React, { useEffect } from 'react';
+import axios, { AxiosResponse } from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import HomePage from './pages/home/HomePage';
 import EditorNote from './pages/editorNote/EditorNotePage';
@@ -60,13 +60,13 @@ import ServiceTerm from './pages/myAccount/term/ServiceTerm';
 import SocialNickname from './pages/signUpPage/forSocial/SocialNickname';
 import SocialMiddle from './pages/signUpPage/forSocial/SocialMiddle';
 import SocialExist from './pages/signUpPage/forSocial/SocialExist';
-import Footer from './common/components/FooterNavigation';
 import { deviceAction } from './redux/slice/deviceSlice';
 
 declare global{
   interface Window{
     BRIDGE:any
     webkit:any
+    Kakao: any;
   }
 }
 
