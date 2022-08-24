@@ -42,8 +42,8 @@ function UserInfo() {
   const [emailDupCheckFail, setEmailDupCheckFail] = useState(false);
   const [nicknameDuplicated, setNicknameDuplicated] = useState(true);
   const [nicknameDupCheckFail, setNicknameDupCheckFail] = useState(false);
-  const emailRef = useRef<any>();
-  const nicknameRef = useRef<any>();
+  const emailRef = useRef<HTMLInputElement>(null);
+  const nicknameRef = useRef<HTMLInputElement>(null);
   const firstPageIsValid =
     validInput.email.length && validInput.password.length && validInput.confirm.length && !emailDuplicated;
   console.log(validInput);
@@ -196,7 +196,9 @@ function UserInfo() {
           } else {
             setEmailDuplicated(true);
             setEmailDupCheckFail(true);
-            emailRef.current.focus();
+            if(emailRef.current){
+              emailRef.current.focus();
+            }
           }
         },
         dispatch,
@@ -215,7 +217,9 @@ function UserInfo() {
         } else {
           setNicknameDuplicated(true);
           setNicknameDupCheckFail(true);
-          nicknameRef.current.focus();
+          if(nicknameRef.current){
+            nicknameRef.current.focus();
+          }
         }
       },
       dispatch,

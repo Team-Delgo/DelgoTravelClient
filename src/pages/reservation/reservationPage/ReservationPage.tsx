@@ -1,16 +1,13 @@
-import React, { useCallback, useEffect, useState ,useRef} from 'react';
+import React, { useCallback, useState ,useRef} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { AxiosResponse } from 'axios';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
 import { useQuery } from 'react-query';
 import { reservationActions } from '../../../redux/slice/reservationSlice';
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
 import { ReactComponent as BottomArrow } from '../../../icons/bottom-arrow2.svg';
 import './ReservationPage.scss';
-import BottomButton from '../../../common/components/BottomButton';
 import { getCouponList } from '../../../common/api/coupon';
-import { TOSS } from '../../../constants/url.cosnt';
 import AlertConfirmOne from '../../../common/dialog/AlertConfirmOne'
 import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
 import {RootState} from '../../../redux/store'
@@ -27,10 +24,9 @@ interface CouponType {
   userId: number
 }
 
-
 function ReservationPage() {
   const { user, room, place, date } = useSelector((state: RootState) => state.persist.reservation);
-  const {OS} = useSelector((state:any)=>state.persist.device);
+  const {OS} = useSelector((state:RootState)=>state.persist.device);
   const [couponDropDownOpen, setCouponDropDownOpen] = useState(false);
   const [selectedCouponId, setSelectedCouponId] = useState(0);
   const [selectCouponDiscount,setSelectCouponDiscount] = useState(0)

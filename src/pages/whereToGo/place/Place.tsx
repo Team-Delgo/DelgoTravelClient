@@ -32,21 +32,17 @@ interface PlaceType {
   placeId: number
   wishId: number
 }
-declare global{
-  interface Window{
-    BRIDGE:any
-  }
-}
 
 function Place({ place,areaTerm }: PlaceTypeProps) {
   const [wishList, setWishList] = useState(place.wishId);
+  const [logInModalOpen, setLogInModalOpen] = useState(false);
   const accessToken = useSelector((state: RootState) => state.token.token);
   const userId = useSelector((state: RootState) => state.persist.user.user.id)
+  const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
+  const {OS} = useSelector((state:RootState)=>state.persist.device);
   const dispatch = useDispatch();
   const location: any = useLocation();
   const navigate = useNavigate();
-  const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
-  const [logInModalOpen, setLogInModalOpen] = useState(false);
 
   const wishListInsert = () => {
     if(isSignIn){
@@ -55,7 +51,12 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
           setWishList(response.data.data.wishId);
         }
       }, dispatch);
-      window.BRIDGE.vibrate() 
+      if (OS === 'android') {
+        window.BRIDGE.vibrate()
+      }
+      else {
+        window.webkit.messageHandlers.vibrate.postMessage('')
+      }
     }
     else{
       setLogInModalOpen(true);
@@ -72,7 +73,12 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
       },
       dispatch,
     );
-    window.BRIDGE.vibrate()
+    if (OS === 'android') {
+      window.BRIDGE.vibrate()
+    }
+    else {
+      window.webkit.messageHandlers.vibrate.postMessage('')
+    }
   }
 
 

@@ -1,9 +1,9 @@
-import React, { ChangeEvent, useEffect, useState,useCallback } from 'react';
+import React, { ChangeEvent, useState,useCallback } from 'react';
 import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import imageCompression from 'browser-image-compression';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { checkPetName } from '../../signUpPage/userInfo/ValidCheck';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import { ReactComponent as Camera } from '../../../icons/camera.svg';

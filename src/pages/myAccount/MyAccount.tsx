@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AxiosResponse } from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -27,16 +27,16 @@ function MyAccount() {
   const [text, setText] = useState('');
   const [age, setAge] = useState(0);
   const [days, setDays] = useState('1');
-  const pet = useSelector((state: RootState) => state.persist.user.pet);
   const navigation = useNavigate();
   const dispatch = useDispatch();
+  const location: any = useLocation();
+  const refreshToken = localStorage.getItem('refreshToken') || '';
+  const pet = useSelector((state: RootState) => state.persist.user.pet);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const dogBirth = useSelector((state: RootState) => state.persist.user.pet.birthday);
   const accessToken = useSelector((state: RootState) => state.token.token);
-  const refreshToken = localStorage.getItem('refreshToken') || '';
-  const location: any = useLocation();
   const { myAccountScrollY } = useSelector((state: RootState) => state.persist.scroll);
-  const { OS } = useSelector((state: any) => state.persist.device);
+  const { OS } = useSelector((state: RootState) => state.persist.device);
 
   const {
     isLoading: getMyAccountDataListIsLoading,

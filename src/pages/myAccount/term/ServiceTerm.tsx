@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import React, { DOMAttributes, UIEventHandler } from 'react';
+import React from 'react';
 import '../../signUpPage/terms/DetailTerm.scss';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import term from '../../signUpPage/terms/TermContents';
@@ -12,12 +12,10 @@ function DetailTerm(props: { id: number }) {
 
   return (
     <div className="serviceterm-height">
-      
       <div className="wrapper serviceterm">
         <div aria-hidden="true" className="login-back" onClick={() => navigate(-1)}>
           <Arrow />
         </div>
-
         <p className="title">{term[keyTyped].main}</p>
         <p className="description">{term[keyTyped].description}</p>
       </div>

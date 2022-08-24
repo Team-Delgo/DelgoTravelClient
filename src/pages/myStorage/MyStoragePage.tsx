@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { useNavigate ,useLocation} from 'react-router-dom';
+import { useLocation} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { scrollActions } from '../../redux/slice/scrollSlice';
 import Footer from '../../common/components/FooterNavigation';

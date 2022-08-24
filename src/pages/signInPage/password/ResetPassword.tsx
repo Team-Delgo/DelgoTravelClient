@@ -9,11 +9,6 @@ import { changePassword } from '../../../common/api/login';
 import { checkPassword, checkPasswordConfirm } from '../../signUpPage/userInfo/ValidCheck';
 import './ResetPassword.scss';
 
-interface Input {
-  password: string;
-  passwordConfirm: string;
-}
-
 function ResetPassword() {
   const [feedback, setFeedback] = useState({ password: '', confirm: '' });
   const [enteredInput, setEnteredInput] = useState({ password: '', confirm: '' });

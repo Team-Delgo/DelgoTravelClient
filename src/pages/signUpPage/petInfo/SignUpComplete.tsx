@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './SignUpComplete.scss';
 import Delgo from '../../../icons/delgo.svg';
 import Check from '../../../icons/check.svg';
-import { ROOT_PATH, SIGN_IN_PATH } from '../../../constants/path.const';
+import { ROOT_PATH } from '../../../constants/path.const';
 
 interface PetName {
   name: string;

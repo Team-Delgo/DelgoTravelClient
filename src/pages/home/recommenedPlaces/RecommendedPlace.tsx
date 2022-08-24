@@ -30,20 +30,13 @@ interface PlaceType {
   wishId: number;
 }
 
-declare global{
-  interface Window{
-    BRIDGE:any
-    webkit:any
-  }
-}
-
 function RecommendedPlace({ place }: RedcommendedPlacesProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const [logInModalOpen, setLogInModalOpen] = useState(false);
   const accessToken = useSelector((state: RootState) => state.token.token);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
-  const {OS} = useSelector((state:any)=>state.persist.device);
+  const { OS } = useSelector((state: RootState) => state.persist.device);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location: any = useLocation();

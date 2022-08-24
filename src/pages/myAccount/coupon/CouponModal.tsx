@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
-import React, { ChangeEvent, useRef, useState,useCallback } from 'react';
+import React, { ChangeEvent, useRef, useState,useCallback, HTMLInputTypeAttribute } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Sheet from 'react-modal-sheet';
 import { registCoupon } from '../../../common/api/coupon';
@@ -14,7 +14,7 @@ function CouponModal(props: { closeModal: () => void; openModal: boolean; confir
   const [feedback, setFeedback] = useState('공백 없이 쿠폰코드를 입력해주세요.');
   const [invalid, setInvalid] = useState(false);
   const dispatch = useDispatch();
-  const inputRef = useRef<any>();
+  const inputRef = useRef<HTMLInputElement>(null);
   const { id } = useSelector((state: RootState) => state.persist.user.user);
   const { closeModal ,openModal ,confirmCouponRegisterCompletedOpen} = props;
 
@@ -43,12 +43,16 @@ function CouponModal(props: { closeModal: () => void; openModal: boolean; confir
       } else if (code === 312) {
         setInvalid(true);
         setFeedback('이미 등록 된 쿠폰입니다.');
-        inputRef.current.focus();
+        if(inputRef.current){
+          inputRef.current.focus();
+        }
       }
       else {
         setInvalid(true);
         setFeedback('유효하지 않은 쿠폰 코드 입니다.');
-        inputRef.current.focus();
+        if(inputRef.current){
+          inputRef.current.focus();
+        }
       }
     }, dispatch);
   };

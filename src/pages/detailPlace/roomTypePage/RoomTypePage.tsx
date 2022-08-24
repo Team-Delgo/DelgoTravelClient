@@ -49,7 +49,6 @@ function RoomTypePage() {
 
 
   useEffect(() => {
-    console.log(room)
     window.scrollTo(0, 0);
     getRoomData(
       room?.roomId,

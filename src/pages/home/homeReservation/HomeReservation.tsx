@@ -1,24 +1,21 @@
-import React, { useRef, useEffect, useState ,memo } from 'react';
-import { useSelector } from "react-redux";
-import { Link} from 'react-router-dom';
+import React, { useRef, useEffect, useState, memo } from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import './HomeReservation.scss';
 import RightArrow from '../../../icons/right-arrow-black.svg';
 import Location from '../../../icons/location.svg';
 import Call from '../../../icons/call.svg';
+import { RootState } from '../../../redux/store';
 
-interface Info {
-  location: string;
-  date: number;
-}
 
-function HomeReservation(props: { lists: any[], pageChange: (page: number) => void }) {
+function HomeReservation(props: { lists: any[]; pageChange: (page: number) => void }) {
   const { lists, pageChange } = props;
-  const scrollRef = useRef<any>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState(0);
   const [startPosition, setStartPosition] = useState(0);
   const [page, setPage] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
-  const {OS} = useSelector((state:any)=>state.persist.device);
+  const { OS } = useSelector((state: RootState) => state.persist.device);
   const infoArray = lists.map((list) => {
     const today = new Date();
     const bookDate = new Date(list.startDt);
@@ -26,65 +23,60 @@ function HomeReservation(props: { lists: any[], pageChange: (page: number) => vo
       location: list.place.address.slice(0, 2),
       date: 1,
     };
-  })
+  });
 
   useEffect(() => {
     pageChange(page);
-    console.log(lists)
   }, [page]);
-
-  // console.log(lists);
-  // useEffect(() => {
-  //   setIsScrolling(false);
-  //   setTimeout(() => {
-  //     if (!isScrolling) {
-  //       console.log(1);
-  //     }
-  //   }, 50)
-  // }, [isScrolling]);
 
   const scrollHandler = () => {
     setIsScrolling(true);
-    setPosition(scrollRef.current.scrollLeft);
+    if (scrollRef.current) {
+      setPosition(scrollRef.current.scrollLeft);
+    }
   };
 
   const mouseLeaveHandler = () => {
-    const el = scrollRef.current;
-    const width = el.offsetWidth;
-    setTimeout(() => {
-      if (position < startPosition) {
-        el.scrollTo({
-          left: Math.floor(el.scrollLeft / width) * width,
-          behavior: 'smooth',
-        });
-        setPosition(startPosition - width);
-        setPage(Math.floor(el.scrollLeft / width));
-      } else if (position > startPosition) {
-        el.scrollTo({
-          left: (Math.floor(el.scrollLeft / width) + 1) * width,
-          behavior: 'smooth',
-        });
-        setPosition(startPosition + width);
-        setPage(Math.floor(el.scrollLeft / width) + 1);
-      } else {
-        el.scrollTo({
-          left: startPosition,
-          behavior: 'smooth',
-        });
-      }
-    }, 400);
+    if (scrollRef.current) {
+      const el = scrollRef.current;
+      const width = el.offsetWidth;
+      setTimeout(() => {
+        if (position < startPosition) {
+          el.scrollTo({
+            left: Math.floor(el.scrollLeft / width) * width,
+            behavior: 'smooth',
+          });
+          setPosition(startPosition - width);
+          setPage(Math.floor(el.scrollLeft / width));
+        } else if (position > startPosition) {
+          el.scrollTo({
+            left: (Math.floor(el.scrollLeft / width) + 1) * width,
+            behavior: 'smooth',
+          });
+          setPosition(startPosition + width);
+          setPage(Math.floor(el.scrollLeft / width) + 1);
+        } else {
+          el.scrollTo({
+            left: startPosition,
+            behavior: 'smooth',
+          });
+        }
+      }, 400);
+    }
   };
 
   const mouseDownHandler = () => {
-    const el = scrollRef.current;
-    const width = el.offsetWidth;
-    const currentPosition = el.scrollLeft;
-    const main = Math.floor(currentPosition / width) * width;
-    setStartPosition(main);
+    if (scrollRef.current) {
+      const el = scrollRef.current;
+      const width = el.offsetWidth;
+      const currentPosition = el.scrollLeft;
+      const main = Math.floor(currentPosition / width) * width;
+      setStartPosition(main);
+    }
   };
 
   const moveToCallApp = (placeTelePhoneNumber: string) => (event: React.MouseEvent) => {
-    window.webkit.messageHandlers.numToCall.postMessage(`tel://${placeTelePhoneNumber}`)
+    window.webkit.messageHandlers.numToCall.postMessage(`tel://${placeTelePhoneNumber}`);
   };
 
   const reservationList = lists.map((list) => {
@@ -107,8 +99,8 @@ function HomeReservation(props: { lists: any[], pageChange: (page: number) => vo
     }
     const endDayTemp = new Date(list.endDt);
     const endDay = days[endDayTemp.getDay()];
-    const placeTelePhonNumber =list.place.phoneNo
-    const placeNaverMapUrl =list.place.mapUrl
+    const placeTelePhonNumber = list.place.phoneNo;
+    const placeNaverMapUrl = list.place.mapUrl;
 
     return (
       <div className="homemodal-item">
@@ -141,18 +133,23 @@ function HomeReservation(props: { lists: any[], pageChange: (page: number) => vo
                   {endDate} {endDay}
                 </div>
                 <div className="homemodal-item-card-time">{list.place.checkout.slice(0, 5)}</div>
-                {
-                  OS === 'android' ? <a href={`tel: ${placeTelePhonNumber}`}>
+                {OS === 'android' ? (
+                  <a href={`tel: ${placeTelePhonNumber}`}>
                     <div className="homemodal-item-card-button" aria-hidden="true">
                       <img className="homemodal-item-card-location" src={Call} alt="call" />
                       <div className="homemodal-item-card-label">전화</div>
                     </div>
                   </a>
-                    : <div className="homemodal-item-card-button" aria-hidden="true" onClick={moveToCallApp(placeTelePhonNumber)}>
-                      <img className="homemodal-item-card-location" src={Call} alt="call" />
-                      <div className="homemodal-item-card-label">전화</div>
-                    </div>
-                }
+                ) : (
+                  <div
+                    className="homemodal-item-card-button"
+                    aria-hidden="true"
+                    onClick={moveToCallApp(placeTelePhonNumber)}
+                  >
+                    <img className="homemodal-item-card-location" src={Call} alt="call" />
+                    <div className="homemodal-item-card-label">전화</div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
