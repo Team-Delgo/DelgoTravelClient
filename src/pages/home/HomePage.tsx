@@ -36,6 +36,7 @@ interface RecommendedPlaceType {
   placeId: number;
   wishId: number;
 }
+const loadingScreenHeight = { height: window.innerHeight * 2 }
 
 function HomePage() {
   const [page, setPage] = useState(0);
@@ -98,13 +99,12 @@ function HomePage() {
   );
 
   useEffect(() => {
-    console.log(editorNotePlaces)
     if (location.state?.prevPath.includes('/detail-place')) {
       window.scrollTo(0, homeScrollY);
     } else {
       window.scrollTo(0, 0);
     }
-  }, [reservationPlaces, recommendedPlaces, editorNotePlaces]);
+  }, [getRecommendedPlacesIsLoading, getBookingDataIsLoading, getEditorNotePlacesIsLoading]);
 
   const getDday = () => {
     const startDate = new Date(reservationPlaces?.data[page].startDt);
@@ -124,36 +124,16 @@ function HomePage() {
     if (reservationPlaces?.data?.length) getDday();
   }, [page, reservationPlaces]);
 
-  // useEffect(() => {
-  //   tokenRefresh(
-  //     { refreshToken },
-  //     (response: AxiosResponse) => {
-  //       const { code } = response.data;
-
-  //       if (code === 200) {
-  //         const accessToken = response.headers.authorization_access;
-  //         const refreshToken = response.headers.authorization_refresh;
-
-  //         dispatch(tokenActions.setToken(accessToken));
-  //         localStorage.setItem('refreshToken', refreshToken);
-  //       } else {
-  //         navigation('/user/signin',{replace:true});
-  //       }
-  //     },
-  //     dispatch,
-  //   );
-  // }, [accessToken]);
-
   if (getRecommendedPlacesIsLoading) {
-    return <div className="home-background"><Footer/></div>;
+    return <div className="home-background" style={loadingScreenHeight}><Footer/></div>;
   }
 
   if (getBookingDataIsLoading) {
-    return <div className="home-background"><Footer/></div>;
+    return <div className="home-background" style={loadingScreenHeight}><Footer/></div>;
   }
 
   if (getEditorNotePlacesIsLoading) {
-    return <div className="home-background"><Footer/></div>;
+    return <div className="home-background" style={loadingScreenHeight}><Footer/></div>;
   }
 
   return (
