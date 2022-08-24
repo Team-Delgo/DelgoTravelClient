@@ -89,7 +89,6 @@ function History({currentTab}:FolderTypeProps) {
   }, [currentTab,traveledPlaces]);
 
   useEffect(() => {
-    console.log(location.state?.prevPath)
     if (location.state?.prevPath.includes('/reservation-history')) {
       window.scrollTo(0, myStorageScrollY);
     }

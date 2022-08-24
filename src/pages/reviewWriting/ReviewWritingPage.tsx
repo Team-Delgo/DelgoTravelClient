@@ -3,7 +3,7 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { AxiosResponse } from 'axios';
-import BottomButton from '../../common/components/BottomButton';
+import imageCompression from 'browser-image-compression';
 import AlertConfirmOne from '../../common/dialog/AlertConfirmOne'
 import { MY_STORAGE_PATH, } from '../../constants/path.const';
 import { RootState } from '../../redux/store'
@@ -37,9 +37,15 @@ interface TraveledHisotryPlaceType {
 
 const reviewImgExtension = ["image/jpeg","image/gif","image/png","image/jpg"]
 
+const options = {
+  maxSizeMB: 0.2,
+  maxWidthOrHeight: 1920,
+  useWebWorker: true,
+};
+
 function RiviewWritingPage() {
   const [images, setImages] = useState<Array<string>>([]);
-  const [sendingImage, setSendingImage] = useState<Array<File>>([]);
+  const [sendingImage, setSendingImage] = useState<Array<any>>([]);
   const fileUploadRef = useRef<HTMLInputElement>(null);
   const [activeStar1, setActiveStar1] = useState(true);
   const [activeStar2, setActiveStar2] = useState(true);
@@ -79,8 +85,8 @@ function RiviewWritingPage() {
   }, []);
 
 
-  const handleUploadFile = (event: { target: HTMLInputElement }) => {
-    if(!reviewImgExtension.includes((event.target.files as FileList)[0].type)){
+  const handleUploadFile =  async (event: { target: HTMLInputElement }) => {
+    if (!reviewImgExtension.includes((event.target.files as FileList)[0].type)) {
       setReviewImgExtensionAlert(true)
       return
     }
