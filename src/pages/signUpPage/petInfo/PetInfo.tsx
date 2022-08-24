@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState,useCallback } from 'react';
 import classNames from 'classnames';
 import imageCompression from 'browser-image-compression';
 import { AxiosResponse } from 'axios';
@@ -16,6 +16,7 @@ import { SIGN_UP_PATH } from '../../../constants/path.const';
 import { userActions } from '../../../redux/slice/userSlice';
 import { tokenActions } from '../../../redux/slice/tokenSlice';
 import { oAuthSignup } from '../../../common/api/social';
+import AlertConfirmOne from '../../../common/dialog/AlertConfirmOne'
 
 interface LocationState {
   phone: string;
@@ -42,6 +43,7 @@ enum Id {
   BIRTH = 'birth',
   TYPE = 'type',
 }
+const reviewImgExtension = ["image/jpeg","image/gif","image/png","image/jpg"]
 
 function PetInfo() {
   const dispatch = useDispatch();
@@ -59,10 +61,15 @@ function PetInfo() {
     birth: false,
     type: false,
   });
+  const [reviewImgExtensionAlert,setReviewImgExtensionAlert]=useState(false)
   const pageIsValid = isValid.name && isValid.birth && isValid.type;
   const formData = new FormData();
 
-  const handleImage = async (event: ChangeEvent<HTMLInputElement>) => {
+  const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
+    if(!reviewImgExtension.includes((event.target.files as FileList)[0].type)){
+      setReviewImgExtensionAlert(true)
+      return
+    }
     const reader = new FileReader();
     reader.onload = function () {
       setImage(reader.result);
@@ -298,6 +305,10 @@ function PetInfo() {
     // signup({ email, password, nickname, phone, pet: {petName:enteredInput.name,petBirth:enteredInput.birth,petImage:} }, () => {});
   };
 
+  const alertReviewImgExtensionClose = useCallback(() => {
+    setReviewImgExtensionAlert(false)
+  },[])
+
   return (
     <div className="login">
       <div aria-hidden="true" className="login-back" onClick={() => { setTimeout(() => { navigation(-1) }, 200) }}>
@@ -406,6 +417,7 @@ function PetInfo() {
       >
         저장하기
       </button>
+      {reviewImgExtensionAlert && <AlertConfirmOne text="이미지 확장자 파일만 올려주세요" buttonHandler={alertReviewImgExtensionClose} />}
     </div>
   );
 }
