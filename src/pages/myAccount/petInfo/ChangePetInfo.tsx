@@ -82,9 +82,9 @@ function ChangePetInfo() {
     const compressedFile = await imageCompression(event.target.files![0], options);
     reader.readAsDataURL(compressedFile);
     reader.onloadend = () => {
-    const base64data = reader.result;
-    console.log(compressedFile.type);
-    setSendingImage(base64data);
+      const base64data = reader.result;
+      console.log(compressedFile.type);
+      setSendingImage(base64data);
     }
     setImageIsChanged(true);
   };
@@ -97,24 +97,25 @@ function ChangePetInfo() {
     }
   };
 
-  const handlingDataForm = async (dataURI:any) => {
+  const handlingDataForm = async (dataURI: any) => {
     const byteString = atob(dataURI.split(",")[1]);
-  
+
     const ab = new ArrayBuffer(byteString.length);
     const ia = new Uint8Array(ab);
-    for (let i = 0; i < byteString.length; i+=1) {
+    for (let i = 0; i < byteString.length; i += 1) {
       ia[i] = byteString.charCodeAt(i);
     }
     const blob = new Blob([ia], {
       type: "image/jpeg"
     });
     const file = new File([blob], "image.jpg");
-  
+
     const formData = new FormData();
     formData.append("photo", file);
 
     return formData;
   };
+
 
   const nameInputCheck = (name: string) => {
     const response = checkPetName(name);

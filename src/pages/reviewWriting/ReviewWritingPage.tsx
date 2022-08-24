@@ -3,6 +3,7 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { AxiosResponse } from 'axios';
+import imageCompression from 'browser-image-compression';
 import BottomButton from '../../common/components/BottomButton';
 import AlertConfirmOne from '../../common/dialog/AlertConfirmOne'
 import { MY_STORAGE_PATH, } from '../../constants/path.const';
@@ -18,7 +19,7 @@ import './ReviewWritingPage.scss';
 interface TraveledHisotryPlaceType {
   bookingId: string,
   roomName: string,
-  roomId:number,
+  roomId: number,
   startDt: string,
   endDt: string,
   reviewExisting: boolean,
@@ -35,11 +36,11 @@ interface TraveledHisotryPlaceType {
   },
 }
 
-const reviewImgExtension = ["image/jpeg","image/gif","image/png","image/jpg"]
+const reviewImgExtension = ["image/jpeg", "image/gif", "image/png", "image/jpg"]
 
 function RiviewWritingPage() {
   const [images, setImages] = useState<Array<string>>([]);
-  const [sendingImage, setSendingImage] = useState<Array<File>>([]);
+  const [sendingImage, setSendingImage] = useState<Array<any>>([]);
   const fileUploadRef = useRef<HTMLInputElement>(null);
   const [activeStar1, setActiveStar1] = useState(true);
   const [activeStar2, setActiveStar2] = useState(true);
@@ -47,9 +48,9 @@ function RiviewWritingPage() {
   const [activeStar4, setActiveStar4] = useState(true);
   const [activeStar5, setActiveStar5] = useState(true);
   const [rivewText, setReviewText] = useState('');
-  const [reviewCompleteAlert,setReviewCompleteAlert]=useState(false)
-  const [reviewTextLengthLimitAlert,setReviewTextLengthLimitAlert]=useState(false)
-  const [reviewImgExtensionAlert,setReviewImgExtensionAlert]=useState(false)
+  const [reviewCompleteAlert, setReviewCompleteAlert] = useState(false)
+  const [reviewTextLengthLimitAlert, setReviewTextLengthLimitAlert] = useState(false)
+  const [reviewImgExtensionAlert, setReviewImgExtensionAlert] = useState(false)
   const starRaiting = useRef(5);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const petName = useSelector((state: RootState) => state.persist.user.pet.name);
@@ -60,9 +61,9 @@ function RiviewWritingPage() {
   const location: any = useLocation();
 
   useEffect(() => {
-      window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
   }, []);
-  
+
 
   const moveToPreviousPage = useCallback(() => {
     navigate(MY_STORAGE_PATH, {
@@ -79,8 +80,8 @@ function RiviewWritingPage() {
   }, []);
 
 
-  const handleUploadFile = (event: { target: HTMLInputElement }) => {
-    if(!reviewImgExtension.includes((event.target.files as FileList)[0].type)){
+  const handleUploadFile = async (event: { target: HTMLInputElement }) => {
+    if (!reviewImgExtension.includes((event.target.files as FileList)[0].type)) {
       setReviewImgExtensionAlert(true)
       return
     }
@@ -90,7 +91,11 @@ function RiviewWritingPage() {
     if (event.target.files) {
       const imageLists = event.target.files;
       let imageUrlLists = [...images];
-
+      const options = {
+        maxSizeMB: 0.2,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true,
+      };
       for (let i = 0; i < imageLists.length; i += 1) {
         const currentImageUrl = URL.createObjectURL(imageLists[i]);
         imageUrlLists.push(currentImageUrl);
@@ -102,9 +107,42 @@ function RiviewWritingPage() {
       setImages(imageUrlLists);
 
       const reader = new FileReader();
-      reader.readAsDataURL(event.target.files![0]);
-      setSendingImage([...sendingImage , event.target.files![0]]);
+      const compressedFile = await imageCompression(event.target.files![0], options);
+      reader.readAsDataURL(compressedFile);
+      reader.onloadend = () => {
+        const base64data = reader.result;
+        console.log(compressedFile.type);
+        setSendingImage([...sendingImage, base64data]);
+      }
+      console.log(sendingImage);
     }
+  };
+
+  const handlingDataForm = async (dataURI: any[]) => {
+    const byteString = dataURI.map((data: any) => atob(data.split(",")[1]));
+    console.log(byteString);
+    const ab = byteString.map((str, idx) => new ArrayBuffer(byteString[idx].length));
+    console.log(ab);
+    const ia = byteString.map((str, idx) => new Uint8Array(ab[idx]));
+    console.log(ia);
+    for (let i = 0; i < byteString.length; i += 1) {
+      for (let j = 0; j < byteString[i].length; j += 1) {
+        ia[i][j] = byteString[i].charCodeAt(i);
+      }
+    }
+    const blobs = ia.map((i) => new Blob([i], {
+      type: "image/jpeg"
+    }));
+    console.log(blobs);
+
+    const file = blobs.map((blob, i) => new File([blob], `image${i}.jpg`));
+
+    const formData = new FormData();
+    for (let i = 0; i < file.length; i += 1) {
+      formData.append("photos", file[i]);
+    }
+
+    return formData;
   };
 
   const handleDeleteImage = (clickedImage: string) => (event: React.MouseEvent) => {
@@ -113,7 +151,7 @@ function RiviewWritingPage() {
   };
 
   const submitRivew = () => {
-    if(rivewText.length>9){
+    if (rivewText.length > 9) {
       writeReivew(
         {
           userId,
@@ -128,11 +166,9 @@ function RiviewWritingPage() {
           if (code === 200) {
             if (sendingImage.length > 0) {
               const { reviewId } = response.data.data;
-  
-              for (let i = 0; i < sendingImage.length; i += 1) {
-                formData.append('photos', sendingImage[i]);
-              }
-  
+
+              handlingDataForm(sendingImage);
+
               reviewImageUpload(
                 formData,
                 reviewId,
@@ -156,7 +192,7 @@ function RiviewWritingPage() {
         dispatch,
       );
     }
-    else{
+    else {
       setReviewTextLengthLimitAlert(true)
     }
   };
@@ -245,15 +281,15 @@ function RiviewWritingPage() {
   const confirmReviewCompletedClose = useCallback(() => {
     setReviewCompleteAlert(false)
     moveToPreviousPage()
-  },[])
+  }, [])
 
   const alertReviewLengthLimitClose = useCallback(() => {
     setReviewTextLengthLimitAlert(false)
-  },[])
+  }, [])
 
   const alertReviewImgExtensionClose = useCallback(() => {
     setReviewImgExtensionAlert(false)
-  },[])
+  }, [])
 
   return (
     <div className="review-writing">
@@ -271,9 +307,9 @@ function RiviewWritingPage() {
         <h4>{petName}와의 이용이 어땠나요?</h4>
         <div className="review-writing-body-star">
           {activeStar1 ? (
-              <BigRivewStarActive onClick={handleStarRating1} />
+            <BigRivewStarActive onClick={handleStarRating1} />
           ) : (
-              <BigRivewStar onClick={handleStarRating1} />
+            <BigRivewStar onClick={handleStarRating1} />
           )}
           {activeStar2 ? (
             <BigRivewStarActive onClick={handleStarRating2} />
@@ -303,7 +339,7 @@ function RiviewWritingPage() {
             onChange={handleReviewWrite}
             maxLength={150}
           />
-          <div className="review-writing-body-textarea-length">{rivewText.replace(/ /g,"").length}/150</div>
+          <div className="review-writing-body-textarea-length">{rivewText.replace(/ /g, "").length}/150</div>
         </div>
         <div className="review-writing-body-file">
           <div className="review-writing-body-file-uploader" aria-hidden="true" onClick={handleOpenFileUpload}>
