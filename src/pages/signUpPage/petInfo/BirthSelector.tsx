@@ -9,9 +9,9 @@ function BirthSelector(props: { changeBirth: (year: number, month: number, day: 
   const [selectedDay, setSelectedDay] = useState<number>(1);
   const { years, months, days, leapYear } = Birth(2000, 2022, true);
   const [dayArray, setDayArray] = useState<(number | string)[]>(days[0]);
-  const yearRef = useRef<any>(null);
-  const monthRef = useRef<any>(null);
-  const dayRef = useRef<any>(null);
+  const yearRef = useRef<HTMLDivElement>(null);
+  const monthRef = useRef<HTMLDivElement>(null);
+  const dayRef = useRef<HTMLDivElement>(null);
   const { changeBirth } = props;
 
   useEffect(() => {
@@ -25,13 +25,19 @@ function BirthSelector(props: { changeBirth: (year: number, month: number, day: 
 
   useEffect(() => {
     if (selectedYear) {
-      yearRef.current.scrollTop = (selectedYear - 2000) * 30;
+      if(yearRef.current){
+        yearRef.current.scrollTop = (selectedYear - 2000) * 30;
+      }
     }
     if (selectedMonth) {
-      monthRef.current.scrollTop = (selectedMonth - 1) * 30;
+      if(monthRef.current){
+        monthRef.current.scrollTop = (selectedMonth - 1) * 30;
+      }
     }
     if (selectedDay) {
-      dayRef.current.scrollTop = (selectedDay - 1) * 30;
+      if(dayRef.current){
+        dayRef.current.scrollTop = (selectedDay - 1) * 30;
+      }
     }
     changeBirth(selectedYear, selectedMonth, selectedDay);
   }, [selectedYear, selectedMonth, selectedDay]);
@@ -62,21 +68,27 @@ function BirthSelector(props: { changeBirth: (year: number, month: number, day: 
   });
 
   const yearScrollHandler = () => {
-    const { scrollTop } = yearRef.current;
-    const year = Math.round(scrollTop / 30) + 2000;
-    setSelectedYear(year);
+    if(yearRef.current){
+      const { scrollTop } = yearRef.current;
+      const year = Math.round(scrollTop / 30) + 2000;
+      setSelectedYear(year);
+    }
   };
 
   const monthScrollHandler = () => {
-    const { scrollTop } = monthRef.current;
-    const month = Math.round(scrollTop / 30) + 1;
-    setSelectedMonth(month);
+    if(monthRef.current){
+      const { scrollTop } = monthRef.current;
+      const month = Math.round(scrollTop / 30) + 1;
+      setSelectedMonth(month);
+    }
   };
 
   const dayScrollHandler = () => {
-    const { scrollTop } = dayRef.current;
-    const day = Math.round(scrollTop / 30) + 1;
-    setSelectedDay(day);
+    if(dayRef.current){
+      const { scrollTop } = dayRef.current;
+      const day = Math.round(scrollTop / 30) + 1;
+      setSelectedDay(day);
+    }
   };
 
   return (

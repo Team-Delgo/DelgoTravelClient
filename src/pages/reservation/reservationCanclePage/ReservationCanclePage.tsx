@@ -3,13 +3,9 @@ import { useSelector,useDispatch } from "react-redux";
 import { useNavigate,useParams} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
-import RightArrow from "../../../icons/right-arrow.svg";
-import RightArrowBlack from "../../../icons/right-arrow-black.svg";
-import BottomButton from "../../../common/components/BottomButton";
 import { reservationActions } from '../../../redux/slice/reservationSlice';
 import {RootState} from '../../../redux/store'
 import {bookingGetData} from '../../../common/api/booking'
-// import ReservationCancleModal from "./modal/ReservationCancleModal";
 import './ReservationCanclePage.scss';
 import { ROOT_PATH } from "../../../constants/path.const";
 
@@ -61,7 +57,6 @@ function ReservationCanclePage() {
         { bookingId, accessToken },
         (response: AxiosResponse) => {
           setReservationData(response.data.data);
-          console.log(response.data.data)
         },
         dispatch,
       );

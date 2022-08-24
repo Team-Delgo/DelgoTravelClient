@@ -23,14 +23,6 @@ function ReservationWaitingPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    console.log(user.id)
-    console.log(place.placeId)
-    console.log(room.roomId)
-    console.log(user.nickname)
-    console.log(date.date.start)
-    console.log(date.date.end)
-    console.log(orderId)
-    console.log(paymentKey)
     bookingRequest(
       {
         userId: user.id,

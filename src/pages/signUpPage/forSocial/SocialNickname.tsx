@@ -25,7 +25,7 @@ function SocialNickname() {
   const [feedback, setFeedback] = useState('');
   const [nicknameDuplicated, setNicknameDuplicated] = useState(true);
   const [nicknameDupCheckFail, setNicknameDupCheckFail] = useState(false);
-  const nicknameRef = useRef<any>();
+  const nicknameRef = useRef<HTMLInputElement>(null);
 
   const nicknameValidCheck = (value: string) => {
     const response = checkNickname(value);
@@ -66,7 +66,9 @@ function SocialNickname() {
         } else {
           setNicknameDuplicated(true);
           setNicknameDupCheckFail(true);
-          nicknameRef.current.focus();
+          if(nicknameRef.current){
+            nicknameRef.current.focus();
+          }
         }
       },
       dispatch,

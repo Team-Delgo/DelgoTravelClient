@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { AxiosResponse } from 'axios';
+import { Link, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
 import Footer from '../../common/components/FooterNavigation';
 import RecommendedPlace from './recommenedPlaces/RecommendedPlace';
-import { tokenActions } from '../../redux/slice/tokenSlice';
-import { tokenRefresh } from '../../common/api/login';
 import { bookingGetDataByMain } from '../../common/api/booking';
 import { getRecommendedPlace, getEditorNotePlacesAll } from '../../common/api/places';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
@@ -15,7 +12,6 @@ import { RootState } from '../../redux/store';
 import './HomePage.scss';
 import HomeReservation from './homeReservation/HomeReservation';
 import Delgo from '../../icons/delgo.svg';
-import Loading from '../../common/utils/Loading';
 
 interface EditorPlaceType {
   mainUrl: string;

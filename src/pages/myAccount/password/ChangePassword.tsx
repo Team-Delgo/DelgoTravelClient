@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import React, { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../../../common/api/login';
 import { changePassword } from '../../../common/api/myaccount';
 import { MY_ACCOUNT_PATH } from '../../../constants/path.const';
 import {RootState} from '../../../redux/store'

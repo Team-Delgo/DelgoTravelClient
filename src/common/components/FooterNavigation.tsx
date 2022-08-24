@@ -22,22 +22,10 @@ import AlertConfirm from '../dialog/AlertConfirm';
 
 function Footer() {
   const location = useLocation();
-  // const [OS, setOS] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
+  const {OS} = useSelector((state:RootState)=>state.persist.device);
   const navigate = useNavigate();
-
-  const {OS} = useSelector((state:any)=>state.persist.device);
-
-  // useEffect(() => {
-  //   const varUA = navigator.userAgent.toLowerCase();
-  //   if ( varUA.indexOf('android') > -1) {
-  //     setOS('android');
-  //   }
-  //   else if (varUA.indexOf('iphone') > -1 || varUA.indexOf('ipad') > -1 || varUA.indexOf('ipod') > -1) {
-  //     setOS('ios');
-  //   }
-  // }, []);
 
   const moveToTopScreen = useCallback(() => {
     window.scroll({ top: 0, behavior: 'smooth' });

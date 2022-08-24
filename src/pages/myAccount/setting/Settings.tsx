@@ -1,23 +1,18 @@
 import classNames from 'classnames';
 import React, { useState, useEffect } from 'react';
-import { useNavigate,Link,useLocation } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import './Settings.scss';
 import { MY_ACCOUNT_PATH } from '../../../constants/path.const';
+import { RootState } from '../../../redux/store';
 
-declare global{
-  interface Window{
-    BRIDGE:any
-    webkit:any
-  }
-}
 
 function Settings() {
   const [alert, setAlert] = useState(false);
   const navigate = useNavigate();
   const location: any = useLocation();
-  const {OS} = useSelector((state:any)=>state.persist.device);
+  const {OS} = useSelector((state:RootState)=>state.persist.device);
 
   useEffect(() => {
     window.scroll(0, 0);

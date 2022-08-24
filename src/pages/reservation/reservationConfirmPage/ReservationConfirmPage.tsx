@@ -11,13 +11,6 @@ import {RootState} from '../../../redux/store'
 import './ReservationConfirmPage.scss';
 import { ROOT_PATH } from "../../../constants/path.const";
 
-declare global{
-  interface Window{
-    BRIDGE:any
-    webkit:any
-  }
-}
-
 function ReservationConfirmPage() {
   const navigate = useNavigate();
   const accessToken = useSelector((state: RootState) => state.token.token);

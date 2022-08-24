@@ -28,18 +28,11 @@ type RecommendedPlaceType = {
   wishId: number
   }
 
-  declare global{
-    interface Window{
-      BRIDGE:any
-      webkit:any
-    }
-  }
-
 function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: RecommendedPlaceProps  ) {
   const [wishList, setWishList] = useState(place.wishId);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const accessToken = useSelector((state: RootState) => state.token.token);
-  const {OS} = useSelector((state:any)=>state.persist.device);
+  const {OS} = useSelector((state:RootState)=>state.persist.device);
   const dispatch = useDispatch();
   const location: any = useLocation();
   const navigate = useNavigate();

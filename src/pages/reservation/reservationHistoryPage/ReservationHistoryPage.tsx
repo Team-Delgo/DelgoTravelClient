@@ -9,13 +9,6 @@ import { MY_STORAGE_PATH } from '../../../constants/path.const';
 import { RootState } from '../../../redux/store'
 import './ReservationHistoryPage.scss';
 
-declare global{
-  interface Window{
-    BRIDGE:any
-    webkit:any
-  }
-}
-
 function ReservationHistoryPage() {
   const navigate = useNavigate();
   const accessToken = useSelector((state: RootState) => state.token.token);
@@ -52,7 +45,7 @@ function ReservationHistoryPage() {
   })
   const { bookingId } = useParams();
   const location: any = useLocation();
-  const {OS} = useSelector((state:any)=>state.persist.device);
+  const {OS} = useSelector((state:RootState)=>state.persist.device);
 
   useEffect(() => {
     window.scrollTo(0, 0);

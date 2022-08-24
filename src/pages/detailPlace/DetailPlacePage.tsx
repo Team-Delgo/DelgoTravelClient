@@ -76,13 +76,6 @@ interface NoticeType {
   title:string
 }
 
-declare global{
-  interface Window{
-    BRIDGE:any
-    webkit:any
-  }
-}
-
 function DetailPlacePage() {
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
   const [logInModalOpen, setLogInModalOpen] = useState(false);

@@ -12,8 +12,8 @@ import './WishedPlace.scss';
 
 interface WishedPlaceTypeProps {
   place: PlaceType
-  getWishedPlacesRefetch:any
-  getRecommendedPlacesRefetch:any
+  getWishedPlacesRefetch:() => void
+  getRecommendedPlacesRefetch:() => void
 }
 
 interface PlaceType {
@@ -27,8 +27,9 @@ interface PlaceType {
 }
 
 function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch}: WishedPlaceTypeProps) {
-  const accessToken = useSelector((state: RootState) => state.token.token);
   const [wishListAlertConfirmOpen, setWishListAlertConfirmOpen] = useState(false);
+  const accessToken = useSelector((state: RootState) => state.token.token);
+  const { OS } = useSelector((state: RootState) => state.persist.device);
   const dispatch = useDispatch();
   const location: any = useLocation();
   const navigate = useNavigate();
@@ -47,7 +48,12 @@ function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch
       },
       dispatch,
     );
-    window.BRIDGE.vibrate() 
+    if (OS === 'android') {
+      window.BRIDGE.vibrate()
+    }
+    else {
+      window.webkit.messageHandlers.vibrate.postMessage('')
+    }
   }, []);
 
   const wishListConfirmModalOpen =useCallback(() => {

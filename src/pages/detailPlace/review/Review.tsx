@@ -1,5 +1,5 @@
 
-import React, { useMemo, useState, useCallback, memo } from 'react'
+import React, { useMemo, useState, memo } from 'react'
 import { ReactComponent as ReviewStar } from '../../../icons/review-star.svg'
 import { ReactComponent as ReviewVoidStar } from '../../../icons/review-void-star.svg'
 import './Review.scss';

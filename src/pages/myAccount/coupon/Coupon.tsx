@@ -36,7 +36,6 @@ function Coupon() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const refreshToken = localStorage.getItem('refreshToken') || '';
-  let count;
 
   useEffect(() => {
     window.scroll(0, 0);

@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate , useLocation } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import {  useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { AxiosResponse } from 'axios';
 import { useQuery } from 'react-query'
-import { tokenActions } from '../../../redux/slice/tokenSlice';
-import { tokenRefresh } from '../../../common/api/login';
 import { getRecommendedPlace } from '../../../common/api/places';
 import { getBookingHistory } from '../../../common/api/booking';
 import { useErrorHandlers } from '../../../common/api/useErrorHandlers';

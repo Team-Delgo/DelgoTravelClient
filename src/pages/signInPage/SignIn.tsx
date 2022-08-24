@@ -22,7 +22,7 @@ function SignIn() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(true);
   const [feedback, setFeedback] = useState('');
-  const emailRef = useRef<any>();
+  const emailRef = useRef<HTMLInputElement>(null);
   const navigation = useNavigate();
   const dispatch = useDispatch();
 
