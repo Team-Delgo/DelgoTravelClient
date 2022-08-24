@@ -82,10 +82,7 @@ function ChangePetInfo() {
     const compressedFile = await imageCompression(event.target.files![0], options);
     reader.readAsDataURL(compressedFile);
     reader.onloadend = () => {
-      // 변환 완료!
     const base64data = reader.result;
-
-      // formData 만드는 함수
     console.log(compressedFile.type);
     setSendingImage(base64data);
     }
