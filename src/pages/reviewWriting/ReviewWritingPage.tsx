@@ -85,7 +85,7 @@ function RiviewWritingPage() {
   }, []);
 
 
-  const handleUploadFile =  async (event: { target: HTMLInputElement }) => {
+  const handleUploadFile = async (event: { target: HTMLInputElement }) => {
     if (!reviewImgExtension.includes((event.target.files as FileList)[0].type)) {
       setReviewImgExtensionAlert(true)
       return
