@@ -9,7 +9,7 @@ import ReservationCancleModal from "./modal/ReservationCancleModal";
 import Map from '../../../common/utils/Map';
 import {RootState} from '../../../redux/store'
 import './ReservationConfirmPage.scss';
-import { ROOT_PATH } from "../../../constants/path.const";
+import { ROOT_PATH } from "../../../common/constants/path.const";
 
 function ReservationConfirmPage() {
   const navigate = useNavigate();

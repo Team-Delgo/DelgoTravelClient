@@ -6,7 +6,7 @@ import { AxiosResponse } from "axios";
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import "./FindPassword.scss";
 import { emailAuth } from "../../../common/api/login";
-import { SIGN_IN_PATH } from "../../../constants/path.const";
+import { SIGN_IN_PATH } from "../../../common/constants/path.const";
 import Check from "../../../icons/check.svg";
 
 function FindPassword() {

@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { AxiosResponse } from 'axios';
 import imageCompression from 'browser-image-compression';
 import AlertConfirmOne from '../../common/dialog/AlertConfirmOne'
-import { MY_STORAGE_PATH, } from '../../constants/path.const';
+import { MY_STORAGE_PATH, } from '../../common/constants/path.const';
 import { RootState } from '../../redux/store'
 import { writeReivew, reviewImageUpload } from '../../common/api/reivew'
 import { ReactComponent as BigRivewStarActive } from '../../icons/big-review-star-active.svg';

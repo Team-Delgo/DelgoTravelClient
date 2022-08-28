@@ -13,7 +13,7 @@ import BirthSelector from '../../signUpPage/petInfo/BirthSelector';
 import { petImageUpload } from '../../../common/api/signup';
 import Check from '../../../icons/check.svg';
 import { userActions } from '../../../redux/slice/userSlice';
-import { MY_ACCOUNT_PATH } from '../../../constants/path.const';
+import { MY_ACCOUNT_PATH } from '../../../common/constants/path.const';
 import { changePetInfo } from '../../../common/api/myaccount';
 import { RootState } from '../../../redux/store';
 import AlertConfirmOne from '../../../common/dialog/AlertConfirmOne'

@@ -3,8 +3,8 @@ import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import qs from 'qs';
-import { NAVER} from '../../constants/url.cosnt';
-import { tokenActions } from '../../redux/slice/tokenSlice';
+import { NAVER} from '../../../common/constants/url.cosnt';
+import { tokenActions } from '../../../redux/slice/tokenSlice';
 
 declare global {
   interface Window {
@@ -37,8 +37,8 @@ function NaverRedirectHandler() {
 
     const payload = qs.stringify({
       grant_type: "authorization_code",
-      client_id: NAVER.CLIENT_ID,
-      client_secret: NAVER.CLIENT_SECRET,
+      client_id: `${process.env.REACT_APP_NAVER_CLIENT_ID}`,
+      client_secret: `${process.env.REACT_APP_NAVER_CLIENT_SECRET}`,
       code,
       state,
     });

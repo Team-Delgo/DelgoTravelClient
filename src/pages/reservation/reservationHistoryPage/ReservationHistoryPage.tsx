@@ -5,7 +5,7 @@ import { AxiosResponse } from 'axios';
 import { ReactComponent as Exit } from '../../../icons/exit.svg';
 import { bookingGetData } from '../../../common/api/booking'
 import Map from '../../../common/utils/Map';
-import { MY_STORAGE_PATH } from '../../../constants/path.const';
+import { MY_STORAGE_PATH } from '../../../common/constants/path.const';
 import { RootState } from '../../../redux/store'
 import './ReservationHistoryPage.scss';
 

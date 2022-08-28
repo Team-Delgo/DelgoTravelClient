@@ -7,7 +7,7 @@ import { reservationActions } from '../../../redux/slice/reservationSlice';
 import {RootState} from '../../../redux/store'
 import {bookingGetData} from '../../../common/api/booking'
 import './ReservationCanclePage.scss';
-import { ROOT_PATH } from "../../../constants/path.const";
+import { ROOT_PATH } from "../../../common/constants/path.const";
 
 
 

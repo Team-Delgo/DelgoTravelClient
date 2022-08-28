@@ -13,7 +13,7 @@ import { ReactComponent as ActiveHeart } from '../../../icons/heart-active.svg';
 import { ReactComponent as Heart } from '../../../icons/heart.svg';
 import {
   SIGN_IN_PATH,
-} from '../../../constants/path.const';
+} from '../../../common/constants/path.const';
 import './Place.scss'
 
 interface PlaceTypeProps {

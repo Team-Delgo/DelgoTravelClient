@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import RightArrow from '../../../icons/right-arrow.svg';
 import LeftArrow from '../../../icons/left-arrow.svg';
 import './ChangeUserInfo.scss';
-import { MY_ACCOUNT_PATH } from '../../../constants/path.const';
+import { MY_ACCOUNT_PATH } from '../../../common/constants/path.const';
 import { RootState } from '../../../redux/store';
 import { nicknameCheck } from '../../../common/api/signup';
 import { checkNickname } from '../../signUpPage/userInfo/ValidCheck';

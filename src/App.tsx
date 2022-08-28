@@ -26,7 +26,7 @@ import {
   KAKAO_REDIRECT_HANDLE_PATH,
   NAVER_REDIRECT_HANDLE_PATH,
   RESERVATION_PATH,
-} from './constants/path.const';
+} from './common/constants/path.const';
 import './App.scss';
 import MyAccount from './pages/myAccount/MyAccount';
 import FindPassword from './pages/signInPage/password/FindPassword';
@@ -37,8 +37,8 @@ import ReviewsPage from './pages/detailPlace/reviewsPage/ReviewsPage';
 import RoomTypePage from './pages/detailPlace/roomTypePage/RoomTypePage';
 import Reservation from './pages/reservation/reservationPage/ReservationPage';
 import ReviewWritingPage from './pages/reviewWriting/ReviewWritingPage';
-import KakaoRedirectHandler from './common/socialLogion/KakaoRedirectHandler';
-import NaverRedirectHandler from './common/socialLogion/NaverRedirectHandler';
+import KakaoRedirectHandler from './pages/signInPage/socialLogion/KakaoRedirectHandler';
+import NaverRedirectHandler from './pages/signInPage/socialLogion/NaverRedirectHandler';
 import AlertConfirmOne from './common/dialog/AlertConfirmOne';
 import { tokenActions } from './redux/slice/tokenSlice';
 import { tokenRefresh } from './common/api/login';

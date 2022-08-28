@@ -11,7 +11,7 @@ import { login } from '../../common/api/login';
 import './Login.scss';
 import { checkEmail, checkPasswordLogin } from '../signUpPage/userInfo/ValidCheck';
 import Loading from '../../common/utils/Loading';
-import { ROOT_PATH } from '../../constants/path.const';
+import { ROOT_PATH } from '../../common/constants/path.const';
 
 interface Input {
   email: string;

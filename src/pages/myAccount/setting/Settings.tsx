@@ -4,7 +4,7 @@ import { useNavigate,useLocation } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import './Settings.scss';
-import { MY_ACCOUNT_PATH } from '../../../constants/path.const';
+import { MY_ACCOUNT_PATH } from '../../../common/constants/path.const';
 import { RootState } from '../../../redux/store';
 
 

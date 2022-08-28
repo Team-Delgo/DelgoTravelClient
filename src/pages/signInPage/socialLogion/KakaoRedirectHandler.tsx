@@ -4,12 +4,12 @@ import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import qs from 'qs';
-import { KAKAO } from '../../constants/url.cosnt';
-import { tokenActions } from '../../redux/slice/tokenSlice';
-import { setAccessCode } from '../api/social';
-import { ROOT_PATH, SIGN_UP_PATH } from '../../constants/path.const';
-import { userActions } from '../../redux/slice/userSlice';
-import Loading from '../../common/utils/Loading';
+import { KAKAO } from '../../../common/constants/url.cosnt';
+import { tokenActions } from '../../../redux/slice/tokenSlice';
+import { setAccessCode } from '../../../common/api/social';
+import { ROOT_PATH, SIGN_UP_PATH } from '../../../common/constants/path.const';
+import { userActions } from '../../../redux/slice/userSlice';
+import Loading from '../../../common/utils/Loading';
 
 declare global {
   interface Window {

@@ -6,7 +6,7 @@ import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg'
 import BottomButton from '../../common/components/BottomButton';
 import { getEditorNotePlace } from '../../common/api/places';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
-import { ROOT_PATH } from '../../constants/path.const';
+import { ROOT_PATH } from '../../common/constants/path.const';
 import { prevPathActions } from "../../redux/slice/prevPathSlice"
 import { scrollActions } from '../../redux/slice/scrollSlice';
 import "./EditorNotePage.scss";

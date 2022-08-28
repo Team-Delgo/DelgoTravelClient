@@ -7,7 +7,7 @@ import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import ToastMessage from '../../../common/dialog/ToastMessage';
 import Timer from '../../signUpPage/verifyphone/Timer';
 import { phoneCheckNumber, phoneSendMessage, phoneSendMessageForFind } from '../../../common/api/signup';
-import { SIGN_IN_PATH, SIGN_UP_PATH } from '../../../constants/path.const';
+import { SIGN_IN_PATH, SIGN_UP_PATH } from '../../../common/constants/path.const';
 import { errorActions } from '../../../redux/slice/errorSlice';
 import './PhoneAuth.scss';
 
