@@ -12,6 +12,7 @@ import { getCouponList } from '../../../common/api/coupon';
 import AlertConfirmOne from '../../../common/dialog/AlertConfirmOne'
 import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
 import BottomButton from '../../../common/components/BottomButton';
+import { GET_MY_COUPON_LIST, CACHE_TIME, STALE_TIME } from '../../../common/constants/queryKey.const'
 import {RootState} from '../../../redux/store'
 import { ReactComponent as FootPrintActive } from "../../../icons/foot-print-active.svg";
 import CouponModal from './CouponModal';
@@ -41,12 +42,12 @@ function Coupon() {
     window.scroll(0, 0);
   }, []);
 
-  const { isLoading:getCouponListIsLoading, data: couponList,refetch} = useQuery(
-    'getCouponList',
+  const { isLoading: getCouponListIsLoading, data: couponList, refetch } = useQuery(
+    GET_MY_COUPON_LIST,
     () => getCouponList(userId),
     {
-      cacheTime: 1000 * 60 * 5,
-      staleTime: 1000 * 60 * 3,
+      cacheTime: CACHE_TIME,
+      staleTime: STALE_TIME,
       refetchInterval: false,
       onError: (error: any) => {
         useErrorHandlers(dispatch, error)

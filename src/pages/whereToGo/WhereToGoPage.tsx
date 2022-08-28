@@ -18,6 +18,7 @@ import { ReactComponent as BottomArrow } from '../../icons/bottom-arrow.svg';
 import Delgo from '../../icons/delgo.svg';
 import './WhereToGoPage.scss';
 import Calender from '../../common/utils/Calender';
+import { GET_ALL_PLACES, CACHE_TIME, STALE_TIME } from '../../common/constants/queryKey.const'
 
 
 interface PlaceType {
@@ -67,12 +68,11 @@ function WhereToGoPage() {
   const dispatch = useDispatch()
 
   const { isLoading, data: places, refetch } = useQuery(
-    'getAllPlaces',
+    GET_ALL_PLACES,
     () => getAllPlaces(userId, startDt, endDt),
     {
-      cacheTime: 1000 * 60 * 5,
-      staleTime: 1000 * 60 * 3,
-      refetchInterval: false,
+      cacheTime: CACHE_TIME,
+      staleTime: STALE_TIME,
       onError: (error: any) => {
         useErrorHandlers(dispatch, error)
       }

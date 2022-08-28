@@ -7,6 +7,7 @@ import WishedPlace from './wishedPlace/WishedPlace';
 import { getWishedPlaces ,getRecommendedPlace} from '../../../common/api/places';
 import RecommendedPlace from '../../../common/components/RecommendedPlace'
 import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
+import { GET_RECOMMENED_PLACES, GET_WISHED_PLACES, CACHE_TIME, STALE_TIME } from '../../../common/constants/queryKey.const'
 import {RootState} from '../../../redux/store'
 import { ReactComponent as FootPrintActive } from '../../../icons/foot-print-active.svg';
 import './Folder.scss';
@@ -51,9 +52,9 @@ function Folder({currentTab}:FolderTypeProps) {
     isLoading: getWishedPlacesIsLoading,
     data: wishedPlaces,
     refetch:getWishedPlacesRefetch,
-  } = useQuery('getWishedPlaces', () => getWishedPlaces(accessToken, userId), {
-    cacheTime: 1000 * 60 * 5,
-    staleTime: 1000 * 60 * 3,
+  } = useQuery(GET_WISHED_PLACES, () => getWishedPlaces(accessToken, userId), {
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
     onError: (error: any) => {
       useErrorHandlers(dispatch, error);
     },
@@ -63,10 +64,9 @@ function Folder({currentTab}:FolderTypeProps) {
     isLoading: getRecommendedPlacesIsLoading,
     data: recommendedPlaces,
     refetch: getRecommendedPlacesRefetch,
-  } = useQuery('getRecommendedPlaces', () => getRecommendedPlace(userId), {
-    cacheTime: 1000 * 60 * 5,
-    staleTime: 1000 * 60 * 3,
-    refetchInterval: false,
+  } = useQuery(GET_RECOMMENED_PLACES, () => getRecommendedPlace(userId), {
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
     onError: (error: any) => {
       useErrorHandlers(dispatch, error);
     },
@@ -85,11 +85,7 @@ function Folder({currentTab}:FolderTypeProps) {
     }
   }, [getWishedPlacesIsLoading, getRecommendedPlacesIsLoading]);
 
-  if (getWishedPlacesIsLoading){
-    return <div className="wish-list-container" style={loadingScreenHeight}>&nbsp;</div>;
-  }
-
-  if (getRecommendedPlacesIsLoading){
+  if (getWishedPlacesIsLoading||getRecommendedPlacesIsLoading){
     return <div className="wish-list-container" style={loadingScreenHeight}>&nbsp;</div>;
   }
 

@@ -17,6 +17,7 @@ import { deleteUser } from '../../common/api/signup';
 import { MY_ACCOUNT_PATH, SIGN_IN_PATH } from '../../common/constants/path.const';
 import {  getMyAccountDataList } from '../../common/api/myaccount';
 import { getBookingState } from '../../common/api/booking';
+import { GET_MY_ACCOUNT_DATA_LIST, GET_BOOKING_STATE_DATA_LIST, CACHE_TIME, STALE_TIME } from '../../common/constants/queryKey.const'
 import { RootState } from '../../redux/store';
 
 const loadingScreenHeight = { height: window.innerHeight * 2 }
@@ -42,9 +43,9 @@ function MyAccount() {
     isLoading: getMyAccountDataListIsLoading,
     data: myAccountDataList,
     refetch:getMyAccountDataListRefetch,
-  } = useQuery('getMyAccountDataList', () => getMyAccountDataList(userId), {
-    cacheTime: 1000 * 60 * 5,
-    staleTime: 1000 * 60 * 3,
+  } = useQuery(GET_MY_ACCOUNT_DATA_LIST, () => getMyAccountDataList(userId), {
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
     refetchInterval: false,
     onError: (error: any) => {
       useErrorHandlers(dispatch, error);
@@ -55,9 +56,9 @@ function MyAccount() {
     isLoading: getBookingStateIsLoading,
     data: bookingStateDataList,
     refetch: getBookingStateRefetch,
-  } = useQuery('getBookingStateDateList', () => getBookingState(userId), {
-    cacheTime: 1000 * 60 * 5,
-    staleTime: 1000 * 60 * 3,
+  } = useQuery(GET_BOOKING_STATE_DATA_LIST, () => getBookingState(userId), {
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
     refetchInterval: false,
     onError: (error: any) => {
       useErrorHandlers(dispatch, error);
@@ -192,11 +193,7 @@ function MyAccount() {
     <div className="account-purchase-reservation-box empty">최근 예약한 숙소가 없어요</div>
   )
 
-  if (getMyAccountDataListIsLoading) {
-    return <div className="account" style={loadingScreenHeight}><Footer /></div>;
-  }
-
-  if (getBookingStateIsLoading) {
+  if (getMyAccountDataListIsLoading || getBookingStateIsLoading) {
     return <div className="account" style={loadingScreenHeight}><Footer /></div>;
   }
 

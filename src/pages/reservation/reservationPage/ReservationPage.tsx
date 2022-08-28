@@ -10,7 +10,8 @@ import './ReservationPage.scss';
 import { getCouponList } from '../../../common/api/coupon';
 import AlertConfirmOne from '../../../common/dialog/AlertConfirmOne'
 import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
-import {RootState} from '../../../redux/store'
+import { GET_MY_COUPON_LIST, CACHE_TIME, STALE_TIME } from '../../../common/constants/queryKey.const'
+import { RootState } from '../../../redux/store'
 
 interface CouponType {
   couponId: number
@@ -35,13 +36,12 @@ function ReservationPage() {
   const [reservationNameConfrim,setReservationNameConfrim]=useState(false)
   const reservationNameInput = useRef<HTMLInputElement>(null);
 
-  const { isLoading:getCouponListIsLoading, data: couponList,refetch} = useQuery(
-    'getCouponList',
+  const { isLoading:getCouponListIsLoading, data: couponList} = useQuery(
+    GET_MY_COUPON_LIST,
     () => getCouponList(user.id),
     {
-      cacheTime: 1000 * 60 * 5,
-      staleTime: 1000 * 60 * 3,
-      refetchInterval: false,
+      cacheTime: CACHE_TIME,
+      staleTime: STALE_TIME,
       onError: (error: any) => {
         useErrorHandlers(dispatch, error)
       }

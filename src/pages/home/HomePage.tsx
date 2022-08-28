@@ -8,10 +8,11 @@ import RecommendedPlace from './recommenedPlaces/RecommendedPlace';
 import { bookingGetDataByMain } from '../../common/api/booking';
 import { getRecommendedPlace, getEditorNotePlacesAll } from '../../common/api/places';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
+import { GET_EDITOR_NOTE_PLACES_ALL, GET_RECOMMENED_PLACES, GET_BOOKING_DATA_BY_MAIN, CACHE_TIME, STALE_TIME } from '../../common/constants/queryKey.const'
 import { RootState } from '../../redux/store';
-import './HomePage.scss';
 import HomeReservation from './homeReservation/HomeReservation';
 import Delgo from '../../icons/delgo.svg';
+import './HomePage.scss';
 
 interface EditorPlaceType {
   mainUrl: string;
@@ -56,12 +57,11 @@ function HomePage() {
   }, []);
 
   const { isLoading: getRecommendedPlacesIsLoading, data: recommendedPlaces } = useQuery(
-    'getRecommendedPlaces',
+    GET_RECOMMENED_PLACES,
     () => getRecommendedPlace(userId),
     {
-      cacheTime: 1000 * 60 * 5,
-      staleTime: 1000 * 60 * 3,
-      refetchInterval: false,
+      cacheTime: CACHE_TIME,
+      staleTime: STALE_TIME,
       onError: (error: any) => {
         useErrorHandlers(dispatch, error);
       },
@@ -69,12 +69,11 @@ function HomePage() {
   );
 
   const { isLoading: getBookingDataIsLoading, data: reservationPlaces } = useQuery(
-    'bookingGetDataByMain',
+    GET_BOOKING_DATA_BY_MAIN,
     () => bookingGetDataByMain(accessToken, userId),
     {
-      cacheTime: 1000 * 60 * 5,
-      staleTime: 1000 * 60 * 3,
-      refetchInterval: false,
+      cacheTime: CACHE_TIME,
+      staleTime: STALE_TIME,
       onError: (error: any) => {
         useErrorHandlers(dispatch, error);
       },
@@ -82,11 +81,11 @@ function HomePage() {
   );
 
   const { isLoading: getEditorNotePlacesIsLoading, data: editorNotePlaces } = useQuery(
-    'getEditorNotePlacesAll',
+    GET_EDITOR_NOTE_PLACES_ALL,
     () => getEditorNotePlacesAll(),
     {
-      cacheTime: 1000 * 60 * 5,
-      staleTime: 1000 * 60 * 3,
+      cacheTime: CACHE_TIME,
+      staleTime: STALE_TIME,
       refetchInterval: false,
       onError: (error: any) => {
         useErrorHandlers(dispatch, error);
@@ -120,16 +119,8 @@ function HomePage() {
     if (reservationPlaces?.data?.length) getDday();
   }, [page, reservationPlaces]);
 
-  if (getRecommendedPlacesIsLoading) {
-    return <div className="home-background" style={loadingScreenHeight}><Footer/></div>;
-  }
-
-  if (getBookingDataIsLoading) {
-    return <div className="home-background" style={loadingScreenHeight}><Footer/></div>;
-  }
-
-  if (getEditorNotePlacesIsLoading) {
-    return <div className="home-background" style={loadingScreenHeight}><Footer/></div>;
+  if (getEditorNotePlacesIsLoading || getBookingDataIsLoading || getEditorNotePlacesIsLoading) {
+    return <div className="home-background" style={loadingScreenHeight}><Footer /></div>;
   }
 
   return (
