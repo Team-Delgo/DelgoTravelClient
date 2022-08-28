@@ -63,17 +63,16 @@ function ReservationCanclePage() {
     }
   }, []);
 
-  const moveToMainPage = useCallback(() => {
+  const moveToMainPage = () => {
     setTimeout(() => {
       navigate(ROOT_PATH);
       dispatch(
         reservationActions.reservationInit()
       )
     }, 300);
-  }, []);
+  }
 
   return (
-    <>
       <div className="reservationCanclePage">
         <div className="header">
           <Exit className="exit-button" onClick={moveToMainPage} />
@@ -146,8 +145,6 @@ function ReservationCanclePage() {
           </div>
         </div>
       </div>
-      {/* <BottomButton text="예약내역 공유하기" /> */}
-    </>
   );
 }
 

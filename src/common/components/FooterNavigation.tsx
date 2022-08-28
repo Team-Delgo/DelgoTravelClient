@@ -27,25 +27,25 @@ function Footer() {
   const {OS} = useSelector((state:RootState)=>state.persist.device);
   const navigate = useNavigate();
 
-  const moveToTopScreen = useCallback(() => {
+  const moveToTopScreen = () => {
     window.scroll({ top: 0, behavior: 'smooth' });
-  }, []);
+  }
 
-  const moveToMyStoragePage = useCallback(() => {
+  const moveToMyStoragePage = () => {
     if (!isSignIn) {
       setIsModalOpen(true);
     } else{
       navigate(MY_STORAGE_PATH);
     }
-  }, [isSignIn]);
+  }
 
-  const moveToMyAccountPage = useCallback(() => {
+  const moveToMyAccountPage = () => {
     if (!isSignIn) {
       setIsModalOpen(true);
     } else {
       navigate(MY_ACCOUNT_PATH.MAIN);
     }
-  }, [isSignIn]);
+  }
 
   return (
     <div className={OS === 'android' ? 'footer-android' : 'footer-ios'}>

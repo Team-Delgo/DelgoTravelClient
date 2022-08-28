@@ -1,9 +1,8 @@
-import React, { useState, useCallback, memo, useEffect } from 'react'
+import React, { useState, memo } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { wishInsert, wishDelete } from '../../../common/api/wish'
-// import Heart from '../../../common/components/Heart'
 import AlertConfirm from '../../../common/dialog/AlertConfirm';
 import { scrollActions } from '../../../redux/slice/scrollSlice';
 import { areaActions } from '../../../redux/slice/areaSlice';
@@ -82,12 +81,12 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
   }
 
 
-  const moveToDetailPage = useCallback(() => {
+  const moveToDetailPage = () => {
     dispatch(scrollActions.scroll({ whereToGo: window.scrollY }));
     dispatch(areaActions.setArea({ areaName: areaTerm }));
     dispatch(prevPathActions.prevPath({ prevPath: location.pathname }));
     navigate(`/detail-place/${place.placeId}`);
-  }, [])
+  }
 
   return (
     <div className="place" aria-hidden="true">

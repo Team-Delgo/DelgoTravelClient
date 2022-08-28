@@ -45,7 +45,7 @@ function ReservationHistoryPage() {
   })
   const { bookingId } = useParams();
   const location: any = useLocation();
-  const {OS} = useSelector((state:RootState)=>state.persist.device);
+  const { OS } = useSelector((state: RootState) => state.persist.device);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -61,7 +61,7 @@ function ReservationHistoryPage() {
     }
   }, []);
 
-  const copyPlaceAddress = useCallback(() => {
+  const copyPlaceAddress = () => {
     if (navigator.clipboard && window.isSecureContext) {
       navigator.clipboard.writeText(reservationData.place.address)
       if (OS === 'android') {
@@ -71,9 +71,9 @@ function ReservationHistoryPage() {
         window.webkit.messageHandlers.copyToClipboard.postMessage(reservationData.place.address)
       }
     }
-  }, [reservationData]);
+  }
 
-  const copyReservationNumber = useCallback(() => {
+  const copyReservationNumber = () => {
     if (navigator.clipboard && window.isSecureContext) {
       navigator.clipboard.writeText(reservationData.bookingId)
       if (OS === 'android') {
@@ -84,11 +84,11 @@ function ReservationHistoryPage() {
         window.webkit.messageHandlers.copyToClipboard.postMessage(reservationData.bookingId)
       }
     }
-  }, [reservationData]);
+  }
 
-  const moveToCallApp = useCallback(() => {
+  const moveToCallApp = () => {
     window.webkit.messageHandlers.numToCall.postMessage(`tel://${reservationData.place.phoneNo}`)
-  }, [reservationData]);
+  }
 
   const getDate = (date: string) => {
     const week = ['일', '월', '화', '수', '목', '금', '토'];
@@ -96,13 +96,13 @@ function ReservationHistoryPage() {
     return dayOfWeek;
   }
 
-  const moveToPrevPage = useCallback(() => {
+  const moveToPrevPage = () => {
     navigate(MY_STORAGE_PATH, {
       state: {
         prevPath: location.pathname,
       },
     });
-  }, []);
+  }
 
   return (
       <div className="reservationPage">
