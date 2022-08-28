@@ -46,7 +46,6 @@ function MyAccount() {
   } = useQuery(GET_MY_ACCOUNT_DATA_LIST, () => getMyAccountDataList(userId), {
     cacheTime: CACHE_TIME,
     staleTime: STALE_TIME,
-    refetchInterval: false,
     onError: (error: any) => {
       useErrorHandlers(dispatch, error);
     },
@@ -59,7 +58,6 @@ function MyAccount() {
   } = useQuery(GET_BOOKING_STATE_DATA_LIST, () => getBookingState(userId), {
     cacheTime: CACHE_TIME,
     staleTime: STALE_TIME,
-    refetchInterval: false,
     onError: (error: any) => {
       useErrorHandlers(dispatch, error);
     },
@@ -124,26 +122,26 @@ function MyAccount() {
 
   const moveToMyAccountPetInfoPage = () => {
     setTimeout(() => {
-      dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
+      dispatch(scrollActions.myStorageScroll({ myAccount: window.scrollY }));
       navigation(MY_ACCOUNT_PATH.PETINFO);
     }, 200);
   };
   const moveToMyAccountCouponPage = () => {
     setTimeout(() => {
-      dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
+      dispatch(scrollActions.myStorageScroll({ myAccount: window.scrollY }));
       navigation(MY_ACCOUNT_PATH.COUPON);
     }, 200);
   };
   const moveToMyAccountReviewsPage = () => {
     setTimeout(() => {
-      dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
+      dispatch(scrollActions.myStorageScroll({ myAccount: window.scrollY }));
       navigation(MY_ACCOUNT_PATH.REVIEWS);
     }, 200);
   };
 
   const moveToMyAccountUserInfoPage = () => {
     setTimeout(() => {
-      dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
+      dispatch(scrollActions.myStorageScroll({ myAccount: window.scrollY }));
       navigation(MY_ACCOUNT_PATH.USERINFO);
     }, 200)
 
@@ -151,7 +149,7 @@ function MyAccount() {
 
   const moveToMyAccountSettingsPage = () => {
     setTimeout(() => {
-      dispatch(scrollActions.scroll({ myAccount: window.scrollY }));
+      dispatch(scrollActions.myStorageScroll({ myAccount: window.scrollY }));
       navigation(MY_ACCOUNT_PATH.SETTINGS);
     }, 200);
   };

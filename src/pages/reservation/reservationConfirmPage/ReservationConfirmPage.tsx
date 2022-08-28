@@ -77,8 +77,6 @@ function ReservationConfirmPage() {
     }, 100);
   }, []);
 
-
-
   const openReservationCancleModal = useCallback(() => {
     setReservationCancleModal(true);
   }, []);
@@ -89,26 +87,26 @@ function ReservationConfirmPage() {
 
   const copyPlaceAddress = useCallback(() => {
     if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(reservationData.place.address)
-    if(OS==='android'){
-      window.BRIDGE.copyToClipboard(reservationData.place.address)
+      navigator.clipboard.writeText(reservationData.place.address)
+      if (OS === 'android') {
+        window.BRIDGE.copyToClipboard(reservationData.place.address)
+      }
+      else {
+        window.webkit.messageHandlers.copyToClipboard.postMessage(reservationData.place.address)
+      }
     }
-    else{
-      window.webkit.messageHandlers.copyToClipboard.postMessage(reservationData.place.address)
-    }
-  }
   }, [reservationData]);
 
   const copyReservationNumber = useCallback(() => {
     if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(reservationData.bookingId)
-    if(OS==='android'){
-      window.BRIDGE.copyToClipboard(reservationData.bookingId)
+      navigator.clipboard.writeText(reservationData.bookingId)
+      if (OS === 'android') {
+        window.BRIDGE.copyToClipboard(reservationData.bookingId)
+      }
+      else {
+        window.webkit.messageHandlers.copyToClipboard.postMessage(reservationData.bookingId)
+      }
     }
-    else{
-      window.webkit.messageHandlers.copyToClipboard.postMessage(reservationData.bookingId)
-    }
-  }
   }, [reservationData]);
 
   const moveToCallApp = useCallback(() => {
@@ -116,11 +114,11 @@ function ReservationConfirmPage() {
   }, [reservationData]);
 
 
-  const getDate = (date:string) => { 
+  const getDate = useCallback((date:string) => { 
       const week = ['일', '월', '화', '수', '목', '금', '토'];
       const dayOfWeek = week[new Date(date).getDay()];
       return dayOfWeek;
-  }
+  }, [reservationData]);
 
   return (
     <>

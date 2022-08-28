@@ -35,7 +35,7 @@ function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch
   const navigate = useNavigate();
 
   const wishListDelete = useCallback(() => {
-    setWishListAlertConfirmOpen(false)
+    wishListConfirmModalClose()
     wishDelete(
       { wishId: place.wishId, accessToken },
       (response: AxiosResponse) => {

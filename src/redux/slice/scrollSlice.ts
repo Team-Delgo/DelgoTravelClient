@@ -5,7 +5,7 @@ const initialState = {
   detailPlaceScrollY: 0,
   myStorageScrollY: 0,
   homeScrollY: 0,
-  myAccountScrollY:0,
+  myAccountScrollY: 0,
 };
 
 const scrollSlice = createSlice({
@@ -23,6 +23,12 @@ const scrollSlice = createSlice({
     },
     scrollInit() {
       return initialState;
+    },
+    myStorageScroll(state, action) {
+      return {
+        ...state,
+        myAccountScrollY: action.payload.myAccount
+      };
     },
   },
 });
