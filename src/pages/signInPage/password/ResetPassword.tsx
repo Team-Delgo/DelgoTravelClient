@@ -4,7 +4,7 @@ import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
-import { SIGN_IN_PATH } from '../../../constants/path.const';
+import { SIGN_IN_PATH } from '../../../common/constants/path.const';
 import { changePassword } from '../../../common/api/login';
 import { checkPassword, checkPasswordConfirm } from '../../signUpPage/userInfo/ValidCheck';
 import './ResetPassword.scss';

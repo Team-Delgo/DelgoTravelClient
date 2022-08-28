@@ -7,7 +7,7 @@ import Check from '../../../icons/check.svg';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import { checkNickname } from '../userInfo/ValidCheck';
 import { nicknameCheck } from '../../../common/api/signup';
-import { SIGN_UP_PATH } from '../../../constants/path.const';
+import { SIGN_UP_PATH } from '../../../common/constants/path.const';
 
 interface LocationState {
   phone: string;

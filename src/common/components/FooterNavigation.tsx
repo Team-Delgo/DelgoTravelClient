@@ -15,7 +15,7 @@ import {
   WHERE_TO_GO_PATH,
   MY_ACCOUNT_PATH,
   SIGN_IN_PATH,
-} from '../../constants/path.const';
+} from '../constants/path.const';
 import {RootState} from '../../redux/store'
 import './FooterNavigation.scss';
 import AlertConfirm from '../dialog/AlertConfirm';

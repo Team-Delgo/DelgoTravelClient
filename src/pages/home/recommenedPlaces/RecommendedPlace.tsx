@@ -6,7 +6,7 @@ import { wishInsert, wishDelete } from '../../../common/api/wish';
 import AlertConfirm from '../../../common/dialog/AlertConfirm';
 import {
   SIGN_IN_PATH,
-} from '../../../constants/path.const';
+} from '../../../common/constants/path.const';
 import './RecommendedPlace.scss';
 import { scrollActions } from '../../../redux/slice/scrollSlice';
 import { prevPathActions } from '../../../redux/slice/prevPathSlice';

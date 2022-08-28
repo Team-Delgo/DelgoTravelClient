@@ -9,14 +9,14 @@ import { Circles, Grid, Oval, Puff, Rings } from 'react-loader-spinner';
 import { ReactComponent as Kakao } from '../../icons/kakao.svg';
 import { ReactComponent as Naver } from '../../icons/naver.svg';
 import { ReactComponent as Apple } from '../../icons/apple.svg';
-import { ROOT_PATH, SIGN_IN_PATH, SIGN_UP_PATH } from '../../constants/path.const';
+import { ROOT_PATH, SIGN_IN_PATH, SIGN_UP_PATH } from '../../common/constants/path.const';
 import { tokenActions } from '../../redux/slice/tokenSlice';
-import { KAKAO, NAVER } from '../../constants/url.cosnt';
+import { KAKAO, NAVER } from '../../common/constants/url.cosnt';
 import Delgo from '../../icons/delgo.svg';
 import { checkEmail } from '../signUpPage/userInfo/ValidCheck';
 import { emailAuth } from '../../common/api/login';
 import Loading from '../../common/utils/Loading';
-import AppleLoginButton from './AppleLogin';
+import AppleLoginButton from './socialLogion/AppleLogin';
 
 function SignIn() {
   const [email, setEmail] = useState('');

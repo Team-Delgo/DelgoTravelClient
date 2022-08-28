@@ -14,7 +14,7 @@ import {
   MY_STORAGE_PATH,
   WHERE_TO_GO_PATH,
   SIGN_IN_PATH,
-} from '../../constants/path.const';
+} from '../../common/constants/path.const';
 import {RootState} from '../../redux/store'
 import { ReactComponent as ActiveHeart } from '../../icons/heart-active.svg';
 import { ReactComponent as Heart } from '../../icons/heart.svg';

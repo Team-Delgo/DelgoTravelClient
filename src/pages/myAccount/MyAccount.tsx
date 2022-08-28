@@ -14,7 +14,7 @@ import { tokenActions } from '../../redux/slice/tokenSlice';
 import { scrollActions } from '../../redux/slice/scrollSlice';
 import AlertConfirm from '../../common/dialog/AlertConfirm';
 import { deleteUser } from '../../common/api/signup';
-import { MY_ACCOUNT_PATH, SIGN_IN_PATH } from '../../constants/path.const';
+import { MY_ACCOUNT_PATH, SIGN_IN_PATH } from '../../common/constants/path.const';
 import {  getMyAccountDataList } from '../../common/api/myaccount';
 import { getBookingState } from '../../common/api/booking';
 import { RootState } from '../../redux/store';

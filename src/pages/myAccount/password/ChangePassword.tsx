@@ -4,7 +4,7 @@ import React, { ChangeEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { changePassword } from '../../../common/api/myaccount';
-import { MY_ACCOUNT_PATH } from '../../../constants/path.const';
+import { MY_ACCOUNT_PATH } from '../../../common/constants/path.const';
 import {RootState} from '../../../redux/store'
 import LeftArrow from '../../../icons/left-arrow.svg';
 import { checkPassword, checkPasswordConfirm } from '../../signUpPage/userInfo/ValidCheck';

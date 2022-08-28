@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import DetailTerm from './DetailTerm';
-import { SIGN_IN_PATH, SIGN_UP_PATH } from '../../../constants/path.const';
+import { SIGN_IN_PATH, SIGN_UP_PATH } from '../../../common/constants/path.const';
 import './Terms.scss';
 import Check from '../../../icons/check.svg';
 

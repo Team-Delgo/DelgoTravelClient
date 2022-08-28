@@ -7,7 +7,7 @@ import { errorActions } from '../../../redux/slice/errorSlice';
 import ToastMessage from '../../../common/dialog/ToastMessage';
 import './VerifyPhone.scss';
 import Timer from './Timer';
-import { SIGN_UP_PATH } from '../../../constants/path.const';
+import { SIGN_UP_PATH } from '../../../common/constants/path.const';
 import { ReactComponent as Check } from '../../../icons/check.svg';
 import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
 import { ReactComponent as Exit } from "../../../icons/x.svg";
