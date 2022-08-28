@@ -119,7 +119,7 @@ function HomePage() {
     if (reservationPlaces?.data?.length) getDday();
   }, [page, reservationPlaces]);
 
-  if (getEditorNotePlacesIsLoading || getBookingDataIsLoading || getEditorNotePlacesIsLoading) {
+  if (getRecommendedPlacesIsLoading || getBookingDataIsLoading || getEditorNotePlacesIsLoading) {
     return <div className="home-background" style={loadingScreenHeight}><Footer /></div>;
   }
 
