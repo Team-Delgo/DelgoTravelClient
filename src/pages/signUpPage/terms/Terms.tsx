@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
+import { ReactComponent as Arrow } from '../../../common/icons/left-arrow.svg';
 import DetailTerm from './DetailTerm';
 import { SIGN_IN_PATH, SIGN_UP_PATH } from '../../../common/constants/path.const';
 import './Terms.scss';
-import Check from '../../../icons/check.svg';
+import Check from '../../../common/icons/check.svg';
 
 interface LocationState {
   isSocial: boolean;

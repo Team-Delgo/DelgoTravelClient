@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import { useDispatch } from "react-redux";
 import { AxiosResponse } from "axios";
-import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
+import { ReactComponent as Arrow } from '../../../common/icons/left-arrow.svg';
 import "./FindPassword.scss";
 import { emailAuth } from "../../../common/api/login";
 import { SIGN_IN_PATH } from "../../../common/constants/path.const";
-import Check from "../../../icons/check.svg";
+import Check from "../../../common/icons/check.svg";
 
 function FindPassword() {
   const [email, setEmail] = useState('');

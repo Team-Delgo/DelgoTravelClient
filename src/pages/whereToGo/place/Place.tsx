@@ -9,8 +9,8 @@ import { scrollActions } from '../../../redux/slice/scrollSlice';
 import { areaActions } from '../../../redux/slice/areaSlice';
 import { prevPathActions } from "../../../redux/slice/prevPathSlice"
 import {RootState} from '../../../redux/store'
-import { ReactComponent as ActiveHeart } from '../../../icons/heart-active.svg';
-import { ReactComponent as Heart } from '../../../icons/heart.svg';
+import { ReactComponent as ActiveHeart } from '../../../common/icons/heart-active.svg';
+import { ReactComponent as Heart } from '../../../common/icons/heart.svg';
 import {
   SIGN_IN_PATH,
 } from '../../../common/constants/path.const';

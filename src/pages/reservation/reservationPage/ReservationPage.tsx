@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
 import { useQuery } from 'react-query';
 import { reservationActions } from '../../../redux/slice/reservationSlice';
-import { ReactComponent as Exit } from '../../../icons/exit.svg';
-import { ReactComponent as BottomArrow } from '../../../icons/bottom-arrow2.svg';
+import { ReactComponent as Exit } from '../../../common/icons/exit.svg';
+import { ReactComponent as BottomArrow } from '../../../common/icons/bottom-arrow2.svg';
 import './ReservationPage.scss';
 import { getCouponList } from '../../../common/api/coupon';
 import AlertConfirmOne from '../../../common/dialog/AlertConfirmOne'

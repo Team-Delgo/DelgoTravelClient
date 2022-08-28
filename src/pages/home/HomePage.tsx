@@ -11,7 +11,7 @@ import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import { GET_EDITOR_NOTE_PLACES_ALL, GET_RECOMMENED_PLACES, GET_BOOKING_DATA_BY_MAIN, CACHE_TIME, STALE_TIME } from '../../common/constants/queryKey.const'
 import { RootState } from '../../redux/store';
 import HomeReservation from './homeReservation/HomeReservation';
-import Delgo from '../../icons/delgo.svg';
+import Delgo from '../../common/icons/delgo.svg';
 import './HomePage.scss';
 
 interface EditorPlaceType {

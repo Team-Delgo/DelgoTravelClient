@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
-import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
+import { ReactComponent as Arrow } from '../../../common/icons/left-arrow.svg';
 import { SIGN_IN_PATH } from '../../../common/constants/path.const';
 import { changePassword } from '../../../common/api/login';
 import { checkPassword, checkPasswordConfirm } from '../../signUpPage/userInfo/ValidCheck';

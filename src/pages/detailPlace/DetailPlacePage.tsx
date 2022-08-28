@@ -16,12 +16,12 @@ import {
   SIGN_IN_PATH,
 } from '../../common/constants/path.const';
 import {RootState} from '../../redux/store'
-import { ReactComponent as ActiveHeart } from '../../icons/heart-active.svg';
-import { ReactComponent as Heart } from '../../icons/heart.svg';
+import { ReactComponent as ActiveHeart } from '../../common/icons/heart-active.svg';
+import { ReactComponent as Heart } from '../../common/icons/heart.svg';
 import { getDetailPlace} from '../../common/api/places';
 import { getDetailPlaceRivews} from '../../common/api/reivew';
 import { wishInsert, wishDelete } from '../../common/api/wish';
-import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg';
+import { ReactComponent as LeftArrow } from '../../common/icons/left-arrow2.svg';
 import { currentPlaceActions } from '../../redux/slice/placeSlice';
 import { scrollActions } from '../../redux/slice/scrollSlice';
 import Calender from '../../common/utils/Calender';

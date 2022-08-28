@@ -7,7 +7,7 @@ import { wishDelete } from '../../../../common/api/wish'
 import { scrollActions } from '../../../../redux/slice/scrollSlice';
 import {prevPathActions} from "../../../../redux/slice/prevPathSlice"
 import {RootState} from '../../../../redux/store'
-import { ReactComponent as ActiveHeart } from '../../../../icons/heart-active.svg';
+import { ReactComponent as ActiveHeart } from '../../../../common/icons/heart-active.svg';
 import './WishedPlace.scss';
 
 interface WishedPlaceTypeProps {

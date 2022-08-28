@@ -8,11 +8,11 @@ import AlertConfirmOne from '../../common/dialog/AlertConfirmOne'
 import { MY_STORAGE_PATH, } from '../../common/constants/path.const';
 import { RootState } from '../../redux/store'
 import { writeReivew, reviewImageUpload } from '../../common/api/reivew'
-import { ReactComponent as BigRivewStarActive } from '../../icons/big-review-star-active.svg';
-import { ReactComponent as BigRivewStar } from '../../icons/big-review-star.svg';
-import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg';
-import { ReactComponent as Camera } from '../../icons/camera.svg';
-import { ReactComponent as X } from '../../icons/x.svg';
+import { ReactComponent as BigRivewStarActive } from '../../common/icons/big-review-star-active.svg';
+import { ReactComponent as BigRivewStar } from '../../common/icons/big-review-star.svg';
+import { ReactComponent as LeftArrow } from '../../common/icons/left-arrow2.svg';
+import { ReactComponent as Camera } from '../../common/icons/camera.svg';
+import { ReactComponent as X } from '../../common/icons/x.svg';
 import './ReviewWritingPage.scss';
 
 interface TraveledHisotryPlaceType {

@@ -8171,10 +8171,10 @@
     "iconv-lite" "0.4.24"
     "unpipe" "1.0.0"
 
-"react-alert-confirm@^3.3.6":
-  "integrity" "sha512-kXLS4tOolxG4ftTB/DCQDlGLiaJfwaSlZeZxMUHLtPZQ9NUdhypR6H1Q4fPAEwRdzDKJr/1triizRyJo5Y/E/Q=="
-  "resolved" "https://registry.npmjs.org/react-alert-confirm/-/react-alert-confirm-3.3.6.tgz"
-  "version" "3.3.6"
+"react-alert-confirm@^3.3.7":
+  "integrity" "sha512-FFPkID+u4tekQ1fIqR+YGG07JECMVgJ54SPzbkEmKOtgunUeQoQH/YyCv8kWyu14JEFpkdkM082BBOMB4BMb4g=="
+  "resolved" "https://registry.npmjs.org/react-alert-confirm/-/react-alert-confirm-3.3.7.tgz"
+  "version" "3.3.7"
 
 "react-app-polyfill@^3.0.0":
   "integrity" "sha512-sZ41cxiU5llIB003yxxQBYrARBqe0repqPTTYBTmMqTz9szeBbE37BehCE891NZsmdZqqP+xWKdT3eo3vOzN8w=="

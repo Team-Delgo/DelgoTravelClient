@@ -4,7 +4,7 @@ import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from 'react-query';
-import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
+import { ReactComponent as Arrow } from '../../../common/icons/left-arrow.svg';
 import './Coupon.scss';
 import { tokenActions } from '../../../redux/slice/tokenSlice';
 import { tokenRefresh } from '../../../common/api/login';
@@ -14,7 +14,7 @@ import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
 import BottomButton from '../../../common/components/BottomButton';
 import { GET_MY_COUPON_LIST, CACHE_TIME, STALE_TIME } from '../../../common/constants/queryKey.const'
 import {RootState} from '../../../redux/store'
-import { ReactComponent as FootPrintActive } from "../../../icons/foot-print-active.svg";
+import { ReactComponent as FootPrintActive } from "../../../common/icons/foot-print-active.svg";
 import CouponModal from './CouponModal';
 
 interface CouponType {

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { login } from '../../../common/api/login';
 import { MY_ACCOUNT_PATH } from '../../../common/constants/path.const';
 import {RootState} from '../../../redux/store'
-import LeftArrow from '../../../icons/left-arrow.svg';
+import LeftArrow from '../../../common/icons/left-arrow.svg';
 import "./ChangePasswordCheck.scss";
 
 function ChangePasswordCheck() {

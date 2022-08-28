@@ -7,10 +7,10 @@ import { getMyReviewList } from "../../../common/api/reivew";
 import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
 import { GET_MY_REVIEW_LIST, CACHE_TIME, STALE_TIME } from '../../../common/constants/queryKey.const'
 import {RootState} from '../../../redux/store'
-import LeftArrow from '../../../icons/left-arrow.svg';
-import RightArrow from '../../../icons/right-arrow-thin.svg';
-import Star from "../../../icons/big-review-star-active.svg";
-import GrayStar from "../../../icons/big-review-star.svg";
+import LeftArrow from '../../../common/icons/left-arrow.svg';
+import RightArrow from '../../../common/icons/right-arrow-thin.svg';
+import Star from "../../../common/icons/big-review-star-active.svg";
+import GrayStar from "../../../common/icons/big-review-star.svg";
 import './ReviewList.scss';
 
 interface ReviewType {

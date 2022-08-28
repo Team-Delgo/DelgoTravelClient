@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import '../../signUpPage/terms/DetailTerm.scss';
-import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
+import { ReactComponent as Arrow } from '../../../common/icons/left-arrow.svg';
 import term from '../../signUpPage/terms/TermContents';
 import './ServiceTerm.scss';
 

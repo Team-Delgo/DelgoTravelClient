@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
-import { ReactComponent as Exit } from '../../../icons/exit.svg';
+import { ReactComponent as Exit } from '../../../common/icons/exit.svg';
 import { bookingGetData } from '../../../common/api/booking'
 import Map from '../../../common/utils/Map';
 import { MY_STORAGE_PATH } from '../../../common/constants/path.const';
