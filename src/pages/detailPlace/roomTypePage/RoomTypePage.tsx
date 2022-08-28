@@ -12,7 +12,7 @@ import AlertConfirm from '../../../common/dialog/AlertConfirm';
 import {
   SIGN_IN_PATH,
 } from '../../../common/constants/path.const';
-import { ReactComponent as LeftArrow } from '../../../icons/left-arrow2.svg';
+import { ReactComponent as LeftArrow } from '../../../common/icons/left-arrow2.svg';
 import Calender from '../../../common/utils/Calender';
 import { currentRoomActions } from '../../../redux/slice/roomSlice';
 import {RootState} from '../../../redux/store'

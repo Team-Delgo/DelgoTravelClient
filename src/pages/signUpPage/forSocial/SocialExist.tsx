@@ -1,9 +1,9 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { ReactComponent as Exit } from '../../../icons/exit.svg';
+import { ReactComponent as Exit } from '../../../common/icons/exit.svg';
 import './SocialMiddle.scss';
-import KAKAO from '../../../icons/kakao.svg';
-import NAVER from '../../../icons/naver.svg';
+import KAKAO from '../../../common/icons/kakao.svg';
+import NAVER from '../../../common/icons/naver.svg';
 
 interface LocationState {
   social: string;

@@ -14,8 +14,8 @@ import Footer from '../../common/components/FooterNavigation'
 import RegionSelectionModal from './modal/RegionSelectionModal'
 import Place from './place/Place'
 import { RootState } from '../../redux/store'
-import { ReactComponent as BottomArrow } from '../../icons/bottom-arrow.svg';
-import Delgo from '../../icons/delgo.svg';
+import { ReactComponent as BottomArrow } from '../../common/icons/bottom-arrow.svg';
+import Delgo from '../../common/icons/delgo.svg';
 import './WhereToGoPage.scss';
 import Calender from '../../common/utils/Calender';
 import { GET_ALL_PLACES, CACHE_TIME, STALE_TIME } from '../../common/constants/queryKey.const'

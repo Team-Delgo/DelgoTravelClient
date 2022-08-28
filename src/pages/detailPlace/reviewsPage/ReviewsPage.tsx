@@ -3,8 +3,8 @@
 import React,{useEffect,useState,useCallback} from 'react';
 import { useLocation,Link,useParams} from 'react-router-dom';
 import Review from '../review/Review';
-import { ReactComponent as LeftArrow } from '../../../icons/left-arrow.svg';
-import { ReactComponent as ReviewStar } from '../../../icons/review-star.svg';
+import { ReactComponent as LeftArrow } from '../../../common/icons/left-arrow.svg';
+import { ReactComponent as ReviewStar } from '../../../common/icons/review-star.svg';
 import './ReviewsPage.scss';
 
 interface RivewType {

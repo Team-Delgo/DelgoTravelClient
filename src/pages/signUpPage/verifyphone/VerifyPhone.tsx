@@ -8,9 +8,9 @@ import ToastMessage from '../../../common/dialog/ToastMessage';
 import './VerifyPhone.scss';
 import Timer from './Timer';
 import { SIGN_UP_PATH } from '../../../common/constants/path.const';
-import { ReactComponent as Check } from '../../../icons/check.svg';
-import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
-import { ReactComponent as Exit } from "../../../icons/x.svg";
+import { ReactComponent as Check } from '../../../common/icons/check.svg';
+import { ReactComponent as Arrow } from '../../../common/icons/left-arrow.svg';
+import { ReactComponent as Exit } from "../../../common/icons/x.svg";
 import { phoneSendMessage, phoneCheckNumber } from '../../../common/api/signup';
 
 function VerifyPhone() {

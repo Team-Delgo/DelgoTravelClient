@@ -9,7 +9,7 @@ import {RootState} from '../../../redux/store';
 import RecommendedPlace from '../../../common/components/RecommendedPlace';
 import { GET_RECOMMENED_PLACES, GET_TRAVELED_PLACES, CACHE_TIME, STALE_TIME } from '../../../common/constants/queryKey.const'
 import TravelHisotryPlace from './travelHistoryPlace/TravelHistoryPlace';
-import { ReactComponent as FootPrintActive } from '../../../icons/foot-print-active.svg';
+import { ReactComponent as FootPrintActive } from '../../../common/icons/foot-print-active.svg';
 import './History.scss';
 
 interface RecommendedPlaceType {

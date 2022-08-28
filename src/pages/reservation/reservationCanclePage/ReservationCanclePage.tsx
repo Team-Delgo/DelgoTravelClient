@@ -2,7 +2,7 @@ import React,{useCallback,useEffect, useState} from "react";
 import { useSelector,useDispatch } from "react-redux";
 import { useNavigate,useParams} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
-import { ReactComponent as Exit } from '../../../icons/exit.svg';
+import { ReactComponent as Exit } from '../../../common/icons/exit.svg';
 import { reservationActions } from '../../../redux/slice/reservationSlice';
 import {RootState} from '../../../redux/store'
 import {bookingGetData} from '../../../common/api/booking'

@@ -2,8 +2,8 @@ import React,{useState,useCallback , memo} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation , useNavigate} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
-import { ReactComponent as ActiveHeart } from '../../icons/heart-active.svg';
-import { ReactComponent as Heart } from '../../icons/heart.svg';
+import { ReactComponent as ActiveHeart } from '../icons/heart-active.svg';
+import { ReactComponent as Heart } from '../icons/heart.svg';
 import { wishInsert,wishDelete } from '../api/wish'
 import { scrollActions } from '../../redux/slice/scrollSlice';
 import {prevPathActions} from "../../redux/slice/prevPathSlice"

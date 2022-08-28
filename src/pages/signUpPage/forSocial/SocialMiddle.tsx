@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { ReactComponent as Exit } from '../../../icons/exit.svg';
+import { ReactComponent as Exit } from '../../../common/icons/exit.svg';
 import './SocialMiddle.scss';
 
 interface LocationState {

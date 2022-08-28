@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
-import { ReactComponent as Arrow } from '../../../icons/left-arrow.svg';
+import { ReactComponent as Arrow } from '../../../common/icons/left-arrow.svg';
 import ToastMessage from '../../../common/dialog/ToastMessage';
 import Timer from '../../signUpPage/verifyphone/Timer';
 import { phoneCheckNumber, phoneSendMessage, phoneSendMessageForFind } from '../../../common/api/signup';

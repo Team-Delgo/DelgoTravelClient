@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ReactComponent as Home } from '../../icons/home.svg';
-import { ReactComponent as Search } from '../../icons/search.svg';
-import { ReactComponent as Bag } from '../../icons/bag.svg';
-import { ReactComponent as Person } from '../../icons/person.svg';
-import { ReactComponent as HomeActive } from '../../icons/home-active.svg';
-import { ReactComponent as SearchActive } from '../../icons/search-active.svg';
-import { ReactComponent as BagActive } from '../../icons/bag-active.svg';
-import { ReactComponent as PersonActive } from '../../icons/person-active.svg';
+import { ReactComponent as Home } from '../icons/home.svg';
+import { ReactComponent as Search } from '../icons/search.svg';
+import { ReactComponent as Bag } from '../icons/bag.svg';
+import { ReactComponent as Person } from '../icons/person.svg';
+import { ReactComponent as HomeActive } from '../icons/home-active.svg';
+import { ReactComponent as SearchActive } from '../icons/search-active.svg';
+import { ReactComponent as BagActive } from '../icons/bag-active.svg';
+import { ReactComponent as PersonActive } from '../icons/person-active.svg';
 import {
   ROOT_PATH,
   MY_STORAGE_PATH,

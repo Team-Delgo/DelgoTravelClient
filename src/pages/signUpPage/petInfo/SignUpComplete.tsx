@@ -1,8 +1,8 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './SignUpComplete.scss';
-import Delgo from '../../../icons/delgo.svg';
-import Check from '../../../icons/check.svg';
+import Delgo from '../../../common/icons/delgo.svg';
+import Check from '../../../common/icons/check.svg';
 import { ROOT_PATH } from '../../../common/constants/path.const';
 
 interface PetName {
