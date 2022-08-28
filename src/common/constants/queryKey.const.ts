@@ -1,1 +1,15 @@
-export const ROOT_PATH = '/';
+export const GET_DETAIL_PLACE = 'getDetailPlace';
+export const GET_DETAIL_PLACE_REVIEWS = 'getDetailPlaceRivews';
+export const GET_EDITOR_NOTE_PLACE = 'getEditorNotePlace';
+export const GET_EDITOR_NOTE_PLACES_ALL = 'getEditorNotePlacesAll';
+export const GET_RECOMMENED_PLACES = 'getRecommendedPlaces';
+export const GET_BOOKING_DATA_BY_MAIN = 'getBookingDataByMain';
+export const GET_MY_ACCOUNT_DATA_LIST = 'getMyAccountDataList';
+export const GET_BOOKING_STATE_DATA_LIST = 'getBookingStateDateList';
+export const GET_MY_COUPON_LIST = 'getMyCouponList';
+export const GET_MY_REVIEW_LIST = 'getMyReviewList';
+export const GET_TRAVELED_PLACES = 'getTraveledPlaces';
+export const GET_WISHED_PLACES = 'getWishedPlaces';
+export const GET_ALL_PLACES = 'getAllPlaces';
+export const CACHE_TIME = 1000 * 60 * 5;
+export const STALE_TIME = 1000 * 60 * 3;

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from 'react-query';
 import { getMyReviewList } from "../../../common/api/reivew";
 import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
+import { GET_MY_REVIEW_LIST, CACHE_TIME, STALE_TIME } from '../../../common/constants/queryKey.const'
 import {RootState} from '../../../redux/store'
 import LeftArrow from '../../../icons/left-arrow.svg';
 import RightArrow from '../../../icons/right-arrow-thin.svg';
@@ -47,12 +48,12 @@ function ReviewList() {
   }, []);
 
 
-  const { isLoading:getReviewListIsLoading, data: reviewList } = useQuery(
-    'getReviewList',
+  const { isLoading: getReviewListIsLoading, data: reviewList } = useQuery(
+    GET_MY_REVIEW_LIST,
     () => getMyReviewList(userId),
     {
-      cacheTime: 1000 * 60 * 5,
-      staleTime: 1000 * 60 * 3,
+      cacheTime: CACHE_TIME,
+      staleTime: STALE_TIME,
       refetchInterval: false,
       onError: (error: any) => {
         useErrorHandlers(dispatch, error)

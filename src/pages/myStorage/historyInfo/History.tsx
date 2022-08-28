@@ -7,6 +7,7 @@ import { getBookingHistory } from '../../../common/api/booking';
 import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
 import {RootState} from '../../../redux/store';
 import RecommendedPlace from '../../../common/components/RecommendedPlace';
+import { GET_RECOMMENED_PLACES, GET_TRAVELED_PLACES, CACHE_TIME, STALE_TIME } from '../../../common/constants/queryKey.const'
 import TravelHisotryPlace from './travelHistoryPlace/TravelHistoryPlace';
 import { ReactComponent as FootPrintActive } from '../../../icons/foot-print-active.svg';
 import './History.scss';
@@ -59,22 +60,20 @@ function History({currentTab}:FolderTypeProps) {
     isLoading: getRecommendedPlacesIsLoading,
     data: recommendedPlaces,
     refetch: getRecommendedPlacesRefetch,
-  } = useQuery('getRecommendedPlaces', () => getRecommendedPlace(userId), {
-    cacheTime: 1000 * 60 * 5,
-    staleTime: 1000 * 60 * 3,
-    refetchInterval: false,
+  } = useQuery(GET_RECOMMENED_PLACES, () => getRecommendedPlace(userId), {
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
     onError: (error: any) => {
       useErrorHandlers(dispatch, error);
     },
   });
 
   const { isLoading: getTraveledPlacesIsLoading, data: traveledPlaces } = useQuery(
-    'getTraveledPlaces',
+    GET_TRAVELED_PLACES,
     () => getBookingHistory(userId),
     {
-      cacheTime: 1000 * 60 * 5,
-      staleTime: 1000 * 60 * 3,
-      refetchInterval: false,
+      cacheTime: CACHE_TIME,
+      staleTime: STALE_TIME,
       onError: (error: any) => {
         useErrorHandlers(dispatch, error);
       },
@@ -98,15 +97,12 @@ function History({currentTab}:FolderTypeProps) {
     else {
       window.scrollTo(0, 0);
     }
-  }, [getRecommendedPlacesIsLoading,getTraveledPlacesIsLoading]);
+  }, [getRecommendedPlacesIsLoading, getTraveledPlacesIsLoading]);
 
-  if (getRecommendedPlacesIsLoading) {
+  if (getRecommendedPlacesIsLoading || getTraveledPlacesIsLoading) {
     return <div className="travel-history-container" style={loadingScreenHeight}>&nbsp;</div>;
   }
-  if (getTraveledPlacesIsLoading) {
-    return <div className="travel-history-container" style={loadingScreenHeight}>&nbsp;</div>;
-  }
-  
+
   return (
     <div className="travel-history-container">
       {traveledPlaces.data.length > 0 ? (

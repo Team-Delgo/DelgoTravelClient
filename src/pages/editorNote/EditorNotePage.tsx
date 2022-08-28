@@ -7,6 +7,7 @@ import BottomButton from '../../common/components/BottomButton';
 import { getEditorNotePlace } from '../../common/api/places';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import { ROOT_PATH } from '../../common/constants/path.const';
+import { GET_EDITOR_NOTE_PLACE, CACHE_TIME, STALE_TIME } from '../../common/constants/queryKey.const'
 import { prevPathActions } from "../../redux/slice/prevPathSlice"
 import { scrollActions } from '../../redux/slice/scrollSlice';
 import "./EditorNotePage.scss";
@@ -26,11 +27,11 @@ function EditorNotePage() {
   const { placeId } = location.state;
 
   const { isLoading: getEditorNotePlaceIsLoading, data: editorNotePlace } = useQuery(
-    'getEditorNotePlace',
+    GET_EDITOR_NOTE_PLACE,
     () => getEditorNotePlace(placeId),
     {
-      cacheTime: 1000 * 60 * 5,
-      staleTime: 1000 * 60 * 3,
+      cacheTime: CACHE_TIME,
+      staleTime: STALE_TIME,
       refetchInterval: false,
       onError: (error: any) => {
         useErrorHandlers(dispatch, error);

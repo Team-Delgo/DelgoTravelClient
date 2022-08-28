@@ -24,11 +24,11 @@ import { wishInsert, wishDelete } from '../../common/api/wish';
 import { ReactComponent as LeftArrow } from '../../icons/left-arrow2.svg';
 import { currentPlaceActions } from '../../redux/slice/placeSlice';
 import { scrollActions } from '../../redux/slice/scrollSlice';
-import './DetailPlacePage.scss';
 import Calender from '../../common/utils/Calender';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
+import { GET_DETAIL_PLACE, GET_DETAIL_PLACE_REVIEWS, CACHE_TIME, STALE_TIME } from '../../common/constants/queryKey.const'
 import Notice from './notice/Notice'
-
+import './DetailPlacePage.scss';
 
 interface RivewType {
   placeName: string
@@ -97,21 +97,21 @@ function DetailPlacePage() {
     isLoading: getDetailPlaceIsLoading,
     data: detailPlace,
     refetch,
-  } = useQuery('getDetailPlace', () => getDetailPlace(userId, placeId as string, startDt, endDt), {
-    cacheTime: 1000 * 60 * 5,
-    staleTime: 1000 * 60 * 3,
+  } = useQuery(GET_DETAIL_PLACE, () => getDetailPlace(userId, placeId as string, startDt, endDt), {
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
     refetchInterval: false,
     onError: (error: any) => {
       useErrorHandlers(dispatch, error);
     },
   });
 
-  const { isLoading: getDetailPlaceIsLoading2, data: detailPlaceRivews } = useQuery(
-    'getDetailPlaceRivews',
+  const { isLoading: getDetailPlaceIsReviewsLoading, data: detailPlaceRivews } = useQuery(
+    GET_DETAIL_PLACE_REVIEWS,
     () => getDetailPlaceRivews(placeId as string),
     {
-      cacheTime: 1000 * 60 * 5,
-      staleTime: 1000 * 60 * 3,
+      cacheTime: CACHE_TIME,
+      staleTime: STALE_TIME,
       refetchInterval: false,
       onError: (error: any) => {
         useErrorHandlers(dispatch, error);
@@ -226,11 +226,7 @@ function DetailPlacePage() {
     );
   }, []);
 
-  if (getDetailPlaceIsLoading){
-    return <div className='detail-place'>&nbsp;</div>;
-  }
-
-  if (getDetailPlaceIsLoading2){
+  if (getDetailPlaceIsLoading || getDetailPlaceIsReviewsLoading) {
     return <div className='detail-place'>&nbsp;</div>;
   }
 
