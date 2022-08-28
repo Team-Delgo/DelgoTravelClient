@@ -1,6 +1,4 @@
 export const ROOT_PATH = '/';
-
-// TODO:: 개선하기 https://www.albertgao.xyz/2019/09/07/reuse-react-router-routes-constants-with-hooks-when-navigating/
 export const EDITOR_NOTE_PATH = '/editor-note/:id';
 export const MY_ACCOUNT_PATH = {
   MAIN: '/user/myaccount',
@@ -21,7 +19,6 @@ export const SIGN_IN_PATH = {
   PHONEAUTH: '/user/signin/phoneauth',
   RESETPASSWORD: '/user/signin/resetpassword',
 };
-
 export const SIGN_UP_PATH = {
   VERIFY: '/user/signup/verify-phone',
   TERMS: '/user/signup/terms',
@@ -35,21 +32,16 @@ export const SIGN_UP_PATH = {
     OTHER: '/user/signup/social/other',
   },
 };
-
 export const MY_STORAGE_PATH = '/my-storage';
 export const WHERE_TO_GO_PATH = '/where-to-go';
-
 export const DETAIL_PLACE_PATH = {
   MAIN: '/detail-place/:placeId',
   REVIEWS: '/detail-place/:placeId/reviews',
   ROOMTYPES: '/detail-place/:placeId/:roomTypeId',
 };
-
 export const REVIEW_WRITING_PATH = '/review-writing/:reservationId';
-
 export const KAKAO_REDIRECT_HANDLE_PATH = '/oauth/callback/kakao';
 export const NAVER_REDIRECT_HANDLE_PATH = '/oauth/callback/naver';
-
 export const RESERVATION_PATH = {
   RESERVATION: '/reservation/:placeId/:roomTypeId/:startDate/:endDate',
   RESERVATION_WAITING: '/reservation-waiting/:placeId/:roomTypeId/:startDate/:endDate',

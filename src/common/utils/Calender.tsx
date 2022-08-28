@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import './Calender.scss';
 import { ReactComponent as Exit } from '../icons/exit.svg';
 import { dateActions } from '../../redux/slice/dateSlice';
 import { getReservedDate } from '../api/calender';
@@ -10,6 +9,7 @@ import { errorActions } from '../../redux/slice/errorSlice';
 import {RootState} from '../../redux/store'
 import { currentRoomActions } from '../../redux/slice/roomSlice';
 import AlertConfirmOne from '../dialog/AlertConfirmOne';
+import './Calender.scss';
 
 interface CalenderProps {
   closeCalender: () => void;

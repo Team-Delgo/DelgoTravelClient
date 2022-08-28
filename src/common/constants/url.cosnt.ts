@@ -1,5 +1,3 @@
-/* eslint-disable no-template-curly-in-string */
-
 export const KAKAO = {
   // REST_API_KEY: 'b40f84b68ce44634317bb5530b0166c1',
   CALL_BACK_URL: `${process.env.REACT_APP_BASE_URL}/oauth/callback/kakao`,
