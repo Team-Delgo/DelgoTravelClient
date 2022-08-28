@@ -17,8 +17,6 @@ import deviceSlice from './slice/deviceSlice';
 const persistConfig = {
   key: 'root',
   storage,
-  // debug: true,
-  // whitelist: ["user, currentPlace, currentRoom, reservation, area, scroll, prevPath"]
 };
 
 const reducers = combineReducers({
