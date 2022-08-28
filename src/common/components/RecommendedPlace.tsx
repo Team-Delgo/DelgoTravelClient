@@ -1,4 +1,4 @@
-import React,{useState,useCallback , memo} from 'react'
+import React,{useState,memo} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation , useNavigate} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
@@ -37,7 +37,7 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
   const location: any = useLocation();
   const navigate = useNavigate();
   
-  const wishListInsert = useCallback(() => {
+  const wishListInsert = () => {
     wishInsert(
       { userId, placeId: place.placeId, accessToken },
       (response: AxiosResponse) => {
@@ -47,15 +47,15 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
       },
       dispatch,
     );
-    if(OS==='android'){
-      window.BRIDGE.vibrate() 
+    if (OS === 'android') {
+      window.BRIDGE.vibrate()
     }
-    else{
-      window.webkit.messageHandlers.vibrate.postMessage('') 
+    else {
+      window.webkit.messageHandlers.vibrate.postMessage('')
     }
-  }, [wishList]);
+  }
 
-  const wishListDelete = useCallback(() => {
+  const wishListDelete = () => {
     wishDelete(
       { wishId: wishList, accessToken },
       (response: AxiosResponse) => {
@@ -66,13 +66,13 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
       },
       dispatch,
     );
-    if(OS==='android'){
-      window.BRIDGE.vibrate() 
+    if (OS === 'android') {
+      window.BRIDGE.vibrate()
     }
-    else{
+    else {
       window.webkit.messageHandlers.vibrate.postMessage('')
     }
-  }, [wishList]);
+  }
 
   const moveToDetailPage = () => {
     dispatch(scrollActions.scroll({ whereToGo: 0, detailPlace: 0, myStorage: window.scrollY, homeY: 0 }));
@@ -94,4 +94,4 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
   );
 }
 
-export default memo(RecommendedPlace);
+export default RecommendedPlace;
