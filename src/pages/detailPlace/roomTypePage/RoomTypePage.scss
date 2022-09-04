@@ -8,7 +8,7 @@
     display: none;
   }
   &-image-skeleton{
-    height: 30vh;
+    height: 375px;
   }
   &-main-image {
     width: 100%;
@@ -58,20 +58,6 @@
     border-radius: 5px;
     &-calender {
       margin-right: 15px;
-    }
-  }
-  &-notice{
-    padding: 0 5% 10px 5%;
-    &-title {
-      font-size: 18px;
-      font-weight: 700;
-      padding-bottom: 20px;
-    }
-    &-content {
-      font-size: 12px;
-      font-weight: 400;
-      padding-bottom: 50px;
-      line-height:18px
     }
   }
 }
