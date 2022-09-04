@@ -27,7 +27,7 @@ import { scrollActions } from '../../redux/slice/scrollSlice';
 import Calender from '../../common/utils/Calender';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import { GET_DETAIL_PLACE, GET_DETAIL_PLACE_REVIEWS, CACHE_TIME, STALE_TIME } from '../../common/constants/queryKey.const'
-import Notice from './notice/Notice'
+import PlaceNotice from './PlaceNotice/PlaceNotice'
 import './DetailPlacePage.scss';
 
 interface RivewType {
@@ -337,8 +337,8 @@ function DetailPlacePage() {
             </body>
           </div>
         )}
-        {detailPlace?.data.placeNoticeList.map((notice: NoticeType) => (
-          <Notice notice={notice} key={notice.placeNoticeId}/>
+        {detailPlace?.data.placeNoticeList.map((placeNotice: NoticeType) => (
+          <PlaceNotice placeNotice={placeNotice} key={placeNotice.placeNoticeId}/>
         ))}
         <div className="detail-place-map">
           <header className="detail-place-map-header">지도</header>
