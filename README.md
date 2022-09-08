@@ -6,12 +6,12 @@
 
 ## <b> 📚 Contents </b>
 
--   ### <b> <a href="#1"> 🐶 Service introduce </a> </b>
+-   ### <b> <a href="#1"> 🐶 Service Introduce </a> </b>
 -   ### <b> <a href="#2"> 🐶 Repositories </a> </b>
 -   ### <b> <a href="#3"> 🐶 Technology </a> </b>
--   ### <b> <a href="#0"> 🐶 Team introduce </a> </b>
--   ### <b> <a href="#4"> 🐶 Store link </a> </b>
--   ### <b> <a href="#5"> 🐶 Develop period </a> </b>
+-   ### <b> <a href="#0"> 🐶 Team Introduce </a> </b>
+-   ### <b> <a href="#4"> 🐶 Store Link </a> </b>
+-   ### <b> <a href="#5"> 🐶 Develop Period </a> </b>
 -   ### <b> <a href="#6"> 🐶 Result </a> </b>
 
 <br/>
@@ -69,7 +69,7 @@
 <br/>
 
 <h2 id="0">
-    <b>💁 Team  introduce </b>
+    <b>💁 Team  Introduce </b>
 </h2>
 
 
