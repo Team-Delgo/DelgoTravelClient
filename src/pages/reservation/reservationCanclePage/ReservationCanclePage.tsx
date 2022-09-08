@@ -16,7 +16,7 @@ function ReservationCanclePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { bookingId } = useParams();
-  const accessToken = useSelector((state: RootState) => state.token.token);
+  const accessToken = useSelector((state: RootState) => state.persist.token.token);
   const [reservationData, setReservationData] = useState({
     bookingId: "",
     bookingState: "",

@@ -81,7 +81,7 @@ function DetailPlacePage() {
   const [logInModalOpen, setLogInModalOpen] = useState(false);
   const { date, dateString } = useSelector((state: RootState) => state.date);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
-  const accessToken = useSelector((state: RootState) => state.token.token);
+  const accessToken = useSelector((state: RootState) => state.persist.token.token);
   const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
   const {OS} = useSelector((state:any)=>state.persist.device);
   const { placeId } = useParams();

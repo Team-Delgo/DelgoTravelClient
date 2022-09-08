@@ -50,7 +50,7 @@ const loadingScreenHeight = { height: window.innerHeight * 2 }
 
 function History({currentTab}:FolderTypeProps) {
   const dispatch = useDispatch();
-  const accessToken = useSelector((state: RootState) => state.token.token);
+  const accessToken = useSelector((state: RootState) => state.persist.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const location: any = useLocation();

@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter,HashRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import VConsole from 'vconsole';
 import {PersistGate} from 'redux-persist/integration/react';
 import {persistStore} from 'redux-persist';
 import App from './App';
@@ -10,11 +9,6 @@ import store from './redux/store';
 import reportWebVitals from './reportWebVitals';
 
 const persistor = persistStore(store);
-
-const vConsole = new VConsole();
-
-console.log('a');
-
 
 ReactDOM.render(
   <BrowserRouter>

@@ -33,7 +33,7 @@ function Coupon() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [couponRegistrationCompleted ,setCouponRegistrationCompleted]=useState(false)
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
-  const accessToken = useSelector((state: RootState) => state.token.token);
+  const accessToken = useSelector((state: RootState) => state.persist.token.token);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const refreshToken = localStorage.getItem('refreshToken') || '';

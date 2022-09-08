@@ -16,9 +16,9 @@ async function wishInsert(
           placeId: data.placeId,
       },
       {
-        // headers: {
-        //   Authorization_Access: `${data.accessToken}`,
-        // },
+        headers: {
+          Authorization_Access: `${data.accessToken}`,
+        },
       },
     );
     success(result);

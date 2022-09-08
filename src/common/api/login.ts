@@ -18,6 +18,7 @@ async function login(data: { email: string; password: string }, success: (data: 
 }
 
 async function tokenRefresh(data: { refreshToken: string }, success: (data: AxiosResponse) => void, dispatch: any) {
+  console.log(data.refreshToken);
   await axios
     .get(`${process.env.REACT_APP_API_URL}/tokenReissue`, {
       headers: {
@@ -38,6 +39,7 @@ async function emailAuth(email: string, success: (data: AxiosResponse) => void, 
       params: { email },
     })
     .then((data) => {
+      console.log(data)
       success(data);
     })
     .catch((error) => {

@@ -39,7 +39,7 @@ function HomePage() {
   const [page, setPage] = useState(0);
   const [dday, setDday] = useState('0');
   const dispatch = useDispatch();
-  const accessToken = useSelector((state: RootState) => state.token.token);
+  const accessToken = useSelector((state: RootState) => state.persist.token.token);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const location: any = useLocation();
   const {homeScrollY} = useSelector((state: RootState) => state.persist.scroll);
