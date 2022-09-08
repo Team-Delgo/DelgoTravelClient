@@ -20,7 +20,7 @@
 
 
 <h2 id="1">
-    <b>💁 Service introduce</b>
+    <b>💁 Service Introduce</b>
 </h2>
 
 ### 전국민 반려인을 위한 반려견 동반 여행 O2O 서비스 플랫폼
@@ -86,7 +86,7 @@
 
 
 
-<h2 id="4">🛒 Store link</h2>
+<h2 id="4">🛒 Store Link</h2>
 
 -   ### <b> <a href="https://play.google.com/store/apps/details?id=com.delgo.delgoandroid" target="_blank" > 🔗 Android </a> </b>
 -   ### <b> <a href=""> 🔗 IOS </a> </b>
@@ -94,7 +94,7 @@
 <br/>
 
 
-<h2 id="5">📅 Develop period</h2>
+<h2 id="5">📅 Develop Period</h2>
 
 <b>22.03.15 ~ 운영 관리 중</b>
 
