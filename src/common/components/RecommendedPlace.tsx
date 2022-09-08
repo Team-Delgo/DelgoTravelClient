@@ -31,7 +31,7 @@ type RecommendedPlaceType = {
 function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: RecommendedPlaceProps  ) {
   const [wishList, setWishList] = useState(place.wishId);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
-  const accessToken = useSelector((state: RootState) => state.token.token);
+  const accessToken = useSelector((state: RootState) => state.persist.token.token);
   const {OS} = useSelector((state:RootState)=>state.persist.device);
   const dispatch = useDispatch();
   const location: any = useLocation();
@@ -61,18 +61,17 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
           setWishList(0);
-          getRecommendedPlacesRefetch()
+          getRecommendedPlacesRefetch();
         }
       },
       dispatch,
     );
     if (OS === 'android') {
-      window.BRIDGE.vibrate()
+      window.BRIDGE.vibrate();
+    } else {
+      window.webkit.messageHandlers.vibrate.postMessage('');
     }
-    else {
-      window.webkit.messageHandlers.vibrate.postMessage('')
-    }
-  }
+  };
 
   const moveToDetailPage = () => {
     dispatch(scrollActions.scroll({ whereToGo: 0, detailPlace: 0, myStorage: window.scrollY, homeY: 0 }));

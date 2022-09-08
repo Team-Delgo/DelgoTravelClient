@@ -56,7 +56,7 @@ function WhereToGoPage() {
   const [areaTerm, setAreaTerm] = useState("");
   const [regionSelectionModal, setRegionSelectionModal] = useState(false);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
-  const accessToken = useSelector((state: RootState) => state.token.token);
+  const accessToken = useSelector((state: RootState) => state.persist.token.token);
   const refreshToken = localStorage.getItem('refreshToken') || '';
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
   const { date, dateString } = useSelector((state: RootState) => state.date);

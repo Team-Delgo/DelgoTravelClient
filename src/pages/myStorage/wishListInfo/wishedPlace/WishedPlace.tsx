@@ -28,7 +28,7 @@ interface PlaceType {
 
 function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch}: WishedPlaceTypeProps) {
   const [wishListAlertConfirmOpen, setWishListAlertConfirmOpen] = useState(false);
-  const accessToken = useSelector((state: RootState) => state.token.token);
+  const accessToken = useSelector((state: RootState) => state.persist.token.token);
   const { OS } = useSelector((state: RootState) => state.persist.device);
   const dispatch = useDispatch();
   const location: any = useLocation();

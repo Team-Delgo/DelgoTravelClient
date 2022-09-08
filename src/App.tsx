@@ -66,12 +66,13 @@ declare global{
   interface Window{
     BRIDGE:any
     webkit:any
-    Kakao: any;
+    Kakao: any
   }
 }
 
 function App() {
   const hasError = useSelector((state: RootState) => state.error.hasError);
+  const accessToken = useSelector((state: RootState) => state.persist.token.token);
   const dispatch = useDispatch();
   const queryClient = new QueryClient();
   const location = useLocation();
@@ -88,41 +89,41 @@ function App() {
   }, []);
 
   useEffect(() => {
-    axios.interceptors.response.use(
-      (response) => {
-        return response;
-      },
-      async (error) => {
-        const {
-          config,
-          response: { status },
-        } = error;
-        if (status === 303) {
+    axios.interceptors.response.use((response) => {
+      if (response.data.code !== 303) return response;
+      if (response.data.code === 303) {
+        console.log(refreshToken);
+        if (refreshToken) {
           tokenRefresh(
             { refreshToken },
             (response: AxiosResponse) => {
-              const { code } = response.data;
+              console.log(response.status);
+              const { status } = response;
+              if (status === 200) {
+                console.log(response)
+                const newAccessToken = response.headers.authorization_access;
+                const newRefreshToken = response.headers.authorization_refresh;
 
-              if (code === 200) {
-                const accessToken = response.headers.authorization_access;
-                const refreshToken = response.headers.authorization_refresh;
+                console.log(newAccessToken);
+                console.log(newRefreshToken);
+          
 
-                dispatch(tokenActions.setToken(accessToken));
-                localStorage.setItem('refreshToken', refreshToken);
-                const originalRequest = config;
+                dispatch(tokenActions.setToken(newAccessToken));
+                localStorage.setItem('refreshToken', newRefreshToken);
+                const originalRequest = response.config;
 
-                originalRequest.headers.authorization = accessToken;
-
-                return axios(originalRequest);
+                if (originalRequest.headers !== undefined) {
+                  originalRequest.headers.authorization = newAccessToken;
+                  return axios(originalRequest);
+                }
               }
             },
             dispatch,
           );
         }
-        return Promise.reject(error);
-      },
-    );
-  }, []);
+      }
+    });
+  }, [refreshToken]);
 
   const alertButtonHandler = () => {
     dispatch(errorActions.setFine());

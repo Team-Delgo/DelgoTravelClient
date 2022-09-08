@@ -21,6 +21,7 @@ const persistConfig = {
 
 const reducers = combineReducers({
   user: userSlice,
+  token:tokenSlice,
   currentPlace:placeSlice,
   currentRoom:roomSlice,
   reservation: reservationSlice,
@@ -34,7 +35,7 @@ const reducers = combineReducers({
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 const store = configureStore({
-  reducer: { persist: persistedReducer, token: tokenSlice, error: errorSlice, date: dateSlice},
+  reducer: { persist: persistedReducer, error: errorSlice, date: dateSlice},
   devTools: process.env.NODE_ENV !== 'production', 
 });
 export type RootState = ReturnType<typeof store.getState>

@@ -35,7 +35,7 @@ function MyAccount() {
   const pet = useSelector((state: RootState) => state.persist.user.pet);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const dogBirth = useSelector((state: RootState) => state.persist.user.pet.birthday);
-  const accessToken = useSelector((state: RootState) => state.token.token);
+  const accessToken = useSelector((state: RootState) => state.persist.token.token);
   const { myAccountScrollY } = useSelector((state: RootState) => state.persist.scroll);
   const { OS } = useSelector((state: RootState) => state.persist.device);
 

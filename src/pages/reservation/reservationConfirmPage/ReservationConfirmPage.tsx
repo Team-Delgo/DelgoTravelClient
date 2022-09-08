@@ -13,7 +13,7 @@ import { ROOT_PATH } from "../../../common/constants/path.const";
 
 function ReservationConfirmPage() {
   const navigate = useNavigate();
-  const accessToken = useSelector((state: RootState) => state.token.token);
+  const accessToken = useSelector((state: RootState) => state.persist.token.token);
   const dispatch = useDispatch();
   const [reservationCancleModal, setReservationCancleModal] = useState(false);
   const [reservationData, setReservationData] = useState({

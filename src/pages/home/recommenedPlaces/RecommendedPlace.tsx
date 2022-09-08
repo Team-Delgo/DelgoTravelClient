@@ -33,7 +33,7 @@ interface PlaceType {
 function RecommendedPlace({ place }: RedcommendedPlacesProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const [logInModalOpen, setLogInModalOpen] = useState(false);
-  const accessToken = useSelector((state: RootState) => state.token.token);
+  const accessToken = useSelector((state: RootState) => state.persist.token.token);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
   const { OS } = useSelector((state: RootState) => state.persist.device);
