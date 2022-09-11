@@ -44,23 +44,26 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
   const navigate = useNavigate();
 
   const wishListInsert = () => {
-    if(isSignIn){
-      wishInsert({ userId, placeId: place.placeId, accessToken }, (response: AxiosResponse) => {
-        if (response.data.code === 200) {
-          setWishList(response.data.data.wishId);
-        }
-      }, dispatch);
+    if (isSignIn) {
+      wishInsert(
+        { userId, placeId: place.placeId, accessToken },
+        (response: AxiosResponse) => {
+          if (response.data.code === 200) {
+            setWishList(response.data.data.wishId);
+          }
+        },
+        dispatch,
+      );
+      setWishList(1);
       if (OS === 'android') {
-        window.BRIDGE.vibrate()
+        window.BRIDGE.vibrate();
+      } else {
+        window.webkit.messageHandlers.vibrate.postMessage('');
       }
-      else {
-        window.webkit.messageHandlers.vibrate.postMessage('')
-      }
-    }
-    else{
+    } else {
       setLogInModalOpen(true);
     }
-  }
+  };
 
   const wishListDelete = () => {
     wishDelete(
@@ -72,6 +75,7 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
       },
       dispatch,
     );
+    setWishList(0);
     if (OS === 'android') {
       window.BRIDGE.vibrate()
     }

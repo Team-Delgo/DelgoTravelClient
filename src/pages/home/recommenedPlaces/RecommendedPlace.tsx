@@ -13,6 +13,7 @@ import { prevPathActions } from '../../../redux/slice/prevPathSlice';
 import {RootState} from '../../../redux/store'
 import { ReactComponent as ActiveHeart } from '../../../common/icons/heart-active.svg';
 import { ReactComponent as Heart } from '../../../common/icons/heart.svg';
+import Settings from '../../myAccount/setting/Settings';
 
 interface RedcommendedPlacesProps {
   place: PlaceType;
@@ -41,7 +42,7 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
   const navigate = useNavigate();
   const location: any = useLocation();
 
-  const wishListInsert = useCallback(() => {
+  const wishListInsert = () => {
     if (isSignIn) {
       wishInsert(
         { userId, placeId: place.placeId, accessToken },
@@ -51,20 +52,19 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
           }
         },
         dispatch,
-      )
+      );
+      setWishList(1);
       if (OS === 'android') {
-        window.BRIDGE.vibrate()
+        window.BRIDGE.vibrate();
+      } else {
+        window.webkit.messageHandlers.vibrate.postMessage('');
       }
-      else {
-        window.webkit.messageHandlers.vibrate.postMessage('')
-      }
-    }
-    else {
+    } else {
       setLogInModalOpen(true);
     }
-  }, [isSignIn,wishList]);
+  };
 
-  const wishListDelete = useCallback(() => {
+  const wishListDelete = () => {
     wishDelete(
       { wishId: wishList, accessToken },
       (response: AxiosResponse) => {
@@ -74,13 +74,13 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
       },
       dispatch,
     );
+    setWishList(0);
     if (OS === 'android') {
-      window.BRIDGE.vibrate()
+      window.BRIDGE.vibrate();
+    } else {
+      window.webkit.messageHandlers.vibrate.postMessage('');
     }
-    else {
-      window.webkit.messageHandlers.vibrate.postMessage('')
-    }
-  }, [wishList]);
+  };
 
   const moveToDetailPage = useCallback(() => {
     dispatch(scrollActions.scroll({ whereToGo: 0, detailPlace: 0, myStorage: 0, home: window.scrollY }));

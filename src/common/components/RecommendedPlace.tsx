@@ -28,15 +28,15 @@ type RecommendedPlaceType = {
   wishId: number
   }
 
-function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: RecommendedPlaceProps  ) {
+function RecommendedPlace({ place, getRecommendedPlacesRefetch, currentTab }: RecommendedPlaceProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const accessToken = useSelector((state: RootState) => state.persist.token.token);
-  const {OS} = useSelector((state:RootState)=>state.persist.device);
+  const OS = useSelector((state: RootState) => state.persist.device.OS);
   const dispatch = useDispatch();
   const location: any = useLocation();
   const navigate = useNavigate();
-  
+
   const wishListInsert = () => {
     wishInsert(
       { userId, placeId: place.placeId, accessToken },
@@ -47,13 +47,13 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
       },
       dispatch,
     );
+    setWishList(1);
     if (OS === 'android') {
-      window.BRIDGE.vibrate()
+      window.BRIDGE.vibrate();
+    } else {
+      window.webkit.messageHandlers.vibrate.postMessage('');
     }
-    else {
-      window.webkit.messageHandlers.vibrate.postMessage('')
-    }
-  }
+  };
 
   const wishListDelete = () => {
     wishDelete(
@@ -66,6 +66,7 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
       },
       dispatch,
     );
+    setWishList(0);
     if (OS === 'android') {
       window.BRIDGE.vibrate();
     } else {
@@ -76,14 +77,18 @@ function RecommendedPlace({ place,getRecommendedPlacesRefetch,currentTab }: Reco
   const moveToDetailPage = () => {
     dispatch(scrollActions.scroll({ whereToGo: 0, detailPlace: 0, myStorage: window.scrollY, homeY: 0 }));
     dispatch(prevPathActions.prevPath({ prevPath: location.pathname }));
-    navigate(`/detail-place/${place.placeId}`, { state: currentTab })
-  }
+    navigate(`/detail-place/${place.placeId}`, { state: currentTab });
+  };
 
   return (
     <div className="popular-place">
       <img src={place.mainPhotoUrl} alt="popular-place-img" aria-hidden="true" onClick={moveToDetailPage} />
-      <div className="popular-place-name" aria-hidden="true" onClick={moveToDetailPage}>{place.name}</div>
-      <div className="popular-place-location" aria-hidden="true" onClick={moveToDetailPage}>{place.address}</div>
+      <div className="popular-place-name" aria-hidden="true" onClick={moveToDetailPage}>
+        {place.name}
+      </div>
+      <div className="popular-place-location" aria-hidden="true" onClick={moveToDetailPage}>
+        {place.address}
+      </div>
       {wishList ? (
         <ActiveHeart className="popular-place-heart" onClick={wishListDelete} />
       ) : (

@@ -24,6 +24,7 @@ import { wishInsert, wishDelete } from '../../common/api/wish';
 import { ReactComponent as LeftArrow } from '../../common/icons/left-arrow2.svg';
 import { currentPlaceActions } from '../../redux/slice/placeSlice';
 import { scrollActions } from '../../redux/slice/scrollSlice';
+import { errorActions } from '../../redux/slice/errorSlice';
 import Calender from '../../common/utils/Calender';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import { GET_DETAIL_PLACE, GET_DETAIL_PLACE_REVIEWS, CACHE_TIME, STALE_TIME } from '../../common/constants/queryKey.const'
@@ -83,20 +84,23 @@ function DetailPlacePage() {
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const accessToken = useSelector((state: RootState) => state.persist.token.token);
   const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
-  const {OS} = useSelector((state:any)=>state.persist.device);
+  const OS = useSelector((state: RootState) => state.persist.device.OS);
+  const detailPlacePrevPath = useSelector((state: RootState) => state.persist.prevPath.detailPlacePrevPath);
+  const tokenExpirationError = useSelector((state: RootState) => state.error.tokenExpirationError);
+  const { whereToGoScrollY, detailPlaceScrollY, myStorageScrollY } = useSelector(
+    (state: RootState) => state.persist.scroll,
+  );
   const { placeId } = useParams();
   const location: any = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { whereToGoScrollY, detailPlaceScrollY, myStorageScrollY } = useSelector((state: RootState) => state.persist.scroll);
-  const detailPlacePrevPath = useSelector((state: RootState) => state.persist.prevPath.detailPlacePrevPath);
-  const startDt = `${date.start.substring(0, 4)}-${date.start.substring(4, 6)}-${date.start.substring(6, 10)}`
-  const endDt = `${date.end.substring(0, 4)}-${date.end.substring(4, 6)}-${date.end.substring(6, 10)}`
+  const startDt = `${date.start.substring(0, 4)}-${date.start.substring(4, 6)}-${date.start.substring(6, 10)}`;
+  const endDt = `${date.end.substring(0, 4)}-${date.end.substring(4, 6)}-${date.end.substring(6, 10)}`;
 
   const {
     isLoading: getDetailPlaceIsLoading,
     data: detailPlace,
-    refetch,
+    refetch:getDetailPlaceRefetch,
   } = useQuery(GET_DETAIL_PLACE, () => getDetailPlace(userId, placeId as string, startDt, endDt), {
     cacheTime: CACHE_TIME,
     staleTime: STALE_TIME,
@@ -120,8 +124,13 @@ function DetailPlacePage() {
   );
 
   useEffect(() => {
-    refetch()
-  }, [date]); 
+    getDetailPlaceRefetch();
+  }, [date]);
+
+  useEffect(() => {
+    getDetailPlaceRefetch();
+    dispatch(errorActions.setTokenExpirationErrorFine());
+  }, [tokenExpirationError]); 
 
 
   useEffect(() => {
@@ -148,46 +157,47 @@ function DetailPlacePage() {
     );
   }, [detailPlace]);
 
-  const wishListInsert = useCallback(() => {
+  const wishListInsert = () => {
     if (isSignIn) {
       wishInsert(
-        { userId, placeId: Number(detailPlace?.data.place.placeId), accessToken },
+        { userId, placeId: Number(placeId), accessToken },
         (response: AxiosResponse) => {
           if (response.data.code === 200) {
-            refetch()
+            getDetailPlaceRefetch();
           }
         },
         dispatch,
-      )
+      );
+      // wishInsert({ userId, placeId: Number(detailPlace?.data.place.placeId), accessToken });
+      // setTimeout(() => {
+      //   refetch();
+      // }, 100);
       if (OS === 'android') {
-        window.BRIDGE.vibrate()
+        window.BRIDGE.vibrate();
+      } else {
+        window.webkit.messageHandlers.vibrate.postMessage('');
       }
-      else {
-        window.webkit.messageHandlers.vibrate.postMessage('') 
-      }
-    }
-    else {
+    } else {
       setLogInModalOpen(true);
     }
-  }, [detailPlace, isSignIn]);
+  };
 
-  const wishListDelete = useCallback(() => {
+  const wishListDelete = () => {
     wishDelete(
       { wishId: Number(detailPlace?.data.place.wishId), accessToken },
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
-          refetch();
+          getDetailPlaceRefetch();
         }
       },
       dispatch,
     );
     if (OS === 'android') {
-      window.BRIDGE.vibrate()
+      window.BRIDGE.vibrate();
+    } else {
+      window.webkit.messageHandlers.vibrate.postMessage('');
     }
-    else {
-      window.webkit.messageHandlers.vibrate.postMessage('') 
-    }
-  }, [detailPlace]);
+  };
 
   const calenderOpenClose = useCallback(() => {
     setIsCalenderOpen(!isCalenderOpen);

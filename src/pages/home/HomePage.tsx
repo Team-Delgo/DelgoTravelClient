@@ -8,8 +8,15 @@ import RecommendedPlace from './recommenedPlaces/RecommendedPlace';
 import { bookingGetDataByMain } from '../../common/api/booking';
 import { getRecommendedPlace, getEditorNotePlacesAll } from '../../common/api/places';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
-import { GET_EDITOR_NOTE_PLACES_ALL, GET_RECOMMENED_PLACES, GET_BOOKING_DATA_BY_MAIN, CACHE_TIME, STALE_TIME } from '../../common/constants/queryKey.const'
+import {
+  GET_EDITOR_NOTE_PLACES_ALL,
+  GET_RECOMMENED_PLACES,
+  GET_BOOKING_DATA_BY_MAIN,
+  CACHE_TIME,
+  STALE_TIME,
+} from '../../common/constants/queryKey.const';
 import { RootState } from '../../redux/store';
+import { errorActions } from '../../redux/slice/errorSlice';
 import HomeReservation from './homeReservation/HomeReservation';
 import Delgo from '../../common/icons/delgo.svg';
 import './HomePage.scss';
@@ -33,40 +40,17 @@ interface RecommendedPlaceType {
   placeId: number;
   wishId: number;
 }
-const loadingScreenHeight = { height: window.innerHeight * 2 }
+const loadingScreenHeight = { height: window.innerHeight * 10 }
 
 function HomePage() {
   const [page, setPage] = useState(0);
   const [dday, setDday] = useState('0');
-  const dispatch = useDispatch();
+  const homeScrollY = useSelector((state: RootState) => state.persist.scroll.homeScrollY);
+  const tokenExpirationError = useSelector((state: RootState) => state.error.tokenExpirationError);
   const accessToken = useSelector((state: RootState) => state.persist.token.token);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
+  const dispatch = useDispatch();
   const location: any = useLocation();
-  const {homeScrollY} = useSelector((state: RootState) => state.persist.scroll);
-
-  const preventGoBack = () => {
-    window.history.pushState(null, '', null);
-  };
-
-  useEffect(() => {
-    window.history.pushState(null, '', null);
-    window.addEventListener('popstate', preventGoBack);
-    return () => {
-      window.removeEventListener('popstate', preventGoBack);
-    };
-  }, []);
-
-  const { isLoading: getRecommendedPlacesIsLoading, data: recommendedPlaces } = useQuery(
-    GET_RECOMMENED_PLACES,
-    () => getRecommendedPlace(userId),
-    {
-      cacheTime: CACHE_TIME,
-      staleTime: STALE_TIME,
-      onError: (error: any) => {
-        useErrorHandlers(dispatch, error);
-      },
-    },
-  );
 
   const { isLoading: getBookingDataIsLoading, data: reservationPlaces } = useQuery(
     GET_BOOKING_DATA_BY_MAIN,
@@ -93,6 +77,31 @@ function HomePage() {
     },
   );
 
+  const {
+    isLoading: getRecommendedPlacesIsLoading,
+    data: recommendedPlaces,
+    refetch: recommendedPlacesRefetch,
+  } = useQuery(GET_RECOMMENED_PLACES, () => getRecommendedPlace(userId), {
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
+    onError: (error: any) => {
+      useErrorHandlers(dispatch, error);
+    },
+  });
+
+  useEffect(() => {
+    window.history.pushState(null, '', null);
+    window.addEventListener('popstate', preventGoBack);
+    return () => {
+      window.removeEventListener('popstate', preventGoBack);
+    };
+  }, []);
+
+  useEffect(() => {
+    recommendedPlacesRefetch();
+    dispatch(errorActions.setTokenExpirationErrorFine());
+  }, [tokenExpirationError]);
+
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
       window.scrollTo(0, homeScrollY);
@@ -100,6 +109,10 @@ function HomePage() {
       window.scrollTo(0, 0);
     }
   }, [getRecommendedPlacesIsLoading, getBookingDataIsLoading, getEditorNotePlacesIsLoading]);
+
+  const preventGoBack = () => {
+    window.history.pushState(null, '', null);
+  };
 
   const getDday = () => {
     const startDate = new Date(reservationPlaces?.data[page].startDt);
@@ -120,7 +133,11 @@ function HomePage() {
   }, [page, reservationPlaces]);
 
   if (getRecommendedPlacesIsLoading || getBookingDataIsLoading || getEditorNotePlacesIsLoading) {
-    return <div className="home-background" style={loadingScreenHeight}><Footer /></div>;
+    return (
+      <div className="home-background" style={loadingScreenHeight}>
+        <Footer />
+      </div>
+    );
   }
 
   return (
@@ -152,18 +169,14 @@ function HomePage() {
               key={place.placeId}
             >
               <img src={place.thumbnailUrl} alt="editor-thumnail-img" />
-              <div className="editor-thumbnail-title">
-                {place.thumbnailTitle}
-              </div>
-              <div className="editor-thumbnail-sub-title">
-                {place.thumbnailSubtitle}
-              </div>
+              <div className="editor-thumbnail-title">{place.thumbnailTitle}</div>
+              <div className="editor-thumbnail-sub-title">{place.thumbnailSubtitle}</div>
             </Link>
           ))}
         </div>
         <header className="recommended-places-text">델고갈만한 숙소</header>
         {recommendedPlaces?.data.map((place: RecommendedPlaceType) => (
-          <RecommendedPlace place={place} key={place.placeId} />
+          <RecommendedPlace place={place} key={place.placeId}  />
         ))}
       </div>
       <Footer />
