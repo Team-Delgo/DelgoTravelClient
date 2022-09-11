@@ -62,6 +62,7 @@ import SocialMiddle from './pages/signUpPage/forSocial/SocialMiddle';
 import SocialExist from './pages/signUpPage/forSocial/SocialExist';
 import { deviceAction } from './redux/slice/deviceSlice';
 
+
 declare global{
   interface Window{
     BRIDGE:any
@@ -73,6 +74,7 @@ declare global{
 function App() {
   const hasError = useSelector((state: RootState) => state.error.hasError);
   const accessToken = useSelector((state: RootState) => state.persist.token.token);
+  const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const dispatch = useDispatch();
   const queryClient = new QueryClient();
   const location = useLocation();
@@ -80,50 +82,62 @@ function App() {
 
   useEffect(() => {
     const varUA = navigator.userAgent.toLowerCase();
-    if ( varUA.indexOf('android') > -1) {
+    if (varUA.indexOf('android') > -1) {
       dispatch(deviceAction.android());
-    }
-    else if (varUA.indexOf('iphone') > -1 || varUA.indexOf('ipad') > -1 || varUA.indexOf('ipod') > -1) {
+    } else if (varUA.indexOf('iphone') > -1 || varUA.indexOf('ipad') > -1 || varUA.indexOf('ipod') > -1) {
       dispatch(deviceAction.ios());
     }
   }, []);
 
+
   useEffect(() => {
-    axios.interceptors.response.use((response) => {
-      if (response.data.code !== 303) return response;
-      if (response.data.code === 303) {
-        console.log(refreshToken);
-        if (refreshToken) {
-          tokenRefresh(
-            { refreshToken },
-            (response: AxiosResponse) => {
-              console.log(response.status);
-              const { status } = response;
-              if (status === 200) {
-                console.log(response)
-                const newAccessToken = response.headers.authorization_access;
-                const newRefreshToken = response.headers.authorization_refresh;
+    axios.interceptors.response.use(
+      (response) => {
+        return response;
+      },
+      async (error) => {
+        console.log('error',error)
+        const {
+          config,
+          response: { status },
+        } = error;
+        console.log('error.response.status',error.response.status)
+        console.log('config', config);
+        if (status === 403) {
+          console.log('refreshToken', refreshToken);
+          if (refreshToken !== undefined) {
+            tokenRefresh(
+              { refreshToken },
+              (response: AxiosResponse) => {
+                const { status } = response;
+                if (status === 200) {
+                  console.log('response : ', response);
+                  const originalRequest = config;
+                  const newAccessToken = response.headers.authorization_access;
+                  const newRefreshToken = response.headers.authorization_refresh;
 
-                console.log(newAccessToken);
-                console.log(newRefreshToken);
-          
+                  console.log('newAccessToken : ', newAccessToken);
+                  console.log('newRefreshToken : ', newRefreshToken);
 
-                dispatch(tokenActions.setToken(newAccessToken));
-                localStorage.setItem('refreshToken', newRefreshToken);
-                const originalRequest = response.config;
+                  dispatch(tokenActions.setToken(newAccessToken));
+                  localStorage.setItem('refreshToken', newRefreshToken);
 
-                if (originalRequest.headers !== undefined) {
-                  originalRequest.headers.authorization = newAccessToken;
-                  return axios(originalRequest);
+                  console.log('originalRequest : ', originalRequest);
+
+                  dispatch(errorActions.setTokenExpirationError());
+
+                  originalRequest.headers.Authorization_Access = newAccessToken;
+                  return axios(originalRequest)
                 }
-              }
-            },
-            dispatch,
-          );
+              },
+              dispatch,
+            );
+          }
         }
-      }
-    });
-  }, [refreshToken]);
+        return Promise.reject(error);
+      },
+    );
+  }, []);
 
   const alertButtonHandler = () => {
     dispatch(errorActions.setFine());

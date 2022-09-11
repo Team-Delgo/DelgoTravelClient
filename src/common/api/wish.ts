@@ -12,12 +12,12 @@ async function wishInsert(
     const result = await axios.post(
       `${process.env.REACT_APP_API_URL}/wish/insert`,
       {
-          userId: data.userId,
-          placeId: data.placeId,
+        userId: data.userId,
+        placeId: data.placeId,
       },
       {
         headers: {
-          Authorization_Access: `${data.accessToken}`,
+          Authorization_Access: data.accessToken,
         },
       },
     );
@@ -36,9 +36,9 @@ async function wishDelete(
     const result = await axios.post(
       `${process.env.REACT_APP_API_URL}/wish/delete/${data.wishId}`,
       {
-        // headers: {
-        //   Authorization_Access: `${data.accessToken}`,
-        // },
+        headers: {
+          Authorization_Access: data.accessToken,
+        },
       },
     );
     success(result);

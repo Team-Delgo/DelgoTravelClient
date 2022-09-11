@@ -9,6 +9,7 @@ import RecommendedPlace from '../../../common/components/RecommendedPlace'
 import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
 import { GET_RECOMMENED_PLACES, GET_WISHED_PLACES, CACHE_TIME, STALE_TIME } from '../../../common/constants/queryKey.const'
 import {RootState} from '../../../redux/store'
+import { errorActions } from '../../../redux/slice/errorSlice';
 import { ReactComponent as FootPrintActive } from '../../../common/icons/foot-print-active.svg';
 import './Folder.scss';
 
@@ -44,14 +45,16 @@ const loadingScreenHeight = { height: window.innerHeight * 2 }
 function Folder({currentTab}:FolderTypeProps) {
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const accessToken = useSelector((state: RootState) => state.persist.token.token);
+  const { myStorageScrollY } = useSelector((state: RootState) => state.persist.scroll);
+  const tokenExpirationError = useSelector((state: RootState) => state.error.tokenExpirationError);
   const dispatch = useDispatch();
   const location: any = useLocation();
-  const { myStorageScrollY } = useSelector((state: RootState) => state.persist.scroll);
+  
 
   const {
     isLoading: getWishedPlacesIsLoading,
     data: wishedPlaces,
-    refetch:getWishedPlacesRefetch,
+    refetch: getWishedPlacesRefetch,
   } = useQuery(GET_WISHED_PLACES, () => getWishedPlaces(accessToken, userId), {
     cacheTime: CACHE_TIME,
     staleTime: STALE_TIME,
@@ -71,6 +74,14 @@ function Folder({currentTab}:FolderTypeProps) {
       useErrorHandlers(dispatch, error);
     },
   });
+
+  // useEffect(() => {
+  //   getRecommendedPlacesRefetch();
+  //   setTimeout(() => {
+  //     getWishedPlacesRefetch();
+  //   }, 100);
+  //   dispatch(errorActions.setTokenExpirationErrorFine());
+  // }, [tokenExpirationError]); 
 
   useEffect(() => {
     getWishedPlacesRefetch();
