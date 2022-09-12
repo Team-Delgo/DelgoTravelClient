@@ -22,7 +22,9 @@ async function wishInsert(
       },
     );
     success(result);
+    console.log(result);
   } catch (error: AxiosError | any) {
+    console.log(error);
     useErrorHandlers(dispatch, error);
   }
 }
@@ -43,7 +45,7 @@ async function wishDelete(
     );
     success(result);
   } catch (error: AxiosError | any) {
-    useErrorHandlers(dispatch, error);
+    // useErrorHandlers(dispatch, error);
   }
 }
 
