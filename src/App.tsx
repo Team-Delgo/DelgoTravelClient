@@ -78,7 +78,7 @@ function App() {
   const dispatch = useDispatch();
   const queryClient = new QueryClient();
   const location = useLocation();
-  const refreshToken = localStorage.getItem('refreshToken') || '';
+  const refreshToken = localStorage.getItem("refreshToken") || '';
 
   useEffect(() => {
     const varUA = navigator.userAgent.toLowerCase();
@@ -127,6 +127,7 @@ function App() {
                   dispatch(errorActions.setTokenExpirationError());
 
                   originalRequest.headers.Authorization_Access = newAccessToken;
+
                   return axios(originalRequest)
                 }
               },

@@ -10,6 +10,7 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { getAllPlaces } from '../../common/api/places';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
+import { tokenRefresh } from '../../common/api/login';
 import Footer from '../../common/components/FooterNavigation'
 import RegionSelectionModal from './modal/RegionSelectionModal'
 import Place from './place/Place'
@@ -87,7 +88,6 @@ function WhereToGoPage() {
   useEffect(() => {
     refetch();
     dispatch(errorActions.setTokenExpirationErrorFine());
-    console.log(places)
   }, [tokenExpirationError]); 
 
   useEffect(() => {
