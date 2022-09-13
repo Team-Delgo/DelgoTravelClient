@@ -16,7 +16,6 @@ import {
   STALE_TIME,
 } from '../../common/constants/queryKey.const';
 import { RootState } from '../../redux/store';
-import { errorActions } from '../../redux/slice/errorSlice';
 import HomeReservation from './homeReservation/HomeReservation';
 import Delgo from '../../common/icons/delgo.svg';
 import './HomePage.scss';
@@ -46,11 +45,10 @@ function HomePage() {
   const [page, setPage] = useState(0);
   const [dday, setDday] = useState('0');
   const homeScrollY = useSelector((state: RootState) => state.persist.scroll.homeScrollY);
-  const tokenExpirationError = useSelector((state: RootState) => state.error.tokenExpirationError);
-  const accessToken = useSelector((state: RootState) => state.persist.token.token);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const dispatch = useDispatch();
   const location: any = useLocation();
+  const accessToken = localStorage.getItem("accessToken") || '';
 
   const { isLoading: getBookingDataIsLoading, data: reservationPlaces } = useQuery(
     GET_BOOKING_DATA_BY_MAIN,
@@ -96,11 +94,6 @@ function HomePage() {
       window.removeEventListener('popstate', preventGoBack);
     };
   }, []);
-
-  useEffect(() => {
-    recommendedPlacesRefetch();
-    dispatch(errorActions.setTokenExpirationErrorFine());
-  }, [tokenExpirationError]);
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {

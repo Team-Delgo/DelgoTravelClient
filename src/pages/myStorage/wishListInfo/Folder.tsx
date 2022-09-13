@@ -44,9 +44,8 @@ const loadingScreenHeight = { height: window.innerHeight * 2 }
 
 function Folder({currentTab}:FolderTypeProps) {
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
-  const accessToken = useSelector((state: RootState) => state.persist.token.token);
+  const accessToken = localStorage.getItem('accessToken') || '';
   const { myStorageScrollY } = useSelector((state: RootState) => state.persist.scroll);
-  const tokenExpirationError = useSelector((state: RootState) => state.error.tokenExpirationError);
   const dispatch = useDispatch();
   const location: any = useLocation();
   
@@ -74,14 +73,6 @@ function Folder({currentTab}:FolderTypeProps) {
       useErrorHandlers(dispatch, error);
     },
   });
-
-  // useEffect(() => {
-  //   getRecommendedPlacesRefetch();
-  //   setTimeout(() => {
-  //     getWishedPlacesRefetch();
-  //   }, 100);
-  //   dispatch(errorActions.setTokenExpirationErrorFine());
-  // }, [tokenExpirationError]); 
 
   useEffect(() => {
     getWishedPlacesRefetch();

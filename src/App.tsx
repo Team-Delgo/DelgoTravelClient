@@ -40,8 +40,6 @@ import ReviewWritingPage from './pages/reviewWriting/ReviewWritingPage';
 import KakaoRedirectHandler from './pages/signInPage/socialLogion/KakaoRedirectHandler';
 import NaverRedirectHandler from './pages/signInPage/socialLogion/NaverRedirectHandler';
 import AlertConfirmOne from './common/dialog/AlertConfirmOne';
-import { tokenActions } from './redux/slice/tokenSlice';
-import { tokenRefresh } from './common/api/login';
 import { errorActions } from './redux/slice/errorSlice';
 import { RootState } from './redux/store';
 import ReservationConfirmPage from './pages/reservation/reservationConfirmPage/ReservationConfirmPage';
@@ -73,12 +71,9 @@ declare global{
 
 function App() {
   const hasError = useSelector((state: RootState) => state.error.hasError);
-  const accessToken = useSelector((state: RootState) => state.persist.token.token);
-  const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const dispatch = useDispatch();
   const queryClient = new QueryClient();
   const location = useLocation();
-  const refreshToken = localStorage.getItem("refreshToken") || '';
 
   useEffect(() => {
     const varUA = navigator.userAgent.toLowerCase();
@@ -87,57 +82,6 @@ function App() {
     } else if (varUA.indexOf('iphone') > -1 || varUA.indexOf('ipad') > -1 || varUA.indexOf('ipod') > -1) {
       dispatch(deviceAction.ios());
     }
-  }, []);
-
-
-  useEffect(() => {
-    axios.interceptors.response.use(
-      (response) => {
-        return response;
-      },
-      async (error) => {
-        console.log('error',error)
-        const {
-          config,
-          response: { status },
-        } = error;
-        console.log('error.response.status',error.response.status)
-        console.log('config', config);
-        if (status === 403) {
-          console.log('refreshToken', refreshToken);
-          if (refreshToken !== undefined) {
-            tokenRefresh(
-              { refreshToken },
-              (response: AxiosResponse) => {
-                const { status } = response;
-                if (status === 200) {
-                  console.log('response : ', response);
-                  const originalRequest = config;
-                  const newAccessToken = response.headers.authorization_access;
-                  const newRefreshToken = response.headers.authorization_refresh;
-
-                  console.log('newAccessToken : ', newAccessToken);
-                  console.log('newRefreshToken : ', newRefreshToken);
-
-                  dispatch(tokenActions.setToken(newAccessToken));
-                  localStorage.setItem('refreshToken', newRefreshToken);
-
-                  console.log('originalRequest : ', originalRequest);
-
-                  dispatch(errorActions.setTokenExpirationError());
-
-                  originalRequest.headers.Authorization_Access = newAccessToken;
-
-                  return axios(originalRequest)
-                }
-              },
-              dispatch,
-            );
-          }
-        }
-        return Promise.reject(error);
-      },
-    );
   }, []);
 
   const alertButtonHandler = () => {

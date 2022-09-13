@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import qs from 'qs';
 import { KAKAO } from '../../../common/constants/url.cosnt';
-import { tokenActions } from '../../../redux/slice/tokenSlice';
 import { setAccessCode } from '../../../common/api/social';
 import { ROOT_PATH, SIGN_UP_PATH } from '../../../common/constants/path.const';
 import { userActions } from '../../../redux/slice/userSlice';
@@ -108,7 +107,7 @@ function KakaoRedirectHandler() {
           );
           const accessToken = response.headers.authorization_access;
           const refreshToken = response.headers.authorization_refresh;
-          dispatch(tokenActions.setToken(accessToken));
+          localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);
           navigate(ROOT_PATH, { replace: true });
         } else if (code === 370) {

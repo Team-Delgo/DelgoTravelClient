@@ -10,7 +10,6 @@ import './MyAccount.scss';
 import RightArrow from '../../common/icons/right-arrow.svg';
 import RightArrowBlack from '../../common/icons/right-arrow-black.svg';
 import { userActions } from '../../redux/slice/userSlice';
-import { tokenActions } from '../../redux/slice/tokenSlice';
 import { scrollActions } from '../../redux/slice/scrollSlice';
 import AlertConfirm from '../../common/dialog/AlertConfirm';
 import { deleteUser } from '../../common/api/signup';
@@ -32,10 +31,10 @@ function MyAccount() {
   const dispatch = useDispatch();
   const location: any = useLocation();
   const refreshToken = localStorage.getItem('refreshToken') || '';
+  const accessToken = localStorage.getItem('accessToken') || '';
   const pet = useSelector((state: RootState) => state.persist.user.pet);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const dogBirth = useSelector((state: RootState) => state.persist.user.pet.birthday);
-  const accessToken = useSelector((state: RootState) => state.persist.token.token);
   const { myAccountScrollY } = useSelector((state: RootState) => state.persist.scroll);
   const { OS } = useSelector((state: RootState) => state.persist.device);
 
@@ -91,8 +90,8 @@ function MyAccount() {
 
 
   const logoutHandler = () => {
-    dispatch(tokenActions.setToken(''));
     dispatch(userActions.signout());
+    localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     navigation(SIGN_IN_PATH.MAIN);
   };
@@ -106,6 +105,7 @@ function MyAccount() {
       dispatch,
     );
     dispatch(userActions.signout());
+    localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     navigation(SIGN_IN_PATH.MAIN);
   };

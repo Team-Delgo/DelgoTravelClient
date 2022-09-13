@@ -28,11 +28,11 @@ interface PlaceType {
 
 function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch}: WishedPlaceTypeProps) {
   const [wishListAlertConfirmOpen, setWishListAlertConfirmOpen] = useState(false);
-  const accessToken = useSelector((state: RootState) => state.persist.token.token);
   const  OS  = useSelector((state: RootState) => state.persist.device.OS);
   const dispatch = useDispatch();
   const location: any = useLocation();
   const navigate = useNavigate();
+  const accessToken = localStorage.getItem("accessToken") || '';
 
   const wishListDelete = () => {
     wishListConfirmModalClose();
@@ -46,16 +46,7 @@ function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch
           }, 100);
         }
       },
-      dispatch,
     );
-
-    setTimeout(() => {
-      getRecommendedPlacesRefetch();
-    }, 100);
-    setTimeout(() => {
-      getWishedPlacesRefetch();
-    }, 200);
-
     if (OS === 'android') {
       window.BRIDGE.vibrate();
     } else {

@@ -11,7 +11,7 @@ import './ReservationHistoryPage.scss';
 
 function ReservationHistoryPage() {
   const navigate = useNavigate();
-  const accessToken = useSelector((state: RootState) => state.persist.token.token);
+  const accessToken = localStorage.getItem('accessToken') || '';
   const dispatch = useDispatch();
   const [reservationData, setReservationData] = useState({
     bookingId: "",
