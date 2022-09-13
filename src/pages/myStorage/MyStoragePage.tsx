@@ -13,7 +13,7 @@ function MyStoragePage() {
   const location: any = useLocation();
   const [currentTab, setCurrentTab] = useState(0);
   const dispatch = useDispatch();
-  const accessToken = useSelector((state: RootState) => state.persist.token.token);
+  const accessToken = localStorage.getItem('accessToken') || '';
   const refreshToken = localStorage.getItem('refreshToken') || '';
 
   useEffect(() => {

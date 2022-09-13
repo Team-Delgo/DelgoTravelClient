@@ -3,7 +3,6 @@ import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import userSlice from './slice/userSlice';
-import tokenSlice from './slice/tokenSlice';
 import dateSlice from './slice/dateSlice';
 import errorSlice from './slice/errorSlice';
 import reservationSlice from './slice/reservationSlice';
@@ -21,7 +20,6 @@ const persistConfig = {
 
 const reducers = combineReducers({
   user: userSlice,
-  token:tokenSlice,
   currentPlace:placeSlice,
   currentRoom:roomSlice,
   reservation: reservationSlice,

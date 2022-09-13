@@ -31,11 +31,11 @@ type RecommendedPlaceType = {
 function RecommendedPlace({ place, getRecommendedPlacesRefetch, currentTab }: RecommendedPlaceProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
-  const accessToken = useSelector((state: RootState) => state.persist.token.token);
   const OS = useSelector((state: RootState) => state.persist.device.OS);
   const dispatch = useDispatch();
   const location: any = useLocation();
   const navigate = useNavigate();
+  const accessToken = localStorage.getItem("accessToken") || '';
 
   const wishListInsert = () => {
     wishInsert(
@@ -45,9 +45,7 @@ function RecommendedPlace({ place, getRecommendedPlacesRefetch, currentTab }: Re
           setWishList(response.data.data.wishId);
         }
       },
-      dispatch,
     );
-    setWishList(1);
     if (OS === 'android') {
       window.BRIDGE.vibrate();
     } else {
@@ -64,9 +62,7 @@ function RecommendedPlace({ place, getRecommendedPlacesRefetch, currentTab }: Re
           getRecommendedPlacesRefetch();
         }
       },
-      dispatch,
     );
-    setWishList(0);
     if (OS === 'android') {
       window.BRIDGE.vibrate();
     } else {

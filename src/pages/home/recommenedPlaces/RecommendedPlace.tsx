@@ -34,7 +34,7 @@ interface PlaceType {
 function RecommendedPlace({ place }: RedcommendedPlacesProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const [logInModalOpen, setLogInModalOpen] = useState(false);
-  const accessToken = useSelector((state: RootState) => state.persist.token.token);
+  const accessToken = localStorage.getItem("accessToken") || '';
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
   const { OS } = useSelector((state: RootState) => state.persist.device);
@@ -51,9 +51,7 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
             setWishList(response.data.data.wishId);
           }
         },
-        dispatch,
       );
-      setWishList(1);
       if (OS === 'android') {
         window.BRIDGE.vibrate();
       } else {
@@ -72,9 +70,7 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
           setWishList(0);
         }
       },
-      dispatch,
     );
-    setWishList(0);
     if (OS === 'android') {
       window.BRIDGE.vibrate();
     } else {

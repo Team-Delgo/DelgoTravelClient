@@ -15,7 +15,6 @@ import Footer from '../../common/components/FooterNavigation'
 import RegionSelectionModal from './modal/RegionSelectionModal'
 import Place from './place/Place'
 import { RootState } from '../../redux/store'
-import { errorActions } from '../../redux/slice/errorSlice';
 import { ReactComponent as BottomArrow } from '../../common/icons/bottom-arrow.svg';
 import Delgo from '../../common/icons/delgo.svg';
 import './WhereToGoPage.scss';
@@ -58,12 +57,11 @@ function WhereToGoPage() {
   const [areaTerm, setAreaTerm] = useState("");
   const [regionSelectionModal, setRegionSelectionModal] = useState(false);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
-  const accessToken = useSelector((state: RootState) => state.persist.token.token);
+  const accessToken = localStorage.getItem('accessToken') || '';
   const refreshToken = localStorage.getItem('refreshToken') || '';
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
   const { date, dateString } = useSelector((state: RootState) => state.date);
   const { whereToGoScrollY } = useSelector((state: RootState) => state.persist.scroll);
-  const tokenExpirationError = useSelector((state: RootState) => state.error.tokenExpirationError);
   const location: any = useLocation();
   const allPlacesSkeletons = useMemo(() => AllPlacesSkeletons(), [])
   const startDt = `${date.start.substring(0, 4)}-${date.start.substring(4, 6)}-${date.start.substring(6, 10)}`
@@ -84,11 +82,6 @@ function WhereToGoPage() {
   useEffect(() => {
     refetch();
   }, [date]);
-
-  useEffect(() => {
-    refetch();
-    dispatch(errorActions.setTokenExpirationErrorFine());
-  }, [tokenExpirationError]); 
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
