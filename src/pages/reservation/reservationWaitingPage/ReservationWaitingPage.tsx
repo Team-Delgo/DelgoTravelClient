@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react';
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import Loading from "../../../common/utils/Loading"
@@ -12,7 +12,6 @@ import './ReservationWaitingPage.scss';
 
 function ReservationWaitingPage() {
   const { room, place,date,user,coupon } = useSelector((state: RootState) => state.persist.reservation);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const urlStr = window.location.href
   const url = new URL(urlStr);
@@ -42,7 +41,6 @@ function ReservationWaitingPage() {
           navigate(`/reservation-confirm/${response.data.data}`);
         }
       },
-      dispatch,
     )
   }, []);
 

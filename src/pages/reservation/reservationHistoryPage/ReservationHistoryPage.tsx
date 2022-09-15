@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { ReactComponent as Exit } from '../../../common/icons/exit.svg';
@@ -11,8 +11,6 @@ import './ReservationHistoryPage.scss';
 
 function ReservationHistoryPage() {
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('accessToken') || '';
-  const dispatch = useDispatch();
   const [reservationData, setReservationData] = useState({
     bookingId: "",
     bookingState: "",
@@ -51,12 +49,11 @@ function ReservationHistoryPage() {
     window.scrollTo(0, 0);
     if (bookingId !== undefined) {
       bookingGetData(
-        { bookingId, accessToken },
+        { bookingId },
         (response: AxiosResponse) => {
           setReservationData(response.data.data);
-          console.log(response.data.data)
+          console.log(response.data.data);
         },
-        dispatch,
       );
     }
   }, []);

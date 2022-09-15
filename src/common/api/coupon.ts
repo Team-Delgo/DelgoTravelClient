@@ -1,28 +1,31 @@
-import axios, { AxiosResponse, AxiosError } from 'axios';
-import { useErrorHandlers } from './useErrorHandlers';
+import { AxiosResponse } from 'axios';
+import axiosInstance from './interceptors';
 
-async function registCoupon(
-  data: { userId: number; couponCode: string },
-  success: (data: AxiosResponse) => void,
-  dispatch: any,
-) {
-  await axios
-    .post(`${process.env.REACT_APP_API_URL}/coupon/regist`, {
+async function registCoupon(data: { userId: number; couponCode: string }, success: (data: AxiosResponse) => void) {
+  const accessToken = localStorage.getItem('accessToken') || '';
+  const result = await axiosInstance.post(
+    `/coupon/regist`,
+    {
       userId: data.userId,
       couponCode: data.couponCode,
-    })
-    .then((data) => {
-      success(data);
-    })
-    .catch((error) => {
-      useErrorHandlers(dispatch, error);
-    });
+    },
+    {
+      headers: {
+        Authorization_Access: accessToken,
+      },
+    },
+  );
+  success(result);
 }
 
 async function getCouponList(userId: number) {
-  const {data} = await axios
-  .get(`${process.env.REACT_APP_API_URL}/coupon/getCouponList?userId=${userId}`)
-  return data
+  const accessToken = localStorage.getItem('accessToken') || '';
+  const { data } = await axiosInstance.get(`/coupon/getCouponList?userId=${userId}`, {
+    headers: {
+      Authorization_Access: accessToken,
+    },
+  });
+  return data;
 }
 
-export { registCoupon , getCouponList};
+export { registCoupon, getCouponList };

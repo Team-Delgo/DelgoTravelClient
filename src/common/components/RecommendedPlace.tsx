@@ -1,32 +1,32 @@
-import React,{useState,memo} from 'react'
+import React, { useState, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation , useNavigate} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { ReactComponent as ActiveHeart } from '../icons/heart-active.svg';
 import { ReactComponent as Heart } from '../icons/heart.svg';
-import { wishInsert,wishDelete } from '../api/wish'
+import { wishInsert, wishDelete } from '../api/wish';
 import { scrollActions } from '../../redux/slice/scrollSlice';
-import {prevPathActions} from "../../redux/slice/prevPathSlice"
-import {RootState} from '../../redux/store'
-import './RecommendedPlace.scss'
+import { prevPathActions } from '../../redux/slice/prevPathSlice';
+import { RootState } from '../../redux/store';
+import './RecommendedPlace.scss';
 
 type RecommendedPlaceProps = {
-    place:RecommendedPlaceType
-    getRecommendedPlacesRefetch:() => void
-    currentTab:number
-}
+  place: RecommendedPlaceType;
+  getRecommendedPlacesRefetch: () => void;
+  currentTab: number;
+};
 
 type RecommendedPlaceType = {
-  address: string
-  checkin: string
-  checkout: string
-  isBooking: number
-  lowestPrice: string
-  mainPhotoUrl: string
-  name: string
-  placeId: number
-  wishId: number
-  }
+  address: string;
+  checkin: string;
+  checkout: string;
+  isBooking: number;
+  lowestPrice: string;
+  mainPhotoUrl: string;
+  name: string;
+  placeId: number;
+  wishId: number;
+};
 
 function RecommendedPlace({ place, getRecommendedPlacesRefetch, currentTab }: RecommendedPlaceProps) {
   const [wishList, setWishList] = useState(place.wishId);
@@ -35,17 +35,13 @@ function RecommendedPlace({ place, getRecommendedPlacesRefetch, currentTab }: Re
   const dispatch = useDispatch();
   const location: any = useLocation();
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem("accessToken") || '';
 
   const wishListInsert = () => {
-    wishInsert(
-      { userId, placeId: place.placeId, accessToken },
-      (response: AxiosResponse) => {
-        if (response.data.code === 200) {
-          setWishList(response.data.data.wishId);
-        }
-      },
-    );
+    wishInsert({ userId, placeId: place.placeId }, (response: AxiosResponse) => {
+      if (response.data.code === 200) {
+        setWishList(response.data.data.wishId);
+      }
+    });
     if (OS === 'android') {
       window.BRIDGE.vibrate();
     } else {
@@ -54,15 +50,12 @@ function RecommendedPlace({ place, getRecommendedPlacesRefetch, currentTab }: Re
   };
 
   const wishListDelete = () => {
-    wishDelete(
-      { wishId: wishList, accessToken },
-      (response: AxiosResponse) => {
-        if (response.data.code === 200) {
-          setWishList(0);
-          getRecommendedPlacesRefetch();
-        }
-      },
-    );
+    wishDelete({ wishId: wishList }, (response: AxiosResponse) => {
+      if (response.data.code === 200) {
+        setWishList(0);
+        getRecommendedPlacesRefetch();
+      }
+    });
     if (OS === 'android') {
       window.BRIDGE.vibrate();
     } else {

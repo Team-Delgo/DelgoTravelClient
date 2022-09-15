@@ -35,7 +35,6 @@ interface PlaceType {
 function Place({ place,areaTerm }: PlaceTypeProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const [logInModalOpen, setLogInModalOpen] = useState(false);
-  const accessToken = localStorage.getItem('accessToken') || '';
   const userId = useSelector((state: RootState) => state.persist.user.user.id)
   const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
   const {OS} = useSelector((state:RootState)=>state.persist.device);
@@ -46,7 +45,7 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
   const wishListInsert = () => {
     if (isSignIn) {
       wishInsert(
-        { userId, placeId: place.placeId, accessToken },
+        { userId, placeId: place.placeId },
         (response: AxiosResponse) => {
           if (response.data.code === 200) {
             setWishList(response.data.data.wishId);
@@ -65,7 +64,7 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
 
   const wishListDelete = () => {
     wishDelete(
-      { wishId: wishList, accessToken },
+      { wishId: wishList },
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
           setWishList(0);

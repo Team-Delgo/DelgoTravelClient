@@ -32,12 +32,11 @@ function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch
   const dispatch = useDispatch();
   const location: any = useLocation();
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem("accessToken") || '';
 
   const wishListDelete = () => {
     wishListConfirmModalClose();
     wishDelete(
-      { wishId: place.wishId, accessToken },
+      { wishId: place.wishId },
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
           getRecommendedPlacesRefetch()
