@@ -48,11 +48,10 @@ function HomePage() {
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const dispatch = useDispatch();
   const location: any = useLocation();
-  const accessToken = localStorage.getItem("accessToken") || '';
 
   const { isLoading: getBookingDataIsLoading, data: reservationPlaces } = useQuery(
     GET_BOOKING_DATA_BY_MAIN,
-    () => bookingGetDataByMain(accessToken, userId),
+    () => bookingGetDataByMain(userId),
     {
       cacheTime: CACHE_TIME,
       staleTime: STALE_TIME,

@@ -16,7 +16,6 @@ function ReservationCanclePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { bookingId } = useParams();
-  const accessToken = localStorage.getItem('accessToken') || '';
   const [reservationData, setReservationData] = useState({
     bookingId: "",
     bookingState: "",
@@ -54,7 +53,7 @@ function ReservationCanclePage() {
     window.scrollTo(0, 0);
     if (bookingId !== undefined) {
       bookingGetData(
-        { bookingId, accessToken },
+        { bookingId },
         (response: AxiosResponse) => {
           setReservationData(response.data.data);
         },

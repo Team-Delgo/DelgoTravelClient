@@ -13,7 +13,6 @@ import { ROOT_PATH } from "../../../common/constants/path.const";
 
 function ReservationConfirmPage() {
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('accessToken') || '';
   const dispatch = useDispatch();
   const [reservationCancleModal, setReservationCancleModal] = useState(false);
   const [reservationData, setReservationData] = useState({
@@ -55,7 +54,7 @@ function ReservationConfirmPage() {
     window.scrollTo(0, 0);
     if (bookingId !== undefined) {
       bookingGetData(
-        { bookingId, accessToken },
+        { bookingId },
         (response: AxiosResponse) => {
           setReservationData(response.data.data);
           console.log(response.data.data)

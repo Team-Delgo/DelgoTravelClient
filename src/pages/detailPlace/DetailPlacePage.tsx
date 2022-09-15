@@ -91,7 +91,6 @@ function DetailPlacePage() {
   const location: any = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const accessToken = localStorage.getItem('accessToken') || '';
   const startDt = `${date.start.substring(0, 4)}-${date.start.substring(4, 6)}-${date.start.substring(6, 10)}`;
   const endDt = `${date.end.substring(0, 4)}-${date.end.substring(4, 6)}-${date.end.substring(6, 10)}`;
 
@@ -153,7 +152,7 @@ function DetailPlacePage() {
   const wishListInsert = () => {
     if (isSignIn) {
       wishInsert(
-        { userId, placeId: Number(placeId), accessToken },
+        { userId, placeId: Number(placeId) },
         (response: AxiosResponse) => {
           if (response.data.code === 200) {
             getDetailPlaceRefetch();
@@ -172,7 +171,7 @@ function DetailPlacePage() {
 
   const wishListDelete = () => {
     wishDelete(
-      { wishId: Number(detailPlace?.data.place.wishId), accessToken },
+      { wishId: Number(detailPlace?.data.place.wishId) },
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
           getDetailPlaceRefetch();

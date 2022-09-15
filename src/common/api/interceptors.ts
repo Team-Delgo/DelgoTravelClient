@@ -1,9 +1,12 @@
+/* eslint-disable no-param-reassign */
 import axios from 'axios';
-import { useDispatch , useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useErrorHandlers } from './useErrorHandlers';
-import { RootState } from '../../redux/store';
 
-const axiosInstance = axios.create();
+
+const axiosInstance = axios.create({
+  baseURL: `${process.env.REACT_APP_API_URL}`,
+});
 const refreshToken = localStorage.getItem('refreshToken') || '';
 const accessToken = localStorage.getItem('accessToken') || '';
 
@@ -44,7 +47,8 @@ axiosInstance.interceptors.response.use(
 
       return axiosInstance(originalRequest);
     }
-    errorHandlers(error)
+    // return Promise.reject(error);
+    errorHandlers(error);
   },
 );
 

@@ -11,7 +11,6 @@ import './ReservationHistoryPage.scss';
 
 function ReservationHistoryPage() {
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('accessToken') || '';
   const dispatch = useDispatch();
   const [reservationData, setReservationData] = useState({
     bookingId: "",
@@ -51,10 +50,10 @@ function ReservationHistoryPage() {
     window.scrollTo(0, 0);
     if (bookingId !== undefined) {
       bookingGetData(
-        { bookingId, accessToken },
+        { bookingId },
         (response: AxiosResponse) => {
           setReservationData(response.data.data);
-          console.log(response.data.data)
+          console.log(response.data.data);
         },
         dispatch,
       );

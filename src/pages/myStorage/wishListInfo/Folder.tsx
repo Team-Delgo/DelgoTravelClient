@@ -44,7 +44,6 @@ const loadingScreenHeight = { height: window.innerHeight * 2 }
 
 function Folder({currentTab}:FolderTypeProps) {
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
-  const accessToken = localStorage.getItem('accessToken') || '';
   const { myStorageScrollY } = useSelector((state: RootState) => state.persist.scroll);
   const dispatch = useDispatch();
   const location: any = useLocation();
@@ -54,7 +53,7 @@ function Folder({currentTab}:FolderTypeProps) {
     isLoading: getWishedPlacesIsLoading,
     data: wishedPlaces,
     refetch: getWishedPlacesRefetch,
-  } = useQuery(GET_WISHED_PLACES, () => getWishedPlaces(accessToken, userId), {
+  } = useQuery(GET_WISHED_PLACES, () => getWishedPlaces(userId), {
     cacheTime: CACHE_TIME,
     staleTime: STALE_TIME,
     onError: (error: any) => {
