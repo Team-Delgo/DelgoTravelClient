@@ -1,10 +1,9 @@
-import React,{useCallback,useEffect, useState} from "react";
-import { useSelector,useDispatch } from "react-redux";
+import React,{useEffect, useState} from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate,useParams} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { ReactComponent as Exit } from '../../../common/icons/exit.svg';
 import { reservationActions } from '../../../redux/slice/reservationSlice';
-import {RootState} from '../../../redux/store'
 import {bookingGetData} from '../../../common/api/booking'
 import './ReservationCanclePage.scss';
 import { ROOT_PATH } from "../../../common/constants/path.const";
@@ -57,7 +56,6 @@ function ReservationCanclePage() {
         (response: AxiosResponse) => {
           setReservationData(response.data.data);
         },
-        dispatch,
       );
     }
   }, []);

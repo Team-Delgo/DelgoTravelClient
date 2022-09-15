@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
 import React, { ChangeEvent, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { changePassword } from '../../../common/api/myaccount';
 import { MY_ACCOUNT_PATH } from '../../../common/constants/path.const';
@@ -16,7 +16,6 @@ function ChangePassword() {
   const [validInput, setValidInput] = useState({ password: '', confirm: '' });
   const [confirmIsTouched, setConfirmIsTouched] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const email = useSelector((state: RootState) => state.persist.user.user.email);
   const isValid = validInput.confirm.length && validInput.password.length;
 
@@ -102,7 +101,7 @@ function ChangePassword() {
   const submitButtonHandler = () => {
     changePassword(email, validInput.password, (response: AxiosResponse) => {
       navigate(MY_ACCOUNT_PATH.MAIN);
-    }, dispatch);
+    });
   };
 
   return <div className='userinfo'>

@@ -1,7 +1,6 @@
 import React from 'react';
 import Sheet from 'react-modal-sheet';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from "react-redux";
 import {bookingCancle} from '../../../../common/api/booking'
 import './ReservationCancleModal.scss'
 
@@ -44,7 +43,6 @@ interface reservationDataType{
 }
 
 function ReservationCancleModal({ openReservationCancleModal, closeReservationCancleModal,reservationData }:ReservationCancleModalProps) {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const cancleReservation = () => {
@@ -58,7 +56,6 @@ function ReservationCancleModal({ openReservationCancleModal, closeReservationCa
           }, 100)
         }
       },
-      dispatch,
     );
   }
 

@@ -1,9 +1,13 @@
 import axios, { AxiosResponse } from 'axios';
-import { useErrorHandlers } from './useErrorHandlers';
+import axiosInstance from './interceptors'
 
 async function getMyAccountDataList(userId: number) {
-  const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/myAccount`, {
+  const accessToken = localStorage.getItem('accessToken') || '';
+  const { data } = await axiosInstance.get(`/myAccount`, {
     params: { userId },
+    headers: {
+      Authorization_Access: accessToken,
+    }
   });
   console.log(data);
   return data;
@@ -12,36 +16,35 @@ async function getMyAccountDataList(userId: number) {
 async function changePetInfo(
   data: { email: string; name: string; birthday: string | undefined; size: string },
   success: (data: AxiosResponse) => void,
-  dispatch: any,
 ) {
   const { email, name, birthday, size } = data;
-  await axios
-    .post(`${process.env.REACT_APP_API_URL}/changePetInfo`, {
+  const accessToken = localStorage.getItem('accessToken') || '';
+  const result = await axiosInstance
+    .post(`/changePetInfo`, {
       email,
       name,
       birthday,
       size,
+    },{
+      headers:{
+        Authorization_Access: accessToken
+      }
     })
-    .then((data) => {
-      success(data);
-    })
-    .catch((error) => {
-      useErrorHandlers(dispatch, error);
-    });
+    success(result)
 }
 
-async function changePassword(email: string, password: string, success: (data: AxiosResponse) => void, dispatch: any) {
-  await axios
-    .post(`${process.env.REACT_APP_API_URL}/changePassword`, {
+async function changePassword(email: string, password: string, success: (data: AxiosResponse) => void) {
+  const accessToken = localStorage.getItem("accessToken") || '';
+  const result = await axiosInstance
+    .post(`/changePassword`, {
       email,
       newPassword: password,
+    },{
+      headers:{
+        Authorization_Access: accessToken,
+      }
     })
-    .then((data) => {
-      success(data);
-    })
-    .catch((error) => {
-      useErrorHandlers(dispatch, error);
-    });
+    success(result)
 }
 
 export { getMyAccountDataList, changePetInfo, changePassword };

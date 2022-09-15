@@ -50,8 +50,6 @@ const loadingScreenHeight = { height: window.innerHeight * 2 }
 
 function History({currentTab}:FolderTypeProps) {
   const dispatch = useDispatch();
-  const accessToken = localStorage.getItem('accessToken') || '';
-  const refreshToken = localStorage.getItem('refreshToken') || '';
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const location: any = useLocation();
   const { myStorageScrollY } = useSelector((state: RootState) => state.persist.scroll);

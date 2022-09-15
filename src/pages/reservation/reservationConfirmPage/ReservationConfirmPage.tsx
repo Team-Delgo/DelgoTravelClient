@@ -1,13 +1,12 @@
 import React,{useCallback,useEffect, useState} from "react";
 import { useSelector,useDispatch } from "react-redux";
-import { useNavigate,useParams,useLocation} from 'react-router-dom';
+import { useNavigate,useParams} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { ReactComponent as Exit } from '../../../common/icons/exit.svg';
 import { reservationActions } from '../../../redux/slice/reservationSlice';
 import {bookingGetData} from '../../../common/api/booking'
 import ReservationCancleModal from "./modal/ReservationCancleModal";
 import Map from '../../../common/utils/Map';
-import {RootState} from '../../../redux/store'
 import './ReservationConfirmPage.scss';
 import { ROOT_PATH } from "../../../common/constants/path.const";
 
@@ -59,7 +58,6 @@ function ReservationConfirmPage() {
           setReservationData(response.data.data);
           console.log(response.data.data)
         },
-        dispatch,
       );
     }
     window.addEventListener("android", async (e:any) => {

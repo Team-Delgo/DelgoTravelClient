@@ -3,12 +3,9 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useErrorHandlers } from './useErrorHandlers';
 
-
 const axiosInstance = axios.create({
   baseURL: `${process.env.REACT_APP_API_URL}`,
 });
-const refreshToken = localStorage.getItem('refreshToken') || '';
-const accessToken = localStorage.getItem('accessToken') || '';
 
 axiosInstance.interceptors.response.use(
   (response) => {
@@ -23,6 +20,8 @@ axiosInstance.interceptors.response.use(
     console.log('error.response.status', error.response.status);
     console.log('config', config);
     if (status === 403) {
+      const refreshToken = localStorage.getItem('refreshToken') || '';
+      const accessToken = localStorage.getItem('accessToken') || '';
       console.log('refreshToken', refreshToken);
       console.log('accessToken', accessToken);
 

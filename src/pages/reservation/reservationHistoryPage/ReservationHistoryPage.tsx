@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { ReactComponent as Exit } from '../../../common/icons/exit.svg';
@@ -11,7 +11,6 @@ import './ReservationHistoryPage.scss';
 
 function ReservationHistoryPage() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [reservationData, setReservationData] = useState({
     bookingId: "",
     bookingState: "",
@@ -55,7 +54,6 @@ function ReservationHistoryPage() {
           setReservationData(response.data.data);
           console.log(response.data.data);
         },
-        dispatch,
       );
     }
   }, []);
