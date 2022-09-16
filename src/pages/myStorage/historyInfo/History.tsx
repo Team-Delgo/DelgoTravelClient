@@ -46,7 +46,7 @@ interface TravelHisotryPlaceType {
 interface FolderTypeProps {
   currentTab:number
 }
-const loadingScreenHeight = { height: window.innerHeight * 2 }
+const loadingScreenHeight = { height: window.innerHeight * 100 }
 
 function History({currentTab}:FolderTypeProps) {
   const dispatch = useDispatch();

@@ -9,8 +9,8 @@ import { GET_MY_REVIEW_LIST, CACHE_TIME, STALE_TIME } from '../../../common/cons
 import {RootState} from '../../../redux/store'
 import LeftArrow from '../../../common/icons/left-arrow.svg';
 import RightArrow from '../../../common/icons/right-arrow-thin.svg';
-import Star from "../../../common/icons/big-review-star-active.svg";
-import GrayStar from "../../../common/icons/big-review-star.svg";
+import Star from "../../../common/icons/review-star.svg";
+import GrayStar from "../../../common/icons/review-void-star.svg";
 import './ReviewList.scss';
 
 interface ReviewType {
@@ -56,13 +56,13 @@ function ReviewList() {
       staleTime: STALE_TIME,
       refetchInterval: false,
       onError: (error: any) => {
-        useErrorHandlers(dispatch, error)
-      }
+        useErrorHandlers(dispatch, error);
+      },
     },
   );
 
   if (getReviewListIsLoading) {
-    return <div className="reviewlist">&nbsp;</div>
+    return <div className="reviewlist">&nbsp;</div>;
   }
 
 
@@ -125,10 +125,10 @@ function ReviewList() {
         <div className="review-place-name">{review.placeName}</div>
         <img src={RightArrow} alt="place-detail" className="reivew-place-arrow" />
       </div>
-      <div className="review-edit">
+      {/* <div className="review-edit">
         <div className="review-edit-fix">수정</div>
         <div className="review-edit-delete">삭제</div>
-      </div>
+      </div> */}
       <div className="review-rate">
         <div className="review-rate-stars">{star}</div>
         <div className="review-rate-date">{date}</div>
