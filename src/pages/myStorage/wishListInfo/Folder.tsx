@@ -40,7 +40,7 @@ interface FolderTypeProps {
   currentTab:number
 }
 
-const loadingScreenHeight = { height: window.innerHeight * 2 }
+const loadingScreenHeight = { height: window.innerHeight * 100 }
 
 function Folder({currentTab}:FolderTypeProps) {
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
