@@ -59,6 +59,9 @@ async function bookingGetData(
 
 async function bookingGetDataByMain(userId: number) {
   const accessToken = localStorage.getItem('accessToken') || '';
+  
+  if(userId===0) return
+
   const { data } = await axiosInstance.get(`/booking/getData/main?userId=${userId}`, {
     headers: {
       Authorization_Access: accessToken,

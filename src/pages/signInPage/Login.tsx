@@ -61,7 +61,6 @@ function Login() {
           dispatch(
             userActions.signin({
               isSignIn: true,
-              couponList: data.couponList,
               user: {
                 id: data.user.userId,
                 nickname: data.user.name,

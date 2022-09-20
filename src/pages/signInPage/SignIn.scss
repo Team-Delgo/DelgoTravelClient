@@ -29,20 +29,17 @@
       align-items: center;
     }
     height: 100vh;
-    padding: 0 20px;
-  }
 
-  // width: 100vw;
-  // height: 100vh;
+  }
   &-input-flex {
     display: flex;
-    width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
   &-title-wrapper {
-    padding-top: 30%;
+    padding: 30% 6% 0 6%;
+    width: 88vw;
   }
   &-title1 {
     font-style: normal;

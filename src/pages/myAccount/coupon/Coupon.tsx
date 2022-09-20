@@ -32,8 +32,6 @@ function Coupon() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [couponRegistrationCompleted ,setCouponRegistrationCompleted]=useState(false)
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
-  const accessToken = localStorage.getItem('accessToken') || '';
-  const refreshToken = localStorage.getItem('refreshToken') || '';
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -62,26 +60,6 @@ function Coupon() {
   useEffect(() => {
     getScheduledCoupon();
   }, [couponList]);
-
-  useEffect(() => {
-    tokenRefresh(
-      { refreshToken },
-      (response: AxiosResponse) => {
-        const { code } = response.data;
-
-        if (code === 200) {
-          const accessToken = response.headers.authorization_access;
-          const refreshToken = response.headers.authorization_refresh;
-
-          localStorage.setItem('accessToken', accessToken);
-          localStorage.setItem('refreshToken', refreshToken);
-        } else {
-          // navigate('/user/signin');
-        }
-      },
-      dispatch,
-    );
-  }, [accessToken]);
 
   const getScheduledCoupon = () => {
     let count = 0;
