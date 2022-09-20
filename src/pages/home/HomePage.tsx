@@ -61,6 +61,7 @@ function HomePage() {
     },
   );
 
+
   const { isLoading: getEditorNotePlacesIsLoading, data: editorNotePlaces } = useQuery(
     GET_EDITOR_NOTE_PLACES_ALL,
     () => getEditorNotePlacesAll(),
@@ -77,7 +78,6 @@ function HomePage() {
   const {
     isLoading: getRecommendedPlacesIsLoading,
     data: recommendedPlaces,
-    refetch: recommendedPlacesRefetch,
   } = useQuery(GET_RECOMMENED_PLACES, () => getRecommendedPlace(userId), {
     cacheTime: CACHE_TIME,
     staleTime: STALE_TIME,
