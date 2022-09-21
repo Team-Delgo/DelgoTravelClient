@@ -94,4 +94,18 @@
     }
   }
 }
-
+.home-buisness-information{
+  margin: 28px;
+  &-title{
+    font-size: 18px;
+    font-weight: 700;
+    color: #3e382f;
+  }
+  &-des{
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #3e382f;
+    white-space: pre-wrap;
+  }
+}
