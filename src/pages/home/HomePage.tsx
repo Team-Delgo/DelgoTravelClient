@@ -8,7 +8,13 @@ import RecommendedPlace from './recommenedPlaces/RecommendedPlace';
 import { bookingGetDataByMain } from '../../common/api/booking';
 import { getRecommendedPlace, getEditorNotePlacesAll } from '../../common/api/places';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
-import { GET_EDITOR_NOTE_PLACES_ALL, GET_RECOMMENED_PLACES, GET_BOOKING_DATA_BY_MAIN, CACHE_TIME, STALE_TIME } from '../../common/constants/queryKey.const'
+import {
+  GET_EDITOR_NOTE_PLACES_ALL,
+  GET_RECOMMENED_PLACES,
+  GET_BOOKING_DATA_BY_MAIN,
+  CACHE_TIME,
+  STALE_TIME,
+} from '../../common/constants/queryKey.const';
 import { RootState } from '../../redux/store';
 import HomeReservation from './homeReservation/HomeReservation';
 import Delgo from '../../common/icons/delgo.svg';
@@ -33,44 +39,19 @@ interface RecommendedPlaceType {
   placeId: number;
   wishId: number;
 }
-const loadingScreenHeight = { height: window.innerHeight * 2 }
+const loadingScreenHeight = { height: window.innerHeight * 10 }
 
 function HomePage() {
   const [page, setPage] = useState(0);
   const [dday, setDday] = useState('0');
-  const dispatch = useDispatch();
-  const accessToken = useSelector((state: RootState) => state.token.token);
+  const homeScrollY = useSelector((state: RootState) => state.persist.scroll.homeScrollY);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
+  const dispatch = useDispatch();
   const location: any = useLocation();
-  const {homeScrollY} = useSelector((state: RootState) => state.persist.scroll);
-
-  const preventGoBack = () => {
-    window.history.pushState(null, '', null);
-  };
-
-  useEffect(() => {
-    window.history.pushState(null, '', null);
-    window.addEventListener('popstate', preventGoBack);
-    return () => {
-      window.removeEventListener('popstate', preventGoBack);
-    };
-  }, []);
-
-  const { isLoading: getRecommendedPlacesIsLoading, data: recommendedPlaces } = useQuery(
-    GET_RECOMMENED_PLACES,
-    () => getRecommendedPlace(userId),
-    {
-      cacheTime: CACHE_TIME,
-      staleTime: STALE_TIME,
-      onError: (error: any) => {
-        useErrorHandlers(dispatch, error);
-      },
-    },
-  );
 
   const { isLoading: getBookingDataIsLoading, data: reservationPlaces } = useQuery(
     GET_BOOKING_DATA_BY_MAIN,
-    () => bookingGetDataByMain(accessToken, userId),
+    () => bookingGetDataByMain(userId),
     {
       cacheTime: CACHE_TIME,
       staleTime: STALE_TIME,
@@ -79,6 +60,7 @@ function HomePage() {
       },
     },
   );
+
 
   const { isLoading: getEditorNotePlacesIsLoading, data: editorNotePlaces } = useQuery(
     GET_EDITOR_NOTE_PLACES_ALL,
@@ -93,6 +75,25 @@ function HomePage() {
     },
   );
 
+  const {
+    isLoading: getRecommendedPlacesIsLoading,
+    data: recommendedPlaces,
+  } = useQuery(GET_RECOMMENED_PLACES, () => getRecommendedPlace(userId), {
+    cacheTime: CACHE_TIME,
+    staleTime: STALE_TIME,
+    onError: (error: any) => {
+      useErrorHandlers(dispatch, error);
+    },
+  });
+
+  useEffect(() => {
+    window.history.pushState(null, '', null);
+    window.addEventListener('popstate', preventGoBack);
+    return () => {
+      window.removeEventListener('popstate', preventGoBack);
+    };
+  }, []);
+
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
       window.scrollTo(0, homeScrollY);
@@ -100,6 +101,10 @@ function HomePage() {
       window.scrollTo(0, 0);
     }
   }, [getRecommendedPlacesIsLoading, getBookingDataIsLoading, getEditorNotePlacesIsLoading]);
+
+  const preventGoBack = () => {
+    window.history.pushState(null, '', null);
+  };
 
   const getDday = () => {
     const startDate = new Date(reservationPlaces?.data[page].startDt);
@@ -120,8 +125,19 @@ function HomePage() {
   }, [page, reservationPlaces]);
 
   if (getRecommendedPlacesIsLoading || getBookingDataIsLoading || getEditorNotePlacesIsLoading) {
-    return <div className="home-background" style={loadingScreenHeight}><Footer /></div>;
+    return (
+      <div className="home-background" style={loadingScreenHeight}>
+        <Footer />
+      </div>
+    );
   }
+
+  const infoContent = `주소 : 서울특별시 광진구 광나루로 19길 23 가온나리1 202호
+대표 : 이창민 | 사업자등록번호 : 345-49-00732
+전자우편주소 : help@zollezolle.me
+통신판매번호 : 2022-서울광진-1816
+호스팅서비스게종자의 상호 표시 : Delgo
+  `
 
   return (
     <>
@@ -152,12 +168,8 @@ function HomePage() {
               key={place.placeId}
             >
               <img src={place.thumbnailUrl} alt="editor-thumnail-img" />
-              <div className="editor-thumbnail-title">
-                {place.thumbnailTitle}
-              </div>
-              <div className="editor-thumbnail-sub-title">
-                {place.thumbnailSubtitle}
-              </div>
+              <div className="editor-thumbnail-title">{place.thumbnailTitle}</div>
+              <div className="editor-thumbnail-sub-title">{place.thumbnailSubtitle}</div>
             </Link>
           ))}
         </div>
@@ -165,6 +177,12 @@ function HomePage() {
         {recommendedPlaces?.data.map((place: RecommendedPlaceType) => (
           <RecommendedPlace place={place} key={place.placeId} />
         ))}
+        <div className='home-buisness-information'>
+          <div className='home-buisness-information-title'>이제 우리 강아지도 Delgo 가요!</div>
+          <div className='home-buisness-information-des'>
+            {infoContent}
+          </div>
+        </div>
       </div>
       <Footer />
     </>

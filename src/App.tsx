@@ -26,6 +26,7 @@ import {
   KAKAO_REDIRECT_HANDLE_PATH,
   NAVER_REDIRECT_HANDLE_PATH,
   RESERVATION_PATH,
+  APPLE_REDIRECT_HANDLE_PATH,
 } from './common/constants/path.const';
 import './App.scss';
 import MyAccount from './pages/myAccount/MyAccount';
@@ -170,6 +171,7 @@ function App() {
         <Route path={RESERVATION_PATH.RESERVATION_HISTORY} element={<ReservationHistoryPage />} />
         <Route path={REVIEW_WRITING_PATH} element={<ReviewWritingPage />} />
         <Route path={KAKAO_REDIRECT_HANDLE_PATH} element={<KakaoRedirectHandler />} />
+        <Route path={APPLE_REDIRECT_HANDLE_PATH} element={<KakaoRedirectHandler />} />
         <Route path={NAVER_REDIRECT_HANDLE_PATH} element={<NaverRedirectHandler />} />
       </Routes>
     </QueryClientProvider>

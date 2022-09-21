@@ -11,7 +11,6 @@ import reportWebVitals from './reportWebVitals';
 
 const persistor = persistStore(store);
 
-const vConsole = new VConsole();
 
 console.log('a');
 
