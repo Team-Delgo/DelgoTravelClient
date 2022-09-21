@@ -4,6 +4,7 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { AxiosResponse } from 'axios';
 import Skeleton , { SkeletonTheme } from 'react-loading-skeleton'
+import RoomTypeNotice from './roomNotice/RoomTypeNotice';
 import { reservationActions } from '../../../redux/slice/reservationSlice';
 import { getRoomData } from '../../../common/api/room';
 import ImageSlider from '../../../common/utils/ImageSlider';
@@ -117,24 +118,26 @@ function RoomTypePage() {
   return (
     <>
       {isCalenderOpen && <Calender closeCalender={calenderOpenClose} isRoom roomId={room.roomId} />}
-      {logInModalOpen && <AlertConfirm
-        text="로그인 후 이용 할 수 있습니다."
-        buttonText='로그인'
-        noButtonHandler={() => {
-          setLogInModalOpen(false);
-        }}
-        yesButtonHandler={() => {
-          navigate(SIGN_IN_PATH.MAIN);
-        }}
-      />}
+      {logInModalOpen && (
+        <AlertConfirm
+          text="로그인 후 이용 할 수 있습니다."
+          buttonText="로그인"
+          noButtonHandler={() => {
+            setLogInModalOpen(false);
+          }}
+          yesButtonHandler={() => {
+            navigate(SIGN_IN_PATH.MAIN);
+          }}
+        />
+      )}
       <div className={classNames('detail-place-room-type', { close: isCalenderOpen })}>
-        {photoList.length > 0 ? 
+        {photoList.length > 0 ? (
           <ImageSlider images={photoList} />
-         : 
+        ) : (
           <SkeletonTheme baseColor="#f0e9e9" highlightColor="#e4dddd">
-            <Skeleton className="detail-place-room-type-image-skeleton"/>
+            <Skeleton className="detail-place-room-type-image-skeleton" />
           </SkeletonTheme>
-        }
+        )}
         <Link
           to={`/detail-place/${currentPlace.placeId}`}
           state={{ prevPath: location.pathname }}
@@ -157,13 +160,17 @@ function RoomTypePage() {
             {dateString}&nbsp;&nbsp;&nbsp;&gt;
           </span>
         </div>
-        {
-          roomNoticeList.map((notice: RoomNoticeType) =>
-            <div className="detail-place-room-type-notice">
-              <div className="detail-place-room-type-notice-title">{notice.title}</div>
-              <div className="detail-place-room-type-notice-content">{notice.contents.map((content: string, index: number) => <div>{index + 1}.{content}</div>)}</div>
-            </div>)
-        }
+        {roomNoticeList.map((roomNotice: RoomNoticeType) => (
+          <RoomTypeNotice roomNotice={roomNotice} key={roomNotice.roomNoticeId} />
+          // <div className="detail-place-room-type-notice">
+          //   <div className="detail-place-room-type-notice-title">{notice.title}</div>
+          //   <div className="detail-place-room-type-notice-content">
+          //     {notice.contents.map((content: string, index: number) => (
+          //       <div>* {content}</div>
+          //     ))}
+          //   </div>
+          // </div>
+        ))}
         <div className="reservation-button" aria-hidden="true" onClick={handleReservation}>
           <BottomButton text="예약하기" />
         </div>

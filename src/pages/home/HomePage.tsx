@@ -175,7 +175,7 @@ function HomePage() {
         </div>
         <header className="recommended-places-text">델고갈만한 숙소</header>
         {recommendedPlaces?.data.map((place: RecommendedPlaceType) => (
-          <RecommendedPlace place={place} key={place.placeId} />
+          <RecommendedPlace place={place} key={place.placeId}  />
         ))}
         <div className='home-buisness-information'>
           <div className='home-buisness-information-title'>이제 우리 강아지도 Delgo 가요!</div>

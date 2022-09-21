@@ -35,7 +35,6 @@ interface PlaceType {
 function Place({ place,areaTerm }: PlaceTypeProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const [logInModalOpen, setLogInModalOpen] = useState(false);
-  const accessToken = useSelector((state: RootState) => state.token.token);
   const userId = useSelector((state: RootState) => state.persist.user.user.id)
   const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
   const {OS} = useSelector((state:RootState)=>state.persist.device);
@@ -44,33 +43,33 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
   const navigate = useNavigate();
 
   const wishListInsert = () => {
-    if(isSignIn){
-      wishInsert({ userId, placeId: place.placeId, accessToken }, (response: AxiosResponse) => {
-        if (response.data.code === 200) {
-          setWishList(response.data.data.wishId);
-        }
-      }, dispatch);
+    if (isSignIn) {
+      wishInsert(
+        { userId, placeId: place.placeId },
+        (response: AxiosResponse) => {
+          if (response.data.code === 200) {
+            setWishList(response.data.data.wishId);
+          }
+        },
+      );
       if (OS === 'android') {
-        window.BRIDGE.vibrate()
+        window.BRIDGE.vibrate();
+      } else {
+        window.webkit.messageHandlers.vibrate.postMessage('');
       }
-      else {
-        window.webkit.messageHandlers.vibrate.postMessage('')
-      }
-    }
-    else{
+    } else {
       setLogInModalOpen(true);
     }
-  }
+  };
 
   const wishListDelete = () => {
     wishDelete(
-      { wishId: wishList, accessToken },
+      { wishId: wishList },
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
           setWishList(0);
         }
       },
-      dispatch,
     );
     if (OS === 'android') {
       window.BRIDGE.vibrate()

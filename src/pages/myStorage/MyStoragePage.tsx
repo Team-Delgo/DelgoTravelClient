@@ -13,8 +13,6 @@ function MyStoragePage() {
   const location: any = useLocation();
   const [currentTab, setCurrentTab] = useState(0);
   const dispatch = useDispatch();
-  const accessToken = useSelector((state: RootState) => state.token.token);
-  const refreshToken = localStorage.getItem('refreshToken') || '';
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/reservation-history')) {

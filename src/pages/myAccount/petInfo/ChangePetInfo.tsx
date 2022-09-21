@@ -186,7 +186,6 @@ function ChangePetInfo() {
       (response: AxiosResponse) => {
         console.log(response);
       },
-      dispatch,
     );
     if (imageisChanged) {
       const formData = await handlingDataForm(sendingImage);

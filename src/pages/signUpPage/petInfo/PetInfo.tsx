@@ -14,7 +14,6 @@ import { signup, petImageUpload } from '../../../common/api/signup';
 import Check from '../../../common/icons/check.svg';
 import { SIGN_UP_PATH } from '../../../common/constants/path.const';
 import { userActions } from '../../../redux/slice/userSlice';
-import { tokenActions } from '../../../redux/slice/tokenSlice';
 import { oAuthSignup } from '../../../common/api/social';
 import AlertConfirmOne from '../../../common/dialog/AlertConfirmOne'
 
@@ -200,7 +199,7 @@ function PetInfo() {
             const refreshToken = response.headers.authorization_refresh;
             console.log(accessToken);
             console.log(refreshToken);
-            dispatch(tokenActions.setToken(accessToken));
+            localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('refreshToken', refreshToken);
             userId = response.data.data.user.userId;
             console.log(response);
@@ -251,7 +250,7 @@ function PetInfo() {
             const refreshToken = response.headers.authorization_refresh;
             console.log(accessToken);
             console.log(refreshToken);
-            dispatch(tokenActions.setToken(accessToken));
+            localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('refreshToken', refreshToken);
             userId = response.data.data.user.userId;
             console.log(response);

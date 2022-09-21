@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isSignIn: false,
-  couponList: [],
   user: { id: 0, nickname: '', email: '', phone: '', isSocial: false },
   pet: { name: '', petId: 0, birthday: '', size: '', image: '' },
 };
@@ -14,7 +13,6 @@ const userSlice = createSlice({
     signin(state, action) {
       return {
         isSignIn: true,
-        couponList: action.payload.couponList,
         user: action.payload.user,
         pet: action.payload.pet,
       };
@@ -25,7 +23,6 @@ const userSlice = createSlice({
     setpetprofile(state, action) {
       return {
         isSignIn: state.isSignIn,
-        couponList: state.couponList,
         user: state.user,
         pet: {
           ...state.pet,
@@ -36,7 +33,6 @@ const userSlice = createSlice({
     changepetinfo(state, action) {
       return {
         isSignIn: state.isSignIn,
-        couponList: state.couponList,
         user: state.user,
         pet: {
           name: action.payload.name,

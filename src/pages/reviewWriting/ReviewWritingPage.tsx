@@ -1,7 +1,7 @@
 /* eslint-disable array-callback-return */
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
 import imageCompression from 'browser-image-compression';
 import AlertConfirmOne from '../../common/dialog/AlertConfirmOne'
@@ -59,7 +59,6 @@ function RiviewWritingPage() {
   const starRaiting = useRef(5);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const petName = useSelector((state: RootState) => state.persist.user.pet.name);
-  const dispatch = useDispatch();
   const state = useLocation().state as TraveledHisotryPlaceType;
   const navigate = useNavigate();
   const formData = new FormData();
@@ -151,7 +150,6 @@ function RiviewWritingPage() {
                     console.log(codeMsg);
                   }
                 },
-                dispatch,
               );
             }
             setReviewCompleteAlert(true)
@@ -159,7 +157,6 @@ function RiviewWritingPage() {
             console.log(codeMsg);
           }
         },
-        dispatch,
       );
     }
     else{

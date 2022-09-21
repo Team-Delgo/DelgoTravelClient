@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import qs from 'qs';
 import { NAVER} from '../../../common/constants/url.cosnt';
-import { tokenActions } from '../../../redux/slice/tokenSlice';
 
 declare global {
   interface Window {

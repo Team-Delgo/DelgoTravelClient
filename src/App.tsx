@@ -41,8 +41,6 @@ import ReviewWritingPage from './pages/reviewWriting/ReviewWritingPage';
 import KakaoRedirectHandler from './pages/signInPage/socialLogion/KakaoRedirectHandler';
 import NaverRedirectHandler from './pages/signInPage/socialLogion/NaverRedirectHandler';
 import AlertConfirmOne from './common/dialog/AlertConfirmOne';
-import { tokenActions } from './redux/slice/tokenSlice';
-import { tokenRefresh } from './common/api/login';
 import { errorActions } from './redux/slice/errorSlice';
 import { RootState } from './redux/store';
 import ReservationConfirmPage from './pages/reservation/reservationConfirmPage/ReservationConfirmPage';
@@ -63,11 +61,12 @@ import SocialMiddle from './pages/signUpPage/forSocial/SocialMiddle';
 import SocialExist from './pages/signUpPage/forSocial/SocialExist';
 import { deviceAction } from './redux/slice/deviceSlice';
 
+
 declare global{
   interface Window{
     BRIDGE:any
     webkit:any
-    Kakao: any;
+    Kakao: any
   }
 }
 
@@ -76,53 +75,14 @@ function App() {
   const dispatch = useDispatch();
   const queryClient = new QueryClient();
   const location = useLocation();
-  const refreshToken = localStorage.getItem('refreshToken') || '';
 
   useEffect(() => {
     const varUA = navigator.userAgent.toLowerCase();
-    if ( varUA.indexOf('android') > -1) {
+    if (varUA.indexOf('android') > -1) {
       dispatch(deviceAction.android());
-    }
-    else if (varUA.indexOf('iphone') > -1 || varUA.indexOf('ipad') > -1 || varUA.indexOf('ipod') > -1) {
+    } else if (varUA.indexOf('iphone') > -1 || varUA.indexOf('ipad') > -1 || varUA.indexOf('ipod') > -1) {
       dispatch(deviceAction.ios());
     }
-  }, []);
-
-  useEffect(() => {
-    axios.interceptors.response.use(
-      (response) => {
-        return response;
-      },
-      async (error) => {
-        const {
-          config,
-          response: { status },
-        } = error;
-        if (status === 303) {
-          tokenRefresh(
-            { refreshToken },
-            (response: AxiosResponse) => {
-              const { code } = response.data;
-
-              if (code === 200) {
-                const accessToken = response.headers.authorization_access;
-                const refreshToken = response.headers.authorization_refresh;
-
-                dispatch(tokenActions.setToken(accessToken));
-                localStorage.setItem('refreshToken', refreshToken);
-                const originalRequest = config;
-
-                originalRequest.headers.authorization = accessToken;
-
-                return axios(originalRequest);
-              }
-            },
-            dispatch,
-          );
-        }
-        return Promise.reject(error);
-      },
-    );
   }, []);
 
   const alertButtonHandler = () => {

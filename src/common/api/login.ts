@@ -38,6 +38,7 @@ async function emailAuth(email: string, success: (data: AxiosResponse) => void, 
       params: { email },
     })
     .then((data) => {
+      console.log(data)
       success(data);
     })
     .catch((error) => {

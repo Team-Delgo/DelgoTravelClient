@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import { userActions } from '../../redux/slice/userSlice';
-import { tokenActions } from '../../redux/slice/tokenSlice';
 import { ReactComponent as Arrow } from '../../common/icons/left-arrow.svg';
 import ToastMessage from '../../common/dialog/ToastMessage';
 import { login } from '../../common/api/login';
@@ -62,7 +61,6 @@ function Login() {
           dispatch(
             userActions.signin({
               isSignIn: true,
-              couponList: data.couponList,
               user: {
                 id: data.user.userId,
                 nickname: data.user.name,
@@ -82,7 +80,7 @@ function Login() {
 
           const accessToken = response.headers.authorization_access;
           const refreshToken = response.headers.authorization_refresh;
-          dispatch(tokenActions.setToken(accessToken));
+          localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);
           navigation(ROOT_PATH, { replace: true });
         } else if (code === 304) {

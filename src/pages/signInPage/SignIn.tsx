@@ -5,14 +5,11 @@ import AppleLogin from 'react-apple-login';
 import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Circles, Grid, Oval, Puff, Rings } from 'react-loader-spinner';
 import { ReactComponent as Kakao } from '../../common/icons/kakao.svg';
 import { ReactComponent as Naver } from '../../common/icons/naver.svg';
 import { ReactComponent as Apple } from '../../common/icons/apple.svg';
 import { ROOT_PATH, SIGN_IN_PATH, SIGN_UP_PATH } from '../../common/constants/path.const';
-import { tokenActions } from '../../redux/slice/tokenSlice';
 import { KAKAO, NAVER } from '../../common/constants/url.cosnt';
-import Delgo from '../../common/icons/delgo.svg';
 import { checkEmail } from '../signUpPage/userInfo/ValidCheck';
 import { emailAuth } from '../../common/api/login';
 import Loading from '../../common/utils/Loading';
@@ -27,8 +24,8 @@ function SignIn() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(tokenActions.setToken(''));
     localStorage.removeItem('refreshToken');
+    localStorage.removeItem('accessToken')
     setTimeout(() => {
       setLoading(false);
     }, 700);

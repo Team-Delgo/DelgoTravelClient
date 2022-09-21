@@ -46,12 +46,10 @@ interface TravelHisotryPlaceType {
 interface FolderTypeProps {
   currentTab:number
 }
-const loadingScreenHeight = { height: window.innerHeight * 2 }
+const loadingScreenHeight = { height: window.innerHeight * 100 }
 
 function History({currentTab}:FolderTypeProps) {
   const dispatch = useDispatch();
-  const accessToken = useSelector((state: RootState) => state.token.token);
-  const refreshToken = localStorage.getItem('refreshToken') || '';
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const location: any = useLocation();
   const { myStorageScrollY } = useSelector((state: RootState) => state.persist.scroll);

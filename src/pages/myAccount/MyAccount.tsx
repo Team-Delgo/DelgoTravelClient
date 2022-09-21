@@ -10,7 +10,6 @@ import './MyAccount.scss';
 import RightArrow from '../../common/icons/right-arrow.svg';
 import RightArrowBlack from '../../common/icons/right-arrow-black.svg';
 import { userActions } from '../../redux/slice/userSlice';
-import { tokenActions } from '../../redux/slice/tokenSlice';
 import { scrollActions } from '../../redux/slice/scrollSlice';
 import AlertConfirm from '../../common/dialog/AlertConfirm';
 import { deleteUser } from '../../common/api/signup';
@@ -20,7 +19,7 @@ import { getBookingState } from '../../common/api/booking';
 import { GET_MY_ACCOUNT_DATA_LIST, GET_BOOKING_STATE_DATA_LIST, CACHE_TIME, STALE_TIME } from '../../common/constants/queryKey.const'
 import { RootState } from '../../redux/store';
 
-const loadingScreenHeight = { height: window.innerHeight * 2 }
+const loadingScreenHeight = { height: window.innerHeight * 10 }
 
 function MyAccount() {
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
@@ -31,18 +30,15 @@ function MyAccount() {
   const navigation = useNavigate();
   const dispatch = useDispatch();
   const location: any = useLocation();
-  const refreshToken = localStorage.getItem('refreshToken') || '';
   const pet = useSelector((state: RootState) => state.persist.user.pet);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const dogBirth = useSelector((state: RootState) => state.persist.user.pet.birthday);
-  const accessToken = useSelector((state: RootState) => state.token.token);
   const { myAccountScrollY } = useSelector((state: RootState) => state.persist.scroll);
   const { OS } = useSelector((state: RootState) => state.persist.device);
 
   const {
     isLoading: getMyAccountDataListIsLoading,
     data: myAccountDataList,
-    refetch:getMyAccountDataListRefetch,
   } = useQuery(GET_MY_ACCOUNT_DATA_LIST, () => getMyAccountDataList(userId), {
     cacheTime: CACHE_TIME,
     staleTime: STALE_TIME,
@@ -54,7 +50,6 @@ function MyAccount() {
   const {
     isLoading: getBookingStateIsLoading,
     data: bookingStateDataList,
-    refetch: getBookingStateRefetch,
   } = useQuery(GET_BOOKING_STATE_DATA_LIST, () => getBookingState(userId), {
     cacheTime: CACHE_TIME,
     staleTime: STALE_TIME,
@@ -91,8 +86,8 @@ function MyAccount() {
 
 
   const logoutHandler = () => {
-    dispatch(tokenActions.setToken(''));
     dispatch(userActions.signout());
+    localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     navigation(SIGN_IN_PATH.MAIN);
   };
@@ -106,6 +101,7 @@ function MyAccount() {
       dispatch,
     );
     dispatch(userActions.signout());
+    localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     navigation(SIGN_IN_PATH.MAIN);
   };

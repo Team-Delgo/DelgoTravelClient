@@ -28,16 +28,15 @@ interface PlaceType {
 
 function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch}: WishedPlaceTypeProps) {
   const [wishListAlertConfirmOpen, setWishListAlertConfirmOpen] = useState(false);
-  const accessToken = useSelector((state: RootState) => state.token.token);
-  const { OS } = useSelector((state: RootState) => state.persist.device);
+  const  OS  = useSelector((state: RootState) => state.persist.device.OS);
   const dispatch = useDispatch();
   const location: any = useLocation();
   const navigate = useNavigate();
 
-  const wishListDelete = useCallback(() => {
-    wishListConfirmModalClose()
+  const wishListDelete = () => {
+    wishListConfirmModalClose();
     wishDelete(
-      { wishId: place.wishId, accessToken },
+      { wishId: place.wishId },
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
           getRecommendedPlacesRefetch()
@@ -46,26 +45,24 @@ function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch
           }, 100);
         }
       },
-      dispatch,
     );
     if (OS === 'android') {
-      window.BRIDGE.vibrate()
+      window.BRIDGE.vibrate();
+    } else {
+      window.webkit.messageHandlers.vibrate.postMessage('');
     }
-    else {
-      window.webkit.messageHandlers.vibrate.postMessage('')
-    }
-  }, []);
+  };
 
-  const wishListConfirmModalOpen =useCallback(() => {
+  const wishListConfirmModalOpen = () => {
     setWishListAlertConfirmOpen(true);
-  },[])
+  };
 
-  const wishListConfirmModalClose = useCallback(()=> {
+  const wishListConfirmModalClose = () => {
     setWishListAlertConfirmOpen(false);
-  },[])
+  };
 
   const moveToDetailPage = useCallback(() => {
-    dispatch(scrollActions.scroll({ myStorage: window.scrollY}));
+    dispatch(scrollActions.scroll({ myStorage: window.scrollY }));
     dispatch(prevPathActions.prevPath({ prevPath: location.pathname }));
     navigate(`/detail-place/${place.placeId}`);
   }, []);
@@ -83,12 +80,12 @@ function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch
         {wishListAlertConfirmOpen && (
           <AlertConfirm
             text="정말 찜 목록에서 제거하시겠어요?"
-            buttonText='확인'
+            buttonText="확인"
             yesButtonHandler={wishListDelete}
             noButtonHandler={wishListConfirmModalClose}
           />
         )}
-          <ActiveHeart onClick={wishListConfirmModalOpen} />
+        <ActiveHeart onClick={wishListConfirmModalOpen} />
       </div>
     </div>
   );

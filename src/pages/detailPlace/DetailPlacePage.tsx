@@ -27,7 +27,7 @@ import { scrollActions } from '../../redux/slice/scrollSlice';
 import Calender from '../../common/utils/Calender';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import { GET_DETAIL_PLACE, GET_DETAIL_PLACE_REVIEWS, CACHE_TIME, STALE_TIME } from '../../common/constants/queryKey.const'
-import Notice from './notice/Notice'
+import PlaceNotice from './PlaceNotice/PlaceNotice'
 import './DetailPlacePage.scss';
 
 interface RivewType {
@@ -81,22 +81,23 @@ function DetailPlacePage() {
   const [logInModalOpen, setLogInModalOpen] = useState(false);
   const { date, dateString } = useSelector((state: RootState) => state.date);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
-  const accessToken = useSelector((state: RootState) => state.token.token);
   const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
-  const {OS} = useSelector((state:any)=>state.persist.device);
+  const OS = useSelector((state: RootState) => state.persist.device.OS);
+  const detailPlacePrevPath = useSelector((state: RootState) => state.persist.prevPath.detailPlacePrevPath);
+  const { whereToGoScrollY, detailPlaceScrollY, myStorageScrollY } = useSelector(
+    (state: RootState) => state.persist.scroll,
+  );
   const { placeId } = useParams();
   const location: any = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { whereToGoScrollY, detailPlaceScrollY, myStorageScrollY } = useSelector((state: RootState) => state.persist.scroll);
-  const detailPlacePrevPath = useSelector((state: RootState) => state.persist.prevPath.detailPlacePrevPath);
-  const startDt = `${date.start.substring(0, 4)}-${date.start.substring(4, 6)}-${date.start.substring(6, 10)}`
-  const endDt = `${date.end.substring(0, 4)}-${date.end.substring(4, 6)}-${date.end.substring(6, 10)}`
+  const startDt = `${date.start.substring(0, 4)}-${date.start.substring(4, 6)}-${date.start.substring(6, 10)}`;
+  const endDt = `${date.end.substring(0, 4)}-${date.end.substring(4, 6)}-${date.end.substring(6, 10)}`;
 
   const {
     isLoading: getDetailPlaceIsLoading,
     data: detailPlace,
-    refetch,
+    refetch:getDetailPlaceRefetch,
   } = useQuery(GET_DETAIL_PLACE, () => getDetailPlace(userId, placeId as string, startDt, endDt), {
     cacheTime: CACHE_TIME,
     staleTime: STALE_TIME,
@@ -120,8 +121,8 @@ function DetailPlacePage() {
   );
 
   useEffect(() => {
-    refetch()
-  }, [date]); 
+    getDetailPlaceRefetch();
+  }, [date]);
 
 
   useEffect(() => {
@@ -148,46 +149,41 @@ function DetailPlacePage() {
     );
   }, [detailPlace]);
 
-  const wishListInsert = useCallback(() => {
+  const wishListInsert = () => {
     if (isSignIn) {
       wishInsert(
-        { userId, placeId: Number(detailPlace?.data.place.placeId), accessToken },
+        { userId, placeId: Number(placeId) },
         (response: AxiosResponse) => {
           if (response.data.code === 200) {
-            refetch()
+            getDetailPlaceRefetch();
           }
         },
-        dispatch,
-      )
+      );
       if (OS === 'android') {
-        window.BRIDGE.vibrate()
+        window.BRIDGE.vibrate();
+      } else {
+        window.webkit.messageHandlers.vibrate.postMessage('');
       }
-      else {
-        window.webkit.messageHandlers.vibrate.postMessage('') 
-      }
-    }
-    else {
+    } else {
       setLogInModalOpen(true);
     }
-  }, [detailPlace, isSignIn]);
+  };
 
-  const wishListDelete = useCallback(() => {
+  const wishListDelete = () => {
     wishDelete(
-      { wishId: Number(detailPlace?.data.place.wishId), accessToken },
+      { wishId: Number(detailPlace?.data.place.wishId) },
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
-          refetch();
+          getDetailPlaceRefetch();
         }
-      },
-      dispatch,
+      }
     );
     if (OS === 'android') {
-      window.BRIDGE.vibrate()
+      window.BRIDGE.vibrate();
+    } else {
+      window.webkit.messageHandlers.vibrate.postMessage('');
     }
-    else {
-      window.webkit.messageHandlers.vibrate.postMessage('') 
-    }
-  }, [detailPlace]);
+  };
 
   const calenderOpenClose = useCallback(() => {
     setIsCalenderOpen(!isCalenderOpen);
@@ -337,8 +333,8 @@ function DetailPlacePage() {
             </body>
           </div>
         )}
-        {detailPlace?.data.placeNoticeList.map((notice: NoticeType) => (
-          <Notice notice={notice} key={notice.placeNoticeId}/>
+        {detailPlace?.data.placeNoticeList.map((placeNotice: NoticeType) => (
+          <PlaceNotice placeNotice={placeNotice} key={placeNotice.placeNoticeId}/>
         ))}
         <div className="detail-place-map">
           <header className="detail-place-map-header">지도</header>

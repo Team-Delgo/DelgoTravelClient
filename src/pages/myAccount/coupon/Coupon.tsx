@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from 'react-query';
 import { ReactComponent as Arrow } from '../../../common/icons/left-arrow.svg';
 import './Coupon.scss';
-import { tokenActions } from '../../../redux/slice/tokenSlice';
 import { tokenRefresh } from '../../../common/api/login';
 import { getCouponList } from '../../../common/api/coupon';
 import AlertConfirmOne from '../../../common/dialog/AlertConfirmOne'
@@ -33,10 +32,9 @@ function Coupon() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [couponRegistrationCompleted ,setCouponRegistrationCompleted]=useState(false)
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
-  const accessToken = useSelector((state: RootState) => state.token.token);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const refreshToken = localStorage.getItem('refreshToken') || '';
+
 
   useEffect(() => {
     window.scroll(0, 0);
@@ -62,26 +60,6 @@ function Coupon() {
   useEffect(() => {
     getScheduledCoupon();
   }, [couponList]);
-
-  useEffect(() => {
-    tokenRefresh(
-      { refreshToken },
-      (response: AxiosResponse) => {
-        const { code } = response.data;
-
-        if (code === 200) {
-          const accessToken = response.headers.authorization_access;
-          const refreshToken = response.headers.authorization_refresh;
-
-          dispatch(tokenActions.setToken(accessToken));
-          localStorage.setItem('refreshToken', refreshToken);
-        } else {
-          // navigate('/user/signin');
-        }
-      },
-      dispatch,
-    );
-  }, [accessToken]);
 
   const getScheduledCoupon = () => {
     let count = 0;

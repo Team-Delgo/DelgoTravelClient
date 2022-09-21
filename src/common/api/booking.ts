@@ -1,5 +1,5 @@
-import axios, { AxiosResponse, AxiosError } from 'axios';
-import { useErrorHandlers } from './useErrorHandlers';
+import { AxiosResponse } from 'axios';
+import axiosInstance from './interceptors';
 
 async function bookingRequest(
   data: {
@@ -11,86 +11,97 @@ async function bookingRequest(
     point: number;
     startDt: string;
     endDt: string;
-    orderId:string|null;
-    paymentKey:string|null;
+    orderId: string | null;
+    paymentKey: string | null;
   },
   success: (data: AxiosResponse) => void,
-  dispatch: any,
 ) {
-  const startDt = `${data.startDt.substring(0,4)}-${data.startDt.substring(4,6)}-${data.startDt.substring(6,10)}`
-  const endDt = `${data.endDt.substring(0,4)}-${data.endDt.substring(4,6)}-${data.endDt.substring(6,10)}`
-  try {
-    const result = await axios.post(`${process.env.REACT_APP_API_URL}/booking/request`, {
-      userId: data.userId,
-      placeId: data.placeId,
-      roomId: data.roomId,
-      couponId: data.couponId,
-      reservedName:data.reservedName,
-      point: data.point,
-      startDt,
-      endDt,
-      orderId:data.orderId,
-      paymentKey:data.paymentKey
-    });
+  const accessToken = localStorage.getItem('accessToken') || '';
+  const startDt = `${data.startDt.substring(0, 4)}-${data.startDt.substring(4, 6)}-${data.startDt.substring(6, 10)}`;
+  const endDt = `${data.endDt.substring(0, 4)}-${data.endDt.substring(4, 6)}-${data.endDt.substring(6, 10)}`;
+  const result = await axiosInstance.post(
+      `/booking/request`,
+      {
+        userId: data.userId,
+        placeId: data.placeId,
+        roomId: data.roomId,
+        couponId: data.couponId,
+        reservedName: data.reservedName,
+        point: data.point,
+        startDt,
+        endDt,
+        orderId: data.orderId,
+        paymentKey: data.paymentKey,
+      },
+      {
+        headers: {
+          Authorization_Access: accessToken,
+        },
+      },
+    );
     success(result);
-  } catch (error: AxiosError | any) {
-    useErrorHandlers(dispatch, error);
-  }
 }
 
 async function bookingGetData(
   data: {
-    accessToken: string;
     bookingId: string;
   },
   success: (data: AxiosResponse) => void,
-  dispatch: any,
 ) {
-  try {
-    const result = await axios.get(`${process.env.REACT_APP_API_URL}/booking/getData?bookingId=${data.bookingId}`,{
-      // headers: {
-      //   Authorization_Access: `${data.accessToken}`,
-      // },
+  const accessToken = localStorage.getItem('accessToken') || '';
+  const result = await axiosInstance.get(`/booking/getData?bookingId=${data.bookingId}`, {
+      headers: {
+        Authorization_Access: accessToken,
+      },
     });
-    success(result);
-  } catch (error: AxiosError | any) {
-    useErrorHandlers(dispatch, error);
-  }
+  success(result);
 }
 
+async function bookingGetDataByMain(userId: number) {
+  const accessToken = localStorage.getItem('accessToken') || '';
+  
+  if(userId===0) return
 
-async function bookingGetDataByMain(accessToken: string, userId: number) {
-  const {data} = await axios
-  .get(`${process.env.REACT_APP_API_URL}/booking/getData/main?userId=${userId}`)
-  return data
+  const { data } = await axiosInstance.get(`/booking/getData/main?userId=${userId}`, {
+    headers: {
+      Authorization_Access: accessToken,
+    },
+  });
+  return data;
 }
-
 
 async function getBookingHistory(userId: number) {
-  const {data} = await axios
-  .get(`${process.env.REACT_APP_API_URL}/booking/getHistory?userId=${userId}`)
-  return data
+  const accessToken = localStorage.getItem('accessToken') || '';
+  const { data } = await axiosInstance.get(`/booking/getHistory?userId=${userId}`, {
+    headers: {
+      Authorization_Access: accessToken,
+    },
+  });
+  return data;
 }
 
-async function bookingCancle(
-  bookingId: string,
-  success: (data: AxiosResponse) => void,
-  dispatch: any,
-) {
-  try {
-    const result = await axios.post(`${process.env.REACT_APP_API_URL}/booking/cancel/${bookingId}`);
-    success(result);
-  } catch (error: AxiosError | any) {
-    useErrorHandlers(dispatch, error);
-  }
+async function bookingCancle(bookingId: string, success: (data: AxiosResponse) => void) {
+  const accessToken = localStorage.getItem('accessToken') || '';
+  const result = await axiosInstance.post(`/booking/cancel/${bookingId}`, {
+      headers: {
+        Authorization_Access: accessToken,
+      },
+    });
+  success(result);
 }
 
 async function getBookingState(userId: number) {
-  const { data } = await axios
-    .get(`${process.env.REACT_APP_API_URL}/booking/getData/account`, {
+  const accessToken = localStorage.getItem('accessToken') || '';
+  const { data } = await axiosInstance.get(
+    `/booking/getData/account`,
+    {
       params: { userId },
-    })
-  return data
+      headers: {
+        Authorization_Access: accessToken,
+      },
+    },
+  );
+  return data;
 }
 
 export { bookingRequest, bookingGetData, bookingGetDataByMain, getBookingHistory, bookingCancle, getBookingState };
