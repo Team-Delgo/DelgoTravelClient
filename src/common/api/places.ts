@@ -10,7 +10,7 @@ async function getAllPlaces(userId: number, startDt: string, endDt: string) {
 
 async function getWishedPlaces(userId: number) {
   const accessToken = localStorage.getItem("accessToken") || '';
-  const { data } = await axiosInstance.get(`/wish/select?userId=${userId}`, {
+  const {data} = await axiosInstance.get(`/wish/select?userId=${userId}`, {
     headers: {
       Authorization_Access: accessToken,
     },
@@ -33,6 +33,7 @@ async function getRecommendedPlace(userId: number) {
 }
 
 async function getEditorNotePlacesAll() {
+  console.log(`${process.env.REACT_APP_API_URL}`);
   const { data } = await axios
     .get(`${process.env.REACT_APP_API_URL}/place/getEditorNote/all`, {
     })
@@ -40,10 +41,8 @@ async function getEditorNotePlacesAll() {
 }
 
 async function getEditorNotePlace(placeId: number) {
-  const { data } = await axios
-    .get(`${process.env.REACT_APP_API_URL}/place/getEditorNote/place?placeId=${placeId}`, {
-    })
-  return data
+  const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/place/getEditorNote/place?placeId=${placeId}`, {});
+  return data;
 }
 
 
