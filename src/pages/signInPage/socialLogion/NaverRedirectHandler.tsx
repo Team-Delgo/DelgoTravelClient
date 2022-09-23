@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import qs from 'qs';
-import { NAVER} from '../../../common/constants/url.cosnt';
+import { NAVER } from '../../../common/constants/url.cosnt';
+import { setStateCode } from '../../../common/api/social';
 
 declare global {
   interface Window {
@@ -15,61 +16,67 @@ declare global {
 function NaverRedirectHandler() {
   const dispatch = useDispatch();
   const code = new URL(window.location.href).searchParams.get("code"); // 네이버 로그인 인증에 성공하면 반환받는 인증 코드, 접근 토큰(access token) 발급에 사용
-  const state = new URL(window.location.href).searchParams.get("state"); 
+  const state = new URL(window.location.href).searchParams.get("state");
   const navigate = useNavigate();
 
-  console.log(code,state)
-
   useEffect(() => {
-    getToken();
+    setStateCode({ code, state }, (response: AxiosResponse) => {
+      console.log(response);
+    }, dispatch);
   }, []);
 
-  const getToken = async () => {
+  // console.log(code,state)
 
-  //   const userData = await axios.get('https://openapi.naver.com/v1/nid/me', { // 유저정보 api -> cors에러
-  //     headers : {
-  //         'Authorization' : `Bearer ${code}`,
-  //     }
-  // })
+  // useEffect(() => {
+  //   getToken();
+  // }, []);
 
-  // console.log(userData)
+  // const getToken = async () => {
 
-    const payload = qs.stringify({
-      grant_type: "authorization_code",
-      client_id: `${process.env.REACT_APP_NAVER_CLIENT_ID}`,
-      client_secret: `${process.env.REACT_APP_NAVER_CLIENT_SECRET}`,
-      code,
-      state,
-    });
-    try {
-      const res = await axios.post( // 토큰발급 -> 서버에서 해줘야됨
-        "https://nid.naver.com/oauth2.0/token",
-         payload
-      );
-      console.log(res)
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // //   const userData = await axios.get('https://openapi.naver.com/v1/nid/me', { // 유저정보 api -> cors에러
+  // //     headers : {
+  // //         'Authorization' : `Bearer ${code}`,
+  // //     }
+  // // })
 
-  const getProfile = async () => {
-    try {
-      window.Naver.API.request({
-        url: 'https://openapi.naver.com/v1/nid/me',  // 유저정보 api -> cors에러
-        success(response:any) {
-            console.log(response);
-        },
-        fail(error:any) {
-            console.log(error);
-        }
-    });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // // console.log(userData)
+
+  //   const payload = qs.stringify({
+  //     grant_type: "authorization_code",
+  //     client_id: `${process.env.REACT_APP_NAVER_CLIENT_ID}`,
+  //     client_secret: `${process.env.REACT_APP_NAVER_CLIENT_SECRET}`,
+  //     code,
+  //     state,
+  //   });
+  //   try {
+  //     const res = await axios.post( // 토큰발급 -> 서버에서 해줘야됨
+  //       "https://nid.naver.com/oauth2.0/token",
+  //        payload
+  //     );
+  //     console.log(res)
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // const getProfile = async () => {
+  //   try {
+  //     window.Naver.API.request({
+  //       url: 'https://openapi.naver.com/v1/nid/me',  // 유저정보 api -> cors에러
+  //       success(response:any) {
+  //           console.log(response);
+  //       },
+  //       fail(error:any) {
+  //           console.log(error);
+  //       }
+  //   });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
 
-  const moveToPreviousPage = ()=>{
+  const moveToPreviousPage = () => {
     navigate('/user/signin')
   }
 
@@ -77,7 +84,7 @@ function NaverRedirectHandler() {
   return <div>네이버 로그인
     <button type="button" onClick={moveToPreviousPage}>뒤로가기</button>
   </div>
-  
+
 };
 
 export default NaverRedirectHandler
