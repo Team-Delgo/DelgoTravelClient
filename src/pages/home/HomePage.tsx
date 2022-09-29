@@ -41,6 +41,13 @@ interface RecommendedPlaceType {
 }
 const loadingScreenHeight = { height: window.innerHeight * 10 }
 
+const infoContent = `주소 : 서울특별시 광진구 광나루로 19길 23 가온나리1 202호
+대표 : 이창민 | 사업자등록번호 : 345-49-00732
+전자우편주소 : help@zollezolle.me
+통신판매번호 : 2022-서울광진-1816
+호스팅서비스게종자의 상호 표시 : Delgo
+  `
+
 function HomePage() {
   const [page, setPage] = useState(0);
   const [dday, setDday] = useState('0');
@@ -132,13 +139,6 @@ function HomePage() {
     );
   }
 
-  const infoContent = `주소 : 서울특별시 광진구 광나루로 19길 23 가온나리1 202호
-대표 : 이창민 | 사업자등록번호 : 345-49-00732
-전자우편주소 : help@zollezolle.me
-통신판매번호 : 2022-서울광진-1816
-호스팅서비스게종자의 상호 표시 : Delgo
-  `
-
   return (
     <>
       <div className="home-background">
@@ -160,7 +160,7 @@ function HomePage() {
         )}
         <header className="editor-header-text">델고 에디터노트</header>
         <div className="editor-container">
-          {editorNotePlaces.data.map((place: EditorPlaceType) => (
+          {editorNotePlaces.data?.map((place: EditorPlaceType) => (
             <Link
               className="editor-thumbnail"
               to={`/editor-note/${place.placeId}`}

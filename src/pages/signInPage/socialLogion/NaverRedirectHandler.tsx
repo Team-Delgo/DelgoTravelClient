@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import qs from 'qs';
 import { NAVER } from '../../../common/constants/url.cosnt';
 import { userActions } from '../../../redux/slice/userSlice';
 import { ROOT_PATH, SIGN_UP_PATH } from '../../../common/constants/path.const';
+import { setStateCode } from '../../../common/api/social';
 
 declare global {
   interface Window {
@@ -20,22 +21,13 @@ function NaverRedirectHandler() {
   const state = new URL(window.location.href).searchParams.get("state");
   const navigate = useNavigate();
 
-  console.log(code, state)
 
   useEffect(() => {
-    getToken();
+    setNaverCode();
   }, []);
 
-  const getToken = async () => {
-
-    //   const userData = await axios.get('https://openapi.naver.com/v1/nid/me', { // 유저정보 api -> cors에러
-    //     headers : {
-    //         'Authorization' : `Bearer ${code}`,
-    //     }
-    // })
-
-    // console.log(userData)
-
+  // console.log(code,state)
+  const setNaverCode = async () => {
     const payload = qs.stringify({
       grant_type: "authorization_code",
       client_id: `${process.env.REACT_APP_NAVER_CLIENT_ID}`,
@@ -93,7 +85,7 @@ function NaverRedirectHandler() {
       console.log(err);
     }
   };
-
+    
   const moveToPreviousPage = () => {
     navigate('/user/signin')
   }
@@ -102,7 +94,6 @@ function NaverRedirectHandler() {
   return <div>네이버 로그인
     <button type="button" onClick={moveToPreviousPage}>뒤로가기</button>
   </div>
-
-};
+}
 
 export default NaverRedirectHandler
