@@ -23,23 +23,7 @@ function NaverRedirectHandler() {
 
 
   useEffect(() => {
-    setNaverCode();
-  }, []);
-
-  // console.log(code,state)
-  const setNaverCode = async () => {
-    const payload = qs.stringify({
-      grant_type: "authorization_code",
-      client_id: `${process.env.REACT_APP_NAVER_CLIENT_ID}`,
-      client_secret: `${process.env.REACT_APP_NAVER_CLIENT_SECRET}`,
-      code,
-      state,
-    });
-    try {
-      const response = await axios.post( // 토큰발급 -> 서버에서 해줘야됨
-        "https://nid.naver.com/oauth2.0/token",
-        payload
-      );
+    setStateCode({ code, state }, (response: AxiosResponse) => {
       console.log(response);
       const { code, data } = response.data;
       if (code === 200) {
@@ -81,10 +65,8 @@ function NaverRedirectHandler() {
       } else {
         console.log('네이버 가입 에러');
       }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    }, dispatch);
+  }, []);
     
   const moveToPreviousPage = () => {
     navigate('/user/signin')
