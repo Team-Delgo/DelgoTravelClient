@@ -60,13 +60,13 @@ import SocialNickname from './pages/signUpPage/forSocial/SocialNickname';
 import SocialMiddle from './pages/signUpPage/forSocial/SocialMiddle';
 import SocialExist from './pages/signUpPage/forSocial/SocialExist';
 import { deviceAction } from './redux/slice/deviceSlice';
+import AppleRedirectHandler from './pages/signInPage/socialLogion/AppleRedirectHandler';
 
-
-declare global{
-  interface Window{
-    BRIDGE:any
-    webkit:any
-    Kakao: any
+declare global {
+  interface Window {
+    BRIDGE: any;
+    webkit: any;
+    Kakao: any;
   }
 }
 
@@ -131,7 +131,7 @@ function App() {
         <Route path={RESERVATION_PATH.RESERVATION_HISTORY} element={<ReservationHistoryPage />} />
         <Route path={REVIEW_WRITING_PATH} element={<ReviewWritingPage />} />
         <Route path={KAKAO_REDIRECT_HANDLE_PATH} element={<KakaoRedirectHandler />} />
-        <Route path={APPLE_REDIRECT_HANDLE_PATH} element={<KakaoRedirectHandler />} />
+        <Route path={APPLE_REDIRECT_HANDLE_PATH} element={<AppleRedirectHandler />} />
         <Route path={NAVER_REDIRECT_HANDLE_PATH} element={<NaverRedirectHandler />} />
       </Routes>
     </QueryClientProvider>
