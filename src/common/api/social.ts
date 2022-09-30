@@ -60,4 +60,17 @@ async function oAuthSignup(
     });
 }
 
-export { setAccessCode, setStateCode, oAuthSignup };
+async function appleSendToken(token:string|null ,success: (data: AxiosResponse) => void,
+  dispatch: any,
+) {
+  await axios
+    .post(`${process.env.REACT_APP_API_URL}/apple/id_token/${token}`)
+    .then((data) => {
+      success(data);
+    })
+    .catch((error) => {
+      useErrorHandlers(dispatch, error);
+    });
+}
+
+export { setAccessCode, setStateCode, oAuthSignup, appleSendToken };
