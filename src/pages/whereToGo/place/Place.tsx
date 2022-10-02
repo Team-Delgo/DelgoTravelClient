@@ -45,7 +45,7 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
   const wishListInsert = () => {
     if (isSignIn) {
       wishInsert(
-        { userId, placeId: place.placeId },
+        { userId, placeId: place.placeId },dispatch,
         (response: AxiosResponse) => {
           if (response.data.code === 200) {
             setWishList(response.data.data.wishId);
@@ -64,7 +64,7 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
 
   const wishListDelete = () => {
     wishDelete(
-      { wishId: wishList },
+      { wishId: wishList },dispatch,
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
           setWishList(0);

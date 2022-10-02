@@ -52,7 +52,7 @@ function ReservationCanclePage() {
     window.scrollTo(0, 0);
     if (bookingId !== undefined) {
       bookingGetData(
-        { bookingId },
+        { bookingId },dispatch,
         (response: AxiosResponse) => {
           setReservationData(response.data.data);
         },

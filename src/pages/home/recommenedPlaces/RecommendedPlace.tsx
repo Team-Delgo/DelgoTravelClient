@@ -45,6 +45,7 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
     if (isSignIn) {
       wishInsert(
         { userId, placeId: place.placeId },
+        dispatch,
         (response: AxiosResponse) => {
           if (response.data.code === 200) {
             setWishList(response.data.data.wishId);
@@ -63,7 +64,7 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
 
   const wishListDelete = () => {
     wishDelete(
-      { wishId: wishList },
+      { wishId: wishList },dispatch,
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
           setWishList(0);

@@ -74,7 +74,6 @@ function Folder({currentTab}:FolderTypeProps) {
   });
 
   useEffect(() => {
-    console.log(wishedPlaces)
     getWishedPlacesRefetch();
     getRecommendedPlacesRefetch();
   }, [currentTab]);
@@ -93,7 +92,7 @@ function Folder({currentTab}:FolderTypeProps) {
 
   return (
     <div className="wish-list-container">
-      {wishedPlaces.data?.length > 0 ? (
+      {wishedPlaces?.data?.length > 0 ? (
         <div className="wish-list-header-text" aria-hidden="true">
           델고 갈 {wishedPlaces.data.length}개 장소
         </div>
@@ -104,7 +103,7 @@ function Folder({currentTab}:FolderTypeProps) {
           <div className="wish-list-notice-sub">인기 숙소를 보여드릴게요</div>
         </div>
       )}
-      {wishedPlaces.data?.length > 0
+      {wishedPlaces?.data?.length > 0
         ? wishedPlaces.data
             .sort((a: WishedPlaceType, b: WishedPlaceType) => b.wishId - a.wishId)
             .map((place: WishedPlaceType) => (

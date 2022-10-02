@@ -1,7 +1,9 @@
 import { AxiosResponse } from 'axios';
 import axiosInstance from './interceptors';
+import { useErrorHandlers } from './useErrorHandlers';
 
-async function registCoupon(data: { userId: number; couponCode: string }, success: (data: AxiosResponse) => void) {
+async function registCoupon(data: { userId: number; couponCode: string },dispatch: any, success: (data: AxiosResponse) => void) {
+  try {
   const accessToken = localStorage.getItem('accessToken') || '';
   const result = await axiosInstance.post(
     `/coupon/regist`,
@@ -16,6 +18,9 @@ async function registCoupon(data: { userId: number; couponCode: string }, succes
     },
   );
   success(result);
+} catch (err: any) {
+  useErrorHandlers(dispatch, err);
+}
 }
 
 async function getCouponList(userId: number) {

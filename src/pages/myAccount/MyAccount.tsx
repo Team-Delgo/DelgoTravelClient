@@ -47,16 +47,17 @@ function MyAccount() {
     },
   });
 
-  const {
-    isLoading: getBookingStateIsLoading,
-    data: bookingStateDataList,
-  } = useQuery(GET_BOOKING_STATE_DATA_LIST, () => getBookingState(userId), {
-    cacheTime: CACHE_TIME,
-    staleTime: STALE_TIME,
-    onError: (error: any) => {
-      useErrorHandlers(dispatch, error);
+  const { isLoading: getBookingStateIsLoading, data: bookingStateDataList } = useQuery(
+    GET_BOOKING_STATE_DATA_LIST,
+    () => getBookingState(userId, dispatch),
+    {
+      cacheTime: CACHE_TIME,
+      staleTime: STALE_TIME,
+      onError: (error: any) => {
+        useErrorHandlers(dispatch, error);
+      },
     },
-  });
+  );
 
   useEffect(() => {
     if (location.state?.prevPath.includes(MY_ACCOUNT_PATH.MAIN)) {
@@ -224,7 +225,7 @@ function MyAccount() {
           <div className="account-profile-info-second">
             <div className="account-profile-info-item" aria-hidden="true" onClick={moveToMyAccountCouponPage}>
               <p className="account-profile-info-column">쿠폰</p>
-              <p className="account-profile-info-value">{myAccountDataList?.data.couponNum}장</p>
+              <p className="account-profile-info-value">{myAccountDataList?.data?.couponNum}장</p>
             </div>
             <div className="account-profile-info-item">
               <p className="account-profile-info-column">포인트</p>
@@ -232,7 +233,7 @@ function MyAccount() {
             </div>
             <div className="account-profile-info-item" aria-hidden="true" onClick={moveToMyAccountReviewsPage}>
               <p className="account-profile-info-column">리뷰</p>
-              <p className="account-profile-info-value">{myAccountDataList?.data.reviewNum}건</p>
+              <p className="account-profile-info-value">{myAccountDataList?.data?.reviewNum}건</p>
             </div>
           </div>
         </div>

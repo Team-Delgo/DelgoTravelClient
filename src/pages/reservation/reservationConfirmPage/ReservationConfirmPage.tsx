@@ -53,7 +53,7 @@ function ReservationConfirmPage() {
     window.scrollTo(0, 0);
     if (bookingId !== undefined) {
       bookingGetData(
-        { bookingId },
+        { bookingId },dispatch,
         (response: AxiosResponse) => {
           setReservationData(response.data.data);
           console.log(response.data.data)

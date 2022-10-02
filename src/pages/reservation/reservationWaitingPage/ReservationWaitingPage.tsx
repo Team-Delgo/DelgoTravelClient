@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import Loading from "../../../common/utils/Loading"
@@ -18,7 +18,7 @@ function ReservationWaitingPage() {
   const urlParams = url.searchParams;
   const orderId = urlParams.get('orderId');
   const paymentKey = urlParams.get('paymentKey');
-
+  const dispatch = useDispatch();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -35,13 +35,14 @@ function ReservationWaitingPage() {
         orderId,
         paymentKey,
       },
+      dispatch,
       (response: AxiosResponse) => {
-        console.log(response.data.data)
+        console.log(response.data.data);
         if (response.data.data !== null) {
           navigate(`/reservation-confirm/${response.data.data}`);
         }
       },
-    )
+    );
   }, []);
 
   return (

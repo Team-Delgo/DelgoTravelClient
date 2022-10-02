@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import HomePage from './pages/home/HomePage';
 import EditorNote from './pages/editorNote/EditorNotePage';
@@ -60,6 +60,7 @@ import SocialNickname from './pages/signUpPage/forSocial/SocialNickname';
 import SocialMiddle from './pages/signUpPage/forSocial/SocialMiddle';
 import SocialExist from './pages/signUpPage/forSocial/SocialExist';
 import { deviceAction } from './redux/slice/deviceSlice';
+import { userActions } from './redux/slice/userSlice';
 import AppleRedirectHandler from './pages/signInPage/socialLogion/AppleRedirectHandler';
 
 declare global {
@@ -72,9 +73,11 @@ declare global {
 
 function App() {
   const hasError = useSelector((state: RootState) => state.error.hasError);
+  const tokenExpriedError = useSelector((state: RootState) => state.error.tokenExpried);
   const dispatch = useDispatch();
   const queryClient = new QueryClient();
   const location = useLocation();
+  const navigation = useNavigate();
 
   useEffect(() => {
     const varUA = navigator.userAgent.toLowerCase();
@@ -89,9 +92,18 @@ function App() {
     dispatch(errorActions.setFine());
   };
 
+  const AlertLoginSessionExpried = () => {
+    dispatch(errorActions.setTokenFine());
+    dispatch(userActions.signout());
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    navigation(SIGN_IN_PATH.MAIN);
+  };
+
   return (
     <QueryClientProvider client={queryClient}>
       {hasError && <AlertConfirmOne text="네트워크를 확인해주세요" buttonHandler={alertButtonHandler} />}
+      {tokenExpriedError && <AlertConfirmOne text="로그인 세션이 만료되었습니다." buttonHandler={AlertLoginSessionExpried} />}
       <Routes location={location}>
         <Route path={ROOT_PATH} element={<HomePage />} />
         <Route path={EDITOR_NOTE_PATH} element={<EditorNote />} />
