@@ -7,6 +7,8 @@ import { userActions } from '../../../redux/slice/userSlice';
 import { ROOT_PATH, SIGN_UP_PATH } from '../../../common/constants/path.const';
 import { setStateCode } from '../../../common/api/social';
 import AlertConfirm from '../../../common/dialog/AlertConfirm';
+import AlertConfirmOne from '../../../common/dialog/AlertConfirmOne';
+import Loading from '../../../common/utils/Loading';
 
 declare global {
   interface Window {
@@ -20,6 +22,7 @@ function NaverRedirectHandler() {
   const state = new URL(window.location.href).searchParams.get('state');
   const [userData, setUserData] = useState({phone:'',email:''});
   const [signUp, setSignUp] = useState(false);
+  const [loginFailed, setLoginFailed] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -66,6 +69,7 @@ function NaverRedirectHandler() {
           navigate(SIGN_UP_PATH.SOCIAL.OTHER, { state: { social: data.userSoical, email: data.email } });
         } else {
           console.log('네이버 가입 에러');
+          setLoginFailed(true);
         }
       },
       dispatch,
@@ -82,13 +86,14 @@ function NaverRedirectHandler() {
 
   return (
     <div>
-      네이버 로그인
+      <Loading/>
       {signUp && <AlertConfirm
         text="네이버로 가입된 계정이 없습니다"
         buttonText="회원가입"
         yesButtonHandler={moveToSignUpPage}
         noButtonHandler={moveToPreviousPage}
       />}
+      {loginFailed && <AlertConfirmOne text='네이버 로그인에 실패하였습니다' buttonHandler={moveToPreviousPage}/>}
     </div>
   );
 }
