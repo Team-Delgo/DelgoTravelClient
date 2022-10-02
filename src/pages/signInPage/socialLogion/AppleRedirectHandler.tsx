@@ -11,7 +11,7 @@ function AppleRedirectHandler() {
   const url = window.location.href;
   console.log(url);
   const i = url.indexOf('id_token');
-  const token = url.substring(i+9);
+  const token = url.substring(i + 9);
   console.log(token);
 
   useEffect(() => {
@@ -22,6 +22,12 @@ function AppleRedirectHandler() {
     await appleSendToken(
       token,
       (response: AxiosResponse) => {
+        const { code } = response.data;
+        if(code===200){
+          console.log(1);
+        }else{
+          console.log(1);
+        }
         console.log(response);
       },
       dispatch,
