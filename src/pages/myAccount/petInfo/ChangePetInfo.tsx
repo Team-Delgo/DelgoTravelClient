@@ -183,6 +183,7 @@ function ChangePetInfo() {
     console.log(imageisChanged);
     changePetInfo(
       data,
+      dispatch,
       (response: AxiosResponse) => {
         console.log(response);
       },

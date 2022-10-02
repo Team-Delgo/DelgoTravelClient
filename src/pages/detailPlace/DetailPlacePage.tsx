@@ -153,6 +153,7 @@ function DetailPlacePage() {
     if (isSignIn) {
       wishInsert(
         { userId, placeId: Number(placeId) },
+        dispatch,
         (response: AxiosResponse) => {
           if (response.data.code === 200) {
             getDetailPlaceRefetch();
@@ -172,6 +173,7 @@ function DetailPlacePage() {
   const wishListDelete = () => {
     wishDelete(
       { wishId: Number(detailPlace?.data.place.wishId) },
+      dispatch,
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
           getDetailPlaceRefetch();

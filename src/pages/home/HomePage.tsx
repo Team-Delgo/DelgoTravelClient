@@ -77,6 +77,7 @@ function HomePage() {
       staleTime: STALE_TIME,
       refetchInterval: false,
       onError: (error: any) => {
+        console.log(error)
         useErrorHandlers(dispatch, error);
       },
     },

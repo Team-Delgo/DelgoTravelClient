@@ -30,6 +30,13 @@ axiosInstance.interceptors.response.use(
           Authorization_Refresh: refreshToken,
         },
       });
+
+      if (response.data.code === 333) {
+        console.log('refresh token 만료');
+        throw new Error('token exprired');
+      }
+
+
       console.log('response', response);
       console.log('config', config);
       const originalRequest = config;
@@ -46,8 +53,9 @@ axiosInstance.interceptors.response.use(
 
       return axiosInstance(originalRequest);
     }
-    // return Promise.reject(error);
-    errorHandlers(error);
+    console.log(error)
+    return Promise.reject(error);
+    // errorHandlers(error);
   },
 );
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import Sheet from 'react-modal-sheet';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {bookingCancle} from '../../../../common/api/booking'
 import './ReservationCancleModal.scss'
@@ -44,10 +45,12 @@ interface reservationDataType{
 
 function ReservationCancleModal({ openReservationCancleModal, closeReservationCancleModal,reservationData }:ReservationCancleModalProps) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const cancleReservation = () => {
     bookingCancle(
       reservationData.bookingId,
+      dispatch,
       (response) => {
         if (response.data.code === 200) {
           console.log('성공')

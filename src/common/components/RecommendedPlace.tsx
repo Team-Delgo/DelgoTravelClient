@@ -37,7 +37,7 @@ function RecommendedPlace({ place, getRecommendedPlacesRefetch, currentTab }: Re
   const navigate = useNavigate();
 
   const wishListInsert = () => {
-    wishInsert({ userId, placeId: place.placeId }, (response: AxiosResponse) => {
+    wishInsert({ userId, placeId: place.placeId },dispatch, (response: AxiosResponse) => {
       if (response.data.code === 200) {
         setWishList(response.data.data.wishId);
       }
@@ -50,7 +50,7 @@ function RecommendedPlace({ place, getRecommendedPlacesRefetch, currentTab }: Re
   };
 
   const wishListDelete = () => {
-    wishDelete({ wishId: wishList }, (response: AxiosResponse) => {
+    wishDelete({ wishId: wishList },dispatch, (response: AxiosResponse) => {
       if (response.data.code === 200) {
         setWishList(0);
         getRecommendedPlacesRefetch();

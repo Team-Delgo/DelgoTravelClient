@@ -37,6 +37,7 @@ function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch
     wishListConfirmModalClose();
     wishDelete(
       { wishId: place.wishId },
+      dispatch,
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
           getRecommendedPlacesRefetch()

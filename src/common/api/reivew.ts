@@ -11,7 +11,8 @@ async function getDetailPlaceRivews(placeId: string) {
   // );
 }
 
-async function reviewImageUpload(formdata: FormData,reviewId:number, success: (data: AxiosResponse) => void) {
+async function reviewImageUpload(formdata: FormData,reviewId:number, dispatch:any,success: (data: AxiosResponse) => void) {
+  try {
     const accessToken = localStorage.getItem('accessToken') || '';
     const result = await axiosInstance.post(`/photo/upload/reviewPhoto/${reviewId}`, formdata, {
       headers: {
@@ -19,30 +20,38 @@ async function reviewImageUpload(formdata: FormData,reviewId:number, success: (d
       },
     });
     success(result);
+  } catch (err: any) {
+    useErrorHandlers(dispatch, err);
+  }
 }
 
 async function writeReivew(
   data: { userId: number; placeId: number; roomId: number; rating: number; text: string; bookingId: string },
+  dispatch:any,
   success: (data: AxiosResponse) => void,
 ) {
-  const accessToken = localStorage.getItem('accessToken') || '';
-  const result = await axiosInstance.post(
-    `/review/write`,
-    {
-      userId: data.userId,
-      placeId: data.placeId,
-      roomId: data.roomId,
-      rating: data.rating,
-      text: data.text,
-      bookingId: data.bookingId,
-    },
-    {
-      headers: {
-        Authorization_Access: accessToken,
+  try {
+    const accessToken = localStorage.getItem('accessToken') || '';
+    const result = await axiosInstance.post(
+      `/review/write`,
+      {
+        userId: data.userId,
+        placeId: data.placeId,
+        roomId: data.roomId,
+        rating: data.rating,
+        text: data.text,
+        bookingId: data.bookingId,
       },
-    },
-  );
-  success(result);
+      {
+        headers: {
+          Authorization_Access: accessToken,
+        },
+      },
+    );
+    success(result);
+  } catch (err: any) {
+    useErrorHandlers(dispatch, err);
+  }
 }
 
 async function getMyReviewList(userId: number) {

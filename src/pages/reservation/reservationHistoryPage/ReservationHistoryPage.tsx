@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { ReactComponent as Exit } from '../../../common/icons/exit.svg';
@@ -43,18 +43,16 @@ function ReservationHistoryPage() {
   })
   const { bookingId } = useParams();
   const location: any = useLocation();
+  const dispatch = useDispatch();
   const { OS } = useSelector((state: RootState) => state.persist.device);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     if (bookingId !== undefined) {
-      bookingGetData(
-        { bookingId },
-        (response: AxiosResponse) => {
-          setReservationData(response.data.data);
-          console.log(response.data.data);
-        },
-      );
+      bookingGetData({ bookingId }, dispatch, (response: AxiosResponse) => {
+        setReservationData(response.data.data);
+        console.log(response.data.data);
+      });
     }
   }, []);
 
