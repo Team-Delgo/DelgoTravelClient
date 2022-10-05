@@ -69,6 +69,7 @@ function KakaoRedirectHandler() {
           navigate(ROOT_PATH, { replace: true });
         } else if (code === 370) {
           console.log('소셜 회원가입');
+          setUserData({ phone: data.phoneNo, email: data.email });
           setSignUp(true);
         } else if (code === 380) {
           console.log('카카오 전화번호 x');

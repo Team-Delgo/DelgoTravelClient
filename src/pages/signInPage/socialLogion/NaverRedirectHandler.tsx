@@ -61,7 +61,7 @@ function NaverRedirectHandler() {
 
         } else if (code === 370) {
           console.log('소셜 회원가입');
-          setUserData({ phone: data.user.phoneNo, email: data.user.email });
+          setUserData({ phone: data.phoneNo, email: data.email });
           setSignUp(true);
 
         } else if (code === 380) {
