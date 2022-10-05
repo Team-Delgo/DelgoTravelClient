@@ -70,7 +70,7 @@ function NaverRedirectHandler() {
 
         } else if (code === 381) {
           console.log('다른 로그인');
-          navigate(SIGN_UP_PATH.SOCIAL.OTHER, { state: { social: data.userSoical, email: data.email } });
+          navigate(SIGN_UP_PATH.SOCIAL.OTHER, { state: { social: data.user.userSoical, email: data.email } });
 
         } else {
           console.log('네이버 가입 에러');

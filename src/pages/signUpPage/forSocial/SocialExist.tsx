@@ -33,13 +33,13 @@ function SocialExist() {
     }
     if (social === 'D') {
       return (
-        <div className="social-middle-box-icon-naver">
+        <div className="social-middle-box-icon-delgo">
           <img src={NAVER} alt="icon" />
         </div>
       );
     }
     return (
-      <div className="social-middle-box-icon-naver">
+      <div className="social-middle-box-icon-apple">
         <img src={NAVER} alt="icon" />
       </div>
     );
