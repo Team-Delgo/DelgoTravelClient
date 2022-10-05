@@ -16,6 +16,8 @@ function SocialExist() {
   const state = useLocation().state as LocationState;
   const { social, email } = state;
 
+  console.log(social, email);
+
   const setIcon = () => {
     if (social === 'K') {
       return (
