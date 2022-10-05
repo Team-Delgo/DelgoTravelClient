@@ -4,7 +4,8 @@ import { ReactComponent as Exit } from '../../../common/icons/exit.svg';
 import './SocialMiddle.scss';
 import KAKAO from '../../../common/icons/kakao.svg';
 import NAVER from '../../../common/icons/naver.svg';
-import DELGO from '../../../common/icons/delgo.svg';
+import DELGO from '../../../common/icons/delgo-button.svg';
+import APPLE from "../../../common/icons/apple.svg";
 
 interface LocationState {
   social: string;
@@ -36,13 +37,13 @@ function SocialExist() {
     if (social === 'D') {
       return (
         <div className="social-middle-box-icon-delgo">
-          <img src={NAVER} alt="icon" />
+          <img src={DELGO} alt="icon" />
         </div>
       );
     }
     return (
       <div className="social-middle-box-icon-apple">
-        <img src={NAVER} alt="icon" />
+        <img src={APPLE} alt="icon" />
       </div>
     );
   };
