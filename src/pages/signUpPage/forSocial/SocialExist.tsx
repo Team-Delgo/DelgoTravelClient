@@ -1,9 +1,10 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ReactComponent as Exit } from '../../../common/icons/exit.svg';
 import './SocialMiddle.scss';
 import KAKAO from '../../../common/icons/kakao.svg';
 import NAVER from '../../../common/icons/naver.svg';
+import DELGO from '../../../common/icons/delgo.svg';
 
 interface LocationState {
   social: string;
@@ -11,6 +12,7 @@ interface LocationState {
 }
 
 function SocialExist() {
+  const navigate = useNavigate();
   const state = useLocation().state as LocationState;
   const { social, email } = state;
 
@@ -46,7 +48,13 @@ function SocialExist() {
 
   return (
     <div className="social-middle">
-      <div className="social-exit">
+      <div
+        aria-hidden="true"
+        className="social-exit"
+        onClick={() => {
+          navigate('/user/signin');
+        }}
+      >
         <Exit />
       </div>
       <span className="social-middle-main">이미 아이디가 있었어요</span>
@@ -56,7 +64,13 @@ function SocialExist() {
         {icon}
         <span>{email}</span>
       </span>
-      <button type="button" className="social-middle-button">
+      <button
+        type="button"
+        className="social-middle-button"
+        onClick={() => {
+          navigate('/user/signin');
+        }}
+      >
         로그인
       </button>
     </div>

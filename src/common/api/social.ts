@@ -32,7 +32,7 @@ async function setStateCode(
 
 async function oAuthSignup(
   data: {
-    // email: string;
+    email: string;
     nickname: string;
     phoneNo: string;
     petName: string;
@@ -43,16 +43,9 @@ async function oAuthSignup(
   success: (data: AxiosResponse) => void,
   dispatch: any,
 ) {
-  const { nickname, phoneNo, petName, petSize, birthday, userSocial } = data;
+  // const { nickname, phoneNo, petName, petSize, birthday, userSocial } = data;
   await axios
-    .post(`${process.env.REACT_APP_API_URL}/oauth-signup `, {
-      userName: nickname,
-      phoneNo,
-      petName,
-      petSize,
-      birthday,
-      userSocial,
-    })
+    .post(`${process.env.REACT_APP_API_URL}/oauth-signup `, data)
     .then((data) => {
       success(data);
     })
