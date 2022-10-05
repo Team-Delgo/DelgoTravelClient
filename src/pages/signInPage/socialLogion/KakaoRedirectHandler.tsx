@@ -76,7 +76,7 @@ function KakaoRedirectHandler() {
           navigate(SIGN_UP_PATH.SOCIAL.NO_PHONE, { state: { social: '카카오' } });
         } else if (code === 381) {
           console.log('다른 로그인');
-          navigate(SIGN_UP_PATH.SOCIAL.OTHER, { state: { social: data.userSoical, email: data.email } });
+          navigate(SIGN_UP_PATH.SOCIAL.OTHER, { state: { social: data.userSocial, email: data.email } });
         } else {
           console.log('카카오 가입 에러');
           setLoginFailed(true);
