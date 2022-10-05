@@ -66,15 +66,16 @@ function NaverRedirectHandler() {
 
         } else if (code === 380) {
           console.log('네이버 전화번호 x');
-          navigate(SIGN_UP_PATH.SOCIAL.NO_PHONE, { state: { social: '카카오' } });
+          navigate(SIGN_UP_PATH.SOCIAL.NO_PHONE, { state: { social: '네이버' } });
 
         } else if (code === 381) {
           console.log('다른 로그인');
           navigate(SIGN_UP_PATH.SOCIAL.OTHER, { state: { social: data.userSoical, email: data.email } });
-          
+
         } else {
           console.log('네이버 가입 에러');
           setLoginFailed(true);
+
         }
       },
       dispatch,
