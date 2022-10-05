@@ -23,25 +23,26 @@ function SocialExist() {
           <img src={KAKAO} alt="icon" />
         </div>
       );
-    } else if (social === 'N') {
-      return (
-        <div className="social-middle-box-icon-naver">
-          <img src={NAVER} alt="icon" />
-        </div>
-      );
-    } else if (social === 'D') {
-      return (
-        <div className="social-middle-box-icon-naver">
-          <img src={NAVER} alt="icon" />
-        </div>
-      );
-    } else {
+    }
+    if (social === 'N') {
       return (
         <div className="social-middle-box-icon-naver">
           <img src={NAVER} alt="icon" />
         </div>
       );
     }
+    if (social === 'D') {
+      return (
+        <div className="social-middle-box-icon-naver">
+          <img src={NAVER} alt="icon" />
+        </div>
+      );
+    }
+    return (
+      <div className="social-middle-box-icon-naver">
+        <img src={NAVER} alt="icon" />
+      </div>
+    );
   };
 
   const icon = setIcon();

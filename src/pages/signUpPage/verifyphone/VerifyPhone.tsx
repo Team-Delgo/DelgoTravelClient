@@ -1,7 +1,7 @@
 import React, { useState, useEffect, ChangeEvent, useRef } from 'react';
 import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { errorActions } from '../../../redux/slice/errorSlice';
 import ToastMessage from '../../../common/dialog/ToastMessage';
@@ -13,8 +13,14 @@ import { ReactComponent as Arrow } from '../../../common/icons/left-arrow.svg';
 import { ReactComponent as Exit } from "../../../common/icons/x.svg";
 import { phoneSendMessage, phoneCheckNumber } from '../../../common/api/signup';
 
+interface LocationState{
+  isSocial: string;
+}
+
 function VerifyPhone() {
   const navigation = useNavigate();
+  const state = useLocation().state as LocationState;
+  const {isSocial} = state;
   const [buttonIsClicked, setButtonIsClicked] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [authNumber, setAuthNumber] = useState('');
@@ -135,7 +141,11 @@ function VerifyPhone() {
           const { code } = response.data;
           console.log(response);
           if (code === 200) {
-            navigation(SIGN_UP_PATH.USER_INFO, { state: { phone: phoneNumber } });
+            if(isSocial){
+              navigation(SIGN_UP_PATH.SOCIAL.NICKNAME, { state: { phone: phoneNumber, isSocial, email:'' } });
+            }else{
+              navigation(SIGN_UP_PATH.USER_INFO, { state: { phone: phoneNumber } });
+            }
           } else {
             setFeedback('인증번호를 확인해주세요');
             setAuthFailed(true);
