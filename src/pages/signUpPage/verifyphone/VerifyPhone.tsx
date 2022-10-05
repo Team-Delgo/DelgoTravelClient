@@ -10,17 +10,17 @@ import Timer from './Timer';
 import { SIGN_UP_PATH } from '../../../common/constants/path.const';
 import { ReactComponent as Check } from '../../../common/icons/check.svg';
 import { ReactComponent as Arrow } from '../../../common/icons/left-arrow.svg';
-import { ReactComponent as Exit } from "../../../common/icons/x.svg";
+import { ReactComponent as Exit } from '../../../common/icons/x.svg';
 import { phoneSendMessage, phoneCheckNumber } from '../../../common/api/signup';
 
-interface LocationState{
+interface LocationState {
   isSocial: string;
 }
 
 function VerifyPhone() {
   const navigation = useNavigate();
   const state = useLocation().state as LocationState;
-  const {isSocial} = state;
+  const { isSocial } = state;
   const [buttonIsClicked, setButtonIsClicked] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [authNumber, setAuthNumber] = useState('');
@@ -141,9 +141,9 @@ function VerifyPhone() {
           const { code } = response.data;
           console.log(response);
           if (code === 200) {
-            if(isSocial){
-              navigation(SIGN_UP_PATH.SOCIAL.NICKNAME, { state: { phone: phoneNumber, isSocial, email:'' } });
-            }else{
+            if (isSocial==='A') {
+              navigation(SIGN_UP_PATH.SOCIAL.NICKNAME, { state: { phone: phoneNumber, isSocial, email: '' } });
+            } else {
               navigation(SIGN_UP_PATH.USER_INFO, { state: { phone: phoneNumber } });
             }
           } else {
@@ -154,7 +154,7 @@ function VerifyPhone() {
         },
         errorHandler,
       );
-    }, 200)
+    }, 200);
   };
 
   const buttonContext = !isSended ? (
@@ -203,9 +203,8 @@ function VerifyPhone() {
           className={classNames('login-input-clear', { checked: isSended, isMount: isEntered, isUnMount: !isEntered })}
           onClick={clearButtonHandler}
         >
-          {isSended ? <Check /> : <Exit className='login-input-clear-exit' />}
+          {isSended ? <Check /> : <Exit className="login-input-clear-exit" />}
         </span>
-
       </div>
       {isSended && (
         <div className="login-authnumber">
@@ -229,7 +228,7 @@ function VerifyPhone() {
       )}
       {buttonContext}
       {buttonIsClicked && <ToastMessage message="인증번호가 전송 되었습니다" />}
-      { }
+      {}
     </div>
   );
 }
