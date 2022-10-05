@@ -8,7 +8,7 @@ import './Terms.scss';
 import Check from '../../../common/icons/check.svg';
 
 interface LocationState {
-  isSocial: boolean;
+  isSocial: string;
   phone: string;
   email: string;
 }
@@ -62,10 +62,12 @@ function Terms() {
 
   const nextClickHandler = () => {
     setTimeout(() => {
-      if (isSocial) {
+      if (isSocial === 'K' || isSocial === 'N') {
         navigation(SIGN_IN_PATH.PHONEAUTH, { state: { phone, isSocial, email } });
-      } else {
+      } else if(isSocial === 'A'){
         navigation(SIGN_UP_PATH.VERIFY);
+      } else{
+        navigation(SIGN_UP_PATH.VERIFY)
       }
     }, 300);
   };

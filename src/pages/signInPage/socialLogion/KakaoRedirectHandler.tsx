@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -8,6 +8,8 @@ import { KAKAO } from '../../../common/constants/url.cosnt';
 import { setAccessCode } from '../../../common/api/social';
 import { ROOT_PATH, SIGN_UP_PATH } from '../../../common/constants/path.const';
 import { userActions } from '../../../redux/slice/userSlice';
+import AlertConfirm from '../../../common/dialog/AlertConfirm';
+import AlertConfirmOne from '../../../common/dialog/AlertConfirmOne';
 import Loading from '../../../common/utils/Loading';
 
 declare global {
@@ -20,6 +22,9 @@ function KakaoRedirectHandler() {
   const dispatch = useDispatch();
   const CLIENT_SECRET = '[본인 CLIENT SECRET 값]';
   const code = new URL(window.location.href).searchParams.get('code');
+  const [userData, setUserData] = useState({phone:'',email:''});
+  const [signUp, setSignUp] = useState(false);
+  const [loginFailed, setLoginFailed] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,54 +33,6 @@ function KakaoRedirectHandler() {
     }
     getAccessToken();
   }, []);
-
-  // const getToken = async () => {
-  //   const payload = qs.stringify({
-  //     grant_type: "authorization_code",
-  //     client_id: KAKAO.REST_API_KEY,
-  //     redirect_uri: KAKAO.CALL_BACK_URL,
-  //     code,
-  //     client_secret: CLIENT_SECRET,
-  //   });
-  //   try {
-  //     const res = await axios.post(
-  //       "https://kauth.kakao.com/oauth/token",
-  //       payload
-  //     );
-  //     console.log(res);
-  //     window.Kakao.init(KAKAO.REST_API_KEY);
-  //     window.Kakao.Auth.setAccessToken(res.data.access_token);
-
-  //     const accessToken = res.data.access_token;
-  //     const refreshToken = res.data.refresh_token;
-  //     dispatch(
-  //       tokenActions.setToken(accessToken),
-  //     );
-  //     localStorage.setItem('refreshToken', refreshToken);
-  //     getProfile()
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // const getProfile = async () => {
-  //   try {
-  //     window.Kakao.API.request({
-  //       url: '/v2/user/me',
-  //       data: {
-  //         property_keys: ["kakao_account.phone_number"]
-  //       },
-  //       success(response: any) {
-  //         console.log(response);
-  //       },
-  //       fail(error: any) {
-  //         console.log(error);
-  //       }
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   const getAccessToken = () => {
     setAccessCode(
@@ -112,7 +69,7 @@ function KakaoRedirectHandler() {
           navigate(ROOT_PATH, { replace: true });
         } else if (code === 370) {
           console.log('소셜 회원가입');
-          navigate(SIGN_UP_PATH.TERMS, { state: { isSocial: 'K', phone: data.phoneNo, email:data.email } });
+          setSignUp(true);
         } else if (code === 380) {
           console.log('카카오 전화번호 x');
           navigate(SIGN_UP_PATH.SOCIAL.NO_PHONE, { state: { social: '카카오' } });
@@ -121,22 +78,31 @@ function KakaoRedirectHandler() {
           navigate(SIGN_UP_PATH.SOCIAL.OTHER, { state: { social: data.userSoical, email: data.email } });
         } else {
           console.log('카카오 가입 에러');
+          setLoginFailed(true);
         }
       },
       dispatch,
     );
   };
 
-  const KakaoLogOut = () => {
-    window.Kakao.API.request({
-      url: '/v1/user/unlink',
-    });
+  const moveToPreviousPage = () => {
     navigate('/user/signin');
+  };
+  
+  const moveToSignUpPage = () => {
+    navigate(SIGN_UP_PATH.TERMS, { state: { isSocial: 'K', phone: userData.phone, email: userData.email } });
   };
 
   return (
     <div>
-      <Loading />
+      <Loading/>
+      {signUp && <AlertConfirm
+        text="카카오로 가입된 계정이 없습니다"
+        buttonText="회원가입"
+        yesButtonHandler={moveToSignUpPage}
+        noButtonHandler={moveToPreviousPage}
+      />}
+      {loginFailed && <AlertConfirmOne text='카카오 로그인에 실패하였습니다' buttonHandler={moveToPreviousPage}/>}
     </div>
   );
 }
