@@ -32,6 +32,8 @@ function PhoneAuth() {
   const authIsValid = timeIsValid && authNumber.length === 4;
   const navigation = useNavigate();
 
+  console.log(phone);
+
   useEffect(() => {
     if (buttonIsClicked) {
       authNumberResend();
@@ -99,7 +101,6 @@ function PhoneAuth() {
         if (code === 200) {
           if (isSocial) {
             console.log(isSocial);
-
             navigation(SIGN_UP_PATH.SOCIAL.NICKNAME, { state: { phone, isSocial, email } });
           } else {
             navigation(SIGN_IN_PATH.RESETPASSWORD, { state: email });

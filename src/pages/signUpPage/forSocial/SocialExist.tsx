@@ -15,17 +15,31 @@ function SocialExist() {
   const { social, email } = state;
 
   const setIcon = () => {
-    if (social === 'K')
+    if (social === 'K') {
       return (
         <div className="social-middle-box-icon-kakao">
           <img src={KAKAO} alt="icon" />
         </div>
       );
-    return (
-      <div className="social-middle-box-icon-naver">
-        <img src={NAVER} alt="icon" />
-      </div>
-    );
+    } else if (social === 'N') {
+      return (
+        <div className="social-middle-box-icon-naver">
+          <img src={NAVER} alt="icon" />
+        </div>
+      );
+    } else if (social === 'D') {
+      return (
+        <div className="social-middle-box-icon-naver">
+          <img src={NAVER} alt="icon" />
+        </div>
+      );
+    } else {
+      return (
+        <div className="social-middle-box-icon-naver">
+          <img src={NAVER} alt="icon" />
+        </div>
+      );
+    }
   };
 
   const icon = setIcon();

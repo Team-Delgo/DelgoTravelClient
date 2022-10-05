@@ -20,7 +20,7 @@ function NaverRedirectHandler() {
   const dispatch = useDispatch();
   const code = new URL(window.location.href).searchParams.get('code'); // 네이버 로그인 인증에 성공하면 반환받는 인증 코드, 접근 토큰(access token) 발급에 사용
   const state = new URL(window.location.href).searchParams.get('state');
-  const [userData, setUserData] = useState({phone:'',email:''});
+  const [userData, setUserData] = useState({ phone: '', email: '' });
   const [signUp, setSignUp] = useState(false);
   const [loginFailed, setLoginFailed] = useState(false);
   const navigate = useNavigate();
@@ -58,15 +58,20 @@ function NaverRedirectHandler() {
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);
           navigate(ROOT_PATH, { replace: true });
+
         } else if (code === 370) {
           console.log('소셜 회원가입');
+          setUserData({ phone: data.user.phoneNo, email: data.user.email });
           setSignUp(true);
+
         } else if (code === 380) {
           console.log('네이버 전화번호 x');
           navigate(SIGN_UP_PATH.SOCIAL.NO_PHONE, { state: { social: '카카오' } });
+
         } else if (code === 381) {
           console.log('다른 로그인');
           navigate(SIGN_UP_PATH.SOCIAL.OTHER, { state: { social: data.userSoical, email: data.email } });
+          
         } else {
           console.log('네이버 가입 에러');
           setLoginFailed(true);
@@ -79,21 +84,23 @@ function NaverRedirectHandler() {
   const moveToPreviousPage = () => {
     navigate('/user/signin');
   };
-  
+
   const moveToSignUpPage = () => {
     navigate(SIGN_UP_PATH.TERMS, { state: { isSocial: 'N', phone: userData.phone, email: userData.email } });
   };
 
   return (
     <div>
-      <Loading/>
-      {signUp && <AlertConfirm
-        text="네이버로 가입된 계정이 없습니다"
-        buttonText="회원가입"
-        yesButtonHandler={moveToSignUpPage}
-        noButtonHandler={moveToPreviousPage}
-      />}
-      {loginFailed && <AlertConfirmOne text='네이버 로그인에 실패하였습니다' buttonHandler={moveToPreviousPage}/>}
+      <Loading />
+      {signUp && (
+        <AlertConfirm
+          text="네이버로 가입된 계정이 없습니다"
+          buttonText="회원가입"
+          yesButtonHandler={moveToSignUpPage}
+          noButtonHandler={moveToPreviousPage}
+        />
+      )}
+      {loginFailed && <AlertConfirmOne text="네이버 로그인에 실패하였습니다" buttonHandler={moveToPreviousPage} />}
     </div>
   );
 }
