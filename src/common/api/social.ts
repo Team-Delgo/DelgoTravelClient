@@ -33,7 +33,7 @@ async function setStateCode(
 async function oAuthSignup(
   data: {
     email: string;
-    nickname: string;
+    userName: string;
     phoneNo: string;
     petName: string;
     petSize: string;
