@@ -79,6 +79,32 @@
           height: 20px;
         }
       }
+      &-delgo{
+        width: 37px;
+        height: 37px;
+        border-radius: 100%;
+        background-color: #3E382F;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+          width: 20px;
+          height: 20px;
+        }
+      }
+      &-apple{
+        width: 37px;
+        height: 37px;
+        border-radius: 100%;
+        background-color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+          width: 20px;
+          height: 20px;
+        }
+      }
     }
   }
 }
