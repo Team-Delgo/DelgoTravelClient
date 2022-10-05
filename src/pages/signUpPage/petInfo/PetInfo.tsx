@@ -183,7 +183,7 @@ function PetInfo() {
       // oauthSignup();
       const requestBody = {
         email,
-        nickname,
+        userName:nickname,
         phoneNo: phone,
         petName: enteredInput.name,
         petSize: enteredInput.type,
