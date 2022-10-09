@@ -28,6 +28,14 @@ type RecommendedPlaceType = {
   wishId: number;
 };
 
+declare global {
+  interface Window {
+    BRIDGE: any;
+    webkit: any;
+    Kakao: any;
+  }
+}
+
 function RecommendedPlace({ place, getRecommendedPlacesRefetch, currentTab }: RecommendedPlaceProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
@@ -56,11 +64,6 @@ function RecommendedPlace({ place, getRecommendedPlacesRefetch, currentTab }: Re
         getRecommendedPlacesRefetch();
       }
     });
-    if (OS === 'android') {
-      window.BRIDGE.vibrate();
-    } else {
-      window.webkit.messageHandlers.vibrate.postMessage('');
-    }
   };
 
   const moveToDetailPage = () => {
