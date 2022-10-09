@@ -32,6 +32,14 @@ interface PlaceType {
   wishId: number
 }
 
+declare global {
+  interface Window {
+    BRIDGE: any;
+    webkit: any;
+    Kakao: any;
+  }
+}
+
 function Place({ place,areaTerm }: PlaceTypeProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const [logInModalOpen, setLogInModalOpen] = useState(false);
@@ -71,12 +79,6 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
         }
       },
     );
-    if (OS === 'android') {
-      window.BRIDGE.vibrate()
-    }
-    else {
-      window.webkit.messageHandlers.vibrate.postMessage('')
-    }
   }
 
 

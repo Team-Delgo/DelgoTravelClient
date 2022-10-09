@@ -76,6 +76,14 @@ interface NoticeType {
   title:string
 }
 
+declare global {
+  interface Window {
+    BRIDGE: any;
+    webkit: any;
+    Kakao: any;
+  }
+}
+
 function DetailPlacePage() {
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
   const [logInModalOpen, setLogInModalOpen] = useState(false);
@@ -180,11 +188,6 @@ function DetailPlacePage() {
         }
       }
     );
-    if (OS === 'android') {
-      window.BRIDGE.vibrate();
-    } else {
-      window.webkit.messageHandlers.vibrate.postMessage('');
-    }
   };
 
   const calenderOpenClose = useCallback(() => {

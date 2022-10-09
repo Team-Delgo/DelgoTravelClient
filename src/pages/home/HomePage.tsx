@@ -178,12 +178,12 @@ function HomePage() {
         {recommendedPlaces?.data.map((place: RecommendedPlaceType) => (
           <RecommendedPlace place={place} key={place.placeId} />
         ))}
-        <div className='home-buisness-information'>
+        {/* <div className='home-buisness-information'>
           <div className='home-buisness-information-title'>이제 우리 강아지도 Delgo 가요!</div>
           <div className='home-buisness-information-des'>
             {infoContent}
           </div>
-        </div>
+        </div> */}
       </div>
       <Footer />
     </>

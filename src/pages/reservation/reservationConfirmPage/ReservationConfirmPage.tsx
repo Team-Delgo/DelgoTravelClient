@@ -1,6 +1,6 @@
 import React,{useCallback,useEffect, useState} from "react";
 import { useSelector,useDispatch } from "react-redux";
-import { useNavigate,useParams} from 'react-router-dom';
+import { useLocation, useNavigate,useParams} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { ReactComponent as Exit } from '../../../common/icons/exit.svg';
 import { reservationActions } from '../../../redux/slice/reservationSlice';
@@ -8,11 +8,12 @@ import {bookingGetData} from '../../../common/api/booking'
 import ReservationCancleModal from "./modal/ReservationCancleModal";
 import Map from '../../../common/utils/Map';
 import './ReservationConfirmPage.scss';
-import { ROOT_PATH } from "../../../common/constants/path.const";
+import { MY_ACCOUNT_PATH, ROOT_PATH } from "../../../common/constants/path.const";
 
 function ReservationConfirmPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location: any = useLocation();
   const [reservationCancleModal, setReservationCancleModal] = useState(false);
   const [reservationData, setReservationData] = useState({
     bookingId: "",
@@ -66,12 +67,18 @@ function ReservationConfirmPage() {
   }, []);
 
   const moveToPrevPage = useCallback(() => {
-    setTimeout(() => {
-      navigate(ROOT_PATH);
-      dispatch(
-        reservationActions.reservationInit()
-      );
-    }, 100);
+    if (location.state?.prevPath.includes(MY_ACCOUNT_PATH.MAIN)) {
+      navigate(MY_ACCOUNT_PATH.MAIN, {
+        state: {
+          prevPath: location.pathname,
+        },
+      });
+    } else {
+      setTimeout(() => {
+        navigate(ROOT_PATH);
+        dispatch(reservationActions.reservationInit());
+      }, 100);
+    }
   }, []);
 
   const openReservationCancleModal = useCallback(() => {
