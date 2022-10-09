@@ -2,6 +2,7 @@ import React, { useState, useCallback, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 import { wishInsert, wishDelete } from '../../../common/api/wish';
 import AlertConfirm from '../../../common/dialog/AlertConfirm';
 import {
@@ -10,10 +11,10 @@ import {
 import './RecommendedPlace.scss';
 import { scrollActions } from '../../../redux/slice/scrollSlice';
 import { prevPathActions } from '../../../redux/slice/prevPathSlice';
-import {RootState} from '../../../redux/store'
+import { RootState } from '../../../redux/store';
 import { ReactComponent as ActiveHeart } from '../../../common/icons/heart-active.svg';
 import { ReactComponent as Heart } from '../../../common/icons/heart.svg';
-import Settings from '../../myAccount/setting/Settings';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface RedcommendedPlacesProps {
   place: PlaceType;
@@ -34,6 +35,7 @@ interface PlaceType {
 function RecommendedPlace({ place }: RedcommendedPlacesProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const [logInModalOpen, setLogInModalOpen] = useState(false);
+  const [toastMessageOpen, setToastMessage] = useState(false);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
   const { OS } = useSelector((state: RootState) => state.persist.device);
@@ -41,17 +43,21 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
   const navigate = useNavigate();
   const location: any = useLocation();
 
+  const notify = () =>
+    toast('찜 목록에 등록 되었습니다', {
+      position: toast.POSITION.BOTTOM_CENTER,
+      type: toast.TYPE.SUCCESS,
+      theme: 'colored',
+    });
+
   const wishListInsert = () => {
     if (isSignIn) {
-      wishInsert(
-        { userId, placeId: place.placeId },
-        dispatch,
-        (response: AxiosResponse) => {
-          if (response.data.code === 200) {
-            setWishList(response.data.data.wishId);
-          }
-        },
-      );
+      wishInsert({ userId, placeId: place.placeId }, dispatch, (response: AxiosResponse) => {
+        if (response.data.code === 200) {
+          setWishList(response.data.data.wishId);
+          notify();
+        }
+      });
       if (OS === 'android') {
         window.BRIDGE.vibrate();
       } else {
@@ -63,14 +69,11 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
   };
 
   const wishListDelete = () => {
-    wishDelete(
-      { wishId: wishList },dispatch,
-      (response: AxiosResponse) => {
-        if (response.data.code === 200) {
-          setWishList(0);
-        }
-      },
-    );
+    wishDelete({ wishId: wishList }, dispatch, (response: AxiosResponse) => {
+      if (response.data.code === 200) {
+        setWishList(0);
+      }
+    });
     if (OS === 'android') {
       window.BRIDGE.vibrate();
     } else {
@@ -94,22 +97,21 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
         {place.address}
       </div>
       <div className="recommended-places-heart">
-        {wishList === 0 ? (
-          <Heart onClick={wishListInsert} />
-        ) : (
-          <ActiveHeart onClick={wishListDelete} />
-        )}
+        {wishList === 0 ? <Heart onClick={wishListInsert} /> : <ActiveHeart onClick={wishListDelete} />}
       </div>
-      {logInModalOpen && <AlertConfirm
-        text="로그인 후 이용 할 수 있습니다."
-        buttonText='로그인'
-        noButtonHandler={() => {
-          setLogInModalOpen(false);
-        }}
-        yesButtonHandler={() => {
-          navigate(SIGN_IN_PATH.MAIN);
-        }}
-      />}
+      {logInModalOpen && (
+        <AlertConfirm
+          text="로그인 후 이용 할 수 있습니다."
+          buttonText="로그인"
+          noButtonHandler={() => {
+            setLogInModalOpen(false);
+          }}
+          yesButtonHandler={() => {
+            navigate(SIGN_IN_PATH.MAIN);
+          }}
+        />
+      )}
+      <ToastContainer autoClose={1000}/>
     </div>
   );
 }

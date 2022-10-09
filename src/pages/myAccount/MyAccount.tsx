@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AxiosResponse } from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -13,7 +13,7 @@ import { userActions } from '../../redux/slice/userSlice';
 import { scrollActions } from '../../redux/slice/scrollSlice';
 import AlertConfirm from '../../common/dialog/AlertConfirm';
 import { deleteUser } from '../../common/api/signup';
-import { MY_ACCOUNT_PATH, SIGN_IN_PATH } from '../../common/constants/path.const';
+import { MY_ACCOUNT_PATH, SIGN_IN_PATH, RESERVATION_PATH } from '../../common/constants/path.const';
 import {  getMyAccountDataList } from '../../common/api/myaccount';
 import { getBookingState } from '../../common/api/booking';
 import { GET_MY_ACCOUNT_DATA_LIST, GET_BOOKING_STATE_DATA_LIST, CACHE_TIME, STALE_TIME } from '../../common/constants/queryKey.const'
@@ -62,8 +62,9 @@ function MyAccount() {
   useEffect(() => {
     if (location.state?.prevPath.includes(MY_ACCOUNT_PATH.MAIN)) {
       window.scroll(0, myAccountScrollY);
-    }
-    else {
+    } else if (location.state?.prevPath.includes('reservation')) {
+      window.scroll(0, myAccountScrollY);
+    } else {
       window.scroll(0, 0);
     }
   }, [getMyAccountDataListIsLoading, getBookingStateIsLoading]);
@@ -86,14 +87,14 @@ function MyAccount() {
 
 
 
-  const logoutHandler = () => {
+  const logoutHandler = useCallback(() => {
     dispatch(userActions.signout());
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     navigation(SIGN_IN_PATH.MAIN);
-  };
+  },[])
 
-  const deleteHandler = () => {
+  const deleteHandler = useCallback(() => {
     deleteUser(
       userId.toString(),
       (response: AxiosResponse) => {
@@ -105,59 +106,82 @@ function MyAccount() {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     navigation(SIGN_IN_PATH.MAIN);
-  };
+  },[])
 
-  const logOutModalOpen = () => {
+  const logOutModalOpen = useCallback(() => {
     setLogoutModalOpen(true);
     setText('정말 로그아웃 하시겠습니까?');
-  };
+  },[])
 
   const deleteUserModalOpen = () => {
     setDeleteModalOpen(true);
     setText('정말 회원탈퇴 하시겠어요?ㅠㅠ');
   };
 
-  const moveToMyAccountPetInfoPage = () => {
+  const moveToMyAccountPetInfoPage = useCallback(() => {
     setTimeout(() => {
       dispatch(scrollActions.myStorageScroll({ myAccount: window.scrollY }));
       navigation(MY_ACCOUNT_PATH.PETINFO);
     }, 200);
-  };
-  const moveToMyAccountCouponPage = () => {
+  },[])
+
+  const moveToMyAccountCouponPage = useCallback(() => {
     setTimeout(() => {
       dispatch(scrollActions.myStorageScroll({ myAccount: window.scrollY }));
       navigation(MY_ACCOUNT_PATH.COUPON);
     }, 200);
-  };
-  const moveToMyAccountReviewsPage = () => {
+  },[])
+
+  const moveToMyAccountReviewsPage = useCallback(() => {
     setTimeout(() => {
       dispatch(scrollActions.myStorageScroll({ myAccount: window.scrollY }));
       navigation(MY_ACCOUNT_PATH.REVIEWS);
     }, 200);
-  };
+  },[])
 
-  const moveToMyAccountUserInfoPage = () => {
+  const moveToMyAccountUserInfoPage = useCallback(() => {
     setTimeout(() => {
       dispatch(scrollActions.myStorageScroll({ myAccount: window.scrollY }));
       navigation(MY_ACCOUNT_PATH.USERINFO);
     }, 200)
+  },[])
 
-  };
-
-  const moveToMyAccountSettingsPage = () => {
+  const moveToMyAccountSettingsPage = useCallback(() => {
     setTimeout(() => {
       dispatch(scrollActions.myStorageScroll({ myAccount: window.scrollY }));
       navigation(MY_ACCOUNT_PATH.SETTINGS);
     }, 200);
-  };
+  },[])
 
-  const moveToKakaoPlusFriend = () => {
+  const moveToReservationConfirmPage = () => {
+    setTimeout(() => {
+      dispatch(scrollActions.myStorageScroll({ myAccount: window.scrollY }));
+      navigation(`/reservation-confrim/${bookingStateDataList.data[0].bookingId}`, {
+        state: {
+          prevPath: location.pathname,
+        },
+      });
+    }, 200);
+  }
+
+  const moveToReservationCanclePage = () => {
+    setTimeout(() => {
+      dispatch(scrollActions.myStorageScroll({ myAccount: window.scrollY }));
+      navigation(`/reservation-cancle/${bookingStateDataList.data[0].bookingId}`, {
+        state: {
+          prevPath: location.pathname,
+        },
+      });
+    }, 200);
+  }
+
+  const moveToKakaoPlusFriend = useCallback(() => {
     if (OS === 'android') {
       window.BRIDGE.goToPlusFriends();
     } else {
       window.webkit.messageHandlers.goToPlusFriends.postMessage('');
     }
-  };
+  },[])
 
   const bookingState = () => {
     if (bookingStateDataList.data[0].bookingState === 'W') {
@@ -171,25 +195,40 @@ function MyAccount() {
     }
 
     return <div className="account-purchase-reservation-box-state CF">취소완료</div>;
-  }
+  };
 
-  const bookingCard = bookingStateDataList?.data?.length > 0 ? (
-    <div className="account-purchase-reservation-box">
-      <div className="account-purchase-reservation-box-wrapper">
-        <p className="account-purchase-reservation-box-wrapper-title">{bookingStateDataList?.data[0].place.name}</p>
-        <p className="account-purchase-reservation-box-wrapper-room">{bookingStateDataList?.data[0].roomName}</p>
-        <p className="account-purchase-reservation-box-wrapper-date">
-          {bookingStateDataList?.data[0].startDt.slice(5, 7)}.{bookingStateDataList?.data[0].startDt.slice(8, 10)} ~ {bookingStateDataList?.data[0].endDt.slice(5, 7)}.{bookingStateDataList?.data[0].endDt.slice(8, 10)} {days}박
-        </p>
+  const bookingCard =
+    bookingStateDataList?.data?.length > 0 ? (
+      <div
+        className="account-purchase-reservation-box"
+        aria-hidden="true"
+        onClick={
+          bookingStateDataList.data[0].bookingState === 'CW' || 'CF'
+            ? moveToReservationCanclePage
+            : moveToReservationConfirmPage
+        }
+      >
+        <div className="account-purchase-reservation-box-wrapper">
+          <p className="account-purchase-reservation-box-wrapper-title">{bookingStateDataList?.data[0].place.name}</p>
+          <p className="account-purchase-reservation-box-wrapper-room">{bookingStateDataList?.data[0].roomName}</p>
+          <p className="account-purchase-reservation-box-wrapper-date">
+            {bookingStateDataList?.data[0].startDt.slice(5, 7)}.{bookingStateDataList?.data[0].startDt.slice(8, 10)} ~{' '}
+            {bookingStateDataList?.data[0].endDt.slice(5, 7)}.{bookingStateDataList?.data[0].endDt.slice(8, 10)} {days}
+            박
+          </p>
+        </div>
+        {bookingState()}
       </div>
-      {bookingState()}
-    </div>
-  ) : (
-    <div className="account-purchase-reservation-box empty">최근 예약한 숙소가 없어요</div>
-  )
+    ) : (
+      <div className="account-purchase-reservation-box empty">최근 예약한 숙소가 없어요</div>
+    );
 
   if (getMyAccountDataListIsLoading || getBookingStateIsLoading) {
-    return <div className="account" style={loadingScreenHeight}><Footer /></div>;
+    return (
+      <div className="account" style={loadingScreenHeight}>
+        <Footer />
+      </div>
+    );
   }
 
   return (
