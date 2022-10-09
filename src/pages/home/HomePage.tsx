@@ -95,11 +95,11 @@ function HomePage() {
   });
 
   useEffect(() => {
-    window.history.pushState(null, '', null);
-    window.addEventListener('popstate', preventGoBack);
-    return () => {
-      window.removeEventListener('popstate', preventGoBack);
-    };
+    // window.history.pushState(null, '', location.href);
+    // window.addEventListener('popstate', preventGoBack);
+    // return () => {
+      // window.removeEventListener('popstate', preventGoBack);
+    // };
   }, []);
 
   useEffect(() => {
@@ -111,7 +111,7 @@ function HomePage() {
   }, [getRecommendedPlacesIsLoading, getBookingDataIsLoading, getEditorNotePlacesIsLoading]);
 
   const preventGoBack = () => {
-    window.history.pushState(null, '', null);
+    // window.history.pushState(null, '', location.href);
   };
 
   const getDday = () => {
