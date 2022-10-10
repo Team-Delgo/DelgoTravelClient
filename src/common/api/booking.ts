@@ -64,7 +64,9 @@ async function bookingGetData(
       },
     });
     success(result);
+    console.log(result)
   } catch (err: any) {
+    console.log(err)
     useErrorHandlers(dispatch, err);
   }
 }
