@@ -60,6 +60,7 @@ function MyAccount() {
   );
 
   useEffect(() => {
+    console.log(bookingStateDataList);
     if (location.state?.prevPath.includes(MY_ACCOUNT_PATH.MAIN)) {
       window.scroll(0, myAccountScrollY);
     } else if (location.state?.prevPath.includes('reservation')) {

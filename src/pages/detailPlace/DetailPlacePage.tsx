@@ -246,7 +246,7 @@ function DetailPlacePage() {
       />}
       <div className={classNames('detail-place', { close: isCalenderOpen })}>
         <div style={{ width: '100%' }}>
-            <ImageSlider images={detailPlace?.data.detailPhotoList} />
+            <ImageSlider images={detailPlace?.data?.detailPhotoList} />
         </div>
         <LeftArrow className="detail-place-previous-page" onClick={moveToPrevPage} />
         <div className="detail-place-heart">

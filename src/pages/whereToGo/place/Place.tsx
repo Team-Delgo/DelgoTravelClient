@@ -43,9 +43,9 @@ declare global {
 function Place({ place,areaTerm }: PlaceTypeProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const [logInModalOpen, setLogInModalOpen] = useState(false);
-  const userId = useSelector((state: RootState) => state.persist.user.user.id)
+  const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
-  const {OS} = useSelector((state:RootState)=>state.persist.device);
+  const { OS } = useSelector((state: RootState) => state.persist.device);
   const dispatch = useDispatch();
   const location: any = useLocation();
   const navigate = useNavigate();

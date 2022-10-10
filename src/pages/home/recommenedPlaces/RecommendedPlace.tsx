@@ -2,7 +2,6 @@ import React, { useState, useCallback, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
 import { wishInsert, wishDelete } from '../../../common/api/wish';
 import AlertConfirm from '../../../common/dialog/AlertConfirm';
 import {
@@ -14,7 +13,6 @@ import { prevPathActions } from '../../../redux/slice/prevPathSlice';
 import { RootState } from '../../../redux/store';
 import { ReactComponent as ActiveHeart } from '../../../common/icons/heart-active.svg';
 import { ReactComponent as Heart } from '../../../common/icons/heart.svg';
-import 'react-toastify/dist/ReactToastify.css';
 
 interface RedcommendedPlacesProps {
   place: PlaceType;
@@ -51,19 +49,12 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
   const navigate = useNavigate();
   const location: any = useLocation();
 
-  const notify = () =>
-    toast('찜 목록에 등록 되었습니다', {
-      position: toast.POSITION.BOTTOM_CENTER,
-      type: toast.TYPE.SUCCESS,
-      theme: 'colored',
-    });
 
   const wishListInsert = () => {
     if (isSignIn) {
       wishInsert({ userId, placeId: place.placeId }, dispatch, (response: AxiosResponse) => {
         if (response.data.code === 200) {
           setWishList(response.data.data.wishId);
-          notify();
         }
       });
       if (OS === 'android') {
@@ -114,7 +105,6 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
           }}
         />
       )}
-      <ToastContainer autoClose={1000}/>
     </div>
   );
 }
