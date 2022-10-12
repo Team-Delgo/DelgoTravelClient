@@ -49,7 +49,6 @@ function SocialNickname() {
 
   const submitHandler = () => {
     //  유저정보 보내기
-
     navigate(SIGN_UP_PATH.USER_PET_INFO, {
       state: { email, password:'', nickname: enteredInput, phone, isSocial },
     });
