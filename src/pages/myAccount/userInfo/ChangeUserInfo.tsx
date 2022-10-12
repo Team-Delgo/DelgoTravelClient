@@ -15,6 +15,7 @@ import { checkNickname } from '../../signUpPage/userInfo/ValidCheck';
 function ChangeUserInfo() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isSocial = useSelector((state:RootState) => state.persist.user.user.isSocial);
   const initialNickName = useSelector((state: RootState) => state.persist.user.user.nickname);
   const [enteredInput, setEnteredInput] = useState(initialNickName);
   const [validInput, setValidInput] = useState('');
@@ -106,14 +107,14 @@ function ChangeUserInfo() {
         <div className="userinfo-phone-label">휴대전화</div>
         <span className="userinfo-phone-value">{phoneNumber}</span>
       </div>
-      {email.length > 0 && (
+      {!isSocial && (
         <div className="userinfo-email">
           <div className="userinfo-email-label">이메일</div>
           <span className="userinfo-email-value">{userEmail}</span>
         </div>
       )}
       <div className="userinfo-devide" />
-      {email.length > 0 && (
+      {!isSocial && (
         <div
           className="userinfo-password"
           aria-hidden="true"

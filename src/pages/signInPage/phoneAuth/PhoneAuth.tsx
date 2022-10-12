@@ -32,7 +32,6 @@ function PhoneAuth() {
   const authIsValid = timeIsValid && authNumber.length === 4;
   const navigation = useNavigate();
 
-  console.log(phone);
 
   useEffect(() => {
     if (buttonIsClicked) {
