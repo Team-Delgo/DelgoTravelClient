@@ -183,10 +183,10 @@ function ReservationHistoryPage() {
           <div className="payment-methods-label">결제 수단</div>
         <div className="payment-methods-price">신용카드</div>
       </div>
-      <div className="reservation-place-map">
+      {/* <div className="reservation-place-map">
         <header className="reservation-place-map-header">지도</header>
         {reservationData?.place.address ? <Map address={reservationData?.place.address} /> : null}
-      </div>
+      </div> */}
     </div>
   );
 }

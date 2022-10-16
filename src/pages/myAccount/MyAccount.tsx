@@ -293,10 +293,10 @@ function MyAccount() {
           <h2 className="account-item-name">설정</h2>
           <img src={RightArrow} alt="detail" />
         </div>
-        <div className="account-item">
+        {/* <div className="account-item">
           <h2 className="account-item-name">공지사항</h2>
           <img src={RightArrow} alt="detail" />
-        </div>
+        </div> */}
         <div className="account-item last" aria-hidden="true" onClick={moveToKakaoPlusFriend}>
           <h2 className="account-item-name">
             문의

@@ -136,19 +136,28 @@ function ReservationConfirmPage() {
           )}
         </div>
         <div className="placeinfo">
-            <div className="placeinfo-wrapper">
-              <div className="placeinfo-name">{reservationData?.place.name}</div>
-            </div>
+          <div className="placeinfo-wrapper">
+            <div className="placeinfo-name">{reservationData?.place.name}</div>
+          </div>
           <p className="placeinfo-address">{reservationData?.place.address}</p>
           <p className="placeinfo-room">{reservationData?.roomName}</p>
         </div>
         <div className="place-use-info">
-          {
-            OS==='ios' ? <div aria-hidden="true" onClick={moveToCallApp}>숙소문의</div>
-            : <a href={`tel: ${reservationData?.place.phoneNo}`}><div>숙소문의</div></a>
-          }
-          <div aria-hidden="true" onClick={copyPlaceAddress}>주소복사</div>
-          <a href={reservationData?.place.mapUrl}><div >지도보기</div></a>
+          {OS === 'ios' ? (
+            <div aria-hidden="true" onClick={moveToCallApp}>
+              숙소문의
+            </div>
+          ) : (
+            <a href={`tel: ${reservationData?.place.phoneNo}`}>
+              <div>숙소문의</div>
+            </a>
+          )}
+          <div aria-hidden="true" onClick={copyPlaceAddress}>
+            주소복사
+          </div>
+          <a href={reservationData?.place.mapUrl}>
+            <div>지도보기</div>
+          </a>
         </div>
         <div className="checkin-checkout">
           <div className="checkin-checkout-date">
@@ -170,7 +179,9 @@ function ReservationConfirmPage() {
         </div>
         <div className="reservation-info-header">
           <div className="reservation-info-header-label">예약정보</div>
-          <div className="reservation-number-copy" aria-hidden="true" onClick={copyReservationNumber}>예약번호 복사</div>
+          <div className="reservation-number-copy" aria-hidden="true" onClick={copyReservationNumber}>
+            예약번호 복사
+          </div>
         </div>
         <div className="reservation-info">
           <div className="reservation-info-first-line">
@@ -222,16 +233,16 @@ function ReservationConfirmPage() {
             예약취소
           </button>
         </div>
-        <div className="reservation-place-map">
-        <header className="reservation-place-map-header">지도</header>
-        {reservationData.place.address ? <Map address={reservationData.place.address} /> : null}
+        {/* <div className="reservation-place-map">
+          <header className="reservation-place-map-header">지도</header>
+          {reservationData.place.address ? <Map address={reservationData.place.address} /> : null}
+        </div> */}
       </div>
-      </div>
-        <ReservationCancleModal
-          openReservationCancleModal={reservationCancleModal}
-          closeReservationCancleModal={closeReservationCancleModal}
-          reservationData={reservationData}
-        />
+      <ReservationCancleModal
+        openReservationCancleModal={reservationCancleModal}
+        closeReservationCancleModal={closeReservationCancleModal}
+        reservationData={reservationData}
+      />
     </>
   );
 }
