@@ -233,10 +233,10 @@ function ReservationConfirmPage() {
             예약취소
           </button>
         </div>
-        {/* <div className="reservation-place-map">
+        <div className="reservation-place-map">
           <header className="reservation-place-map-header">지도</header>
           {reservationData.place.address ? <Map address={reservationData.place.address} /> : null}
-        </div> */}
+        </div>
       </div>
       <ReservationCancleModal
         openReservationCancleModal={reservationCancleModal}

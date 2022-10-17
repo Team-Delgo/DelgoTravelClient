@@ -341,10 +341,10 @@ function DetailPlacePage() {
         {detailPlace?.data.placeNoticeList.map((placeNotice: NoticeType) => (
           <PlaceNotice placeNotice={placeNotice} key={placeNotice.placeNoticeId}/>
         ))}
-        {/* <div className="detail-place-map">
+        <div className="detail-place-map">
           <header className="detail-place-map-header">지도</header>
           {detailPlace?.data.place.address ? <Map address={detailPlace.data.place.address} /> : null}
-        </div> */}
+        </div>
       </div>
     </>
   );
