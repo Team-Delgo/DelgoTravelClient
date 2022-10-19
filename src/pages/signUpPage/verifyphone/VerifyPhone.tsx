@@ -28,6 +28,7 @@ function VerifyPhone() {
   const [timeIsValid, setTimeIsValid] = useState(true);
   const [isReSended, setIsReSended] = useState(false);
   const [feedback, setFeedback] = useState('');
+  const [socialFeedback, setSocialFeedback] = useState<string|undefined>();
   const [SMSid, setSMSid] = useState(0);
   const [phoneIsExist, setPhoneIsExist] = useState(false);
   const [authFailed, setAuthFailed] = useState(false);
@@ -52,7 +53,14 @@ function VerifyPhone() {
           setButtonIsClicked(true);
           setIsSended(true);
           setPhoneIsExist(false);
-        } else {
+        } else if(code === 371){
+          setPhoneIsExist(true);
+          if(data.userSocial === 'N')
+          setSocialFeedback('네이버로 가입된 전화번호 입니다.');
+          if(data.userSocial === 'K')
+          setSocialFeedback('카카오로 가입된 전화번호 입니다.');
+          phoneRef.current.focus();
+        } else{
           setPhoneIsExist(true);
           phoneRef.current.focus();
         }
@@ -60,7 +68,6 @@ function VerifyPhone() {
       errorHandler,
     );
   };
-
   const dispatch = useDispatch();
   const errorHandler = () => {
     dispatch(errorActions.setError());
@@ -139,7 +146,6 @@ function VerifyPhone() {
         { number: authNumber, smsId: SMSid },
         (response: AxiosResponse) => {
           const { code } = response.data;
-          console.log(response);
           if (code === 200) {
             if (isSocial==='A') {
               navigation(SIGN_UP_PATH.SOCIAL.NICKNAME, { state: { phone: phoneNumber, isSocial, email: '' } });
@@ -196,7 +202,7 @@ function VerifyPhone() {
           autoComplete="off"
           ref={phoneRef}
         />
-        <p className={classNames('input-feedback')}>{phoneIsExist && '이미 가입된 전화번호입니다.'}</p>
+        <p className={classNames('input-feedback')}>{socialFeedback || (phoneIsExist && '이미 가입된 전화번호입니다.')}</p>
 
         <span
           aria-hidden="true"
