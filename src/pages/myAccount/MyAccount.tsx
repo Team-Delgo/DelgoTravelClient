@@ -202,7 +202,7 @@ function MyAccount() {
     }
     return <div className="account-purchase-reservation-box-state E">여행완료</div>;
   };
-
+  console.log(bookingStateDataList.data[0]);
   const bookingCard =
     bookingStateDataList?.data?.length > 0 ? (
       <div
