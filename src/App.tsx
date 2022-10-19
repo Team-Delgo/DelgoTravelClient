@@ -62,6 +62,7 @@ import SocialExist from './pages/signUpPage/forSocial/SocialExist';
 import { deviceAction } from './redux/slice/deviceSlice';
 import { userActions } from './redux/slice/userSlice';
 import AppleRedirectHandler from './pages/signInPage/socialLogion/AppleRedirectHandler';
+import ReviewPhotoList from './pages/myAccount/review/ReviewPhotoList';
 
 declare global {
   interface Window {
@@ -133,6 +134,7 @@ function App() {
         <Route path={MY_ACCOUNT_PATH.PASSWORDCHANGE} element={<ChangePassword />} />
         <Route path={MY_ACCOUNT_PATH.TERM1} element={<ServiceTerm id={1} />} />
         <Route path={MY_ACCOUNT_PATH.TERM2} element={<ServiceTerm id={2} />} />
+        <Route path={MY_ACCOUNT_PATH.PHOTOVIEWER} element={<ReviewPhotoList/>} />
         <Route path={DETAIL_PLACE_PATH.MAIN} element={<DetailPlacePage />} />
         <Route path={DETAIL_PLACE_PATH.REVIEWS} element={<ReviewsPage />} />
         <Route path={DETAIL_PLACE_PATH.ROOMTYPES} element={<RoomTypePage />} />
