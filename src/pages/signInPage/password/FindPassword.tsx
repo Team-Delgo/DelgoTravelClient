@@ -28,7 +28,7 @@ function FindPassword() {
 
       const { code, data } = response.data;
       if (code === 200) {
-        setPhoneNumber(data);
+        setPhoneNumber(data.phoneNo);
         setEmailIsSubmitted(true);
       }
       else {

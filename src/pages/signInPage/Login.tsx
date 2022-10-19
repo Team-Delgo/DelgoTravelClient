@@ -31,6 +31,12 @@ function Login() {
   const state = useLocation().state as State;
   const { email } = state;
 
+  const enterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      loginFetch();
+    }
+  };
+
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = event.target;
     if (id === 'email') {
@@ -132,6 +138,7 @@ function Login() {
             autoComplete="off"
             value={enteredInput.password}
             onChange={inputChangeHandler}
+            onKeyDown={enterKey}
           />
           <p className="login-feedback">{feedback.password}</p>
         </div>
