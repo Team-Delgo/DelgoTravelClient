@@ -67,4 +67,10 @@ async function getMyReviewList(userId: number) {
   return data;
 }
 
-export { getDetailPlaceRivews, reviewImageUpload, writeReivew, getMyReviewList };
+async function getReviewData(reviewId:number) {
+    const data = await axiosInstance.get(`/review/photo?reviewId=${reviewId}`);
+    return data;
+}
+
+
+export { getDetailPlaceRivews, reviewImageUpload, writeReivew, getMyReviewList,getReviewData };

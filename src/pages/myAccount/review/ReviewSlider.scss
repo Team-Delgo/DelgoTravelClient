@@ -1,0 +1,10 @@
+.image-slider{
+    width: 100vw;
+    &-wrapper{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: black;
+        height: 100vh;
+    }
+}

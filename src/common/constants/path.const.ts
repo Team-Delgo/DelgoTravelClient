@@ -6,6 +6,7 @@ export const MY_ACCOUNT_PATH = {
   SETTINGS: '/user/myaccount/settings',
   PETINFO: '/user/myaccount/petinfo',
   REVIEWS: '/user/myaccount/reviews',
+  PHOTOVIEWER: '/user/myaccount/reviews/photos',
   USERINFO: '/user/myaccount/userinfo',
   PASSWORDCHECK: '/user/myaccount/userinfo/check',
   PASSWORDCHANGE: '/user/myaccount/userinfo/change',

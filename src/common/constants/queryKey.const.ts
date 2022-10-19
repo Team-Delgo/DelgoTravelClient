@@ -11,5 +11,6 @@ export const GET_MY_REVIEW_LIST = 'getMyReviewList';
 export const GET_TRAVELED_PLACES = 'getTraveledPlaces';
 export const GET_WISHED_PLACES = 'getWishedPlaces';
 export const GET_ALL_PLACES = 'getAllPlaces';
+export const GET_REVIEW_DATA = 'getReviewData';
 export const CACHE_TIME = 1000 * 60 * 5;
 export const STALE_TIME = 1000 * 60 * 3;

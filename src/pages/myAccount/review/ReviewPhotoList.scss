@@ -1,0 +1,8 @@
+.photoviewer{
+  &-exit{
+    z-index: 9;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+}
