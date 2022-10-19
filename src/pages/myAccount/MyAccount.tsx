@@ -194,8 +194,13 @@ function MyAccount() {
     if (bookingStateDataList.data[0].bookingState === 'CW') {
       return <div className="account-purchase-reservation-box-state CW">취소요청</div>;
     }
-
-    return <div className="account-purchase-reservation-box-state CF">취소완료</div>;
+    if (bookingStateDataList.data[0].bookingState === 'CF') {
+      return <div className="account-purchase-reservation-box-state CF">취소완료</div>;
+    }
+    if (bookingStateDataList.data[0].bookingState === 'T') {
+      return <div className="account-purchase-reservation-box-state T">여행중</div>;
+    }
+    return <div className="account-purchase-reservation-box-state E">여행완료</div>;
   };
 
   const bookingCard =
