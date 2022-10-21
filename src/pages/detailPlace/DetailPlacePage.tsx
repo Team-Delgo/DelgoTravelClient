@@ -159,6 +159,7 @@ function DetailPlacePage() {
 
   const wishListInsert = () => {
     if (isSignIn) {
+    dispatch(scrollActions.initDetailPlaceScroll())
       wishInsert(
         { userId, placeId: Number(placeId) },
         dispatch,
@@ -179,6 +180,7 @@ function DetailPlacePage() {
   };
 
   const wishListDelete = () => {
+    dispatch(scrollActions.initDetailPlaceScroll())
     wishDelete(
       { wishId: Number(detailPlace?.data.place.wishId) },
       dispatch,
