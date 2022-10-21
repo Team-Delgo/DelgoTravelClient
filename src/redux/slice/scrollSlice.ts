@@ -30,6 +30,12 @@ const scrollSlice = createSlice({
         myAccountScrollY: action.payload.myAccount
       };
     },
+    initDetailPlaceScroll(state) {
+      return {
+        ...state,
+        detailPlaceScrollY: 0
+      };
+    },
   },
 });
 
