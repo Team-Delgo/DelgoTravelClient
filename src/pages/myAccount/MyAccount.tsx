@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AxiosResponse } from 'axios';
@@ -176,6 +177,18 @@ function MyAccount() {
     }, 200);
   }
 
+  const moveToReservationHistoryPage = () => {
+
+    setTimeout(() => {
+      dispatch(scrollActions.myStorageScroll({ myAccount: window.scrollY }));
+      navigation(`/reservation-history/${bookingStateDataList.data[0].bookingId}`, {
+        state: {
+          prevPath: location.pathname,
+        },
+      });
+    }, 200)
+  }
+
   const moveToKakaoPlusFriend = useCallback(() => {
     if (OS === 'android') {
       window.BRIDGE.goToPlusFriends();
@@ -208,9 +221,17 @@ function MyAccount() {
         className="account-purchase-reservation-box"
         aria-hidden="true"
         onClick={
-          bookingStateDataList.data[0].bookingState === 'CW' || 'CF'
+          bookingStateDataList.data[0].bookingState === 'CW'
             ? moveToReservationCanclePage
-            : moveToReservationConfirmPage
+            : bookingStateDataList.data[0].bookingState === 'CF'
+            ? moveToReservationCanclePage
+            : bookingStateDataList.data[0].bookingState === 'W'
+            ? moveToReservationConfirmPage
+            : bookingStateDataList.data[0].bookingState === 'F'
+            ? moveToReservationConfirmPage
+            : bookingStateDataList.data[0].bookingState === 'T'
+            ? moveToReservationCanclePage
+            : moveToReservationHistoryPage
         }
       >
         <div className="account-purchase-reservation-box-wrapper">
