@@ -5,7 +5,7 @@ import { AxiosResponse } from 'axios';
 import { ReactComponent as Exit } from '../../../common/icons/exit.svg';
 import { bookingGetData } from '../../../common/api/booking'
 import Map from '../../../common/utils/Map';
-import { MY_STORAGE_PATH } from '../../../common/constants/path.const';
+import { MY_ACCOUNT_PATH, MY_STORAGE_PATH } from '../../../common/constants/path.const';
 import { RootState } from '../../../redux/store'
 import './ReservationHistoryPage.scss';
 
@@ -92,11 +92,20 @@ function ReservationHistoryPage() {
   }
 
   const moveToPrevPage = () => {
-    navigate(MY_STORAGE_PATH, {
-      state: {
-        prevPath: location.pathname,
-      },
-    });
+    if (location.state?.prevPath.includes(MY_ACCOUNT_PATH.MAIN)) {
+      navigate(MY_ACCOUNT_PATH.MAIN, {
+        state: {
+          prevPath: location.pathname,
+        },
+      });
+    }
+    else{
+      navigate(MY_STORAGE_PATH, {
+        state: {
+          prevPath: location.pathname,
+        },
+      });
+    }
   }
 
   return (
