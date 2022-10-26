@@ -262,9 +262,9 @@ function DetailPlacePage() {
           <header className="detail-place-info-name">{detailPlace?.data.place.name}</header>
           <div className="detail-place-info-address">
             {detailPlace?.data.place.address}
-            {/* <span className="detail-place-info-map" aria-hidden="true" onClick={moveToMap}>
+            <span className="detail-place-info-map" aria-hidden="true" onClick={moveToMap}>
               지도 &gt;
-            </span> */}
+            </span>
           </div>
           {detailPlaceRivews?.data && (
             <Link
