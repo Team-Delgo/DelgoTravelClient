@@ -106,9 +106,6 @@ function RiviewWritingPage() {
         imageUrlLists = imageUrlLists.slice(0, 10);
       }
       setImages(imageUrlLists);
-
-      const reader = new FileReader();
-      reader.readAsDataURL(event.target.files![0]);
       setSendingImage([...sendingImage , event.target.files![0]]);
     }
   };
