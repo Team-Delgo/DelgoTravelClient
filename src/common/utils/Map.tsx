@@ -13,6 +13,9 @@ interface addressProps {
 
 function Map({address}:addressProps) {
   useEffect(() => {
+
+    console.log(address)
+
     const container = document.getElementById('myMap');
     const options = {
       center: new window.kakao.maps.LatLng(0, 0),
@@ -28,6 +31,8 @@ function Map({address}:addressProps) {
       // 정상적으로 검색이 완료됐으면
       if (status === window.kakao.maps.services.Status.OK) {
         const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+
+        console.log(result[0].y, result[0].x)
 
         const marker = new window.kakao.maps.Marker({
           map,
