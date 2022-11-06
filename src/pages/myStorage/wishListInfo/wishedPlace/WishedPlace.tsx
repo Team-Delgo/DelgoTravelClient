@@ -46,12 +46,7 @@ function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch
           }, 100);
         }
       },
-    );
-    if (OS === 'android') {
-      window.BRIDGE.vibrate();
-    } else {
-      window.webkit.messageHandlers.vibrate.postMessage('');
-    }
+    )
   };
 
   const wishListConfirmModalOpen = () => {
