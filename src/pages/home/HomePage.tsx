@@ -95,12 +95,13 @@ function HomePage() {
   });
 
   useEffect(() => {
+    console.log(reservationPlaces)
     // window.history.pushState(null, '', location.href);
     // window.addEventListener('popstate', preventGoBack);
     // return () => {
       // window.removeEventListener('popstate', preventGoBack);
     // };
-  }, []);
+  }, [getBookingDataIsLoading]);
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
