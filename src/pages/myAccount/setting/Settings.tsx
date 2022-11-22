@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { useState, useEffect } from 'react';
-import { useNavigate,useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { ReactComponent as Arrow } from '../../../common/icons/left-arrow.svg';
 import './Settings.scss';
@@ -12,7 +12,7 @@ function Settings() {
   const [alert, setAlert] = useState(false);
   const navigate = useNavigate();
   const location: any = useLocation();
-  const {OS} = useSelector((state:RootState)=>state.persist.device);
+  const { OS } = useSelector((state: RootState) => state.persist.device);
 
   useEffect(() => {
     window.scroll(0, 0);
@@ -25,7 +25,7 @@ function Settings() {
   };
 
   const moveToMyAccountMainPage = () => {
-    navigate(MY_ACCOUNT_PATH.MAIN,{
+    navigate(MY_ACCOUNT_PATH.MAIN, {
       state: {
         prevPath: location.pathname,
       },
@@ -33,15 +33,15 @@ function Settings() {
   };
 
   const moveToPhoneSetting = () => {
-    if(OS==='android'){
+    if (OS === 'android') {
       window.BRIDGE.setNotify()
     }
-    else{
-      window.webkit.messageHandlers.setNotify.postMessage('') 
+    else {
+      window.webkit.messageHandlers.setNotify.postMessage('')
     }
   };
 
-  return (  
+  return (
     <div className="setting">
       <div aria-hidden="true" className="myaccount-back" onClick={moveToMyAccountMainPage}>
         <Arrow />
@@ -85,6 +85,9 @@ function Settings() {
         </div>
         <div className="setting-others">
           <div className="setting-label">공지사항</div>
+        </div>
+        <div className="setting-others">
+          <div className="setting-label">회원탈퇴</div>
         </div>
       </div>
     </div>

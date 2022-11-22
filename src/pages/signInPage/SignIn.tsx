@@ -15,6 +15,12 @@ import { emailAuth } from '../../common/api/login';
 import Loading from '../../common/utils/Loading';
 import AppleLoginButton from './socialLogion/AppleLogin';
 
+declare global {
+  interface Window{
+    naver: any;
+  }
+}
+
 function SignIn() {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(true);
@@ -22,6 +28,12 @@ function SignIn() {
   const emailRef = useRef<HTMLInputElement>(null);
   const navigation = useNavigate();
   const dispatch = useDispatch();
+
+  const { naver } = window;
+  const naverLogin = new naver.LoginWithNaverId({
+    clientId: process.env.REACT_APP_NAVER_CLIENT_ID,
+    
+  })
 
   useEffect(() => {
     localStorage.removeItem('refreshToken');
@@ -124,7 +136,7 @@ function SignIn() {
                 <Apple className="icon" />
               </button> */}
               <div className="login-apple">
-              <Apple className="icon" />
+                <Apple className="icon" />
                 <AppleLoginButton />
               </div>
             </div>
