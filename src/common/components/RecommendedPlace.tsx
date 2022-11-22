@@ -28,6 +28,14 @@ type RecommendedPlaceType = {
   wishId: number;
 };
 
+declare global {
+  interface Window {
+    BRIDGE: any;
+    webkit: any;
+    Kakao: any;
+  }
+}
+
 function RecommendedPlace({ place, getRecommendedPlacesRefetch, currentTab }: RecommendedPlaceProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
@@ -37,7 +45,7 @@ function RecommendedPlace({ place, getRecommendedPlacesRefetch, currentTab }: Re
   const navigate = useNavigate();
 
   const wishListInsert = () => {
-    wishInsert({ userId, placeId: place.placeId }, (response: AxiosResponse) => {
+    wishInsert({ userId, placeId: place.placeId },dispatch, (response: AxiosResponse) => {
       if (response.data.code === 200) {
         setWishList(response.data.data.wishId);
       }
@@ -50,17 +58,12 @@ function RecommendedPlace({ place, getRecommendedPlacesRefetch, currentTab }: Re
   };
 
   const wishListDelete = () => {
-    wishDelete({ wishId: wishList }, (response: AxiosResponse) => {
+    wishDelete({ wishId: wishList },dispatch, (response: AxiosResponse) => {
       if (response.data.code === 200) {
         setWishList(0);
         getRecommendedPlacesRefetch();
       }
     });
-    if (OS === 'android') {
-      window.BRIDGE.vibrate();
-    } else {
-      window.webkit.messageHandlers.vibrate.postMessage('');
-    }
   };
 
   const moveToDetailPage = () => {

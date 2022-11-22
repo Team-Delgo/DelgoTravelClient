@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { ReactComponent as Exit } from '../../../common/icons/exit.svg';
 import { bookingGetData } from '../../../common/api/booking'
 import Map from '../../../common/utils/Map';
-import { MY_STORAGE_PATH } from '../../../common/constants/path.const';
+import { MY_ACCOUNT_PATH, MY_STORAGE_PATH } from '../../../common/constants/path.const';
 import { RootState } from '../../../redux/store'
 import './ReservationHistoryPage.scss';
 
@@ -43,18 +43,16 @@ function ReservationHistoryPage() {
   })
   const { bookingId } = useParams();
   const location: any = useLocation();
+  const dispatch = useDispatch();
   const { OS } = useSelector((state: RootState) => state.persist.device);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     if (bookingId !== undefined) {
-      bookingGetData(
-        { bookingId },
-        (response: AxiosResponse) => {
-          setReservationData(response.data.data);
-          console.log(response.data.data);
-        },
-      );
+      bookingGetData({ bookingId }, dispatch, (response: AxiosResponse) => {
+        setReservationData(response.data.data);
+        console.log(response.data.data);
+      });
     }
   }, []);
 
@@ -94,11 +92,20 @@ function ReservationHistoryPage() {
   }
 
   const moveToPrevPage = () => {
-    navigate(MY_STORAGE_PATH, {
-      state: {
-        prevPath: location.pathname,
-      },
-    });
+    if (location.state?.prevPath.includes(MY_ACCOUNT_PATH.MAIN)) {
+      navigate(MY_ACCOUNT_PATH.MAIN, {
+        state: {
+          prevPath: location.pathname,
+        },
+      });
+    }
+    else{
+      navigate(MY_STORAGE_PATH, {
+        state: {
+          prevPath: location.pathname,
+        },
+      });
+    }
   }
 
   return (

@@ -37,22 +37,21 @@ function SignIn() {
 
   useEffect(() => {
     localStorage.removeItem('refreshToken');
-    localStorage.removeItem('accessToken')
+    localStorage.removeItem('accessToken');
     setTimeout(() => {
       setLoading(false);
     }, 700);
   }, []);
 
-  const enterKey = (e: KeyboardEvent) => {
+  const enterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       buttonClickHandler();
     }
   };
 
-  window.addEventListener('keyup', enterKey);
-
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
+    console.log(value);
     setEmail(value);
     const response = checkEmail(value);
     setFeedback(response.message);
@@ -62,9 +61,15 @@ function SignIn() {
     emailAuth(
       email,
       (response: AxiosResponse) => {
-        const { code } = response.data;
+        const { code, data } = response.data;
         if (code === 200) {
-          navigation(SIGN_IN_PATH.SIGNIN, { state: { email } });
+          if (data.userSocial === 'N') {
+            setFeedback('네이버로 가입된 이메일입니다.');
+          } else if (data.userSocial === 'K') {
+            setFeedback('카카오로 가입된 이메일입니다.');
+          } else {
+            navigation(SIGN_IN_PATH.SIGNIN, { state: { email } });
+          }
         } else {
           setFeedback('가입되지 않은 이메일입니다.');
         }
@@ -89,6 +94,7 @@ function SignIn() {
               <input
                 placeholder="이메일"
                 autoComplete="off"
+                onKeyDown={enterKey}
                 onChange={inputChangeHandler}
                 value={email}
                 ref={emailRef}

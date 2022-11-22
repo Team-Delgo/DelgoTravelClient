@@ -32,12 +32,20 @@ interface PlaceType {
   wishId: number
 }
 
+declare global {
+  interface Window {
+    BRIDGE: any;
+    webkit: any;
+    Kakao: any;
+  }
+}
+
 function Place({ place,areaTerm }: PlaceTypeProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const [logInModalOpen, setLogInModalOpen] = useState(false);
-  const userId = useSelector((state: RootState) => state.persist.user.user.id)
+  const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
-  const {OS} = useSelector((state:RootState)=>state.persist.device);
+  const { OS } = useSelector((state: RootState) => state.persist.device);
   const dispatch = useDispatch();
   const location: any = useLocation();
   const navigate = useNavigate();
@@ -45,7 +53,7 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
   const wishListInsert = () => {
     if (isSignIn) {
       wishInsert(
-        { userId, placeId: place.placeId },
+        { userId, placeId: place.placeId },dispatch,
         (response: AxiosResponse) => {
           if (response.data.code === 200) {
             setWishList(response.data.data.wishId);
@@ -64,19 +72,13 @@ function Place({ place,areaTerm }: PlaceTypeProps) {
 
   const wishListDelete = () => {
     wishDelete(
-      { wishId: wishList },
+      { wishId: wishList },dispatch,
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
           setWishList(0);
         }
       },
     );
-    if (OS === 'android') {
-      window.BRIDGE.vibrate()
-    }
-    else {
-      window.webkit.messageHandlers.vibrate.postMessage('')
-    }
   }
 
 

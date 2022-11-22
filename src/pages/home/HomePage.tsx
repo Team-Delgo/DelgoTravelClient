@@ -41,6 +41,13 @@ interface RecommendedPlaceType {
 }
 const loadingScreenHeight = { height: window.innerHeight * 10 }
 
+const infoContent = `주소 : 서울특별시 광진구 광나루로 19길 23 가온나리1 202호
+대표 : 이창민 | 사업자등록번호 : 345-49-00732
+전자우편주소 : help@zollezolle.me
+통신판매번호 : 2022-서울광진-1816
+호스팅서비스게종자의 상호 표시 : Delgo
+  `
+
 function HomePage() {
   const [page, setPage] = useState(0);
   const [dday, setDday] = useState('0');
@@ -70,6 +77,7 @@ function HomePage() {
       staleTime: STALE_TIME,
       refetchInterval: false,
       onError: (error: any) => {
+        console.log(error)
         useErrorHandlers(dispatch, error);
       },
     },
@@ -87,12 +95,13 @@ function HomePage() {
   });
 
   useEffect(() => {
-    window.history.pushState(null, '', null);
-    window.addEventListener('popstate', preventGoBack);
-    return () => {
-      window.removeEventListener('popstate', preventGoBack);
-    };
-  }, []);
+    console.log(reservationPlaces)
+    // window.history.pushState(null, '', location.href);
+    // window.addEventListener('popstate', preventGoBack);
+    // return () => {
+      // window.removeEventListener('popstate', preventGoBack);
+    // };
+  }, [getBookingDataIsLoading]);
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
@@ -103,7 +112,7 @@ function HomePage() {
   }, [getRecommendedPlacesIsLoading, getBookingDataIsLoading, getEditorNotePlacesIsLoading]);
 
   const preventGoBack = () => {
-    window.history.pushState(null, '', null);
+    // window.history.pushState(null, '', location.href);
   };
 
   const getDday = () => {
@@ -132,13 +141,6 @@ function HomePage() {
     );
   }
 
-  const infoContent = `주소 : 서울특별시 광진구 광나루로 19길 23 가온나리1 202호
-대표 : 이창민 | 사업자등록번호 : 345-49-00732
-전자우편주소 : help@zollezolle.me
-통신판매번호 : 2022-서울광진-1816
-호스팅서비스게종자의 상호 표시 : Delgo
-  `
-
   return (
     <>
       <div className="home-background">
@@ -160,7 +162,7 @@ function HomePage() {
         )}
         <header className="editor-header-text">델고 에디터노트</header>
         <div className="editor-container">
-          {editorNotePlaces.data.map((place: EditorPlaceType) => (
+          {editorNotePlaces.data?.map((place: EditorPlaceType) => (
             <Link
               className="editor-thumbnail"
               to={`/editor-note/${place.placeId}`}
@@ -177,12 +179,12 @@ function HomePage() {
         {recommendedPlaces?.data.map((place: RecommendedPlaceType) => (
           <RecommendedPlace place={place} key={place.placeId} />
         ))}
-        <div className='home-buisness-information'>
+        {/* <div className='home-buisness-information'>
           <div className='home-buisness-information-title'>이제 우리 강아지도 Delgo 가요!</div>
           <div className='home-buisness-information-des'>
             {infoContent}
           </div>
-        </div>
+        </div> */}
       </div>
       <Footer />
     </>

@@ -1,7 +1,7 @@
 /* eslint-disable array-callback-return */
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
 import imageCompression from 'browser-image-compression';
 import AlertConfirmOne from '../../common/dialog/AlertConfirmOne'
@@ -63,6 +63,7 @@ function RiviewWritingPage() {
   const navigate = useNavigate();
   const formData = new FormData();
   const location: any = useLocation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
       window.scrollTo(0, 0);
@@ -105,9 +106,6 @@ function RiviewWritingPage() {
         imageUrlLists = imageUrlLists.slice(0, 10);
       }
       setImages(imageUrlLists);
-
-      const reader = new FileReader();
-      reader.readAsDataURL(event.target.files![0]);
       setSendingImage([...sendingImage , event.target.files![0]]);
     }
   };
@@ -128,6 +126,7 @@ function RiviewWritingPage() {
           text: rivewText,
           bookingId: state.bookingId,
         },
+        dispatch,
         (response: AxiosResponse) => {
           const { code, codeMsg } = response.data;
           if (code === 200) {
@@ -141,6 +140,7 @@ function RiviewWritingPage() {
               reviewImageUpload(
                 formData,
                 reviewId,
+                dispatch,
                 (response: AxiosResponse) => {
                   console.log(response);
                   const { code, codeMsg } = response.data;

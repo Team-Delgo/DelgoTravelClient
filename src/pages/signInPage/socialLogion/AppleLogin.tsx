@@ -8,9 +8,9 @@ function AppleLoginButton() {
     <div className='apple-login-button'>
       <AppleLogin
         clientId={`${appleClientId}`}
-        redirectURI="https://delgo.pet/oauth/callback/apple"
-        responseType="code"
-        responseMode="query"
+        redirectURI="https://www.delgo.pet/oauth/callback/apple"
+        responseType="code id_token"
+        responseMode="fragment"
         usePopup={false}
         designProp={{
           height: 60,

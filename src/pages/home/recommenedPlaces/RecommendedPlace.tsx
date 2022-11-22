@@ -10,10 +10,9 @@ import {
 import './RecommendedPlace.scss';
 import { scrollActions } from '../../../redux/slice/scrollSlice';
 import { prevPathActions } from '../../../redux/slice/prevPathSlice';
-import {RootState} from '../../../redux/store'
+import { RootState } from '../../../redux/store';
 import { ReactComponent as ActiveHeart } from '../../../common/icons/heart-active.svg';
 import { ReactComponent as Heart } from '../../../common/icons/heart.svg';
-import Settings from '../../myAccount/setting/Settings';
 
 interface RedcommendedPlacesProps {
   place: PlaceType;
@@ -31,9 +30,18 @@ interface PlaceType {
   wishId: number;
 }
 
+declare global {
+  interface Window {
+    BRIDGE: any;
+    webkit: any;
+    Kakao: any;
+  }
+}
+
 function RecommendedPlace({ place }: RedcommendedPlacesProps) {
   const [wishList, setWishList] = useState(place.wishId);
   const [logInModalOpen, setLogInModalOpen] = useState(false);
+  const [toastMessageOpen, setToastMessage] = useState(false);
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const isSignIn = useSelector((state: RootState) => state.persist.user.isSignIn);
   const { OS } = useSelector((state: RootState) => state.persist.device);
@@ -41,16 +49,14 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
   const navigate = useNavigate();
   const location: any = useLocation();
 
+
   const wishListInsert = () => {
     if (isSignIn) {
-      wishInsert(
-        { userId, placeId: place.placeId },
-        (response: AxiosResponse) => {
-          if (response.data.code === 200) {
-            setWishList(response.data.data.wishId);
-          }
-        },
-      );
+      wishInsert({ userId, placeId: place.placeId }, dispatch, (response: AxiosResponse) => {
+        if (response.data.code === 200) {
+          setWishList(response.data.data.wishId);
+        }
+      });
       if (OS === 'android') {
         window.BRIDGE.vibrate();
       } else {
@@ -62,19 +68,11 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
   };
 
   const wishListDelete = () => {
-    wishDelete(
-      { wishId: wishList },
-      (response: AxiosResponse) => {
-        if (response.data.code === 200) {
-          setWishList(0);
-        }
-      },
-    );
-    if (OS === 'android') {
-      window.BRIDGE.vibrate();
-    } else {
-      window.webkit.messageHandlers.vibrate.postMessage('');
-    }
+    wishDelete({ wishId: wishList }, dispatch, (response: AxiosResponse) => {
+      if (response.data.code === 200) {
+        setWishList(0);
+      }
+    });
   };
 
   const moveToDetailPage = useCallback(() => {
@@ -93,22 +91,20 @@ function RecommendedPlace({ place }: RedcommendedPlacesProps) {
         {place.address}
       </div>
       <div className="recommended-places-heart">
-        {wishList === 0 ? (
-          <Heart onClick={wishListInsert} />
-        ) : (
-          <ActiveHeart onClick={wishListDelete} />
-        )}
+        {wishList === 0 ? <Heart onClick={wishListInsert} /> : <ActiveHeart onClick={wishListDelete} />}
       </div>
-      {logInModalOpen && <AlertConfirm
-        text="로그인 후 이용 할 수 있습니다."
-        buttonText='로그인'
-        noButtonHandler={() => {
-          setLogInModalOpen(false);
-        }}
-        yesButtonHandler={() => {
-          navigate(SIGN_IN_PATH.MAIN);
-        }}
-      />}
+      {logInModalOpen && (
+        <AlertConfirm
+          text="로그인 후 이용 할 수 있습니다."
+          buttonText="로그인"
+          noButtonHandler={() => {
+            setLogInModalOpen(false);
+          }}
+          yesButtonHandler={() => {
+            navigate(SIGN_IN_PATH.MAIN);
+          }}
+        />
+      )}
     </div>
   );
 }

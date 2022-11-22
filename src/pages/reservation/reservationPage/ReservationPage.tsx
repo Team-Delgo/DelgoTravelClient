@@ -93,7 +93,7 @@ function ReservationPage() {
     setReservationName(e.target.value.replace(/ /g,""));
   },[]);
 
-  const existCoupon = couponList?.data.map((coupon:CouponType) => {
+  const existCoupon = couponList?.data?.map((coupon:CouponType) => {
     const priceString = coupon.discountNum.toString();
     const price = `${priceString.slice(0, priceString.length - 3)},${priceString.slice(priceString.length - 3)}`;
 
@@ -211,7 +211,7 @@ function ReservationPage() {
           <div className="coupon-drop-down" aria-hidden="true" onClick={handleCouponDropDown}>
             {selectCouponDiscount === 0 ? (
               <>
-                보유한 쿠폰 {couponList?.data.length}장 <BottomArrow className="coupon-bottom-arrow" />
+                보유한 쿠폰 {couponList?.data?.length}장 <BottomArrow className="coupon-bottom-arrow" />
               </>
             ) : (
               <>[Delgo 가요]{selectCouponDiscount.toLocaleString()}원 할인쿠폰 </>
@@ -220,7 +220,7 @@ function ReservationPage() {
         ) : (
           <div className="coupon-drop-down-full">
             <div className="coupon-header" aria-hidden="true" onClick={handleCouponDropDown}>
-              보유한 쿠폰 {couponList.data.length}장 <BottomArrow className="coupon-bottom-arrow" />
+              보유한 쿠폰 {couponList?.data?.length}장 <BottomArrow className="coupon-bottom-arrow" />
             </div>
             {existCoupon}
           </div>

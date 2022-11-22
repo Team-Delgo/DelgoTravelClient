@@ -76,6 +76,14 @@ interface NoticeType {
   title:string
 }
 
+declare global {
+  interface Window {
+    BRIDGE: any;
+    webkit: any;
+    Kakao: any;
+  }
+}
+
 function DetailPlacePage() {
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
   const [logInModalOpen, setLogInModalOpen] = useState(false);
@@ -151,8 +159,10 @@ function DetailPlacePage() {
 
   const wishListInsert = () => {
     if (isSignIn) {
+    dispatch(scrollActions.initDetailPlaceScroll())
       wishInsert(
         { userId, placeId: Number(placeId) },
+        dispatch,
         (response: AxiosResponse) => {
           if (response.data.code === 200) {
             getDetailPlaceRefetch();
@@ -170,19 +180,16 @@ function DetailPlacePage() {
   };
 
   const wishListDelete = () => {
+    dispatch(scrollActions.initDetailPlaceScroll())
     wishDelete(
       { wishId: Number(detailPlace?.data.place.wishId) },
+      dispatch,
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
           getDetailPlaceRefetch();
         }
       }
     );
-    if (OS === 'android') {
-      window.BRIDGE.vibrate();
-    } else {
-      window.webkit.messageHandlers.vibrate.postMessage('');
-    }
   };
 
   const calenderOpenClose = useCallback(() => {
@@ -241,7 +248,7 @@ function DetailPlacePage() {
       />}
       <div className={classNames('detail-place', { close: isCalenderOpen })}>
         <div style={{ width: '100%' }}>
-            <ImageSlider images={detailPlace?.data.detailPhotoList} />
+            <ImageSlider images={detailPlace?.data?.detailPhotoList} />
         </div>
         <LeftArrow className="detail-place-previous-page" onClick={moveToPrevPage} />
         <div className="detail-place-heart">

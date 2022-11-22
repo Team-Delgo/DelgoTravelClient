@@ -1,12 +1,12 @@
 import React,{useEffect, useState} from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate,useParams} from 'react-router-dom';
+import { useLocation, useNavigate,useParams} from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 import { ReactComponent as Exit } from '../../../common/icons/exit.svg';
 import { reservationActions } from '../../../redux/slice/reservationSlice';
 import {bookingGetData} from '../../../common/api/booking'
 import './ReservationCanclePage.scss';
-import { ROOT_PATH } from "../../../common/constants/path.const";
+import { MY_ACCOUNT_PATH, ROOT_PATH } from "../../../common/constants/path.const";
 
 
 
@@ -14,6 +14,7 @@ import { ROOT_PATH } from "../../../common/constants/path.const";
 function ReservationCanclePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location: any = useLocation();
   const { bookingId } = useParams();
   const [reservationData, setReservationData] = useState({
     bookingId: "",
@@ -52,7 +53,7 @@ function ReservationCanclePage() {
     window.scrollTo(0, 0);
     if (bookingId !== undefined) {
       bookingGetData(
-        { bookingId },
+        { bookingId },dispatch,
         (response: AxiosResponse) => {
           setReservationData(response.data.data);
         },
@@ -60,19 +61,25 @@ function ReservationCanclePage() {
     }
   }, []);
 
-  const moveToMainPage = () => {
-    setTimeout(() => {
-      navigate(ROOT_PATH);
-      dispatch(
-        reservationActions.reservationInit()
-      )
-    }, 300);
-  }
+  const moveToPrevPage = () => {
+    if (location.state?.prevPath.includes(MY_ACCOUNT_PATH.MAIN)) {
+      navigate(MY_ACCOUNT_PATH.MAIN, {
+        state: {
+          prevPath: location.pathname,
+        },
+      });
+    } else {
+      setTimeout(() => {
+        navigate(ROOT_PATH);
+        dispatch(reservationActions.reservationInit());
+      }, 100);
+    }
+  };
 
   return (
       <div className="reservationCanclePage">
         <div className="header">
-          <Exit className="exit-button" onClick={moveToMainPage} />
+          <Exit className="exit-button" onClick={moveToPrevPage} />
           <h1 className="header-title">예약취소</h1>
         </div>
         <div className="reservation-cancle-box">

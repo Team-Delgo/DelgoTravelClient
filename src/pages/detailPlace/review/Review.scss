@@ -49,9 +49,14 @@
             display: flex;
             overflow-x: scroll;
             img{
+                background-color: rgb(255, 255, 255);
+                border: 1px solid #ececec;
+                margin: 0 5px;
+                object-fit: contain;
+                text-align: center;
                 width:150px;
-                height:120px;
-                padding-right: 10px;
+                height:150px;
+                margin-right: 10px;
             }
         }
     }

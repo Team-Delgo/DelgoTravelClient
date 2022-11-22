@@ -1,7 +1,7 @@
 import React, { useState, useEffect, ChangeEvent, useRef } from 'react';
 import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { errorActions } from '../../../redux/slice/errorSlice';
 import ToastMessage from '../../../common/dialog/ToastMessage';
@@ -10,11 +10,17 @@ import Timer from './Timer';
 import { SIGN_UP_PATH } from '../../../common/constants/path.const';
 import { ReactComponent as Check } from '../../../common/icons/check.svg';
 import { ReactComponent as Arrow } from '../../../common/icons/left-arrow.svg';
-import { ReactComponent as Exit } from "../../../common/icons/x.svg";
+import { ReactComponent as Exit } from '../../../common/icons/x.svg';
 import { phoneSendMessage, phoneCheckNumber } from '../../../common/api/signup';
+
+interface LocationState {
+  isSocial: string;
+}
 
 function VerifyPhone() {
   const navigation = useNavigate();
+  const state = useLocation().state as LocationState;
+  const { isSocial } = state;
   const [buttonIsClicked, setButtonIsClicked] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [authNumber, setAuthNumber] = useState('');
@@ -22,6 +28,7 @@ function VerifyPhone() {
   const [timeIsValid, setTimeIsValid] = useState(true);
   const [isReSended, setIsReSended] = useState(false);
   const [feedback, setFeedback] = useState('');
+  const [socialFeedback, setSocialFeedback] = useState<string|undefined>();
   const [SMSid, setSMSid] = useState(0);
   const [phoneIsExist, setPhoneIsExist] = useState(false);
   const [authFailed, setAuthFailed] = useState(false);
@@ -46,7 +53,14 @@ function VerifyPhone() {
           setButtonIsClicked(true);
           setIsSended(true);
           setPhoneIsExist(false);
-        } else {
+        } else if(code === 371){
+          setPhoneIsExist(true);
+          if(data.userSocial === 'N')
+          setSocialFeedback('네이버로 가입된 전화번호 입니다.');
+          if(data.userSocial === 'K')
+          setSocialFeedback('카카오로 가입된 전화번호 입니다.');
+          phoneRef.current.focus();
+        } else{
           setPhoneIsExist(true);
           phoneRef.current.focus();
         }
@@ -54,7 +68,6 @@ function VerifyPhone() {
       errorHandler,
     );
   };
-
   const dispatch = useDispatch();
   const errorHandler = () => {
     dispatch(errorActions.setError());
@@ -133,9 +146,12 @@ function VerifyPhone() {
         { number: authNumber, smsId: SMSid },
         (response: AxiosResponse) => {
           const { code } = response.data;
-          console.log(response);
           if (code === 200) {
-            navigation(SIGN_UP_PATH.USER_INFO, { state: { phone: phoneNumber } });
+            if (isSocial==='A') {
+              navigation(SIGN_UP_PATH.SOCIAL.NICKNAME, { state: { phone: phoneNumber, isSocial, email: '' } });
+            } else {
+              navigation(SIGN_UP_PATH.USER_INFO, { state: { phone: phoneNumber } });
+            }
           } else {
             setFeedback('인증번호를 확인해주세요');
             setAuthFailed(true);
@@ -144,7 +160,7 @@ function VerifyPhone() {
         },
         errorHandler,
       );
-    }, 200)
+    }, 200);
   };
 
   const buttonContext = !isSended ? (
@@ -186,16 +202,15 @@ function VerifyPhone() {
           autoComplete="off"
           ref={phoneRef}
         />
-        <p className={classNames('input-feedback')}>{phoneIsExist && '이미 가입된 전화번호입니다.'}</p>
+        <p className={classNames('input-feedback')}>{socialFeedback || (phoneIsExist && '이미 가입된 전화번호입니다.')}</p>
 
         <span
           aria-hidden="true"
           className={classNames('login-input-clear', { checked: isSended, isMount: isEntered, isUnMount: !isEntered })}
           onClick={clearButtonHandler}
         >
-          {isSended ? <Check /> : <Exit className='login-input-clear-exit' />}
+          {isSended ? <Check /> : <Exit className="login-input-clear-exit" />}
         </span>
-
       </div>
       {isSended && (
         <div className="login-authnumber">
@@ -219,7 +234,7 @@ function VerifyPhone() {
       )}
       {buttonContext}
       {buttonIsClicked && <ToastMessage message="인증번호가 전송 되었습니다" />}
-      { }
+      {}
     </div>
   );
 }

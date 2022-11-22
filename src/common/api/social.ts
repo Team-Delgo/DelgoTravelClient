@@ -32,7 +32,8 @@ async function setStateCode(
 
 async function oAuthSignup(
   data: {
-    nickname: string;
+    email: string;
+    userName: string;
     phoneNo: string;
     petName: string;
     petSize: string;
@@ -42,16 +43,9 @@ async function oAuthSignup(
   success: (data: AxiosResponse) => void,
   dispatch: any,
 ) {
-  const { nickname, phoneNo, petName, petSize, birthday, userSocial } = data;
+  // const { nickname, phoneNo, petName, petSize, birthday, userSocial } = data;
   await axios
-    .post(`${process.env.REACT_APP_API_URL}/oAuthSignup `, {
-      userName: nickname,
-      phoneNo,
-      petName,
-      petSize,
-      birthday,
-      userSocial,
-    })
+    .post(`${process.env.REACT_APP_API_URL}/oauth-signup `, data)
     .then((data) => {
       success(data);
     })
@@ -60,4 +54,17 @@ async function oAuthSignup(
     });
 }
 
-export { setAccessCode, setStateCode, oAuthSignup };
+async function appleSendToken(token:string|null ,success: (data: AxiosResponse) => void,
+  dispatch: any,
+) {
+  await axios
+    .post(`${process.env.REACT_APP_API_URL}/apple/id_token/${token}`)
+    .then((data) => {
+      success(data);
+    })
+    .catch((error) => {
+      useErrorHandlers(dispatch, error);
+    });
+}
+
+export { setAccessCode, setStateCode, oAuthSignup, appleSendToken };

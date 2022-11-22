@@ -1,4 +1,4 @@
-import React, { useState, useCallback,memo } from 'react'
+import React, { useState } from 'react'
 import {  useLocation,useNavigate} from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { AxiosResponse } from 'axios';
@@ -37,6 +37,7 @@ function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch
     wishListConfirmModalClose();
     wishDelete(
       { wishId: place.wishId },
+      dispatch,
       (response: AxiosResponse) => {
         if (response.data.code === 200) {
           getRecommendedPlacesRefetch()
@@ -45,12 +46,7 @@ function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch
           }, 100);
         }
       },
-    );
-    if (OS === 'android') {
-      window.BRIDGE.vibrate();
-    } else {
-      window.webkit.messageHandlers.vibrate.postMessage('');
-    }
+    )
   };
 
   const wishListConfirmModalOpen = () => {
@@ -61,11 +57,11 @@ function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch
     setWishListAlertConfirmOpen(false);
   };
 
-  const moveToDetailPage = useCallback(() => {
+  const moveToDetailPage = () => {
     dispatch(scrollActions.scroll({ myStorage: window.scrollY }));
     dispatch(prevPathActions.prevPath({ prevPath: location.pathname }));
     navigate(`/detail-place/${place.placeId}`);
-  }, []);
+  }
 
   return (
     <div className="wished-place" aria-hidden="true">
@@ -91,4 +87,4 @@ function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch
   );
 }
 
-export default memo(WishedPlace)
+export default WishedPlace

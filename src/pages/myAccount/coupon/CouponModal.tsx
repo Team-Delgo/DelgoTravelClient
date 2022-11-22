@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import classNames from 'classnames';
 import React, { ChangeEvent, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Sheet from 'react-modal-sheet';
 import { registCoupon } from '../../../common/api/coupon';
 import {RootState} from '../../../redux/store'
@@ -15,7 +15,8 @@ function CouponModal(props: { closeModal: () => void; openModal: boolean; confir
   const inputRef = useRef<HTMLInputElement>(null);
   const { id } = useSelector((state: RootState) => state.persist.user.user);
   const { closeModal ,openModal ,confirmCouponRegisterCompletedOpen} = props;
-
+  const dispatch = useDispatch();
+  
   const inputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     if (value.length > 16) return;
@@ -30,7 +31,7 @@ function CouponModal(props: { closeModal: () => void; openModal: boolean; confir
       userId: id,
       couponCode: enteredInput
     };
-    registCoupon(data, (response: AxiosResponse) => {
+    registCoupon(data,dispatch, (response: AxiosResponse) => {
       const { code } = response.data;
       console.log(response);
       if (code === 200) {

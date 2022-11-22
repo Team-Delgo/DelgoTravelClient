@@ -1,5 +1,7 @@
 import { AxiosResponse } from 'axios';
+import TravelHistoryPlace from '../../pages/myStorage/historyInfo/travelHistoryPlace/TravelHistoryPlace';
 import axiosInstance from './interceptors';
+import { useErrorHandlers } from './useErrorHandlers';
 
 async function bookingRequest(
   data: {
@@ -14,12 +16,14 @@ async function bookingRequest(
     orderId: string | null;
     paymentKey: string | null;
   },
+  dispatch: any,
   success: (data: AxiosResponse) => void,
 ) {
   const accessToken = localStorage.getItem('accessToken') || '';
   const startDt = `${data.startDt.substring(0, 4)}-${data.startDt.substring(4, 6)}-${data.startDt.substring(6, 10)}`;
   const endDt = `${data.endDt.substring(0, 4)}-${data.endDt.substring(4, 6)}-${data.endDt.substring(6, 10)}`;
-  const result = await axiosInstance.post(
+  try {
+    const result = await axiosInstance.post(
       `/booking/request`,
       {
         userId: data.userId,
@@ -40,68 +44,83 @@ async function bookingRequest(
       },
     );
     success(result);
+  } catch (err: any) {
+    useErrorHandlers(dispatch, err);
+  }
 }
 
 async function bookingGetData(
   data: {
     bookingId: string;
   },
+  dispatch: any,
   success: (data: AxiosResponse) => void,
 ) {
-  const accessToken = localStorage.getItem('accessToken') || '';
-  const result = await axiosInstance.get(`/booking/getData?bookingId=${data.bookingId}`, {
+  try {
+    const accessToken = localStorage.getItem('accessToken') || '';
+    const result = await axiosInstance.get(`/booking/getData?bookingId=${data.bookingId}`, {
       headers: {
         Authorization_Access: accessToken,
       },
     });
-  success(result);
+    success(result);
+    console.log(result)
+  } catch (err: any) {
+    console.log(err)
+    useErrorHandlers(dispatch, err);
+  }
 }
 
 async function bookingGetDataByMain(userId: number) {
   const accessToken = localStorage.getItem('accessToken') || '';
-  
-  if(userId===0) return
 
-  const { data } = await axiosInstance.get(`/booking/getData/main?userId=${userId}`, {
-    headers: {
-      Authorization_Access: accessToken,
-    },
-  });
-  return data;
-}
+  if (userId === 0) return;
 
-async function getBookingHistory(userId: number) {
-  const accessToken = localStorage.getItem('accessToken') || '';
-  const { data } = await axiosInstance.get(`/booking/getHistory?userId=${userId}`, {
-    headers: {
-      Authorization_Access: accessToken,
-    },
-  });
-  return data;
-}
-
-async function bookingCancle(bookingId: string, success: (data: AxiosResponse) => void) {
-  const accessToken = localStorage.getItem('accessToken') || '';
-  const result = await axiosInstance.post(`/booking/cancel/${bookingId}`, {
+    const { data } = await axiosInstance.get(`/booking/getData/main?userId=${userId}`, {
       headers: {
         Authorization_Access: accessToken,
       },
     });
-  success(result);
+    return data;
 }
 
-async function getBookingState(userId: number) {
-  const accessToken = localStorage.getItem('accessToken') || '';
-  const { data } = await axiosInstance.get(
-    `/booking/getData/account`,
-    {
+async function getBookingHistory(userId: number) {
+    const accessToken = localStorage.getItem('accessToken') || '';
+    const { data } = await axiosInstance.get(`/booking/getHistory?userId=${userId}`, {
+      headers: {
+        Authorization_Access: accessToken,
+      },
+    });
+    return data;
+}
+
+async function bookingCancle(bookingId: string, dispatch: any, success: (data: AxiosResponse) => void) {
+  try {
+    const accessToken = localStorage.getItem('accessToken') || '';
+    const result = await axiosInstance.post(`/booking/cancel/${bookingId}`, {
+      headers: {
+        Authorization_Access: accessToken,
+      },
+    });
+    success(result);
+  } catch (err: any) {
+    useErrorHandlers(dispatch, err);
+  }
+}
+
+async function getBookingState(userId: number, dispatch: any) {
+  try {
+    const accessToken = localStorage.getItem('accessToken') || '';
+    const { data } = await axiosInstance.get(`/booking/getData/account`, {
       params: { userId },
       headers: {
         Authorization_Access: accessToken,
       },
-    },
-  );
-  return data;
+    });
+    return data;
+  } catch (err: any) {
+    useErrorHandlers(dispatch, err);
+  }
 }
 
 export { bookingRequest, bookingGetData, bookingGetDataByMain, getBookingHistory, bookingCancle, getBookingState };

@@ -1,83 +1,68 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import axios, { AxiosResponse } from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import qs from 'qs';
-import { NAVER} from '../../../common/constants/url.cosnt';
+import { appleSendToken } from '../../../common/api/social';
+import Loading from '../../../common/utils/Loading';
+import AlertConfirm from '../../../common/dialog/AlertConfirm';
+import { SIGN_UP_PATH } from '../../../common/constants/path.const';
+import AlertConfirmOne from '../../../common/dialog/AlertConfirmOne';
 
-declare global {
-  interface Window {
-    Naver: any;
-  }
-}
-
-
-function NaverRedirectHandler() {
+function AppleRedirectHandler() {
+  const [signUp, setSignUp] = useState(false);
+  const [loginFailed, setLoginFailed] = useState(false);
   const dispatch = useDispatch();
-  const code = new URL(window.location.href).searchParams.get("code"); // 네이버 로그인 인증에 성공하면 반환받는 인증 코드, 접근 토큰(access token) 발급에 사용
-  const state = new URL(window.location.href).searchParams.get("state"); 
   const navigate = useNavigate();
-
-  console.log(code,state)
+  const url = window.location.href;
+  const i = url.indexOf('id_token');
+  const token = url.substring(i + 9);
 
   useEffect(() => {
     getToken();
   }, []);
 
   const getToken = async () => {
-
-  //   const userData = await axios.get('https://openapi.naver.com/v1/nid/me', { // 유저정보 api -> cors에러
-  //     headers : {
-  //         'Authorization' : `Bearer ${code}`,
-  //     }
-  // })
-
-  // console.log(userData)
-
-    const payload = qs.stringify({
-      grant_type: "authorization_code",
-      client_id: `${process.env.REACT_APP_NAVER_CLIENT_ID}`,
-      client_secret: `${process.env.REACT_APP_NAVER_CLIENT_SECRET}`,
-      code,
-      state,
-    });
-    try {
-      const res = await axios.post( // 토큰발급 -> 서버에서 해줘야됨
-        "https://nid.naver.com/oauth2.0/token",
-         payload
-      );
-      console.log(res)
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const getProfile = async () => {
-    try {
-      window.Naver.API.request({
-        url: 'https://openapi.naver.com/v1/nid/me',  // 유저정보 api -> cors에러
-        success(response:any) {
-            console.log(response);
-        },
-        fail(error:any) {
-            console.log(error);
+    await appleSendToken(
+      token,
+      (response: AxiosResponse) => {
+        const { code } = response.data;
+        if (code === 200) {
+          // 유저 정보, token dispatch
+          navigate('/');
+        } else if (code === 383) {
+          setSignUp(true);
+        } else {
+          setLoginFailed(true);
         }
-    });
-    } catch (err) {
-      console.log(err);
-    }
+        console.log(response);
+      },
+      dispatch,
+    );
   };
 
+  const moveToPreviousPage = () => {
+    navigate('/user/signin');
+  };
 
-  const moveToPreviousPage = ()=>{
-    navigate('/user/signin')
-  }
+  const moveToSignUpPage = () => {
+    navigate(SIGN_UP_PATH.TERMS, { state: { isSocial: 'A', phone: '', email: '' } });
+  };
 
+  return (
+    <div>
+      <Loading />
+      {signUp && (
+        <AlertConfirm
+          text="애플로 가입된 계정이 없습니다"
+          buttonText="회원가입"
+          yesButtonHandler={moveToSignUpPage}
+          noButtonHandler={moveToPreviousPage}
+        />
+      )}
+      {loginFailed && <AlertConfirmOne text="애플 로그인에 실패하였습니다" buttonHandler={moveToPreviousPage} />}
+    </div>
+  );
+}
 
-  return <div>네이버 로그인
-    <button type="button" onClick={moveToPreviousPage}>뒤로가기</button>
-  </div>
-  
-};
-
-export default NaverRedirectHandler
+export default AppleRedirectHandler;

@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface Feedback {
   isValid: boolean;
   message: string;
