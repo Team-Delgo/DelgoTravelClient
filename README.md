@@ -1,6 +1,5 @@
 # <b>🐕 Delgo Client Repository 🐕</b>
 ![logo_1](https://user-images.githubusercontent.com/54196723/185036077-7ec238dd-88f6-4c82-adc9-89eaca0b3c2c.png)
-
 <br/>
 
 
@@ -25,12 +24,19 @@
 
 ### 전국민 반려인을 위한 반려견 동반 여행 O2O 서비스 플랫폼
 
+
 -   <b>지역별 숙소정보 제공</b>
--   <b>일정별 예약 현황 확인</b>
--   <b>간편한 예약 결제/취소</b>
--   <b>쿠폰/포인트 할인</b>
--   <b>리뷰 작성을 통한 숙소후기</b></b>
+
+-   <b>일정별 가격 비교 / 예약 현황 확인</b>
+
+-   <b>토스페이먼츠 활용한 예약 결제 / 취소</b>
+
+-   <b>쿠폰 / 포인트 할인</b>
+
+-   <b>리뷰를 통한 숙박업소 후기</b>
+
 -   <b>마음에 드는 숙소찜</b>
+
 -   <b>DELGO 자체 숙소추천</b>
 
 <br/>
@@ -173,6 +179,6 @@
 </p>
 
 <p float="left">  
-<img width="33%" height="600px" src="https://user-images.githubusercontent.com/54196723/198865076-899e526d-3471-445c-b799-355d0b9f5bf3.png">
-<img width="33%" height="600px" src="https://user-images.githubusercontent.com/54196723/198865077-ed415b6c-3918-4f89-9345-35d2b54b1eed.png">
+<img width="33%" height="600px" src="https://user-images.githubusercontent.com/54196723/203537684-7349bfc6-0142-481c-863f-66baf87d018f.png">
+<img width="33%" height="600px" src="https://user-images.githubusercontent.com/54196723/203537693-c05f08f8-dc81-436a-9ac6-1e1e8b940392.png">
 </p>
