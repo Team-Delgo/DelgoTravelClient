@@ -134,6 +134,7 @@ function DetailPlacePage() {
 
 
   useEffect(() => {
+    // console.log('detailPlaceRivews',detailPlaceRivews)
     if (location.state?.prevPath?.includes('/detail-place')) {
       window.scroll(0, detailPlaceScrollY);
     }

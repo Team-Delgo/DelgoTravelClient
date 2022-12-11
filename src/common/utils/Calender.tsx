@@ -153,6 +153,10 @@ function Calender(props: CalenderProps) {
 
     currentMonth += 1;
 
+    if(currentMonth>=13){
+      currentMonth -=12
+    }
+
     if (currentMonth < 10) {
       currentMonth = currentMonth.toString();
       currentMonth = `0${currentMonth}`;

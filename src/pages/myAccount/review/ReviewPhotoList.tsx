@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
 import { AxiosResponse } from 'axios';
@@ -17,20 +17,18 @@ interface LocationState{
 
 function ReviewPhotoList() {
   const state = useLocation().state as LocationState;
-  const {reviewId} = state;
-  const [images, setImages] = useState([]);
+  const { reviewId } = state;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  console.log(reviewId);
-
-  useEffect(()=>{
+  useEffect(() => {
     getReviewDataRefetch();
-  },[])
+  }, []);
 
   const {
     isLoading: getReviewDataIsLoading,
     data: detailPlace,
-    refetch:getReviewDataRefetch,
+    refetch: getReviewDataRefetch,
   } = useQuery(GET_REVIEW_DATA, () => getReviewData(reviewId), {
     cacheTime: CACHE_TIME,
     staleTime: STALE_TIME,
@@ -40,16 +38,16 @@ function ReviewPhotoList() {
     },
   });
 
-  console.log(detailPlace);
+  const moveToMyReviewPage = () => {
+    navigate(-1);
+  };
 
   return (
     <div className="photoviewer">
-      <div className='photoviewer-exit'>
-        <img src={Exit} alt="exit"/>
+      <div className="photoviewer-exit">
+        <img src={Exit} alt="exit" aria-hidden="true" onClick={moveToMyReviewPage} />
       </div>
-      <ReviewSlider
-        images={detailPlace?.data.data}
-      />
+      <ReviewSlider images={detailPlace?.data.data} />
     </div>
   );
 }
