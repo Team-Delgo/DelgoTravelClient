@@ -203,20 +203,6 @@ function RiviewWritingPage() {
       setCompressedFileName(event.target.files[0].name);
       const galleryImg = URL.createObjectURL(event.target.files[0]);
       setImg(galleryImg);
-
-        // const imageLists = event.target.files;
-        // let imageUrlLists = [...images];
-
-        // for (let i = 0; i < imageLists.length; i += 1) {
-        //   const currentImageUrl = URL.createObjectURL(imageLists[i]);
-        //   imageUrlLists.push(currentImageUrl);
-        // }
-
-        // if (imageUrlLists.length > 10) {
-        //   imageUrlLists = imageUrlLists.slice(0, 10);
-        // }
-        // setImages(imageUrlLists);
-        // setSendingImage([...sendingImage , event.target.files![0]]);
       }
     }
 
