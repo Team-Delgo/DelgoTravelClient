@@ -22,6 +22,7 @@
     "react-apple-login": "^1.1.5",
     "react-css-spinners": "^4.0.2",
     "react-dom": "^17.0.2",
+    "react-easy-crop": "^4.6.3",
     "react-loader-spinner": "^5.1.7-beta.1",
     "react-loading-skeleton": "^3.1.0",
     "react-modal-sheet": "^1.5.2",
