@@ -44,12 +44,12 @@ function ReviewsPage() {
     window.scrollTo(0, 0);
     setReviews(location.state.reviews);
 
-    const reviewImages = location.state.reviews.filter(function(review:RivewType) {
-      if(review.review.reviewPhotoList.length >0)  {
+    const reviewImages = location.state.reviews.filter(function (review: RivewType) {
+      if (review.review.reviewPhotoList.length > 0) {
         return true;
       }
-    })
-    setImageReviewsCount(reviewImages.length)
+    });
+    setImageReviewsCount(reviewImages.length);
   }, []);
 
 
