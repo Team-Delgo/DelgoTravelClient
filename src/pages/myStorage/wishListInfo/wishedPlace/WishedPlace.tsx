@@ -58,7 +58,7 @@ function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch
   };
 
   const moveToDetailPage = () => {
-    dispatch(scrollActions.scroll({ myStorage: window.scrollY }));
+    dispatch(scrollActions.myStorageScroll({ myStorage: window.scrollY }));
     dispatch(prevPathActions.prevPath({ prevPath: location.pathname }));
     navigate(`/detail-place/${place.placeId}`);
   }

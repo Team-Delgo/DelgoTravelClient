@@ -83,12 +83,12 @@ function Settings() {
         >
           <div className="setting-label">개인정보 처리방침</div>
         </div>
-        <div className="setting-others">
+        {/* <div className="setting-others">
           <div className="setting-label">공지사항</div>
         </div>
         <div className="setting-others">
           <div className="setting-label">회원탈퇴</div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

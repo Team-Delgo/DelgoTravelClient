@@ -1,5 +1,7 @@
 
 import React, { useMemo, useState, memo } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { MY_ACCOUNT_PATH, REVIEWS_PHOTOS } from '../../../common/constants/path.const';
 import { ReactComponent as ReviewStar } from '../../../common/icons/review-star.svg'
 import { ReactComponent as ReviewVoidStar } from '../../../common/icons/review-void-star.svg'
 import './Review.scss';
@@ -37,6 +39,8 @@ interface ReviewPhotoType {
 function Review({ review }: RivewTypeProps) {
   const reviewStarCount = useMemo(() => reviewStarComponents(), [])
   const [moreDescription, setMoreDescription] = useState(false)
+  const navigate = useNavigate();
+  const {reviewId} = review.review 
 
   function reviewStarComponents() {
     const reviewStarArray = [];
@@ -48,7 +52,6 @@ function Review({ review }: RivewTypeProps) {
     }
     return reviewStarArray;
   }
-
 
   const handleMoreDescription = () => {
     setMoreDescription(!moreDescription);
@@ -87,8 +90,14 @@ function Review({ review }: RivewTypeProps) {
         ) : (
           <div className="review-content-description">{review.review.text}</div>
         )}
-        <div className="review-content-image-container">
-          {review.review.reviewPhotoList.map((image:ReviewPhotoType )=> (
+        <div
+          className="review-content-image-container"
+          aria-hidden="true"
+          onClick={() => {
+            navigate(REVIEWS_PHOTOS, { state: { reviewId} });
+          }}
+        >
+          {review.review.reviewPhotoList.map((image: ReviewPhotoType) => (
             <img src={image.url} alt="profile-img" />
           ))}
         </div>

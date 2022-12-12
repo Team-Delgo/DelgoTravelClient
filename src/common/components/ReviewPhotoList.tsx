@@ -4,12 +4,12 @@ import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
 import { AxiosResponse } from 'axios';
 import "./ReviewPhotoList.scss";
-import ReviewSlider from './ReviewSlider';
-import Exit from "../../../common/icons/exit-white.svg";
+import ReviewSlider from '../utils/ReviewSlider';
+import Exit from "../icons/exit-white.svg";
 
-import { getReviewData } from '../../../common/api/reivew';
-import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
-import { CACHE_TIME, GET_REVIEW_DATA, STALE_TIME } from '../../../common/constants/queryKey.const';
+import { getReviewData } from '../api/reivew';
+import { useErrorHandlers } from '../api/useErrorHandlers';
+import { CACHE_TIME, GET_REVIEW_DATA, STALE_TIME } from '../constants/queryKey.const';
 
 interface LocationState{
   reviewId : number;
@@ -38,14 +38,14 @@ function ReviewPhotoList() {
     },
   });
 
-  const moveToMyReviewPage = () => {
+  const moveToPrevPage = () => {
     navigate(-1);
   };
 
   return (
     <div className="photoviewer">
       <div className="photoviewer-exit">
-        <img src={Exit} alt="exit" aria-hidden="true" onClick={moveToMyReviewPage} />
+        <img src={Exit} alt="exit" aria-hidden="true" onClick={moveToPrevPage} />
       </div>
       <ReviewSlider images={detailPlace?.data.data} />
     </div>

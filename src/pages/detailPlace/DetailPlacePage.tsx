@@ -14,6 +14,7 @@ import {
   MY_STORAGE_PATH,
   WHERE_TO_GO_PATH,
   SIGN_IN_PATH,
+  MY_ACCOUNT_PATH,
 } from '../../common/constants/path.const';
 import {RootState} from '../../redux/store'
 import { ReactComponent as ActiveHeart } from '../../common/icons/heart-active.svg';
@@ -160,16 +161,12 @@ function DetailPlacePage() {
 
   const wishListInsert = () => {
     if (isSignIn) {
-    dispatch(scrollActions.initDetailPlaceScroll())
-      wishInsert(
-        { userId, placeId: Number(placeId) },
-        dispatch,
-        (response: AxiosResponse) => {
-          if (response.data.code === 200) {
-            getDetailPlaceRefetch();
-          }
-        },
-      );
+    dispatch(scrollActions.detailPlaceScroll({ detailPlace: 0 }));
+    wishInsert({ userId, placeId: Number(placeId) }, dispatch, (response: AxiosResponse) => {
+      if (response.data.code === 200) {
+        getDetailPlaceRefetch();
+      }
+    });
       if (OS === 'android') {
         window.BRIDGE.vibrate();
       } else {
@@ -181,7 +178,7 @@ function DetailPlacePage() {
   };
 
   const wishListDelete = () => {
-    dispatch(scrollActions.initDetailPlaceScroll())
+    dispatch(scrollActions.detailPlaceScroll({ detailPlace: 0 }));
     wishDelete(
       { wishId: Number(detailPlace?.data.place.wishId) },
       dispatch,
@@ -206,7 +203,7 @@ function DetailPlacePage() {
       navigate(MY_STORAGE_PATH, {
         state: {
           prevPath: location.pathname,
-          myStorageTab:location.state
+          myStorageTab: location.state,
         },
       });
     else if (detailPlacePrevPath.toString() === WHERE_TO_GO_PATH)
@@ -215,6 +212,12 @@ function DetailPlacePage() {
           prevPath: location.pathname,
         },
       });
+    else if (detailPlacePrevPath.toString() === MY_ACCOUNT_PATH.REVIEWS)
+    navigate(MY_ACCOUNT_PATH.REVIEWS, {
+      state: {
+        prevPath: location.pathname,
+      },
+    });
     else
       navigate(ROOT_PATH, {
         state: {
@@ -237,19 +240,21 @@ function DetailPlacePage() {
   return (
     <>
       {isCalenderOpen && <Calender closeCalender={calenderOpenClose} isRoom={false} />}
-      {logInModalOpen && <AlertConfirm
-        text="로그인 후 이용 할 수 있습니다."
-        buttonText='로그인'
-        noButtonHandler={() => {
-          setLogInModalOpen(false);
-        }}
-        yesButtonHandler={() => {
-          navigate(SIGN_IN_PATH.MAIN);
-        }}
-      />}
+      {logInModalOpen && (
+        <AlertConfirm
+          text="로그인 후 이용 할 수 있습니다."
+          buttonText="로그인"
+          noButtonHandler={() => {
+            setLogInModalOpen(false);
+          }}
+          yesButtonHandler={() => {
+            navigate(SIGN_IN_PATH.MAIN);
+          }}
+        />
+      )}
       <div className={classNames('detail-place', { close: isCalenderOpen })}>
         <div style={{ width: '100%' }}>
-            <ImageSlider images={detailPlace?.data?.detailPhotoList} />
+          <ImageSlider images={detailPlace?.data?.detailPhotoList} />
         </div>
         <LeftArrow className="detail-place-previous-page" onClick={moveToPrevPage} />
         <div className="detail-place-heart">
@@ -271,7 +276,7 @@ function DetailPlacePage() {
             <Link
               style={{ textDecoration: 'none' }}
               to={`/detail-place/${detailPlace?.data.place.placeId}/reviews`}
-              state={{ reviews: detailPlaceRivews.data.readReviewDTOList }}
+              state={{ reviews: detailPlaceRivews.data.readReviewDTOList, ratingAvg: detailPlaceRivews.data.ratingAvg }}
               key={detailPlace?.data.place.placeId}
             >
               <span className="detail-place-info-reviews">
@@ -300,22 +305,21 @@ function DetailPlacePage() {
           <header className="detail-place-room-select-header">객실선택</header>
         </div>
         <div className="detail-place-room-types">
-          {
-          detailPlace?.data.roomList.map((room: RoomType) => (
-                <div aria-hidden="true" onClick={saveDetailPlaceScrollY}>
-                  <RoomType
-                    key={room.roomId}
-                    room={room}
-                    navigate={() => {
-                      navigate(`/detail-place/${detailPlace?.data.place.placeId}/${room.roomId}`, {
-                        state: {
-                          room,
-                        },
-                      });
-                    }}
-                  />
-                </div>
-              ))}
+          {detailPlace?.data.roomList.map((room: RoomType) => (
+            <div aria-hidden="true" onClick={saveDetailPlaceScrollY}>
+              <RoomType
+                key={room.roomId}
+                room={room}
+                navigate={() => {
+                  navigate(`/detail-place/${detailPlace?.data.place.placeId}/${room.roomId}`, {
+                    state: {
+                      room,
+                    },
+                  });
+                }}
+              />
+            </div>
+          ))}
         </div>
         {detailPlaceRivews?.data && (
           <div className="detail-place-review">
@@ -327,7 +331,10 @@ function DetailPlacePage() {
                 <Link
                   style={{ textDecoration: 'none' }}
                   to={`/detail-place/${detailPlace?.data.place.placeId}/reviews`}
-                  state={{ reviews: detailPlaceRivews.data.readReviewDTOList, reviewsAvg: detailPlaceRivews.data.ratingAvg }}
+                  state={{
+                    reviews: detailPlaceRivews.data.readReviewDTOList,
+                    reviewsAvg: detailPlaceRivews.data.ratingAvg,
+                  }}
                   key={detailPlace?.data.place.placeId}
                 >
                   <div className="detail-place-review-header-more">전체보기</div>
@@ -342,7 +349,7 @@ function DetailPlacePage() {
           </div>
         )}
         {detailPlace?.data.placeNoticeList.map((placeNotice: NoticeType) => (
-          <PlaceNotice placeNotice={placeNotice} key={placeNotice.placeNoticeId}/>
+          <PlaceNotice placeNotice={placeNotice} key={placeNotice.placeNoticeId} />
         ))}
         <div className="detail-place-map">
           <header className="detail-place-map-header">지도</header>
