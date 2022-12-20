@@ -3,8 +3,13 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useErrorHandlers } from './useErrorHandlers';
 
+const accessToken = localStorage.getItem('accessToken') || '';
+
 const axiosInstance = axios.create({
   baseURL: `${process.env.REACT_APP_API_URL}`,
+  headers: {
+    authorization_access: accessToken,
+  },
 });
 
 axiosInstance.interceptors.response.use(
@@ -27,7 +32,7 @@ axiosInstance.interceptors.response.use(
 
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/tokenReissue`, {
         headers: {
-          Authorization_Refresh: refreshToken,
+          authorization_refresh: refreshToken,
         },
       });
 
@@ -49,20 +54,12 @@ axiosInstance.interceptors.response.use(
       localStorage.setItem('accessToken', newAccessToken);
       localStorage.setItem('refreshToken', newRefreshToken);
 
-      originalRequest.headers.Authorization_Access = newAccessToken;
+      originalRequest.headers.authorization_access = newAccessToken;
 
-      return axiosInstance(originalRequest);
+      return axios(originalRequest);
     }
-    console.log(error)
     return Promise.reject(error);
-    // errorHandlers(error);
   },
 );
-
-function errorHandlers(error: any) {
-  console.log('error', error);
-  const dispatch = useDispatch();
-  useErrorHandlers(dispatch, error);
-}
 
 export default axiosInstance;
