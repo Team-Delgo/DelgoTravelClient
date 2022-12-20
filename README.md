@@ -46,7 +46,7 @@
 <b>📂 Repositories</b>
 </h2>
 
--   ### <b> <a href="https://github.com/Team-Delgo"> 🔗 Delgo-Travel-Organization </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo"> 🔗 Delgo-Organization </a> </b>
 -   ### <b> <a href="https://github.com/Team-Delgo/DelgoTravelClient" > 🔗 Delgo-Travel-Frontend </a> </b>
 -   ### <b> <a href="https://github.com/Team-Delgo/DelgoTravelServer" > 🔗 Delgo-Travel-Backend </a> </b>
 -   ### <b> <a href="https://github.com/Team-Delgo/DelgoTravelAndroid" > 🔗 Delgo-Travel-Android </a> </b>
