@@ -9,6 +9,7 @@ function useErrorHandlers(dispatch: any, error: AxiosError) {
     dispatch(errorActions.setTokenExpriedError());
     return;
   }
+  console.log('error',error)
   dispatch(errorActions.setError());
   if (error.response) {
     console.log(error.response);

@@ -1,24 +1,18 @@
-import React, { useEffect } from 'react'
-import { useDispatch } from "react-redux";
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
-import { ReactComponent as LeftArrow } from '../../common/icons/left-arrow2.svg'
+import { ReactComponent as LeftArrow } from '../../common/icons/left-arrow2.svg';
 import BottomButton from '../../common/components/BottomButton';
 import { getEditorNotePlace } from '../../common/api/places';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
 import { ROOT_PATH } from '../../common/constants/path.const';
-import { GET_EDITOR_NOTE_PLACE, CACHE_TIME, STALE_TIME } from '../../common/constants/queryKey.const'
-import { prevPathActions } from "../../redux/slice/prevPathSlice"
+import { GET_EDITOR_NOTE_PLACE, CACHE_TIME, STALE_TIME } from '../../common/constants/queryKey.const';
+import { prevPathActions } from '../../redux/slice/prevPathSlice';
 import { scrollActions } from '../../redux/slice/scrollSlice';
-import "./EditorNotePage.scss";
+import { EditorImgType } from '../../common/types/editor';
+import './EditorNotePage.scss';
 
-interface EditorImgType {
-  editorNoteId: number
-  order: number
-  placeId: number
-  thumbnailUrl: string
-  url: string
-}
 
 function EditorNotePage() {
   const dispatch = useDispatch();
@@ -46,7 +40,7 @@ function EditorNotePage() {
 
   const moveToMainPage = () => {
     navigate(ROOT_PATH);
-  }
+  };
 
   const moveToDetailPage = () => {
     dispatch(prevPathActions.prevPath({ prevPath: location.pathname }));
@@ -59,9 +53,9 @@ function EditorNotePage() {
 
   return (
     <div className="editor-background">
-      {
-        editorNotePlace.data.map((place: EditorImgType) => <img className="editor-img" src={place.url} alt="editor-place-img" />)
-      }
+      {editorNotePlace.data.map((place: EditorImgType) => (
+        <img className="editor-img" src={place.url} alt="editor-place-img" />
+      ))}
       <div className="editor-previous-page">
         <LeftArrow onClick={moveToMainPage} />
       </div>

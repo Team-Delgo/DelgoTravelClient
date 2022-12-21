@@ -51,18 +51,10 @@ axiosInstance.interceptors.response.use(
 
       originalRequest.headers.Authorization_Access = newAccessToken;
 
-      return axiosInstance(originalRequest);
-    }
-    console.log(error)
+      return axios(originalRequest);
+    } 
     return Promise.reject(error);
-    // errorHandlers(error);
   },
 );
-
-function errorHandlers(error: any) {
-  console.log('error', error);
-  const dispatch = useDispatch();
-  useErrorHandlers(dispatch, error);
-}
 
 export default axiosInstance;

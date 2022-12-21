@@ -11,19 +11,8 @@ import { getCouponList } from '../../../common/api/coupon';
 import AlertConfirmOne from '../../../common/dialog/AlertConfirmOne'
 import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
 import { GET_MY_COUPON_LIST, CACHE_TIME, STALE_TIME } from '../../../common/constants/queryKey.const'
+import { CouponType } from '../../../common/types/coupon';
 import { RootState } from '../../../redux/store'
-
-interface CouponType {
-  couponId: number
-  couponManagerId: number
-  couponType: string
-  discountNum: number
-  expireDt: string
-  isUsed: number
-  isValid: number
-  registDt: string
-  userId: number
-}
 
 function ReservationPage() {
   const { user, room, place, date } = useSelector((state: RootState) => state.persist.reservation);

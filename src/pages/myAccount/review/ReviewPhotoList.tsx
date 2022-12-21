@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useQuery } from 'react-query';
-import { AxiosResponse } from 'axios';
 import "./ReviewPhotoList.scss";
 import ReviewSlider from './ReviewSlider';
 import Exit from "../../../common/icons/exit-white.svg";

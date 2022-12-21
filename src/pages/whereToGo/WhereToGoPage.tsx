@@ -20,19 +20,7 @@ import Delgo from '../../common/icons/delgo.svg';
 import './WhereToGoPage.scss';
 import Calender from '../../common/utils/Calender';
 import { GET_ALL_PLACES, CACHE_TIME, STALE_TIME } from '../../common/constants/queryKey.const'
-
-
-interface PlaceType {
-  address: string
-  checkin: string
-  checkout: string
-  isBooking: number
-  lowestPrice: string
-  mainPhotoUrl: string
-  name: string
-  placeId: number
-  wishId: number
-}
+import {PlaceType} from '../../common/types/place'
 
 function AllPlacesSkeletons() {
   const AllPlacesSkeletonsArray = [];

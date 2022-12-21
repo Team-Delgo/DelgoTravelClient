@@ -13,31 +13,8 @@ import Star from '../../../common/icons/review-star.svg';
 import GrayStar from '../../../common/icons/review-void-star.svg';
 import './ReviewList.scss';
 import { MY_ACCOUNT_PATH } from '../../../common/constants/path.const';
+import { ReviewType } from '../../../common/types/review';
 
-interface ReviewType {
-  placeName: string;
-  profileUrl: string;
-  review: {
-    bookingId: string;
-    placeId: number;
-    rating: number;
-    registDt: string;
-    reviewId: number;
-    reviewPhotoList: Array<ReviewPhotoListType>;
-    roomId: number;
-    text: string;
-    updateDt: null;
-    userId: number;
-  };
-  roomName: string;
-  userName: string;
-}
-
-interface ReviewPhotoListType {
-  registDt: string;
-  reviewPhotoId: number;
-  url: string;
-}
 
 function ReviewList() {
   const userId = useSelector((state: RootState) => state.persist.user.user.id);

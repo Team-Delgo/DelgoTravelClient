@@ -1,80 +1,37 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams, useNavigate,useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 import { AxiosResponse } from 'axios';
-import { useQuery } from 'react-query'
+import { useQuery } from 'react-query';
 import RoomType from './roomType/RoomType';
 import Review from './review/Review';
 import ImageSlider from '../../common/utils/ImageSlider';
 import Map from '../../common/utils/Map';
 import AlertConfirm from '../../common/dialog/AlertConfirm';
-import {
-  ROOT_PATH,
-  MY_STORAGE_PATH,
-  WHERE_TO_GO_PATH,
-  SIGN_IN_PATH,
-} from '../../common/constants/path.const';
-import {RootState} from '../../redux/store'
+import { ROOT_PATH, MY_STORAGE_PATH, WHERE_TO_GO_PATH, SIGN_IN_PATH } from '../../common/constants/path.const';
+import { RootState } from '../../redux/store';
 import { ReactComponent as ActiveHeart } from '../../common/icons/heart-active.svg';
 import { ReactComponent as Heart } from '../../common/icons/heart.svg';
-import { getDetailPlace} from '../../common/api/places';
-import { getDetailPlaceRivews} from '../../common/api/reivew';
+import { getDetailPlace } from '../../common/api/places';
+import { getDetailPlaceRivews } from '../../common/api/reivew';
 import { wishInsert, wishDelete } from '../../common/api/wish';
 import { ReactComponent as LeftArrow } from '../../common/icons/left-arrow2.svg';
 import { currentPlaceActions } from '../../redux/slice/placeSlice';
 import { scrollActions } from '../../redux/slice/scrollSlice';
 import Calender from '../../common/utils/Calender';
 import { useErrorHandlers } from '../../common/api/useErrorHandlers';
-import { GET_DETAIL_PLACE, GET_DETAIL_PLACE_REVIEWS, CACHE_TIME, STALE_TIME } from '../../common/constants/queryKey.const'
-import PlaceNotice from './PlaceNotice/PlaceNotice'
+import {
+  GET_DETAIL_PLACE,
+  GET_DETAIL_PLACE_REVIEWS,
+  CACHE_TIME,
+  STALE_TIME,
+} from '../../common/constants/queryKey.const';
+import PlaceNotice from './PlaceNotice/PlaceNotice';
+import { ReviewType } from '../../common/types/review';
+import { RoomDataType } from '../../common/types/room';
+import { PlaceNoticeType } from '../../common/types/notice';
 import './DetailPlacePage.scss';
-
-interface RivewType {
-  placeName: string
-  profileUrl: string
-  review: {
-    bookingId: string
-    placeId: number
-    rating: number
-    registDt: string
-    reviewId: number
-    roomId: number
-    text: string
-    updateDt: null
-    userId: number
-    reviewPhotoList: Array<ReviewPhotoType>
-  };
-  roomName: string
-  userName: string
-}
-
-interface ReviewPhotoType {
-  registDt: string
-  reviewPhotoId: number
-  url: string
-}
-
-interface RoomType {
-  isBooking: number
-  mainPhotoUrl: string
-  name: string
-  personMaxNum: number
-  personStandardNum: number
-  petMaxNum: number
-  petSizeLimit: string
-  petStandardNum: number
-  placeId: number
-  price: string
-  roomId: number
-}
-
-interface NoticeType {
-  contents:Array<string>
-  placeId: number
-  placeNoticeId: number
-  title:string
-}
 
 declare global {
   interface Window {
@@ -105,7 +62,7 @@ function DetailPlacePage() {
   const {
     isLoading: getDetailPlaceIsLoading,
     data: detailPlace,
-    refetch:getDetailPlaceRefetch,
+    refetch: getDetailPlaceRefetch,
   } = useQuery(GET_DETAIL_PLACE, () => getDetailPlace(userId, placeId as string, startDt, endDt), {
     cacheTime: CACHE_TIME,
     staleTime: STALE_TIME,
@@ -132,17 +89,14 @@ function DetailPlacePage() {
     getDetailPlaceRefetch();
   }, [date]);
 
-
   useEffect(() => {
     // console.log('detailPlaceRivews',detailPlaceRivews)
     if (location.state?.prevPath?.includes('/detail-place')) {
       window.scroll(0, detailPlaceScrollY);
-    }
-    else{
+    } else {
       window.scroll(0, 0);
-    } 
-  }, [detailPlace,detailPlaceRivews]); 
-
+    }
+  }, [detailPlace, detailPlaceRivews]);
 
   useEffect(() => {
     dispatch(
@@ -160,16 +114,12 @@ function DetailPlacePage() {
 
   const wishListInsert = () => {
     if (isSignIn) {
-    dispatch(scrollActions.initDetailPlaceScroll())
-      wishInsert(
-        { userId, placeId: Number(placeId) },
-        dispatch,
-        (response: AxiosResponse) => {
-          if (response.data.code === 200) {
-            getDetailPlaceRefetch();
-          }
-        },
-      );
+      dispatch(scrollActions.initDetailPlaceScroll());
+      wishInsert({ userId, placeId: Number(placeId) }, dispatch, (response: AxiosResponse) => {
+        if (response.data.code === 200) {
+          getDetailPlaceRefetch();
+        }
+      });
       if (OS === 'android') {
         window.BRIDGE.vibrate();
       } else {
@@ -181,16 +131,12 @@ function DetailPlacePage() {
   };
 
   const wishListDelete = () => {
-    dispatch(scrollActions.initDetailPlaceScroll())
-    wishDelete(
-      { wishId: Number(detailPlace?.data.place.wishId) },
-      dispatch,
-      (response: AxiosResponse) => {
-        if (response.data.code === 200) {
-          getDetailPlaceRefetch();
-        }
+    dispatch(scrollActions.initDetailPlaceScroll());
+    wishDelete({ wishId: Number(detailPlace?.data.place.wishId) }, dispatch, (response: AxiosResponse) => {
+      if (response.data.code === 200) {
+        getDetailPlaceRefetch();
       }
-    );
+    });
   };
 
   const calenderOpenClose = useCallback(() => {
@@ -206,7 +152,7 @@ function DetailPlacePage() {
       navigate(MY_STORAGE_PATH, {
         state: {
           prevPath: location.pathname,
-          myStorageTab:location.state
+          myStorageTab: location.state,
         },
       });
     else if (detailPlacePrevPath.toString() === WHERE_TO_GO_PATH)
@@ -223,7 +169,6 @@ function DetailPlacePage() {
       });
   }, []);
 
-
   const saveDetailPlaceScrollY = useCallback(() => {
     dispatch(
       scrollActions.scroll({ whereToGo: whereToGoScrollY, detailPlace: window.scrollY, myStorage: myStorageScrollY }),
@@ -231,25 +176,27 @@ function DetailPlacePage() {
   }, []);
 
   if (getDetailPlaceIsLoading || getDetailPlaceIsReviewsLoading) {
-    return <div className='detail-place'>&nbsp;</div>;
+    return <div className="detail-place">&nbsp;</div>;
   }
 
   return (
     <>
       {isCalenderOpen && <Calender closeCalender={calenderOpenClose} isRoom={false} />}
-      {logInModalOpen && <AlertConfirm
-        text="로그인 후 이용 할 수 있습니다."
-        buttonText='로그인'
-        noButtonHandler={() => {
-          setLogInModalOpen(false);
-        }}
-        yesButtonHandler={() => {
-          navigate(SIGN_IN_PATH.MAIN);
-        }}
-      />}
+      {logInModalOpen && (
+        <AlertConfirm
+          text="로그인 후 이용 할 수 있습니다."
+          buttonText="로그인"
+          noButtonHandler={() => {
+            setLogInModalOpen(false);
+          }}
+          yesButtonHandler={() => {
+            navigate(SIGN_IN_PATH.MAIN);
+          }}
+        />
+      )}
       <div className={classNames('detail-place', { close: isCalenderOpen })}>
         <div style={{ width: '100%' }}>
-            <ImageSlider images={detailPlace?.data?.detailPhotoList} />
+          <ImageSlider images={detailPlace?.data?.detailPhotoList} />
         </div>
         <LeftArrow className="detail-place-previous-page" onClick={moveToPrevPage} />
         <div className="detail-place-heart">
@@ -300,22 +247,21 @@ function DetailPlacePage() {
           <header className="detail-place-room-select-header">객실선택</header>
         </div>
         <div className="detail-place-room-types">
-          {
-          detailPlace?.data.roomList.map((room: RoomType) => (
-                <div aria-hidden="true" onClick={saveDetailPlaceScrollY}>
-                  <RoomType
-                    key={room.roomId}
-                    room={room}
-                    navigate={() => {
-                      navigate(`/detail-place/${detailPlace?.data.place.placeId}/${room.roomId}`, {
-                        state: {
-                          room,
-                        },
-                      });
-                    }}
-                  />
-                </div>
-              ))}
+          {detailPlace?.data.roomList.map((room: RoomDataType) => (
+            <div aria-hidden="true" onClick={saveDetailPlaceScrollY}>
+              <RoomType
+                key={room.roomId}
+                room={room}
+                navigate={() => {
+                  navigate(`/detail-place/${detailPlace?.data.place.placeId}/${room.roomId}`, {
+                    state: {
+                      room,
+                    },
+                  });
+                }}
+              />
+            </div>
+          ))}
         </div>
         {detailPlaceRivews?.data && (
           <div className="detail-place-review">
@@ -327,7 +273,10 @@ function DetailPlacePage() {
                 <Link
                   style={{ textDecoration: 'none' }}
                   to={`/detail-place/${detailPlace?.data.place.placeId}/reviews`}
-                  state={{ reviews: detailPlaceRivews.data.readReviewDTOList, reviewsAvg: detailPlaceRivews.data.ratingAvg }}
+                  state={{
+                    reviews: detailPlaceRivews.data.readReviewDTOList,
+                    reviewsAvg: detailPlaceRivews.data.ratingAvg,
+                  }}
                   key={detailPlace?.data.place.placeId}
                 >
                   <div className="detail-place-review-header-more">전체보기</div>
@@ -335,14 +284,14 @@ function DetailPlacePage() {
               </div>
             </header>
             <body className="detail-place-review-body">
-              {detailPlaceRivews?.data?.readReviewDTOList.slice(0, 2).map((review: RivewType) => (
+              {detailPlaceRivews?.data?.readReviewDTOList.slice(0, 2).map((review: ReviewType) => (
                 <Review key={review.review.reviewId} review={review} />
               ))}
             </body>
           </div>
         )}
-        {detailPlace?.data.placeNoticeList.map((placeNotice: NoticeType) => (
-          <PlaceNotice placeNotice={placeNotice} key={placeNotice.placeNoticeId}/>
+        {detailPlace?.data.placeNoticeList.map((placeNotice: PlaceNoticeType) => (
+          <PlaceNotice placeNotice={placeNotice} key={placeNotice.placeNoticeId} />
         ))}
         <div className="detail-place-map">
           <header className="detail-place-map-header">지도</header>

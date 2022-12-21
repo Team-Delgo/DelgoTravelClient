@@ -1,42 +1,16 @@
-
-import React, { useMemo, useState, memo } from 'react'
-import { ReactComponent as ReviewStar } from '../../../common/icons/review-star.svg'
-import { ReactComponent as ReviewVoidStar } from '../../../common/icons/review-void-star.svg'
+import React, { useMemo, useState, memo } from 'react';
+import { ReactComponent as ReviewStar } from '../../../common/icons/review-star.svg';
+import { ReactComponent as ReviewVoidStar } from '../../../common/icons/review-void-star.svg';
+import { ReviewType, ReviewPhotoType } from '../../../common/types/review';
 import './Review.scss';
 
-
-interface RivewTypeProps {
-  review: RivewType
+interface ReviewTypeProps {
+  review: ReviewType;
 }
 
-interface RivewType {
-  placeName: string
-  profileUrl: string
-  review: {
-    bookingId: string
-    placeId: number
-    rating: number
-    registDt: string
-    reviewId: number
-    roomId: number
-    text: string
-    updateDt: null
-    userId: number
-    reviewPhotoList: Array<ReviewPhotoType>
-  };
-  roomName: string
-  userName: string
-}
-
-interface ReviewPhotoType {
-  registDt: string
-  reviewPhotoId: number
-  url: string
-}
-
-function Review({ review }: RivewTypeProps) {
-  const reviewStarCount = useMemo(() => reviewStarComponents(), [])
-  const [moreDescription, setMoreDescription] = useState(false)
+function Review({ review }: ReviewTypeProps) {
+  const reviewStarCount = useMemo(() => reviewStarComponents(), []);
+  const [moreDescription, setMoreDescription] = useState(false);
 
   function reviewStarComponents() {
     const reviewStarArray = [];
@@ -49,10 +23,9 @@ function Review({ review }: RivewTypeProps) {
     return reviewStarArray;
   }
 
-
   const handleMoreDescription = () => {
     setMoreDescription(!moreDescription);
-  }
+  };
 
   return (
     <div className="review">
@@ -88,7 +61,7 @@ function Review({ review }: RivewTypeProps) {
           <div className="review-content-description">{review.review.text}</div>
         )}
         <div className="review-content-image-container">
-          {review.review.reviewPhotoList.map((image:ReviewPhotoType )=> (
+          {review.review.reviewPhotoList.map((image: ReviewPhotoType) => (
             <img src={image.url} alt="profile-img" />
           ))}
         </div>

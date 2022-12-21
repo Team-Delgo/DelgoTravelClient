@@ -13,23 +13,12 @@ import { prevPathActions } from '../../../redux/slice/prevPathSlice';
 import { RootState } from '../../../redux/store';
 import { ReactComponent as ActiveHeart } from '../../../common/icons/heart-active.svg';
 import { ReactComponent as Heart } from '../../../common/icons/heart.svg';
+import { PlaceType } from '../../../common/types/place';
 
 interface RedcommendedPlacesProps {
   place: PlaceType;
 }
-
-interface PlaceType {
-  address: string;
-  checkin: string;
-  checkout: string;
-  isBooking: number;
-  lowestPrice: string;
-  mainPhotoUrl: string;
-  name: string;
-  placeId: number;
-  wishId: number;
-}
-
+ 
 declare global {
   interface Window {
     BRIDGE: any;

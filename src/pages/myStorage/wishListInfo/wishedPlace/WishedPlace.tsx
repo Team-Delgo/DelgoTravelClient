@@ -8,22 +8,13 @@ import { scrollActions } from '../../../../redux/slice/scrollSlice';
 import {prevPathActions} from "../../../../redux/slice/prevPathSlice"
 import {RootState} from '../../../../redux/store'
 import { ReactComponent as ActiveHeart } from '../../../../common/icons/heart-active.svg';
+import { WishedPlaceType,PlaceType } from '../../../../common/types/place';
 import './WishedPlace.scss';
 
 interface WishedPlaceTypeProps {
-  place: PlaceType
+  place: WishedPlaceType
   getWishedPlacesRefetch:() => void
   getRecommendedPlacesRefetch:() => void
-}
-
-interface PlaceType {
-  address: string;
-  lowestPrice: string;
-  mainPhotoUrl: string;
-  name: string;
-  placeId: number;
-  registDt: string;
-  wishId: number;
 }
 
 function WishedPlace({ place, getWishedPlacesRefetch,getRecommendedPlacesRefetch}: WishedPlaceTypeProps) {
