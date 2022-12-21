@@ -1,23 +1,17 @@
-import React from 'react'
-import'./PlaceNotice.scss';
+import React from 'react';
+import './PlaceNotice.scss';
+import { PlaceNoticeType } from '../../../common/types/notice';
 
 interface PlaceNoticeProps {
-  placeNotice: PlaceNoticeType
-  }
-  
-  interface PlaceNoticeType {
-    contents:Array<string>
-    placeId: number
-    placeNoticeId: number
-    title:string
-  }
+  placeNotice: PlaceNoticeType;
+}
 
-function Notice({placeNotice}:PlaceNoticeProps) {
+function Notice({ placeNotice }: PlaceNoticeProps) {
   return (
     <div className="detail-place-notice">
       <div className="detail-place-notice-title">{placeNotice.title}</div>
       <div className="detail-place-notice-content">
-        {placeNotice.contents.map((content: string, index: number) => (
+        {placeNotice.contents.map((content: string) => (
           <div key={content}>* {content}</div>
         ))}
       </div>
@@ -25,4 +19,4 @@ function Notice({placeNotice}:PlaceNoticeProps) {
   );
 }
 
-export default Notice
+export default Notice;

@@ -1,18 +1,19 @@
-import React from 'react'
-import './RoomTypeNotice.scss'
+import React from 'react';
+import './RoomTypeNotice.scss';
+import { RoomNoticeType } from '../../../../common/types/notice';
 
 interface RoomNoticeProps {
-    roomNotice: RoomNoticeType
-  }
+  roomNotice: RoomNoticeType;
+}
 
-interface RoomNoticeType {
-    contents:Array<string>,
-    roomId: number,
-    roomNoticeId: number,
-    title: string
-  }
+// interface RoomNoticeType {
+//   contents: Array<string>;
+//   roomId: number;
+//   roomNoticeId: number;
+//   title: string;
+// }
 
-function RoomTypeNotice({roomNotice}:RoomNoticeProps) {
+function RoomTypeNotice({ roomNotice }: RoomNoticeProps) {
   return (
     <div className="detail-place-room-type-notice">
       <div className="detail-place-room-type-notice-title">{roomNotice.title}</div>

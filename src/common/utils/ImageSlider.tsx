@@ -1,24 +1,18 @@
-import React from 'react'
+import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
-import "react-responsive-carousel/lib/styles/carousel.min.css"; 
-import './ImageSlider.scss'
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import './ImageSlider.scss';
+import { RoomImgType } from '../types/room';
 
-interface ImagesProps  {
-  images:Array<ImageType>
+interface ImagesProps {
+  images: Array<RoomImgType>;
 }
-interface ImageType{
-  detailPhotoId: number
-  isMain: number
-  url: string
-}
-
 
 function ImageSlider({ images }: ImagesProps) {
   return (
     <Carousel showThumbs={false} showStatus={false} emulateTouch={false} infiniteLoop showArrows={false}>
-      {images && images.map((image: ImageType) => (
-        <img className='image-slider' src={image.url} alt="img" key={image.url} />
-      ))}
+      {images &&
+        images.map((image: RoomImgType) => <img className="image-slider" src={image.url} alt="img" key={image.url} />)}
     </Carousel>
   );
 }

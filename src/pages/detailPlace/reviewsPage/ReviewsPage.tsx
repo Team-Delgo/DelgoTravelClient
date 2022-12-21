@@ -5,36 +5,11 @@ import { useLocation,Link,useParams} from 'react-router-dom';
 import Review from '../review/Review';
 import { ReactComponent as LeftArrow } from '../../../common/icons/left-arrow.svg';
 import { ReactComponent as ReviewStar } from '../../../common/icons/review-star.svg';
+import { ReviewType } from '../../../common/types/review';
 import './ReviewsPage.scss';
 
-interface RivewType {
-  placeName: string
-  profileUrl: string
-  review: {
-    bookingId: string
-    placeId: number
-    rating: number
-    registDt: string
-    reviewId: number
-    roomId: number
-    text: string
-    updateDt: null
-    userId: number
-    reviewPhotoList: Array<ReviewPhotoType>
-  };
-  roomName: string
-  userName: string
-}
-
-interface ReviewPhotoType {
-  registDt: string
-  reviewPhotoId: number
-  url: string
-}
-
-
 function ReviewsPage() {
-  const [reviews, setReviews] = useState<Array<RivewType>>([]);
+  const [reviews, setReviews] = useState<Array<ReviewType>>([]);
   const [checked, setChecked] = useState(false);
   const [imageReviewsCount,setImageReviewsCount] = useState(0)
   const location: any = useLocation();
@@ -44,7 +19,7 @@ function ReviewsPage() {
     window.scrollTo(0, 0);
     setReviews(location.state.reviews);
 
-    const reviewImages = location.state.reviews.filter(function (review: RivewType) {
+    const reviewImages = location.state.reviews.filter(function (review: ReviewType) {
       if (review.review.reviewPhotoList.length > 0) {
         return true;
       }
@@ -59,8 +34,8 @@ function ReviewsPage() {
       setReviews(location.state.reviews);
     } else {
       setChecked(!checked);
-      const imageReviews: Array<RivewType> = [];
-      reviews.map((review: RivewType) => {
+      const imageReviews: Array<ReviewType> = [];
+      reviews.map((review: ReviewType) => {
         if (review.review.reviewPhotoList.length > 0) {
           imageReviews.push(review);
         }
@@ -84,7 +59,7 @@ function ReviewsPage() {
         <span className="detail-place-review-page-header-image-review"> 사진 리뷰만 보기({imageReviewsCount}개)</span>
       </header>
       <body className="detail-place-review-page-body">
-        {reviews.map((review: RivewType) => (
+        {reviews.map((review: ReviewType) => (
           <Review key={review.review.bookingId} review={review} />
         ))}
       </body>

@@ -1,42 +1,18 @@
 
-import React, { useMemo, useState, memo } from 'react'
+import React, { useMemo, useState, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ReactComponent as ReviewStar } from '../../../common/icons/review-star.svg';
+import { ReactComponent as ReviewVoidStar } from '../../../common/icons/review-void-star.svg';
+import { ReviewType, ReviewPhotoType } from '../../../common/types/review';
 import { MY_ACCOUNT_PATH, REVIEWS_PHOTOS } from '../../../common/constants/path.const';
-import { ReactComponent as ReviewStar } from '../../../common/icons/review-star.svg'
-import { ReactComponent as ReviewVoidStar } from '../../../common/icons/review-void-star.svg'
 import './Review.scss';
 
-
-interface RivewTypeProps {
-  review: RivewType
+interface ReviewTypeProps {
+  review: ReviewType;
 }
 
-interface RivewType {
-  placeName: string
-  profileUrl: string
-  review: {
-    bookingId: string
-    placeId: number
-    rating: number
-    registDt: string
-    reviewId: number
-    roomId: number
-    text: string
-    updateDt: null
-    userId: number
-    reviewPhotoList: Array<ReviewPhotoType>
-  };
-  roomName: string
-  userName: string
-}
 
-interface ReviewPhotoType {
-  registDt: string
-  reviewPhotoId: number
-  url: string
-}
-
-function Review({ review }: RivewTypeProps) {
+function Review({ review }: ReviewTypeProps) {
   const reviewStarCount = useMemo(() => reviewStarComponents(), [])
   const [moreDescription, setMoreDescription] = useState(false)
   const navigate = useNavigate();
@@ -55,7 +31,7 @@ function Review({ review }: RivewTypeProps) {
 
   const handleMoreDescription = () => {
     setMoreDescription(!moreDescription);
-  }
+  };
 
   return (
     <div className="review">

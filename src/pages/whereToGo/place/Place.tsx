@@ -10,26 +10,13 @@ import { prevPathActions } from "../../../redux/slice/prevPathSlice"
 import {RootState} from '../../../redux/store'
 import { ReactComponent as ActiveHeart } from '../../../common/icons/heart-active.svg';
 import { ReactComponent as Heart } from '../../../common/icons/heart.svg';
-import {
-  SIGN_IN_PATH,
-} from '../../../common/constants/path.const';
-import './Place.scss'
+import { SIGN_IN_PATH } from '../../../common/constants/path.const';
+import './Place.scss';
+import { PlaceType } from '../../../common/types/place';
 
 interface PlaceTypeProps {
-  place: PlaceType
-  areaTerm:string
-}
-
-interface PlaceType {
-  address: string
-  checkin: string
-  checkout: string
-  isBooking: number
-  lowestPrice: string
-  mainPhotoUrl: string
-  name: string
-  placeId: number
-  wishId: number
+  place: PlaceType;
+  areaTerm: string;
 }
 
 declare global {

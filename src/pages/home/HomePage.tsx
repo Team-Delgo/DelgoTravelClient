@@ -18,27 +18,10 @@ import {
 import { RootState } from '../../redux/store';
 import HomeReservation from './homeReservation/HomeReservation';
 import Delgo from '../../common/icons/delgo.svg';
+import { EditorPlaceType } from '../../common/types/editor';
+import { PlaceType } from '../../common/types/place';
 import './HomePage.scss';
 
-interface EditorPlaceType {
-  mainUrl: string;
-  placeId: number;
-  thumbnailSubtitle: string;
-  thumbnailTitle: string;
-  thumbnailUrl: string;
-}
-
-interface RecommendedPlaceType {
-  address: string;
-  checkin: string;
-  checkout: string;
-  isBooking: number;
-  lowestPrice: string;
-  mainPhotoUrl: string;
-  name: string;
-  placeId: number;
-  wishId: number;
-}
 const loadingScreenHeight = { height: window.innerHeight * 10 }
 
 const infoContent = `주소 : 서울특별시 광진구 광나루로 19길 23 가온나리1 202호
@@ -176,7 +159,7 @@ function HomePage() {
           ))}
         </div>
         <header className="recommended-places-text">델고갈만한 숙소</header>
-        {recommendedPlaces?.data.map((place: RecommendedPlaceType) => (
+        {recommendedPlaces?.data.map((place: PlaceType) => (
           <RecommendedPlace place={place} key={place.placeId} />
         ))}
         {/* <div className='home-buisness-information'>

@@ -1,53 +1,35 @@
-import React, {  useEffect } from 'react'
-import { useLocation} from 'react-router-dom';
-import { useSelector } from "react-redux";
-import { useQuery } from 'react-query'
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useQuery } from 'react-query';
 import { useDispatch } from 'react-redux';
 import WishedPlace from './wishedPlace/WishedPlace';
-import { getWishedPlaces ,getRecommendedPlace} from '../../../common/api/places';
-import RecommendedPlace from '../../../common/components/RecommendedPlace'
+import { getWishedPlaces, getRecommendedPlace } from '../../../common/api/places';
+import RecommendedPlace from '../../../common/components/RecommendedPlace';
 import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
-import { GET_RECOMMENED_PLACES, GET_WISHED_PLACES, CACHE_TIME, STALE_TIME } from '../../../common/constants/queryKey.const'
-import {RootState} from '../../../redux/store'
-import { errorActions } from '../../../redux/slice/errorSlice';
+import {
+  GET_RECOMMENED_PLACES,
+  GET_WISHED_PLACES,
+  CACHE_TIME,
+  STALE_TIME,
+} from '../../../common/constants/queryKey.const';
+import { RootState } from '../../../redux/store';
 import { ReactComponent as FootPrintActive } from '../../../common/icons/foot-print-active.svg';
 import './Folder.scss';
+import { WishedPlaceType,PlaceType } from '../../../common/types/place';
 
-
-interface WishedPlaceType {
-  address: string;
-  lowestPrice: string;
-  mainPhotoUrl: string;
-  name: string;
-  placeId: number;
-  registDt: string;
-  wishId: number;
-}
-
-interface RecommendedPlaceType {
-  address: string
-  checkin: string
-  checkout: string
-  isBooking: number
-  lowestPrice: string
-  mainPhotoUrl: string
-  name: string
-  placeId: number
-  wishId: number
-}
 
 interface FolderTypeProps {
-  currentTab:number
+  currentTab: number;
 }
 
-const loadingScreenHeight = { height: window.innerHeight * 100 }
+const loadingScreenHeight = { height: window.innerHeight * 100 };
 
-function Folder({currentTab}:FolderTypeProps) {
+function Folder({ currentTab }: FolderTypeProps) {
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
   const { myStorageScrollY } = useSelector((state: RootState) => state.persist.scroll);
   const dispatch = useDispatch();
   const location: any = useLocation();
-  
 
   const {
     isLoading: getWishedPlacesIsLoading,
@@ -86,8 +68,12 @@ function Folder({currentTab}:FolderTypeProps) {
     }
   }, [getWishedPlacesIsLoading, getRecommendedPlacesIsLoading]);
 
-  if (getWishedPlacesIsLoading||getRecommendedPlacesIsLoading){
-    return <div className="wish-list-container" style={loadingScreenHeight}>&nbsp;</div>;
+  if (getWishedPlacesIsLoading || getRecommendedPlacesIsLoading) {
+    return (
+      <div className="wish-list-container" style={loadingScreenHeight}>
+        &nbsp;
+      </div>
+    );
   }
 
   return (
@@ -114,12 +100,16 @@ function Folder({currentTab}:FolderTypeProps) {
                 getRecommendedPlacesRefetch={getRecommendedPlacesRefetch}
               />
             ))
-        : recommendedPlaces.data.map((place: RecommendedPlaceType) => (
-            <RecommendedPlace place={place} key={place.placeId} getRecommendedPlacesRefetch={getRecommendedPlacesRefetch} currentTab={currentTab}/>
+        : recommendedPlaces.data.map((place: PlaceType) => (
+            <RecommendedPlace
+              place={place}
+              key={place.placeId}
+              getRecommendedPlacesRefetch={getRecommendedPlacesRefetch}
+              currentTab={currentTab}
+            />
           ))}
     </div>
   );
 }
 
 export default Folder;
-

@@ -16,26 +16,8 @@ import { ReactComponent as X } from '../../common/icons/x.svg';
 import './ReviewWritingPage.scss';
 import Crop from '../../common/utils/Crop';
 import getCroppedImg from '../../common/utils/CropHandle';
+import {TraveledHisotryPlaceType} from '../../common/types/place';
 
-interface TraveledHisotryPlaceType {
-  bookingId: string;
-  roomName: string;
-  roomId: number;
-  startDt: string;
-  endDt: string;
-  reviewExisting: boolean;
-  place: {
-    address: string;
-    checkin: string;
-    checkout: string;
-    isBooking: 0;
-    lowestPrice: null;
-    mainPhotoUrl: string;
-    name: string;
-    placeId: number;
-    wishId: number;
-  };
-}
 
 interface croppendAreaPixelType {
   height: number;
@@ -356,6 +338,7 @@ function RiviewWritingPage() {
               placeholder="다른 멍멍이들을 위해&#13;&#10;솔직한 리뷰를 부탁드려요!"
               onChange={handleReviewWrite}
               maxLength={150}
+              value={rivewText}
             />
             <div className="review-writing-body-textarea-length">{rivewText.replace(/ /g, '').length}/150</div>
           </div>

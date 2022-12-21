@@ -3,35 +3,21 @@ import classNames from 'classnames';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { AxiosResponse } from 'axios';
-import Skeleton , { SkeletonTheme } from 'react-loading-skeleton'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import RoomTypeNotice from './roomNotice/RoomTypeNotice';
 import { reservationActions } from '../../../redux/slice/reservationSlice';
 import { getRoomData } from '../../../common/api/room';
 import ImageSlider from '../../../common/utils/ImageSlider';
 import BottomButton from '../../../common/components/BottomButton';
 import AlertConfirm from '../../../common/dialog/AlertConfirm';
-import {
-  SIGN_IN_PATH,
-} from '../../../common/constants/path.const';
+import { SIGN_IN_PATH } from '../../../common/constants/path.const';
 import { ReactComponent as LeftArrow } from '../../../common/icons/left-arrow2.svg';
 import Calender from '../../../common/utils/Calender';
+import { RoomImgType } from '../../../common/types/room';
+import { RoomNoticeType } from '../../../common/types/notice';
 import { currentRoomActions } from '../../../redux/slice/roomSlice';
-import {RootState} from '../../../redux/store'
+import { RootState } from '../../../redux/store';
 import './RoomTypePage.scss';
-
-
-interface PhotoListType {
-  detailPhotoId: number
-  isMain: number
-  url: string
-}
-
-interface RoomNoticeType {
-  contents:Array<string>,
-  roomId: number,
-  roomNoticeId: number,
-  title: string
-}
 
 
 function RoomTypePage() {
@@ -39,15 +25,14 @@ function RoomTypePage() {
   const { date, dateString } = useSelector((state: RootState) => state.date);
   const { currentPlace } = useSelector((state: RootState) => state.persist.currentPlace);
   const { currentRoom } = useSelector((state: RootState) => state.persist.currentRoom);
-  const { user ,isSignIn } = useSelector((state: RootState) => state.persist.user);
+  const { user, isSignIn } = useSelector((state: RootState) => state.persist.user);
   const dispatch = useDispatch();
   const location: any = useLocation();
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
   const [logInModalOpen, setLogInModalOpen] = useState(false);
   const { room } = location.state;
-  const [photoList, setPhotoList] = useState<Array<PhotoListType>>([]);
-  const [roomNoticeList,setRoomNoticeList] = useState<Array<RoomNoticeType>>([])
-
+  const [photoList, setPhotoList] = useState<Array<RoomImgType>>([]);
+  const [roomNoticeList, setRoomNoticeList] = useState<Array<RoomNoticeType>>([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -55,8 +40,8 @@ function RoomTypePage() {
       room?.roomId,
       (response: AxiosResponse) => {
         setPhotoList(response.data.data.detailRoomPhotos);
-        setRoomNoticeList(response.data.data.roomNoticeList)
-        console.log(response.data.data.roomNoticeList)
+        setRoomNoticeList(response.data.data.roomNoticeList);
+        console.log(response.data.data.roomNoticeList);
       },
       dispatch,
     );
@@ -69,7 +54,7 @@ function RoomTypePage() {
           roomId: room?.roomId,
           name: room?.name,
           price: room?.price,
-          personNum:room?.personStandardNum
+          personNum: room?.personStandardNum,
         },
       }),
     );
@@ -80,10 +65,10 @@ function RoomTypePage() {
   }, [isCalenderOpen]);
 
   const handleReservation = () => {
-    if(isSignIn){
+    if (isSignIn) {
       dispatch(
         reservationActions.reservation({
-          user: { id: user.id,  email: user.email, phone: user.phone },
+          user: { id: user.id, email: user.email, phone: user.phone },
           place: {
             placeId: currentPlace.placeId,
             name: currentPlace.name,
@@ -93,27 +78,23 @@ function RoomTypePage() {
             roomId: currentRoom.roomId,
             name: currentRoom.name,
             price: currentRoom.price,
-            personNum:currentRoom.personNum
+            personNum: currentRoom.personNum,
           },
           date: {
             date,
             dateString,
-            checkIn:currentPlace.checkIn.substring(0, 5),
-            checkOut:currentPlace.checkOut.substring(0, 5)
+            checkIn: currentPlace.checkIn.substring(0, 5),
+            checkOut: currentPlace.checkOut.substring(0, 5),
           },
         }),
       );
       setTimeout(() => {
         navigate(`/reservation/${currentPlace.placeId}/${room.roomId}/${date.start}/${date.end}`);
       }, 100);
-    }
-    else{
+    } else {
       setLogInModalOpen(true);
     }
   };
-
-
-
 
   return (
     <>

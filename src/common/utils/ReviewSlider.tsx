@@ -2,14 +2,9 @@ import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './ReviewSlider.scss';
+import { ReviewPhotoType } from '../types/review';
 
-interface ImageType {
-  registDt: string;
-  reviewPhotoId: number;
-  url: string;
-}
-
-function ReviewSlider(props: { images: ImageType[] }) {
+function ReviewSlider(props: { images: ReviewPhotoType[] }) {
   const { images } = props;
   return (
     <Carousel showThumbs={false} showStatus={false} emulateTouch={false} showArrows={false}>

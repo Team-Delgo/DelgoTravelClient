@@ -1,32 +1,12 @@
-
-import React,{useCallback , memo} from 'react'
-import { useLocation,useNavigate} from 'react-router-dom';
-import { useDispatch } from "react-redux";
+import React, { useCallback, memo } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { scrollActions } from '../../../../redux/slice/scrollSlice';
+import { TraveledHisotryPlaceType } from '../../../../common/types/place';
 import './TravelHistoryPlace.scss';
 
 interface TraveledHisotryPlaceTypeProps {
-  traveledPlace:TraveledHisotryPlaceType
-}
-
-interface TraveledHisotryPlaceType {
-  bookingId: string,
-  roomName: string,
-  roomId:number,
-  startDt: string,
-  endDt: string,
-  reviewExisting: boolean,
-  place: {
-    address: string
-    checkin: string
-    checkout: string
-    isBooking: 0
-    lowestPrice: null
-    mainPhotoUrl: string
-    name: string
-    placeId: number
-    wishId: number
-  },
+  traveledPlace: TraveledHisotryPlaceType;
 }
 
 function TravelHisotryPlace({ traveledPlace }: TraveledHisotryPlaceTypeProps) {
@@ -63,11 +43,20 @@ function TravelHisotryPlace({ traveledPlace }: TraveledHisotryPlaceTypeProps) {
         </div>
       </div>
       <div className="travel-hisotry-place-review">
-        {
-          traveledPlace.reviewExisting===true ? <div className="travel-hisotry-place-review-write-completion">리뷰작성완료</div> :
-              <div className="travel-hisotry-place-review-write" aria-hidden="true" onClick={moveToReviewWritingPage}>리뷰쓰기</div>
-        }
-          <div className="travel-hisotry-place-review-reservation-detail" aria-hidden="true" onClick={moveToReservationHistoryPage}>예약상세</div>
+        {traveledPlace.reviewExisting === true ? (
+          <div className="travel-hisotry-place-review-write-completion">리뷰작성완료</div>
+        ) : (
+          <div className="travel-hisotry-place-review-write" aria-hidden="true" onClick={moveToReviewWritingPage}>
+            리뷰쓰기
+          </div>
+        )}
+        <div
+          className="travel-hisotry-place-review-reservation-detail"
+          aria-hidden="true"
+          onClick={moveToReservationHistoryPage}
+        >
+          예약상세
+        </div>
       </div>
     </div>
   );
