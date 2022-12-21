@@ -9,8 +9,19 @@ import Review from './review/Review';
 import ImageSlider from '../../common/utils/ImageSlider';
 import Map from '../../common/utils/Map';
 import AlertConfirm from '../../common/dialog/AlertConfirm';
+<<<<<<< HEAD
 import { ROOT_PATH, MY_STORAGE_PATH, WHERE_TO_GO_PATH, SIGN_IN_PATH } from '../../common/constants/path.const';
 import { RootState } from '../../redux/store';
+=======
+import {
+  ROOT_PATH,
+  MY_STORAGE_PATH,
+  WHERE_TO_GO_PATH,
+  SIGN_IN_PATH,
+  MY_ACCOUNT_PATH,
+} from '../../common/constants/path.const';
+import {RootState} from '../../redux/store'
+>>>>>>> 0171784d58e41862810394bcdbfc0ee298fe7438
 import { ReactComponent as ActiveHeart } from '../../common/icons/heart-active.svg';
 import { ReactComponent as Heart } from '../../common/icons/heart.svg';
 import { getDetailPlace } from '../../common/api/places';
@@ -114,12 +125,21 @@ function DetailPlacePage() {
 
   const wishListInsert = () => {
     if (isSignIn) {
+<<<<<<< HEAD
       dispatch(scrollActions.initDetailPlaceScroll());
       wishInsert({ userId, placeId: Number(placeId) }, dispatch, (response: AxiosResponse) => {
         if (response.data.code === 200) {
           getDetailPlaceRefetch();
         }
       });
+=======
+    dispatch(scrollActions.detailPlaceScroll({ detailPlace: 0 }));
+    wishInsert({ userId, placeId: Number(placeId) }, dispatch, (response: AxiosResponse) => {
+      if (response.data.code === 200) {
+        getDetailPlaceRefetch();
+      }
+    });
+>>>>>>> 0171784d58e41862810394bcdbfc0ee298fe7438
       if (OS === 'android') {
         window.BRIDGE.vibrate();
       } else {
@@ -131,10 +151,21 @@ function DetailPlacePage() {
   };
 
   const wishListDelete = () => {
+<<<<<<< HEAD
     dispatch(scrollActions.initDetailPlaceScroll());
     wishDelete({ wishId: Number(detailPlace?.data.place.wishId) }, dispatch, (response: AxiosResponse) => {
       if (response.data.code === 200) {
         getDetailPlaceRefetch();
+=======
+    dispatch(scrollActions.detailPlaceScroll({ detailPlace: 0 }));
+    wishDelete(
+      { wishId: Number(detailPlace?.data.place.wishId) },
+      dispatch,
+      (response: AxiosResponse) => {
+        if (response.data.code === 200) {
+          getDetailPlaceRefetch();
+        }
+>>>>>>> 0171784d58e41862810394bcdbfc0ee298fe7438
       }
     });
   };
@@ -161,6 +192,12 @@ function DetailPlacePage() {
           prevPath: location.pathname,
         },
       });
+    else if (detailPlacePrevPath.toString() === MY_ACCOUNT_PATH.REVIEWS)
+    navigate(MY_ACCOUNT_PATH.REVIEWS, {
+      state: {
+        prevPath: location.pathname,
+      },
+    });
     else
       navigate(ROOT_PATH, {
         state: {
@@ -218,7 +255,7 @@ function DetailPlacePage() {
             <Link
               style={{ textDecoration: 'none' }}
               to={`/detail-place/${detailPlace?.data.place.placeId}/reviews`}
-              state={{ reviews: detailPlaceRivews.data.readReviewDTOList }}
+              state={{ reviews: detailPlaceRivews.data.readReviewDTOList, ratingAvg: detailPlaceRivews.data.ratingAvg }}
               key={detailPlace?.data.place.placeId}
             >
               <span className="detail-place-info-reviews">
@@ -247,7 +284,11 @@ function DetailPlacePage() {
           <header className="detail-place-room-select-header">객실선택</header>
         </div>
         <div className="detail-place-room-types">
+<<<<<<< HEAD
           {detailPlace?.data.roomList.map((room: RoomDataType) => (
+=======
+          {detailPlace?.data.roomList.map((room: RoomType) => (
+>>>>>>> 0171784d58e41862810394bcdbfc0ee298fe7438
             <div aria-hidden="true" onClick={saveDetailPlaceScrollY}>
               <RoomType
                 key={room.roomId}
@@ -290,7 +331,11 @@ function DetailPlacePage() {
             </body>
           </div>
         )}
+<<<<<<< HEAD
         {detailPlace?.data.placeNoticeList.map((placeNotice: PlaceNoticeType) => (
+=======
+        {detailPlace?.data.placeNoticeList.map((placeNotice: NoticeType) => (
+>>>>>>> 0171784d58e41862810394bcdbfc0ee298fe7438
           <PlaceNotice placeNotice={placeNotice} key={placeNotice.placeNoticeId} />
         ))}
         <div className="detail-place-map">

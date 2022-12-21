@@ -10,12 +10,7 @@ async function getAllPlaces(userId: number, startDt: string, endDt: string) {
 }
 
 async function getWishedPlaces(userId: number) {
-    const accessToken = localStorage.getItem('accessToken') || '';
-    const { data } = await axiosInstance.get(`/wish/select?userId=${userId}`, {
-      headers: {
-        Authorization_Access: accessToken,
-      },
-    });
+    const { data } = await axiosInstance.get(`/wish/select?userId=${userId}`);
     return data;
 }
 

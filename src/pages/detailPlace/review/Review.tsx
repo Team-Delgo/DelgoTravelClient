@@ -1,16 +1,58 @@
+<<<<<<< HEAD
 import React, { useMemo, useState, memo } from 'react';
 import { ReactComponent as ReviewStar } from '../../../common/icons/review-star.svg';
 import { ReactComponent as ReviewVoidStar } from '../../../common/icons/review-void-star.svg';
 import { ReviewType, ReviewPhotoType } from '../../../common/types/review';
+=======
+
+import React, { useMemo, useState, memo } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { MY_ACCOUNT_PATH, REVIEWS_PHOTOS } from '../../../common/constants/path.const';
+import { ReactComponent as ReviewStar } from '../../../common/icons/review-star.svg'
+import { ReactComponent as ReviewVoidStar } from '../../../common/icons/review-void-star.svg'
+>>>>>>> 0171784d58e41862810394bcdbfc0ee298fe7438
 import './Review.scss';
 
 interface ReviewTypeProps {
   review: ReviewType;
 }
 
+<<<<<<< HEAD
 function Review({ review }: ReviewTypeProps) {
   const reviewStarCount = useMemo(() => reviewStarComponents(), []);
   const [moreDescription, setMoreDescription] = useState(false);
+=======
+interface RivewType {
+  placeName: string
+  profileUrl: string
+  review: {
+    bookingId: string
+    placeId: number
+    rating: number
+    registDt: string
+    reviewId: number
+    roomId: number
+    text: string
+    updateDt: null
+    userId: number
+    reviewPhotoList: Array<ReviewPhotoType>
+  };
+  roomName: string
+  userName: string
+}
+
+interface ReviewPhotoType {
+  registDt: string
+  reviewPhotoId: number
+  url: string
+}
+
+function Review({ review }: RivewTypeProps) {
+  const reviewStarCount = useMemo(() => reviewStarComponents(), [])
+  const [moreDescription, setMoreDescription] = useState(false)
+  const navigate = useNavigate();
+  const {reviewId} = review.review 
+>>>>>>> 0171784d58e41862810394bcdbfc0ee298fe7438
 
   function reviewStarComponents() {
     const reviewStarArray = [];
@@ -60,7 +102,17 @@ function Review({ review }: ReviewTypeProps) {
         ) : (
           <div className="review-content-description">{review.review.text}</div>
         )}
+<<<<<<< HEAD
         <div className="review-content-image-container">
+=======
+        <div
+          className="review-content-image-container"
+          aria-hidden="true"
+          onClick={() => {
+            navigate(REVIEWS_PHOTOS, { state: { reviewId} });
+          }}
+        >
+>>>>>>> 0171784d58e41862810394bcdbfc0ee298fe7438
           {review.review.reviewPhotoList.map((image: ReviewPhotoType) => (
             <img src={image.url} alt="profile-img" />
           ))}

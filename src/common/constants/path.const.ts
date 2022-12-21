@@ -1,12 +1,12 @@
 export const ROOT_PATH = '/';
 export const EDITOR_NOTE_PATH = '/editor-note/:id';
+export const REVIEWS_PHOTOS = '/reviews/photos'
 export const MY_ACCOUNT_PATH = {
   MAIN: '/user/myaccount',
   COUPON: '/user/myaccount/coupon',
   SETTINGS: '/user/myaccount/settings',
   PETINFO: '/user/myaccount/petinfo',
   REVIEWS: '/user/myaccount/reviews',
-  PHOTOVIEWER: '/user/myaccount/reviews/photos',
   USERINFO: '/user/myaccount/userinfo',
   PASSWORDCHECK: '/user/myaccount/userinfo/check',
   PASSWORDCHANGE: '/user/myaccount/userinfo/change',

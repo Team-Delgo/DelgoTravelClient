@@ -1,4 +1,4 @@
-# <b>🐕 Delgo Client Repository 🐕</b>
+# <b>🐕 Delgo Travel Client Repository 🐕</b>
 ![logo_1](https://user-images.githubusercontent.com/54196723/185036077-7ec238dd-88f6-4c82-adc9-89eaca0b3c2c.png)
 <br/>
 
@@ -47,12 +47,12 @@
 </h2>
 
 -   ### <b> <a href="https://github.com/Team-Delgo"> 🔗 Delgo-Organization </a> </b>
--   ### <b> <a href="https://github.com/Team-Delgo/DelgoClient" > 🔗 Delgo-Frontend </a> </b>
--   ### <b> <a href="https://github.com/Team-Delgo/DelgoServer" > 🔗 Delgo-Backend </a> </b>
--   ### <b> <a href="https://github.com/Team-Delgo/DelgoAndroid" > 🔗 Delgo-Android </a> </b>
--   ### <b> <a href="https://github.com/Team-Delgo/DelgoIOS"> 🔗 Delgo-IOS </a> </b>
--   ### <b> <a href="https://github.com/Team-Delgo/PMS" > 🔗 Delgo-PMS-Frontend </a> </b>
--   ### <b> <a href="https://github.com/Team-Delgo/PMS_SERVER" > 🔗 Delgo-PMS-Backend </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo/DelgoTravelClient" > 🔗 Delgo-Travel-Frontend </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo/DelgoTravelServer" > 🔗 Delgo-Travel-Backend </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo/DelgoTravelAndroid" > 🔗 Delgo-Travel-Android </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo/DelgoTravelIOS"> 🔗 Delgo-Travel-IOS </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo/PMS" > 🔗 Delgo-Travel-PMS-Frontend </a> </b>
+-   ### <b> <a href="https://github.com/Team-Delgo/PMS_SERVER" > 🔗 Delgo-Travel-PMS-Backend </a> </b>
 
 <br/>
 

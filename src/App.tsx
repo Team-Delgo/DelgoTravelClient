@@ -27,6 +27,7 @@ import {
   NAVER_REDIRECT_HANDLE_PATH,
   RESERVATION_PATH,
   APPLE_REDIRECT_HANDLE_PATH,
+  REVIEWS_PHOTOS,
 } from './common/constants/path.const';
 import './App.scss';
 import MyAccount from './pages/myAccount/MyAccount';
@@ -62,7 +63,7 @@ import SocialExist from './pages/signUpPage/forSocial/SocialExist';
 import { deviceAction } from './redux/slice/deviceSlice';
 import { userActions } from './redux/slice/userSlice';
 import AppleRedirectHandler from './pages/signInPage/socialLogion/AppleRedirectHandler';
-import ReviewPhotoList from './pages/myAccount/review/ReviewPhotoList';
+import ReviewPhotoList from './common/components/ReviewPhotoList';
 
 declare global {
   interface Window {
@@ -134,7 +135,7 @@ function App() {
         <Route path={MY_ACCOUNT_PATH.PASSWORDCHANGE} element={<ChangePassword />} />
         <Route path={MY_ACCOUNT_PATH.TERM1} element={<ServiceTerm id={1} />} />
         <Route path={MY_ACCOUNT_PATH.TERM2} element={<ServiceTerm id={2} />} />
-        <Route path={MY_ACCOUNT_PATH.PHOTOVIEWER} element={<ReviewPhotoList/>} />
+        <Route path={REVIEWS_PHOTOS} element={<ReviewPhotoList/>} />
         <Route path={DETAIL_PLACE_PATH.MAIN} element={<DetailPlacePage />} />
         <Route path={DETAIL_PLACE_PATH.REVIEWS} element={<ReviewsPage />} />
         <Route path={DETAIL_PLACE_PATH.ROOMTYPES} element={<RoomTypePage />} />

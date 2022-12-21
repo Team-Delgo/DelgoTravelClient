@@ -6,19 +6,11 @@ import { useErrorHandlers } from './useErrorHandlers';
 async function getDetailPlaceRivews(placeId: string) {
   const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/review/getReview/place?placeId=${placeId}`);
   return data;
-  // return fetch(`${process.env.REACT_APP_API_URL}/review/getReview/place?placeId=${placeId}`).then((response) =>
-  //   response.json(),
-  // );
 }
 
 async function reviewImageUpload(formdata: FormData,reviewId:number, dispatch:any,success: (data: AxiosResponse) => void) {
   try {
-    const accessToken = localStorage.getItem('accessToken') || '';
-    const result = await axiosInstance.post(`/photo/upload/reviewPhoto/${reviewId}`, formdata, {
-      headers: {
-        Authorization_Access: accessToken,
-      },
-    });
+    const result = await axiosInstance.post(`/photo/upload/reviewPhoto/${reviewId}`, formdata);
     success(result);
   } catch (err: any) {
     useErrorHandlers(dispatch, err);
@@ -31,7 +23,6 @@ async function writeReivew(
   success: (data: AxiosResponse) => void,
 ) {
   try {
-    const accessToken = localStorage.getItem('accessToken') || '';
     const result = await axiosInstance.post(
       `/review/write`,
       {
@@ -42,11 +33,6 @@ async function writeReivew(
         text: data.text,
         bookingId: data.bookingId,
       },
-      {
-        headers: {
-          Authorization_Access: accessToken,
-        },
-      },
     );
     success(result);
   } catch (err: any) {
@@ -55,13 +41,9 @@ async function writeReivew(
 }
 
 async function getMyReviewList(userId: number) {
-  const accessToken = localStorage.getItem('accessToken') || '';
   const { data } = await axiosInstance.get(`/review/getReview/user`, {
     params: {
       userId,
-    },
-    headers: {
-      Authorization_Access: accessToken,
     },
   });
   return data;

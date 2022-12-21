@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getMyReviewList } from '../../../common/api/reivew';
 import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
@@ -12,18 +12,22 @@ import RightArrow from '../../../common/icons/right-arrow-thin.svg';
 import Star from '../../../common/icons/review-star.svg';
 import GrayStar from '../../../common/icons/review-void-star.svg';
 import './ReviewList.scss';
+<<<<<<< HEAD
 import { MY_ACCOUNT_PATH } from '../../../common/constants/path.const';
 import { ReviewType } from '../../../common/types/review';
+=======
+import { MY_ACCOUNT_PATH, REVIEWS_PHOTOS } from '../../../common/constants/path.const';
+import { prevPathActions } from '../../../redux/slice/prevPathSlice';
+import { scrollActions } from '../../../redux/slice/scrollSlice';
+>>>>>>> 0171784d58e41862810394bcdbfc0ee298fe7438
 
 
 function ReviewList() {
   const userId = useSelector((state: RootState) => state.persist.user.user.id);
+  const { myReviewsY } = useSelector((state: RootState) => state.persist.scroll);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    window.scroll(0, 0);
-  }, []);
+  const location:any = useLocation()
 
   const { isLoading: getReviewListIsLoading, data: reviewList } = useQuery(
     GET_MY_REVIEW_LIST,
@@ -38,7 +42,21 @@ function ReviewList() {
     },
   );
 
-  console.log(reviewList);
+  useEffect(() => {
+    console.log('myReviewsY',myReviewsY)
+    if (location.state?.prevPath.includes('/detail-place')) {
+      console.log(2)
+      window.scrollTo(0, myReviewsY);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [getReviewListIsLoading]);
+
+  const moveToDetailPage = (placeId: number) => (e: React.MouseEvent) => {
+    dispatch(scrollActions.myReviewsScroll({ myReviews: window.scrollY }));
+    dispatch(prevPathActions.prevPath({ prevPath: location.pathname }));
+    navigate(`/detail-place/${placeId}`);
+  };
 
   if (getReviewListIsLoading) {
     return <div className="reviewlist">&nbsp;</div>;
@@ -58,7 +76,8 @@ function ReviewList() {
           className="review-photo1"
           aria-hidden="true"
           onClick={() => {
-            navigate(MY_ACCOUNT_PATH.PHOTOVIEWER, {state:{reviewId}});
+            dispatch(scrollActions.myReviewsScroll({ myReviews: window.scrollY }));
+            navigate(REVIEWS_PHOTOS, {state:{reviewId}});
           }}
         >
           <img src={photos[0].url} alt="image1" className="review-photo1-image1" />
@@ -70,7 +89,8 @@ function ReviewList() {
           className="review-photo2"
           aria-hidden="true"
           onClick={() => {
-            navigate(MY_ACCOUNT_PATH.PHOTOVIEWER,  {state:{reviewId}});
+            dispatch(scrollActions.myReviewsScroll({ myReviews: window.scrollY }));
+            navigate(REVIEWS_PHOTOS,  {state:{reviewId}});
           }}
         >
           <div className="review-photo2-image">
@@ -87,7 +107,8 @@ function ReviewList() {
           className="review-photo3"
           aria-hidden="true"
           onClick={() => {
-            navigate(MY_ACCOUNT_PATH.PHOTOVIEWER,  {state:{reviewId}});
+            dispatch(scrollActions.myReviewsScroll({ myReviews: window.scrollY }));
+            navigate(REVIEWS_PHOTOS,  {state:{reviewId}});
           }}
         >
           <div className="review-photo3-image1">
@@ -107,7 +128,8 @@ function ReviewList() {
           className="review-photo4"
           aria-hidden="true"
           onClick={() => {
-            navigate(MY_ACCOUNT_PATH.PHOTOVIEWER,  {state:{reviewId}});
+            dispatch(scrollActions.myReviewsScroll({ myReviews: window.scrollY }));
+            navigate(REVIEWS_PHOTOS,  {state:{reviewId}});
           }}
         >
           <img src={photos[0].url} alt="image1" className="review-photo4-image1" />
@@ -131,7 +153,7 @@ function ReviewList() {
 
     return (
       <div className="reviewlist-review" key={review.review.reviewId}>
-        <div className="review-place">
+        <div className="review-place" aria-hidden="true" onClick={moveToDetailPage(review?.review?.placeId)}>
           <div className="review-place-name">{review.placeName}</div>
           <img src={RightArrow} alt="place-detail" className="reivew-place-arrow" />
         </div>
@@ -158,7 +180,7 @@ function ReviewList() {
         src={LeftArrow}
         alt="back"
         onClick={() => {
-          navigate(-1);
+          navigate(MY_ACCOUNT_PATH.MAIN);
         }}
       />
       <div className="reviewlist-header">내가 쓴 리뷰 {reviewList?.data.length}개</div>

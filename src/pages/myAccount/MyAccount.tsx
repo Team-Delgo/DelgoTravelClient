@@ -122,42 +122,42 @@ function MyAccount() {
 
   const moveToMyAccountPetInfoPage = useCallback(() => {
     setTimeout(() => {
-      dispatch(scrollActions.myStorageScroll({ myAccount: window.scrollY }));
+      dispatch(scrollActions.myAccountScroll({ myAccount: window.scrollY }));
       navigation(MY_ACCOUNT_PATH.PETINFO);
     }, 200);
   },[])
 
   const moveToMyAccountCouponPage = useCallback(() => {
     setTimeout(() => {
-      dispatch(scrollActions.myStorageScroll({ myAccount: window.scrollY }));
+      dispatch(scrollActions.myAccountScroll({ myAccount: window.scrollY }));
       navigation(MY_ACCOUNT_PATH.COUPON);
     }, 200);
   },[])
 
   const moveToMyAccountReviewsPage = useCallback(() => {
     setTimeout(() => {
-      dispatch(scrollActions.myStorageScroll({ myAccount: window.scrollY }));
+      dispatch(scrollActions.myAccountScroll({ myAccount: window.scrollY }));
       navigation(MY_ACCOUNT_PATH.REVIEWS);
     }, 200);
   },[])
 
   const moveToMyAccountUserInfoPage = useCallback(() => {
     setTimeout(() => {
-      dispatch(scrollActions.myStorageScroll({ myAccount: window.scrollY }));
+      dispatch(scrollActions.myAccountScroll({ myAccount: window.scrollY }));
       navigation(MY_ACCOUNT_PATH.USERINFO);
     }, 200)
   },[])
 
   const moveToMyAccountSettingsPage = useCallback(() => {
     setTimeout(() => {
-      dispatch(scrollActions.myStorageScroll({ myAccount: window.scrollY }));
+      dispatch(scrollActions.myAccountScroll({ myAccount: window.scrollY }));
       navigation(MY_ACCOUNT_PATH.SETTINGS);
     }, 200);
   },[])
 
   const moveToReservationConfirmPage = () => {
     setTimeout(() => {
-      dispatch(scrollActions.myStorageScroll({ myAccount: window.scrollY }));
+      dispatch(scrollActions.myAccountScroll({ myAccount: window.scrollY }));
       navigation(`/reservation-confrim/${bookingStateDataList.data[0].bookingId}`, {
         state: {
           prevPath: location.pathname,
@@ -168,7 +168,7 @@ function MyAccount() {
 
   const moveToReservationCanclePage = () => {
     setTimeout(() => {
-      dispatch(scrollActions.myStorageScroll({ myAccount: window.scrollY }));
+      dispatch(scrollActions.myAccountScroll({ myAccount: window.scrollY }));
       navigation(`/reservation-cancle/${bookingStateDataList.data[0].bookingId}`, {
         state: {
           prevPath: location.pathname,
@@ -180,7 +180,7 @@ function MyAccount() {
   const moveToReservationHistoryPage = () => {
 
     setTimeout(() => {
-      dispatch(scrollActions.myStorageScroll({ myAccount: window.scrollY }));
+      dispatch(scrollActions.myAccountScroll({ myAccount: window.scrollY }));
       navigation(`/reservation-history/${bookingStateDataList.data[0].bookingId}`, {
         state: {
           prevPath: location.pathname,

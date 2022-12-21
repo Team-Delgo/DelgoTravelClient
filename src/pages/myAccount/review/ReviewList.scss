@@ -83,11 +83,10 @@
     }
   }
   &-photo1 {
-    // height: 100%;
+    height: 100%;
     &-image1 {
-      width:335px;
-      height:335px;
-      // overflow: hidden;
+      width: 100%;
+      overflow: hidden;
     }
   }
   &-photo2 {
@@ -95,9 +94,8 @@
     display: grid;
     &-image {
       width: 100%;
-      height: 165px;
+      height: 100%;
       overflow: hidden;
-      margin-bottom: 8px;
       img {
         width: 100%;
       }
@@ -106,27 +104,29 @@
   &-photo3 {
     height: 100%;
     display: grid;
-    grid-template-rows: repeat(2, 1fr);
-    grid-template-columns: repeat(2, 1fr);
+    // grid-template-rows: repeat(2, 1fr);
+    // grid-template-columns: repeat(2, 1fr);
     &-image1 {
-      width:165px;
-      height:165px;
+      height: 100%;
+      width: 100%;
       overflow: hidden;
       img {
+        width: 100%;
         height: 100%;
       }
     }
     &-image2 {
-      width:165px;
-      height:165px;
+      width: 100%;
+      height: 100%;
       overflow: hidden;
       img {
+        width: 100%;
         height: 100%;
       }
     }
     &-image3 {
-      height: 165px;
-      width: 340px;
+      height: 100%;
+      width: 100%;
       grid-column: 1/3;
       overflow: hidden;
       img {
@@ -141,20 +141,20 @@
     grid-template-rows: repeat(2, 1fr);
     grid-template-columns: repeat(2, 1fr);
     &-image1 {
-      width:165px;
-      height:165px;
+      width:100%;
+      height:100%;
     }
     &-image2 {
-      width:165px;
-      height:165px;
+      width:100%;
+      height:100%;
     }
     &-image3 {
-      width:165px;
-      height:165px;
+      width:100%;
+      height:100%;
     }
     &-image4 {
-      width:165px;
-      height:165px;
+      width:100%;
+      height:100%;
     }
   }
 }

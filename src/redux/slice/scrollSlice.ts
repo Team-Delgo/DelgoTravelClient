@@ -6,6 +6,7 @@ const initialState = {
   myStorageScrollY: 0,
   homeScrollY: 0,
   myAccountScrollY: 0,
+  myReviewsY:0,
 };
 
 const scrollSlice = createSlice({
@@ -18,22 +19,35 @@ const scrollSlice = createSlice({
         detailPlaceScrollY: action.payload.detailPlace,
         myStorageScrollY: action.payload.myStorage,
         homeScrollY: action.payload.home,
-        myAccountScrollY:action.payload.myAccount
+        myAccountScrollY:action.payload.myAccount,
+        myReviewsY:action.payload.myReviews,
       };
     },
     scrollInit() {
       return initialState;
     },
-    myStorageScroll(state, action) {
+    myAccountScroll(state, action) {
       return {
         ...state,
         myAccountScrollY: action.payload.myAccount
       };
     },
-    initDetailPlaceScroll(state) {
+    myReviewsScroll(state, action) {
       return {
         ...state,
-        detailPlaceScrollY: 0
+        myReviewsY: action.payload.myReviews
+      };
+    },
+    myStorageScroll(state, action) {
+      return {
+        ...state,
+        myStorageScrollY: action.payload.myStorage
+      };
+    },
+    detailPlaceScroll(state, action) {
+      return {
+        ...state,
+        detailPlaceScrollY: action.payload.detailPlace
       };
     },
   },
