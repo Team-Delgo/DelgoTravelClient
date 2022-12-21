@@ -12,14 +12,11 @@ import RightArrow from '../../../common/icons/right-arrow-thin.svg';
 import Star from '../../../common/icons/review-star.svg';
 import GrayStar from '../../../common/icons/review-void-star.svg';
 import './ReviewList.scss';
-<<<<<<< HEAD
-import { MY_ACCOUNT_PATH } from '../../../common/constants/path.const';
 import { ReviewType } from '../../../common/types/review';
-=======
 import { MY_ACCOUNT_PATH, REVIEWS_PHOTOS } from '../../../common/constants/path.const';
 import { prevPathActions } from '../../../redux/slice/prevPathSlice';
 import { scrollActions } from '../../../redux/slice/scrollSlice';
->>>>>>> 0171784d58e41862810394bcdbfc0ee298fe7438
+
 
 
 function ReviewList() {

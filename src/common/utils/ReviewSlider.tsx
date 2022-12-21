@@ -2,7 +2,7 @@ import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './ReviewSlider.scss';
-import { ReviewPhotoType } from '../../../common/types/review';
+import { ReviewPhotoType } from '../types/review';
 
 function ReviewSlider(props: { images: ReviewPhotoType[] }) {
   const { images } = props;

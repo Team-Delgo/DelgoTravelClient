@@ -57,11 +57,7 @@ axiosInstance.interceptors.response.use(
       originalRequest.headers.authorization_access = newAccessToken;
 
       return axios(originalRequest);
-<<<<<<< HEAD
     } 
-=======
-    }
->>>>>>> 0171784d58e41862810394bcdbfc0ee298fe7438
     return Promise.reject(error);
   },
 );

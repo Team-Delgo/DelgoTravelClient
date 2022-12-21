@@ -19,13 +19,8 @@ function ReviewsPage() {
     window.scrollTo(0, 0);
     setReviews(location.state.reviews);
 
-<<<<<<< HEAD
-    const reviewImages = location.state.reviews.filter(function(review:ReviewType) {
-      if(review.review.reviewPhotoList.length >0)  {
-=======
-    const reviewImages = location.state.reviews.filter(function (review: RivewType) {
+    const reviewImages = location.state.reviews.filter(function (review: ReviewType) {
       if (review.review.reviewPhotoList.length > 0) {
->>>>>>> 0171784d58e41862810394bcdbfc0ee298fe7438
         return true;
       }
     });
