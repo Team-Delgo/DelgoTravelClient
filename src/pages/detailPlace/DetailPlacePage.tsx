@@ -231,7 +231,10 @@ function DetailPlacePage() {
             <Link
               style={{ textDecoration: 'none' }}
               to={`/detail-place/${detailPlace?.data.place.placeId}/reviews`}
-              state={{ reviews: detailPlaceRivews.data.readReviewDTOList, reviewsAvg: detailPlaceRivews.data.ratingAvg }}
+              state={{
+                reviews: detailPlaceRivews.data.readReviewDTOList,
+                reviewsAvg: detailPlaceRivews.data.ratingAvg,
+              }}
               key={detailPlace?.data.place.placeId}
             >
               <span className="detail-place-info-reviews">

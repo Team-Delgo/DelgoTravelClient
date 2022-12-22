@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ReactComponent as Home } from '../icons/home.svg';
@@ -31,21 +31,21 @@ function Footer() {
     window.scroll({ top: 0, behavior: 'smooth' });
   }
 
-  const moveToMyStoragePage = () => {
+  const moveToMyStoragePage = useCallback(() => {
     if (!isSignIn) {
       setIsModalOpen(true);
     } else{
       navigate(MY_STORAGE_PATH);
     }
-  }
+  },[])
 
-  const moveToMyAccountPage = () => {
+  const moveToMyAccountPage = useCallback(() => {
     if (!isSignIn) {
       setIsModalOpen(true);
     } else {
       navigate(MY_ACCOUNT_PATH.MAIN);
     }
-  }
+  },[])
 
   return (
     <div className={OS === 'android' ? 'footer-android' : 'footer-ios'}>
