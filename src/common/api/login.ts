@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from 'axios';
-import { useErrorHandler } from './useErrorHandler';
 import { useErrorHandlers } from './useErrorHandlers';
 
 

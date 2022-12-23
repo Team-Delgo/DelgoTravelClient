@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from 'axios';
-import { useErrorHandler } from './useErrorHandler';
 
 async function getReservedDate(
   data: { roomId: string | undefined },
@@ -18,7 +17,6 @@ async function getReservedDate(
     })
     .catch((error) => {
       networkError();
-      useErrorHandler(error);
     });
 }
 
