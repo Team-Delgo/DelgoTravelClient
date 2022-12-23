@@ -77,14 +77,14 @@ function HomePage() {
     },
   });
 
-  useEffect(() => {
-    console.log(reservationPlaces)
-    // window.history.pushState(null, '', location.href);
-    // window.addEventListener('popstate', preventGoBack);
-    // return () => {
-      // window.removeEventListener('popstate', preventGoBack);
-    // };
-  }, [getBookingDataIsLoading]);
+  // useEffect(() => {
+  //   console.log(reservationPlaces)
+  //   // window.history.pushState(null, '', location.href);
+  //   // window.addEventListener('popstate', preventGoBack);
+  //   // return () => {
+  //     // window.removeEventListener('popstate', preventGoBack);
+  //   // };
+  // }, [getBookingDataIsLoading]);
 
   useEffect(() => {
     if (location.state?.prevPath.includes('/detail-place')) {
@@ -94,9 +94,9 @@ function HomePage() {
     }
   }, [getRecommendedPlacesIsLoading, getBookingDataIsLoading, getEditorNotePlacesIsLoading]);
 
-  const preventGoBack = () => {
-    // window.history.pushState(null, '', location.href);
-  };
+  // const preventGoBack = () => {
+  //   // window.history.pushState(null, '', location.href);
+  // };
 
   const getDday = () => {
     const startDate = new Date(reservationPlaces?.data[page].startDt);
