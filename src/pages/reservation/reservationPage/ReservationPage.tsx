@@ -25,6 +25,8 @@ function ReservationPage() {
   const [reservationNameConfrim, setReservationNameConfrim] = useState(false);
   const reservationNameInput = useRef<HTMLInputElement>(null);
 
+  console.log('room',room)
+
 
   const { isLoading: getCouponListIsLoading, data: couponList } = useQuery(
     GET_MY_COUPON_LIST,
@@ -54,7 +56,7 @@ function ReservationPage() {
           roomId: room.roomId,
           name: room.name,
           price: room.price,
-          personNum: room.personNum,
+          personStandardNum: room.personStandardNum,
         },
         date: {
           date: date.date,
@@ -180,7 +182,7 @@ function ReservationPage() {
         </div>
         <div className="reservation-user-info">
           <div className="reservation-label">예약 인원 </div>
-          <div className="reservation-user-info-phone">기준 {room.personNum}명</div>
+          <div className="reservation-user-info-phone">기준 {room.personStandardNum}명</div>
         </div>
         <div className="reservation-devide" />
         <h2 className="reservation-title second">할인정보</h2>
