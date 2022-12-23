@@ -1,4 +1,4 @@
-import React, { useCallback, useState ,useRef} from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
@@ -8,39 +8,40 @@ import { ReactComponent as Exit } from '../../../common/icons/exit.svg';
 import { ReactComponent as BottomArrow } from '../../../common/icons/bottom-arrow2.svg';
 import './ReservationPage.scss';
 import { getCouponList } from '../../../common/api/coupon';
-import AlertConfirmOne from '../../../common/dialog/AlertConfirmOne'
+import AlertConfirmOne from '../../../common/dialog/AlertConfirmOne';
 import { useErrorHandlers } from '../../../common/api/useErrorHandlers';
-import { GET_MY_COUPON_LIST, CACHE_TIME, STALE_TIME } from '../../../common/constants/queryKey.const'
+import { GET_MY_COUPON_LIST, CACHE_TIME, STALE_TIME } from '../../../common/constants/queryKey.const';
 import { CouponType } from '../../../common/types/coupon';
-import { RootState } from '../../../redux/store'
+import { RootState } from '../../../redux/store';
 
 function ReservationPage() {
   const { user, room, place, date } = useSelector((state: RootState) => state.persist.reservation);
-  const {OS} = useSelector((state:RootState)=>state.persist.device);
+  const { OS } = useSelector((state: RootState) => state.persist.device);
   const [couponDropDownOpen, setCouponDropDownOpen] = useState(false);
   const [selectedCouponId, setSelectedCouponId] = useState(0);
-  const [selectCouponDiscount,setSelectCouponDiscount] = useState(0)
+  const [selectCouponDiscount, setSelectCouponDiscount] = useState(0);
   const [reservationName, setReservationName] = useState('');
   const dispatch = useDispatch();
-  const [reservationNameConfrim,setReservationNameConfrim]=useState(false)
+  const [reservationNameConfrim, setReservationNameConfrim] = useState(false);
   const reservationNameInput = useRef<HTMLInputElement>(null);
 
-  const { isLoading:getCouponListIsLoading, data: couponList} = useQuery(
+
+  const { isLoading: getCouponListIsLoading, data: couponList } = useQuery(
     GET_MY_COUPON_LIST,
     () => getCouponList(user.id),
     {
       cacheTime: CACHE_TIME,
       staleTime: STALE_TIME,
       onError: (error: any) => {
-        useErrorHandlers(dispatch, error)
-      }
+        useErrorHandlers(dispatch, error);
+      },
     },
   );
 
-
   const creditCardPayment = () => {
-    const random = new Date().getTime() + Math.random()
-    const randomId = btoa(random.toString())
+    console.log(Number(room.price.toString().slice(0, -1).replace(/,/g, '')) - selectCouponDiscount);
+    const random = new Date().getTime() + Math.random();
+    const randomId = btoa(random.toString());
     dispatch(
       reservationActions.reservation({
         user: { id: user.id, nickname: reservationName, email: user.email, phone: user.phone },
@@ -61,14 +62,14 @@ function ReservationPage() {
           checkIn: date.checkIn.substring(0, 5),
           checkOut: date.checkOut.substring(0, 5),
         },
-        coupon:{
-          couponId:selectedCouponId
-        }
+        coupon: {
+          couponId: selectedCouponId,
+        },
       }),
     );
     loadTossPayments(`${process.env.REACT_APP_TOSS_CLIENT_KEY}`).then((tossPayments) => {
       tossPayments.requestPayment('카드', {
-        amount: Number(room.price.toString().slice(0, -1).replace(',', '')) - selectCouponDiscount,
+        amount: Number(room.price.toString().slice(0, -1).replace(/,/g, '')) - selectCouponDiscount,
         orderId: randomId,
         orderName: place.name + room.name,
         customerName: user.nickname,
@@ -79,10 +80,10 @@ function ReservationPage() {
   };
 
   const handleReservationName = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setReservationName(e.target.value.replace(/ /g,""));
-  },[]);
+    setReservationName(e.target.value.replace(/ /g, ''));
+  }, []);
 
-  const existCoupon = couponList?.data?.map((coupon:CouponType) => {
+  const existCoupon = couponList?.data?.map((coupon: CouponType) => {
     const priceString = coupon.discountNum.toString();
     const price = `${priceString.slice(0, priceString.length - 3)},${priceString.slice(priceString.length - 3)}`;
 
@@ -90,7 +91,7 @@ function ReservationPage() {
       <div
         className="coupon-header"
         aria-hidden="true"
-        onClick={() => selectCoupon(coupon.couponId,  coupon.discountNum)}
+        onClick={() => selectCoupon(coupon.couponId, coupon.discountNum)}
       >
         [Delgo 가요] {price}원 할인쿠폰
       </div>
@@ -98,33 +99,33 @@ function ReservationPage() {
   });
 
   const handleCouponDropDown = () => {
-    setSelectedCouponId(0)
+    setSelectedCouponId(0);
     setSelectCouponDiscount(0);
     setCouponDropDownOpen(!couponDropDownOpen);
   };
 
   const selectCoupon = (couponId: number, discountNum: number) => {
-    setSelectedCouponId(couponId)
+    setSelectedCouponId(couponId);
     setCouponDropDownOpen(false);
     setSelectCouponDiscount(discountNum);
   };
 
   const confirmReservationNameOpen = useCallback(() => {
-    setReservationNameConfrim(true)
-  },[])
+    setReservationNameConfrim(true);
+  }, []);
 
   const confirmReservationNameClose = useCallback(() => {
-    setReservationNameConfrim(false)
-  },[])
+    setReservationNameConfrim(false);
+  }, []);
 
   const inputReservationNameFocus = useCallback(() => {
     if (OS === 'android') {
-      reservationNameInput.current?.scrollIntoView({ behavior: "smooth" })
+      reservationNameInput.current?.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [])
+  }, []);
 
   if (getCouponListIsLoading) {
-    return <div className="reservation-page">&nbsp;</div>
+    return <div className="reservation-page">&nbsp;</div>;
   }
 
   return (
@@ -165,7 +166,13 @@ function ReservationPage() {
         <h2 className="reservation-title first">예약자정보</h2>
         <div className="reservation-user-info">
           <div className="reservation-label">예약자 이름</div>
-          <input className="reservation-user-info-name" type="text" ref={reservationNameInput} onChange={handleReservationName} onFocus={inputReservationNameFocus} />
+          <input
+            className="reservation-user-info-name"
+            type="text"
+            ref={reservationNameInput}
+            onChange={handleReservationName}
+            onFocus={inputReservationNameFocus}
+          />
         </div>
         <div className="reservation-user-info">
           <div className="reservation-label">핸드폰 번호</div>
@@ -209,7 +216,7 @@ function ReservationPage() {
         ) : (
           <div className="coupon-drop-down-full">
             <div className="coupon-header" aria-hidden="true" onClick={handleCouponDropDown}>
-              보유한 쿠폰 {couponList?.data?.length}장 <BottomArrow className="coupon-bottom-arrow" />
+               쿠폰 사용 안하기  <BottomArrow className="coupon-bottom-arrow" />
             </div>
             {existCoupon}
           </div>
@@ -218,13 +225,18 @@ function ReservationPage() {
         <div className="finalprice">
           <div className="reservation-label">결제 금액</div>
           <div className="finalprice-price">
-            {(Number(room.price.toString().slice(0, -1).replace(',', '')) - selectCouponDiscount).toLocaleString()}원
+            {(Number(room.price.toString().slice(0, -1).replace(/,/g, '')) - selectCouponDiscount).toLocaleString()}원
           </div>
         </div>
       </div>
-      <div className="reservation-payment-button" aria-hidden="true" onClick={reservationName !== '' ? creditCardPayment : confirmReservationNameOpen}>
-          {(Number(room.price.toString().slice(0, -1).replace(',', '')) - selectCouponDiscount).toLocaleString()}원 결제하기
-        </div>
+      <div
+        className="reservation-payment-button"
+        aria-hidden="true"
+        onClick={reservationName !== '' ? creditCardPayment : confirmReservationNameOpen}
+      >
+        {(Number(room.price.toString().slice(0, -1).replace(/,/g, '')) - selectCouponDiscount).toLocaleString()}원
+        결제하기
+      </div>
       {reservationNameConfrim && (
         <AlertConfirmOne text="예약자명을 입력하세요" buttonHandler={confirmReservationNameClose} />
       )}
