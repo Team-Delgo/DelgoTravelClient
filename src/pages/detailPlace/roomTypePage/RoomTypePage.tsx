@@ -24,7 +24,6 @@ function RoomTypePage() {
   const navigate = useNavigate();
   const { date, dateString } = useSelector((state: RootState) => state.date);
   const { currentPlace } = useSelector((state: RootState) => state.persist.currentPlace);
-  const { currentRoom } = useSelector((state: RootState) => state.persist.currentRoom);
   const { user, isSignIn } = useSelector((state: RootState) => state.persist.user);
   const dispatch = useDispatch();
   const location: any = useLocation();
@@ -34,6 +33,8 @@ function RoomTypePage() {
   const [photoList, setPhotoList] = useState<Array<RoomImgType>>([]);
   const [roomNoticeList, setRoomNoticeList] = useState<Array<RoomNoticeType>>([]);
 
+  console.log('room',room)
+
   useEffect(() => {
     window.scrollTo(0, 0);
     getRoomData(
@@ -41,7 +42,6 @@ function RoomTypePage() {
       (response: AxiosResponse) => {
         setPhotoList(response.data.data.detailRoomPhotos);
         setRoomNoticeList(response.data.data.roomNoticeList);
-        console.log(response.data.data.roomNoticeList);
       },
       dispatch,
     );
@@ -54,11 +54,12 @@ function RoomTypePage() {
           roomId: room?.roomId,
           name: room?.name,
           price: room?.price,
-          personNum: room?.personStandardNum,
+          personStandardNum: room?.personStandardNum,
         },
       }),
     );
   }, [room]);
+
 
   const calenderOpenClose = useCallback(() => {
     setIsCalenderOpen(!isCalenderOpen);
@@ -66,6 +67,7 @@ function RoomTypePage() {
 
   const handleReservation = () => {
     if (isSignIn) {
+      console.log('room',room)
       dispatch(
         reservationActions.reservation({
           user: { id: user.id, email: user.email, phone: user.phone },
@@ -75,10 +77,10 @@ function RoomTypePage() {
             address: currentPlace.address,
           },
           room: {
-            roomId: currentRoom.roomId,
-            name: currentRoom.name,
-            price: currentRoom.price,
-            personNum: currentRoom.personNum,
+            roomId: room.roomId,
+            name: room.name,
+            price: room.price,
+            personStandardNum: room.personStandardNum,
           },
           date: {
             date,
@@ -132,7 +134,7 @@ function RoomTypePage() {
             <div className="detail-place-room-type-info-accommodation-check-in-check-out">
               입실 {currentPlace.checkIn.substring(0, 5)} / 퇴실 {currentPlace.checkOut.substring(0, 5)}
             </div>
-            <div className="detail-place-room-type-info-accommodation-price">{currentRoom.price}</div>
+            <div className="detail-place-room-type-info-accommodation-price">{room.price}</div>
           </div>
         </div>
         <div className="detail-place-room-type-reservation-date-select" aria-hidden="true" onClick={calenderOpenClose}>
